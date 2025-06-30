@@ -1,5 +1,3 @@
-
-
 <meta name="google-site-verification" content="OeM-YMo4NpQshyIm3m5H59IikSDp0BMe4sXKQmCu7NM" />
 <!DOCTYPE html>
 <html lang="ko">
@@ -137,7 +135,7 @@ pointer-events: auto !important;
 /* 기존 모바일에서 .neo-smart-logo.front 숨김 처리 코드는 삭제됨 */
 </style>
 <style>
-/* PC 네비게이션에서 사전 예약하기 네온 효과 */
+/* PC 네비게이션에서 무료체험 신청 네온 효과 */
 .nav-neon-green {
   color: #7BE495 !important;
   text-shadow: 
@@ -1399,14 +1397,14 @@ transition: transform 0.4s ease-out, opacity 0.4s ease-out;
 <!-- 모바일 전용 상단 고정 네비게이션 (body 직속) -->
 <div id="mobile-top-nav-fixed" style="position: fixed; top: 0; left: 0; right: 0; z-index: 2147483647;">
   <div class="nav-bar">
-    <img src="./images/neohive3.png" alt="NeoHive" class="nav-logo">
+    <img src="./images/neohive3.png" alt="NeoHive" class="nav-logo" onclick="scrollToTop()" style="cursor: pointer;">
     <button class="nav-menu-btn" onclick="toggleNav()">&#9776;</button>
   </div>
   <div class="nav-menu" id="nav-menu" style="display: none;">
     <a href="#hive" onclick="closeNav()">하이브 시스템</a>
     <a href="#smart" onclick="closeNav()">스마트 시스템</a>
     <a href="#impact" onclick="closeNav()">도입 효과</a>
-    <a href="javascript:void(0)" onclick="openForm();closeNav();return false;">사전 예약하기</a>
+    <a href="javascript:void(0)" onclick="openTrialSelectionModal();closeNav();return false;">무료체험 신청</a>
   </div>
 </div>
 
@@ -1419,7 +1417,7 @@ transition: transform 0.4s ease-out, opacity 0.4s ease-out;
     <header style="position: relative; top: 0; left: 0; width: 100%;">
     <div class="container">
       <div class="logo-container" style="display:flex; align-items:center; justify-content: flex-start; margin: 0; padding: 4px 12px; margin-left: -45px;">
-        <a href="#" style="display:block;">
+        <a href="#" onclick="scrollToTop(); return false;" style="display:block; cursor: pointer;">
           <img src="./images/neohive3.png" alt="NeoHive Logo" style="height: 28px; margin-right: 0;">
         </a>
       </div>
@@ -1427,7 +1425,7 @@ transition: transform 0.4s ease-out, opacity 0.4s ease-out;
         <a href="#hive">하이브 시스템</a>
         <a href="#smart">스마트 시스템</a>
         <a href="#impact">도입 효과</a>
-        <a href="javascript:void(0)" onclick="openForm();return false;" class="nav-neon-green">사전 예약하기</a>
+        <a href="javascript:void(0)" onclick="openTrialSelectionModal();return false;" class="nav-neon-green">무료체험 신청</a>
       </nav>
     </div>
     </header>
@@ -1443,7 +1441,7 @@ transition: transform 0.4s ease-out, opacity 0.4s ease-out;
 <section id="hive" class="section animate-on-scroll" style="background:#000; padding-top:24px;">
   <div class="container" style="text-align:center; padding-top:0;">
     <h2 style="font-size: 2rem; text-align: left; color: #FFFFFF; margin-top:0;">
-      네오 하이브 : <span class="neon-green">"하나되는 우리"</span>
+      네오핏 : <span class="neon-green">"새로운 피트니스 문화"</span>
     </h2>
     <p style="margin: 10px 0 24px; color: #aaa; text-align: left; line-height: 1.6;">
       지역 기반 소모임 헬스 커뮤니티 플랫폼<br><span class="neon-green">커뮤니티와 헬스장을 하나로 연결</span><span style="color:#aaa;">하여 지속적인 운동 문화를 만들고, 헬스장의 활성화를 도모합니다.</span>
@@ -1490,9 +1488,25 @@ transition: transform 0.4s ease-out, opacity 0.4s ease-out;
            style="position:absolute; left:50%; top:65%; transform:translate(200%, -60%) scale(0.85); z-index:1; pointer-events:auto; transition-delay:0.36s; width:160px; height:auto;">
 
       <!-- Center phone -->
-      <div class="video-phone" style="position:absolute; left:50%; top:50%; transform:translate(-50%, -50%); width: 180px; height: 360px; border-radius: 20px; overflow: hidden; border: 4px solid #7BE495; background: radial-gradient(circle at center, rgba(123, 228, 149, 0.3), #0A0A0A); box-shadow: 0 0 20px rgba(123, 228, 149, 0.6); z-index: 2147483646; opacity: 1; visibility: visible; display: block;" data-original-left="50%" data-original-top="50%" data-original-transform="translate(-50%, -50%)" data-mobile-left="50%" data-mobile-top="50%" data-mobile-transform="translate(-50%, -50%)">
-        <video src="./videos/neohivevideos.mp.mp4" autoplay loop muted playsinline preload="none" style="width: 100%; height: 100%; object-fit: contain;"></video>
+      <div class="video-phone" style="position:absolute; left:50%; top:50%; transform:translate(-50%, -50%); width: 180px; height: 360px; border-radius: 20px; overflow: hidden; border: 4px solid #7BE495; background: radial-gradient(circle at center, rgba(123, 228, 149, 0.3), #0A0A0A); box-shadow: 0 0 20px rgba(123, 228, 149, 0.6); z-index: 2147483646; opacity: 1; visibility: visible; display: block;" data-original-left="50%" data-original-top="50%" data-original-transform="translate(-50%, -50%)" data-mobile-left="50%" data-mobile-top="60%" data-mobile-transform="translate(-50%, -50%)">
+        <video id="hive-showcase-video" src="./videos/neohivevideos.mp.mp4" autoplay loop muted playsinline preload="metadata" style="width: 100%; height: 100%; object-fit: contain;"></video>
       </div>
+      <!-- 네오 하이브 영상 스피커 버튼 (영상 하단 바깥쪽) -->
+      <button id="hive-speaker-btn" onclick="toggleHiveAudio()" style="position: absolute; left: 50%; top: calc(50% + 264px); transform: translateX(-50%); width: 80px; height: 32px; background: rgba(0,0,0,0.9); border: 2px solid #7BE495; border-radius: 16px; color: #7BE495; font-size: 11px; cursor: pointer; z-index: 2147483647; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 15px rgba(123, 228, 149, 0.5); font-weight: 600; transition: all 0.3s ease;">🔇 음소거</button>
+      
+      <!-- 모바일 환경용 네오 하이브 영상 스피커 버튼 -->
+      <style>
+      @media (max-width: 768px) {
+        #hive-speaker-btn {
+          left: calc(50% + 142px) !important;
+          top: calc(50% - 152px) !important;
+          width: 70px !important;
+          height: 28px !important;
+          font-size: 9px !important;
+          border-radius: 14px !important;
+        }
+      }
+      </style>
     </div>
     <!-- 핵심 UX 흐름 (steps 1~6) and cards -->
     <div class="slide-container p-10" style="margin-top: 24px;">
@@ -2362,8 +2376,24 @@ html body .core-value-fresh-mobile {
 }
 </style>
       <div class="floating-video neo-smart-video" style="left: 50%; z-index: 2147483647; top: 50%; transform: translate(-50%, -50%); opacity: 1; visibility: visible; position: absolute; display: block;">
-        <video src="./videos/neofits.mp4" autoplay loop muted playsinline preload="none" style="width: 100%; height: 100%; object-fit: contain;"></video>
+        <video id="smart-showcase-video" src="./videos/neofits.mp4" autoplay loop muted playsinline preload="metadata" style="width: 100%; height: 100%; object-fit: contain;"></video>
       </div>
+      <!-- 네오 스마트 영상 스피커 버튼 (영상 바깥쪽 우측 상단) -->
+      <button id="smart-speaker-btn" onclick="toggleSmartAudio()" style="position: absolute; left: calc(50% + 366px); top: calc(50% - 168px); width: 80px; height: 32px; background: rgba(0,0,0,0.9); border: 2px solid #7BE495; border-radius: 16px; color: #7BE495; font-size: 11px; cursor: pointer; z-index: 999; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 15px rgba(123, 228, 149, 0.5); font-weight: 600; transition: all 0.3s ease;">🔇 음소거</button>
+      
+      <!-- 모바일 환경용 네오 스마트 영상 스피커 버튼 -->
+      <style>
+      @media (max-width: 768px) {
+        #smart-speaker-btn {
+          left: calc(50% + 22px) !important;
+          top: calc(50% - 152px) !important;
+          width: 70px !important;
+          height: 28px !important;
+          font-size: 9px !important;
+          border-radius: 14px !important;
+        }
+      }
+      </style>
     </div> <!-- End of .hive-showcase -->
 
 <!-- JavaScript로 NEOS 카드 강제 이동 -->
@@ -2885,7 +2915,7 @@ if (window.innerWidth <= 768) {
             </p>
             
             <p style="font-size: 1.1rem; color: #fff; font-weight: 600; margin-bottom: 24px; line-height: 1.8; text-align: center; padding: 20px; background: rgba(123,228,149,0.1); border-radius: 12px;">
-              <span class='neon-green'>매출 상승 효과!</span> <span style="color: #fff;">사전 예약 시,</span> <span class='neon-green'>3개월 무료 체험</span> <span style="color: #fff;">기회까지.</span>
+              <span class='neon-green'>매출 상승 효과!</span> <span style="color: #fff;">무료체험 신청 시,</span> <span class='neon-green'>3개월 무료 체험</span> <span style="color: #fff;">기회까지.</span>
             </p>
             
             <p style="font-size: 1rem; color: #fff; font-weight: 500; margin-bottom: 28px; line-height: 1.8;">
@@ -2893,7 +2923,7 @@ if (window.innerWidth <= 768) {
               회원들은 언제든 NFC 태그로 운동법을 확인하며 자기 주도적 운동 환경을 경험하고 있습니다.
             </p>
             
-                          <p style="font-size: 1.1rem; color: #fff; font-weight: 600; margin-bottom: 0; line-height: 1.8; text-align: center;">
+            <p style="font-size: 1.1rem; color: #fff; font-weight: 600; margin-bottom: 0; line-height: 1.8; text-align: center;">
               지금 바로 <span class='neon-green'>NEO HIVE + NEO SMART</span>로<br>
               헬스장의 <span class='neon-green'>새로운 가능성</span>을 경험해보세요.
             </p>
@@ -2915,7 +2945,7 @@ if (window.innerWidth <= 768) {
             <div style="margin-bottom: 20px; margin-left: -32px; margin-right: -32px;">
               <div style="background: rgba(123,228,149,0.1); border-radius: 12px; padding: 18px 12px 18px 6px;">
                 <p id="mobile-cost-recovery-text" style="font-size: 0.85rem !important; color: #fff !important; font-weight: 600 !important; line-height: 1.7 !important; margin: 0 !important; text-align: center !important; transform: translateX(16px) !important; position: relative !important; width: 100% !important;">
-                  <span class='neon-green'>매출 상승 효과!</span> <span style="color: #fff;">사전 예약 시,</span> <span class='neon-green'>3개월 무료 체험</span> <span style="color: #fff;">기회까지.</span>
+                  <span class='neon-green'>매출 상승 효과!</span> <span style="color: #fff;">무료체험 신청 시,</span> <span class='neon-green'>3개월 무료 체험</span> <span style="color: #fff;">기회까지.</span>
                 </p>
               </div>
             </div>
@@ -2947,7 +2977,7 @@ if (window.innerWidth <= 768) {
           <!-- 혜택 안내 텍스트 -->
           <div class="benefit-text-container" style="margin-bottom: 20px;">
             <div style="font-size: 1.3rem; font-weight: 600; margin-bottom: 10px;">
-              <span style="color: #7BE495;">✨ 사전 예약 시 </span>
+              <span style="color: #7BE495;">✨ 무료체험 신청 시 </span>
               <span style="color: #fff; font-size: 1.5rem; font-weight: 700;">3개월 무료</span>
               <span style="color: #7BE495;"> 혜택! 🎁</span>
             </div>
@@ -2960,16 +2990,16 @@ if (window.innerWidth <= 768) {
             </div>
           </div>
           
-          <!-- 사전 예약하기 버튼 - 네온 글로우 디자인 -->
-          <button onclick="openForm()" class="btn reservation-btn" style="
+          <!-- 예약하기 버튼 - 네온 글로우 디자인 -->
+          <a href="javascript:void(0)" onclick="openTrialSelectionModal();return false;" class="btn reservation-btn" style="
             background: #000;
-            color: #7BE495;
+        color: #7BE495;
             padding: 20px 50px;
             border: 3px solid #7BE495;
             border-radius: 15px;
             font-size: 1.3rem;
             font-weight: 700;
-            cursor: pointer;
+        cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 
               0 0 30px rgba(123, 228, 149, 0.6),
@@ -2983,10 +3013,12 @@ if (window.innerWidth <= 768) {
             min-width: 250px;
             position: relative;
             overflow: hidden;
-          ">
-            사전 예약하기
-          </button>
-        </div>
+            text-decoration: none;
+            display: inline-block;
+      ">
+        무료체험 신청
+          </a>
+    </div>
   </div>
   <style>
     /* PC 환경에서는 데스크톱 레이아웃 표시, 모바일 레이아웃 숨김 */
@@ -3124,11 +3156,41 @@ if (window.innerWidth <= 768) {
     }
     
     /* 모바일에서 로고 이미지 위치 조정 - 우측으로 1칸 이동 및 크기 확대 */
-    @media (max-width: 768px) {
+@media (max-width: 768px) {
       .testimonial-card img[src="./images/hive3.png"] {
-        left: 136px !important; /* 120px에서 136px로 변경 (16px 우측 이동) */
+    left: 136px !important; /* 120px에서 136px로 변경 (16px 우측 이동) */
         top: 180px !important;
-        width: 320px !important; /* 280px에서 320px로 크기 확대 */
+    width: 320px !important; /* 280px에서 320px로 크기 확대 */
+  }
+  
+  /* 모바일에서 video-phone 초기 위치를 최종 위치로 즉시 고정 */
+  .video-phone {
+    left: 50% !important;
+    top: 60% !important;
+    transform: translate(-50%, -50%) !important;
+  }
+  
+  /* 페이지 로딩 시에만 트랜지션 비활성화 */
+  .video-phone.no-transition {
+    transition: none !important;
+    -webkit-transition: none !important;
+    animation: none !important;
+    -webkit-animation: none !important;
+  }
+  
+  /* 모바일에서 팀결성, 제휴센터 예약 라벨을 각 이미지 그룹 바로 아래로 이동 */
+  .hive-label-left {
+    top: 320px !important; /* 위로 2칸(32px) 더 이동: 352px → 320px */
+    left: 5% !important; /* 간격을 더 벌리기 위해 10% → 5%로 조정 */
+    transform: translateX(-50%) !important;
+    z-index: 25 !important;
+  }
+  
+  .hive-label-right {
+    top: 320px !important; /* 위로 2칸(32px) 더 이동: 352px → 320px */
+    right: 5% !important; /* 간격을 더 벌리기 위해 10% → 5%로 조정 */
+    transform: translateX(50%) !important;
+    z-index: 25 !important;
       }
     }
   </style>
@@ -3170,6 +3232,57 @@ if (window.innerWidth <= 768) {
     <textarea id="memo" name="memo" placeholder="요청 사항이나 메모를 입력해주세요" style="padding:10px; border:1px solid #3AC8A8; border-radius:4px; background:#000; color:#fff;" rows="4"></textarea>
     <button type="submit" class="btn" style="align-self:center; margin-top:10px; background:#3AC8A8; color:#fff; font-weight:bold; border-radius:4px; width:auto; min-width:120px; max-width:200px; padding:12px 24px;">신청서 보내기</button>
   </form>
+</div>
+
+<!-- 무료체험 선택 모달 -->
+<div id="trialSelectionModal" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); z-index:10001; background: linear-gradient(135deg, #111 0%, #222 100%); padding:30px; width:90%; max-width:500px; height:auto; border-radius:12px; color:#fff; box-sizing:border-box; border:2px solid #7BE495; box-shadow: 0 0 30px rgba(123, 228, 149, 0.8), 0 0 60px rgba(123, 228, 149, 0.4);">
+  <div style="text-align:right;">
+    <button onclick="closeTrialSelectionModal()" style="background:none; border:none; font-size:2rem; color:#fff; cursor:pointer; transition: color 0.3s ease;" onmouseover="this.style.color='#7BE495'" onmouseout="this.style.color='#fff'">&times;</button>
+  </div>
+  <div style="text-align:center; margin-bottom:30px;">
+    <h2 style="color:#7BE495; font-size:1.8rem; margin-bottom:10px; text-shadow: 0 0 8px rgba(123, 228, 149, 0.8);">무료체험 선택</h2>
+    <p style="color:#ddd; font-size:1rem; line-height:1.5;">원하시는 무료체험을 선택해주세요</p>
+  </div>
+  <div style="display:flex; flex-direction:column; gap:20px; align-items:center;">
+    <!-- 네오핏 무료체험 버튼 -->
+    <button onclick="openNeofitTrialForm()" style="
+      background: linear-gradient(135deg, #7BE495, #62D2A2);
+      color: #000;
+      border: none;
+      padding: 20px 40px;
+      border-radius: 12px;
+      font-size: 1.3rem;
+      font-weight: 700;
+      cursor: pointer;
+      width: 100%;
+      max-width: 350px;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 20px rgba(123, 228, 149, 0.6), 0 4px 15px rgba(0, 0, 0, 0.2);
+    " onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 0 30px rgba(123, 228, 149, 0.8), 0 6px 20px rgba(0, 0, 0, 0.3)'" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 0 20px rgba(123, 228, 149, 0.6), 0 4px 15px rgba(0, 0, 0, 0.2)'">
+      🏋️ 네오핏 무료체험
+    </button>
+    
+    <!-- 필라테스 무료체험 버튼 -->
+    <button onclick="openPilatesTrialForm()" style="
+      background: linear-gradient(135deg, #9DF3C4, #7BE495);
+      color: #000;
+      border: none;
+      padding: 20px 40px;
+      border-radius: 12px;
+      font-size: 1.3rem;
+      font-weight: 700;
+      cursor: pointer;
+      width: 100%;
+      max-width: 350px;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 20px rgba(157, 243, 196, 0.6), 0 4px 15px rgba(0, 0, 0, 0.2);
+    " onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 0 30px rgba(157, 243, 196, 0.8), 0 6px 20px rgba(0, 0, 0, 0.3)'" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 0 20px rgba(157, 243, 196, 0.6), 0 4px 15px rgba(0, 0, 0, 0.2)'">
+      🧘‍♀️ 필라테스 무료체험
+    </button>
+  </div>
+  <div style="text-align:center; margin-top:25px;">
+    <p style="color:#888; font-size:0.9rem;">※ 각 체험은 1회 한정이며, 사전 예약이 필요합니다.</p>
+  </div>
 </div>
 <script>
   // PC에서만 스크롤 제어 적용 (모바일에서는 스크롤 자유롭게 허용)
@@ -3254,7 +3367,7 @@ if (window.innerWidth <= 768) {
         }, { passive: true });
       }
     }
-
+    
     // 모바일에서 사전예약 버튼 강제 이벤트 바인딩
     if (window.innerWidth <= 768) {
       setTimeout(() => {
@@ -3296,13 +3409,295 @@ if (window.innerWidth <= 768) {
       }, 1000);
     }
     
-    // 비디오 지연 로딩
+    // 비디오 지연 로딩 - 모바일 최적화
+    if (window.innerWidth <= 768) {
+      // 모바일에서는 더 빠른 로딩
+      setTimeout(() => {
+        const videos = document.querySelectorAll('video[preload="none"]');
+        videos.forEach(video => {
+          video.preload = 'metadata';
+        });
+      }, 500);
+    } else {
+      // PC에서는 기존 방식
     setTimeout(() => {
       const videos = document.querySelectorAll('video[preload="none"]');
       videos.forEach(video => {
         video.preload = 'metadata';
       });
     }, 1000);
+    }
+      });
+  
+  // 스크롤 기반 영상 음향 제어 시스템
+  function setupVideoAudioControl() {
+    console.log('🎵 영상 음향 제어 시스템 초기화 (스크롤 기반 자동 재생 비활성화)');
+    
+    // 페이지 이탈 시 모든 영상 음소거
+    window.addEventListener('beforeunload', () => {
+      const hiveVideo = document.getElementById('hive-showcase-video');
+      const smartVideo = document.getElementById('smart-showcase-video');
+      
+      if (hiveVideo) hiveVideo.muted = true;
+      if (smartVideo) smartVideo.muted = true;
+    });
+      }
+    
+    // 네오 하이브 영상 스피커 토글 함수
+    function toggleHiveAudio() {
+      const hiveVideo = document.getElementById('hive-showcase-video');
+      const speakerBtn = document.getElementById('hive-speaker-btn');
+      
+      if (hiveVideo && speakerBtn) {
+        if (hiveVideo.muted) {
+          hiveVideo.muted = false;
+          // 모바일과 PC에 따른 볼륨 설정
+          if (window.innerWidth <= 768) {
+            hiveVideo.volume = 0.08; // 모바일에서 8%
+          } else {
+            hiveVideo.volume = 0.15; // PC에서 15%
+          }
+          speakerBtn.innerHTML = '🔊 소리켜짐';
+          speakerBtn.style.background = 'rgba(123, 228, 149, 0.2)';
+          console.log('🎵 Neo Hive 영상 소리 켜짐');
+        } else {
+          hiveVideo.muted = true;
+          speakerBtn.innerHTML = '🔇 음소거';
+          speakerBtn.style.background = 'rgba(0,0,0,0.9)';
+          console.log('🔇 Neo Hive 영상 소리 꺼짐');
+        }
+      }
+    }
+
+    // 네오 스마트 영상 스피커 토글 함수
+    function toggleSmartAudio() {
+      const smartVideo = document.getElementById('smart-showcase-video');
+      const speakerBtn = document.getElementById('smart-speaker-btn');
+      
+      if (smartVideo && speakerBtn) {
+        if (smartVideo.muted) {
+          smartVideo.muted = false;
+          // 모바일과 PC에 따른 볼륨 설정
+          if (window.innerWidth <= 768) {
+            smartVideo.volume = 0.3; // 모바일에서 30%
+          } else {
+            smartVideo.volume = 0.6; // PC에서 60%
+          }
+          speakerBtn.innerHTML = '🔊 소리켜짐';
+          speakerBtn.style.background = 'rgba(123, 228, 149, 0.2)';
+          console.log('🎵 Neo Smart 영상 소리 켜짐');
+        } else {
+          smartVideo.muted = true;
+          speakerBtn.innerHTML = '🔇 음소거';
+          speakerBtn.style.background = 'rgba(0,0,0,0.9)';
+          console.log('🔇 Neo Smart 영상 소리 꺼짐');
+        }
+      }
+    }
+
+    // 페이지 상단으로 스크롤하는 함수 (모바일/PC 공통)
+    function scrollToTop() {
+      if (window.innerWidth <= 768) {
+        // 모바일: 네오 하이브 섹션이 보이는 위치로 스크롤
+        const hiveSection = document.getElementById('hive');
+        if (hiveSection) {
+          const navHeight = 60; // 모바일 네비게이션 높이
+          const targetPosition = hiveSection.offsetTop - navHeight - 20; // 추가 여백 20px
+          
+          window.scrollTo({
+            top: Math.max(0, targetPosition),
+            left: 0,
+            behavior: 'smooth'
+          });
+          
+          console.log('📱 네오 하이브 로고 클릭 - 네오 하이브 섹션으로 스크롤');
+        } else {
+          // 네오 하이브 섹션을 찾을 수 없으면 최상단으로
+          window.scrollTo(0, 0);
+        }
+      } else {
+        // PC: 완전 최상단으로 이동
+        window.scrollTo(0, 0);
+        
+        // 추가적으로 부드러운 스크롤도 적용
+        setTimeout(() => {
+          window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: 'smooth'
+          });
+        }, 10);
+        
+        console.log('💻 네오 하이브 로고 클릭 - 완전 최상단으로 스크롤');
+      }
+    }
+ 
+  
+    // DOM 로드 완료 후 영상 음향 제어 시스템 초기화
+  document.addEventListener('DOMContentLoaded', () => {
+    setupVideoAudioControl();
+    
+         // 즉시 두 영상 모두 재생 및 음소거 해제 시도
+     setTimeout(() => {
+       const smartVideo = document.getElementById('smart-showcase-video');
+       const hiveVideo = document.getElementById('hive-showcase-video');
+       
+       // 네오 스마트 영상 재생 시도
+       if (smartVideo) {
+         const tryPlaySmart = () => {
+           smartVideo.play().then(() => {
+             console.log('🚀 페이지 로드 시 Neo Smart 영상 재생 성공');
+           }).catch(error => {
+             console.error('🚀 페이지 로드 시 Neo Smart 영상 재생 실패:', error);
+             // 2초 후 재시도
+             setTimeout(() => {
+               smartVideo.play().catch(e => console.log('Neo Smart 페이지 로드 재시도 실패:', e));
+             }, 2000);
+           });
+         };
+         
+         tryPlaySmart();
+       }
+       
+       // 네오 하이브 영상 재생 시도
+       if (hiveVideo) {
+         const tryPlayHive = () => {
+           hiveVideo.play().then(() => {
+             console.log('🚀 페이지 로드 시 Neo Hive 영상 재생 성공');
+           }).catch(error => {
+             console.error('🚀 페이지 로드 시 Neo Hive 영상 재생 실패:', error);
+             // 2초 후 재시도
+             setTimeout(() => {
+               hiveVideo.play().catch(e => console.log('Neo Hive 페이지 로드 재시도 실패:', e));
+             }, 2000);
+           });
+         };
+         
+         tryPlayHive();
+         console.log('🚀 페이지 로드 시 Neo Hive 영상 재생 시도');
+       }
+          }, 1000);
+     
+     // 전역 사용자 상호작용으로 모든 영상 재생 활성화
+     const enableAllVideos = () => {
+       const smartVideo = document.getElementById('smart-showcase-video');
+       const hiveVideo = document.getElementById('hive-showcase-video');
+       
+       if (smartVideo && smartVideo.paused) {
+         smartVideo.play().then(() => {
+           console.log('👆 사용자 상호작용으로 Neo Smart 영상 재생 활성화');
+         }).catch(e => console.log('Neo Smart 상호작용 재생 실패:', e));
+       }
+       
+       if (hiveVideo && hiveVideo.paused) {
+         hiveVideo.play().then(() => {
+           console.log('👆 사용자 상호작용으로 Neo Hive 영상 재생 활성화');
+         }).catch(e => console.log('Neo Hive 상호작용 재생 실패:', e));
+       }
+     };
+     
+     // 페이지 첫 클릭/터치 시 모든 영상 재생 활성화
+     document.addEventListener('click', enableAllVideos, { once: true });
+     document.addEventListener('touchstart', enableAllVideos, { once: true });
+     
+     // 네오 스마트 영상 디버깅
+    setTimeout(() => {
+      const smartVideo = document.getElementById('smart-showcase-video');
+      if (smartVideo) {
+        console.log('🎬 Neo Smart 영상 요소 발견:', smartVideo);
+        console.log('📁 영상 소스:', smartVideo.src);
+        console.log('🔇 음소거 상태:', smartVideo.muted);
+        console.log('🔊 볼륨 레벨:', smartVideo.volume);
+        console.log('📺 영상 준비 상태:', smartVideo.readyState);
+        
+        // 영상의 오디오 트랙 확인
+        smartVideo.addEventListener('loadedmetadata', () => {
+          console.log('📊 Neo Smart 영상 메타데이터 로드됨');
+          console.log('⏱️ 영상 길이:', smartVideo.duration, '초');
+          console.log('📏 영상 크기:', smartVideo.videoWidth, 'x', smartVideo.videoHeight);
+          
+          // 오디오 트랙 존재 여부 확인
+          if (smartVideo.mozHasAudio !== undefined) {
+            console.log('🎵 오디오 트랙 (Firefox):', smartVideo.mozHasAudio);
+          } else if (smartVideo.webkitAudioDecodedByteCount !== undefined) {
+            console.log('🎵 오디오 트랙 (Chrome):', smartVideo.webkitAudioDecodedByteCount > 0);
+          }
+          
+          // 강제 재생 시도
+          smartVideo.play().then(() => {
+            console.log('✅ Neo Smart 영상 재생 성공');
+          }).catch(error => {
+            console.error('❌ Neo Smart 영상 재생 실패:', error);
+            // 사용자 상호작용 후 재생 시도
+            document.addEventListener('click', () => {
+              smartVideo.play().then(() => {
+                console.log('✅ Neo Smart 영상 클릭 후 재생 성공');
+              }).catch(e => console.error('❌ Neo Smart 영상 클릭 후에도 재생 실패:', e));
+            }, { once: true });
+          });
+          
+          console.log('📊 Neo Smart 영상 메타데이터 로드됨');
+          
+
+        });
+        
+        smartVideo.addEventListener('error', (e) => {
+          console.error('❌ Neo Smart 영상 로드 오류:', e);
+        });
+        
+      } else {
+        console.error('❌ Neo Smart 영상 요소를 찾을 수 없음');
+      }
+      
+      // 네오 하이브 영상 디버깅
+      const hiveVideo = document.getElementById('hive-showcase-video');
+      if (hiveVideo) {
+        console.log('🎬 Neo Hive 영상 요소 발견:', hiveVideo);
+        console.log('📁 영상 소스:', hiveVideo.src);
+        console.log('🔇 음소거 상태:', hiveVideo.muted);
+        console.log('🔊 볼륨 레벨:', hiveVideo.volume);
+        console.log('▶️ 재생 상태:', hiveVideo.paused ? '일시정지' : '재생중');
+        console.log('📺 영상 준비 상태:', hiveVideo.readyState);
+        
+                 // 강제 재생 시도 (여러 번 시도)
+         const tryPlayHive = () => {
+           hiveVideo.play().then(() => {
+             console.log('✅ Neo Hive 영상 재생 성공');
+           }).catch(error => {
+             console.error('❌ Neo Hive 영상 재생 실패:', error);
+             // 1초 후 재시도
+             setTimeout(() => {
+               hiveVideo.play().catch(e => console.log('Neo Hive 재시도 실패:', e));
+             }, 1000);
+           });
+         };
+         
+         tryPlayHive();
+         
+         // 사용자 상호작용 후 재생 시도
+         const enableHivePlay = () => {
+           hiveVideo.play().then(() => {
+             console.log('✅ Neo Hive 영상 클릭 후 재생 성공');
+           }).catch(e => console.error('❌ Neo Hive 영상 클릭 후에도 재생 실패:', e));
+         };
+         
+         document.addEventListener('click', enableHivePlay, { once: true });
+         document.addEventListener('touchstart', enableHivePlay, { once: true });
+        
+        hiveVideo.addEventListener('loadedmetadata', () => {
+          console.log('📊 Neo Hive 영상 메타데이터 로드됨');
+          console.log('⏱️ 영상 길이:', hiveVideo.duration, '초');
+          console.log('📏 영상 크기:', hiveVideo.videoWidth, 'x', hiveVideo.videoHeight);
+        });
+        
+        hiveVideo.addEventListener('error', (e) => {
+          console.error('❌ Neo Hive 영상 로드 오류:', e);
+        });
+        
+      } else {
+        console.error('❌ Neo Hive 영상 요소를 찾을 수 없음');
+      }
+    }, 2000);
   });
   
   // 윈도우 리사이즈 시에도 z-index 적용
@@ -3437,8 +3832,8 @@ if (window.innerWidth <= 768) {
       
       // 즉시 강제 적용 및 확인
       requestAnimationFrame(() => {
-        const overlay = document.getElementById('mobileForceOverlay');
-        if (overlay) {
+      const overlay = document.getElementById('mobileForceOverlay');
+      if (overlay) {
           // 다시 한번 강력하게 적용
           overlay.style.setProperty('position', 'fixed', 'important');
           overlay.style.setProperty('top', '0', 'important');
@@ -3459,7 +3854,7 @@ if (window.innerWidth <= 768) {
           overlay.style.setProperty('-webkit-transform', 'translateZ(0)', 'important');
           
           console.log('✅ Mobile dark overlay created and confirmed');
-        } else {
+      } else {
           console.error('❌ Mobile dark overlay creation failed');
         }
       });
@@ -3534,8 +3929,10 @@ if (window.innerWidth <= 768) {
       
       console.log('Mobile modal positioned at scroll:', scrollTop, 'center:', scrollTop + windowHeight / 2);
       
-      // 배경 스크롤 방지
+      // 배경 스크롤 방지 (모바일에서만)
+      if (window.innerWidth <= 768) {
       document.body.style.overflow = 'hidden';
+      }
       
       // 추가 안전장치
       setTimeout(() => {
@@ -3560,6 +3957,171 @@ if (window.innerWidth <= 768) {
     }
     
     return false;
+  }
+  
+  // 무료체험 선택 모달 열기
+  function openTrialSelectionModal() {
+    console.log('=== openTrialSelectionModal called ===');
+    
+    const modal = document.getElementById('trialSelectionModal');
+    let overlay = document.getElementById('modalOverlay');
+    
+    if (!modal) {
+      console.error('trialSelectionModal not found');
+      return false;
+    }
+    
+    // 오버레이가 없으면 동적으로 생성
+    if (!overlay) {
+      overlay = document.createElement('div');
+      overlay.id = 'modalOverlay';
+      overlay.className = 'modal-overlay';
+      overlay.onclick = closeTrialSelectionModal;
+      overlay.style.cssText = `
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        background: rgba(0, 0, 0, 0.8) !important;
+        backdrop-filter: blur(5px) !important;
+        -webkit-backdrop-filter: blur(5px) !important;
+        z-index: 10000 !important;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+      `;
+      document.body.appendChild(overlay);
+    } else {
+      // 기존 오버레이 표시
+      overlay.style.setProperty('display', 'block', 'important');
+      overlay.style.setProperty('visibility', 'visible', 'important');
+      overlay.style.setProperty('opacity', '1', 'important');
+      overlay.style.setProperty('background', 'rgba(0, 0, 0, 0.8)', 'important');
+      overlay.style.setProperty('backdrop-filter', 'blur(5px)', 'important');
+      overlay.style.setProperty('-webkit-backdrop-filter', 'blur(5px)', 'important');
+      overlay.style.setProperty('z-index', '10000', 'important');
+      overlay.classList.add('active');
+    }
+    
+    // 스크롤 방지
+    document.body.style.overflow = 'hidden';
+    
+    // 모달 표시
+    modal.style.display = 'block';
+    
+    // 모바일 환경에서 현재 화면 위치에 팝업 표시
+    if (window.innerWidth <= 768) {
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      const windowHeight = window.innerHeight;
+      
+      modal.style.setProperty('position', 'absolute', 'important');
+      modal.style.setProperty('top', (scrollTop + windowHeight / 2) + 'px', 'important');
+      modal.style.setProperty('left', '50%', 'important');
+      modal.style.setProperty('transform', 'translate(-50%, -50%)', 'important');
+      modal.style.setProperty('width', '90%', 'important');
+      modal.style.setProperty('max-width', '400px', 'important');
+      modal.style.setProperty('z-index', '10001', 'important');
+    } else {
+      // PC 환경에서는 기본 fixed 중앙 정렬
+      modal.style.setProperty('position', 'fixed', 'important');
+      modal.style.setProperty('top', '50%', 'important');
+      modal.style.setProperty('left', '50%', 'important');
+      modal.style.setProperty('transform', 'translate(-50%, -50%)', 'important');
+      modal.style.setProperty('z-index', '10001', 'important');
+    }
+    
+    return false;
+  }
+  
+  // 무료체험 선택 모달 닫기
+  function closeTrialSelectionModal() {
+    console.log('=== closeTrialSelectionModal called ===');
+    
+    const modal = document.getElementById('trialSelectionModal');
+    const overlay = document.getElementById('modalOverlay');
+    
+    if (modal) {
+      modal.style.display = 'none';
+    }
+    
+    // 스크롤 복원
+    document.body.style.overflow = 'auto';
+    
+    // 오버레이 숨김
+    if (overlay) {
+      overlay.style.setProperty('display', 'none', 'important');
+      overlay.style.setProperty('visibility', 'hidden', 'important');
+      overlay.style.setProperty('opacity', '0', 'important');
+      overlay.classList.remove('active');
+    }
+  }
+  
+  // 네오핏 무료체험 폼 열기
+  function openNeofitTrialForm() {
+    console.log('=== openNeofitTrialForm called ===');
+    closeTrialSelectionModal();
+    
+    // 기존 폼의 제목과 내용을 네오핏 무료체험용으로 변경
+    const formModal = document.getElementById('formModal');
+    if (formModal) {
+      // 폼 제목 변경
+      const existingTitle = formModal.querySelector('h2, h3');
+      if (existingTitle) {
+        existingTitle.textContent = '네오핏 무료체험 신청';
+      } else {
+        // 제목이 없으면 추가
+        const titleDiv = document.createElement('div');
+        titleDiv.innerHTML = '<h2 style="color:#7BE495; text-align:center; margin-bottom:20px;">🏋️ 네오핏 무료체험 신청</h2>';
+        formModal.insertBefore(titleDiv, formModal.firstChild.nextSibling);
+      }
+      
+      // 신청 상품 선택 필드를 네오핏으로 고정
+      const productSelect = formModal.querySelector('select[name="product"]');
+      if (productSelect) {
+        productSelect.value = '네오핏 무료체험';
+        productSelect.disabled = true;
+        productSelect.style.backgroundColor = '#333';
+      }
+    }
+    
+    // 기존 openForm 함수 호출
+    openForm();
+  }
+  
+  // 필라테스 무료체험 폼 열기
+  function openPilatesTrialForm() {
+    console.log('=== openPilatesTrialForm called ===');
+    closeTrialSelectionModal();
+    
+    // 기존 폼의 제목과 내용을 필라테스 무료체험용으로 변경
+    const formModal = document.getElementById('formModal');
+    if (formModal) {
+      // 폼 제목 변경
+      const existingTitle = formModal.querySelector('h2, h3');
+      if (existingTitle) {
+        existingTitle.textContent = '필라테스 무료체험 신청';
+      } else {
+        // 제목이 없으면 추가
+        const titleDiv = document.createElement('div');
+        titleDiv.innerHTML = '<h2 style="color:#7BE495; text-align:center; margin-bottom:20px;">🧘‍♀️ 필라테스 무료체험 신청</h2>';
+        formModal.insertBefore(titleDiv, formModal.firstChild.nextSibling);
+      }
+      
+      // 신청 상품 선택 필드를 필라테스로 고정
+      const productSelect = formModal.querySelector('select[name="product"]');
+      if (productSelect) {
+        productSelect.value = '필라테스 무료체험';
+        productSelect.disabled = true;
+        productSelect.style.backgroundColor = '#333';
+      }
+    }
+    
+    // 기존 openForm 함수 호출
+    openForm();
   }
   function closeForm() {
     console.log('=== closeForm called ===');
@@ -3611,7 +4173,7 @@ if (window.innerWidth <= 768) {
         if (bgMatch && div.style.position === 'fixed') {
           div.remove();
           console.log('✅ Removed dark background div');
-        }
+      }
       });
       
       // 모바일에서 배경 스크롤 복원
@@ -3631,6 +4193,9 @@ if (window.innerWidth <= 768) {
         console.log('PC Overlay hidden');
       }
     }
+    
+    // 모든 환경에서 스크롤 복원 (안전장치)
+    document.body.style.overflow = 'auto';
     
     // 최종 확인 - 0.1초 후 남은 오버레이 재검사
     setTimeout(() => {
@@ -3950,9 +4515,7 @@ if (window.innerWidth <= 768) {
         });
         if (videoPhone) {
           if (window.innerWidth <= 768) {
-            // 모바일에서만 !important 사용 - 트랜지션 먼저 설정
-            videoPhone.style.setProperty('transition', 'all 0.4s cubic-bezier(0.4,0,0.2,1)', 'important');
-            videoPhone.style.setProperty('-webkit-transition', 'all 0.4s cubic-bezier(0.4,0,0.2,1)', 'important');
+          // 모바일에서만 !important 사용 - 트랜지션은 클래스로 제어
             videoPhone.style.setProperty('left', '50%', 'important');
             videoPhone.style.setProperty('top', '60%', 'important');
             videoPhone.style.setProperty('transform', 'translate(-50%, -50%)', 'important');
@@ -4719,7 +5282,7 @@ if (video) {
     .hive-showcase {
       margin-top: 100px !important;
       padding: 0 16px !important;
-      touch-action: pan-x pinch-zoom !important;
+      touch-action: pan-y pan-x pinch-zoom !important;
     }
   }
 </style>
@@ -4730,7 +5293,17 @@ if (video) {
   @media (max-width: 768px) {
     body {
       padding-top: 56px !important;
+      touch-action: pan-y pinch-zoom !important;
+      -webkit-overflow-scrolling: touch !important;
+      overflow-y: auto !important;
     }
+    
+    html {
+      touch-action: pan-y pinch-zoom !important;
+      -webkit-overflow-scrolling: touch !important;
+      overflow-y: auto !important;
+    }
+    
     .hive-showcase {
       margin-top: 16px !important;
     }
@@ -6554,7 +7127,7 @@ document.addEventListener('DOMContentLoaded', function() {
     background: #222 !important;
   }
   
-  /* 사전 예약하기만 그린 네온 효과 적용 */
+  /* 예약하기만 그린 네온 효과 적용 */
   #mobile-top-nav-fixed .nav-menu a[onclick*="openForm"] {
     color: #7BE495 !important;
     font-weight: 600 !important;
@@ -7298,7 +7871,7 @@ document.addEventListener('DOMContentLoaded', function() {
   -webkit-tap-highlight-color: transparent !important;
 }
 
-/* 사전 예약하기 버튼 - 네온 글로우 스타일 */
+/* 예약하기 버튼 - 네온 글로우 스타일 */
 .reservation-btn {
   animation: neonGlow 2s ease-in-out infinite alternate;
 }
@@ -7425,12 +7998,12 @@ document.addEventListener('DOMContentLoaded', function() {
   if (isMobile) {
     // 즉시 실행 함수로 스타일 강제 적용
     function forceApplyMobileStyles() {
-      const elements = [
-        { selector: '.mobile-ui-position-adjustment', transform: 'translateY(-444px)' },
-        { selector: '#mobile-moved-merged-box', transform: 'translateY(-312px)' },
-        { selector: '.core-value-fresh-mobile', transform: 'translateY(-388.8px)' },
-        { selector: '.mobile-system-box-wrapper', transform: 'translateY(-600px)' },
-        { selector: '#smart', transform: 'translateY(-432px)' }
+                      const elements = [
+          { selector: '.mobile-ui-position-adjustment', transform: 'translateY(-444px)' },
+          { selector: '#mobile-moved-merged-box', transform: 'translateY(-312px)' },
+          { selector: '.core-value-fresh-mobile', transform: 'translateY(-388.8px)' },
+          { selector: '.mobile-system-box-wrapper', transform: 'translateY(-600px)' },
+          { selector: '#smart', transform: 'translateY(-432px)' }
       ];
       
       elements.forEach(({ selector, transform }) => {
@@ -7612,11 +8185,13 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('Mobile footer hidden');
       }
       
-      // 모바일에서 스크롤바 완전 제거
+      // 모바일에서 가로 스크롤만 제거, 세로 스크롤은 유지
       document.documentElement.style.setProperty('overflow-x', 'hidden', 'important');
+      document.documentElement.style.setProperty('overflow-y', 'auto', 'important');
       document.documentElement.style.setProperty('scrollbar-width', 'none', 'important');
       document.documentElement.style.setProperty('-ms-overflow-style', 'none', 'important');
       document.body.style.setProperty('overflow-x', 'hidden', 'important');
+      document.body.style.setProperty('overflow-y', 'auto', 'important');
       document.body.style.setProperty('-webkit-overflow-scrolling', 'touch', 'important');
       
       // 회색 가로 바 형태의 요소들 제거
@@ -7679,19 +8254,58 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     }
     
-    // 모바일 페이지 로딩 완료 처리
+    // 모바일 페이지 로딩 완료 처리 - 성능 최적화 (기능 유지)
     function showMobilePage() {
+      // 모바일에서 이미지 lazy loading만 적용 (비디오는 그대로 유지)
+      const images = document.querySelectorAll('img');
+      let loadedImages = 0;
+      const totalImages = images.length;
+      
+      images.forEach(img => {
+        if (img.src && !img.complete) {
+          img.loading = 'lazy';
+          // 중요하지 않은 배경 이미지만 지연 로딩
+          if (!img.closest('.hero') && !img.closest('.testimonial') && !img.closest('.hive-showcase')) {
+            img.addEventListener('load', () => {
+              loadedImages++;
+              if (loadedImages === totalImages) {
+                console.log('All images loaded');
+              }
+            });
+          }
+        }
+      });
+      
       removeGreyBoxes(); // 회색 박스 먼저 제거
       forceApplyMobileStyles();
       adjustMobileIcons();
       restoreGlowEffect(); // 발광효과 복구
       
-      // 페이지 표시
+      // 모바일에서 video-phone 초기 로딩 시 트랜지션 비활성화
+      if (window.innerWidth <= 768) {
+        const videoPhone = document.querySelector('.video-phone');
+        if (videoPhone) {
+          videoPhone.classList.add('no-transition');
+        }
+      }
+      
+      // 페이지 표시 - 약간 빠르게
       setTimeout(() => {
         document.body.classList.add('mobile-loaded');
         removeGreyBoxes(); // 한 번 더 제거
         restoreGlowEffect(); // 발광효과 재복구
-      }, 50);
+        
+        // 모바일에서 로딩 완료 후 트랜지션 다시 활성화
+        if (window.innerWidth <= 768) {
+          setTimeout(() => {
+            const videoPhone = document.querySelector('.video-phone');
+            if (videoPhone) {
+              videoPhone.classList.remove('no-transition');
+              console.log('Mobile video-phone transitions re-enabled');
+            }
+          }, 100); // 추가 100ms 후 트랜지션 활성화
+        }
+      }, 30); // 50ms에서 30ms로 약간 단축
     }
     
     // 즉시 실행 (HTML 파싱과 동시에)
@@ -7746,5 +8360,95 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 })();
 </script>
+
+<!-- 모바일 스크롤 최적화 CSS -->
+<style>
+@media (max-width: 768px) {
+  /* 전역 스크롤 최적화 */
+  * {
+    -webkit-overflow-scrolling: touch !important;
+  }
+  
+  /* 높은 z-index 요소들의 터치 이벤트 최적화 */
+  [style*="z-index: 2147483647"],
+  [style*="z-index: 2147483646"],
+  [style*="z-index: 999"] {
+    pointer-events: auto !important;
+}
+
+  /* 스크롤 컨테이너 최적화 */
+  .slide-container,
+  .container,
+  .section {
+    touch-action: pan-y pinch-zoom !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  
+  /* 스크롤 막힘 방지 */
+  body, html {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    scroll-behavior: smooth !important;
+  }
+  
+  /* 터치 이벤트 최적화 */
+  .video-phone,
+  .hive-showcase,
+  .circular-flow-container {
+    touch-action: pan-y pinch-zoom !important;
+  }
+  
+  /* 무료체험 선택 모달 모바일 반응형 */
+  #trialSelectionModal {
+    width: 95% !important;
+    max-width: 400px !important;
+    padding: 25px !important;
+    border-radius: 15px !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    position: fixed !important;
+    margin: 0 auto !important;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%) !important;
+    border: 2px solid #7BE495 !important;
+    box-shadow: 
+      0 0 30px rgba(123, 228, 149, 0.8), 
+      0 0 60px rgba(123, 228, 149, 0.4),
+      0 20px 40px rgba(0, 0, 0, 0.5) !important;
+  }
+  
+  #trialSelectionModal h2 {
+    font-size: 1.5rem !important;
+    color: #7BE495 !important;
+    text-shadow: 0 0 15px rgba(123, 228, 149, 0.8) !important;
+  }
+  
+  #trialSelectionModal p {
+    color: #eee !important;
+  }
+  
+  #trialSelectionModal button[onclick*="openNeofitTrialForm"], 
+  #trialSelectionModal button[onclick*="openPilatesTrialForm"] {
+    font-size: 1.2rem !important;
+    padding: 18px 30px !important;
+    width: 100% !important;
+    border-radius: 15px !important;
+    font-weight: 800 !important;
+  }
+  
+  #trialSelectionModal > div:first-child button {
+    font-size: 1.5rem !important;
+    padding: 5px 10px !important;
+    width: auto !important;
+    color: #fff !important;
+    transition: color 0.3s ease !important;
+  }
+  
+  #trialSelectionModal > div:first-child button:hover {
+    color: #7BE495 !important;
+  }
+}
+</style>
+
 </body>
 </html>
