@@ -8034,6 +8034,21 @@ document.addEventListener('DOMContentLoaded', function() {
     document.addEventListener('touchstart', function() {}, { passive: true });
     document.addEventListener('touchmove', function() {}, { passive: true });
     
+    // 네오 하이브 섹션 스크롤 끊김 방지를 위한 추가 이벤트 처리
+    document.addEventListener('touchmove', function(e) {
+      // 스크롤 momentum 유지
+      if (e.target.closest('.hive-showcase') || e.target.closest('#hive')) {
+        e.stopPropagation();
+      }
+    }, { passive: true });
+    
+    // 스크롤 끊김 방지를 위한 wheel 이벤트 처리
+    document.addEventListener('wheel', function(e) {
+      if (e.target.closest('.hive-showcase')) {
+        e.stopPropagation();
+      }
+    }, { passive: true });
+    
     // 즉시 실행 함수로 스타일 강제 적용
     function forceApplyMobileStyles() {
                       const elements = [
@@ -8354,7 +8369,36 @@ document.addEventListener('DOMContentLoaded', function() {
       document.documentElement.style.setProperty('touch-action', 'pan-y', 'important');
       document.body.style.setProperty('touch-action', 'pan-y', 'important');
       document.body.style.setProperty('overflow-y', 'auto', 'important');
-      console.log('📱 터치 스크롤 재확인 완료');
+      
+      // 네오 하이브 섹션 스크롤 끊김 방지
+      const hiveSection = document.getElementById('hive');
+      if (hiveSection) {
+        hiveSection.style.setProperty('touch-action', 'pan-y', 'important');
+        hiveSection.style.setProperty('pointer-events', 'auto', 'important');
+      }
+      
+      // 하이브 쇼케이스 스크롤 방해 요소 비활성화
+      const hiveShowcase = document.querySelector('.hive-showcase');
+      if (hiveShowcase) {
+        hiveShowcase.style.setProperty('pointer-events', 'none', 'important');
+        hiveShowcase.style.setProperty('touch-action', 'pan-y', 'important');
+      }
+      
+      // 비디오 폰은 스크롤 허용하되 상호작용 제한
+      const videoPhone = document.querySelector('.video-phone');
+      if (videoPhone) {
+        videoPhone.style.setProperty('pointer-events', 'none', 'important');
+        videoPhone.style.setProperty('touch-action', 'pan-y', 'important');
+      }
+      
+      // 비디오 자체는 터치 허용
+      const hiveVideo = document.getElementById('hive-showcase-video');
+      if (hiveVideo) {
+        hiveVideo.style.setProperty('pointer-events', 'auto', 'important');
+        hiveVideo.style.setProperty('touch-action', 'pan-y', 'important');
+      }
+      
+      console.log('📱 터치 스크롤 재확인 완료 + 네오 하이브 섹션 최적화');
     }, 100);
     
     // DOM 준비 시 재실행 (보험)
@@ -8443,7 +8487,50 @@ document.addEventListener('DOMContentLoaded', function() {
   [style*="z-index: 2147483646"],
   [style*="z-index: 999"] {
     pointer-events: auto !important;
-}
+  }
+  
+  /* 슬라이드 이미지들 스크롤 방해 방지 */
+  .hive-image,
+  .hive-label-left,
+  .hive-label-right {
+    pointer-events: none !important;
+    touch-action: pan-y !important;
+  }
+  
+  /* 슬라이드 네비게이션 버튼은 터치 허용 */
+  #slide-prev,
+  #slide-next {
+    pointer-events: auto !important;
+    touch-action: none !important;
+  }
+  
+  /* 배경 글로우 효과는 터치 차단 */
+  [style*="background: radial-gradient"],
+  [style*="filter: blur"] {
+    pointer-events: none !important;
+    touch-action: pan-y !important;
+  }
+  
+  /* 네오 하이브 섹션 스크롤 최적화 */
+  #hive {
+    -webkit-overflow-scrolling: touch !important;
+    transform: translateZ(0) !important;
+    will-change: scroll-position !important;
+  }
+  
+  /* 하이브 쇼케이스 컨테이너 스크롤 보장 */
+  .hive-showcase {
+    transform: none !important;
+    will-change: auto !important;
+    contain: layout !important;
+  }
+  
+  /* 스크롤 끊김 방지를 위한 transform 최적화 */
+  .hive-image {
+    will-change: transform !important;
+    transform-style: preserve-3d !important;
+    backface-visibility: hidden !important;
+  }
 
   /* 스크롤 컨테이너 최적화 */
   .slide-container,
@@ -8475,11 +8562,27 @@ document.addEventListener('DOMContentLoaded', function() {
     pointer-events: auto !important;
   }
   
-  /* 터치 이벤트 최적화 */
+  /* 터치 이벤트 최적화 - 스크롤 끊김 방지 */
   .video-phone,
   .hive-showcase,
   .circular-flow-container {
-    touch-action: pan-y pinch-zoom !important;
+    touch-action: pan-y !important;
+    pointer-events: none !important;
+  }
+  
+  /* 영상 요소는 터치 허용하되 스크롤 방해 안함 */
+  .video-phone video,
+  #hive-showcase-video,
+  #smart-showcase-video {
+    touch-action: pan-y !important;
+    pointer-events: auto !important;
+  }
+  
+  /* 스피커 버튼만 터치 허용 */
+  #hive-speaker-btn,
+  #smart-speaker-btn {
+    touch-action: none !important;
+    pointer-events: auto !important;
   }
   
   /* 무료체험 선택 모달 모바일 반응형 */
