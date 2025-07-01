@@ -1,4 +1,4 @@
- <meta name="google-site-verification" content="OeM-YMo4NpQshyIm3m5H59IikSDp0BMe4sXKQmCu7NM" />
+<meta name="google-site-verification" content="OeM-YMo4NpQshyIm3m5H59IikSDp0BMe4sXKQmCu7NM" />
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -8511,30 +8511,18 @@ document.addEventListener('DOMContentLoaded', function() {
     touch-action: pan-y !important;
   }
   
-  /* 네오 하이브 섹션 스크롤 최적화 - 강화 */
+  /* 네오 하이브 섹션 스크롤 최적화 */
   #hive {
     -webkit-overflow-scrolling: touch !important;
     transform: translateZ(0) !important;
     will-change: scroll-position !important;
-    touch-action: pan-y !important;
-    overflow: visible !important;
   }
   
-  /* 하이브 쇼케이스 컨테이너 스크롤 보장 - 강화 */
+  /* 하이브 쇼케이스 컨테이너 스크롤 보장 */
   .hive-showcase {
-    pointer-events: none !important;
-    touch-action: pan-y !important;
     transform: none !important;
     will-change: auto !important;
     contain: layout !important;
-    position: relative !important;
-    z-index: 1 !important;
-  }
-  
-  /* 하이브 쇼케이스 내 모든 요소 터치 차단 */
-  .hive-showcase * {
-    pointer-events: none !important;
-    touch-action: pan-y !important;
   }
   
   /* 스크롤 끊김 방지를 위한 transform 최적화 */
