@@ -28,13 +28,14 @@
   }
   
   .core-value-fresh-mobile {
-    transform: translateY(-364.8px) !important;
-    -webkit-transform: translateY(-364.8px) !important;
+    transform: translateY(-368px) !important;
+    -webkit-transform: translateY(-368px) !important;
     position: relative !important;
     display: flex !important;
     flex-direction: row !important;
     align-items: center !important;
     justify-content: flex-start !important;
+    isolation: isolate !important;
   }
   
   .mobile-system-box-wrapper {
@@ -1846,9 +1847,9 @@ transition: transform 0.4s ease-out, opacity 0.4s ease-out;
 @media (max-width: 768px) {
 body #mobile-moved-merged-box,
 html body #mobile-moved-merged-box {
-  /* 0.3칸(4.8px) 위로 이동: -360px → -364.8px */
-  transform: translateY(-364.8px) !important;
-  -webkit-transform: translateY(-364.8px) !important;
+  /* 위치 조정하여 충돌 방지: -364.8px → -360px */
+  transform: translateY(-360px) !important;
+  -webkit-transform: translateY(-360px) !important;
   position: relative !important;
   z-index: 100 !important; /* 더 높은 우선순위 */
   margin-top: 0 !important; /* 기존 margin과 충돌 방지 */
@@ -1858,6 +1859,8 @@ html body #mobile-moved-merged-box {
   will-change: auto !important;
   backface-visibility: hidden !important;
   -webkit-backface-visibility: hidden !important;
+  /* 스크롤 시 레이어 분리 */
+  isolation: isolate !important;
 }
 }
 </style>
@@ -1867,9 +1870,9 @@ html body #mobile-moved-merged-box {
 body .core-value-fresh-mobile,
 html body .core-value-fresh-mobile {
   margin-top: 52px !important;
-  /* 0.3칸(4.8px) 위로 이동: -424px → -364.8px (이전 수정 반영) */
-  transform: translateY(-364.8px) !important;
-  -webkit-transform: translateY(-364.8px) !important;
+  /* 위치 조정하여 충돌 방지: -364.8px → -368px */
+  transform: translateY(-368px) !important;
+  -webkit-transform: translateY(-368px) !important;
   display: flex !important;
   flex-direction: row !important;
   align-items: center !important;
@@ -1903,6 +1906,8 @@ html body .core-value-fresh-mobile {
   will-change: auto !important;
   backface-visibility: hidden !important;
   -webkit-backface-visibility: hidden !important;
+  /* 스크롤 시 레이어 분리 */
+  isolation: isolate !important;
 }
 .core-value-fresh-mobile .core-icon {
   width: 42px !important; /* 48px → 42px로 조금 축소 */
@@ -2001,7 +2006,7 @@ html body .core-value-fresh-mobile {
 
 /* 터치 효과 */
 .core-value-fresh-mobile:active {
-  transform: translateY(-366.8px) !important; /* 터치 시 살짝 위로 */
+  transform: translateY(-370px) !important; /* 터치 시 살짝 위로 */
   box-shadow: 
     0 12px 40px rgba(123, 228, 149, 0.3),
     0 6px 20px rgba(123, 228, 149, 0.2),
@@ -8725,6 +8730,29 @@ if (window.innerWidth <= 768) {
   /* 모바일에서 특정 요소의 위치 고정 */
   .mobile-ui-position-adjustment {
     position: relative !important;
+  }
+  
+  /* 스크롤 성능 추가 최적화 */
+  #mobile-moved-merged-box,
+  .core-value-fresh-mobile,
+  .mobile-system-box-wrapper {
+    contain: layout style !important;
+  }
+  
+  /* 고정 높이 설정으로 리플로우 방지 */
+  .core-value-fresh-mobile {
+    min-height: 80px !important;
+    max-height: 100px !important;
+  }
+  
+  #mobile-moved-merged-box {
+    min-height: 200px !important;
+  }
+  
+  /* 하드웨어 가속 강제 적용 */
+  .mobile-transform-target {
+    transform: translateZ(0) !important;
+    -webkit-transform: translateZ(0) !important;
   }
 }
 </style>
