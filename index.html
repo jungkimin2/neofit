@@ -7137,6 +7137,9 @@ document.addEventListener('DOMContentLoaded', function() {
     padding: 0;
     padding-top: 60px !important; /* 네비게이션 공간 확보 */
     overflow-x: hidden;
+    /* 스크롤 성능 최적화 */
+    -webkit-overflow-scrolling: touch !important;
+    overflow-scrolling: touch !important;
   }
 
   /* 모바일 상단 네비게이션 - 최상위 고정 */
@@ -7151,11 +7154,12 @@ document.addEventListener('DOMContentLoaded', function() {
     border-bottom: 2px solid #7BE495 !important;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5) !important;
     z-index: 2147483647 !important; /* 최대 z-index */
-    transform: translateZ(0) !important; /* GPU 가속 */
-    -webkit-transform: translateZ(0) !important;
+    /* transform 제거로 스크롤 성능 개선 */
+    transform: none !important;
+    -webkit-transform: none !important;
     -webkit-backface-visibility: hidden !important;
     backface-visibility: hidden !important;
-    will-change: transform !important;
+    will-change: auto !important; /* will-change 최적화 */
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
@@ -7402,15 +7406,15 @@ document.addEventListener('DOMContentLoaded', function() {
   /* 네비게이션만 다시 강제 고정 */
   #mobile-top-nav-fixed,
   #mobile-top-nav-fixed * {
-    transform: unset !important;
-    -webkit-transform: unset !important;
-    position: unset !important;
+    transform: none !important;
+    -webkit-transform: none !important;
+    position: static !important;
   }
   
   #mobile-top-nav-fixed {
     position: fixed !important;
-    transform: translateZ(0) !important;
-    -webkit-transform: translateZ(0) !important;
+    transform: none !important;
+    -webkit-transform: none !important;
   }
   
   /* 네오 하이브 슬라이드 원래 위치 강제 복구 - 최고 우선순위 */
@@ -7674,11 +7678,11 @@ document.addEventListener('DOMContentLoaded', function() {
     -webkit-transform-style: flat !important;
   }
   
-  /* 네비게이션은 예외 - 3D 변환 허용 */
+  /* 네비게이션은 3D 변환 제거 */
   #mobile-top-nav-fixed,
   #mobile-top-nav-fixed * {
-    transform-style: preserve-3d !important;
-    -webkit-transform-style: preserve-3d !important;
+    transform-style: flat !important;
+    -webkit-transform-style: flat !important;
   }
   
   /* 네오 하이브/스마트 영상도 3D 변환 허용 */
@@ -7691,21 +7695,19 @@ document.addEventListener('DOMContentLoaded', function() {
   
   /* 네비게이션 고정 강화 (최강력) */
   #mobile-top-nav-fixed {
-    position: -webkit-sticky !important;
-    position: sticky !important;
     position: fixed !important;
     top: 0 !important;
     left: 0 !important;
     right: 0 !important;
     width: 100% !important;
     z-index: 2147483647 !important;
-    transform: translateZ(0) !important;
-    -webkit-transform: translateZ(0) !important;
-    will-change: transform !important;
+    transform: none !important;
+    -webkit-transform: none !important;
+    will-change: auto !important;
     -webkit-backface-visibility: hidden !important;
     backface-visibility: hidden !important;
-    transform-style: preserve-3d !important;
-    -webkit-transform-style: preserve-3d !important;
+    transform-style: flat !important;
+    -webkit-transform-style: flat !important;
   }
   
   /* 네비게이션 부모 요소들의 transform 제거 (네비게이션 고정 보장) */
@@ -8698,24 +8700,33 @@ if (window.innerWidth <= 768) {
   // passive 이벤트 리스너로 스크롤 성능 향상
   document.addEventListener('touchstart', function() {}, {passive: true});
   document.addEventListener('touchmove', function() {}, {passive: true});
-  document.addEventListener('scroll', function() {}, {passive: true});
   
-  // 스크롤 중 애니메이션 일시 중지
-  let scrollTimer = null;
-  let isScrolling = false;
+  // 스크롤 이벤트 최적화 - requestAnimationFrame 사용
+  let ticking = false;
+  function updateScrolling() {
+    document.body.classList.add('is-scrolling');
+    
+    setTimeout(function() {
+      document.body.classList.remove('is-scrolling');
+      ticking = false;
+    }, 150);
+  }
   
   document.addEventListener('scroll', function() {
-    if (!isScrolling) {
-      document.body.classList.add('is-scrolling');
-      isScrolling = true;
+    if (!ticking) {
+      window.requestAnimationFrame(updateScrolling);
+      ticking = true;
     }
-    
-    clearTimeout(scrollTimer);
-    scrollTimer = setTimeout(function() {
-      document.body.classList.remove('is-scrolling');
-      isScrolling = false;
-    }, 150);
   }, {passive: true});
+  
+  // 네비게이션 위치 고정 강화
+  const nav = document.getElementById('mobile-top-nav-fixed');
+  if (nav) {
+    nav.style.position = 'fixed';
+    nav.style.top = '0';
+    nav.style.transform = 'none';
+    nav.style.webkitTransform = 'none';
+  }
 }
 </script>
 
@@ -8749,10 +8760,11 @@ if (window.innerWidth <= 768) {
     min-height: 200px !important;
   }
   
-  /* 하드웨어 가속 강제 적용 */
+  /* 하드웨어 가속 최적화 - translateZ 제거 */
   .mobile-transform-target {
-    transform: translateZ(0) !important;
-    -webkit-transform: translateZ(0) !important;
+    transform: none !important;
+    -webkit-transform: none !important;
+    will-change: auto !important;
   }
 }
 </style>
