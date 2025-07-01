@@ -1,4 +1,4 @@
-<meta name="google-site-verification" content="OeM-YMo4NpQshyIm3m5H59IikSDp0BMe4sXKQmCu7NM" />
+ <meta name="google-site-verification" content="OeM-YMo4NpQshyIm3m5H59IikSDp0BMe4sXKQmCu7NM" />
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -8034,29 +8034,11 @@ document.addEventListener('DOMContentLoaded', function() {
     document.addEventListener('touchstart', function() {}, { passive: true });
     document.addEventListener('touchmove', function() {}, { passive: true });
     
-    // 네오 하이브 섹션 스크롤 끊김 방지 - 강화된 이벤트 처리
-    let isScrolling = false;
-    
-    document.addEventListener('touchstart', function(e) {
-      if (e.target.closest('.hive-showcase') && !e.target.closest('#hive-speaker-btn')) {
-        // 스피커 버튼이 아닌 경우 터치 이벤트 무시
-        e.preventDefault();
-        e.stopPropagation();
-        isScrolling = true;
-      }
-    }, { passive: false });
-    
+    // 네오 하이브 섹션 스크롤 끊김 방지를 위한 추가 이벤트 처리
     document.addEventListener('touchmove', function(e) {
-      if (e.target.closest('.hive-showcase') && !e.target.closest('#hive-speaker-btn')) {
-        // 스크롤 momentum 유지하되 다른 상호작용 차단
+      // 스크롤 momentum 유지
+      if (e.target.closest('.hive-showcase') || e.target.closest('#hive')) {
         e.stopPropagation();
-        isScrolling = true;
-      }
-    }, { passive: true });
-    
-    document.addEventListener('touchend', function(e) {
-      if (isScrolling) {
-        setTimeout(() => { isScrolling = false; }, 100);
       }
     }, { passive: true });
     
@@ -8608,28 +8590,11 @@ document.addEventListener('DOMContentLoaded', function() {
     pointer-events: auto !important;
   }
   
-  /* 스피커 버튼만 터치 허용 - 강화 */
+  /* 스피커 버튼만 터치 허용 */
   #hive-speaker-btn,
   #smart-speaker-btn {
     touch-action: none !important;
     pointer-events: auto !important;
-    position: relative !important;
-    z-index: 9999999 !important;
-    isolation: isolate !important;
-  }
-  
-  /* 비디오 요소도 터치 차단으로 변경 */
-  .video-phone video,
-  #hive-showcase-video,
-  #smart-showcase-video {
-    pointer-events: none !important;
-    touch-action: pan-y !important;
-  }
-  
-  /* 비디오 컨테이너도 완전 차단 */
-  .video-phone {
-    pointer-events: none !important;
-    touch-action: pan-y !important;
   }
   
   /* 무료체험 선택 모달 모바일 반응형 */
