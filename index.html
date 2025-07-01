@@ -8034,21 +8034,6 @@ document.addEventListener('DOMContentLoaded', function() {
     document.addEventListener('touchstart', function() {}, { passive: true });
     document.addEventListener('touchmove', function() {}, { passive: true });
     
-    // 네오 하이브 섹션 스크롤 끊김 방지를 위한 추가 이벤트 처리
-    document.addEventListener('touchmove', function(e) {
-      // 스크롤 momentum 유지
-      if (e.target.closest('.hive-showcase') || e.target.closest('#hive')) {
-        e.stopPropagation();
-      }
-    }, { passive: true });
-    
-    // 스크롤 끊김 방지를 위한 wheel 이벤트 처리
-    document.addEventListener('wheel', function(e) {
-      if (e.target.closest('.hive-showcase')) {
-        e.stopPropagation();
-      }
-    }, { passive: true });
-    
     // 즉시 실행 함수로 스타일 강제 적용
     function forceApplyMobileStyles() {
                       const elements = [
@@ -8509,27 +8494,6 @@ document.addEventListener('DOMContentLoaded', function() {
   [style*="filter: blur"] {
     pointer-events: none !important;
     touch-action: pan-y !important;
-  }
-  
-  /* 네오 하이브 섹션 스크롤 최적화 */
-  #hive {
-    -webkit-overflow-scrolling: touch !important;
-    transform: translateZ(0) !important;
-    will-change: scroll-position !important;
-  }
-  
-  /* 하이브 쇼케이스 컨테이너 스크롤 보장 */
-  .hive-showcase {
-    transform: none !important;
-    will-change: auto !important;
-    contain: layout !important;
-  }
-  
-  /* 스크롤 끊김 방지를 위한 transform 최적화 */
-  .hive-image {
-    will-change: transform !important;
-    transform-style: preserve-3d !important;
-    backface-visibility: hidden !important;
   }
 
   /* 스크롤 컨테이너 최적화 */
