@@ -1852,6 +1852,12 @@ html body #mobile-moved-merged-box {
   position: relative !important;
   z-index: 100 !important; /* 더 높은 우선순위 */
   margin-top: 0 !important; /* 기존 margin과 충돌 방지 */
+  /* 스크롤 성능 개선 */
+  transform-style: preserve-3d !important;
+  -webkit-transform-style: preserve-3d !important;
+  will-change: auto !important;
+  backface-visibility: hidden !important;
+  -webkit-backface-visibility: hidden !important;
 }
 }
 </style>
@@ -1891,6 +1897,12 @@ html body .core-value-fresh-mobile {
   position: relative !important;
   z-index: 10000 !important;
   overflow: hidden !important;
+  /* 스크롤 성능 개선을 위한 GPU 가속 */
+  transform-style: preserve-3d !important;
+  -webkit-transform-style: preserve-3d !important;
+  will-change: auto !important;
+  backface-visibility: hidden !important;
+  -webkit-backface-visibility: hidden !important;
 }
 .core-value-fresh-mobile .core-icon {
   width: 42px !important; /* 48px → 42px로 조금 축소 */
@@ -2122,6 +2134,20 @@ html body .core-value-fresh-mobile {
       0 6px 20px rgba(123, 228, 149, 0.2),
       inset 0 1px 0 rgba(255, 255, 255, 0.15),
       inset 0 -1px 0 rgba(123, 228, 149, 0.25) !important;
+  }
+  
+  /* 모바일 스크롤 성능 최적화 */
+  .mobile-transform-target {
+    transform-style: preserve-3d !important;
+    -webkit-transform-style: preserve-3d !important;
+    backface-visibility: hidden !important;
+    -webkit-backface-visibility: hidden !important;
+    will-change: auto !important;
+  }
+  
+  /* 스크롤 시 부드러운 전환 */
+  .section, .container {
+    -webkit-overflow-scrolling: touch !important;
   }
 }
 @media (min-width: 769px) {
@@ -8657,6 +8683,48 @@ document.addEventListener('DOMContentLoaded', function() {
   
   #trialSelectionModal > div:first-child button:hover {
     color: #7BE495 !important;
+  }
+}
+</style>
+
+<script>
+// 모바일 스크롤 성능 최적화
+if (window.innerWidth <= 768) {
+  // passive 이벤트 리스너로 스크롤 성능 향상
+  document.addEventListener('touchstart', function() {}, {passive: true});
+  document.addEventListener('touchmove', function() {}, {passive: true});
+  document.addEventListener('scroll', function() {}, {passive: true});
+  
+  // 스크롤 중 애니메이션 일시 중지
+  let scrollTimer = null;
+  let isScrolling = false;
+  
+  document.addEventListener('scroll', function() {
+    if (!isScrolling) {
+      document.body.classList.add('is-scrolling');
+      isScrolling = true;
+    }
+    
+    clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(function() {
+      document.body.classList.remove('is-scrolling');
+      isScrolling = false;
+    }, 150);
+  }, {passive: true});
+}
+</script>
+
+<style>
+/* 스크롤 중 애니메이션 중지 */
+@media (max-width: 768px) {
+  body.is-scrolling * {
+    animation-play-state: paused !important;
+    transition: none !important;
+  }
+  
+  /* 모바일에서 특정 요소의 위치 고정 */
+  .mobile-ui-position-adjustment {
+    position: relative !important;
   }
 }
 </style>
