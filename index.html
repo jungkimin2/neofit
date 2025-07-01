@@ -8475,15 +8475,30 @@ document.addEventListener('DOMContentLoaded', function() {
     pointer-events: auto !important;
   }
   
-  /* 터치 이벤트 최적화 - 스크롤 끊김 방지 */
-  .video-phone,
-  .hive-showcase,
-  .circular-flow-container {
+  /* Neo Hive 섹션 스크롤 최적화 - 스크롤 끊김 방지 */
+  #hive {
     touch-action: pan-y !important;
-    pointer-events: none !important;
+    -webkit-overflow-scrolling: touch !important;
+    pointer-events: auto !important;
+    transform: translateZ(0) !important;
+    will-change: scroll-position !important;
   }
   
-  /* 영상 요소는 터치 허용하되 스크롤 방해 안함 */
+  /* 하이브 쇼케이스 - 스크롤 허용하되 불필요한 상호작용 제한 */
+  .hive-showcase {
+    touch-action: pan-y !important;
+    pointer-events: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  
+  /* 비디오 컨테이너 - 스크롤 우선 */
+  .video-phone {
+    touch-action: pan-y !important;
+    pointer-events: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  
+  /* 영상 요소 - 스크롤 허용 */
   .video-phone video,
   #hive-showcase-video,
   #smart-showcase-video {
@@ -8491,10 +8506,24 @@ document.addEventListener('DOMContentLoaded', function() {
     pointer-events: auto !important;
   }
   
-  /* 스피커 버튼만 터치 허용 */
+  /* 스피커 버튼 - 클릭 허용 */
   #hive-speaker-btn,
   #smart-speaker-btn {
-    touch-action: none !important;
+    touch-action: manipulation !important;
+    pointer-events: auto !important;
+    z-index: 999 !important;
+  }
+  
+  /* 슬라이드 이미지 - 클릭과 스크롤 모두 허용 */
+  .hive-image {
+    touch-action: pan-y !important;
+    pointer-events: auto !important;
+  }
+  
+  /* 슬라이드 네비게이션 버튼 */
+  #slide-prev,
+  #slide-next {
+    touch-action: manipulation !important;
     pointer-events: auto !important;
   }
   
