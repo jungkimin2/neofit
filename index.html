@@ -1492,7 +1492,7 @@ transition: transform 0.4s ease-out, opacity 0.4s ease-out;
         <video id="hive-showcase-video" src="./videos/neohivevideos.mp.mp4" autoplay loop muted playsinline preload="metadata" style="width: 100%; height: 100%; object-fit: contain;"></video>
       </div>
       <!-- 네오 하이브 영상 스피커 버튼 (영상 하단 바깥쪽) -->
-      <button id="hive-speaker-btn" onclick="toggleHiveAudio()" style="position: absolute; left: 50%; top: calc(50% + 264px); transform: translateX(-50%); width: 80px; height: 32px; background: rgba(0,0,0,0.9); border: 2px solid #7BE495; border-radius: 16px; color: #7BE495; font-size: 11px; cursor: pointer; z-index: 2147483647; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 15px rgba(123, 228, 149, 0.5); font-weight: 600; transition: all 0.3s ease;">🔇 음소거</button>
+      <button id="hive-speaker-btn" onclick="toggleHiveAudio(event); return false;" style="position: absolute; left: 50%; top: calc(50% + 264px); transform: translateX(-50%); width: 80px; height: 32px; background: rgba(0,0,0,0.9); border: 2px solid #7BE495; border-radius: 16px; color: #7BE495; font-size: 11px; cursor: pointer; z-index: 2147483647; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 15px rgba(123, 228, 149, 0.5); font-weight: 600; transition: all 0.3s ease;">🔇 음소거</button>
       
       <!-- 모바일 환경용 네오 하이브 영상 스피커 버튼 -->
       <style>
@@ -1505,7 +1505,16 @@ transition: transform 0.4s ease-out, opacity 0.4s ease-out;
           height: 28px !important;
           font-size: 9px !important;
           border-radius: 14px !important;
+          pointer-events: auto !important;
+          isolation: isolate !important;
         }
+      }
+      
+      /* 음소거 버튼 이벤트 전파 방지 */
+      #hive-speaker-btn {
+        pointer-events: auto !important;
+        z-index: 2147483647 !important;
+        isolation: isolate !important;
       }
       </style>
     </div>
@@ -3445,7 +3454,14 @@ if (window.innerWidth <= 768) {
       }
     
     // 네오 하이브 영상 스피커 토글 함수
-    function toggleHiveAudio() {
+    function toggleHiveAudio(event) {
+      // 이벤트 전파 방지 - 화면 전환 막기
+      if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        event.stopImmediatePropagation();
+      }
+      
       const hiveVideo = document.getElementById('hive-showcase-video');
       const speakerBtn = document.getElementById('hive-speaker-btn');
       
@@ -3468,6 +3484,9 @@ if (window.innerWidth <= 768) {
           console.log('🔇 Neo Hive 영상 소리 꺼짐');
         }
       }
+      
+      // 확실히 false 반환하여 기본 동작 막기
+      return false;
     }
 
     // 네오 스마트 영상 스피커 토글 함수
