@@ -8349,21 +8349,96 @@ document.addEventListener('DOMContentLoaded', function() {
     // 즉시 실행 (HTML 파싱과 동시에)
     showMobilePage();
     
+    // Neo Hive 섹션 스크롤 완전 보장 - 강화
+    function guaranteeHiveScroll() {
+      const hiveSection = document.getElementById('hive');
+      if (hiveSection) {
+        // 하이브 섹션 전체에 강력한 스크롤 보장
+        hiveSection.style.setProperty('touch-action', 'pan-y', 'important');
+        hiveSection.style.setProperty('-webkit-overflow-scrolling', 'touch', 'important');
+        hiveSection.style.setProperty('pointer-events', 'auto', 'important');
+        hiveSection.style.setProperty('overflow-y', 'visible', 'important');
+        hiveSection.style.setProperty('transform', 'translateZ(0)', 'important');
+        hiveSection.style.setProperty('will-change', 'scroll-position', 'important');
+        
+        // 하이브 섹션 내 모든 요소들 스크롤 보장
+        const hiveElements = hiveSection.querySelectorAll('*');
+        hiveElements.forEach(el => {
+          // 스피커 버튼과 이미지는 클릭 허용
+          if (el.id === 'hive-speaker-btn' || el.classList.contains('hive-image') || 
+              el.id === 'slide-prev' || el.id === 'slide-next') {
+            el.style.setProperty('pointer-events', 'auto', 'important');
+            el.style.setProperty('touch-action', 'manipulation', 'important');
+          } else {
+            // 나머지는 스크롤 우선
+            el.style.setProperty('pointer-events', 'none', 'important');
+            el.style.setProperty('touch-action', 'pan-y', 'important');
+          }
+        });
+        
+        console.log('🎯 Neo Hive 섹션 스크롤 완전 보장 적용');
+      }
+    }
+    
+    // 터치 이벤트 강제 처리로 스크롤 끊김 방지
+    function addHiveTouchHandlers() {
+      const hiveSection = document.getElementById('hive');
+      if (hiveSection) {
+        let isScrolling = false;
+        
+        // 터치 시작 시 스크롤 상태 감지
+        hiveSection.addEventListener('touchstart', function(e) {
+          isScrolling = false;
+        }, { passive: true });
+        
+        // 터치 이동 시 스크롤 보장
+        hiveSection.addEventListener('touchmove', function(e) {
+          isScrolling = true;
+          // 스크롤 이벤트 전파 보장
+          e.stopPropagation = function() {}; // 전파 차단 무력화
+        }, { passive: true });
+        
+        // 터치 종료 시 스크롤 모멘텀 보장
+        hiveSection.addEventListener('touchend', function(e) {
+          if (isScrolling) {
+            // 스크롤 모멘텀 유지
+            document.body.style.setProperty('overflow-y', 'auto', 'important');
+            document.documentElement.style.setProperty('overflow-y', 'auto', 'important');
+          }
+        }, { passive: true });
+        
+        console.log('👆 Neo Hive 터치 핸들러 추가 완료');
+      }
+    }
+    
     // 추가 터치 스크롤 보장
     setTimeout(() => {
       document.documentElement.style.setProperty('touch-action', 'pan-y', 'important');
       document.body.style.setProperty('touch-action', 'pan-y', 'important');
       document.body.style.setProperty('overflow-y', 'auto', 'important');
-      console.log('📱 터치 스크롤 재확인 완료');
+      
+      // Neo Hive 섹션 스크롤 보장 적용
+      guaranteeHiveScroll();
+      addHiveTouchHandlers();
+      
+      console.log('📱 터치 스크롤 재확인 완료 + Neo Hive 강화');
     }, 100);
     
     // DOM 준비 시 재실행 (보험)
     if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', showMobilePage);
+      document.addEventListener('DOMContentLoaded', function() {
+        showMobilePage();
+        guaranteeHiveScroll();
+        addHiveTouchHandlers();
+      });
     }
     
     // 페이지 완전 로드 시 재실행 (최종 보험)
-    window.addEventListener('load', showMobilePage);
+    window.addEventListener('load', function() {
+      showMobilePage();
+      guaranteeHiveScroll();
+      addHiveTouchHandlers();
+    });
     
     // MutationObserver로 DOM 변경 감지 시 재적용
     const observer = new MutationObserver(function(mutations) {
@@ -8378,6 +8453,8 @@ document.addEventListener('DOMContentLoaded', function() {
         forceApplyMobileStyles();
         adjustMobileIcons();
         restoreGlowEffect(); // 발광효과 복구
+        guaranteeHiveScroll(); // Neo Hive 스크롤 보장
+        addHiveTouchHandlers(); // Neo Hive 터치 핸들러
       }
     });
     
@@ -8475,56 +8552,101 @@ document.addEventListener('DOMContentLoaded', function() {
     pointer-events: auto !important;
   }
   
-  /* Neo Hive 섹션 스크롤 최적화 - 스크롤 끊김 방지 */
+  /* Neo Hive 섹션 스크롤 완전 보장 - 최강 설정 */
   #hive {
     touch-action: pan-y !important;
     -webkit-overflow-scrolling: touch !important;
-    pointer-events: auto !important;
+    pointer-events: auto !important;  
     transform: translateZ(0) !important;
     will-change: scroll-position !important;
+    overflow: visible !important;
+    position: relative !important;
+    isolation: isolate !important;
+    contain: none !important;
   }
   
-  /* 하이브 쇼케이스 - 스크롤 허용하되 불필요한 상호작용 제한 */
+  /* 하이브 섹션 내 모든 요소 - 스크롤 최우선 */
+  #hive * {
+    touch-action: pan-y !important;
+    -webkit-overflow-scrolling: touch !important;
+    pointer-events: none !important; /* 기본적으로 모든 상호작용 차단 */
+  }
+  
+  /* 하이브 쇼케이스 - 스크롤 완전 보장 */
   .hive-showcase {
     touch-action: pan-y !important;
-    pointer-events: auto !important;
+    pointer-events: none !important; /* 스크롤만 허용 */
     -webkit-overflow-scrolling: touch !important;
+    transform: none !important;
+    will-change: auto !important;
+    contain: none !important;
   }
   
-  /* 비디오 컨테이너 - 스크롤 우선 */
+  /* 비디오 컨테이너 - 스크롤 우선, 상호작용 차단 */
   .video-phone {
     touch-action: pan-y !important;
-    pointer-events: auto !important;
+    pointer-events: none !important;
     -webkit-overflow-scrolling: touch !important;
+    transform: none !important;
   }
   
-  /* 영상 요소 - 스크롤 허용 */
+  /* 영상 요소 - 스크롤만 허용 */
   .video-phone video,
   #hive-showcase-video,
   #smart-showcase-video {
     touch-action: pan-y !important;
-    pointer-events: auto !important;
+    pointer-events: none !important;
   }
   
-  /* 스피커 버튼 - 클릭 허용 */
+  /* 클릭 필요한 요소들만 예외 허용 */
   #hive-speaker-btn,
   #smart-speaker-btn {
     touch-action: manipulation !important;
     pointer-events: auto !important;
-    z-index: 999 !important;
+    z-index: 9999 !important;
+    position: relative !important;
+    isolation: isolate !important;
   }
   
-  /* 슬라이드 이미지 - 클릭과 스크롤 모두 허용 */
+  /* 슬라이드 이미지 - 클릭 허용 */
   .hive-image {
-    touch-action: pan-y !important;
+    touch-action: manipulation !important;
     pointer-events: auto !important;
+    z-index: 100 !important;
+    position: relative !important;
   }
   
-  /* 슬라이드 네비게이션 버튼 */
+  /* 슬라이드 네비게이션 버튼 - 클릭 허용 */
   #slide-prev,
   #slide-next {
     touch-action: manipulation !important;
     pointer-events: auto !important;
+    z-index: 100 !important;
+    position: relative !important;
+  }
+  
+  /* Neo Hive 섹션 스크롤 강제 보장 */
+  #hive,
+  #hive .hive-showcase,
+  #hive .video-phone {
+    scroll-behavior: auto !important;
+    overscroll-behavior: auto !important;
+    -webkit-scroll-snap-type: none !important;
+    scroll-snap-type: none !important;
+  }
+  
+  /* 스크롤 방해 요소들 완전 무력화 */
+  #hive [style*="position: fixed"],
+  #hive [style*="position: sticky"] {
+    pointer-events: none !important;
+    touch-action: pan-y !important;
+  }
+  
+  /* 하이브 섹션 레이아웃 안정화 */
+  #hive {
+    min-height: auto !important;
+    height: auto !important;
+    max-height: none !important;
   }
   
   /* 무료체험 선택 모달 모바일 반응형 */
