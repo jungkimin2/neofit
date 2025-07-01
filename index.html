@@ -28,8 +28,10 @@
   }
   
   .core-value-fresh-mobile {
-    transform: translateY(-368px) !important;
-    -webkit-transform: translateY(-368px) !important;
+    /* transform 제거하고 margin으로 대체 */
+    margin-top: -368px !important;
+    transform: none !important;
+    -webkit-transform: none !important;
     position: relative !important;
     display: flex !important;
     flex-direction: row !important;
@@ -45,8 +47,10 @@
   }
   
   #smart {
-    transform: translateY(-456px) !important;
-    -webkit-transform: translateY(-456px) !important;
+    /* transform 대신 margin 사용 */
+    margin-top: -456px !important;
+    transform: none !important;
+    -webkit-transform: none !important;
     position: relative !important;
   }
 
@@ -1847,15 +1851,13 @@ transition: transform 0.4s ease-out, opacity 0.4s ease-out;
 @media (max-width: 768px) {
 body #mobile-moved-merged-box,
 html body #mobile-moved-merged-box {
-  /* 위치 조정하여 충돌 방지: -364.8px → -360px */
-  transform: translateY(-360px) !important;
-  -webkit-transform: translateY(-360px) !important;
+  /* transform 대신 margin 사용으로 스크롤 성능 개선 */
+  margin-top: -360px !important;
+  transform: none !important;
+  -webkit-transform: none !important;
   position: relative !important;
   z-index: 100 !important; /* 더 높은 우선순위 */
-  margin-top: 0 !important; /* 기존 margin과 충돌 방지 */
   /* 스크롤 성능 개선 */
-  transform-style: preserve-3d !important;
-  -webkit-transform-style: preserve-3d !important;
   will-change: auto !important;
   backface-visibility: hidden !important;
   -webkit-backface-visibility: hidden !important;
@@ -1869,10 +1871,10 @@ html body #mobile-moved-merged-box {
 @media (max-width: 768px) {
 body .core-value-fresh-mobile,
 html body .core-value-fresh-mobile {
-  margin-top: 52px !important;
-  /* 위치 조정하여 충돌 방지: -364.8px → -368px */
-  transform: translateY(-368px) !important;
-  -webkit-transform: translateY(-368px) !important;
+  /* transform 대신 margin 사용으로 스크롤 성능 개선 */
+  margin-top: -316px !important;
+  transform: none !important;
+  -webkit-transform: none !important;
   display: flex !important;
   flex-direction: row !important;
   align-items: center !important;
@@ -1900,9 +1902,7 @@ html body .core-value-fresh-mobile {
   position: relative !important;
   z-index: 10000 !important;
   overflow: hidden !important;
-  /* 스크롤 성능 개선을 위한 GPU 가속 */
-  transform-style: preserve-3d !important;
-  -webkit-transform-style: preserve-3d !important;
+  /* 스크롤 성능 개선 */
   will-change: auto !important;
   backface-visibility: hidden !important;
   -webkit-backface-visibility: hidden !important;
@@ -2006,7 +2006,8 @@ html body .core-value-fresh-mobile {
 
 /* 터치 효과 */
 .core-value-fresh-mobile:active {
-  transform: translateY(-370px) !important; /* 터치 시 살짝 위로 */
+  /* transform 제거하고 box-shadow만 사용 */
+  transform: none !important;
   box-shadow: 
     0 12px 40px rgba(123, 228, 149, 0.3),
     0 6px 20px rgba(123, 228, 149, 0.2),
@@ -2141,10 +2142,10 @@ html body .core-value-fresh-mobile {
       inset 0 -1px 0 rgba(123, 228, 149, 0.25) !important;
   }
   
-  /* 모바일 스크롤 성능 최적화 */
+  /* 모바일 스크롤 성능 최적화 - transform 완전 제거 */
   .mobile-transform-target {
-    transform-style: preserve-3d !important;
-    -webkit-transform-style: preserve-3d !important;
+    transform: none !important;
+    -webkit-transform: none !important;
     backface-visibility: hidden !important;
     -webkit-backface-visibility: hidden !important;
     will-change: auto !important;
@@ -7233,6 +7234,7 @@ document.addEventListener('DOMContentLoaded', function() {
       0 0 15px #7BE495,
       0 0 20px #62D2A2,
       0 0 25px #62D2A2 !important;
+      
     animation: mobileNeonPulse 2s ease-in-out infinite alternate !important;
   }
   
@@ -7296,12 +7298,13 @@ document.addEventListener('DOMContentLoaded', function() {
     position: unset !important;
   }
   
-  /* 네오 스마트 섹션은 독립적으로 처리 - transform 보존 */
+  /* 네오 스마트 섹션은 독립적으로 처리 - transform 제거 */
   body #smart,
   html body #smart {
-    transform: translateY(-512px) !important; /* 1칸(16px) 아래로 이동: -528px → -512px */
-    -webkit-transform: translateY(-512px) !important;
-    margin-top: -180px !important;
+    /* transform 대신 margin으로 위치 조정 */
+    margin-top: -692px !important; /* -180px + -512px = -692px */
+    transform: none !important;
+    -webkit-transform: none !important;
     padding-top: 0 !important;
     position: relative !important;
     z-index: 50 !important; /* 다른 UI 요소들과의 충돌 방지 */
@@ -8765,6 +8768,7 @@ if (window.innerWidth <= 768) {
     transform: none !important;
     -webkit-transform: none !important;
     will-change: auto !important;
+    position: relative !important;
   }
 }
 </style>
