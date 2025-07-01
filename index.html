@@ -8021,6 +8021,19 @@ document.addEventListener('DOMContentLoaded', function() {
   const isMobile = window.innerWidth <= 768;
   
   if (isMobile) {
+    // 즉시 터치 스크롤 활성화
+    document.documentElement.style.setProperty('touch-action', 'pan-y', 'important');
+    document.documentElement.style.setProperty('-webkit-overflow-scrolling', 'touch', 'important');
+    document.body.style.setProperty('touch-action', 'pan-y', 'important');
+    document.body.style.setProperty('-webkit-overflow-scrolling', 'touch', 'important');
+    document.body.style.setProperty('pointer-events', 'auto', 'important');
+    
+    console.log('📱 모바일 터치 스크롤 즉시 활성화');
+    
+    // 터치 이벤트 즉시 활성화
+    document.addEventListener('touchstart', function() {}, { passive: true });
+    document.addEventListener('touchmove', function() {}, { passive: true });
+    
     // 즉시 실행 함수로 스타일 강제 적용
     function forceApplyMobileStyles() {
                       const elements = [
@@ -8336,6 +8349,14 @@ document.addEventListener('DOMContentLoaded', function() {
     // 즉시 실행 (HTML 파싱과 동시에)
     showMobilePage();
     
+    // 추가 터치 스크롤 보장
+    setTimeout(() => {
+      document.documentElement.style.setProperty('touch-action', 'pan-y', 'important');
+      document.body.style.setProperty('touch-action', 'pan-y', 'important');
+      document.body.style.setProperty('overflow-y', 'auto', 'important');
+      console.log('📱 터치 스크롤 재확인 완료');
+    }, 100);
+    
     // DOM 준비 시 재실행 (보험)
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', showMobilePage);
@@ -8389,9 +8410,32 @@ document.addEventListener('DOMContentLoaded', function() {
 <!-- 모바일 스크롤 최적화 CSS -->
 <style>
 @media (max-width: 768px) {
+  /* 모바일 즉시 스크롤 활성화 */
+  html {
+    touch-action: pan-y !important;
+    -webkit-overflow-scrolling: touch !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+  }
+  
+  body {
+    touch-action: pan-y !important;
+    -webkit-overflow-scrolling: touch !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    pointer-events: auto !important;
+  }
+  
   /* 전역 스크롤 최적화 */
   * {
     -webkit-overflow-scrolling: touch !important;
+  }
+  
+  /* 고정된 요소들의 터치 이벤트 조정 */
+  #mobile-top-nav-fixed,
+  #mobile-top-nav-fixed * {
+    pointer-events: auto !important;
+    touch-action: none !important;
   }
   
   /* 높은 z-index 요소들의 터치 이벤트 최적화 */
@@ -8404,9 +8448,12 @@ document.addEventListener('DOMContentLoaded', function() {
   /* 스크롤 컨테이너 최적화 */
   .slide-container,
   .container,
-  .section {
-    touch-action: pan-y pinch-zoom !important;
+  .section,
+  #scrollable-content,
+  main {
+    touch-action: pan-y !important;
     -webkit-overflow-scrolling: touch !important;
+    pointer-events: auto !important;
   }
   
   /* 스크롤 막힘 방지 */
@@ -8414,6 +8461,18 @@ document.addEventListener('DOMContentLoaded', function() {
     overflow-y: auto !important;
     overflow-x: hidden !important;
     scroll-behavior: smooth !important;
+  }
+  
+  /* 오버레이나 고정 요소들이 스크롤을 막지 않도록 */
+  .modal-overlay,
+  #modalOverlay,
+  [style*="position: fixed"]:not(#mobile-top-nav-fixed) {
+    pointer-events: none !important;
+  }
+  
+  .modal-overlay.active,
+  #modalOverlay.active {
+    pointer-events: auto !important;
   }
   
   /* 터치 이벤트 최적화 */
