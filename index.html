@@ -8034,11 +8034,29 @@ document.addEventListener('DOMContentLoaded', function() {
     document.addEventListener('touchstart', function() {}, { passive: true });
     document.addEventListener('touchmove', function() {}, { passive: true });
     
-    // 네오 하이브 섹션 스크롤 끊김 방지를 위한 추가 이벤트 처리
-    document.addEventListener('touchmove', function(e) {
-      // 스크롤 momentum 유지
-      if (e.target.closest('.hive-showcase') || e.target.closest('#hive')) {
+    // 네오 하이브 섹션 스크롤 끊김 방지 - 강화된 이벤트 처리
+    let isScrolling = false;
+    
+    document.addEventListener('touchstart', function(e) {
+      if (e.target.closest('.hive-showcase') && !e.target.closest('#hive-speaker-btn')) {
+        // 스피커 버튼이 아닌 경우 터치 이벤트 무시
+        e.preventDefault();
         e.stopPropagation();
+        isScrolling = true;
+      }
+    }, { passive: false });
+    
+    document.addEventListener('touchmove', function(e) {
+      if (e.target.closest('.hive-showcase') && !e.target.closest('#hive-speaker-btn')) {
+        // 스크롤 momentum 유지하되 다른 상호작용 차단
+        e.stopPropagation();
+        isScrolling = true;
+      }
+    }, { passive: true });
+    
+    document.addEventListener('touchend', function(e) {
+      if (isScrolling) {
+        setTimeout(() => { isScrolling = false; }, 100);
       }
     }, { passive: true });
     
@@ -8391,14 +8409,42 @@ document.addEventListener('DOMContentLoaded', function() {
         videoPhone.style.setProperty('touch-action', 'pan-y', 'important');
       }
       
-      // 비디오 자체는 터치 허용
+      // 비디오도 터치 차단으로 변경 (스크롤 끊김 방지)
       const hiveVideo = document.getElementById('hive-showcase-video');
       if (hiveVideo) {
-        hiveVideo.style.setProperty('pointer-events', 'auto', 'important');
+        hiveVideo.style.setProperty('pointer-events', 'none', 'important');
         hiveVideo.style.setProperty('touch-action', 'pan-y', 'important');
       }
       
-      console.log('📱 터치 스크롤 재확인 완료 + 네오 하이브 섹션 최적화');
+      // 하이브 쇼케이스 내 모든 이미지와 라벨 터치 차단
+      const hiveImages = document.querySelectorAll('.hive-image');
+      hiveImages.forEach(img => {
+        img.style.setProperty('pointer-events', 'none', 'important');
+        img.style.setProperty('touch-action', 'pan-y', 'important');
+      });
+      
+      const hiveLabels = document.querySelectorAll('.hive-label-left, .hive-label-right');
+      hiveLabels.forEach(label => {
+        label.style.setProperty('pointer-events', 'none', 'important');
+        label.style.setProperty('touch-action', 'pan-y', 'important');
+      });
+      
+      // 슬라이드 버튼도 터치 차단 (스크롤 우선)
+      const slideButtons = document.querySelectorAll('#slide-prev, #slide-next');
+      slideButtons.forEach(btn => {
+        btn.style.setProperty('pointer-events', 'none', 'important');
+        btn.style.setProperty('touch-action', 'pan-y', 'important');
+      });
+      
+      // 스피커 버튼만 예외적으로 터치 허용
+      const speakerBtn = document.getElementById('hive-speaker-btn');
+      if (speakerBtn) {
+        speakerBtn.style.setProperty('pointer-events', 'auto', 'important');
+        speakerBtn.style.setProperty('touch-action', 'none', 'important');
+        speakerBtn.style.setProperty('z-index', '9999999', 'important');
+      }
+      
+      console.log('📱 터치 스크롤 재확인 완료 + 네오 하이브 섹션 강화 최적화');
     }, 100);
     
     // DOM 준비 시 재실행 (보험)
@@ -8511,18 +8557,54 @@ document.addEventListener('DOMContentLoaded', function() {
     touch-action: pan-y !important;
   }
   
-  /* 네오 하이브 섹션 스크롤 최적화 */
+  /* 네오 하이브 섹션 스크롤 최적화 - 강화 */
   #hive {
     -webkit-overflow-scrolling: touch !important;
     transform: translateZ(0) !important;
     will-change: scroll-position !important;
+    touch-action: pan-y !important;
+    overflow: visible !important;
   }
   
-  /* 하이브 쇼케이스 컨테이너 스크롤 보장 */
+  /* 하이브 쇼케이스 컨테이너 스크롤 보장 - 강화 */
   .hive-showcase {
+    pointer-events: none !important;
+    touch-action: pan-y !important;
     transform: none !important;
     will-change: auto !important;
     contain: layout !important;
+    position: relative !important;
+    z-index: 1 !important;
+  }
+  
+  /* 하이브 쇼케이스 내 모든 요소 터치 차단 */
+  .hive-showcase * {
+    pointer-events: none !important;
+    touch-action: pan-y !important;
+  }
+  
+  /* 네오 하이브 섹션 전체 스크롤 강제 보장 */
+  #hive * {
+    touch-action: pan-y !important;
+  }
+  
+  /* 스크롤 방해하는 고정 요소들 차단 */
+  #hive [style*="position: absolute"],
+  #hive [style*="position: fixed"] {
+    pointer-events: none !important;
+  }
+  
+  /* 스피커 버튼만 예외 */
+  #hive-speaker-btn {
+    pointer-events: auto !important;
+    touch-action: none !important;
+    z-index: 9999999 !important;
+  }
+  
+  /* 네오 하이브 섹션 스크롤 최우선 */
+  #hive {
+    scroll-behavior: auto !important;
+    overscroll-behavior: auto !important;
   }
   
   /* 스크롤 끊김 방지를 위한 transform 최적화 */
@@ -8578,11 +8660,28 @@ document.addEventListener('DOMContentLoaded', function() {
     pointer-events: auto !important;
   }
   
-  /* 스피커 버튼만 터치 허용 */
+  /* 스피커 버튼만 터치 허용 - 강화 */
   #hive-speaker-btn,
   #smart-speaker-btn {
     touch-action: none !important;
     pointer-events: auto !important;
+    position: relative !important;
+    z-index: 9999999 !important;
+    isolation: isolate !important;
+  }
+  
+  /* 비디오 요소도 터치 차단으로 변경 */
+  .video-phone video,
+  #hive-showcase-video,
+  #smart-showcase-video {
+    pointer-events: none !important;
+    touch-action: pan-y !important;
+  }
+  
+  /* 비디오 컨테이너도 완전 차단 */
+  .video-phone {
+    pointer-events: none !important;
+    touch-action: pan-y !important;
   }
   
   /* 무료체험 선택 모달 모바일 반응형 */
