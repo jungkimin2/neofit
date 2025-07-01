@@ -8354,36 +8354,7 @@ document.addEventListener('DOMContentLoaded', function() {
       document.documentElement.style.setProperty('touch-action', 'pan-y', 'important');
       document.body.style.setProperty('touch-action', 'pan-y', 'important');
       document.body.style.setProperty('overflow-y', 'auto', 'important');
-      
-      // 네오 하이브 섹션 스크롤 끊김 방지
-      const hiveSection = document.getElementById('hive');
-      if (hiveSection) {
-        hiveSection.style.setProperty('touch-action', 'pan-y', 'important');
-        hiveSection.style.setProperty('pointer-events', 'auto', 'important');
-      }
-      
-      // 하이브 쇼케이스 스크롤 방해 요소 비활성화
-      const hiveShowcase = document.querySelector('.hive-showcase');
-      if (hiveShowcase) {
-        hiveShowcase.style.setProperty('pointer-events', 'none', 'important');
-        hiveShowcase.style.setProperty('touch-action', 'pan-y', 'important');
-      }
-      
-      // 비디오 폰은 스크롤 허용하되 상호작용 제한
-      const videoPhone = document.querySelector('.video-phone');
-      if (videoPhone) {
-        videoPhone.style.setProperty('pointer-events', 'none', 'important');
-        videoPhone.style.setProperty('touch-action', 'pan-y', 'important');
-      }
-      
-      // 비디오 자체는 터치 허용
-      const hiveVideo = document.getElementById('hive-showcase-video');
-      if (hiveVideo) {
-        hiveVideo.style.setProperty('pointer-events', 'auto', 'important');
-        hiveVideo.style.setProperty('touch-action', 'pan-y', 'important');
-      }
-      
-      console.log('📱 터치 스크롤 재확인 완료 + 네오 하이브 섹션 최적화');
+      console.log('📱 터치 스크롤 재확인 완료');
     }, 100);
     
     // DOM 준비 시 재실행 (보험)
@@ -8472,29 +8443,7 @@ document.addEventListener('DOMContentLoaded', function() {
   [style*="z-index: 2147483646"],
   [style*="z-index: 999"] {
     pointer-events: auto !important;
-  }
-  
-  /* 슬라이드 이미지들 스크롤 방해 방지 */
-  .hive-image,
-  .hive-label-left,
-  .hive-label-right {
-    pointer-events: none !important;
-    touch-action: pan-y !important;
-  }
-  
-  /* 슬라이드 네비게이션 버튼은 터치 허용 */
-  #slide-prev,
-  #slide-next {
-    pointer-events: auto !important;
-    touch-action: none !important;
-  }
-  
-  /* 배경 글로우 효과는 터치 차단 */
-  [style*="background: radial-gradient"],
-  [style*="filter: blur"] {
-    pointer-events: none !important;
-    touch-action: pan-y !important;
-  }
+}
 
   /* 스크롤 컨테이너 최적화 */
   .slide-container,
