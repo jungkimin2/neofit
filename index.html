@@ -4485,40 +4485,36 @@ if (window.innerWidth <= 768) {
 
   <script>
     // 성능 최적화된 Intersection Observer
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      // 모바일에서는 스크롤 애니메이션 비활성화
-      if (window.innerWidth <= 768) {
-        entry.target.classList.add("visible");
-        entry.target.style.opacity = "1";
-        entry.target.style.transform = "none";
-        observer.unobserve(entry.target);
-        return;
-      }
-
-      if (entry.isIntersecting) {
-        // requestAnimationFrame으로 애니메이션 최적화
-        requestAnimationFrame(() => {
-          entry.target.classList.add("visible");
-        });
-        observer.unobserve(entry.target);
-      }
-    });
-  }, {
-    rootMargin: '0px 0px -50px 0px', // 더 빠른 트리거
-    threshold: 0.1 // 10%만 보여도 트리거
-  });
-
-  document.querySelectorAll(".animate-on-scroll, .section.animate-on-scroll, .slide-in-left, .slide-in-right, .feature-item").forEach(el => {
-    // 모바일에서는 초기부터 visible 클래스 추가
+      // 모바일에서는 애니메이션 완전 비활성화
     if (window.innerWidth <= 768) {
-      el.classList.add("visible");
-      el.style.opacity = "1";
-      el.style.transform = "none";
+      document.querySelectorAll(".animate-on-scroll, .section.animate-on-scroll, .slide-in-left, .slide-in-right, .feature-item").forEach(el => {
+        el.classList.add("visible");
+        el.style.opacity = "1";
+        el.style.transform = "none";
+        el.style.animation = "none";
+        el.style.transition = "none";
+      });
+      console.log('📱 모바일 애니메이션 비활성화 완료');
     } else {
-      observer.observe(el);
+      // PC에서만 Intersection Observer 사용
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            requestAnimationFrame(() => {
+              entry.target.classList.add("visible");
+            });
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        rootMargin: '0px 0px -50px 0px',
+        threshold: 0.1
+      });
+
+      document.querySelectorAll(".animate-on-scroll, .section.animate-on-scroll, .slide-in-left, .slide-in-right, .feature-item").forEach(el => {
+        observer.observe(el);
+      });
     }
-  });
 </script>
 <script>
   // Hive 이미지 슬라이드 기능 - 성능 최적화
@@ -8113,320 +8109,19 @@ document.addEventListener('DOMContentLoaded', function() {
     document.addEventListener('touchstart', function() {}, { passive: true });
     document.addEventListener('touchmove', function() {}, { passive: true });
     
-    // 즉시 실행 함수로 스타일 강제 적용
-    function forceApplyMobileStyles() {
-                      const elements = [
-          { selector: '.mobile-ui-position-adjustment', transform: 'translateY(-444px)' },
-          { selector: '#mobile-moved-merged-box', transform: 'translateY(-312px)' },
-          { selector: '.core-value-fresh-mobile', transform: 'translateY(-388.8px)' },
-          { selector: '.mobile-system-box-wrapper', transform: 'translateY(-600px)' },
-          { selector: '#smart', transform: 'translateY(-432px)' }
-      ];
-      
-      elements.forEach(({ selector, transform }) => {
-        const element = document.querySelector(selector);
-        if (element) {
-          element.style.setProperty('transform', transform, 'important');
-          element.style.setProperty('-webkit-transform', transform, 'important');
-          element.style.setProperty('position', 'relative', 'important');
-          element.style.setProperty('opacity', '1', 'important');
-          element.style.setProperty('visibility', 'visible', 'important');
-        }
-      });
-      
-      // 뒤집기 컨테이너 전체를 5칸 아래로 이동 (JavaScript 뒤집기 효과와 연동)
-      const flipper = document.querySelector('.flipper');
-      if (flipper) {
-        flipper.style.setProperty('transform', 'translateY(160px)', 'important');
-        flipper.style.setProperty('position', 'relative', 'important');
-      }
-      
-      // 텍스트 오버레이 초기 숨김
-      const backTextOverlay = document.querySelector('.back-text-overlay');
-      if (backTextOverlay) {
-        backTextOverlay.style.setProperty('opacity', '0', 'important');
-      }
-      
-      // NEOS 카드 리스트는 기본 모바일 스타일만 적용
-      const neosCardList = document.querySelector('div.neos-card-list[style*="margin-top: 120px"]');
-      if (neosCardList) {
-        neosCardList.style.setProperty('margin-top', '120px', 'important'); // 원래 값 유지
-        neosCardList.style.setProperty('position', 'relative', 'important');
-        neosCardList.style.setProperty('z-index', '15', 'important');
-        neosCardList.style.setProperty('grid-template-columns', 'repeat(2, 1fr)', 'important');
-        neosCardList.style.setProperty('gap', '8px', 'important');
-        neosCardList.style.setProperty('padding', '12px', 'important');
-        neosCardList.style.setProperty('max-width', '90%', 'important');
-        neosCardList.style.setProperty('margin-left', '-25px', 'important');
-      }
-      
-      // 모바일 환경에서 발광효과 강제 표시
-      const glowElement = document.querySelector('.circular-bg-glow');
-      if (glowElement) {
-        glowElement.style.setProperty('display', 'block', 'important');
-        glowElement.style.setProperty('visibility', 'visible', 'important');
-        glowElement.style.setProperty('opacity', '1', 'important');
-        glowElement.style.setProperty('z-index', '-1', 'important');
-        glowElement.style.setProperty('position', 'absolute', 'important');
-        glowElement.style.setProperty('top', 'calc(50% + 40px)', 'important');
-        glowElement.style.setProperty('left', 'calc(65% - 5px)', 'important');
-        glowElement.style.setProperty('width', '500px', 'important');
-        glowElement.style.setProperty('height', '500px', 'important');
-        glowElement.style.setProperty('transform', 'translate(-50%, -50%)', 'important');
-        glowElement.style.setProperty('background', 'radial-gradient(circle, rgba(123, 228, 149, 0.25) 0%, rgba(123, 228, 149, 0.15) 40%, rgba(123, 228, 149, 0.08) 70%, rgba(0,0,0,0) 100%)', 'important');
-        glowElement.style.setProperty('filter', 'blur(80px)', 'important');
-        glowElement.style.setProperty('border-radius', '50%', 'important');
-        glowElement.style.setProperty('pointer-events', 'none', 'important');
-      }
-    }
-    
-    // 아이콘 정렬 함수
-    function adjustMobileIcons() {
-      const coreValue = document.querySelector('.core-value-fresh-mobile');
-      if (coreValue) {
-        // 가로 정렬 강제 적용
-        coreValue.style.setProperty('display', 'flex', 'important');
-        coreValue.style.setProperty('flex-direction', 'row', 'important');
-        coreValue.style.setProperty('align-items', 'center', 'important');
-        coreValue.style.setProperty('justify-content', 'flex-start', 'important');
-        
-        const coreIcon = coreValue.querySelector('.core-icon');
-        if (coreIcon) {
-          coreIcon.style.setProperty('margin-right', '12px', 'important');
-          coreIcon.style.setProperty('flex-shrink', '0', 'important');
-        }
-        
-        const textBlock = coreValue.querySelector('.core-text-block');
-        if (textBlock) {
-          textBlock.style.setProperty('flex', '1', 'important');
-        }
-      }
-    }
-    
-    // 회색 박스 강제 제거 함수
+    // 모바일 전용 단순 스크롤 보장
     function removeGreyBoxes() {
-      // impact 섹션 완전 제거
-      const impactSections = document.querySelectorAll('#impact, div#impact, section#impact, .animate-on-scroll#impact');
-      impactSections.forEach(section => {
-        if (section) {
-          section.remove();
-        }
-      });
-      
-      // 모바일 시스템 UI 요소들 제거
-      const mobileSystemBoxes = document.querySelectorAll('.mobile-ui-position-adjustment, .mobile-system-box, .mobile-system-content, .mobile-system-title');
-      mobileSystemBoxes.forEach(box => {
-        if (box) {
-          box.remove();
-        }
-      });
-      
-      // 무인 출입 시스템과 이벤트 시스템 텍스트를 포함한 요소들 제거
-      const systemElements = document.querySelectorAll('*');
-      systemElements.forEach(el => {
-        if (el.textContent && (
-          el.textContent.includes('무인 출입 시스템 운영 방식') ||
-          el.textContent.includes('이벤트 시스템 연동')
-        )) {
-          const parentBox = el.closest('.mobile-ui-position-adjustment, .mobile-system-box');
-          if (parentBox) {
-            parentBox.remove();
-          }
-        }
-      });
-      
-      // 회색 배경을 가진 모든 div 제거
-      const greyBoxes = document.querySelectorAll('div[style*="background: linear-gradient(135deg, #0F1F1A"], div[style*="background: #0F1A1C"]');
-      greyBoxes.forEach(box => {
-        box.remove();
-      });
-      
-      // 특정 텍스트를 포함한 요소들 제거
-      const textElements = document.querySelectorAll('*');
-      textElements.forEach(el => {
-        if (el.textContent && (
-          el.textContent.includes('헬스장 운영의 패러다임 전환') ||
-          el.textContent.includes('피트니스 시장의 생존 전략') ||
-          el.textContent.includes('NEO HIVE 도입 시 매출 상승 효과') ||
-          el.textContent.includes('NEO SMART 도입 시 비용 절감 효과')
-        )) {
-          const parentDiv = el.closest('div[style*="background"]');
-          if (parentDiv) {
-            parentDiv.remove();
-          }
-        }
-      });
-      
-      // benefits 섹션 강제 위치 조정 - 모바일에서 2칸 더 위로 이동 (CSS와 함께 적용)
-      const benefitsSection = document.querySelector('section#benefits');
-      if (benefitsSection) {
-        benefitsSection.style.setProperty('margin-top', '-552px', 'important');
-        benefitsSection.style.setProperty('transform', 'translateY(-32px)', 'important');
-        benefitsSection.style.setProperty('background', '#000', 'important');
-        benefitsSection.style.setProperty('padding-top', '80px', 'important');
-        benefitsSection.style.setProperty('position', 'relative', 'important');
-        benefitsSection.style.setProperty('z-index', '10', 'important');
-        benefitsSection.style.setProperty('display', 'block', 'important');
-        benefitsSection.style.setProperty('visibility', 'visible', 'important');
-        benefitsSection.style.setProperty('opacity', '1', 'important');
-        
-        // 강제로 스타일 재적용
-        benefitsSection.offsetHeight; // 리플로우 강제 트리거
-      }
-      
-      // 모바일에서 비용 회수 텍스트 강제 우측 이동 - transform 사용
-      const costRecoveryText = document.getElementById('mobile-cost-recovery-text');
-      if (costRecoveryText) {
-        costRecoveryText.style.setProperty('text-align', 'center', 'important');
-        costRecoveryText.style.setProperty('transform', 'translateX(0px)', 'important'); /* 좌측으로 1칸 이동 */
-        costRecoveryText.style.setProperty('position', 'relative', 'important');
-        costRecoveryText.style.setProperty('width', '100%', 'important');
-        costRecoveryText.style.setProperty('margin', '0', 'important');
-        costRecoveryText.style.setProperty('padding', '0', 'important');
-        
-        // 강제 리플로우
-        costRecoveryText.offsetHeight;
-      }
-      
-      // 모바일에서 푸터 숨김
-      const footer = document.querySelector('footer');
-      if (footer) {
-        footer.style.setProperty('display', 'none', 'important');
-        footer.style.setProperty('visibility', 'hidden', 'important');
-        footer.style.setProperty('opacity', '0', 'important');
-        footer.style.setProperty('height', '0', 'important');
-        footer.style.setProperty('padding', '0', 'important');
-        footer.style.setProperty('margin', '0', 'important');
-        footer.style.setProperty('min-height', '0', 'important');
-        
-        console.log('Mobile footer hidden');
-      }
-      
-      // 모바일에서 가로 스크롤만 제거, 세로 스크롤은 유지
       document.documentElement.style.setProperty('overflow-x', 'hidden', 'important');
       document.documentElement.style.setProperty('overflow-y', 'auto', 'important');
-      document.documentElement.style.setProperty('scrollbar-width', 'none', 'important');
-      document.documentElement.style.setProperty('-ms-overflow-style', 'none', 'important');
       document.body.style.setProperty('overflow-x', 'hidden', 'important');
       document.body.style.setProperty('overflow-y', 'auto', 'important');
       document.body.style.setProperty('-webkit-overflow-scrolling', 'touch', 'important');
-      
-      // 회색 가로 바 형태의 요소들 제거
-      const greyBars = document.querySelectorAll('div[style*="background-color: gray"], div[style*="background-color: grey"], div[style*="background: gray"], div[style*="background: grey"], div[style*="height: 4px"], div[style*="height: 5px"], div[style*="height: 8px"]');
-      greyBars.forEach(bar => {
-        if (bar.offsetHeight <= 10 && bar.offsetWidth > 100) {
-          bar.remove();
-        }
-      });
-      
-      // 스크롤 인디케이터 제거
-      const scrollIndicators = document.querySelectorAll('*[class*="scroll"], *[id*="scroll"]');
-      scrollIndicators.forEach(indicator => {
-        if (indicator.offsetHeight <= 10 && indicator.offsetWidth > 100) {
-          indicator.style.display = 'none';
-        }
-      });
-      
-      // 여백을 만드는 빈 div들 제거 (발광효과는 보호)
-      const emptyDivs = document.querySelectorAll('div:empty, div[style*="height"], div[style*="margin"]');
-      emptyDivs.forEach(div => {
-        // 발광효과 요소는 보호
-        if (div.classList.contains('circular-bg-glow')) {
-          return;
-        }
-        
-        const computedStyle = window.getComputedStyle(div);
-        const height = parseInt(computedStyle.height);
-        const marginTop = parseInt(computedStyle.marginTop);
-        const marginBottom = parseInt(computedStyle.marginBottom);
-        
-        // 큰 여백이나 높이를 가진 빈 요소들 제거
-        if ((height > 50 || marginTop > 50 || marginBottom > 50) && div.children.length === 0) {
-          div.remove();
-        }
-      });
     }
     
-    
-    // 발광효과 강제 복구 함수
-    function restoreGlowEffect() {
-      const glowElement = document.querySelector('.circular-bg-glow');
-      if (glowElement) {
-        // 모바일 환경에서 발광효과 완전 복구
-        glowElement.style.setProperty('display', 'block', 'important');
-        glowElement.style.setProperty('visibility', 'visible', 'important');
-        glowElement.style.setProperty('opacity', '1', 'important');
-        glowElement.style.setProperty('z-index', '-1', 'important');
-        glowElement.style.setProperty('position', 'absolute', 'important');
-        glowElement.style.setProperty('top', 'calc(50% + 40px)', 'important');
-        glowElement.style.setProperty('left', 'calc(65% - 5px)', 'important');
-        glowElement.style.setProperty('width', '500px', 'important');
-        glowElement.style.setProperty('height', '500px', 'important');
-        glowElement.style.setProperty('transform', 'translate(-50%, -50%)', 'important');
-        glowElement.style.setProperty('background', 'radial-gradient(circle, rgba(123, 228, 149, 0.25) 0%, rgba(123, 228, 149, 0.15) 40%, rgba(123, 228, 149, 0.08) 70%, rgba(0,0,0,0) 100%)', 'important');
-        glowElement.style.setProperty('filter', 'blur(80px)', 'important');
-        glowElement.style.setProperty('border-radius', '50%', 'important');
-        glowElement.style.setProperty('pointer-events', 'none', 'important');
-        console.log('Mobile glow effect restored');
-      }
-    }
-    
-    // 모바일 페이지 로딩 완료 처리 - 성능 최적화 (기능 유지)
-    function showMobilePage() {
-      // 모바일에서 이미지 lazy loading만 적용 (비디오는 그대로 유지)
-      const images = document.querySelectorAll('img');
-      let loadedImages = 0;
-      const totalImages = images.length;
-      
-      images.forEach(img => {
-        if (img.src && !img.complete) {
-          img.loading = 'lazy';
-          // 중요하지 않은 배경 이미지만 지연 로딩
-          if (!img.closest('.hero') && !img.closest('.testimonial') && !img.closest('.hive-showcase')) {
-            img.addEventListener('load', () => {
-              loadedImages++;
-              if (loadedImages === totalImages) {
-                console.log('All images loaded');
-              }
-            });
-          }
-        }
-      });
-      
-      removeGreyBoxes(); // 회색 박스 먼저 제거
-      forceApplyMobileStyles();
-      adjustMobileIcons();
-      restoreGlowEffect(); // 발광효과 복구
-      
-      // 모바일에서 video-phone 초기 로딩 시 트랜지션 비활성화
-      if (window.innerWidth <= 768) {
-        const videoPhone = document.querySelector('.video-phone');
-        if (videoPhone) {
-          videoPhone.classList.add('no-transition');
-        }
-      }
-      
-      // 페이지 표시 - 약간 빠르게
-      setTimeout(() => {
-        document.body.classList.add('mobile-loaded');
-        removeGreyBoxes(); // 한 번 더 제거
-        restoreGlowEffect(); // 발광효과 재복구
-        
-        // 모바일에서 로딩 완료 후 트랜지션 다시 활성화
-        if (window.innerWidth <= 768) {
-          setTimeout(() => {
-            const videoPhone = document.querySelector('.video-phone');
-            if (videoPhone) {
-              videoPhone.classList.remove('no-transition');
-              console.log('Mobile video-phone transitions re-enabled');
-            }
-          }, 100); // 추가 100ms 후 트랜지션 활성화
-        }
-      }, 30); // 50ms에서 30ms로 약간 단축
-    }
-    
-    // 즉시 실행 (HTML 파싱과 동시에)
-    showMobilePage();
+    // 즉시 실행 - 단순화
+    removeGreyBoxes();
+    document.body.classList.add('mobile-loaded');
+    console.log('📱 모바일 스크롤 보장');
     
     // 즉시 한 번만 실행
     setTimeout(() => {
@@ -8481,6 +8176,28 @@ document.addEventListener('DOMContentLoaded', function() {
   #hive {
     touch-action: pan-y !important;
     -webkit-overflow-scrolling: touch !important;
+  }
+  
+  /* 모바일에서만 애니메이션 비활성화 - PC는 그대로 유지 */
+  .animate-on-scroll,
+  .section.animate-on-scroll,
+  .slide-in-left,
+  .slide-in-right,
+  .feature-item {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+  }
+  
+  /* 모바일에서만 높은 z-index 제한 */
+  .video-phone {
+    z-index: 10 !important;
+  }
+  
+  #hive-speaker-btn {
+    z-index: 15 !important;
   }
   
 
