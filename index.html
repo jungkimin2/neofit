@@ -549,7 +549,7 @@ div > p.smart-guide-text {
   #neofit-training h1 {
     font-size: 1.5rem !important;
     line-height: 1.4 !important;
-    padding: 0 16px !important;
+    padding: 0 12px !important;
     text-align: left !important;
     margin-bottom: 16px !important;
   }
@@ -562,7 +562,7 @@ div > p.smart-guide-text {
   
   #neofit-training p {
     font-size: 0.9rem !important;
-    padding: 0 16px !important;
+    padding: 0 12px !important;
     text-align: left !important;
     margin-bottom: 12px !important;
   }
@@ -5876,7 +5876,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const syncVideo = syncCard.querySelector('.card-video');
   
   if (syncVideo) {
-    // 호버 시 비디오 재생
+    // 호버 시 비디오 재생 (PC)
     syncCard.addEventListener('mouseenter', function() {
       if (syncVideo.paused) {
         syncVideo.play().catch(e => {
@@ -5885,10 +5885,53 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
     
-    // 호버 해제 시 비디오 일시정지 및 처음으로
+    // 호버 해제 시 비디오 일시정지 및 처음으로 (PC)
     syncCard.addEventListener('mouseleave', function() {
       syncVideo.pause();
       syncVideo.currentTime = 0;
+    });
+    
+    // 모바일 터치 이벤트
+    let touchTimeout;
+    syncCard.addEventListener('touchstart', function(e) {
+      e.preventDefault();
+      
+      // 비디오 재생
+      if (syncVideo.paused) {
+        syncVideo.play().catch(err => {
+          console.log('Mobile video play failed:', err);
+        });
+      }
+      
+      // 텍스트와 이미지 숨기기
+      const texts = syncCard.querySelectorAll('h3, p');
+      const image = syncCard.querySelector('.card-image');
+      const videoEl = syncCard.querySelector('.card-video');
+      const overlay = syncCard.querySelector('.video-overlay');
+      
+      texts.forEach(text => {
+        text.style.opacity = '0';
+        text.style.transform = 'translateY(-20px)';
+      });
+      image.style.opacity = '0';
+      image.style.transform = 'scale(0.8) translateY(-20px)';
+      videoEl.style.opacity = '1';
+      overlay.style.opacity = '1';
+      
+      // 3초 후 원상복구
+      clearTimeout(touchTimeout);
+      touchTimeout = setTimeout(() => {
+        syncVideo.pause();
+        syncVideo.currentTime = 0;
+        texts.forEach(text => {
+          text.style.opacity = '1';
+          text.style.transform = 'translateY(0)';
+        });
+        image.style.opacity = '1';
+        image.style.transform = 'scale(1) translateY(0)';
+        videoEl.style.opacity = '0';
+        overlay.style.opacity = '0';
+      }, 3000);
     });
     
     // 비디오 로드 시 준비
@@ -6451,13 +6494,30 @@ document.addEventListener('DOMContentLoaded', function() {
 .card-video {
   filter: brightness(0.9) contrast(1.1);
 }
-/* 모바일에서는 비디오 비활성화 */
+/* 모바일에서도 비디오 활성화 */
 @media (max-width: 768px) {
   .card-video {
-    display: none !important;
+    display: block !important;
   }
   .video-overlay {
-    display: none !important;
+    display: block !important;
+  }
+  
+  /* 모바일 비디오 호버 효과 - 터치 시 작동 */
+  #sync-card:active .card-video {
+    opacity: 1 !important;
+  }
+  #sync-card:active .video-overlay {
+    opacity: 1 !important;
+  }
+  #sync-card:active .card-image {
+    opacity: 0 !important;
+    transform: scale(0.8) translateY(-20px);
+  }
+  #sync-card:active h3,
+  #sync-card:active p {
+    opacity: 0 !important;
+    transform: translateY(-20px);
   }
 }
 </style>
