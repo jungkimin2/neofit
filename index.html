@@ -2012,6 +2012,68 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <!-- 스크롤 방향 감지 스크립트 제거 - 단순 고정 방식으로 변경 -->
 <!-- <div id="features"></div> -->
+
+<!-- 네오핏 트레이닝 시스템 섹션 -->
+<section id="neofit-training" class="section" style="background: #000; padding: 80px 0;">
+  <div class="container" style="text-align:center; max-width: 1200px; margin: 0 auto;">
+    <h1 style="font-size: 2.5rem; color: #FFFFFF; margin-bottom: 20px;">
+      네오핏 : <span class="neon-green">"새로운 피트니스, 함께하는 문화"</span>
+    </h1>
+    <p style="font-size: 1.2rem; color: #aaa; margin-bottom: 30px;">
+      네오핏은 1~4명이 팀을 이루어 함께 운동하는 <strong style="color: #7BE495;">팀 기반 그룹 트레이닝 시스템</strong>입니다.
+    </p>
+    <p style="font-size: 1.1rem; color: #ccc; margin-bottom: 50px;">
+      기초부터 퍼포먼스까지, <strong style="color: #7BE495;">단계별로 연결된 그룹 트레이닝 시스템</strong>
+    </p>
+    
+    <!-- 3D 카드 컨테이너 -->
+    <div class="training-cards-container" style="position: relative; height: 500px; margin: 0 auto; perspective: 1000px;">
+      <!-- 네오 싱크 카드 -->
+      <div class="training-card active" id="sync-card" style="position: absolute; width: 350px; height: 450px; left: 50%; top: 50%; transform: translateX(-50%) translateY(-50%) translateZ(0); transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer;">
+        <div class="card-inner" style="width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.6s;">
+          <div class="card-front" style="position: absolute; width: 100%; height: 100%; backface-visibility: hidden; background: linear-gradient(135deg, rgba(123,228,149,0.15), rgba(62,200,168,0.10)); border: 2px solid #7BE495; border-radius: 20px; padding: 30px; display: flex; flex-direction: column; align-items: center; box-shadow: 0 10px 40px rgba(123,228,149,0.3);">
+            <h3 style="color: #7BE495; font-size: 2rem; margin-bottom: 20px; text-shadow: 0 0 20px rgba(123,228,149,0.8);">네오 싱크</h3>
+            <img src="./images/neosync.png" alt="네오 싱크" style="width: 80%; height: auto; margin-bottom: 20px; filter: drop-shadow(0 0 20px rgba(123,228,149,0.5));">
+            <p style="color: #fff; font-size: 1.1rem; text-align: center;">기초 체력과 움직임의 동기화</p>
+            <p style="color: #aaa; font-size: 0.95rem; text-align: center; margin-top: 10px;">팀원들과 함께 기본기를 다지는 입문 프로그램</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 네오 밸런스 카드 -->
+      <div class="training-card" id="balance-card" style="position: absolute; width: 350px; height: 450px; left: 50%; top: 50%; transform: translateX(-50%) translateY(-50%) translateX(-400px) translateZ(-200px) rotateY(25deg); opacity: 0.7; transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer;">
+        <div class="card-inner" style="width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.6s;">
+          <div class="card-front" style="position: absolute; width: 100%; height: 100%; backface-visibility: hidden; background: linear-gradient(135deg, rgba(147,197,253,0.15), rgba(59,130,246,0.10)); border: 2px solid #93C5FD; border-radius: 20px; padding: 30px; display: flex; flex-direction: column; align-items: center; box-shadow: 0 10px 40px rgba(147,197,253,0.3);">
+            <h3 style="color: #93C5FD; font-size: 2rem; margin-bottom: 20px; text-shadow: 0 0 20px rgba(147,197,253,0.8);">네오 밸런스</h3>
+            <img src="./images/neoblance.png" alt="네오 밸런스" style="width: 80%; height: auto; margin-bottom: 20px; filter: drop-shadow(0 0 20px rgba(147,197,253,0.5));">
+            <p style="color: #fff; font-size: 1.1rem; text-align: center;">균형과 안정성 강화</p>
+            <p style="color: #aaa; font-size: 0.95rem; text-align: center; margin-top: 10px;">중급자를 위한 균형 잡힌 트레이닝</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 네오 부스트 카드 -->
+      <div class="training-card" id="boost-card" style="position: absolute; width: 350px; height: 450px; left: 50%; top: 50%; transform: translateX(-50%) translateY(-50%) translateX(400px) translateZ(-200px) rotateY(-25deg); opacity: 0.7; transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer;">
+        <div class="card-inner" style="width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.6s;">
+          <div class="card-front" style="position: absolute; width: 100%; height: 100%; backface-visibility: hidden; background: linear-gradient(135deg, rgba(248,113,113,0.15), rgba(239,68,68,0.10)); border: 2px solid #F87171; border-radius: 20px; padding: 30px; display: flex; flex-direction: column; align-items: center; box-shadow: 0 10px 40px rgba(248,113,113,0.3);">
+            <h3 style="color: #F87171; font-size: 2rem; margin-bottom: 20px; text-shadow: 0 0 20px rgba(248,113,113,0.8);">네오 부스트</h3>
+            <img src="./images/neoboots.png" alt="네오 부스트" style="width: 80%; height: auto; margin-bottom: 20px; filter: drop-shadow(0 0 20px rgba(248,113,113,0.5));">
+            <p style="color: #fff; font-size: 1.1rem; text-align: center;">폭발적인 퍼포먼스 향상</p>
+            <p style="color: #aaa; font-size: 0.95rem; text-align: center; margin-top: 10px;">상급자를 위한 고강도 프로그램</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 네비게이션 인디케이터 -->
+    <div class="card-indicators" style="display: flex; justify-content: center; gap: 15px; margin-top: 30px;">
+      <button class="indicator active" data-target="sync" style="width: 12px; height: 12px; border-radius: 50%; border: 2px solid #7BE495; background: #7BE495; cursor: pointer; transition: all 0.3s;"></button>
+      <button class="indicator" data-target="balance" style="width: 12px; height: 12px; border-radius: 50%; border: 2px solid #93C5FD; background: transparent; cursor: pointer; transition: all 0.3s;"></button>
+      <button class="indicator" data-target="boost" style="width: 12px; height: 12px; border-radius: 50%; border: 2px solid #F87171; background: transparent; cursor: pointer; transition: all 0.3s;"></button>
+    </div>
+  </div>
+</section>
+
 <section id="hive" class="section animate-on-scroll" style="background:#000; padding-top:24px;">
   <div class="container" style="text-align:center; padding-top:0;">
     <h2 style="font-size: 2rem; text-align: left; color: #FFFFFF; margin-top:0;">
