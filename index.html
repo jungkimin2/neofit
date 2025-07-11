@@ -481,17 +481,18 @@ div > p.smart-guide-text {
 @media (max-width: 768px) {
   /* 카드 컨테이너 위치 조정 - 화면 중앙에 보이도록 */
   .training-cards-container {
-    height: 380px !important;
-    margin: 10px 0 30px 0 !important;
+    height: 320px !important;
+    margin: 10px 0 20px 0 !important;
     padding: 0 !important;
     position: relative !important;
     top: -50px !important; /* 위로 더 올림 */
+    overflow: visible !important;
   }
   
   /* 카드 크기 조정 */
   .training-card {
-    width: 220px !important;
-    height: 300px !important;
+    width: 200px !important;
+    height: 280px !important;
   }
   
   /* 활성 카드 위치 조정 */
@@ -501,13 +502,13 @@ div > p.smart-guide-text {
   
   /* 비활성 카드 위치 조정 - 좌우 대칭 */
   #balance-card:not(.active) {
-    --mobile-x: -130px;
-    --mobile-rotate: 12deg;
+    --mobile-x: -110px;
+    --mobile-rotate: 10deg;
   }
   
   #boost-card:not(.active) {
-    --mobile-x: 130px;
-    --mobile-rotate: -12deg;
+    --mobile-x: 110px;
+    --mobile-rotate: -10deg;
   }
   
   /* 카드 내부 콘텐츠 크기 조정 */
@@ -6110,7 +6111,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   .training-card:not(.active) {
-    transform: translateX(-50%) translateY(-50%) translateX(var(--mobile-x, 0)) translateZ(-50px) rotateY(var(--mobile-rotate, 0deg)) scale(0.7) !important;
+    transform: translateX(-50%) translateY(-50%) translateX(var(--mobile-x, 0)) translateZ(-50px) rotateY(var(--mobile-rotate, 0deg)) scale(0.6) !important;
   }
   
   #balance-card:not(.active) {
