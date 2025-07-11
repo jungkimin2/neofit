@@ -476,6 +476,73 @@ div > p.smart-guide-text {
 }
 }
 </style>
+<style>
+/* 모바일 환경에서 training cards 위치 및 크기 조정 */
+@media (max-width: 768px) {
+  /* 카드 컨테이너 위치 조정 - 화면 중앙에 보이도록 */
+  .training-cards-container {
+    height: 420px !important;
+    margin: 20px 0 40px 0 !important;
+    padding: 10px 0 !important;
+    position: relative !important;
+    top: -30px !important; /* 위로 올림 */
+  }
+  
+  /* 카드 크기 조정 */
+  .training-card {
+    width: 240px !important;
+    height: 320px !important;
+  }
+  
+  /* 활성 카드 위치 조정 */
+  .training-card.active {
+    transform: translateX(-50%) translateY(-50%) translateZ(0) scale(1) !important;
+  }
+  
+  /* 비활성 카드 위치 조정 */
+  #balance-card:not(.active) {
+    --mobile-x: -160px;
+    --mobile-rotate: 10deg;
+  }
+  
+  #boost-card:not(.active) {
+    --mobile-x: 160px;
+    --mobile-rotate: -10deg;
+  }
+  
+  /* 카드 내부 콘텐츠 크기 조정 */
+  .training-card .card-front {
+    padding: 20px !important;
+  }
+  
+  .training-card h3 {
+    font-size: 1rem !important;
+    margin-bottom: 8px !important;
+  }
+  
+  .training-card img {
+    width: 60px !important;
+    height: 60px !important;
+    margin: 10px 0 !important;
+  }
+  
+  .training-card p {
+    font-size: 0.8rem !important;
+    line-height: 1.3 !important;
+  }
+  
+  /* 인디케이터 위치 조정 */
+  .card-indicators {
+    margin-top: 20px !important;
+    gap: 15px !important;
+  }
+  
+  /* 섹션 패딩 조정 */
+  section:has(.training-cards-container) {
+    padding: 40px 20px 20px !important;
+  }
+}
+</style>
 </body>
 <style>
 @media (max-width: 768px) {
@@ -2032,7 +2099,7 @@ document.addEventListener('DOMContentLoaded', function() {
       <div class="training-card active" id="sync-card" style="position: absolute; width: 350px; height: 450px; left: 50%; top: 50%; transform: translateX(-50%) translateY(-50%) translateZ(0); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; background: transparent; border: none; border-radius: 20px; overflow: hidden;">
         <div class="card-inner" style="width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.3s; background: transparent; border: none;">
           <div class="card-front" style="position: absolute; width: 100%; height: 100%; backface-visibility: hidden; background: #0A0F0D; border: 2px solid #7BE495; border-radius: 20px; padding: 30px; display: flex; flex-direction: column; align-items: center; overflow: hidden;">
-            <h3 style="color: #7BE495; font-size: 2rem; margin-bottom: 20px; text-shadow: 0 0 20px rgba(123,228,149,0.8);">네오 싱크</h3>
+            <h3 style="color: #7BE495; font-size: 2rem; margin-bottom: 20px; text-shadow: 0 0 20px rgba(123,228,149,0.8);">NEO SYNC</h3>
             <img src="./images/neosync.png" alt="네오 싱크" style="width: 80%; height: auto; margin-bottom: 20px; filter: drop-shadow(0 0 20px rgba(123,228,149,0.5));">
             <p style="color: #fff; font-size: 1.1rem; text-align: center;">기초 체력과 움직임의 동기화</p>
             <p style="color: #aaa; font-size: 0.95rem; text-align: center; margin-top: 10px;">팀원들과 함께 기본기를 다지는 입문 프로그램</p>
@@ -2044,7 +2111,7 @@ document.addEventListener('DOMContentLoaded', function() {
       <div class="training-card" id="balance-card" style="position: absolute; width: 350px; height: 450px; left: 50%; top: 50%; transform: translateX(-50%) translateY(-50%) translateX(-400px) translateZ(-200px) rotateY(25deg); opacity: 0.7; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; background: transparent; border: none; border-radius: 20px; overflow: hidden;">
         <div class="card-inner" style="width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.3s; background: transparent; border: none;">
           <div class="card-front" style="position: absolute; width: 100%; height: 100%; backface-visibility: hidden; background: #0A0D0F; border: 2px solid #93C5FD; border-radius: 20px; padding: 30px; display: flex; flex-direction: column; align-items: center; overflow: hidden;">
-            <h3 style="color: #93C5FD; font-size: 2rem; margin-bottom: 20px; text-shadow: 0 0 20px rgba(147,197,253,0.8);">네오 밸런스</h3>
+            <h3 style="color: #93C5FD; font-size: 2rem; margin-bottom: 20px; text-shadow: 0 0 20px rgba(147,197,253,0.8);">NEO BALANCE</h3>
             <img src="./images/neoblance.png" alt="네오 밸런스" style="width: 80%; height: auto; margin-bottom: 20px; filter: drop-shadow(0 0 20px rgba(147,197,253,0.5));">
             <p style="color: #fff; font-size: 1.1rem; text-align: center;">균형과 안정성 강화</p>
             <p style="color: #aaa; font-size: 0.95rem; text-align: center; margin-top: 10px;">중급자를 위한 균형 잡힌 트레이닝</p>
@@ -2056,7 +2123,7 @@ document.addEventListener('DOMContentLoaded', function() {
       <div class="training-card" id="boost-card" style="position: absolute; width: 350px; height: 450px; left: 50%; top: 50%; transform: translateX(-50%) translateY(-50%) translateX(400px) translateZ(-200px) rotateY(-25deg); opacity: 0.7; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; background: transparent; border: none; border-radius: 20px; overflow: hidden;">
         <div class="card-inner" style="width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.3s; background: transparent; border: none;">
           <div class="card-front" style="position: absolute; width: 100%; height: 100%; backface-visibility: hidden; background: #0F0A0A; border: 2px solid #F87171; border-radius: 20px; padding: 30px; display: flex; flex-direction: column; align-items: center; overflow: hidden;">
-            <h3 style="color: #F87171; font-size: 2rem; margin-bottom: 20px; text-shadow: 0 0 20px rgba(248,113,113,0.8);">네오 부스트</h3>
+            <h3 style="color: #F87171; font-size: 2rem; margin-bottom: 20px; text-shadow: 0 0 20px rgba(248,113,113,0.8);">NEO BOOST</h3>
             <img src="./images/neoboots.png" alt="네오 부스트" style="width: 80%; height: auto; margin-bottom: 20px; filter: drop-shadow(0 0 20px rgba(248,113,113,0.5));">
             <p style="color: #fff; font-size: 1.1rem; text-align: center;">폭발적인 퍼포먼스 향상</p>
             <p style="color: #aaa; font-size: 0.95rem; text-align: center; margin-top: 10px;">상급자를 위한 고강도 프로그램</p>
@@ -2067,9 +2134,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     <!-- 네비게이션 인디케이터 -->
     <div class="card-indicators" style="display: flex; justify-content: center; gap: 15px; margin-top: 30px;">
-      <button class="indicator active" data-target="sync" aria-label="네오 싱크 카드 보기" style="width: 12px; height: 12px; border-radius: 50%; border: 2px solid #7BE495; background: #7BE495; cursor: pointer; transition: all 0.3s;"></button>
-      <button class="indicator" data-target="balance" aria-label="네오 밸런스 카드 보기" style="width: 12px; height: 12px; border-radius: 50%; border: 2px solid #93C5FD; background: transparent; cursor: pointer; transition: all 0.3s;"></button>
-      <button class="indicator" data-target="boost" aria-label="네오 부스트 카드 보기" style="width: 12px; height: 12px; border-radius: 50%; border: 2px solid #F87171; background: transparent; cursor: pointer; transition: all 0.3s;"></button>
+      <button class="indicator active" data-target="sync" aria-label="View NEO SYNC card" style="width: 12px; height: 12px; border-radius: 50%; border: 2px solid #7BE495; background: #7BE495; cursor: pointer; transition: all 0.3s;"></button>
+      <button class="indicator" data-target="balance" aria-label="View NEO BALANCE card" style="width: 12px; height: 12px; border-radius: 50%; border: 2px solid #93C5FD; background: transparent; cursor: pointer; transition: all 0.3s;"></button>
+      <button class="indicator" data-target="boost" aria-label="View NEO BOOST card" style="width: 12px; height: 12px; border-radius: 50%; border: 2px solid #F87171; background: transparent; cursor: pointer; transition: all 0.3s;"></button>
     </div>
   </div>
 </section>
@@ -5922,6 +5989,9 @@ document.addEventListener('DOMContentLoaded', function() {
     0 0 20px #7BE495,
     0 0 30px #7BE495,
     0 0 40px rgba(123,228,149,0.5) !important;
+  font-family: 'Arial', sans-serif;
+  font-weight: 700;
+  letter-spacing: 2px;
 }
 
 #balance-card h3 {
@@ -5931,6 +6001,9 @@ document.addEventListener('DOMContentLoaded', function() {
     0 0 20px #93C5FD,
     0 0 30px #93C5FD,
     0 0 40px rgba(147,197,253,0.5) !important;
+  font-family: 'Arial', sans-serif;
+  font-weight: 700;
+  letter-spacing: 2px;
 }
 
 #boost-card h3 {
@@ -5940,6 +6013,9 @@ document.addEventListener('DOMContentLoaded', function() {
     0 0 20px #F87171,
     0 0 30px #F87171,
     0 0 40px rgba(248,113,113,0.5) !important;
+  font-family: 'Arial', sans-serif;
+  font-weight: 700;
+  letter-spacing: 2px;
 }
 
 /* 카드 내부 텍스트 네온 효과 */
@@ -5961,28 +6037,29 @@ document.addEventListener('DOMContentLoaded', function() {
 /* 모바일 최적화 */
 @media (max-width: 768px) {
   .training-cards-container {
-    height: 400px !important;
-    margin: 20px 0 !important;
+    height: 500px !important;
+    margin: 50px 0 80px 0 !important;
+    padding: 20px 0 !important;
   }
   
   .training-card {
-    width: 280px !important;
-    height: 360px !important;
+    width: 260px !important;
+    height: 340px !important;
     transition: all 0.25s ease-out !important;
   }
   
   .training-card:not(.active) {
-    transform: translateX(-50%) translateY(-50%) translateX(var(--mobile-x, 0)) translateZ(-100px) rotateY(var(--mobile-rotate, 0deg)) scale(0.75) !important;
+    transform: translateX(-50%) translateY(-50%) translateX(var(--mobile-x, 0)) translateZ(-50px) rotateY(var(--mobile-rotate, 0deg)) scale(0.7) !important;
   }
   
   #balance-card:not(.active) {
-    --mobile-x: -220px;
-    --mobile-rotate: 15deg;
+    --mobile-x: -180px;
+    --mobile-rotate: 10deg;
   }
   
   #boost-card:not(.active) {
-    --mobile-x: 220px;
-    --mobile-rotate: -15deg;
+    --mobile-x: 180px;
+    --mobile-rotate: -10deg;
   }
   
   .card-indicators {
