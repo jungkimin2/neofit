@@ -549,9 +549,10 @@ div > p.smart-guide-text {
   #neofit-training h1 {
     font-size: 1.5rem !important;
     line-height: 1.4 !important;
-    padding: 0 12px !important;
+    padding: 0 8px !important;
     text-align: left !important;
     margin-bottom: 16px !important;
+    margin-left: 0 !important;
   }
   
   #neofit-training h1 .neon-green {
@@ -562,13 +563,16 @@ div > p.smart-guide-text {
   
   #neofit-training p {
     font-size: 0.9rem !important;
-    padding: 0 12px !important;
+    padding: 0 8px !important;
     text-align: left !important;
     margin-bottom: 12px !important;
+    margin-left: 0 !important;
   }
   
   #neofit-training .container {
     text-align: left !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
   }
 }
 </style>
@@ -5894,25 +5898,37 @@ document.addEventListener('DOMContentLoaded', function() {
     // 모바일 터치 이벤트
     let touchTimeout;
     syncCard.addEventListener('touchstart', function(e) {
-      e.preventDefault();
-      
-      // 클래스 추가로 비디오 효과 적용
-      syncCard.classList.add('video-playing');
-      
-      // 비디오 재생
-      if (syncVideo.paused) {
-        syncVideo.play().catch(err => {
-          console.log('Mobile video play failed:', err);
-        });
+      // 활성 카드일 때만 비디오 재생
+      if (syncCard.classList.contains('active')) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        // 클래스 추가로 비디오 효과 적용
+        syncCard.classList.add('video-playing');
+        
+        // 비디오 재생
+        if (syncVideo.paused) {
+          syncVideo.play().catch(err => {
+            console.log('Mobile video play failed:', err);
+          });
+        }
+        
+        // 3초 후 원상복구
+        clearTimeout(touchTimeout);
+        touchTimeout = setTimeout(() => {
+          syncVideo.pause();
+          syncVideo.currentTime = 0;
+          syncCard.classList.remove('video-playing');
+        }, 3000);
       }
-      
-      // 3초 후 원상복구
-      clearTimeout(touchTimeout);
-      touchTimeout = setTimeout(() => {
-        syncVideo.pause();
-        syncVideo.currentTime = 0;
-        syncCard.classList.remove('video-playing');
-      }, 3000);
+    });
+    
+    // 클릭 이벤트도 처리 (모바일 브라우저 호환성)
+    syncCard.addEventListener('click', function(e) {
+      if (window.innerWidth <= 768 && syncCard.classList.contains('active')) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
     });
     
     // 비디오 로드 시 준비
