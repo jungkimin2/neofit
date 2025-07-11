@@ -5876,7 +5876,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const syncVideo = syncCard.querySelector('.card-video');
   
   if (syncVideo) {
-    // 호버 시 비디오 재생 (PC)
+    // 호버 시 비디오 재생
     syncCard.addEventListener('mouseenter', function() {
       if (syncVideo.paused) {
         syncVideo.play().catch(e => {
@@ -5885,53 +5885,10 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
     
-    // 호버 해제 시 비디오 일시정지 및 처음으로 (PC)
+    // 호버 해제 시 비디오 일시정지 및 처음으로
     syncCard.addEventListener('mouseleave', function() {
       syncVideo.pause();
       syncVideo.currentTime = 0;
-    });
-    
-    // 모바일 터치 이벤트
-    let touchTimeout;
-    syncCard.addEventListener('touchstart', function(e) {
-      e.preventDefault();
-      
-      // 비디오 재생
-      if (syncVideo.paused) {
-        syncVideo.play().catch(err => {
-          console.log('Mobile video play failed:', err);
-        });
-      }
-      
-      // 텍스트와 이미지 숨기기
-      const texts = syncCard.querySelectorAll('h3, p');
-      const image = syncCard.querySelector('.card-image');
-      const videoEl = syncCard.querySelector('.card-video');
-      const overlay = syncCard.querySelector('.video-overlay');
-      
-      texts.forEach(text => {
-        text.style.opacity = '0';
-        text.style.transform = 'translateY(-20px)';
-      });
-      image.style.opacity = '0';
-      image.style.transform = 'scale(0.8) translateY(-20px)';
-      videoEl.style.opacity = '1';
-      overlay.style.opacity = '1';
-      
-      // 3초 후 원상복구
-      clearTimeout(touchTimeout);
-      touchTimeout = setTimeout(() => {
-        syncVideo.pause();
-        syncVideo.currentTime = 0;
-        texts.forEach(text => {
-          text.style.opacity = '1';
-          text.style.transform = 'translateY(0)';
-        });
-        image.style.opacity = '1';
-        image.style.transform = 'scale(1) translateY(0)';
-        videoEl.style.opacity = '0';
-        overlay.style.opacity = '0';
-      }, 3000);
     });
     
     // 비디오 로드 시 준비
