@@ -6451,30 +6451,13 @@ document.addEventListener('DOMContentLoaded', function() {
 .card-video {
   filter: brightness(0.9) contrast(1.1);
 }
-/* 모바일에서도 비디오 활성화 */
+/* 모바일에서는 비디오 비활성화 */
 @media (max-width: 768px) {
   .card-video {
-    display: block !important;
+    display: none !important;
   }
   .video-overlay {
-    display: block !important;
-  }
-  
-  /* 모바일 비디오 호버 효과 - 터치 시 작동 */
-  #sync-card:active .card-video {
-    opacity: 1 !important;
-  }
-  #sync-card:active .video-overlay {
-    opacity: 1 !important;
-  }
-  #sync-card:active .card-image {
-    opacity: 0 !important;
-    transform: scale(0.8) translateY(-20px);
-  }
-  #sync-card:active h3,
-  #sync-card:active p {
-    opacity: 0 !important;
-    transform: translateY(-20px);
+    display: none !important;
   }
 }
 </style>
