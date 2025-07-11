@@ -2119,10 +2119,17 @@ document.addEventListener('DOMContentLoaded', function() {
       <div class="training-card active" id="sync-card" style="position: absolute; width: 350px; height: 450px; left: 50%; top: 50%; transform: translateX(-50%) translateY(-50%) translateZ(0); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; background: transparent; border: none; border-radius: 20px; overflow: hidden;">
         <div class="card-inner" style="width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.3s; background: transparent; border: none;">
           <div class="card-front" style="position: absolute; width: 100%; height: 100%; backface-visibility: hidden; background: linear-gradient(135deg, #0A0F0D 0%, rgba(123,228,149,0.008) 100%); border: 2px solid #7BE495; border-radius: 20px; padding: 30px; display: flex; flex-direction: column; align-items: center; overflow: hidden;">
-            <h3 style="color: #7BE495; font-size: 2rem; margin-bottom: 20px; text-shadow: 0 0 20px rgba(123,228,149,0.8);">NEO SYNC</h3>
-            <img src="./images/neosync.png" alt="네오 싱크" style="width: 80%; height: auto; margin-bottom: 20px; filter: drop-shadow(0 0 20px rgba(123,228,149,0.5));">
-            <p style="color: #fff; font-size: 1.1rem; text-align: center;">기초 체력과 움직임의 동기화</p>
-            <p style="color: #aaa; font-size: 0.95rem; text-align: center; margin-top: 10px;">팀원들과 함께 기본기를 다지는 입문 프로그램</p>
+            <!-- 비디오 레이어 -->
+            <video class="card-video" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.5s ease-in-out; z-index: 1; pointer-events: none; border-radius: 20px;" muted loop playsinline>
+              <source src="./videos/neosyncvido.mp4" type="video/mp4">
+            </video>
+            <!-- 비디오 오버레이 -->
+            <div class="video-overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, rgba(10,15,13,0.3) 0%, rgba(10,15,13,0.7) 100%); opacity: 0; transition: opacity 0.5s ease-in-out; z-index: 2; pointer-events: none;"></div>
+            <!-- 기존 콘텐츠 -->
+            <h3 style="color: #7BE495; font-size: 2rem; margin-bottom: 20px; text-shadow: 0 0 20px rgba(123,228,149,0.8); position: relative; z-index: 3;">NEO SYNC</h3>
+            <img src="./images/neosync.png" alt="네오 싱크" style="width: 80%; height: auto; margin-bottom: 20px; filter: drop-shadow(0 0 20px rgba(123,228,149,0.5)); position: relative; z-index: 3; transition: opacity 0.3s ease-in-out;" class="card-image">
+            <p style="color: #fff; font-size: 1.1rem; text-align: center; position: relative; z-index: 3;">기초 체력과 움직임의 동기화</p>
+            <p style="color: #aaa; font-size: 0.95rem; text-align: center; margin-top: 10px; position: relative; z-index: 3;">팀원들과 함께 기본기를 다지는 입문 프로그램</p>
           </div>
         </div>
       </div>
@@ -5855,6 +5862,32 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
   
+  // 비디오 호버 제어 (NEO SYNC 카드)
+  const syncCard = document.getElementById('sync-card');
+  const syncVideo = syncCard.querySelector('.card-video');
+  
+  if (syncVideo) {
+    // 호버 시 비디오 재생
+    syncCard.addEventListener('mouseenter', function() {
+      if (syncVideo.paused) {
+        syncVideo.play().catch(e => {
+          console.log('Video autoplay failed:', e);
+        });
+      }
+    });
+    
+    // 호버 해제 시 비디오 일시정지 및 처음으로
+    syncCard.addEventListener('mouseleave', function() {
+      syncVideo.pause();
+      syncVideo.currentTime = 0;
+    });
+    
+    // 비디오 로드 시 준비
+    syncVideo.addEventListener('loadedmetadata', function() {
+      syncVideo.currentTime = 0;
+    });
+  }
+  
   // 자동 회전 (옵션)
   let autoRotate = null;
   let isPaused = false;
@@ -6368,6 +6401,39 @@ document.addEventListener('DOMContentLoaded', function() {
 .training-card .card-front {
   -webkit-clip-path: inset(0 round 20px);
   clip-path: inset(0 round 20px);
+}
+/* 비디오 호버 효과 */
+#sync-card:hover .card-video {
+  opacity: 0.8 !important;
+}
+#sync-card:hover .video-overlay {
+  opacity: 1 !important;
+}
+#sync-card:hover .card-image {
+  opacity: 0.3 !important;
+  transform: scale(0.9);
+}
+/* 비디오 재생 중 텍스트 강조 */
+#sync-card:hover h3 {
+  text-shadow: 0 0 30px rgba(123,228,149,1), 0 0 40px rgba(123,228,149,0.8) !important;
+  transform: scale(1.05);
+  transition: all 0.3s ease !important;
+}
+#sync-card:hover p {
+  text-shadow: 0 0 10px rgba(255,255,255,0.8);
+}
+/* 비디오 컨테이너 스타일 */
+.card-video {
+  filter: brightness(0.9) contrast(1.1);
+}
+/* 모바일에서는 비디오 비활성화 */
+@media (max-width: 768px) {
+  .card-video {
+    display: none !important;
+  }
+  .video-overlay {
+    display: none !important;
+  }
 }
 </style>
 </body>
