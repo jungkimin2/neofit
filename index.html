@@ -2029,9 +2029,9 @@ document.addEventListener('DOMContentLoaded', function() {
     <!-- 3D 카드 컨테이너 -->
     <div class="training-cards-container" style="position: relative; height: 500px; margin: 0 auto; perspective: 1000px;">
       <!-- 네오 싱크 카드 -->
-      <div class="training-card active" id="sync-card" style="position: absolute; width: 350px; height: 450px; left: 50%; top: 50%; transform: translateX(-50%) translateY(-50%) translateZ(0); transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer;">
-        <div class="card-inner" style="width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.6s;">
-          <div class="card-front" style="position: absolute; width: 100%; height: 100%; backface-visibility: hidden; background: linear-gradient(135deg, rgba(123,228,149,0.15), rgba(62,200,168,0.10)); border: 2px solid #7BE495; border-radius: 20px; padding: 30px; display: flex; flex-direction: column; align-items: center; box-shadow: 0 10px 40px rgba(123,228,149,0.3);">
+      <div class="training-card active" id="sync-card" style="position: absolute; width: 350px; height: 450px; left: 50%; top: 50%; transform: translateX(-50%) translateY(-50%) translateZ(0); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; background: transparent; border: none; border-radius: 20px; overflow: hidden;">
+        <div class="card-inner" style="width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.3s; background: transparent; border: none;">
+          <div class="card-front" style="position: absolute; width: 100%; height: 100%; backface-visibility: hidden; background: #0A0F0D; border: 2px solid #7BE495; border-radius: 20px; padding: 30px; display: flex; flex-direction: column; align-items: center; overflow: hidden;">
             <h3 style="color: #7BE495; font-size: 2rem; margin-bottom: 20px; text-shadow: 0 0 20px rgba(123,228,149,0.8);">네오 싱크</h3>
             <img src="./images/neosync.png" alt="네오 싱크" style="width: 80%; height: auto; margin-bottom: 20px; filter: drop-shadow(0 0 20px rgba(123,228,149,0.5));">
             <p style="color: #fff; font-size: 1.1rem; text-align: center;">기초 체력과 움직임의 동기화</p>
@@ -2041,9 +2041,9 @@ document.addEventListener('DOMContentLoaded', function() {
       </div>
       
       <!-- 네오 밸런스 카드 -->
-      <div class="training-card" id="balance-card" style="position: absolute; width: 350px; height: 450px; left: 50%; top: 50%; transform: translateX(-50%) translateY(-50%) translateX(-400px) translateZ(-200px) rotateY(25deg); opacity: 0.7; transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer;">
-        <div class="card-inner" style="width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.6s;">
-          <div class="card-front" style="position: absolute; width: 100%; height: 100%; backface-visibility: hidden; background: linear-gradient(135deg, rgba(147,197,253,0.15), rgba(59,130,246,0.10)); border: 2px solid #93C5FD; border-radius: 20px; padding: 30px; display: flex; flex-direction: column; align-items: center; box-shadow: 0 10px 40px rgba(147,197,253,0.3);">
+      <div class="training-card" id="balance-card" style="position: absolute; width: 350px; height: 450px; left: 50%; top: 50%; transform: translateX(-50%) translateY(-50%) translateX(-400px) translateZ(-200px) rotateY(25deg); opacity: 0.7; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; background: transparent; border: none; border-radius: 20px; overflow: hidden;">
+        <div class="card-inner" style="width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.3s; background: transparent; border: none;">
+          <div class="card-front" style="position: absolute; width: 100%; height: 100%; backface-visibility: hidden; background: #0A0D0F; border: 2px solid #93C5FD; border-radius: 20px; padding: 30px; display: flex; flex-direction: column; align-items: center; overflow: hidden;">
             <h3 style="color: #93C5FD; font-size: 2rem; margin-bottom: 20px; text-shadow: 0 0 20px rgba(147,197,253,0.8);">네오 밸런스</h3>
             <img src="./images/neoblance.png" alt="네오 밸런스" style="width: 80%; height: auto; margin-bottom: 20px; filter: drop-shadow(0 0 20px rgba(147,197,253,0.5));">
             <p style="color: #fff; font-size: 1.1rem; text-align: center;">균형과 안정성 강화</p>
@@ -2053,9 +2053,9 @@ document.addEventListener('DOMContentLoaded', function() {
       </div>
       
       <!-- 네오 부스트 카드 -->
-      <div class="training-card" id="boost-card" style="position: absolute; width: 350px; height: 450px; left: 50%; top: 50%; transform: translateX(-50%) translateY(-50%) translateX(400px) translateZ(-200px) rotateY(-25deg); opacity: 0.7; transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer;">
-        <div class="card-inner" style="width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.6s;">
-          <div class="card-front" style="position: absolute; width: 100%; height: 100%; backface-visibility: hidden; background: linear-gradient(135deg, rgba(248,113,113,0.15), rgba(239,68,68,0.10)); border: 2px solid #F87171; border-radius: 20px; padding: 30px; display: flex; flex-direction: column; align-items: center; box-shadow: 0 10px 40px rgba(248,113,113,0.3);">
+      <div class="training-card" id="boost-card" style="position: absolute; width: 350px; height: 450px; left: 50%; top: 50%; transform: translateX(-50%) translateY(-50%) translateX(400px) translateZ(-200px) rotateY(-25deg); opacity: 0.7; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; background: transparent; border: none; border-radius: 20px; overflow: hidden;">
+        <div class="card-inner" style="width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.3s; background: transparent; border: none;">
+          <div class="card-front" style="position: absolute; width: 100%; height: 100%; backface-visibility: hidden; background: #0F0A0A; border: 2px solid #F87171; border-radius: 20px; padding: 30px; display: flex; flex-direction: column; align-items: center; overflow: hidden;">
             <h3 style="color: #F87171; font-size: 2rem; margin-bottom: 20px; text-shadow: 0 0 20px rgba(248,113,113,0.8);">네오 부스트</h3>
             <img src="./images/neoboots.png" alt="네오 부스트" style="width: 80%; height: auto; margin-bottom: 20px; filter: drop-shadow(0 0 20px rgba(248,113,113,0.5));">
             <p style="color: #fff; font-size: 1.1rem; text-align: center;">폭발적인 퍼포먼스 향상</p>
@@ -2067,9 +2067,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     <!-- 네비게이션 인디케이터 -->
     <div class="card-indicators" style="display: flex; justify-content: center; gap: 15px; margin-top: 30px;">
-      <button class="indicator active" data-target="sync" style="width: 12px; height: 12px; border-radius: 50%; border: 2px solid #7BE495; background: #7BE495; cursor: pointer; transition: all 0.3s;"></button>
-      <button class="indicator" data-target="balance" style="width: 12px; height: 12px; border-radius: 50%; border: 2px solid #93C5FD; background: transparent; cursor: pointer; transition: all 0.3s;"></button>
-      <button class="indicator" data-target="boost" style="width: 12px; height: 12px; border-radius: 50%; border: 2px solid #F87171; background: transparent; cursor: pointer; transition: all 0.3s;"></button>
+      <button class="indicator active" data-target="sync" aria-label="네오 싱크 카드 보기" style="width: 12px; height: 12px; border-radius: 50%; border: 2px solid #7BE495; background: #7BE495; cursor: pointer; transition: all 0.3s;"></button>
+      <button class="indicator" data-target="balance" aria-label="네오 밸런스 카드 보기" style="width: 12px; height: 12px; border-radius: 50%; border: 2px solid #93C5FD; background: transparent; cursor: pointer; transition: all 0.3s;"></button>
+      <button class="indicator" data-target="boost" aria-label="네오 부스트 카드 보기" style="width: 12px; height: 12px; border-radius: 50%; border: 2px solid #F87171; background: transparent; cursor: pointer; transition: all 0.3s;"></button>
     </div>
   </div>
 </section>
@@ -5628,6 +5628,651 @@ if (window.innerWidth <= 768) {
     showSlide(slideIndex);
   });
 </script>
+
+<!-- Training Cards Carousel JavaScript -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const cards = {
+    'sync': document.getElementById('sync-card'),
+    'balance': document.getElementById('balance-card'),
+    'boost': document.getElementById('boost-card')
+  };
+  
+  const indicators = document.querySelectorAll('.card-indicators .indicator');
+  const cardContainer = document.querySelector('.training-cards-container');
+  let currentCard = 'sync';
+  let isAnimating = false;
+  
+  // 카드 위치 설정 함수
+  function setCardPosition(cardId, position) {
+    const card = cards[cardId];
+    if (!card) return;
+    
+    switch(position) {
+      case 'center':
+        card.style.transform = 'translateX(-50%) translateY(-50%) translateZ(0) scale(1)';
+        card.style.opacity = '1';
+        card.style.zIndex = '10';
+        card.classList.add('active');
+        break;
+      case 'left':
+        card.style.transform = 'translateX(-50%) translateY(-50%) translateX(-350px) translateZ(-100px) rotateY(15deg) scale(0.85)';
+        card.style.opacity = '0.6';
+        card.style.zIndex = '5';
+        card.classList.remove('active');
+        break;
+      case 'right':
+        card.style.transform = 'translateX(-50%) translateY(-50%) translateX(350px) translateZ(-100px) rotateY(-15deg) scale(0.85)';
+        card.style.opacity = '0.6';
+        card.style.zIndex = '5';
+        card.classList.remove('active');
+        break;
+    }
+  }
+  
+  // 카드 전환 함수
+  function switchCard(targetId) {
+    if (isAnimating || targetId === currentCard) return;
+    isAnimating = true;
+    
+    // 이전 카드 위치 설정
+    if (currentCard === 'sync') {
+      if (targetId === 'balance') {
+        setCardPosition('sync', 'right');
+        setCardPosition('balance', 'center');
+        setCardPosition('boost', 'left');
+      } else {
+        setCardPosition('sync', 'left');
+        setCardPosition('balance', 'right');
+        setCardPosition('boost', 'center');
+      }
+    } else if (currentCard === 'balance') {
+      if (targetId === 'sync') {
+        setCardPosition('sync', 'center');
+        setCardPosition('balance', 'left');
+        setCardPosition('boost', 'right');
+      } else {
+        setCardPosition('sync', 'right');
+        setCardPosition('balance', 'left');
+        setCardPosition('boost', 'center');
+      }
+    } else {
+      if (targetId === 'sync') {
+        setCardPosition('sync', 'center');
+        setCardPosition('balance', 'left');
+        setCardPosition('boost', 'right');
+      } else {
+        setCardPosition('sync', 'left');
+        setCardPosition('balance', 'center');
+        setCardPosition('boost', 'right');
+      }
+    }
+    
+    // 인디케이터 업데이트
+    indicators.forEach(ind => {
+      ind.classList.remove('active');
+      if (ind.dataset.target === targetId) {
+        ind.classList.add('active');
+        ind.style.background = getIndicatorColor(targetId);
+      } else {
+        ind.style.background = 'transparent';
+      }
+    });
+    
+    currentCard = targetId;
+    
+    setTimeout(() => {
+      isAnimating = false;
+    }, 300);
+  }
+  
+  // 인디케이터 색상 가져오기
+  function getIndicatorColor(cardId) {
+    switch(cardId) {
+      case 'sync': return '#7BE495';
+      case 'balance': return '#93C5FD';
+      case 'boost': return '#F87171';
+      default: return 'transparent';
+    }
+  }
+  
+  // 인디케이터 클릭 이벤트
+  indicators.forEach(indicator => {
+    indicator.addEventListener('click', function() {
+      const target = this.dataset.target;
+      switchCard(target);
+    });
+    
+    // 호버 효과
+    indicator.addEventListener('mouseenter', function() {
+      if (!this.classList.contains('active')) {
+        this.style.background = getIndicatorColor(this.dataset.target);
+        this.style.opacity = '0.5';
+      }
+    });
+    
+    indicator.addEventListener('mouseleave', function() {
+      if (!this.classList.contains('active')) {
+        this.style.background = 'transparent';
+        this.style.opacity = '1';
+      }
+    });
+  });
+  
+  // 카드 클릭 이벤트
+  Object.entries(cards).forEach(([cardId, card]) => {
+    card.addEventListener('click', function() {
+      if (!this.classList.contains('active')) {
+        switchCard(cardId);
+      }
+    });
+  });
+  
+  // 자동 회전 (옵션)
+  let autoRotate = null;
+  let isPaused = false;
+  
+  function startAutoRotate() {
+    autoRotate = setInterval(() => {
+      if (!isPaused && !isAnimating) {
+        const cardIds = ['sync', 'balance', 'boost'];
+        const currentIndex = cardIds.indexOf(currentCard);
+        const nextIndex = (currentIndex + 1) % 3;
+        switchCard(cardIds[nextIndex]);
+      }
+    }, 4000);
+  }
+  
+  // 마우스 호버시 자동 회전 일시정지 제거 (전환 문제 해결)
+  // cardContainer.addEventListener('mouseenter', () => {
+  //   isPaused = true;
+  // });
+  // 
+  // cardContainer.addEventListener('mouseleave', () => {
+  //   isPaused = false;
+  // });
+  
+  // 터치 이벤트 (모바일)
+  let touchStartX = 0;
+  let touchEndX = 0;
+  
+  cardContainer.addEventListener('touchstart', (e) => {
+    touchStartX = e.touches[0].clientX;
+  });
+  
+  cardContainer.addEventListener('touchend', (e) => {
+    touchEndX = e.changedTouches[0].clientX;
+    handleSwipe();
+  });
+  
+  function handleSwipe() {
+    const swipeThreshold = 50;
+    const diff = touchEndX - touchStartX;
+    
+    if (Math.abs(diff) > swipeThreshold) {
+      const cardIds = ['sync', 'balance', 'boost'];
+      const currentIndex = cardIds.indexOf(currentCard);
+      
+      if (diff > 0) {
+        // 오른쪽으로 스와이프 (이전 카드)
+        const prevIndex = (currentIndex - 1 + 3) % 3;
+        switchCard(cardIds[prevIndex]);
+      } else {
+        // 왼쪽으로 스와이프 (다음 카드)
+        const nextIndex = (currentIndex + 1) % 3;
+        switchCard(cardIds[nextIndex]);
+      }
+    }
+  }
+  
+  // 자동 회전 시작 (원하면 주석 해제)
+  // startAutoRotate();
+});
+</script>
+
+<!-- Training Cards Enhanced Styles -->
+<style>
+/* 카드 호버 효과 */
+.training-card {
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+}
+
+.training-card:not(.active):hover {
+  opacity: 0.85 !important;
+  cursor: pointer;
+}
+
+/* 호버 시 카드별 네온 효과 */
+#sync-card:not(.active):hover .card-front {
+  border-color: rgba(123,228,149,0.8) !important;
+  box-shadow: 0 0 15px rgba(123,228,149,0.4);
+}
+
+#balance-card:not(.active):hover .card-front {
+  border-color: rgba(147,197,253,0.8) !important;
+  box-shadow: 0 0 15px rgba(147,197,253,0.4);
+}
+
+#boost-card:not(.active):hover .card-front {
+  border-color: rgba(248,113,113,0.8) !important;
+  box-shadow: 0 0 15px rgba(248,113,113,0.4);
+}
+
+/* 각 카드별 네온 글로우 효과 */
+#sync-card.active .card-front {
+  box-shadow: 
+    0 0 30px rgba(123,228,149,0.6),
+    0 0 60px rgba(123,228,149,0.4),
+    0 0 90px rgba(123,228,149,0.2),
+    inset 0 0 30px rgba(123,228,149,0.1) !important;
+  border-color: #7BE495 !important;
+}
+
+#balance-card.active .card-front {
+  box-shadow: 
+    0 0 30px rgba(147,197,253,0.6),
+    0 0 60px rgba(147,197,253,0.4),
+    0 0 90px rgba(147,197,253,0.2),
+    inset 0 0 30px rgba(147,197,253,0.1) !important;
+  border-color: #93C5FD !important;
+}
+
+#boost-card.active .card-front {
+  box-shadow: 
+    0 0 30px rgba(248,113,113,0.6),
+    0 0 60px rgba(248,113,113,0.4),
+    0 0 90px rgba(248,113,113,0.2),
+    inset 0 0 30px rgba(248,113,113,0.1) !important;
+  border-color: #F87171 !important;
+}
+
+/* 인디케이터 개선 */
+.card-indicators {
+  position: relative;
+  z-index: 20;
+}
+
+.card-indicators .indicator {
+  position: relative;
+  width: 14px !important;
+  height: 14px !important;
+  border-width: 2px !important;
+  transition: all 0.3s ease !important;
+  outline: none;
+}
+
+.card-indicators .indicator:hover {
+  transform: scale(1.2);
+  box-shadow: 0 0 10px currentColor;
+}
+
+.card-indicators .indicator.active {
+  width: 16px !important;
+  height: 16px !important;
+  box-shadow: 
+    0 0 15px currentColor,
+    0 0 30px currentColor;
+}
+
+/* 각 카드별 제목 네온 효과 */
+#sync-card h3 {
+  color: #7BE495 !important;
+  text-shadow: 
+    0 0 10px #7BE495,
+    0 0 20px #7BE495,
+    0 0 30px #7BE495,
+    0 0 40px rgba(123,228,149,0.5) !important;
+}
+
+#balance-card h3 {
+  color: #93C5FD !important;
+  text-shadow: 
+    0 0 10px #93C5FD,
+    0 0 20px #93C5FD,
+    0 0 30px #93C5FD,
+    0 0 40px rgba(147,197,253,0.5) !important;
+}
+
+#boost-card h3 {
+  color: #F87171 !important;
+  text-shadow: 
+    0 0 10px #F87171,
+    0 0 20px #F87171,
+    0 0 30px #F87171,
+    0 0 40px rgba(248,113,113,0.5) !important;
+}
+
+/* 카드 내부 텍스트 네온 효과 */
+#sync-card.active p {
+  color: #fff;
+  text-shadow: 0 0 5px rgba(123,228,149,0.5);
+}
+
+#balance-card.active p {
+  color: #fff;
+  text-shadow: 0 0 5px rgba(147,197,253,0.5);
+}
+
+#boost-card.active p {
+  color: #fff;
+  text-shadow: 0 0 5px rgba(248,113,113,0.5);
+}
+
+/* 모바일 최적화 */
+@media (max-width: 768px) {
+  .training-cards-container {
+    height: 400px !important;
+    margin: 20px 0 !important;
+  }
+  
+  .training-card {
+    width: 280px !important;
+    height: 360px !important;
+    transition: all 0.25s ease-out !important;
+  }
+  
+  .training-card:not(.active) {
+    transform: translateX(-50%) translateY(-50%) translateX(var(--mobile-x, 0)) translateZ(-100px) rotateY(var(--mobile-rotate, 0deg)) scale(0.75) !important;
+  }
+  
+  #balance-card:not(.active) {
+    --mobile-x: -220px;
+    --mobile-rotate: 15deg;
+  }
+  
+  #boost-card:not(.active) {
+    --mobile-x: 220px;
+    --mobile-rotate: -15deg;
+  }
+  
+  .card-indicators {
+    gap: 20px !important;
+    margin-top: 40px !important;
+  }
+  
+  .card-indicators .indicator {
+    width: 16px !important;
+    height: 16px !important;
+  }
+  
+  .card-indicators .indicator.active {
+    width: 18px !important;
+    height: 18px !important;
+  }
+}
+
+/* 부드러운 전환 효과 */
+.training-card * {
+  transition: inherit;
+}
+
+/* 접근성 개선 */
+.card-indicators .indicator:focus {
+  outline: 2px solid #7BE495;
+  outline-offset: 4px;
+}
+
+/* 카드 전환 효과 간소화 */
+.training-card .card-front {
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position: relative;
+  overflow: hidden;
+}
+
+/* 카드 모서리 깔끔하게 */
+.training-card .card-inner {
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+/* 카드 내부 콘텐츠 스타일 */
+.training-card img {
+  transition: opacity 0.3s ease;
+}
+
+/* 인디케이터 연결선 효과 */
+.card-indicators::before {
+  content: '';
+  position: absolute;
+  bottom: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #7BE495 20%, #93C5FD 50%, #F87171 80%, transparent);
+  opacity: 0.3;
+  z-index: -1;
+}
+
+/* 카드 컨테이너 스타일 */
+.training-cards-container {
+  position: relative;
+  height: 500px;
+  margin: 0 auto;
+  perspective: 1000px;
+}
+
+/* 인디케이터 리플 효과 */
+@keyframes ripple {
+  0% {
+    box-shadow: 0 0 0 0 currentColor;
+  }
+  100% {
+    box-shadow: 0 0 0 10px transparent;
+  }
+}
+
+.card-indicators .indicator.active {
+  animation: ripple 1.5s infinite;
+}
+
+/* 카드 모서리 및 테두리 정리 */
+.training-card {
+  background: transparent !important;
+  border: none !important;
+}
+
+.training-card .card-inner {
+  background: transparent !important;
+  border: none !important;
+}
+
+.training-card .card-front {
+  border-radius: 20px !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+  height: 100% !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+}
+
+/* 각 카드별 테두리 네온 애니메이션 */
+@keyframes syncGlow {
+  0% {
+    box-shadow: 
+      0 0 20px #7BE495,
+      0 0 40px #7BE495,
+      0 0 60px rgba(123,228,149,0.5);
+  }
+  50% {
+    box-shadow: 
+      0 0 30px #7BE495,
+      0 0 60px #7BE495,
+      0 0 80px rgba(123,228,149,0.7);
+  }
+  100% {
+    box-shadow: 
+      0 0 20px #7BE495,
+      0 0 40px #7BE495,
+      0 0 60px rgba(123,228,149,0.5);
+  }
+}
+
+@keyframes balanceGlow {
+  0% {
+    box-shadow: 
+      0 0 20px #93C5FD,
+      0 0 40px #93C5FD,
+      0 0 60px rgba(147,197,253,0.5);
+  }
+  50% {
+    box-shadow: 
+      0 0 30px #93C5FD,
+      0 0 60px #93C5FD,
+      0 0 80px rgba(147,197,253,0.7);
+  }
+  100% {
+    box-shadow: 
+      0 0 20px #93C5FD,
+      0 0 40px #93C5FD,
+      0 0 60px rgba(147,197,253,0.5);
+  }
+}
+
+@keyframes boostGlow {
+  0% {
+    box-shadow: 
+      0 0 20px #F87171,
+      0 0 40px #F87171,
+      0 0 60px rgba(248,113,113,0.5);
+  }
+  50% {
+    box-shadow: 
+      0 0 30px #F87171,
+      0 0 60px #F87171,
+      0 0 80px rgba(248,113,113,0.7);
+  }
+  100% {
+    box-shadow: 
+      0 0 20px #F87171,
+      0 0 40px #F87171,
+      0 0 60px rgba(248,113,113,0.5);
+  }
+}
+
+#sync-card.active .card-front {
+  animation: syncGlow 2s ease-in-out infinite;
+}
+
+#balance-card.active .card-front {
+  animation: balanceGlow 2s ease-in-out infinite;
+}
+
+#boost-card.active .card-front {
+  animation: boostGlow 2s ease-in-out infinite;
+}
+
+/* 비활성 카드 스타일 */
+.training-card:not(.active) {
+  opacity: 0.7;
+}
+
+/* 비활성 카드의 테두리 색상 감소 */
+#sync-card:not(.active) .card-front {
+  border-color: rgba(123,228,149,0.5) !important;
+}
+
+#balance-card:not(.active) .card-front {
+  border-color: rgba(147,197,253,0.5) !important;
+}
+
+#boost-card:not(.active) .card-front {
+  border-color: rgba(248,113,113,0.5) !important;
+}
+
+/* 모바일 터치 피드백 */
+@media (max-width: 768px) {
+  .training-card:active {
+    transform: translateX(-50%) translateY(-50%) translateZ(0) scale(0.98) !important;
+  }
+  
+  .card-indicators .indicator:active {
+    transform: scale(0.9);
+  }
+}
+
+/* 다크 모드 대응 */
+@media (prefers-color-scheme: dark) {
+  .training-card .card-front {
+    background: linear-gradient(135deg, rgba(0,0,0,0.8), rgba(0,0,0,0.6));
+  }
+}
+
+/* 고대비 모드 대응 */
+@media (prefers-contrast: high) {
+  .training-card {
+    border-width: 3px !important;
+  }
+  
+  .card-indicators .indicator {
+    border-width: 3px !important;
+  }
+}
+
+/* 움직임 감소 모드 대응 */
+@media (prefers-reduced-motion: reduce) {
+  .training-card,
+  .card-indicators .indicator {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* 카드 내부 스타일 추가 정리 */
+.training-card .card-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.3s;
+  border-radius: 20px;
+}
+
+.training-card .card-front > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* 빠른 전환을 위한 최적화 */
+.training-card {
+  will-change: transform, opacity;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-perspective: 1000;
+  perspective: 1000;
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+}
+
+/* 각 카드별 외부 네온 효과 */
+#sync-card.active {
+  filter: drop-shadow(0 0 20px rgba(123,228,149,0.6));
+}
+
+#balance-card.active {
+  filter: drop-shadow(0 0 20px rgba(147,197,253,0.6));
+}
+
+#boost-card.active {
+  filter: drop-shadow(0 0 20px rgba(248,113,113,0.6));
+}
+
+/* 카드 외부 모서리 감추기 */
+.training-card::before,
+.training-card::after,
+.training-card .card-inner::before,
+.training-card .card-inner::after {
+  display: none !important;
+}
+
+/* 카드 front만 스타일 적용 */
+.training-card .card-front {
+  -webkit-clip-path: inset(0 round 20px);
+  clip-path: inset(0 round 20px);
+}
+</style>
 </body>
 <script>
 // 즉시 실행 - DOM 파싱 전에도 실행 (네오 스마트 + 네오 하이브 영상 모두 처리)
