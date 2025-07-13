@@ -3359,7 +3359,7 @@ html body .core-value-fresh-mobile {
           <div class="mobile-video-container" style="display: none; position: absolute; top: 0; left: 0; right: 0; bottom: 0; opacity: 0; transition: opacity 0.5s ease;">
             <h4 style="color: #7BE495; font-size: 1.5rem; margin-bottom: 20px; text-align: center;">실제 사용 화면</h4>
             <div class="phone-frame" style="width: 240px; height: 480px; margin: 0 auto; border-radius: 30px; border: 4px solid #7BE495; overflow: hidden; position: relative; box-shadow: 0 0 40px rgba(123, 228, 149, 0.5); background: #000;">
-              <video id="mobilePreviewVideo" src="./videos/neofits.mp4" autoplay loop muted playsinline style="width: 100%; height: 100%; object-fit: cover;">
+              <video id="mobilePreviewVideo" src="./videos/neofits.mp4" loop muted playsinline style="width: 100%; height: 100%; object-fit: cover;">
               </video>
               <!-- 스피커 버튼 -->
               <div class="speaker-button-wrapper" style="position: absolute; top: 10px; right: 10px; z-index: 10;">
@@ -3525,6 +3525,10 @@ function toggleVideoPreview() {
   const video = document.getElementById('mobilePreviewVideo');
   
   if (cardDisplay && videoContainer && video) {
+    // 비디오를 처음부터 준비
+    video.pause();
+    video.currentTime = 0;
+    
     // 카드 UI 페이드 아웃
     cardDisplay.style.opacity = '0';
     cardDisplay.style.transform = 'scale(0.95)';
@@ -3533,11 +3537,13 @@ function toggleVideoPreview() {
       cardDisplay.style.display = 'none';
       videoContainer.style.display = 'block';
       
-      // 영상 컨테이너 페이드 인
+      // 영상 컨테이너 페이드 인 후 재생
       setTimeout(() => {
         videoContainer.style.opacity = '1';
-        video.currentTime = 0;
-        video.play();
+        // 지연 후 재생 시작
+        setTimeout(() => {
+          video.play();
+        }, 100);
       }, 50);
     }, 500);
   }
@@ -3552,6 +3558,7 @@ function closeInlineVideo() {
     // 영상 페이드 아웃
     videoContainer.style.opacity = '0';
     video.pause();
+    video.currentTime = 0; // 닫을 때도 처음으로 리셋
     
     setTimeout(() => {
       videoContainer.style.display = 'none';
