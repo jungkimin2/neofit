@@ -78,26 +78,38 @@
     margin-bottom: 40px !important;
   }
   
-  /* NFC 카드와 핸드폰 이미지 위치 조정 */
+  /* NFC 카드와 핸드폰 이미지 위치 조정 - 캡처 이미지 기준 */
   #smart .neos-wrapper {
-    left: 20% !important;
-    transform: translate(-50%, -50%) scale(0.35) !important;
+    left: 30% !important;
+    top: 50% !important;
+    transform: translate(-50%, -50%) scale(0.5) !important;
+    width: 400px !important;
+    z-index: 10 !important;
   }
   
   #smart .floating-video {
     width: 180px !important;
     height: 360px !important;
-    right: 20px !important;
-    left: auto !important;
+    position: absolute !important;
+    left: 50% !important;
     top: 50% !important;
-    transform: translateY(-50%) !important;
+    transform: translate(-50%, -50%) !important;
+    z-index: 20 !important;
   }
   
-  /* 뒷면 보기 버튼 위치 조정 */
+  /* 뒷면 보기 버튼 위치 조정 - NFC 카드 바로 아래 */
   #smart .neos-category-tags {
-    bottom: 80px !important;
-    left: 20% !important;
+    bottom: 40px !important;
+    left: 30% !important;
     transform: translateX(-50%) !important;
+    z-index: 15 !important;
+  }
+  
+  /* NEO-S 카드 이미지 스타일 */
+  #smart .neo-smart-logo.front {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
   }
   
   /* hive 섹션 위로 올리기 - 3칸(48px) 추가 */
