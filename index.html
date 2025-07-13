@@ -615,13 +615,13 @@ div > p.smart-guide-text {
   #sync-card.active ~ #balance-card {
     transform: translateX(-50%) translateY(calc(-50% - 48px)) translateX(-150px) translateZ(-50px) rotateY(25deg) scale(0.85) !important;
     z-index: 10 !important;
-    opacity: 0.8 !important;
+    opacity: 0.9 !important;
   }
   
   #sync-card.active ~ #boost-card {
     transform: translateX(-50%) translateY(calc(-50% - 48px)) translateX(150px) translateZ(-50px) rotateY(-25deg) scale(0.85) !important;
     z-index: 10 !important;
-    opacity: 0.8 !important;
+    opacity: 0.9 !important;
   }
   
   /* 밸런스가 중앙일 때 */
@@ -668,19 +668,28 @@ div > p.smart-guide-text {
     border-width: 2px !important;
   }
   
-  /* 네오 싱크 카드 배경색 */
+  /* 네오 싱크 카드 배경색 - 더 진한 배경과 글라스모피즘 효과 */
   #sync-card .card-front {
-    background: linear-gradient(135deg, rgba(0,0,0,0.9) 0%, rgba(123,228,149,0.1) 100%) !important;
+    background: linear-gradient(135deg, rgba(10,15,13,0.95) 0%, rgba(123,228,149,0.15) 100%) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    box-shadow: 0 8px 32px rgba(123,228,149,0.2), inset 0 1px 0 rgba(255,255,255,0.1) !important;
   }
   
-  /* 네오 밸런스 카드 배경색 */
+  /* 네오 밸런스 카드 배경색 - 더 진한 배경과 글라스모피즘 효과 */
   #balance-card .card-front {
-    background: linear-gradient(135deg, rgba(0,0,0,0.9) 0%, rgba(147,197,253,0.1) 100%) !important;
+    background: linear-gradient(135deg, rgba(10,13,15,0.95) 0%, rgba(147,197,253,0.15) 100%) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    box-shadow: 0 8px 32px rgba(147,197,253,0.2), inset 0 1px 0 rgba(255,255,255,0.1) !important;
   }
   
-  /* 네오 부스트 카드 배경색 */
+  /* 네오 부스트 카드 배경색 - 더 진한 배경과 글라스모피즘 효과 */
   #boost-card .card-front {
-    background: linear-gradient(135deg, rgba(0,0,0,0.9) 0%, rgba(248,113,113,0.1) 100%) !important;
+    background: linear-gradient(135deg, rgba(15,10,10,0.95) 0%, rgba(248,113,113,0.15) 100%) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    box-shadow: 0 8px 32px rgba(248,113,113,0.2), inset 0 1px 0 rgba(255,255,255,0.1) !important;
   }
   
   .training-card h3 {
@@ -5964,13 +5973,13 @@ document.addEventListener('DOMContentLoaded', function() {
           break;
         case 'left':
           card.style.transform = 'translateX(-50%) translateY(calc(-50% - 48px)) translateX(-150px) translateZ(-50px) rotateY(25deg) scale(0.85)';
-          card.style.opacity = '0.8';
+          card.style.opacity = '0.9';
           card.style.zIndex = '10';
           card.classList.remove('active');
           break;
         case 'right':
           card.style.transform = 'translateX(-50%) translateY(calc(-50% - 48px)) translateX(150px) translateZ(-50px) rotateY(-25deg) scale(0.85)';
-          card.style.opacity = '0.8';
+          card.style.opacity = '0.9';
           card.style.zIndex = '10';
           card.classList.remove('active');
           break;
