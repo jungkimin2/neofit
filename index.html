@@ -312,12 +312,12 @@ br.mobile-only {
 @media (max-width: 768px) {
   /* 모바일에서 네오핏 제목과 설명 크기 조정 */
   .neofit-title {
-    font-size: 1.1rem !important;
+    font-size: 1.0rem !important;
     margin-bottom: 20px !important;
     padding: 0 20px !important;
     text-align: left !important;
-    white-space: nowrap !important;
-    overflow: hidden !important;
+    display: flex !important;
+    flex-wrap: nowrap !important;
   }
   
   .neofit-description {
@@ -405,21 +405,21 @@ br.mobile-only {
   /* NEO BALANCE - 왼쪽 뒤에 살짝 보이게 */
   #balance-card {
     transform: translateX(-50%) translateY(-50%) !important;
-    left: 20% !important;
+    left: 5% !important;
     top: 50% !important;
-    opacity: 1 !important;
+    opacity: 0.9 !important;
     z-index: 1 !important;
-    scale: 0.95 !important;
+    scale: 0.9 !important;
   }
   
   /* NEO BOOST - 오른쪽 뒤에 살짝 보이게 */
   #boost-card {
     transform: translateX(-50%) translateY(-50%) !important;
-    left: 80% !important;
+    left: 95% !important;
     top: 50% !important;
-    opacity: 1 !important;
+    opacity: 0.9 !important;
     z-index: 1 !important;
-    scale: 0.95 !important;
+    scale: 0.9 !important;
   }
 .neo-smart-logo.front {
 display: block !important;
