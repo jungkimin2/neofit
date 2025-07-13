@@ -630,24 +630,68 @@ div > p.smart-guide-text {
     box-shadow: 0 10px 40px rgba(0,0,0,0.5) !important;
   }
   
-  /* 활성 카드 위치 조정 - 중앙에 작게 */
+  /* 모든 카드 동일한 크기로 설정 */
+  .training-card {
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  }
+  
+  /* 활성 카드 위치 조정 - 중앙에 위치 */
   .training-card.active {
-    transform: translateX(-50%) translateY(-50%) translateZ(20px) scale(0.9) !important;
+    transform: translateX(-50%) translateY(-50%) translateZ(50px) !important;
     z-index: 3 !important;
     opacity: 1 !important;
   }
   
-  /* 비활성 카드 위치 조정 - 좌우에 더 크고 가깝게 배치 */
-  #balance-card:not(.active) {
-    transform: translateX(-50%) translateY(-50%) translateX(-90px) translateZ(-50px) rotateY(15deg) scale(0.8) !important;
-    opacity: 0.9 !important;
-    z-index: 2 !important;
+  /* 비활성 카드 위치 조정 - 기본값 */
+  .training-card:not(.active) {
+    opacity: 0.85 !important;
   }
   
-  #boost-card:not(.active) {
-    transform: translateX(-50%) translateY(-50%) translateX(90px) translateZ(-50px) rotateY(-15deg) scale(0.8) !important;
-    opacity: 0.9 !important;
-    z-index: 2 !important;
+  /* 싱크가 중앙일 때 (기본 상태) */
+  #sync-card.active {
+    transform: translateX(-50%) translateY(-50%) translateZ(50px) !important;
+  }
+  
+  #sync-card.active ~ #balance-card {
+    transform: translateX(-50%) translateY(-50%) translateX(-100px) translateZ(-30px) rotateY(20deg) !important;
+    z-index: 1 !important;
+  }
+  
+  #sync-card.active ~ #boost-card {
+    transform: translateX(-50%) translateY(-50%) translateX(100px) translateZ(-30px) rotateY(-20deg) !important;
+    z-index: 1 !important;
+  }
+  
+  /* 밸런스가 중앙일 때 */
+  #balance-card.active {
+    transform: translateX(-50%) translateY(-50%) translateZ(50px) !important;
+  }
+  
+  #balance-card.active ~ #boost-card {
+    transform: translateX(-50%) translateY(-50%) translateX(100px) translateZ(-30px) rotateY(-20deg) !important;
+    z-index: 1 !important;
+  }
+  
+  /* 모바일에서 밸런스가 활성일 때 싱크 카드 위치 */
+  .training-cards-container.balance-active #sync-card {
+    transform: translateX(-50%) translateY(-50%) translateX(-100px) translateZ(-30px) rotateY(20deg) !important;
+    z-index: 1 !important;
+  }
+  
+  /* 부스트가 중앙일 때 */
+  #boost-card.active {
+    transform: translateX(-50%) translateY(-50%) translateZ(50px) !important;
+  }
+  
+  /* 모바일에서 부스트가 활성일 때 다른 카드들 위치 */
+  .training-cards-container.boost-active #sync-card {
+    transform: translateX(-50%) translateY(-50%) translateX(-100px) translateZ(-30px) rotateY(20deg) !important;
+    z-index: 1 !important;
+  }
+  
+  .training-cards-container.boost-active #balance-card {
+    transform: translateX(-50%) translateY(-50%) translateX(100px) translateZ(-30px) rotateY(-20deg) !important;
+    z-index: 1 !important;
   }
   
   /* 카드 내부 콘텐츠 크기 조정 */
@@ -5951,6 +5995,12 @@ document.addEventListener('DOMContentLoaded', function() {
   function switchCard(targetId) {
     if (isAnimating || targetId === currentCard) return;
     isAnimating = true;
+    
+    // 모바일에서 컨테이너 클래스 업데이트
+    if (window.innerWidth <= 768) {
+      cardContainer.classList.remove('sync-active', 'balance-active', 'boost-active');
+      cardContainer.classList.add(targetId + '-active');
+    }
     
     // 이전 카드 위치 설정
     if (currentCard === 'sync') {
