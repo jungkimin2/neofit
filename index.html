@@ -614,65 +614,107 @@ div > p.smart-guide-text {
 @media (max-width: 768px) {
   /* 카드 컨테이너 위치 조정 - 화면 중앙에 보이도록 */
   .training-cards-container {
-    height: 420px !important;
-    margin: 20px 0 40px 0 !important;
-    padding: 10px 0 !important;
+    height: 600px !important;
+    margin: 40px 0 60px 0 !important;
+    padding: 20px 0 !important;
     position: relative !important;
-    top: -30px !important; /* 위로 올림 */
+    top: 0 !important;
+    perspective: 800px !important;
   }
   
   /* 카드 크기 조정 */
   .training-card {
-    width: 240px !important;
-    height: 320px !important;
+    width: 280px !important;
+    height: 380px !important;
+    border-radius: 24px !important;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5) !important;
   }
   
-  /* 활성 카드 위치 조정 */
+  /* 활성 카드 위치 조정 - 중앙에 크게 */
   .training-card.active {
-    transform: translateX(-50%) translateY(-50%) translateZ(0) scale(1) !important;
+    transform: translateX(-50%) translateY(-50%) translateZ(50px) scale(1.05) !important;
+    z-index: 3 !important;
+    opacity: 1 !important;
   }
   
-  /* 비활성 카드 위치 조정 */
+  /* 비활성 카드 위치 조정 - 3D 원근감 있게 배치 */
   #balance-card:not(.active) {
-    --mobile-x: -160px;
-    --mobile-rotate: 10deg;
+    transform: translateX(-50%) translateY(-50%) translateX(-120px) translateZ(-100px) rotateY(25deg) scale(0.85) !important;
+    opacity: 0.8 !important;
+    z-index: 1 !important;
   }
   
   #boost-card:not(.active) {
-    --mobile-x: 160px;
-    --mobile-rotate: -10deg;
+    transform: translateX(-50%) translateY(-50%) translateX(120px) translateZ(-100px) rotateY(-25deg) scale(0.85) !important;
+    opacity: 0.8 !important;
+    z-index: 1 !important;
   }
   
   /* 카드 내부 콘텐츠 크기 조정 */
   .training-card .card-front {
-    padding: 20px !important;
+    padding: 30px 25px !important;
+    border-width: 2.5px !important;
+    background: linear-gradient(135deg, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.85) 100%) !important;
   }
   
   .training-card h3 {
-    font-size: 1rem !important;
-    margin-bottom: 8px !important;
+    font-size: 1.4rem !important;
+    margin-bottom: 20px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.5px !important;
   }
   
   .training-card img {
-    width: 60px !important;
-    height: 60px !important;
-    margin: 10px 0 !important;
+    width: 120px !important;
+    height: 120px !important;
+    margin: 20px 0 !important;
+    object-fit: contain !important;
   }
   
   .training-card p {
-    font-size: 0.8rem !important;
-    line-height: 1.3 !important;
+    font-size: 0.95rem !important;
+    line-height: 1.4 !important;
+    margin-bottom: 8px !important;
+  }
+  
+  .training-card p:first-of-type {
+    font-weight: 600 !important;
+    color: #fff !important;
+  }
+  
+  .training-card p:last-of-type {
+    font-size: 0.85rem !important;
+    opacity: 0.8 !important;
   }
   
   /* 인디케이터 위치 조정 */
   .card-indicators {
-    margin-top: 20px !important;
-    gap: 15px !important;
+    margin-top: 40px !important;
+    gap: 20px !important;
+    position: relative !important;
+    z-index: 10 !important;
+  }
+  
+  .card-indicators .indicator {
+    width: 14px !important;
+    height: 14px !important;
+    border-width: 2.5px !important;
   }
   
   /* 섹션 패딩 조정 */
-  section:has(.training-cards-container) {
-    padding: 40px 20px 20px !important;
+  section#neofit-training {
+    padding: 60px 15px 40px !important;
+  }
+  
+  /* 비디오 효과 조정 */
+  .training-card .sync-hover-video {
+    opacity: 0.15 !important;
+  }
+  
+  /* 터치 애니메이션 개선 */
+  .training-card {
+    -webkit-tap-highlight-color: transparent !important;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
   }
 }
 </style>
