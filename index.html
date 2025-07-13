@@ -80,10 +80,10 @@
   
   /* NFC 카드와 핸드폰 이미지 위치 조정 - 캡처 이미지 기준 */
   #smart .neos-wrapper {
-    left: 25% !important;
+    left: 20% !important;  /* 25%에서 20%로 변경 (2칸 왼쪽) */
     top: 45% !important;
-    transform: translate(-50%, -50%) scale(0.85) !important;  /* 0.7에서 0.85로 크기 증가 */
-    width: 320px !important;  /* 300px에서 320px로 증가 */
+    transform: translate(-50%, -50%) scale(1.0) !important;  /* 0.85에서 1.0으로 크기 증가 */
+    width: 350px !important;  /* 320px에서 350px로 증가 */
     z-index: 10 !important;
   }
   
@@ -91,8 +91,11 @@
   #smart .flipper {
     width: 100% !important;
     height: 100% !important;
+    position: relative !important;
+    transform-style: preserve-3d !important;
   }
   
+  /* 앞면과 뒷면이 정확히 같은 위치에 겹치도록 설정 */
   #smart .neo-smart-logo.front,
   #smart .flipper .back {
     position: absolute !important;
@@ -101,6 +104,12 @@
     width: 100% !important;
     height: 100% !important;
     backface-visibility: hidden !important;
+    -webkit-backface-visibility: hidden !important;
+  }
+  
+  /* 뒷면은 뒤집어진 상태로 */
+  #smart .flipper .back {
+    transform: rotateY(180deg) !important;
   }
   
   #smart .floating-video {
@@ -117,8 +126,8 @@
   /* 뒷면 보기 버튼 위치 조정 - NFC 카드 바로 아래 */
   #smart .neos-category-tags {
     position: absolute !important;
-    bottom: 20px !important;
-    left: 25% !important;
+    bottom: -50px !important;  /* 카드 바로 아래에 위치 */
+    left: 20% !important;  /* 카드와 같은 left 값 */
     transform: translateX(-50%) !important;
     z-index: 15 !important;
   }
