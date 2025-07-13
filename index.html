@@ -312,10 +312,11 @@ br.mobile-only {
 @media (max-width: 768px) {
   /* 모바일에서 네오핏 제목과 설명 크기 조정 */
   .neofit-title {
-    font-size: 1.5rem !important;
+    font-size: 1.2rem !important;
     margin-bottom: 20px !important;
     white-space: nowrap !important;
-    padding: 0 10px !important;
+    padding: 0 5px !important;
+    overflow: hidden !important;
   }
   
   .neofit-description {
@@ -2174,8 +2175,8 @@ document.addEventListener('DOMContentLoaded', function() {
       <span class="pc-only">네오핏 : </span><span class="mobile-only" style="color: #FFFFFF;">새로운 피트니스, </span><span class="neon-green mobile-text-format">"<span class="pc-only">새로운 피트니스, </span>함께하는 문화"</span>
     </h1>
     <p class="neofit-description" style="font-size: 1.3rem; color: #aaa; margin-bottom: 50px; line-height: 1.8;">
-      네오핏은 <span class="neon-green">1~4명이 팀을 이루어</span> 함께 운동하는<br class="mobile-only">
-      <span class="neon-green">팀 기반 그룹 트레이닝</span> 시스템입니다.<br>
+      <span class="pc-only">네오핏은 <span class="neon-green">1~4명이 팀을 이루어</span> 함께 운동하는 <span class="neon-green">팀 기반 그룹 트레이닝</span> 시스템입니다.</span>
+      <span class="mobile-only">네오핏은 <span class="neon-green">1~4명이</span> 함께 운동하는<br><span class="neon-green">팀 기반 그룹 트레이닝</span> 시스템입니다.</span><br>
       <span class="neon-green">체계적인 단계별 프로그램</span>을 통해 기초부터<br class="mobile-only"> 
       퍼포먼스까지 <span class="neon-green">함께 성장</span>합니다.
     </p>
