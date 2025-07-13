@@ -51,131 +51,6 @@
     position: relative !important;
   }
   
-  /* 네오 스마트 섹션 내부 요소 정렬 수정 */
-  #smart .container {
-    padding: 0 15px !important;
-  }
-  
-  #smart h2 {
-    font-size: 1.8rem !important;
-    margin-bottom: 16px !important;
-    padding: 0 10px !important;
-    text-align: left !important;
-  }
-  
-  #smart p {
-    font-size: 0.9rem !important;
-    line-height: 1.6 !important;
-    margin-bottom: 30px !important;  /* 40px에서 30px로 감소 (0.1 줄임) */
-    padding: 0 10px !important;
-    text-align: left !important;
-  }
-  
-  /* 네오 스마트 쇼케이스 위치 조정 */
-  #smart .hive-showcase {
-    height: 450px !important;
-    margin-top: 20px !important;
-    margin-bottom: 40px !important;
-  }
-  
-  /* NFC 카드와 핸드폰 이미지 위치 조정 - 캡처 이미지 기준 */
-  #smart .neos-wrapper {
-    left: 35% !important;  /* 카드를 더 중앙으로 */
-    top: 50% !important;
-    transform: translate(-50%, -50%) scale(1.2) !important;  /* 더 크게 조정 */
-    width: 400px !important;  /* 더 크게 조정 */
-    z-index: 10 !important;
-  }
-  
-  /* 플립 효과를 위한 앞면/뒷면 위치 동일하게 설정 */
-  #smart .flipper {
-    width: 100% !important;
-    height: 100% !important;
-    position: relative !important;
-    transform-style: preserve-3d !important;
-  }
-  
-  /* 앞면과 뒷면이 정확히 같은 위치에 겹치도록 설정 */
-  #smart .neo-smart-logo.front,
-  #smart .flipper .back {
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100% !important;
-    height: 100% !important;
-    backface-visibility: hidden !important;
-    -webkit-backface-visibility: hidden !important;
-  }
-  
-  /* 뒷면은 뒤집어진 상태로 */
-  #smart .flipper .back {
-    transform: rotateY(180deg) translateY(-32px) !important;  /* 2칸 위로 이동 */
-  }
-  
-  /* 인라인 스타일 덮어쓰기를 위한 더 구체적인 선택자 */
-  #smart .flipper img.back[src*="neo121.png"] {
-    transform: rotateY(180deg) translateY(-96px) !important;  /* 6칸 위로 이동 (2칸 더 추가) */
-    top: -64px !important;  /* top도 추가로 위로 이동 (2칸 더) */
-    left: 0 !important;
-    position: absolute !important;
-    width: 100% !important;
-    height: 100% !important;
-  }
-  
-  /* 더 구체적인 선택자로 강제 적용 */
-  html body #smart .flipper img[src*="neo121.png"].back {
-    transform: rotateY(180deg) translateY(-96px) !important;
-    top: -64px !important;
-  }
-  
-  /* neost.png 앞면 이미지 크기 조정 */
-  #smart .flipper img.neo-smart-logo.front[src*="neost.png"] {
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: contain !important;
-  }
-  
-  #smart .floating-video,
-  #smart .neo-smart-video {
-    width: 180px !important;
-    height: 360px !important;
-    position: absolute !important;
-    right: 15px !important;
-    left: auto !important;
-    top: 45% !important;  /* 카드와 같은 높이로 조정 */
-    transform: translateY(-50%) translateY(-64px) !important;  /* 4칸 위로 추가 (2칸 더) */
-    z-index: 20 !important;
-  }
-  
-  /* 더 구체적인 선택자로 강제 적용 */
-  section#smart .hive-showcase .floating-video,
-  section#smart .hive-showcase .neo-smart-video {
-    top: 45% !important;
-    transform: translateY(-50%) translateY(-64px) !important;  /* 4칸 위로 추가 (2칸 더) */
-  }
-  
-  /* 뒷면 보기 버튼 위치 조정 - NFC 카드 바로 아래 */
-  #smart .neos-category-tags {
-    position: absolute !important;
-    top: 63% !important;  /* 67%에서 63%로 변경 (1칸 더 위로) */
-    left: 35% !important;  /* 카드와 같은 수평 위치 */
-    transform: translateX(-50%) !important;
-    z-index: 15 !important;
-    margin-top: 0px !important;
-  }
-  
-  /* 더 구체적인 선택자로 강제 적용 */
-  section#smart .hive-showcase .neos-category-tags,
-  section#smart .neos-wrapper .neos-category-tags {
-    left: 35% !important;
-    transform: translateX(-50%) !important;
-  }
-  
-  /* NEO-S 카드 이미지 스타일 */
-  #smart .neo-smart-logo.front {
-    object-fit: contain !important;
-  }
-  
   /* hive 섹션 위로 올리기 - 3칸(48px) 추가 */
   #hive {
     transform: translateY(-128px) !important;  /* -80px에서 -128px로 변경 (48px 추가) */
@@ -3328,8 +3203,7 @@ html body .core-value-fresh-mobile {
 @media (max-width: 768px) {
   .neos-category-tags {
     position: absolute !important;
-    top: 352px !important; /* 368px에서 352px로 변경 (16px 더 위로 = 1칸 더 위로) */
-    bottom: auto !important; /* 인라인 bottom 스타일 무효화 */
+    top: 400px !important; /* 392px에서 400px로 변경 (8px 아래로 = 0.5칸 내림) */
     left: calc(50% - 48px) !important; /* 중앙에서 3칸(48px) 왼쪽으로 이동 */
     transform: translateX(-50%) !important;
     width: auto !important;
@@ -3339,26 +3213,12 @@ html body .core-value-fresh-mobile {
     touch-action: manipulation !important;
   }
   
-  /* 인라인 스타일 강제 덮어쓰기 */
-  html body div.neos-category-tags[style] {
-    top: 352px !important;
-    bottom: auto !important;
-  }
-  
   /* 모바일에서 스크롤 성능 개선 */
   .hive-showcase,
   .flip-container,
   .neos-wrapper {
     touch-action: pan-y !important; /* 수직 스크롤 허용 */
     -webkit-overflow-scrolling: touch !important; /* iOS 스크롤 부드럽게 */
-  }
-  
-  /* 전체 페이지 스크롤 차단 해제 */
-  body, html {
-    touch-action: pan-y !important;
-    -webkit-overflow-scrolling: touch !important;
-    overflow-x: hidden !important;
-    overflow-y: auto !important;
   }
   
   /* 뒷면보기 버튼 터치 영역 최적화 */
@@ -3469,7 +3329,7 @@ html body .core-value-fresh-mobile {
   /* 뒷면 이미지는 아래로 4칸 */
   .flipper .back,
   .back {
-    transform: translateY(32px) rotateY(180deg) !important;  /* 64px에서 32px로 변경 (2칸 위로) */
+    transform: translateY(64px) rotateY(180deg) !important;
   }
   
 
@@ -4796,9 +4656,7 @@ if (window.innerWidth <= 768) {
       /* 모바일에서 스크롤바 숨김 */
       body {
         overflow-x: hidden !important;
-        overflow-y: auto !important;
         -webkit-overflow-scrolling: touch !important;
-        touch-action: pan-y !important;
       }
       
       /* 브라우저별 스크롤바 숨김 */
@@ -7108,7 +6966,7 @@ document.addEventListener('DOMContentLoaded', function() {
       if (neoSmartVideo) {
         neoSmartVideo.style.setProperty('position', 'absolute', 'important');
         neoSmartVideo.style.setProperty('left', 'calc(50% + 64px)', 'important');
-        neoSmartVideo.style.setProperty('top', 'calc(50% + 32px)', 'important');
+        neoSmartVideo.style.setProperty('top', 'calc(50% + 64px)', 'important');
         neoSmartVideo.style.setProperty('transform', 'translate(-50%, -50%) rotate(-8deg)', 'important');
         neoSmartVideo.style.setProperty('-webkit-transform', 'translate(-50%, -50%) rotate(-8deg)', 'important');
         neoSmartVideo.style.setProperty('width', '180px', 'important');
@@ -8434,7 +8292,7 @@ div.video-phone[style],
   visibility: visible !important;
   opacity: 1 !important;
   position: absolute !important;
-  left: calc(15% - 184px) !important; /* 좌측으로 1칸(16px) 추가 이동 */
+  left: calc(15% - 168px) !important; /* 우측으로 1칸(16px) 추가 이동 */
   top: 50% !important;
   transform: translateY(-50%) !important;
   z-index: 200 !important;
