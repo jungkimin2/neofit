@@ -637,8 +637,8 @@ div > p.smart-guide-text {
   
   /* 활성 카드 위치 조정 - 중앙에 위치 */
   .training-card.active {
-    transform: translateX(-50%) translateY(-50%) !important;
-    z-index: 3 !important;
+    transform: translateX(-50%) translateY(-50%) translateZ(10px) !important;
+    z-index: 10 !important;
     opacity: 1 !important;
   }
   
@@ -650,7 +650,6 @@ div > p.smart-guide-text {
   /* 싱크가 중앙일 때 (기본 상태) */
   #sync-card.active {
     transform: translateX(-50%) translateY(-50%) translateZ(10px) !important;
-    z-index: 5 !important;
   }
   
   #sync-card.active ~ #balance-card {
@@ -665,34 +664,34 @@ div > p.smart-guide-text {
   
   /* 밸런스가 중앙일 때 */
   #balance-card.active {
-    transform: translateX(-50%) translateY(-50%) !important;
+    transform: translateX(-50%) translateY(-50%) translateZ(10px) !important;
   }
   
   #balance-card.active ~ #boost-card {
-    transform: translateX(-50%) translateY(-50%) translateX(80px) translateZ(-20px) rotateY(-15deg) !important;
-    z-index: 2 !important;
+    transform: translateX(-50%) translateY(-50%) translateX(80px) translateZ(-30px) rotateY(-15deg) !important;
+    z-index: 1 !important;
   }
   
   /* 모바일에서 밸런스가 활성일 때 싱크 카드 위치 */
   .training-cards-container.balance-active #sync-card {
-    transform: translateX(-50%) translateY(-50%) translateX(-80px) translateZ(-20px) rotateY(15deg) !important;
-    z-index: 2 !important;
+    transform: translateX(-50%) translateY(-50%) translateX(-80px) translateZ(-30px) rotateY(15deg) !important;
+    z-index: 1 !important;
   }
   
   /* 부스트가 중앙일 때 */
   #boost-card.active {
-    transform: translateX(-50%) translateY(-50%) !important;
+    transform: translateX(-50%) translateY(-50%) translateZ(10px) !important;
   }
   
   /* 모바일에서 부스트가 활성일 때 다른 카드들 위치 */
   .training-cards-container.boost-active #sync-card {
-    transform: translateX(-50%) translateY(-50%) translateX(-80px) translateZ(-20px) rotateY(15deg) !important;
-    z-index: 2 !important;
+    transform: translateX(-50%) translateY(-50%) translateX(-80px) translateZ(-30px) rotateY(15deg) !important;
+    z-index: 1 !important;
   }
   
   .training-cards-container.boost-active #balance-card {
-    transform: translateX(-50%) translateY(-50%) translateX(80px) translateZ(-20px) rotateY(-15deg) !important;
-    z-index: 2 !important;
+    transform: translateX(-50%) translateY(-50%) translateX(80px) translateZ(-30px) rotateY(-15deg) !important;
+    z-index: 1 !important;
   }
   
   /* 카드 내부 콘텐츠 크기 조정 */
