@@ -136,9 +136,16 @@
     position: absolute !important;
     top: 65% !important;  /* 카드 바로 아래에 위치하도록 top으로 변경 */
     left: 35% !important;  /* 20%에서 35%로 변경 (3칸 오른쪽) */
-    transform: translateX(-50%) !important;
+    transform: translateX(-50%) translateX(48px) !important;  /* 추가로 48px(3칸) 오른쪽 이동 */
     z-index: 15 !important;
     margin-top: 10px !important;  /* 카드와의 간격 */
+  }
+  
+  /* 더 구체적인 선택자로 강제 적용 */
+  section#smart .hive-showcase .neos-category-tags,
+  section#smart .neos-wrapper .neos-category-tags {
+    left: 35% !important;
+    transform: translateX(-50%) translateX(48px) !important;
   }
   
   /* NEO-S 카드 이미지 스타일 */
