@@ -386,15 +386,26 @@ br.mobile-only {
     display: none !important;
   }
   
-  /* 모바일에서 비활성 카드 숨기기 */
-  .training-card:not(.active) {
-    display: none !important;
+  /* 모바일에서 카드 위치 조정 */
+  .training-card {
+    opacity: 1 !important;
   }
   
-  /* 활성 카드 배경 불투명하게 */
-  .training-card.active .card-front {
-    background: #0A0F0D !important;
-    opacity: 1 !important;
+  .training-card.active {
+    z-index: 3 !important;
+    transform: translateX(-50%) translateY(-50%) translateZ(0) !important;
+  }
+  
+  #balance-card {
+    transform: translateX(-80%) translateY(-50%) translateZ(-100px) scale(0.9) !important;
+    opacity: 0.8 !important;
+    z-index: 1 !important;
+  }
+  
+  #boost-card {
+    transform: translateX(-20%) translateY(-50%) translateZ(-100px) scale(0.9) !important;
+    opacity: 0.8 !important;
+    z-index: 1 !important;
   }
 .neo-smart-logo.front {
 display: block !important;
