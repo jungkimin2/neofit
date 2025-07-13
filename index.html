@@ -3498,40 +3498,56 @@ function switchCard(type) {
 
 // 모바일 슬라이드 기능
 let currentSlide = 0;
-const slideContainer = document.querySelector('.slide-container');
-const indicators = document.querySelectorAll('.indicator');
+let slideContainer;
+let indicators;
 let touchStartX = 0;
 let touchEndX = 0;
 
 function goToSlide(index) {
+  // DOM 요소를 함수 호출 시점에 다시 찾기
+  if (!slideContainer) {
+    slideContainer = document.querySelector('.slide-container');
+  }
+  if (!indicators) {
+    indicators = document.querySelectorAll('.indicator');
+  }
+  
   currentSlide = index;
   if (slideContainer) {
     slideContainer.style.transform = `translateX(-${index * 100}%)`;
   }
   
   // 인디케이터 업데이트
-  indicators.forEach((indicator, i) => {
-    if (i === index) {
-      indicator.classList.add('active');
-      indicator.style.background = '#7BE495';
-    } else {
-      indicator.classList.remove('active');
-      indicator.style.background = 'rgba(123, 228, 149, 0.3)';
-    }
-  });
+  if (indicators) {
+    indicators.forEach((indicator, i) => {
+      if (i === index) {
+        indicator.classList.add('active');
+        indicator.style.background = '#7BE495';
+      } else {
+        indicator.classList.remove('active');
+        indicator.style.background = 'rgba(123, 228, 149, 0.3)';
+      }
+    });
+  }
 }
 
-// 터치 이벤트 처리
-if (slideContainer) {
-  slideContainer.addEventListener('touchstart', (e) => {
-    touchStartX = e.changedTouches[0].screenX;
-  }, { passive: true });
+// DOM이 로드된 후 이벤트 리스너 추가
+document.addEventListener('DOMContentLoaded', function() {
+  slideContainer = document.querySelector('.slide-container');
+  indicators = document.querySelectorAll('.indicator');
   
-  slideContainer.addEventListener('touchend', (e) => {
-    touchEndX = e.changedTouches[0].screenX;
-    handleSwipe();
-  }, { passive: true });
-}
+  // 터치 이벤트 처리
+  if (slideContainer) {
+    slideContainer.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+    
+    slideContainer.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+    }, { passive: true });
+  }
+});
 
 function handleSwipe() {
   const swipeThreshold = 50;
@@ -3547,6 +3563,9 @@ function handleSwipe() {
     }
   }
 }
+
+// 전역 함수로 노출 (인라인 onclick에서 호출 가능하도록)
+window.goToSlide = goToSlide;
 </script>
 
 <style>
