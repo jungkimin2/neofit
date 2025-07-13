@@ -388,38 +388,47 @@ br.mobile-only {
     display: none !important;
   }
   
-  /* 모바일에서 카드 위치 조정 */
+  /* 모바일에서 카드 위치 조정 - 3개 나란히 */
   .training-card {
     opacity: 1 !important;
     position: absolute !important;
+    width: 30% !important;
+    height: 320px !important;
   }
   
-  /* 활성 카드 (NEO SYNC) - 가장 앞에 */
+  /* 활성 카드 (NEO SYNC) - 중앙 */
   .training-card.active {
     z-index: 3 !important;
-    transform: translateX(-50%) translateY(-50%) !important;
+    transform: translateX(-50%) translateY(-50%) scale(1.1) !important;
     left: 50% !important;
     top: 50% !important;
   }
   
-  /* NEO BALANCE - 왼쪽 뒤에 살짝 보이게 */
+  /* NEO BALANCE - 왼쪽 */
   #balance-card {
-    transform: translateX(-50%) translateY(-50%) !important;
-    left: 5% !important;
+    transform: translateX(-50%) translateY(-50%) scale(0.85) !important;
+    left: 15% !important;
     top: 50% !important;
-    opacity: 0.9 !important;
-    z-index: 1 !important;
-    scale: 0.9 !important;
+    opacity: 1 !important;
+    z-index: 2 !important;
   }
   
-  /* NEO BOOST - 오른쪽 뒤에 살짝 보이게 */
+  /* NEO BOOST - 오른쪽 */
   #boost-card {
-    transform: translateX(-50%) translateY(-50%) !important;
-    left: 95% !important;
+    transform: translateX(-50%) translateY(-50%) scale(0.85) !important;
+    left: 85% !important;
     top: 50% !important;
-    opacity: 0.9 !important;
-    z-index: 1 !important;
-    scale: 0.9 !important;
+    opacity: 1 !important;
+    z-index: 2 !important;
+  }
+  
+  /* 카드 내용 크기 조정 */
+  .training-card .card-front h3 {
+    font-size: 1.2rem !important;
+  }
+  
+  .training-card .card-front p {
+    font-size: 0.7rem !important;
   }
 .neo-smart-logo.front {
 display: block !important;
