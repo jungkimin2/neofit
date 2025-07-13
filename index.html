@@ -762,8 +762,9 @@ div > p.smart-guide-text {
   #boost-card.active .click-indicator {
     display: block !important;
     font-size: 0.65rem !important;
-    bottom: 10px !important;
-    left: 10px !important;
+    bottom: -6px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
   }
 }
 </style>
@@ -2334,9 +2335,9 @@ document.addEventListener('DOMContentLoaded', function() {
               <img src="./images/neosync.png" alt="네오 싱크" style="width: 80%; height: auto; margin-bottom: 20px; filter: drop-shadow(0 0 20px rgba(123,228,149,0.5));">
               <p style="color: #fff; font-size: 1.1rem; text-align: center;">기초 체력과 움직임의 동기화</p>
               <p style="color: #aaa; font-size: 0.95rem; text-align: center; margin-top: 10px;">팀원들과 함께 기본기를 다지는 입문 프로그램</p>
-              <!-- CLICK 표시 추가 -->
-              <span class="click-indicator" style="position: absolute; bottom: 15px; left: 15px; color: rgba(123,228,149,0.8); font-size: 0.7rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; opacity: 0.7; animation: pulse 2s ease-in-out infinite;">CLICK</span>
             </div>
+            <!-- CLICK 표시 추가 - card-front에 직접 위치 -->
+            <span class="click-indicator" style="position: absolute; bottom: -1px; left: 50%; transform: translateX(-50%); font-size: 0.7rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; animation: pulse 2s ease-in-out infinite; z-index: 3;">CLICK</span>
           </div>
         </div>
       </div>
@@ -2345,12 +2346,14 @@ document.addEventListener('DOMContentLoaded', function() {
       <div class="training-card" id="balance-card" style="position: absolute; width: 350px; height: 450px; left: 50%; top: 50%; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; background: transparent; border: none; border-radius: 20px; overflow: hidden;">
         <div class="card-inner" style="width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.3s; background: transparent; border: none;">
           <div class="card-front" style="position: absolute; width: 100%; height: 100%; backface-visibility: hidden; background: linear-gradient(135deg, #0A0D0F 0%, rgba(147,197,253,0.015) 100%); border: 2px solid #93C5FD; border-radius: 20px; padding: 30px; display: flex; flex-direction: column; align-items: center; overflow: hidden;">
-            <h3 style="color: #93C5FD; font-size: 2rem; margin-bottom: 20px; text-shadow: 0 0 20px rgba(147,197,253,0.8);">NEO BALANCE</h3>
-            <img src="./images/neoblance.png" alt="네오 밸런스" style="width: 80%; height: auto; margin-bottom: 20px; filter: drop-shadow(0 0 20px rgba(147,197,253,0.5));">
-            <p style="color: #fff; font-size: 1.1rem; text-align: center;">균형과 안정성 강화</p>
-            <p style="color: #aaa; font-size: 0.95rem; text-align: center; margin-top: 10px;">중급자를 위한 균형 잡힌 트레이닝</p>
+            <div style="position: relative; z-index: 2; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center;">
+              <h3 style="color: #93C5FD; font-size: 2rem; margin-bottom: 20px; text-shadow: 0 0 20px rgba(147,197,253,0.8);">NEO BALANCE</h3>
+              <img src="./images/neoblance.png" alt="네오 밸런스" style="width: 80%; height: auto; margin-bottom: 20px; filter: drop-shadow(0 0 20px rgba(147,197,253,0.5));">
+              <p style="color: #fff; font-size: 1.1rem; text-align: center;">균형과 안정성 강화</p>
+              <p style="color: #aaa; font-size: 0.95rem; text-align: center; margin-top: 10px;">중급자를 위한 균형 잡힌 트레이닝</p>
+            </div>
             <!-- CLICK 표시 추가 -->
-            <span class="click-indicator" style="position: absolute; bottom: 15px; left: 15px; color: rgba(147,197,253,0.8); font-size: 0.7rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; opacity: 0.7; animation: pulse 2s ease-in-out infinite;">CLICK</span>
+            <span class="click-indicator" style="position: absolute; bottom: -1px; left: 50%; transform: translateX(-50%); font-size: 0.7rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; animation: pulse 2s ease-in-out infinite; z-index: 3;">CLICK</span>
           </div>
         </div>
       </div>
@@ -2359,12 +2362,14 @@ document.addEventListener('DOMContentLoaded', function() {
       <div class="training-card" id="boost-card" style="position: absolute; width: 350px; height: 450px; left: 50%; top: 50%; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; background: transparent; border: none; border-radius: 20px; overflow: hidden;">
         <div class="card-inner" style="width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.3s; background: transparent; border: none;">
           <div class="card-front" style="position: absolute; width: 100%; height: 100%; backface-visibility: hidden; background: linear-gradient(135deg, #0F0A0A 0%, rgba(248,113,113,0.015) 100%); border: 2px solid #F87171; border-radius: 20px; padding: 30px; display: flex; flex-direction: column; align-items: center; overflow: hidden;">
-            <h3 style="color: #F87171; font-size: 2rem; margin-bottom: 20px; text-shadow: 0 0 20px rgba(248,113,113,0.8);">NEO BOOST</h3>
-            <img src="./images/neoboots.png" alt="네오 부스트" style="width: 80%; height: auto; margin-bottom: 20px; filter: drop-shadow(0 0 20px rgba(248,113,113,0.5));">
-            <p style="color: #fff; font-size: 1.1rem; text-align: center;">폭발적인 퍼포먼스 향상</p>
-            <p style="color: #aaa; font-size: 0.95rem; text-align: center; margin-top: 10px;">상급자를 위한 고강도 프로그램</p>
+            <div style="position: relative; z-index: 2; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center;">
+              <h3 style="color: #F87171; font-size: 2rem; margin-bottom: 20px; text-shadow: 0 0 20px rgba(248,113,113,0.8);">NEO BOOST</h3>
+              <img src="./images/neoboots.png" alt="네오 부스트" style="width: 80%; height: auto; margin-bottom: 20px; filter: drop-shadow(0 0 20px rgba(248,113,113,0.5));">
+              <p style="color: #fff; font-size: 1.1rem; text-align: center;">폭발적인 퍼포먼스 향상</p>
+              <p style="color: #aaa; font-size: 0.95rem; text-align: center; margin-top: 10px;">상급자를 위한 고강도 프로그램</p>
+            </div>
             <!-- CLICK 표시 추가 -->
-            <span class="click-indicator" style="position: absolute; bottom: 15px; left: 15px; color: rgba(248,113,113,0.8); font-size: 0.7rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; opacity: 0.7; animation: pulse 2s ease-in-out infinite;">CLICK</span>
+            <span class="click-indicator" style="position: absolute; bottom: -1px; left: 50%; transform: translateX(-50%); font-size: 0.7rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; animation: pulse 2s ease-in-out infinite; z-index: 3;">CLICK</span>
           </div>
         </div>
       </div>
@@ -5955,14 +5960,18 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // PC 환경에서만 비디오 호버 효과 적용
   if (window.innerWidth > 768) {
-    const syncContent = syncCard.querySelector('.card-front > div:last-child');
+    const syncContent = syncCard.querySelector('.card-front > div[style*="z-index: 2"]');
+    const clickIndicator = syncCard.querySelector('.click-indicator');
     
     syncCard.addEventListener('mouseenter', function() {
-      if (syncVideo && syncContent) {
+      if (syncVideo && syncContent && this.classList.contains('active')) {
         syncVideo.style.opacity = '1';
         syncVideo.play().catch(e => console.log('Video play failed:', e));
-        // 콘텐츠 숨기기
+        // 콘텐츠와 CLICK 버튼 숨기기
         syncContent.style.opacity = '0';
+        if (clickIndicator) {
+          clickIndicator.style.opacity = '0';
+        }
       }
     });
     
@@ -5971,8 +5980,11 @@ document.addEventListener('DOMContentLoaded', function() {
         syncVideo.style.opacity = '0';
         syncVideo.pause();
         syncVideo.currentTime = 0;
-        // 콘텐츠 다시 보이기
+        // 콘텐츠와 CLICK 버튼 다시 보이기
         syncContent.style.opacity = '1';
+        if (clickIndicator) {
+          clickIndicator.style.opacity = '1';
+        }
       }
     });
   }
@@ -6266,23 +6278,93 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 }
 
-/* 각 카드별 CLICK 표시 발광 효과 */
-#sync-card .click-indicator {
-  text-shadow: 0 0 10px rgba(123,228,149,0.8), 
-               0 0 20px rgba(123,228,149,0.6), 
-               0 0 30px rgba(123,228,149,0.4) !important;
+/* 각 카드별 CLICK 표시 스타일 - 배경 원형 효과 */
+.click-indicator {
+  padding: 4px 12px !important;
+  border-radius: 15px !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  position: relative !important;
+  overflow: hidden !important;
 }
 
-#balance-card .click-indicator {
-  text-shadow: 0 0 10px rgba(147,197,253,0.8), 
-               0 0 20px rgba(147,197,253,0.6), 
-               0 0 30px rgba(147,197,253,0.4) !important;
+/* 움직이는 테두리 애니메이션 - 각 카드별로 색상 설정 */
+.training-card#sync-card .click-indicator::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border-radius: 15px;
+  background: linear-gradient(45deg, transparent, rgba(123,228,149,0.8), transparent);
+  animation: borderRotate 3s linear infinite;
+  z-index: -1;
 }
 
-#boost-card .click-indicator {
-  text-shadow: 0 0 10px rgba(248,113,113,0.8), 
-               0 0 20px rgba(248,113,113,0.6), 
-               0 0 30px rgba(248,113,113,0.4) !important;
+.training-card#balance-card .click-indicator::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border-radius: 15px;
+  background: linear-gradient(45deg, transparent, rgba(147,197,253,0.8), transparent);
+  animation: borderRotate 3s linear infinite;
+  z-index: -1;
+}
+
+.training-card#boost-card .click-indicator::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border-radius: 15px;
+  background: linear-gradient(45deg, transparent, rgba(248,113,113,0.8), transparent);
+  animation: borderRotate 3s linear infinite;
+  z-index: -1;
+}
+
+.click-indicator::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.8);
+  border-radius: 13px;
+  z-index: -1;
+}
+
+@keyframes borderRotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.training-card#sync-card .click-indicator {
+  color: rgba(123,228,149,0.9) !important;
+  background: rgba(123,228,149,0.1) !important;
+  border: 1px solid rgba(123,228,149,0.3) !important;
+}
+
+.training-card#balance-card .click-indicator {
+  color: rgba(147,197,253,0.9) !important;
+  background: rgba(147,197,253,0.1) !important;
+  border: 1px solid rgba(147,197,253,0.3) !important;
+}
+
+.training-card#boost-card .click-indicator {
+  color: rgba(248,113,113,0.9) !important;
+  background: rgba(248,113,113,0.1) !important;
+  border: 1px solid rgba(248,113,113,0.3) !important;
 }
 
 /* PC에서 CLICK 표시를 각 카드 활성 상태에서만 보이도록 */
@@ -7132,6 +7214,31 @@ if (video) {
 
 .pulse {
     animation: pulse 2s infinite;
+}
+/* 각 카드별 pulse 애니메이션 */
+#sync-card .click-indicator {
+    animation: pulse-sync 2s ease-in-out infinite !important;
+}
+#balance-card .click-indicator {
+    animation: pulse-balance 2s ease-in-out infinite !important;
+}
+#boost-card .click-indicator {
+    animation: pulse-boost 2s ease-in-out infinite !important;
+}
+@keyframes pulse-sync {
+    0% { box-shadow: 0 0 0 0 rgba(123, 228, 149, 0.7); }
+    70% { box-shadow: 0 0 0 15px rgba(123, 228, 149, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(123, 228, 149, 0); }
+}
+@keyframes pulse-balance {
+    0% { box-shadow: 0 0 0 0 rgba(147, 197, 253, 0.7); }
+    70% { box-shadow: 0 0 0 15px rgba(147, 197, 253, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(147, 197, 253, 0); }
+}
+@keyframes pulse-boost {
+    0% { box-shadow: 0 0 0 0 rgba(248, 113, 113, 0.7); }
+    70% { box-shadow: 0 0 0 15px rgba(248, 113, 113, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(248, 113, 113, 0); }
 }
 @keyframes pulse {
     0% { box-shadow: 0 0 0 0 rgba(98, 210, 162, 0.7); }
