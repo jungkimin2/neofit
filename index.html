@@ -1,4 +1,4 @@
- 
+
 
 <meta name="google-site-verification" content="OeM-YMo4NpQshyIm3m5H59IikSDp0BMe4sXKQmCu7NM" />
 <!DOCTYPE html>
@@ -407,7 +407,7 @@ br.mobile-only {
   }
   
   /* 모바일에서 비디오 스타일 */
-  .sync-hover-video {
+  #sync-card .sync-hover-video {
     display: none !important;
     opacity: 0 !important;
     transition: opacity 0.3s ease !important;
@@ -418,13 +418,26 @@ br.mobile-only {
     height: 100% !important;
     object-fit: cover !important;
     border-radius: 20px !important;
-    z-index: 10 !important;
+    z-index: 999 !important;
+    background-color: #000 !important;
+    pointer-events: auto !important;
   }
   
   /* 비디오 재생 중일 때 */
-  .sync-hover-video.playing {
+  #sync-card .sync-hover-video.playing {
     display: block !important;
     opacity: 1 !important;
+  }
+  
+  /* 카드 내부 요소들의 z-index 조정 */
+  #sync-card .card-front {
+    position: relative !important;
+    overflow: hidden !important;
+  }
+  
+  #sync-card .card-front > div {
+    position: relative !important;
+    z-index: 2 !important;
   }
 .neo-smart-logo.front {
 display: block !important;
@@ -6192,9 +6205,10 @@ document.addEventListener('DOMContentLoaded', function() {
           syncVideo.style.height = '100%';
           syncVideo.style.objectFit = 'cover';
           syncVideo.style.borderRadius = '20px';
-          syncVideo.style.zIndex = '10';
+          syncVideo.style.zIndex = '999';  // z-index를 더 높게
           syncVideo.style.opacity = '1';
           syncVideo.style.display = 'block';
+          syncVideo.style.backgroundColor = '#000';  // 검은 배경 추가
           syncVideo.classList.add('playing');
           
           // 비디오 재생
