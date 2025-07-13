@@ -3353,6 +3353,14 @@ html body .core-value-fresh-mobile {
     -webkit-overflow-scrolling: touch !important; /* iOS 스크롤 부드럽게 */
   }
   
+  /* 전체 페이지 스크롤 차단 해제 */
+  body, html {
+    touch-action: pan-y !important;
+    -webkit-overflow-scrolling: touch !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+  }
+  
   /* 뒷면보기 버튼 터치 영역 최적화 */
   .neos-category-tags > div {
     touch-action: manipulation !important;
@@ -4788,7 +4796,9 @@ if (window.innerWidth <= 768) {
       /* 모바일에서 스크롤바 숨김 */
       body {
         overflow-x: hidden !important;
+        overflow-y: auto !important;
         -webkit-overflow-scrolling: touch !important;
+        touch-action: pan-y !important;
       }
       
       /* 브라우저별 스크롤바 숨김 */
