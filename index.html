@@ -80,10 +80,10 @@
   
   /* NFC 카드와 핸드폰 이미지 위치 조정 - 캡처 이미지 기준 */
   #smart .neos-wrapper {
-    left: 20% !important;  /* 25%에서 20%로 변경 (2칸 왼쪽) */
-    top: 45% !important;
-    transform: translate(-50%, -50%) scale(1.0) !important;  /* 0.85에서 1.0으로 크기 증가 */
-    width: 350px !important;  /* 320px에서 350px로 증가 */
+    left: 35% !important;  /* 카드를 더 중앙으로 */
+    top: 50% !important;
+    transform: translate(-50%, -50%) scale(1.2) !important;  /* 더 크게 조정 */
+    width: 400px !important;  /* 더 크게 조정 */
     z-index: 10 !important;
   }
   
@@ -109,7 +109,30 @@
   
   /* 뒷면은 뒤집어진 상태로 */
   #smart .flipper .back {
-    transform: rotateY(180deg) !important;
+    transform: rotateY(180deg) translateY(-32px) !important;  /* 2칸 위로 이동 */
+  }
+  
+  /* 인라인 스타일 덮어쓰기를 위한 더 구체적인 선택자 */
+  #smart .flipper img.back[src*="neo121.png"] {
+    transform: rotateY(180deg) translateY(-96px) !important;  /* 6칸 위로 이동 (2칸 더 추가) */
+    top: -64px !important;  /* top도 추가로 위로 이동 (2칸 더) */
+    left: 0 !important;
+    position: absolute !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
+  
+  /* 더 구체적인 선택자로 강제 적용 */
+  html body #smart .flipper img[src*="neo121.png"].back {
+    transform: rotateY(180deg) translateY(-96px) !important;
+    top: -64px !important;
+  }
+  
+  /* neost.png 앞면 이미지 크기 조정 */
+  #smart .flipper img.neo-smart-logo.front[src*="neost.png"] {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
   }
   
   #smart .floating-video,
@@ -117,35 +140,35 @@
     width: 180px !important;
     height: 360px !important;
     position: absolute !important;
-    right: 10px !important;
+    right: 15px !important;
     left: auto !important;
-    top: 10% !important;  /* 15%에서 10%로 변경 */
-    transform: translateY(-50%) translateY(-32px) !important;  /* 추가로 32px(2칸) 위로 */
+    top: 45% !important;  /* 카드와 같은 높이로 조정 */
+    transform: translateY(-50%) translateY(-64px) !important;  /* 4칸 위로 추가 (2칸 더) */
     z-index: 20 !important;
   }
   
   /* 더 구체적인 선택자로 강제 적용 */
   section#smart .hive-showcase .floating-video,
   section#smart .hive-showcase .neo-smart-video {
-    top: 10% !important;
-    transform: translateY(-50%) translateY(-32px) !important;
+    top: 45% !important;
+    transform: translateY(-50%) translateY(-64px) !important;  /* 4칸 위로 추가 (2칸 더) */
   }
   
   /* 뒷면 보기 버튼 위치 조정 - NFC 카드 바로 아래 */
   #smart .neos-category-tags {
     position: absolute !important;
-    top: 65% !important;  /* 카드 바로 아래에 위치하도록 top으로 변경 */
-    left: 35% !important;  /* 20%에서 35%로 변경 (3칸 오른쪽) */
-    transform: translateX(-50%) translateX(48px) !important;  /* 추가로 48px(3칸) 오른쪽 이동 */
+    top: 63% !important;  /* 67%에서 63%로 변경 (1칸 더 위로) */
+    left: 35% !important;  /* 카드와 같은 수평 위치 */
+    transform: translateX(-50%) !important;
     z-index: 15 !important;
-    margin-top: 10px !important;  /* 카드와의 간격 */
+    margin-top: 0px !important;
   }
   
   /* 더 구체적인 선택자로 강제 적용 */
   section#smart .hive-showcase .neos-category-tags,
   section#smart .neos-wrapper .neos-category-tags {
     left: 35% !important;
-    transform: translateX(-50%) translateX(48px) !important;
+    transform: translateX(-50%) !important;
   }
   
   /* NEO-S 카드 이미지 스타일 */
@@ -3305,7 +3328,8 @@ html body .core-value-fresh-mobile {
 @media (max-width: 768px) {
   .neos-category-tags {
     position: absolute !important;
-    top: 400px !important; /* 392px에서 400px로 변경 (8px 아래로 = 0.5칸 내림) */
+    top: 352px !important; /* 368px에서 352px로 변경 (16px 더 위로 = 1칸 더 위로) */
+    bottom: auto !important; /* 인라인 bottom 스타일 무효화 */
     left: calc(50% - 48px) !important; /* 중앙에서 3칸(48px) 왼쪽으로 이동 */
     transform: translateX(-50%) !important;
     width: auto !important;
@@ -3313,6 +3337,12 @@ html body .core-value-fresh-mobile {
     z-index: 201 !important;
     /* 터치 시 스크롤이 막히지 않도록 설정 */
     touch-action: manipulation !important;
+  }
+  
+  /* 인라인 스타일 강제 덮어쓰기 */
+  html body div.neos-category-tags[style] {
+    top: 352px !important;
+    bottom: auto !important;
   }
   
   /* 모바일에서 스크롤 성능 개선 */
@@ -3431,7 +3461,7 @@ html body .core-value-fresh-mobile {
   /* 뒷면 이미지는 아래로 4칸 */
   .flipper .back,
   .back {
-    transform: translateY(64px) rotateY(180deg) !important;
+    transform: translateY(32px) rotateY(180deg) !important;  /* 64px에서 32px로 변경 (2칸 위로) */
   }
   
 
