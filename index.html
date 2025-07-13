@@ -71,25 +71,34 @@
     text-align: left !important;
   }
   
-  /* 네오 스마트 쇼케이스 - 모바일에서는 숨김 */
+  /* 기존 hive-showcase 숨김 */
   #smart .hive-showcase {
     display: none !important;
   }
   
-  /* 모바일 전용 새로운 NEO-S 쇼케이스 */
-  .mobile-neos-showcase {
-    display: block !important;
-    width: 100% !important;
-    padding: 20px !important;
-    position: relative !important;
-    margin-top: -400px !important; /* hive-showcase 높이만큼 위로 올림 */
+  /* 새로운 NEO-S 쇼케이스 - 모바일 스타일 */
+  .new-neos-showcase .pc-layout {
+    flex-direction: column !important;
+    gap: 30px !important;
   }
   
-  /* PC에서는 모바일 쇼케이스 숨김 */
-  @media (min-width: 769px) {
-    .mobile-neos-showcase {
-      display: none !important;
-    }
+  .new-neos-showcase .card-section,
+  .new-neos-showcase .phone-section {
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+  
+  .new-neos-showcase .card-display-area {
+    padding: 30px 20px !important;
+  }
+  
+  .new-neos-showcase #pc-card-image {
+    width: 250px !important;
+  }
+  
+  .new-neos-showcase .phone-frame {
+    width: 200px !important;
+    height: 400px !important;
   }
   
   /* NFC 카드와 핸드폰 이미지 위치 조정 - 캡처 이미지 기준 */
@@ -3311,28 +3320,49 @@ html body .core-value-fresh-mobile {
       회원이 언제 어디서나 쉽고 빠르게 복습할 수 있는 시스템<br>
       <span class="neon-green">경쟁 센터와의 차별화를 실현하는 디지털 피트니스 솔루션</span>
     </p>
-    <div class="hive-showcase" style="position: relative; width: 100%; height: 620px; margin-top: 48px;">
-      <div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); width: 300px; height: 300px; background: radial-gradient(circle, rgba(123, 228, 149, 0.15), rgba(0,0,0,0)); border-radius: 50%; z-index:0; filter: blur(60px); pointer-events:none;"></div>
-      <!-- Removed outer box/background for neo-smart-logo; only green glow on image remains -->
-      <div class="neos-wrapper" style="position:absolute; left:34%; top:calc(50% + 48px); transform:translate(-50%, -50%); width:550px; height:auto; z-index:10;">
-        <div class="wave-background"></div>
-        <div class="flip-container">
-          <div class="flipper">
-            <img src="./images/neost.png" alt="NEO-S NFC Sticker" class="neo-smart-logo front"
-                 style="width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 0 12px rgba(123, 228, 149, 0.45));">
-            <img src="./images/neo121.png" alt="NEO Smart Back Image" class="back"
-                 style="width: 100%; height: 100%; object-fit: contain; border-radius: 16px; backface-visibility: hidden; position: absolute; top: 0; left: 0; transform: rotateY(180deg);" />
-              <div class="back-text-overlay">
-              </div>
+    
+    <!-- 새로운 통합 NEO-S 쇼케이스 (PC/모바일 공통) -->
+    <div class="new-neos-showcase" style="position: relative; width: 100%; margin-top: 40px;">
+      <!-- PC 레이아웃 -->
+      <div class="pc-layout" style="display: flex; gap: 40px; align-items: center; justify-content: center; flex-wrap: wrap;">
+        <!-- 왼쪽: 카드 섹션 -->
+        <div class="card-section" style="flex: 1; max-width: 500px; min-width: 300px;">
+          <div class="card-display-area" style="background: linear-gradient(135deg, #0A0F0D 0%, #000 100%); border-radius: 20px; padding: 40px; border: 1px solid rgba(123, 228, 149, 0.3); box-shadow: 0 0 30px rgba(123, 228, 149, 0.2); text-align: center;">
+            <img id="pc-card-image" src="./images/neost.png" alt="NEO-S Card" 
+                 style="width: 300px; height: auto; margin: 0 auto 30px; filter: drop-shadow(0 0 20px rgba(123, 228, 149, 0.6)); transition: all 0.3s ease;">
+            <h3 id="pc-card-title" style="color: #7BE495; font-size: 1.8rem; margin-bottom: 15px;">NEO-S NFC 스티커</h3>
+            <p id="pc-card-desc" style="color: #ccc; font-size: 1rem; line-height: 1.6;">
+              스마트폰 태그만으로<br>나만의 운동 영상을 즉시 확인
+            </p>
+            
+            <!-- 탭 버튼 -->
+            <div class="tab-buttons" style="display: flex; gap: 15px; margin-top: 30px;">
+              <button class="tab-btn active" data-card="front" onclick="switchCard('front')" 
+                      style="flex: 1; padding: 12px 25px; background: #7BE495; color: #000; border: none; border-radius: 25px; font-weight: 600; cursor: pointer; transition: all 0.3s;">
+                앞면
+              </button>
+              <button class="tab-btn" data-card="back" onclick="switchCard('back')"
+                      style="flex: 1; padding: 12px 25px; background: transparent; color: #7BE495; border: 1px solid #7BE495; border-radius: 25px; font-weight: 600; cursor: pointer; transition: all 0.3s;">
+                뒷면
+              </button>
+            </div>
           </div>
         </div>
-        <div class="neos-category-tags" style="position: absolute; bottom: 120px; left: 50%; transform: translateX(-52%); cursor: pointer; z-index: 100;">
-          <div style="display: inline-block; text-align: center; margin: 0; background: rgba(0, 0, 0, 0.4); padding: 6px 16px; border-radius: 20px; width: auto; max-width: 100%; pointer-events: auto;">
-            <span style="color: #7BE495; font-size: 0.85rem; font-weight: bold; text-shadow: 0 0 6px rgba(123, 228, 149, 0.8);">
-              뒷면 보기
-            </span>
+        
+        <!-- 오른쪽: 핸드폰 미리보기 -->
+        <div class="phone-section" style="flex: 1; max-width: 400px; min-width: 300px; text-align: center;">
+          <h4 style="color: #7BE495; font-size: 1.5rem; margin-bottom: 20px;">실제 사용 화면</h4>
+          <div class="phone-frame" style="width: 240px; height: 480px; margin: 0 auto; border-radius: 30px; border: 4px solid #7BE495; overflow: hidden; position: relative; box-shadow: 0 0 40px rgba(123, 228, 149, 0.5); background: #000;">
+            <video autoplay loop muted playsinline style="width: 100%; height: 100%; object-fit: cover;">
+              <source src="./videos/neovideo2.mp4" type="video/mp4">
+            </video>
           </div>
         </div>
+      </div>
+    </div>
+    
+    <!-- 기존 hive-showcase (숨김 처리) -->
+    <div class="hive-showcase" style="display: none;">
 <style>
 /* PC 환경에서 .neos-category-tags를 좌측으로 0.6칸(20px) 이동 */
 @media (min-width: 769px) {
@@ -3404,50 +3434,15 @@ html body .core-value-fresh-mobile {
 </style>
       </div>
       
-<!-- 모바일 전용 새로운 NEO-S 디자인 -->
-<div class="mobile-neos-showcase">
-  <!-- 카드 뷰 컨테이너 -->
-  <div class="mobile-card-view" style="background: linear-gradient(135deg, #0A0F0D 0%, #000 100%); border-radius: 20px; padding: 30px 20px; margin-bottom: 30px; border: 1px solid rgba(123, 228, 149, 0.3); box-shadow: 0 0 20px rgba(123, 228, 149, 0.2);">
-    <!-- 현재 보여지는 카드 -->
-    <div class="mobile-card-display" style="text-align: center; margin-bottom: 30px;">
-      <img id="mobile-card-image" src="./images/neost.png" alt="NEO-S Card" style="width: 250px; height: auto; margin: 0 auto 20px; filter: drop-shadow(0 0 15px rgba(123, 228, 149, 0.5));">
-      <h3 id="mobile-card-title" style="color: #7BE495; font-size: 1.4rem; margin-bottom: 10px;">NEO-S NFC 스티커</h3>
-      <p id="mobile-card-desc" style="color: #ccc; font-size: 0.9rem; line-height: 1.6;">
-        스마트폰 태그만으로<br>나만의 운동 영상을 즉시 확인
-      </p>
-    </div>
-    
-    <!-- 탭 버튼 -->
-    <div class="mobile-tabs" style="display: flex; gap: 10px; justify-content: center;">
-      <button class="mobile-tab-btn active" data-card="front" onclick="switchMobileCard('front')" 
-              style="flex: 1; padding: 12px 20px; background: #7BE495; color: #000; border: none; border-radius: 25px; font-weight: 600; font-size: 0.9rem; transition: all 0.3s;">
-        앞면
-      </button>
-      <button class="mobile-tab-btn" data-card="back" onclick="switchMobileCard('back')"
-              style="flex: 1; padding: 12px 20px; background: transparent; color: #7BE495; border: 1px solid #7BE495; border-radius: 25px; font-weight: 600; font-size: 0.9rem; transition: all 0.3s;">
-        뒷면
-      </button>
-    </div>
-  </div>
-  
-  <!-- 핸드폰 미리보기 -->
-  <div class="mobile-phone-section" style="text-align: center;">
-    <h4 style="color: #7BE495; font-size: 1.2rem; margin-bottom: 15px;">실제 사용 화면</h4>
-    <div class="mobile-phone-frame" style="width: 200px; height: 400px; margin: 0 auto; border-radius: 20px; border: 3px solid #7BE495; overflow: hidden; position: relative; box-shadow: 0 0 25px rgba(123, 228, 149, 0.4);">
-      <video autoplay loop muted playsinline style="width: 100%; height: 100%; object-fit: cover;">
-        <source src="./videos/neovideo2.mp4" type="video/mp4">
-      </video>
-    </div>
-  </div>
-</div>
+<!-- 기존 모바일 전용 섹션은 제거됨 -->
 
 <script>
-// 모바일 카드 전환 함수
-function switchMobileCard(type) {
-  const image = document.getElementById('mobile-card-image');
-  const title = document.getElementById('mobile-card-title');
-  const desc = document.getElementById('mobile-card-desc');
-  const buttons = document.querySelectorAll('.mobile-tab-btn');
+// 통합 카드 전환 함수
+function switchCard(type) {
+  const pcImage = document.getElementById('pc-card-image');
+  const pcTitle = document.getElementById('pc-card-title');
+  const pcDesc = document.getElementById('pc-card-desc');
+  const buttons = document.querySelectorAll('.tab-btn');
   
   // 버튼 스타일 업데이트
   buttons.forEach(btn => {
@@ -3466,38 +3461,79 @@ function switchMobileCard(type) {
   
   // 카드 내용 전환
   if (type === 'front') {
-    image.src = './images/neost.png';
-    title.textContent = 'NEO-S NFC 스티커';
-    desc.innerHTML = '스마트폰 태그만으로<br>나만의 운동 영상을 즉시 확인';
+    pcImage.src = './images/neost.png';
+    pcTitle.textContent = 'NEO-S NFC 스티커';
+    pcDesc.innerHTML = '스마트폰 태그만으로<br>나만의 운동 영상을 즉시 확인';
   } else {
-    image.src = './images/neo121.png';
-    title.textContent = '스마트한 운동 관리';
-    desc.innerHTML = '1:1 맞춤 운동 영상<br>언제 어디서나 복습 가능<br>체계적인 운동 기록 관리';
+    pcImage.src = './images/neo121.png';
+    pcTitle.textContent = '스마트한 운동 관리';
+    pcDesc.innerHTML = '1:1 맞춤 운동 영상<br>언제 어디서나 복습 가능<br>체계적인 운동 기록 관리';
   }
+  
+  // 카드 이미지 애니메이션
+  pcImage.style.transform = 'scale(0.95)';
+  setTimeout(() => {
+    pcImage.style.transform = 'scale(1)';
+  }, 150);
 }
 </script>
 
 <style>
-/* 모바일 전용 NEO-S 스타일 */
+/* 새로운 통합 NEO-S 쇼케이스 스타일 */
+.new-neos-showcase {
+  margin-bottom: 60px;
+}
+
+/* PC 환경 스타일 */
+@media (min-width: 769px) {
+  .new-neos-showcase .card-display-area {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .new-neos-showcase .card-display-area:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 40px rgba(123, 228, 149, 0.3);
+  }
+  
+  .new-neos-showcase .tab-btn:hover {
+    transform: scale(1.05);
+  }
+  
+  .new-neos-showcase .phone-frame {
+    transition: transform 0.3s ease;
+  }
+  
+  .new-neos-showcase .phone-frame:hover {
+    transform: scale(1.05);
+  }
+  
+  #pc-card-image {
+    animation: floatAnimation 3s ease-in-out infinite;
+  }
+  
+  @keyframes floatAnimation {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+}
+
+/* 모바일 전용 스타일 */
 @media (max-width: 768px) {
-  .mobile-card-view {
+  .new-neos-showcase .card-section,
+  .new-neos-showcase .phone-section {
     animation: fadeInUp 0.6s ease-out;
   }
   
-  .mobile-phone-section {
-    animation: fadeInUp 0.8s ease-out 0.2s both;
-  }
-  
-  .mobile-tab-btn {
+  .new-neos-showcase .tab-btn {
     -webkit-tap-highlight-color: transparent;
     user-select: none;
   }
   
-  .mobile-tab-btn:active {
+  .new-neos-showcase .tab-btn:active {
     transform: scale(0.95);
   }
   
-  .mobile-card-display img {
+  .new-neos-showcase #pc-card-image {
     animation: floatAnimation 3s ease-in-out infinite;
   }
   
@@ -3511,36 +3547,37 @@ function switchMobileCard(type) {
       transform: translateY(0);
     }
   }
-  
-  @keyframes floatAnimation {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-  }
-  
-  /* 핸드폰 프레임 글로우 효과 */
-  .mobile-phone-frame {
-    position: relative;
-    background: #000;
-  }
-  
-  .mobile-phone-frame::before {
-    content: '';
-    position: absolute;
-    top: -3px;
-    left: -3px;
-    right: -3px;
-    bottom: -3px;
-    background: linear-gradient(45deg, #7BE495, #62D2A2, #7BE495);
-    border-radius: 20px;
-    z-index: -1;
-    opacity: 0.7;
-    animation: glowPulse 2s ease-in-out infinite;
-  }
-  
-  @keyframes glowPulse {
-    0%, 100% { opacity: 0.7; }
-    50% { opacity: 1; }
-  }
+}
+
+/* 공통 글로우 효과 */
+.phone-frame::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  background: linear-gradient(45deg, #7BE495, #62D2A2, #7BE495);
+  border-radius: 30px;
+  z-index: -1;
+  opacity: 0.6;
+  animation: glowPulse 2s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+/* 버튼 공통 스타일 */
+.tab-btn {
+  outline: none;
+  box-shadow: none;
+}
+
+.tab-btn:focus {
+  outline: 2px solid #7BE495;
+  outline-offset: 2px;
 }
 </style>
 
