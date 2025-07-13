@@ -596,7 +596,7 @@ div > p.smart-guide-text {
   
   /* 활성 카드 위치 조정 - 중앙에 위치 (상단으로 48px 이동) */
   .training-card.active {
-    transform: translateX(-50%) translateY(calc(-50% - 48px)) translateZ(50px) scale(1.1) !important;
+    transform: translateX(-50%) translateY(calc(-50% - 48px)) translateZ(50px) scale(1) !important;
     z-index: 100 !important;
     opacity: 1 !important;
   }
@@ -608,7 +608,7 @@ div > p.smart-guide-text {
   
   /* 싱크가 중앙일 때 (기본 상태) */
   #sync-card.active {
-    transform: translateX(-50%) translateY(calc(-50% - 48px)) translateZ(50px) scale(1.1) !important;
+    transform: translateX(-50%) translateY(calc(-50% - 48px)) translateZ(50px) scale(1) !important;
     z-index: 100 !important;
   }
   
@@ -626,7 +626,7 @@ div > p.smart-guide-text {
   
   /* 밸런스가 중앙일 때 */
   #balance-card.active {
-    transform: translateX(-50%) translateY(calc(-50% - 48px)) translateZ(50px) scale(1.1) !important;
+    transform: translateX(-50%) translateY(calc(-50% - 48px)) translateZ(50px) scale(1) !important;
     z-index: 100 !important;
   }
   
@@ -645,7 +645,7 @@ div > p.smart-guide-text {
   
   /* 부스트가 중앙일 때 */
   #boost-card.active {
-    transform: translateX(-50%) translateY(calc(-50% - 48px)) translateZ(50px) scale(1.1) !important;
+    transform: translateX(-50%) translateY(calc(-50% - 48px)) translateZ(50px) scale(1) !important;
     z-index: 100 !important;
   }
   
@@ -5943,7 +5943,7 @@ document.addEventListener('DOMContentLoaded', function() {
       // 모바일에서의 카드 위치
       switch(position) {
         case 'center':
-          card.style.transform = 'translateX(-50%) translateY(calc(-50% - 48px)) translateZ(50px) scale(1.1)';
+          card.style.transform = 'translateX(-50%) translateY(calc(-50% - 48px)) translateZ(50px) scale(1)';
           card.style.opacity = '1';
           card.style.zIndex = '100';
           card.classList.add('active');
