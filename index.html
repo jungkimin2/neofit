@@ -1,4 +1,4 @@
-
+ 
 
 <meta name="google-site-verification" content="OeM-YMo4NpQshyIm3m5H59IikSDp0BMe4sXKQmCu7NM" />
 <!DOCTYPE html>
@@ -406,11 +406,25 @@ br.mobile-only {
     font-size: 0.9rem !important;
   }
   
-  /* 모바일에서 비디오 기본적으로 숨김 */
+  /* 모바일에서 비디오 스타일 */
   .sync-hover-video {
-    display: block !important;
+    display: none !important;
     opacity: 0 !important;
     transition: opacity 0.3s ease !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    border-radius: 20px !important;
+    z-index: 10 !important;
+  }
+  
+  /* 비디오 재생 중일 때 */
+  .sync-hover-video.playing {
+    display: block !important;
+    opacity: 1 !important;
   }
 .neo-smart-logo.front {
 display: block !important;
@@ -6170,15 +6184,26 @@ document.addEventListener('DOMContentLoaded', function() {
         const clickIndicator = this.querySelector('.click-indicator');
         
         if (syncVideo && !syncVideo.classList.contains('playing')) {
-          // 비디오 표시 및 재생
+          // 비디오가 카드 전체를 덮도록 스타일 설정
+          syncVideo.style.position = 'absolute';
+          syncVideo.style.top = '0';
+          syncVideo.style.left = '0';
+          syncVideo.style.width = '100%';
+          syncVideo.style.height = '100%';
+          syncVideo.style.objectFit = 'cover';
+          syncVideo.style.borderRadius = '20px';
+          syncVideo.style.zIndex = '10';
           syncVideo.style.opacity = '1';
           syncVideo.style.display = 'block';
           syncVideo.classList.add('playing');
+          
+          // 비디오 재생
           syncVideo.play().catch(e => console.log('Video play failed:', e));
           
-          // 콘텐츠 숨기기
+          // 콘텐츠 완전히 숨기기
           if (syncContent) {
-            syncContent.style.opacity = '0.1';
+            syncContent.style.opacity = '0';
+            syncContent.style.visibility = 'hidden';
           }
           if (clickIndicator) {
             clickIndicator.style.display = 'none';
@@ -6188,21 +6213,29 @@ document.addEventListener('DOMContentLoaded', function() {
           syncVideo.addEventListener('ended', function() {
             syncVideo.style.opacity = '0';
             syncVideo.classList.remove('playing');
+            setTimeout(() => {
+              syncVideo.style.display = 'none';
+            }, 300);
             if (syncContent) {
               syncContent.style.opacity = '1';
+              syncContent.style.visibility = 'visible';
             }
             if (clickIndicator) {
               clickIndicator.style.display = 'block';
             }
-          });
+          }, { once: true });
         } else if (syncVideo && syncVideo.classList.contains('playing')) {
           // 재생 중인 비디오 정지
           syncVideo.pause();
           syncVideo.currentTime = 0;
           syncVideo.style.opacity = '0';
           syncVideo.classList.remove('playing');
+          setTimeout(() => {
+            syncVideo.style.display = 'none';
+          }, 300);
           if (syncContent) {
             syncContent.style.opacity = '1';
+            syncContent.style.visibility = 'visible';
           }
           if (clickIndicator) {
             clickIndicator.style.display = 'block';
