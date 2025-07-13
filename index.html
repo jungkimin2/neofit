@@ -649,17 +649,18 @@ div > p.smart-guide-text {
   
   /* 싱크가 중앙일 때 (기본 상태) */
   #sync-card.active {
-    transform: translateX(-50%) translateY(-50%) !important;
+    transform: translateX(-50%) translateY(-50%) translateZ(10px) !important;
+    z-index: 5 !important;
   }
   
   #sync-card.active ~ #balance-card {
-    transform: translateX(-50%) translateY(-50%) translateX(-80px) translateZ(-20px) rotateY(15deg) !important;
-    z-index: 2 !important;
+    transform: translateX(-50%) translateY(-50%) translateX(-80px) translateZ(-30px) rotateY(15deg) !important;
+    z-index: 1 !important;
   }
   
   #sync-card.active ~ #boost-card {
-    transform: translateX(-50%) translateY(-50%) translateX(80px) translateZ(-20px) rotateY(-15deg) !important;
-    z-index: 2 !important;
+    transform: translateX(-50%) translateY(-50%) translateX(80px) translateZ(-30px) rotateY(-15deg) !important;
+    z-index: 1 !important;
   }
   
   /* 밸런스가 중앙일 때 */
