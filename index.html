@@ -58,10 +58,12 @@
     position: relative !important;
   }
   
-  /* 모바일에서 인디케이터 위로 올리기 */
+  /* 모바일에서 인디케이터 위로 올리기 - 4칸(64px) 위로 */
   .card-indicators {
-    margin-top: -20px !important;
+    margin-top: -84px !important;  /* -20px에서 -84px로 변경 (64px 추가 상승) */
     margin-bottom: 20px !important;
+    position: relative !important;
+    z-index: 200 !important;
   }
 
   /* 모바일 환경에서 .neos-wrapper 요소를 좌측으로 4칸(약 64px) 옮김 */
