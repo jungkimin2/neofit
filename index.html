@@ -2513,7 +2513,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <!-- 네오핏 트레이닝 시스템 섹션 -->
 <section id="neofit-training" class="section" style="background: #000; padding: 80px 0;">
-  <div class="container" style="text-align:center; max-width: 1200px; margin: 0 auto;">
+  <div class="container" style="text-align:center; max-width: 1100px; margin: 0 auto; padding: 0 20px;">
     <h1 class="neofit-title" style="font-size: 3.2rem; color: #FFFFFF; margin-bottom: 40px;">
       <span class="pc-only">네오핏 : 새로운 피트니스, <span class="neon-green">"함께하는 문화"</span></span>
       <span class="mobile-only" style="color: #FFFFFF; display: inline; white-space: nowrap;">새로운 피트니스,</span><span class="neon-green mobile-text-format mobile-only" style="display: inline; white-space: nowrap;">"함께하는 문화"</span>
@@ -2591,7 +2591,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </section>
 
 <section id="hive" class="section animate-on-scroll" style="background:#000; padding-top:24px;">
-  <div class="container" style="text-align:center; padding-top:0;">
+  <div class="container" style="text-align:center; padding-top:0; max-width: 1100px; margin: 0 auto; padding: 0 20px;">
     <h2 style="font-size: 2rem; text-align: left; color: #FFFFFF; margin-top:0;">
       네오 하이브 : <span class="neon-green">"하나되는 우리"</span>
     </h2>
@@ -2671,7 +2671,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
     
     <!-- 핵심 UX 흐름 (steps 1~6) and cards -->
-    <div class="slide-container p-10 mobile-flow-rounded-box" style="margin-top: 64px;">
+    <div class="slide-container p-10 mobile-flow-rounded-box" style="margin-top: 64px; max-width: 1100px; margin-left: auto; margin-right: auto;">
       <div class="flex items-center mb-8">
         <h1 class="text-4xl font-bold neon-green" style="text-align: left; margin-top: 48px;">UX 흐름 + 무인 예약 시스템</h1>
         <div class="flex-grow mx-5 h-px bg-gradient-to-r from-transparent via-gray-500 to-transparent desktop-only" style="display: block;"></div>
@@ -3311,7 +3311,7 @@ html body .core-value-fresh-mobile {
 
 <!-- <div id="hive"></div> -->
           <section id="smart" class="section animate-on-scroll mobile-transform-target" style="background: #000; padding-top: 80px;">
-  <div class="container" style="text-align:left;">
+  <div class="container" style="text-align:left; max-width: 1100px; margin: 0 auto; padding: 0 20px;">
     <h2 style="font-size: 2rem; text-align: left;">
       <span style="color: #FFFFFF;">네오 스마트 :</span>
       <span class="neon-green smart-trainer-text" style="font-size: 2.2rem;">"내 손안의 스마트 트레이너"</span>
@@ -3349,13 +3349,23 @@ html body .core-value-fresh-mobile {
           </div>
         </div>
         
-        <!-- 오른쪽: 핸드폰 미리보기 -->
-        <div class="phone-section" style="flex: 1; max-width: 400px; min-width: 300px; text-align: center;">
+        <!-- 오른쪽: 실제 사용 화면 -->
+        <div class="phone-section" style="flex: 1; max-width: 400px; min-width: 300px; text-align: center; margin-top: -32px;">
           <h4 style="color: #7BE495; font-size: 1.5rem; margin-bottom: 20px;">실제 사용 화면</h4>
           <div class="phone-frame" style="width: 240px; height: 480px; margin: 0 auto; border-radius: 30px; border: 4px solid #7BE495; overflow: hidden; position: relative; box-shadow: 0 0 40px rgba(123, 228, 149, 0.5); background: #000;">
-            <video autoplay loop muted playsinline style="width: 100%; height: 100%; object-fit: cover;">
-              <source src="./videos/neovideo2.mp4" type="video/mp4">
+            <video id="neofitsVideo" src="./videos/neofits.mp4" autoplay loop muted playsinline style="width: 100%; height: 100%; object-fit: cover;">
             </video>
+            <!-- neofits.mp4 전용 스피커 버튼 -->
+            <div class="speaker-button-wrapper" style="position: absolute; top: 4px; right: 4px; z-index: 10;">
+              <button class="speaker-button" onclick="toggleNeofitsMute()" aria-label="음소거 토글">
+                <svg id="neofitsSpeakerIcon" viewBox="0 0 24 24">
+                  <!-- 음소거 해제 아이콘 (기본) -->
+                  <path id="neofitsVolumeOn" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                  <!-- 음소거 아이콘 (숨김) -->
+                  <path id="neofitsVolumeOff" d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z" style="display: none;"/>
+                </svg>
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -3766,20 +3776,7 @@ function switchCard(type) {
   /* 텍스트 관련 스타일 제거됨 - 텍스트 내용이 삭제되었음 */
 }
 </style>
-      <div class="floating-video neo-smart-video" style="left: 50%; z-index: 2147483647; top: 50%; transform: translate(-50%, -50%); opacity: 1; visibility: visible; position: absolute; display: block;">
-        <video id="neofitsVideo" src="./videos/neofits.mp4" autoplay loop muted playsinline preload="none" style="width: 100%; height: 100%; object-fit: contain;"></video>
-        <!-- neofits.mp4 전용 스피커 버튼 -->
-        <div class="speaker-button-wrapper">
-          <button class="speaker-button" onclick="toggleNeofitsMute()" aria-label="음소거 토글">
-            <svg id="neofitsSpeakerIcon" viewBox="0 0 24 24">
-              <!-- 음소거 해제 아이콘 (기본) -->
-              <path id="neofitsVolumeOn" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
-              <!-- 음소거 아이콘 (숨김) -->
-              <path id="neofitsVolumeOff" d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z" style="display: none;"/>
-            </svg>
-          </button>
-        </div>
-      </div>
+      <!-- 중복된 네오 스마트 영상 삭제됨 -->
     </div> <!-- End of .hive-showcase -->
 
 <!-- JavaScript로 NEOS 카드 강제 이동 -->
@@ -3855,7 +3852,7 @@ if (window.innerWidth <= 768) {
     <!-- 네오 스마트 주요 기능 (features) 블록 삭제됨, 대신 UX 흐름 블록으로 교체 -->
     <!-- 핵심 UX 흐름: 네오 하이브 counterpart와 동일한 구조로 삽입 -->
     <!-- <div id="smart"></div> -->
-    <div class="slide-container p-10" style="margin-top: 2.5rem;">
+    <div class="slide-container p-10" style="margin-top: 2.5rem; max-width: 1100px; margin-left: auto; margin-right: auto;">
       <div class="flex items-center mb-8">
         <h1 class="text-4xl font-bold" style="text-align: left; margin-top: 6rem; margin-bottom: 12px;">
           <span style="color: #FFFFFF;">NFC 기반 영상 재생</span>
@@ -4000,7 +3997,7 @@ if (window.innerWidth <= 768) {
         </div>
       </div>
       <!-- 추가 UI: 출입 코드 생성 방식/이벤트 시스템 연동 -->
-      <div class="smart-health-system-box" style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 16px; color: #ccc; font-size: 0.85rem; line-height: 1.6; text-align: left; background: linear-gradient(135deg, #112921 0%, #0C1612 100%); border-radius: 16px; border: 1px solid #7BE495; box-shadow: 0 0 20px rgba(123, 228, 149, 0.15); padding: 20px 40px; margin-top: 20px; position: relative; overflow: hidden;">
+      <div class="smart-health-system-box" style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 16px; color: #ccc; font-size: 0.85rem; line-height: 1.6; text-align: left; background: linear-gradient(135deg, #112921 0%, #0C1612 100%); border-radius: 16px; border: 1px solid #7BE495; box-shadow: 0 0 20px rgba(123, 228, 149, 0.15); padding: 20px 40px; margin: 20px auto; max-width: 1100px; position: relative; overflow: hidden;">
         <div style="flex: 1 1 48%; min-width: 280px; text-align: left;">
           <h4 style="color:#7BE495; font-size: 1.1rem; font-weight: bold; margin-bottom: 12px; text-align: left;">설치 한 번으로 스마트 헬스장 완성</h4>
           <div class="code-method-box" style="background: linear-gradient(135deg, #112921 0%, #0C1612 100%); border-left:4px solid #62D2A2; border-radius:8px; padding:20px; margin-bottom:24px;">
@@ -11247,4 +11244,6 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 })();
 </script>
+
+
 </html>
