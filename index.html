@@ -613,13 +613,13 @@ div > p.smart-guide-text {
   }
   
   #sync-card.active ~ #balance-card {
-    transform: translateX(-50%) translateY(calc(-50% - 48px)) translateX(-120px) translateZ(-50px) rotateY(25deg) scale(0.85) !important;
+    transform: translateX(-50%) translateY(calc(-50% - 48px)) translateX(-150px) translateZ(-50px) rotateY(25deg) scale(0.85) !important;
     z-index: 10 !important;
     opacity: 0.8 !important;
   }
   
   #sync-card.active ~ #boost-card {
-    transform: translateX(-50%) translateY(calc(-50% - 48px)) translateX(120px) translateZ(-50px) rotateY(-25deg) scale(0.85) !important;
+    transform: translateX(-50%) translateY(calc(-50% - 48px)) translateX(150px) translateZ(-50px) rotateY(-25deg) scale(0.85) !important;
     z-index: 10 !important;
     opacity: 0.8 !important;
   }
@@ -631,14 +631,14 @@ div > p.smart-guide-text {
   }
   
   #balance-card.active ~ #boost-card {
-    transform: translateX(-50%) translateY(calc(-50% - 48px)) translateX(120px) translateZ(-50px) rotateY(-25deg) scale(0.85) !important;
+    transform: translateX(-50%) translateY(calc(-50% - 48px)) translateX(150px) translateZ(-50px) rotateY(-25deg) scale(0.85) !important;
     z-index: 10 !important;
     opacity: 0.8 !important;
   }
   
   /* 모바일에서 밸런스가 활성일 때 싱크 카드 위치 */
   .training-cards-container.balance-active #sync-card {
-    transform: translateX(-50%) translateY(calc(-50% - 48px)) translateX(-120px) translateZ(-50px) rotateY(25deg) scale(0.85) !important;
+    transform: translateX(-50%) translateY(calc(-50% - 48px)) translateX(-150px) translateZ(-50px) rotateY(25deg) scale(0.85) !important;
     z-index: 10 !important;
     opacity: 0.8 !important;
   }
@@ -651,13 +651,13 @@ div > p.smart-guide-text {
   
   /* 모바일에서 부스트가 활성일 때 다른 카드들 위치 */
   .training-cards-container.boost-active #sync-card {
-    transform: translateX(-50%) translateY(calc(-50% - 48px)) translateX(-120px) translateZ(-50px) rotateY(25deg) scale(0.85) !important;
+    transform: translateX(-50%) translateY(calc(-50% - 48px)) translateX(-150px) translateZ(-50px) rotateY(25deg) scale(0.85) !important;
     z-index: 10 !important;
     opacity: 0.8 !important;
   }
   
   .training-cards-container.boost-active #balance-card {
-    transform: translateX(-50%) translateY(calc(-50% - 48px)) translateX(120px) translateZ(-50px) rotateY(-25deg) scale(0.85) !important;
+    transform: translateX(-50%) translateY(calc(-50% - 48px)) translateX(150px) translateZ(-50px) rotateY(-25deg) scale(0.85) !important;
     z-index: 10 !important;
     opacity: 0.8 !important;
   }
@@ -5963,13 +5963,13 @@ document.addEventListener('DOMContentLoaded', function() {
           card.classList.add('active');
           break;
         case 'left':
-          card.style.transform = 'translateX(-50%) translateY(calc(-50% - 48px)) translateX(-120px) translateZ(-50px) rotateY(25deg) scale(0.85)';
+          card.style.transform = 'translateX(-50%) translateY(calc(-50% - 48px)) translateX(-150px) translateZ(-50px) rotateY(25deg) scale(0.85)';
           card.style.opacity = '0.8';
           card.style.zIndex = '10';
           card.classList.remove('active');
           break;
         case 'right':
-          card.style.transform = 'translateX(-50%) translateY(calc(-50% - 48px)) translateX(120px) translateZ(-50px) rotateY(-25deg) scale(0.85)';
+          card.style.transform = 'translateX(-50%) translateY(calc(-50% - 48px)) translateX(150px) translateZ(-50px) rotateY(-25deg) scale(0.85)';
           card.style.opacity = '0.8';
           card.style.zIndex = '10';
           card.classList.remove('active');
