@@ -321,10 +321,10 @@ br.mobile-only {
   }
   
   .neofit-description {
-    font-size: 0.9rem !important;
-    margin-bottom: 28px !important;
+    font-size: 0.85rem !important;
+    margin-bottom: 24px !important;
     padding: 0 20px !important;
-    line-height: 1.6 !important;
+    line-height: 1.8 !important;
     text-align: left !important;
   }
   
@@ -391,23 +391,35 @@ br.mobile-only {
   /* 모바일에서 카드 위치 조정 */
   .training-card {
     opacity: 1 !important;
+    position: absolute !important;
   }
   
+  /* 활성 카드 (NEO SYNC) - 가장 앞에 */
   .training-card.active {
     z-index: 3 !important;
-    transform: translateX(-50%) translateY(-50%) translateZ(0) !important;
+    transform: translateX(-50%) translateY(-50%) !important;
+    left: 50% !important;
+    top: 50% !important;
   }
   
+  /* NEO BALANCE - 왼쪽 뒤에 */
   #balance-card {
-    transform: translateX(-70%) translateY(-50%) translateZ(-150px) scale(0.85) !important;
-    opacity: 0.7 !important;
+    transform: translateX(-50%) translateY(-50%) !important;
+    left: 35% !important;
+    top: 50% !important;
+    opacity: 0.6 !important;
     z-index: 1 !important;
+    scale: 0.9 !important;
   }
   
+  /* NEO BOOST - 오른쪽 뒤에 */
   #boost-card {
-    transform: translateX(-30%) translateY(-50%) translateZ(-150px) scale(0.85) !important;
-    opacity: 0.7 !important;
+    transform: translateX(-50%) translateY(-50%) !important;
+    left: 65% !important;
+    top: 50% !important;
+    opacity: 0.6 !important;
     z-index: 1 !important;
+    scale: 0.9 !important;
   }
 .neo-smart-logo.front {
 display: block !important;
