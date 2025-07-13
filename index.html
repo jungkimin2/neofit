@@ -5936,6 +5936,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const cardContainer = document.querySelector('.training-cards-container');
   let currentCard = 'sync';
   let isAnimating = false;
+  let isMobile = window.innerWidth <= 768;
   
   // 네오싱크 카드 비디오 호버 효과
   const syncCard = document.getElementById('sync-card');
@@ -5970,25 +5971,50 @@ document.addEventListener('DOMContentLoaded', function() {
     const card = cards[cardId];
     if (!card) return;
     
-    switch(position) {
-      case 'center':
-        card.style.transform = 'translateX(-50%) translateY(-50%) translateZ(0) scale(1)';
-        card.style.opacity = '1';
-        card.style.zIndex = '10';
-        card.classList.add('active');
-        break;
-      case 'left':
-        card.style.transform = 'translateX(-50%) translateY(-50%) translateX(-450px) translateZ(-150px) rotateY(25deg) scale(0.8)';
-        card.style.opacity = '0.6';
-        card.style.zIndex = '5';
-        card.classList.remove('active');
-        break;
-      case 'right':
-        card.style.transform = 'translateX(-50%) translateY(-50%) translateX(450px) translateZ(-150px) rotateY(-25deg) scale(0.8)';
-        card.style.opacity = '0.6';
-        card.style.zIndex = '5';
-        card.classList.remove('active');
-        break;
+    if (isMobile) {
+      // 모바일에서의 카드 위치
+      switch(position) {
+        case 'center':
+          card.style.transform = 'translateX(-50%) translateY(calc(-50% - 32px)) translateZ(10px)';
+          card.style.opacity = '1';
+          card.style.zIndex = '10';
+          card.classList.add('active');
+          break;
+        case 'left':
+          card.style.transform = 'translateX(-50%) translateY(calc(-50% - 32px)) translateX(-80px) translateZ(-30px) rotateY(15deg)';
+          card.style.opacity = '0.9';
+          card.style.zIndex = '1';
+          card.classList.remove('active');
+          break;
+        case 'right':
+          card.style.transform = 'translateX(-50%) translateY(calc(-50% - 32px)) translateX(80px) translateZ(-30px) rotateY(-15deg)';
+          card.style.opacity = '0.9';
+          card.style.zIndex = '1';
+          card.classList.remove('active');
+          break;
+      }
+    } else {
+      // PC에서의 카드 위치
+      switch(position) {
+        case 'center':
+          card.style.transform = 'translateX(-50%) translateY(-50%) translateZ(0) scale(1)';
+          card.style.opacity = '1';
+          card.style.zIndex = '10';
+          card.classList.add('active');
+          break;
+        case 'left':
+          card.style.transform = 'translateX(-50%) translateY(-50%) translateX(-450px) translateZ(-150px) rotateY(25deg) scale(0.8)';
+          card.style.opacity = '0.6';
+          card.style.zIndex = '5';
+          card.classList.remove('active');
+          break;
+        case 'right':
+          card.style.transform = 'translateX(-50%) translateY(-50%) translateX(450px) translateZ(-150px) rotateY(-25deg) scale(0.8)';
+          card.style.opacity = '0.6';
+          card.style.zIndex = '5';
+          card.classList.remove('active');
+          break;
+      }
     }
   }
   
@@ -6087,10 +6113,11 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
   
-  // 카드 클릭 이벤트
+  // 카드 클릭 이벤트 - 모바일에서 좌우 카드 클릭 시 중앙으로 이동
   Object.entries(cards).forEach(([cardId, card]) => {
     card.addEventListener('click', function() {
-      if (!this.classList.contains('active')) {
+      // 모바일에서는 모든 카드 클릭 시 중앙으로 이동
+      if (isMobile || !this.classList.contains('active')) {
         switchCard(cardId);
       }
     });
@@ -6155,6 +6182,13 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // 자동 회전 시작 (원하면 주석 해제)
   // startAutoRotate();
+  
+  // 화면 크기 변경 시 모바일 여부 체크
+  window.addEventListener('resize', function() {
+    isMobile = window.innerWidth <= 768;
+    // 현재 카드 위치 재설정
+    switchCard(currentCard);
+  });
 });
 </script>
 
