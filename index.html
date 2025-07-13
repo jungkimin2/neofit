@@ -3356,7 +3356,7 @@ html body .core-value-fresh-mobile {
           </div>
           
           <!-- 모바일 영상 컨테이너 (시현 시 표시) -->
-          <div class="mobile-video-container" style="display: none; position: absolute; top: 0; left: 0; right: 0; bottom: 0; opacity: 0; transition: opacity 0.5s ease;">
+          <div class="mobile-video-container" style="display: none; position: absolute; top: 0; left: 0; right: 0; bottom: 0; opacity: 0; transition: opacity 0.5s ease; background: transparent;">
             <h4 style="color: #7BE495; font-size: 1.5rem; margin-bottom: 20px; text-align: center;">실제 사용 화면</h4>
             <div class="phone-frame" style="width: 240px; height: 480px; margin: 0 auto; border-radius: 30px; border: 4px solid #7BE495; overflow: hidden; position: relative; box-shadow: 0 0 40px rgba(123, 228, 149, 0.5); background: #000;">
               <video id="mobilePreviewVideo" src="./videos/neofits.mp4" loop muted playsinline style="width: 100%; height: 100%; object-fit: cover;">
@@ -3525,28 +3525,34 @@ function toggleVideoPreview() {
   const video = document.getElementById('mobilePreviewVideo');
   
   if (cardDisplay && videoContainer && video) {
-    // 비디오를 처음부터 준비
+    // 비디오를 미리 로드하고 준비
     video.pause();
     video.currentTime = 0;
+    video.load(); // 영상을 다시 로드하여 첫 프레임 준비
     
-    // 카드 UI 페이드 아웃
-    cardDisplay.style.opacity = '0';
-    cardDisplay.style.transform = 'scale(0.95)';
-    
-    setTimeout(() => {
-      cardDisplay.style.display = 'none';
-      videoContainer.style.display = 'block';
+    // 비디오가 로드될 때까지 대기
+    video.addEventListener('loadeddata', function onVideoLoaded() {
+      video.removeEventListener('loadeddata', onVideoLoaded);
       
-      // 영상 컨테이너 페이드 인 후 재생
+      // 카드 UI 페이드 아웃
+      cardDisplay.style.opacity = '0';
+      cardDisplay.style.transform = 'scale(0.95)';
+      
       setTimeout(() => {
-        videoContainer.style.opacity = '1';
-        // 지연 후 재생 시작
+        cardDisplay.style.display = 'none';
+        videoContainer.style.display = 'block';
+        
+        // 영상 컨테이너 페이드 인 후 재생
         setTimeout(() => {
-          video.volume = 0.7; // 볼륨을 70%로 설정
-          video.play();
-        }, 100);
-      }, 50);
-    }, 500);
+          videoContainer.style.opacity = '1';
+          // 지연 후 재생 시작
+          setTimeout(() => {
+            video.volume = 0.7; // 볼륨을 70%로 설정
+            video.play();
+          }, 100);
+        }, 50);
+      }, 300);
+    });
   }
 }
 
