@@ -3534,24 +3534,35 @@ function toggleVideoPreview() {
     video.addEventListener('loadeddata', function onVideoLoaded() {
       video.removeEventListener('loadeddata', onVideoLoaded);
       
-      // 카드 UI 페이드 아웃
-      cardDisplay.style.opacity = '0';
-      cardDisplay.style.transform = 'scale(0.95)';
+      // 카드를 부드럽게 축소하면서 페이드 아웃
+      cardDisplay.style.transform = 'scale(0.98) rotateY(5deg)';
+      cardDisplay.style.opacity = '0.8';
       
       setTimeout(() => {
-        cardDisplay.style.display = 'none';
-        videoContainer.style.display = 'block';
+        cardDisplay.style.transform = 'scale(0.95) rotateY(10deg)';
+        cardDisplay.style.opacity = '0';
         
-        // 영상 컨테이너 페이드 인 후 재생
         setTimeout(() => {
-          videoContainer.style.opacity = '1';
-          // 지연 후 재생 시작
-          setTimeout(() => {
-            video.volume = 0.3; // 볼륨을 30%로 설정
-            video.play();
-          }, 100);
-        }, 50);
-      }, 300);
+          cardDisplay.style.display = 'none';
+          
+          // 영상 컨테이너 초기 상태 설정
+          videoContainer.style.display = 'block';
+          videoContainer.style.opacity = '0';
+          videoContainer.style.transform = 'scale(0.9) translateY(10px)';
+          
+          // 부드럽게 페이드 인하면서 확대
+          requestAnimationFrame(() => {
+            videoContainer.style.opacity = '1';
+            videoContainer.style.transform = 'scale(1) translateY(0)';
+            
+            // 영상 재생
+            setTimeout(() => {
+              video.volume = 0.3; // 볼륨을 30%로 설정
+              video.play();
+            }, 200);
+          });
+        }, 300);
+      }, 150);
     });
   }
 }
@@ -3667,6 +3678,13 @@ function toggleMobilePreviewMute() {
   /* 카드 섹션 스타일 */
   .new-neos-showcase .card-section {
     min-height: 600px;
+    perspective: 1000px;
+  }
+  
+  /* 카드 디스플레이 3D 효과를 위한 설정 */
+  .new-neos-showcase .card-display-area {
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
   }
   
   /* 모바일 영상 컨테이너 닫기 버튼 호버 효과 */
