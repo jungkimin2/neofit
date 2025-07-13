@@ -3323,60 +3323,71 @@ html body .core-value-fresh-mobile {
     
     <!-- 새로운 통합 NEO-S 쇼케이스 (PC/모바일 공통) -->
     <div class="new-neos-showcase" style="position: relative; width: 100%; margin-top: 40px;">
-      <!-- 모바일 슬라이드 래퍼 -->
-      <div class="mobile-slide-wrapper" style="position: relative; overflow: hidden; width: 100%;">
-        <!-- 슬라이드 컨테이너 -->
-        <div class="slide-container" style="display: flex; transition: transform 0.3s ease;">
-          <!-- 슬라이드 1: 카드 섹션 -->
-          <div class="slide-item card-section" style="flex: 0 0 100%; max-width: 500px; min-width: 300px;">
-            <div class="card-display-area" style="background: linear-gradient(135deg, #0A0F0D 0%, #000 100%); border-radius: 20px; padding: 40px; border: 1px solid rgba(123, 228, 149, 0.3); box-shadow: 0 0 30px rgba(123, 228, 149, 0.2); text-align: center;">
-              <img id="pc-card-image" src="./images/neost.png" alt="NEO-S Card" 
-                   style="width: 300px; height: auto; margin: 0 auto 30px; filter: drop-shadow(0 0 20px rgba(123, 228, 149, 0.6)); transition: all 0.3s ease;">
-              <h3 id="pc-card-title" style="color: #7BE495; font-size: 1.8rem; margin-bottom: 15px;">NEO-S NFC 스티커</h3>
-              <p id="pc-card-desc" style="color: #ccc; font-size: 1rem; line-height: 1.6;">
-                스마트폰 태그만으로<br>나만의 운동 영상을 즉시 확인
-              </p>
-              
-              <!-- 탭 버튼 -->
-              <div class="tab-buttons" style="display: flex; gap: 15px; margin-top: 30px;">
-                <button class="tab-btn active" data-card="front" onclick="switchCard('front')" 
-                        style="flex: 1; padding: 12px 25px; background: #7BE495; color: #000; border: none; border-radius: 25px; font-weight: 600; cursor: pointer; transition: all 0.3s;">
-                  앞면
-                </button>
-                <button class="tab-btn" data-card="back" onclick="switchCard('back')"
-                        style="flex: 1; padding: 12px 25px; background: transparent; color: #7BE495; border: 1px solid #7BE495; border-radius: 25px; font-weight: 600; cursor: pointer; transition: all 0.3s;">
-                  뒷면
-                </button>
-              </div>
+      <!-- 레이아웃 래퍼 -->
+      <div class="showcase-wrapper" style="display: flex; gap: 40px; align-items: center; justify-content: center; flex-wrap: wrap;">
+        <!-- 카드 섹션 -->
+        <div class="card-section" style="flex: 1; max-width: 500px; min-width: 300px;">
+          <div class="card-display-area" style="background: linear-gradient(135deg, #0A0F0D 0%, #000 100%); border-radius: 20px; padding: 40px; border: 1px solid rgba(123, 228, 149, 0.3); box-shadow: 0 0 30px rgba(123, 228, 149, 0.2); text-align: center;">
+            <img id="pc-card-image" src="./images/neost.png" alt="NEO-S Card" 
+                 style="width: 300px; height: auto; margin: 0 auto 30px; filter: drop-shadow(0 0 20px rgba(123, 228, 149, 0.6)); transition: all 0.3s ease;">
+            <h3 id="pc-card-title" style="color: #7BE495; font-size: 1.8rem; margin-bottom: 15px;">NEO-S NFC 스티커</h3>
+            <p id="pc-card-desc" style="color: #ccc; font-size: 1rem; line-height: 1.6;">
+              스마트폰 태그만으로<br>나만의 운동 영상을 즉시 확인
+            </p>
+            
+            <!-- 탭 버튼 -->
+            <div class="tab-buttons" style="display: flex; gap: 15px; margin-top: 30px;">
+              <button class="tab-btn active" data-card="front" onclick="switchCard('front')" 
+                      style="flex: 1; padding: 12px 25px; background: #7BE495; color: #000; border: none; border-radius: 25px; font-weight: 600; cursor: pointer; transition: all 0.3s;">
+                앞면
+              </button>
+              <button class="tab-btn" data-card="back" onclick="switchCard('back')"
+                      style="flex: 1; padding: 12px 25px; background: transparent; color: #7BE495; border: 1px solid #7BE495; border-radius: 25px; font-weight: 600; cursor: pointer; transition: all 0.3s;">
+                뒷면
+              </button>
             </div>
+            
+            <!-- 시현 영상 보기 버튼 (모바일에서만) -->
+            <button class="video-preview-btn" onclick="toggleVideoPreview()" 
+                    style="display: none; width: 100%; padding: 12px 25px; margin-top: 15px; background: transparent; color: #7BE495; border: 2px solid #7BE495; border-radius: 25px; font-weight: 600; cursor: pointer; transition: all 0.3s;">
+              시현 영상 보기
+            </button>
           </div>
-          
-          <!-- 슬라이드 2: 실제 사용 화면 -->
-          <div class="slide-item phone-section" style="flex: 0 0 100%; max-width: 400px; min-width: 300px; text-align: center;">
-            <h4 style="color: #7BE495; font-size: 1.5rem; margin-bottom: 20px;">실제 사용 화면</h4>
-            <div class="phone-frame" style="width: 240px; height: 480px; margin: 0 auto; border-radius: 30px; border: 4px solid #7BE495; overflow: hidden; position: relative; box-shadow: 0 0 40px rgba(123, 228, 149, 0.5); background: #000;">
-              <video id="neofitsVideo" src="./videos/neofits.mp4" autoplay loop muted playsinline style="width: 100%; height: 100%; object-fit: cover;">
-              </video>
-              <!-- neofits.mp4 전용 스피커 버튼 -->
-              <div class="speaker-button-wrapper" style="position: absolute; top: 4px; right: 4px; z-index: 10;">
-                <button class="speaker-button" onclick="toggleNeofitsMute()" aria-label="음소거 토글">
-                  <svg id="neofitsSpeakerIcon" viewBox="0 0 24 24">
-                    <!-- 음소거 해제 아이콘 (기본) -->
-                    <path id="neofitsVolumeOn" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
-                    <!-- 음소거 아이콘 (숨김) -->
-                    <path id="neofitsVolumeOff" d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z" style="display: none;"/>
-                  </svg>
-                </button>
-              </div>
+        </div>
+        
+        <!-- 실제 사용 화면 (PC에서만 표시) -->
+        <div class="phone-section pc-only" style="flex: 1; max-width: 400px; min-width: 300px; text-align: center; margin-top: -32px;">
+          <h4 style="color: #7BE495; font-size: 1.5rem; margin-bottom: 20px;">실제 사용 화면</h4>
+          <div class="phone-frame" style="width: 240px; height: 480px; margin: 0 auto; border-radius: 30px; border: 4px solid #7BE495; overflow: hidden; position: relative; box-shadow: 0 0 40px rgba(123, 228, 149, 0.5); background: #000;">
+            <video id="neofitsVideo" src="./videos/neofits.mp4" autoplay loop muted playsinline style="width: 100%; height: 100%; object-fit: cover;">
+            </video>
+            <!-- neofits.mp4 전용 스피커 버튼 -->
+            <div class="speaker-button-wrapper" style="position: absolute; top: 4px; right: 4px; z-index: 10;">
+              <button class="speaker-button" onclick="toggleNeofitsMute()" aria-label="음소거 토글">
+                <svg id="neofitsSpeakerIcon" viewBox="0 0 24 24">
+                  <!-- 음소거 해제 아이콘 (기본) -->
+                  <path id="neofitsVolumeOn" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                  <!-- 음소거 아이콘 (숨김) -->
+                  <path id="neofitsVolumeOff" d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z" style="display: none;"/>
+                </svg>
+              </button>
             </div>
           </div>
         </div>
       </div>
       
-      <!-- 모바일 슬라이드 인디케이터 -->
-      <div class="mobile-slide-indicators" style="display: flex; justify-content: center; gap: 8px; margin-top: 20px;">
-        <span class="indicator active" onclick="goToSlide(0)" style="width: 8px; height: 8px; background: #7BE495; border-radius: 50%; cursor: pointer; transition: all 0.3s;"></span>
-        <span class="indicator" onclick="goToSlide(1)" style="width: 8px; height: 8px; background: rgba(123, 228, 149, 0.3); border-radius: 50%; cursor: pointer; transition: all 0.3s;"></span>
+      <!-- 모바일 영상 팝업 -->
+      <div class="mobile-video-popup" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.9); z-index: 9999; padding: 20px; box-sizing: border-box;">
+        <button onclick="closeVideoPreview()" style="position: absolute; top: 20px; right: 20px; background: none; border: none; color: #7BE495; font-size: 2rem; cursor: pointer; z-index: 10000;">&times;</button>
+        <div style="display: flex; align-items: center; justify-content: center; height: 100%;">
+          <div style="text-align: center; width: 100%; max-width: 500px;">
+            <h4 style="color: #7BE495; font-size: 1.5rem; margin-bottom: 20px;">실제 사용 화면</h4>
+            <div class="phone-frame" style="width: 280px; height: 560px; margin: 0 auto; border-radius: 30px; border: 4px solid #7BE495; overflow: hidden; position: relative; box-shadow: 0 0 40px rgba(123, 228, 149, 0.5); background: #000;">
+              <video id="mobileNeofitsVideo" src="./videos/neofits.mp4" autoplay loop muted playsinline style="width: 100%; height: 100%; object-fit: cover;">
+              </video>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     
@@ -3496,76 +3507,43 @@ function switchCard(type) {
   }, 150);
 }
 
-// 모바일 슬라이드 기능
-let currentSlide = 0;
-let slideContainer;
-let indicators;
-let touchStartX = 0;
-let touchEndX = 0;
-
-function goToSlide(index) {
-  // DOM 요소를 함수 호출 시점에 다시 찾기
-  if (!slideContainer) {
-    slideContainer = document.querySelector('.slide-container');
-  }
-  if (!indicators) {
-    indicators = document.querySelectorAll('.indicator');
-  }
-  
-  currentSlide = index;
-  if (slideContainer) {
-    slideContainer.style.transform = `translateX(-${index * 100}%)`;
-  }
-  
-  // 인디케이터 업데이트
-  if (indicators) {
-    indicators.forEach((indicator, i) => {
-      if (i === index) {
-        indicator.classList.add('active');
-        indicator.style.background = '#7BE495';
-      } else {
-        indicator.classList.remove('active');
-        indicator.style.background = 'rgba(123, 228, 149, 0.3)';
-      }
-    });
-  }
-}
-
-// DOM이 로드된 후 이벤트 리스너 추가
-document.addEventListener('DOMContentLoaded', function() {
-  slideContainer = document.querySelector('.slide-container');
-  indicators = document.querySelectorAll('.indicator');
-  
-  // 터치 이벤트 처리
-  if (slideContainer) {
-    slideContainer.addEventListener('touchstart', (e) => {
-      touchStartX = e.changedTouches[0].screenX;
-    }, { passive: true });
-    
-    slideContainer.addEventListener('touchend', (e) => {
-      touchEndX = e.changedTouches[0].screenX;
-      handleSwipe();
-    }, { passive: true });
-  }
-});
-
-function handleSwipe() {
-  const swipeThreshold = 50;
-  const diff = touchStartX - touchEndX;
-  
-  if (Math.abs(diff) > swipeThreshold) {
-    if (diff > 0 && currentSlide < 1) {
-      // 왼쪽 스와이프 (다음 슬라이드)
-      goToSlide(1);
-    } else if (diff < 0 && currentSlide > 0) {
-      // 오른쪽 스와이프 (이전 슬라이드)
-      goToSlide(0);
+// 모바일 영상 팝업 기능
+function toggleVideoPreview() {
+  const popup = document.querySelector('.mobile-video-popup');
+  if (popup) {
+    popup.style.display = 'block';
+    // 비디오 재생
+    const video = document.getElementById('mobileNeofitsVideo');
+    if (video) {
+      video.currentTime = 0;
+      video.play();
     }
   }
 }
 
-// 전역 함수로 노출 (인라인 onclick에서 호출 가능하도록)
-window.goToSlide = goToSlide;
+function closeVideoPreview() {
+  const popup = document.querySelector('.mobile-video-popup');
+  if (popup) {
+    popup.style.display = 'none';
+    // 비디오 정지
+    const video = document.getElementById('mobileNeofitsVideo');
+    if (video) {
+      video.pause();
+    }
+  }
+}
+
+// 팝업 배경 클릭 시 닫기
+document.addEventListener('DOMContentLoaded', function() {
+  const popup = document.querySelector('.mobile-video-popup');
+  if (popup) {
+    popup.addEventListener('click', function(e) {
+      if (e.target === popup) {
+        closeVideoPreview();
+      }
+    });
+  }
+});
 </script>
 
 <style>
@@ -3609,15 +3587,14 @@ window.goToSlide = goToSlide;
 
 /* 모바일 전용 스타일 */
 @media (max-width: 768px) {
-  /* 모바일에서만 인디케이터 표시 */
-  .new-neos-showcase .mobile-slide-indicators {
-    display: flex !important;
+  /* 모바일에서 PC 전용 영상 섹션 숨김 */
+  .new-neos-showcase .pc-only {
+    display: none !important;
   }
   
-  /* 슬라이드 아이템 정렬 */
-  .new-neos-showcase .slide-item {
-    padding: 0 20px;
-    box-sizing: border-box;
+  /* 시현 영상 보기 버튼 표시 */
+  .new-neos-showcase .video-preview-btn {
+    display: block !important;
   }
   
   .new-neos-showcase .card-display-area {
@@ -3637,25 +3614,52 @@ window.goToSlide = goToSlide;
     transform: scale(0.95);
   }
   
-  @keyframes fadeInUp {
+  /* 시현 영상 보기 버튼 호버/터치 효과 */
+  .new-neos-showcase .video-preview-btn {
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(123, 228, 149, 0.3);
+  }
+  
+  .new-neos-showcase .video-preview-btn:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(123, 228, 149, 0.3), transparent);
+    transition: left 0.6s ease;
+  }
+  
+  .new-neos-showcase .video-preview-btn:hover:before {
+    left: 100%;
+  }
+  
+  .new-neos-showcase .video-preview-btn:active {
+    transform: scale(0.98);
+    background: rgba(123, 228, 149, 0.1) !important;
+    box-shadow: 0 0 30px rgba(123, 228, 149, 0.5);
+  }
+  
+  /* 모바일 비디오 팝업 애니메이션 */
+  .mobile-video-popup {
+    animation: fadeIn 0.3s ease;
+  }
+  
+  @keyframes fadeIn {
     from {
       opacity: 0;
-      transform: translateY(30px);
     }
     to {
       opacity: 1;
-      transform: translateY(0);
     }
   }
 }
 
 /* PC에서는 일반 플렉스 레이아웃 */
 @media (min-width: 769px) {
-  .new-neos-showcase .mobile-slide-wrapper {
-    overflow: visible !important;
-  }
-  
-  .new-neos-showcase .slide-container {
+  .new-neos-showcase .showcase-wrapper {
     display: flex !important;
     gap: 40px !important;
     justify-content: center !important;
@@ -3663,15 +3667,16 @@ window.goToSlide = goToSlide;
     flex-wrap: wrap !important;
   }
   
-  .new-neos-showcase .slide-item {
-    flex: 1 !important;
-  }
-  
   .new-neos-showcase .phone-section {
     margin-top: -32px !important;
   }
   
-  .new-neos-showcase .mobile-slide-indicators {
+  /* PC에서는 모바일 전용 요소 숨김 */
+  .new-neos-showcase .video-preview-btn {
+    display: none !important;
+  }
+  
+  .new-neos-showcase .mobile-video-popup {
     display: none !important;
   }
 }
