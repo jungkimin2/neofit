@@ -3542,6 +3542,7 @@ function toggleVideoPreview() {
         videoContainer.style.opacity = '1';
         // 지연 후 재생 시작
         setTimeout(() => {
+          video.volume = 0.7; // 볼륨을 70%로 설정
           video.play();
         }, 100);
       }, 50);
@@ -3582,6 +3583,7 @@ function toggleMobilePreviewMute() {
   if (video && volumeOn && volumeOff) {
     if (video.muted) {
       video.muted = false;
+      video.volume = 0.7; // 음소거 해제 시에도 볼륨 70%
       volumeOn.style.display = 'block';
       volumeOff.style.display = 'none';
     } else {
