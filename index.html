@@ -80,35 +80,51 @@
   
   /* NFC 카드와 핸드폰 이미지 위치 조정 - 캡처 이미지 기준 */
   #smart .neos-wrapper {
-    left: 30% !important;
-    top: 50% !important;
-    transform: translate(-50%, -50%) scale(0.5) !important;
-    width: 400px !important;
+    left: 25% !important;
+    top: 45% !important;
+    transform: translate(-50%, -50%) scale(0.7) !important;
+    width: 300px !important;
     z-index: 10 !important;
+  }
+  
+  /* 플립 효과를 위한 앞면/뒷면 위치 동일하게 설정 */
+  #smart .flipper {
+    width: 100% !important;
+    height: 100% !important;
+  }
+  
+  #smart .neo-smart-logo.front,
+  #smart .flipper .back {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    backface-visibility: hidden !important;
   }
   
   #smart .floating-video {
     width: 180px !important;
     height: 360px !important;
     position: absolute !important;
-    left: 50% !important;
-    top: 50% !important;
-    transform: translate(-50%, -50%) !important;
+    right: 10px !important;
+    left: auto !important;
+    top: 35% !important;
+    transform: translateY(-50%) !important;
     z-index: 20 !important;
   }
   
   /* 뒷면 보기 버튼 위치 조정 - NFC 카드 바로 아래 */
   #smart .neos-category-tags {
-    bottom: 40px !important;
-    left: 30% !important;
+    position: absolute !important;
+    bottom: 20px !important;
+    left: 25% !important;
     transform: translateX(-50%) !important;
     z-index: 15 !important;
   }
   
   /* NEO-S 카드 이미지 스타일 */
   #smart .neo-smart-logo.front {
-    width: 100% !important;
-    height: 100% !important;
     object-fit: contain !important;
   }
   
