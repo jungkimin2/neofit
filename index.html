@@ -751,6 +751,20 @@ div > p.smart-guide-text {
     -webkit-tap-highlight-color: transparent !important;
     transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
   }
+  
+  /* 모바일에서 CLICK 표시 - 각 카드가 활성일 때만 표시 */
+  .click-indicator {
+    display: none !important;
+  }
+  
+  #sync-card.active .click-indicator,
+  #balance-card.active .click-indicator,
+  #boost-card.active .click-indicator {
+    display: block !important;
+    font-size: 0.65rem !important;
+    bottom: 10px !important;
+    left: 10px !important;
+  }
 }
 </style>
 </body>
@@ -2320,6 +2334,8 @@ document.addEventListener('DOMContentLoaded', function() {
               <img src="./images/neosync.png" alt="네오 싱크" style="width: 80%; height: auto; margin-bottom: 20px; filter: drop-shadow(0 0 20px rgba(123,228,149,0.5));">
               <p style="color: #fff; font-size: 1.1rem; text-align: center;">기초 체력과 움직임의 동기화</p>
               <p style="color: #aaa; font-size: 0.95rem; text-align: center; margin-top: 10px;">팀원들과 함께 기본기를 다지는 입문 프로그램</p>
+              <!-- CLICK 표시 추가 -->
+              <span class="click-indicator" style="position: absolute; bottom: 15px; left: 15px; color: rgba(123,228,149,0.8); font-size: 0.7rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; opacity: 0.7; animation: pulse 2s ease-in-out infinite;">CLICK</span>
             </div>
           </div>
         </div>
@@ -2333,6 +2349,8 @@ document.addEventListener('DOMContentLoaded', function() {
             <img src="./images/neoblance.png" alt="네오 밸런스" style="width: 80%; height: auto; margin-bottom: 20px; filter: drop-shadow(0 0 20px rgba(147,197,253,0.5));">
             <p style="color: #fff; font-size: 1.1rem; text-align: center;">균형과 안정성 강화</p>
             <p style="color: #aaa; font-size: 0.95rem; text-align: center; margin-top: 10px;">중급자를 위한 균형 잡힌 트레이닝</p>
+            <!-- CLICK 표시 추가 -->
+            <span class="click-indicator" style="position: absolute; bottom: 15px; left: 15px; color: rgba(147,197,253,0.8); font-size: 0.7rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; opacity: 0.7; animation: pulse 2s ease-in-out infinite;">CLICK</span>
           </div>
         </div>
       </div>
@@ -2345,6 +2363,8 @@ document.addEventListener('DOMContentLoaded', function() {
             <img src="./images/neoboots.png" alt="네오 부스트" style="width: 80%; height: auto; margin-bottom: 20px; filter: drop-shadow(0 0 20px rgba(248,113,113,0.5));">
             <p style="color: #fff; font-size: 1.1rem; text-align: center;">폭발적인 퍼포먼스 향상</p>
             <p style="color: #aaa; font-size: 0.95rem; text-align: center; margin-top: 10px;">상급자를 위한 고강도 프로그램</p>
+            <!-- CLICK 표시 추가 -->
+            <span class="click-indicator" style="position: absolute; bottom: 15px; left: 15px; color: rgba(248,113,113,0.8); font-size: 0.7rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; opacity: 0.7; animation: pulse 2s ease-in-out infinite;">CLICK</span>
           </div>
         </div>
       </div>
@@ -6234,6 +6254,50 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <!-- Training Cards Enhanced Styles -->
 <style>
+/* CLICK 표시 애니메이션 */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+}
+
+/* 각 카드별 CLICK 표시 발광 효과 */
+#sync-card .click-indicator {
+  text-shadow: 0 0 10px rgba(123,228,149,0.8), 
+               0 0 20px rgba(123,228,149,0.6), 
+               0 0 30px rgba(123,228,149,0.4) !important;
+}
+
+#balance-card .click-indicator {
+  text-shadow: 0 0 10px rgba(147,197,253,0.8), 
+               0 0 20px rgba(147,197,253,0.6), 
+               0 0 30px rgba(147,197,253,0.4) !important;
+}
+
+#boost-card .click-indicator {
+  text-shadow: 0 0 10px rgba(248,113,113,0.8), 
+               0 0 20px rgba(248,113,113,0.6), 
+               0 0 30px rgba(248,113,113,0.4) !important;
+}
+
+/* PC에서 CLICK 표시를 각 카드 활성 상태에서만 보이도록 */
+@media (min-width: 769px) {
+  .click-indicator {
+    display: none;
+  }
+  
+  #sync-card.active .click-indicator,
+  #balance-card.active .click-indicator,
+  #boost-card.active .click-indicator {
+    display: block;
+  }
+}
+
 /* 카드 호버 효과 */
 .training-card {
   transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
