@@ -615,7 +615,7 @@ div > p.smart-guide-text {
   /* 카드 컨테이너 위치 조정 - 화면 중앙에 보이도록 */
   .training-cards-container {
     height: 400px !important;
-    margin: 20px 0 40px 0 !important;
+    margin: 4px 0 40px 0 !important; /* 상단 마진을 20px에서 4px로 줄여서 위로 올림 */
     padding: 10px 0 !important;
     position: relative !important;
     top: 0 !important;
@@ -635,9 +635,9 @@ div > p.smart-guide-text {
     transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
   }
   
-  /* 활성 카드 위치 조정 - 중앙에 위치 (상단으로 32px 이동) */
+  /* 활성 카드 위치 조정 - 중앙에 위치 (상단으로 48px 이동) */
   .training-card.active {
-    transform: translateX(-50%) translateY(calc(-50% - 32px)) translateZ(10px) !important;
+    transform: translateX(-50%) translateY(calc(-50% - 48px)) translateZ(10px) !important;
     z-index: 10 !important;
     opacity: 1 !important;
   }
@@ -649,48 +649,48 @@ div > p.smart-guide-text {
   
   /* 싱크가 중앙일 때 (기본 상태) */
   #sync-card.active {
-    transform: translateX(-50%) translateY(calc(-50% - 32px)) translateZ(10px) !important;
+    transform: translateX(-50%) translateY(calc(-50% - 48px)) translateZ(10px) !important;
   }
   
   #sync-card.active ~ #balance-card {
-    transform: translateX(-50%) translateY(calc(-50% - 32px)) translateX(-80px) translateZ(-30px) rotateY(15deg) !important;
+    transform: translateX(-50%) translateY(calc(-50% - 48px)) translateX(-80px) translateZ(-30px) rotateY(15deg) !important;
     z-index: 1 !important;
   }
   
   #sync-card.active ~ #boost-card {
-    transform: translateX(-50%) translateY(calc(-50% - 32px)) translateX(80px) translateZ(-30px) rotateY(-15deg) !important;
+    transform: translateX(-50%) translateY(calc(-50% - 48px)) translateX(80px) translateZ(-30px) rotateY(-15deg) !important;
     z-index: 1 !important;
   }
   
   /* 밸런스가 중앙일 때 */
   #balance-card.active {
-    transform: translateX(-50%) translateY(calc(-50% - 32px)) translateZ(10px) !important;
+    transform: translateX(-50%) translateY(calc(-50% - 48px)) translateZ(10px) !important;
   }
   
   #balance-card.active ~ #boost-card {
-    transform: translateX(-50%) translateY(calc(-50% - 32px)) translateX(80px) translateZ(-30px) rotateY(-15deg) !important;
+    transform: translateX(-50%) translateY(calc(-50% - 48px)) translateX(80px) translateZ(-30px) rotateY(-15deg) !important;
     z-index: 1 !important;
   }
   
   /* 모바일에서 밸런스가 활성일 때 싱크 카드 위치 */
   .training-cards-container.balance-active #sync-card {
-    transform: translateX(-50%) translateY(calc(-50% - 32px)) translateX(-80px) translateZ(-30px) rotateY(15deg) !important;
+    transform: translateX(-50%) translateY(calc(-50% - 48px)) translateX(-80px) translateZ(-30px) rotateY(15deg) !important;
     z-index: 1 !important;
   }
   
   /* 부스트가 중앙일 때 */
   #boost-card.active {
-    transform: translateX(-50%) translateY(calc(-50% - 32px)) translateZ(10px) !important;
+    transform: translateX(-50%) translateY(calc(-50% - 48px)) translateZ(10px) !important;
   }
   
   /* 모바일에서 부스트가 활성일 때 다른 카드들 위치 */
   .training-cards-container.boost-active #sync-card {
-    transform: translateX(-50%) translateY(calc(-50% - 32px)) translateX(-80px) translateZ(-30px) rotateY(15deg) !important;
+    transform: translateX(-50%) translateY(calc(-50% - 48px)) translateX(-80px) translateZ(-30px) rotateY(15deg) !important;
     z-index: 1 !important;
   }
   
   .training-cards-container.boost-active #balance-card {
-    transform: translateX(-50%) translateY(calc(-50% - 32px)) translateX(80px) translateZ(-30px) rotateY(-15deg) !important;
+    transform: translateX(-50%) translateY(calc(-50% - 48px)) translateX(80px) translateZ(-30px) rotateY(-15deg) !important;
     z-index: 1 !important;
   }
   
@@ -2315,7 +2315,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </p>
     
     <!-- 3D 카드 컨테이너 -->
-    <div class="training-cards-container" style="position: relative; height: 500px; margin: 0 auto; perspective: 1000px;">
+    <div class="training-cards-container" style="position: relative; height: 500px; margin: -16px auto 0 auto; perspective: 1000px;">
       <!-- 네오 싱크 카드 -->
       <div class="training-card active" id="sync-card" style="position: absolute; width: 350px; height: 450px; left: 50%; top: 50%; transform: translateX(-50%) translateY(-50%) translateZ(0); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; background: transparent; border: none; border-radius: 20px; overflow: hidden; z-index: 3;">
         <div class="card-inner" style="width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.3s; background: transparent; border: none;">
@@ -5975,19 +5975,19 @@ document.addEventListener('DOMContentLoaded', function() {
       // 모바일에서의 카드 위치
       switch(position) {
         case 'center':
-          card.style.transform = 'translateX(-50%) translateY(calc(-50% - 32px)) translateZ(10px)';
+          card.style.transform = 'translateX(-50%) translateY(calc(-50% - 48px)) translateZ(10px)';
           card.style.opacity = '1';
           card.style.zIndex = '10';
           card.classList.add('active');
           break;
         case 'left':
-          card.style.transform = 'translateX(-50%) translateY(calc(-50% - 32px)) translateX(-80px) translateZ(-30px) rotateY(15deg)';
+          card.style.transform = 'translateX(-50%) translateY(calc(-50% - 48px)) translateX(-80px) translateZ(-30px) rotateY(15deg)';
           card.style.opacity = '0.9';
           card.style.zIndex = '1';
           card.classList.remove('active');
           break;
         case 'right':
-          card.style.transform = 'translateX(-50%) translateY(calc(-50% - 32px)) translateX(80px) translateZ(-30px) rotateY(-15deg)';
+          card.style.transform = 'translateX(-50%) translateY(calc(-50% - 48px)) translateX(80px) translateZ(-30px) rotateY(-15deg)';
           card.style.opacity = '0.9';
           card.style.zIndex = '1';
           card.classList.remove('active');
