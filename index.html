@@ -2083,14 +2083,17 @@ document.addEventListener('DOMContentLoaded', function() {
 <!-- 네오핏 트레이닝 시스템 섹션 -->
 <section id="neofit-training" class="section" style="background: #000; padding: 80px 0;">
   <div class="container" style="text-align:center; max-width: 1200px; margin: 0 auto;">
-    <h1 style="font-size: 2.5rem; color: #FFFFFF; margin-bottom: 20px;">
-      네오핏 : <span class="neon-green">"새로운 피트니스, 함께하는 문화"</span>
+    <h1 style="font-size: 3.5rem; color: #FFFFFF; margin-bottom: 40px;">
+      네오 하이브 : <span class="neon-green">"하나되는 우리"</span>
     </h1>
-    <p style="font-size: 1.2rem; color: #aaa; margin-bottom: 30px;">
-      네오핏은 1~4명이 팀을 이루어 함께 운동하는 <strong style="color: #7BE495;">팀 기반 그룹 트레이닝 시스템</strong>입니다.
+    <p style="font-size: 1.3rem; color: #aaa; margin-bottom: 20px; line-height: 1.8;">
+      지역 기반 소모임 헬스 커뮤니티 플랫폼
     </p>
-    <p style="font-size: 1.1rem; color: #ccc; margin-bottom: 50px;">
-      기초부터 퍼포먼스까지, <strong style="color: #7BE495;">단계별로 연결된 그룹 트레이닝 시스템</strong>
+    <p style="font-size: 1.3rem; color: #aaa; margin-bottom: 20px; line-height: 1.8;">
+      <span class="neon-green">커뮤니티와 헬스장을 하나로 연결하여</span> 지속적인 운동 문화를
+    </p>
+    <p style="font-size: 1.3rem; color: #aaa; margin-bottom: 50px; line-height: 1.8;">
+      만들고, 헬스장의 활성화를 도모합니다.
     </p>
     
     <!-- 3D 카드 컨테이너 -->
@@ -2099,16 +2102,22 @@ document.addEventListener('DOMContentLoaded', function() {
       <div class="training-card active" id="sync-card" style="position: absolute; width: 350px; height: 450px; left: 50%; top: 50%; transform: translateX(-50%) translateY(-50%) translateZ(0); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; background: transparent; border: none; border-radius: 20px; overflow: hidden;">
         <div class="card-inner" style="width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.3s; background: transparent; border: none;">
           <div class="card-front" style="position: absolute; width: 100%; height: 100%; backface-visibility: hidden; background: linear-gradient(135deg, #0A0F0D 0%, rgba(123,228,149,0.015) 100%); border: 2px solid #7BE495; border-radius: 20px; padding: 30px; display: flex; flex-direction: column; align-items: center; overflow: hidden;">
-            <h3 style="color: #7BE495; font-size: 2rem; margin-bottom: 20px; text-shadow: 0 0 20px rgba(123,228,149,0.8);">NEO SYNC</h3>
-            <img src="./images/neosync.png" alt="네오 싱크" style="width: 80%; height: auto; margin-bottom: 20px; filter: drop-shadow(0 0 20px rgba(123,228,149,0.5));">
-            <p style="color: #fff; font-size: 1.1rem; text-align: center;">기초 체력과 움직임의 동기화</p>
-            <p style="color: #aaa; font-size: 0.95rem; text-align: center; margin-top: 10px;">팀원들과 함께 기본기를 다지는 입문 프로그램</p>
+            <!-- 비디오 요소 추가 -->
+            <video class="sync-hover-video" src="./videos/neosyncvido.mp4" muted loop playsinline style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.3s ease; z-index: 1; pointer-events: none;"></video>
+            
+            <!-- 기존 콘텐츠를 relative로 변경하여 비디오 위에 표시 -->
+            <div style="position: relative; z-index: 2; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center;">
+              <h3 style="color: #7BE495; font-size: 2rem; margin-bottom: 20px; text-shadow: 0 0 20px rgba(123,228,149,0.8);">NEO SYNC</h3>
+              <img src="./images/neosync.png" alt="네오 싱크" style="width: 80%; height: auto; margin-bottom: 20px; filter: drop-shadow(0 0 20px rgba(123,228,149,0.5));">
+              <p style="color: #fff; font-size: 1.1rem; text-align: center;">기초 체력과 움직임의 동기화</p>
+              <p style="color: #aaa; font-size: 0.95rem; text-align: center; margin-top: 10px;">팀원들과 함께 기본기를 다지는 입문 프로그램</p>
+            </div>
           </div>
         </div>
       </div>
       
       <!-- 네오 밸런스 카드 -->
-      <div class="training-card" id="balance-card" style="position: absolute; width: 350px; height: 450px; left: 50%; top: 50%; transform: translateX(-50%) translateY(-50%) translateX(-400px) translateZ(-200px) rotateY(25deg); opacity: 0.7; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; background: transparent; border: none; border-radius: 20px; overflow: hidden;">
+      <div class="training-card" id="balance-card" style="position: absolute; width: 350px; height: 450px; left: 50%; top: 50%; transform: translateX(-50%) translateY(-50%) translateX(-500px) translateZ(-250px) rotateY(30deg); opacity: 0.7; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; background: transparent; border: none; border-radius: 20px; overflow: hidden;">
         <div class="card-inner" style="width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.3s; background: transparent; border: none;">
           <div class="card-front" style="position: absolute; width: 100%; height: 100%; backface-visibility: hidden; background: linear-gradient(135deg, #0A0D0F 0%, rgba(147,197,253,0.015) 100%); border: 2px solid #93C5FD; border-radius: 20px; padding: 30px; display: flex; flex-direction: column; align-items: center; overflow: hidden;">
             <h3 style="color: #93C5FD; font-size: 2rem; margin-bottom: 20px; text-shadow: 0 0 20px rgba(147,197,253,0.8);">NEO BALANCE</h3>
@@ -2120,7 +2129,7 @@ document.addEventListener('DOMContentLoaded', function() {
       </div>
       
       <!-- 네오 부스트 카드 -->
-      <div class="training-card" id="boost-card" style="position: absolute; width: 350px; height: 450px; left: 50%; top: 50%; transform: translateX(-50%) translateY(-50%) translateX(400px) translateZ(-200px) rotateY(-25deg); opacity: 0.7; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; background: transparent; border: none; border-radius: 20px; overflow: hidden;">
+      <div class="training-card" id="boost-card" style="position: absolute; width: 350px; height: 450px; left: 50%; top: 50%; transform: translateX(-50%) translateY(-50%) translateX(500px) translateZ(-250px) rotateY(-30deg); opacity: 0.7; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; background: transparent; border: none; border-radius: 20px; overflow: hidden;">
         <div class="card-inner" style="width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.3s; background: transparent; border: none;">
           <div class="card-front" style="position: absolute; width: 100%; height: 100%; backface-visibility: hidden; background: linear-gradient(135deg, #0F0A0A 0%, rgba(248,113,113,0.015) 100%); border: 2px solid #F87171; border-radius: 20px; padding: 30px; display: flex; flex-direction: column; align-items: center; overflow: hidden;">
             <h3 style="color: #F87171; font-size: 2rem; margin-bottom: 20px; text-shadow: 0 0 20px rgba(248,113,113,0.8);">NEO BOOST</h3>
@@ -5710,6 +5719,34 @@ document.addEventListener('DOMContentLoaded', function() {
   let currentCard = 'sync';
   let isAnimating = false;
   
+  // 네오싱크 카드 비디오 호버 효과
+  const syncCard = document.getElementById('sync-card');
+  const syncVideo = syncCard.querySelector('.sync-hover-video');
+  
+  // PC 환경에서만 비디오 호버 효과 적용
+  if (window.innerWidth > 768) {
+    const syncContent = syncCard.querySelector('.card-front > div:last-child');
+    
+    syncCard.addEventListener('mouseenter', function() {
+      if (syncVideo && syncContent) {
+        syncVideo.style.opacity = '1';
+        syncVideo.play().catch(e => console.log('Video play failed:', e));
+        // 콘텐츠 숨기기
+        syncContent.style.opacity = '0';
+      }
+    });
+    
+    syncCard.addEventListener('mouseleave', function() {
+      if (syncVideo && syncContent) {
+        syncVideo.style.opacity = '0';
+        syncVideo.pause();
+        syncVideo.currentTime = 0;
+        // 콘텐츠 다시 보이기
+        syncContent.style.opacity = '1';
+      }
+    });
+  }
+  
   // 카드 위치 설정 함수
   function setCardPosition(cardId, position) {
     const card = cards[cardId];
@@ -5723,13 +5760,13 @@ document.addEventListener('DOMContentLoaded', function() {
         card.classList.add('active');
         break;
       case 'left':
-        card.style.transform = 'translateX(-50%) translateY(-50%) translateX(-350px) translateZ(-100px) rotateY(15deg) scale(0.85)';
+        card.style.transform = 'translateX(-50%) translateY(-50%) translateX(-450px) translateZ(-150px) rotateY(25deg) scale(0.8)';
         card.style.opacity = '0.6';
         card.style.zIndex = '5';
         card.classList.remove('active');
         break;
       case 'right':
-        card.style.transform = 'translateX(-50%) translateY(-50%) translateX(350px) translateZ(-100px) rotateY(-15deg) scale(0.85)';
+        card.style.transform = 'translateX(-50%) translateY(-50%) translateX(450px) translateZ(-150px) rotateY(-25deg) scale(0.8)';
         card.style.opacity = '0.6';
         card.style.zIndex = '5';
         card.classList.remove('active');
@@ -5913,6 +5950,17 @@ document.addEventListener('DOMContentLoaded', function() {
 #sync-card:not(.active):hover .card-front {
   border-color: rgba(123,228,149,0.8) !important;
   box-shadow: 0 0 15px rgba(123,228,149,0.4);
+}
+
+/* 싱크 카드 호버 시 비디오 백그라운드 효과 */
+@media (min-width: 769px) {
+  #sync-card .sync-hover-video {
+    border-radius: 20px;
+  }
+  
+  #sync-card .card-front > div:last-child {
+    transition: opacity 0.3s ease;
+  }
 }
 
 #balance-card:not(.active):hover .card-front {
