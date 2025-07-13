@@ -112,22 +112,30 @@
     transform: rotateY(180deg) !important;
   }
   
-  #smart .floating-video {
+  #smart .floating-video,
+  #smart .neo-smart-video {
     width: 180px !important;
     height: 360px !important;
     position: absolute !important;
     right: 10px !important;
     left: auto !important;
-    top: 15% !important;  /* 20%에서 15%로 변경 (2칸 더 위로) */
-    transform: translateY(-50%) !important;
+    top: 10% !important;  /* 15%에서 10%로 변경 */
+    transform: translateY(-50%) translateY(-32px) !important;  /* 추가로 32px(2칸) 위로 */
     z-index: 20 !important;
+  }
+  
+  /* 더 구체적인 선택자로 강제 적용 */
+  section#smart .hive-showcase .floating-video,
+  section#smart .hive-showcase .neo-smart-video {
+    top: 10% !important;
+    transform: translateY(-50%) translateY(-32px) !important;
   }
   
   /* 뒷면 보기 버튼 위치 조정 - NFC 카드 바로 아래 */
   #smart .neos-category-tags {
     position: absolute !important;
     top: 65% !important;  /* 카드 바로 아래에 위치하도록 top으로 변경 */
-    left: 20% !important;  /* 카드와 같은 left 값 */
+    left: 35% !important;  /* 20%에서 35%로 변경 (3칸 오른쪽) */
     transform: translateX(-50%) !important;
     z-index: 15 !important;
     margin-top: 10px !important;  /* 카드와의 간격 */
