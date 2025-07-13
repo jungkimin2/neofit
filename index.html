@@ -3327,59 +3327,56 @@ html body .core-value-fresh-mobile {
       <div class="showcase-wrapper" style="display: flex; gap: 40px; align-items: center; justify-content: center; flex-wrap: wrap;">
         <!-- 카드 섹션 -->
         <div class="card-section" style="flex: 1; max-width: 500px; min-width: 300px; position: relative;">
-          <!-- 플립 컨테이너 -->
-          <div class="flip-container-mobile" style="position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);">
-            <!-- 앞면: 카드 디스플레이 영역 -->
-            <div class="card-display-area flip-front" style="position: absolute; width: 100%; height: 100%; backface-visibility: hidden; background: linear-gradient(135deg, #0A0F0D 0%, #000 100%); border-radius: 20px; padding: 40px; border: 1px solid rgba(123, 228, 149, 0.3); box-shadow: 0 0 30px rgba(123, 228, 149, 0.2); text-align: center;">
-              <img id="pc-card-image" src="./images/neost.png" alt="NEO-S Card" 
-                   style="width: 300px; height: auto; margin: 0 auto 30px; filter: drop-shadow(0 0 20px rgba(123, 228, 149, 0.6)); transition: all 0.3s ease;">
-              <h3 id="pc-card-title" style="color: #7BE495; font-size: 1.8rem; margin-bottom: 15px;">NEO-S NFC 스티커</h3>
-              <p id="pc-card-desc" style="color: #ccc; font-size: 1rem; line-height: 1.6;">
-                스마트폰 태그만으로<br>나만의 운동 영상을 즉시 확인
-              </p>
-              
-              <!-- 탭 버튼 -->
-              <div class="tab-buttons" style="display: flex; gap: 15px; margin-top: 30px;">
-                <button class="tab-btn active" data-card="front" onclick="switchCard('front')" 
-                        style="flex: 1; padding: 12px 25px; background: #7BE495; color: #000; border: none; border-radius: 25px; font-weight: 600; cursor: pointer; transition: all 0.3s;">
-                  앞면
-                </button>
-                <button class="tab-btn" data-card="back" onclick="switchCard('back')"
-                        style="flex: 1; padding: 12px 25px; background: transparent; color: #7BE495; border: 1px solid #7BE495; border-radius: 25px; font-weight: 600; cursor: pointer; transition: all 0.3s;">
-                  뒷면
-                </button>
-              </div>
-              
-              <!-- 시현 영상 보기 버튼 (모바일에서만) -->
-              <button class="video-preview-btn" onclick="toggleVideoPreview()" 
-                      style="display: none; width: 100%; padding: 12px 25px; margin-top: 15px; background: transparent; color: #7BE495; border: 2px solid #7BE495; border-radius: 25px; font-weight: 600; cursor: pointer; transition: all 0.3s;">
-                시현 영상 보기
+          <!-- 카드 디스플레이 영역 -->
+          <div class="card-display-area" style="background: linear-gradient(135deg, #0A0F0D 0%, #000 100%); border-radius: 20px; padding: 40px; border: 1px solid rgba(123, 228, 149, 0.3); box-shadow: 0 0 30px rgba(123, 228, 149, 0.2); text-align: center; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);">
+            <img id="pc-card-image" src="./images/neost.png" alt="NEO-S Card" 
+                 style="width: 300px; height: auto; margin: 0 auto 30px; filter: drop-shadow(0 0 20px rgba(123, 228, 149, 0.6)); transition: all 0.3s ease;">
+            <h3 id="pc-card-title" style="color: #7BE495; font-size: 1.8rem; margin-bottom: 15px;">NEO-S NFC 스티커</h3>
+            <p id="pc-card-desc" style="color: #ccc; font-size: 1rem; line-height: 1.6;">
+              스마트폰 태그만으로<br>나만의 운동 영상을 즉시 확인
+            </p>
+            
+            <!-- 탭 버튼 -->
+            <div class="tab-buttons" style="display: flex; gap: 15px; margin-top: 30px;">
+              <button class="tab-btn active" data-card="front" onclick="switchCard('front')" 
+                      style="flex: 1; padding: 12px 25px; background: #7BE495; color: #000; border: none; border-radius: 25px; font-weight: 600; cursor: pointer; transition: all 0.3s;">
+                앞면
+              </button>
+              <button class="tab-btn" data-card="back" onclick="switchCard('back')"
+                      style="flex: 1; padding: 12px 25px; background: transparent; color: #7BE495; border: 1px solid #7BE495; border-radius: 25px; font-weight: 600; cursor: pointer; transition: all 0.3s;">
+                뒷면
               </button>
             </div>
             
-            <!-- 뒷면: 모바일 영상 컨테이너 -->
-            <div class="mobile-video-container flip-back" style="position: absolute; width: 100%; height: 100%; backface-visibility: hidden; transform: rotateY(180deg); background: linear-gradient(135deg, #0A0F0D 0%, #000 100%); border-radius: 20px; padding: 40px; border: 1px solid rgba(123, 228, 149, 0.3); box-shadow: 0 0 30px rgba(123, 228, 149, 0.2);">
-              <h4 style="color: #7BE495; font-size: 1.5rem; margin-bottom: 20px; text-align: center;">실제 사용 화면</h4>
-              <div class="phone-frame" style="width: 240px; height: 480px; margin: 0 auto; border-radius: 30px; border: 3px solid #7BE495; overflow: hidden; position: relative; box-shadow: 0 0 40px rgba(123, 228, 149, 0.5), inset 0 0 0 1px #7BE495; background: #000; -webkit-mask-image: -webkit-radial-gradient(white, black); mask-image: radial-gradient(white, black);">
-                <video id="mobilePreviewVideo" src="./videos/neofits.mp4" loop playsinline style="width: 100%; height: 100%; object-fit: cover;">
-                </video>
-                <!-- 스피커 버튼 -->
-                <div class="speaker-button-wrapper" style="position: absolute; top: 10px; right: 10px; z-index: 10;">
-                  <button class="speaker-button" onclick="toggleMobilePreviewMute()" aria-label="음소거 토글" style="background: rgba(0, 0, 0, 0.7); border: 1px solid #7BE495; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 8px;">
-                    <svg id="mobilePreviewSpeakerIcon" viewBox="0 0 24 24" style="width: 20px; height: 20px; fill: #7BE495;">
-                      <!-- 음소거 해제 아이콘 (기본 표시) -->
-                      <path id="mobilePreviewVolumeOn" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" style="display: block;"/>
-                      <!-- 음소거 아이콘 (숨김) -->
-                      <path id="mobilePreviewVolumeOff" d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z" style="display: none;"/>
-                    </svg>
-                  </button>
-                </div>
+            <!-- 시현 영상 보기 버튼 (모바일에서만) -->
+            <button class="video-preview-btn" onclick="toggleVideoPreview()" 
+                    style="display: none; width: 100%; padding: 12px 25px; margin-top: 15px; background: transparent; color: #7BE495; border: 2px solid #7BE495; border-radius: 25px; font-weight: 600; cursor: pointer; transition: all 0.3s;">
+              시현 영상 보기
+            </button>
+          </div>
+          
+          <!-- 모바일 영상 컨테이너 (시현 시 표시) -->
+          <div class="mobile-video-container" style="display: none; position: absolute; top: 0; left: 0; right: 0; bottom: 0; opacity: 0; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); background: transparent;">
+            <h4 style="color: #7BE495; font-size: 1.5rem; margin-bottom: 20px; text-align: center;">실제 사용 화면</h4>
+            <div class="phone-frame" style="width: 240px; height: 480px; margin: 0 auto; border-radius: 30px; border: 3px solid #7BE495; overflow: hidden; position: relative; box-shadow: 0 0 40px rgba(123, 228, 149, 0.5), inset 0 0 0 1px #7BE495; background: #000; -webkit-mask-image: -webkit-radial-gradient(white, black); mask-image: radial-gradient(white, black);">
+              <video id="mobilePreviewVideo" src="./videos/neofits.mp4" loop playsinline style="width: 100%; height: 100%; object-fit: cover;">
+              </video>
+              <!-- 스피커 버튼 -->
+              <div class="speaker-button-wrapper" style="position: absolute; top: 10px; right: 10px; z-index: 10;">
+                <button class="speaker-button" onclick="toggleMobilePreviewMute()" aria-label="음소거 토글" style="background: rgba(0, 0, 0, 0.7); border: 1px solid #7BE495; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 8px;">
+                  <svg id="mobilePreviewSpeakerIcon" viewBox="0 0 24 24" style="width: 20px; height: 20px; fill: #7BE495;">
+                    <!-- 음소거 해제 아이콘 (기본 표시) -->
+                    <path id="mobilePreviewVolumeOn" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" style="display: block;"/>
+                    <!-- 음소거 아이콘 (숨김) -->
+                    <path id="mobilePreviewVolumeOff" d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z" style="display: none;"/>
+                  </svg>
+                </button>
               </div>
-              <!-- 하단 닫기 버튼 -->
-              <button onclick="closeInlineVideo()" style="width: 200px; margin: 20px auto 0; display: block; padding: 12px 25px; background: transparent; color: #7BE495; border: 2px solid #7BE495; border-radius: 25px; font-weight: 600; cursor: pointer; transition: all 0.3s;">
-                닫기
-              </button>
             </div>
+            <!-- 하단 닫기 버튼 -->
+            <button onclick="closeInlineVideo()" style="width: 200px; margin: 20px auto 0; display: block; padding: 12px 25px; background: transparent; color: #7BE495; border: 2px solid #7BE495; border-radius: 25px; font-weight: 600; cursor: pointer; transition: all 0.3s;">
+              닫기
+            </button>
           </div>
         </div>
         
@@ -3523,36 +3520,63 @@ function switchCard(type) {
 
 // 모바일 인라인 영상 기능
 function toggleVideoPreview() {
-  const flipContainer = document.querySelector('.flip-container-mobile');
+  const cardDisplay = document.querySelector('.card-display-area');
+  const videoContainer = document.querySelector('.mobile-video-container');
   const video = document.getElementById('mobilePreviewVideo');
   
-  if (flipContainer && video) {
+  if (cardDisplay && videoContainer && video) {
     // 비디오를 미리 로드하고 준비
     video.pause();
     video.currentTime = 0;
-    video.load();
+    video.load(); // 영상을 다시 로드하여 첫 프레임 준비
     
     // 비디오가 로드될 때까지 대기
     video.addEventListener('loadeddata', function onVideoLoaded() {
       video.removeEventListener('loadeddata', onVideoLoaded);
       
-      // 플립 효과로 뒷면 표시
-      flipContainer.style.transform = 'rotateY(180deg)';
+      // 카드를 부드럽게 축소하면서 페이드 아웃
+      cardDisplay.style.transform = 'scale(0.98) rotateY(5deg)';
+      cardDisplay.style.opacity = '0.8';
       
-      // 영상 재생
       setTimeout(() => {
-        video.volume = 0.3;
-        video.play();
-      }, 300);
+        cardDisplay.style.transform = 'scale(0.95) rotateY(10deg)';
+        cardDisplay.style.opacity = '0';
+        
+        setTimeout(() => {
+          cardDisplay.style.display = 'none';
+          
+          // 영상 컨테이너 초기 상태 설정
+          videoContainer.style.display = 'block';
+          videoContainer.style.opacity = '0';
+          videoContainer.style.transform = 'scale(0.9) translateY(10px)';
+          
+          // 부드럽게 페이드 인하면서 확대
+          requestAnimationFrame(() => {
+            videoContainer.style.opacity = '1';
+            videoContainer.style.transform = 'scale(1) translateY(0)';
+            
+            // 영상 재생
+            setTimeout(() => {
+              video.volume = 0.3; // 볼륨을 30%로 설정
+              video.play();
+            }, 200);
+          });
+        }, 300);
+      }, 150);
     });
   }
 }
 
 function closeInlineVideo() {
-  const flipContainer = document.querySelector('.flip-container-mobile');
+  const cardDisplay = document.querySelector('.card-display-area');
+  const videoContainer = document.querySelector('.mobile-video-container');
   const video = document.getElementById('mobilePreviewVideo');
   
-  if (flipContainer && video) {
+  if (cardDisplay && videoContainer && video) {
+    // 영상을 살짝 축소하면서 페이드 아웃
+    videoContainer.style.transform = 'scale(0.95)';
+    videoContainer.style.opacity = '0';
+    
     // 비디오 소리를 점진적으로 줄이기
     let currentVolume = video.volume;
     const fadeInterval = setInterval(() => {
@@ -3566,8 +3590,21 @@ function closeInlineVideo() {
       }
     }, 50);
     
-    // 플립 효과로 다시 앞면 표시
-    flipContainer.style.transform = 'rotateY(0deg)';
+    setTimeout(() => {
+      videoContainer.style.display = 'none';
+      videoContainer.style.transform = 'scale(1)'; // 다음 열기를 위해 리셋
+      
+      // 카드를 아래에서 위로 올라오는 효과
+      cardDisplay.style.display = 'block';
+      cardDisplay.style.opacity = '0';
+      cardDisplay.style.transform = 'scale(0.9) translateY(20px)';
+      
+      // 부드러운 페이드 인과 슬라이드 업
+      setTimeout(() => {
+        cardDisplay.style.opacity = '1';
+        cardDisplay.style.transform = 'scale(1) translateY(0)';
+      }, 50);
+    }, 400);
   }
 }
 
@@ -3644,15 +3681,10 @@ function toggleMobilePreviewMute() {
     perspective: 1000px;
   }
   
-  /* 플립 컨테이너 3D 효과 */
-  .flip-container-mobile {
-    transform-style: preserve-3d !important;
-  }
-  
-  /* 플립 앙미면 공통 스타일 */
-  .flip-front, .flip-back {
-    -webkit-backface-visibility: hidden !important;
-    backface-visibility: hidden !important;
+  /* 카드 디스플레이 3D 효과를 위한 설정 */
+  .new-neos-showcase .card-display-area {
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
   }
   
   /* 모바일 영상 컨테이너 닫기 버튼 호버 효과 */
