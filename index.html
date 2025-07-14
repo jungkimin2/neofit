@@ -29,9 +29,10 @@
   
   /* 네오 하이브 섹션 위로 이동 */
   #hive {
-    transform: translateY(-60px) !important;
-    -webkit-transform: translateY(-60px) !important;
+    transform: translateY(-180px) !important;
+    -webkit-transform: translateY(-180px) !important;
     position: relative !important;
+    margin-top: 0 !important;
   }
   
   #mobile-moved-merged-box {
@@ -254,10 +255,11 @@
   
   /* hive 섹션 위로 올리기 - 3칸(48px) 추가 */
   #hive {
-    transform: translateY(-60px) !important;  /* 모바일에서 위로 이동 */
-    -webkit-transform: translateY(-60px) !important;
+    transform: translateY(-180px) !important;  /* 모바일에서 위로 이동 */
+    -webkit-transform: translateY(-180px) !important;
     position: relative !important;
     z-index: 100 !important;
+    margin-top: 0 !important;
   }
   
   /* 모바일에서 인디케이터 위로 올리기 - transform 사용 */
@@ -1402,14 +1404,14 @@ section {
     /* 첫 번째 셉션(네오 하이브) 특별 처리 */
     #hive.section {
       padding-top: 20px !important;
-      margin-top: -248px !important;
+      margin-top: 0 !important;
     }
     
     /* 네오 하이브 전체 콘텐츠를 함께 상단 이동 (3칸 = 48px) */
     #hive.section.animate-on-scroll,
     #hive.section.animate-on-scroll.visible {
-      transform: translateY(-60px) !important;
-      -webkit-transform: translateY(-60px) !important;
+      transform: translateY(-180px) !important;
+      -webkit-transform: translateY(-180px) !important;
     }
     
     /* 컨테이너 기본 설정 */
@@ -9993,7 +9995,7 @@ document.addEventListener('DOMContentLoaded', function() {
       
       /* 모바일에서 하이브 섹션 위치 조정 */
       #hive.section {
-        margin-top: 20px !important; /* 0.5칸 위로 조정 */
+        margin-top: 0 !important; /* transform으로 위치 조정 */
       }
       
       #hive.section .container {
@@ -11152,7 +11154,7 @@ document.addEventListener('DOMContentLoaded', function() {
           { selector: '.core-value-fresh-mobile', transform: 'translateY(-260px)' },
           { selector: '.mobile-system-box-wrapper', transform: 'translateY(-420px)' },
           { selector: '#smart', transform: 'translateY(-320px)' },
-          { selector: '#hive', transform: 'translateY(-60px)' }
+          { selector: '#hive', transform: 'translateY(-180px)' }
       ];
       
       elements.forEach(({ selector, transform }) => {
