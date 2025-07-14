@@ -2594,7 +2594,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="card-inner" style="width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.3s; background: transparent; border: none;">
           <div class="card-front" style="position: absolute; width: 100%; height: 100%; backface-visibility: hidden; background: linear-gradient(135deg, #0A0F0D 0%, rgba(123,228,149,0.015) 100%); border: 2px solid #7BE495; border-radius: 20px; padding: 30px; display: flex; flex-direction: column; align-items: center; overflow: hidden;">
             <!-- 비디오 요소 추가 -->
-            <video class="sync-hover-video" src="./videos/neosyncvido.mp4" muted loop playsinline style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.3s ease; z-index: 1; pointer-events: none;"></video>
+            <video class="sync-hover-video" src="./videos/neosyncvido.mp4" muted loop playsinline preload="auto" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.3s ease; z-index: 1; pointer-events: none;"></video>
             
             <!-- 기존 콘텐츠를 relative로 변경하여 비디오 위에 표시 -->
             <div style="position: relative; z-index: 2; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center;">
@@ -2614,7 +2614,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="card-inner" style="width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.3s; background: transparent; border: none;">
           <div class="card-front" style="position: absolute; width: 100%; height: 100%; backface-visibility: hidden; background: linear-gradient(135deg, #0A0D0F 0%, rgba(147,197,253,0.015) 100%); border: 2px solid #93C5FD; border-radius: 20px; padding: 30px; display: flex; flex-direction: column; align-items: center; overflow: hidden;">
             <!-- 비디오 요소 추가 -->
-            <video class="balance-hover-video" src="./videos/neobalance.mp4" muted loop playsinline style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.3s ease; z-index: 1; pointer-events: none;"></video>
+            <video class="balance-hover-video" src="./videos/neobalance.mp4" muted loop playsinline preload="auto" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.3s ease; z-index: 1; pointer-events: none;"></video>
             
             <!-- 기존 콘텐츠를 relative로 변경하여 비디오 위에 표시 -->
             <div style="position: relative; z-index: 2; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center;">
@@ -6638,16 +6638,59 @@ document.addEventListener('DOMContentLoaded', function() {
   const balanceCard = document.getElementById('balance-card');
   const balanceVideo = balanceCard.querySelector('.balance-hover-video');
   
+  // 비디오 사전 로드 및 초기화 - 버퍼링 방지 및 자동재생 정책 대응
+  if (syncVideo) {
+    syncVideo.preload = 'auto';
+    syncVideo.load();
+  }
+  if (balanceVideo) {
+    balanceVideo.preload = 'auto';
+    balanceVideo.load();
+  }
+  
+  // 비디오 프리로드를 위한 Promise 처리
+  const preloadVideo = (video) => {
+    return new Promise((resolve) => {
+      if (video.readyState >= 3) {
+        resolve();
+      } else {
+        video.addEventListener('canplaythrough', resolve, { once: true });
+      }
+    });
+  };
+  
+  // 비디오 프리로드 대기
+  Promise.all([
+    preloadVideo(syncVideo),
+    preloadVideo(balanceVideo)
+  ]).then(() => {
+    console.log('Videos preloaded and ready');
+  });
+  
   // PC 환경에서만 비디오 호버 효과 적용
   if (window.innerWidth > 768) {
     // 네오싱크 카드
     const syncContent = syncCard.querySelector('.card-front > div[style*="z-index: 2"]');
     const syncClickIndicator = syncCard.querySelector('.click-indicator');
     
+    let syncFadeInterval = null;
+    
     syncCard.addEventListener('mouseenter', function() {
       if (syncVideo && syncContent && this.classList.contains('active')) {
+        // 이전 인터벌 클리어
+        if (syncFadeInterval) {
+          clearInterval(syncFadeInterval);
+          syncFadeInterval = null;
+        }
+        
+        // 비디오 준비 및 재생
+        syncVideo.volume = 0;
         syncVideo.style.opacity = '1';
+        
+        // 재생 시도 - promise로 처리
+        // 재생 시도 - 바로 재생
         syncVideo.play().catch(e => console.log('Video play failed:', e));
+        
         // 콘텐츠와 CLICK 버튼 숨기기
         syncContent.style.opacity = '0';
         if (syncClickIndicator) {
@@ -6658,9 +6701,28 @@ document.addEventListener('DOMContentLoaded', function() {
     
     syncCard.addEventListener('mouseleave', function() {
       if (syncVideo && syncContent) {
+        // 이전 페이드인 인터벌 클리어
+        if (syncFadeInterval) {
+          clearInterval(syncFadeInterval);
+          syncFadeInterval = null;
+        }
+        
+        // 영상 즉시 숨기고 정지
         syncVideo.style.opacity = '0';
-        syncVideo.pause();
-        syncVideo.currentTime = 0;
+        
+        // 볼륨 페이드아웃 효과
+        let volume = syncVideo.volume;
+        const fadeOutInterval = setInterval(() => {
+          if (volume > 0) {
+            volume -= 0.05;
+            syncVideo.volume = Math.max(volume, 0);
+          } else {
+            clearInterval(fadeOutInterval);
+            syncVideo.pause();
+            // currentTime을 리셋하지 않고 유지
+          }
+        }, 30);
+        
         // 콘텐츠와 CLICK 버튼 다시 보이기
         syncContent.style.opacity = '1';
         if (syncClickIndicator) {
@@ -6673,10 +6735,24 @@ document.addEventListener('DOMContentLoaded', function() {
     const balanceContent = balanceCard.querySelector('.card-front > div[style*="z-index: 2"]');
     const balanceClickIndicator = balanceCard.querySelector('.click-indicator');
     
+    let balanceFadeInterval = null;
+    
     balanceCard.addEventListener('mouseenter', function() {
       if (balanceVideo && balanceContent && this.classList.contains('active')) {
+        // 이전 인터벌 클리어
+        if (balanceFadeInterval) {
+          clearInterval(balanceFadeInterval);
+          balanceFadeInterval = null;
+        }
+        
+        // 비디오 준비 및 재생
+        balanceVideo.volume = 0;
         balanceVideo.style.opacity = '1';
+        
+        // 재생 시도 - promise로 처리
+        // 재생 시도 - 바로 재생
         balanceVideo.play().catch(e => console.log('Video play failed:', e));
+        
         // 콘텐츠와 CLICK 버튼 숨기기
         balanceContent.style.opacity = '0';
         if (balanceClickIndicator) {
@@ -6687,9 +6763,28 @@ document.addEventListener('DOMContentLoaded', function() {
     
     balanceCard.addEventListener('mouseleave', function() {
       if (balanceVideo && balanceContent) {
+        // 이전 페이드인 인터벌 클리어
+        if (balanceFadeInterval) {
+          clearInterval(balanceFadeInterval);
+          balanceFadeInterval = null;
+        }
+        
+        // 영상 즉시 숨기고 정지
         balanceVideo.style.opacity = '0';
-        balanceVideo.pause();
-        balanceVideo.currentTime = 0;
+        
+        // 볼륨 페이드아웃 효과
+        let volume = balanceVideo.volume;
+        const fadeOutInterval = setInterval(() => {
+          if (volume > 0) {
+            volume -= 0.05;
+            balanceVideo.volume = Math.max(volume, 0);
+          } else {
+            clearInterval(fadeOutInterval);
+            balanceVideo.pause();
+            // currentTime을 리셋하지 않고 유지
+          }
+        }, 30);
+        
         // 콘텐츠와 CLICK 버튼 다시 보이기
         balanceContent.style.opacity = '1';
         if (balanceClickIndicator) {
