@@ -70,7 +70,7 @@
   }
   
   /* NFC 기반 영상 재생 섹션 위로 이동 */
-  #smart .slide-container {
+  #nfc-section {
     transform: translateY(-48px) !important;
     -webkit-transform: translateY(-48px) !important;
     position: relative !important;
@@ -4121,7 +4121,7 @@ if (window.innerWidth <= 768) {
     <!-- 네오 스마트 주요 기능 (features) 블록 삭제됨, 대신 UX 흐름 블록으로 교체 -->
     <!-- 핵심 UX 흐름: 네오 하이브 counterpart와 동일한 구조로 삽입 -->
     <!-- <div id="smart"></div> -->
-    <div class="slide-container p-10" style="margin-top: 1.5rem; max-width: 1100px; margin-left: auto; margin-right: auto;">
+    <div id="nfc-section" class="slide-container p-10" style="margin-top: 1.5rem; max-width: 1100px; margin-left: auto; margin-right: auto;">
       <div class="flex items-center mb-8">
         <h1 class="text-4xl font-bold" style="text-align: left; margin-top: 3rem; margin-bottom: 12px;">
           <span style="color: #FFFFFF;">NFC 기반 영상 재생</span>
@@ -11167,7 +11167,8 @@ document.addEventListener('DOMContentLoaded', function() {
           { selector: '.core-value-fresh-mobile', transform: 'translateY(-260px)' },
           { selector: '.mobile-system-box-wrapper', transform: 'translateY(-420px)' },
           { selector: '#smart', transform: 'translateY(-320px)' },
-          { selector: '#hive', transform: 'translateY(-180px)' }
+          { selector: '#hive', transform: 'translateY(-180px)' },
+          { selector: '#nfc-section', transform: 'translateY(-48px)' }
       ];
       
       elements.forEach(({ selector, transform }) => {
