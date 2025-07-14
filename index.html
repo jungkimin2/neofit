@@ -59,8 +59,8 @@
   }
   
   #smart {
-    transform: translateY(-320px) !important;
-    -webkit-transform: translateY(-320px) !important;
+    transform: translateY(-368px) !important;  /* 3칸 추가 (-320px - 48px) */
+    -webkit-transform: translateY(-368px) !important;
     position: relative !important;
   }
   
@@ -2091,6 +2091,8 @@ transform: translateY(-512px) !important; /* 1칸(16px) 아래로 이동: -528px
 margin-top: 0 !important;
 padding-top: 0 !important;
 overflow: visible !important;
+transform: translateY(-48px) !important;  /* 3칸 추가 이동 */
+-webkit-transform: translateY(-48px) !important;
 }
 
 #smart h2, #smart p, #smart .hive-showcase {
@@ -11153,7 +11155,7 @@ document.addEventListener('DOMContentLoaded', function() {
           { selector: '#mobile-moved-merged-box', transform: 'translateY(-220px)' },
           { selector: '.core-value-fresh-mobile', transform: 'translateY(-260px)' },
           { selector: '.mobile-system-box-wrapper', transform: 'translateY(-420px)' },
-          { selector: '#smart', transform: 'translateY(-320px)' },
+          { selector: '#smart', transform: 'translateY(-368px)' },  /* 3칸 추가 */
           { selector: '#hive', transform: 'translateY(-180px)' }
       ];
       
