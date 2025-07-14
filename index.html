@@ -2084,15 +2084,15 @@ section {
 #smart {
 margin-top: -180px !important; /* 추가적으로 상단 여백 감소 (기존 -128px에서 -180px로 변경) */
 padding-top: 0 !important;
-transform: translateY(-512px) !important; /* 1칸(16px) 아래로 이동: -528px → -512px */
+transform: translateY(-560px) !important; /* 3칸 추가 이동: -512px - 48px */
+-webkit-transform: translateY(-560px) !important;
 }
 
 #smart.section, #smart .container {
 margin-top: 0 !important;
 padding-top: 0 !important;
 overflow: visible !important;
-transform: translateY(-48px) !important;  /* 3칸 추가 이동 */
--webkit-transform: translateY(-48px) !important;
+/* transform 제거 - 상위에서 이미 적용됨 */
 }
 
 #smart h2, #smart p, #smart .hive-showcase {
@@ -8650,7 +8650,8 @@ html body .mobile-system-box-wrapper {
 @media (max-width: 768px) {
 body #smart,
 html body #smart {
-  transform: translateY(-512px) !important; /* 1칸(16px) 아래로 이동: -528px → -512px */
+  transform: translateY(-560px) !important; /* 3칸 추가 이동: -512px - 48px */
+-webkit-transform: translateY(-560px) !important;
   -webkit-transform: translateY(-512px) !important;
   margin-top: -180px !important;
   padding-top: 0 !important;
@@ -8691,7 +8692,8 @@ html body #smart p {
 
 body #smart,
 html body #smart {
-  transform: translateY(-512px) !important; /* 1칸(16px) 아래로 이동: -528px → -512px */
+  transform: translateY(-560px) !important; /* 3칸 추가 이동: -512px - 48px */
+-webkit-transform: translateY(-560px) !important;
   -webkit-transform: translateY(-512px) !important;
   margin-top: -180px !important;
   padding-top: 0 !important;
@@ -8737,7 +8739,8 @@ html body #smart p {
 
 body #smart,
 html body #smart {
-  transform: translateY(-512px) !important; /* 1칸(16px) 아래로 이동: -528px → -512px */
+  transform: translateY(-560px) !important; /* 3칸 추가 이동: -512px - 48px */
+-webkit-transform: translateY(-560px) !important;
   -webkit-transform: translateY(-512px) !important;
   margin-top: -180px !important;
   padding-top: 0 !important;
@@ -10183,7 +10186,8 @@ document.addEventListener('DOMContentLoaded', function() {
   /* 네오 스마트 섹션은 독립적으로 처리 - transform 보존 */
   body #smart,
   html body #smart {
-    transform: translateY(-512px) !important; /* 1칸(16px) 아래로 이동: -528px → -512px */
+    transform: translateY(-560px) !important; /* 3칸 추가 이동: -512px - 48px */
+-webkit-transform: translateY(-560px) !important;
     -webkit-transform: translateY(-512px) !important;
     margin-top: -180px !important;
     padding-top: 0 !important;
