@@ -254,9 +254,10 @@
   
   /* hive 섹션 위로 올리기 - 3칸(48px) 추가 */
   #hive {
-    transform: translateY(-128px) !important;  /* -80px에서 -128px로 변경 (48px 추가) */
-    -webkit-transform: translateY(-128px) !important;
+    transform: translateY(-60px) !important;  /* 모바일에서 위로 이동 */
+    -webkit-transform: translateY(-60px) !important;
     position: relative !important;
+    z-index: 100 !important;
   }
   
   /* 모바일에서 인디케이터 위로 올리기 - transform 사용 */
@@ -1407,8 +1408,8 @@ section {
     /* 네오 하이브 전체 콘텐츠를 함께 상단 이동 (3칸 = 48px) */
     #hive.section.animate-on-scroll,
     #hive.section.animate-on-scroll.visible {
-      transform: translateY(-48px) !important;
-      -webkit-transform: translateY(-48px) !important;
+      transform: translateY(-60px) !important;
+      -webkit-transform: translateY(-60px) !important;
     }
     
     /* 컨테이너 기본 설정 */
@@ -11150,7 +11151,8 @@ document.addEventListener('DOMContentLoaded', function() {
           { selector: '#mobile-moved-merged-box', transform: 'translateY(-220px)' },
           { selector: '.core-value-fresh-mobile', transform: 'translateY(-260px)' },
           { selector: '.mobile-system-box-wrapper', transform: 'translateY(-420px)' },
-          { selector: '#smart', transform: 'translateY(-320px)' }
+          { selector: '#smart', transform: 'translateY(-320px)' },
+          { selector: '#hive', transform: 'translateY(-60px)' }
       ];
       
       elements.forEach(({ selector, transform }) => {
