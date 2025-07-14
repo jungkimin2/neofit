@@ -2594,7 +2594,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="card-inner" style="width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.3s; background: transparent; border: none;">
           <div class="card-front" style="position: absolute; width: 100%; height: 100%; backface-visibility: hidden; background: linear-gradient(135deg, #0A0F0D 0%, rgba(123,228,149,0.015) 100%); border: 2px solid #7BE495; border-radius: 20px; padding: 30px; display: flex; flex-direction: column; align-items: center; overflow: hidden;">
             <!-- 비디오 요소 추가 -->
-            <video class="sync-hover-video" src="./videos/neosyncvido.mp4" muted loop playsinline style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.3s ease; z-index: 1; pointer-events: none;"></video>
+            <video class="sync-hover-video" src="./videos/neosyncvido.mp4" loop playsinline style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.3s ease; z-index: 1; pointer-events: none;"></video>
             
             <!-- 기존 콘텐츠를 relative로 변경하여 비디오 위에 표시 -->
             <div style="position: relative; z-index: 2; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center;">
@@ -2614,7 +2614,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="card-inner" style="width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.3s; background: transparent; border: none;">
           <div class="card-front" style="position: absolute; width: 100%; height: 100%; backface-visibility: hidden; background: linear-gradient(135deg, #0A0D0F 0%, rgba(147,197,253,0.015) 100%); border: 2px solid #93C5FD; border-radius: 20px; padding: 30px; display: flex; flex-direction: column; align-items: center; overflow: hidden;">
             <!-- 비디오 요소 추가 -->
-            <video class="balance-hover-video" src="./videos/neobalance.mp4" muted loop playsinline style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.3s ease; z-index: 1; pointer-events: none;"></video>
+            <video class="balance-hover-video" src="./videos/neobalance.mp4" loop playsinline style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.3s ease; z-index: 1; pointer-events: none;"></video>
             
             <!-- 기존 콘텐츠를 relative로 변경하여 비디오 위에 표시 -->
             <div style="position: relative; z-index: 2; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center;">
@@ -6644,27 +6644,40 @@ document.addEventListener('DOMContentLoaded', function() {
     const syncContent = syncCard.querySelector('.card-front > div[style*="z-index: 2"]');
     const syncClickIndicator = syncCard.querySelector('.click-indicator');
     
-    syncCard.addEventListener('mouseenter', function() {
-      if (syncVideo && syncContent && this.classList.contains('active')) {
-        syncVideo.style.opacity = '1';
-        syncVideo.play().catch(e => console.log('Video play failed:', e));
-        // 콘텐츠와 CLICK 버튼 숨기기
-        syncContent.style.opacity = '0';
-        if (syncClickIndicator) {
-          syncClickIndicator.style.opacity = '0';
-        }
-      }
-    });
+    // 비디오 재생 상태 추적
+    let syncVideoPlaying = false;
     
-    syncCard.addEventListener('mouseleave', function() {
-      if (syncVideo && syncContent) {
-        syncVideo.style.opacity = '0';
-        syncVideo.pause();
-        syncVideo.currentTime = 0;
-        // 콘텐츠와 CLICK 버튼 다시 보이기
-        syncContent.style.opacity = '1';
-        if (syncClickIndicator) {
-          syncClickIndicator.style.opacity = '1';
+    syncCard.addEventListener('click', function(e) {
+      e.stopPropagation();
+      
+      if (this.classList.contains('active')) {
+        if (!syncVideoPlaying) {
+          // 비디오 재생
+          if (syncVideo && syncContent) {
+            syncVideo.style.opacity = '1';
+            syncVideo.volume = 0.3; // 소리 설정
+            syncVideo.play().then(() => {
+              syncVideoPlaying = true;
+              // 콘텐츠와 CLICK 버튼 숨기기
+              syncContent.style.opacity = '0';
+              if (syncClickIndicator) {
+                syncClickIndicator.style.opacity = '0';
+              }
+            }).catch(e => console.log('Video play failed:', e));
+          }
+        } else {
+          // 비디오 정지
+          if (syncVideo && syncContent) {
+            syncVideo.style.opacity = '0';
+            syncVideo.pause();
+            syncVideo.currentTime = 0;
+            syncVideoPlaying = false;
+            // 콘텐츠와 CLICK 버튼 다시 보이기
+            syncContent.style.opacity = '1';
+            if (syncClickIndicator) {
+              syncClickIndicator.style.opacity = '1';
+            }
+          }
         }
       }
     });
@@ -6673,27 +6686,40 @@ document.addEventListener('DOMContentLoaded', function() {
     const balanceContent = balanceCard.querySelector('.card-front > div[style*="z-index: 2"]');
     const balanceClickIndicator = balanceCard.querySelector('.click-indicator');
     
-    balanceCard.addEventListener('mouseenter', function() {
-      if (balanceVideo && balanceContent && this.classList.contains('active')) {
-        balanceVideo.style.opacity = '1';
-        balanceVideo.play().catch(e => console.log('Video play failed:', e));
-        // 콘텐츠와 CLICK 버튼 숨기기
-        balanceContent.style.opacity = '0';
-        if (balanceClickIndicator) {
-          balanceClickIndicator.style.opacity = '0';
-        }
-      }
-    });
+    // 비디오 재생 상태 추적
+    let balanceVideoPlaying = false;
     
-    balanceCard.addEventListener('mouseleave', function() {
-      if (balanceVideo && balanceContent) {
-        balanceVideo.style.opacity = '0';
-        balanceVideo.pause();
-        balanceVideo.currentTime = 0;
-        // 콘텐츠와 CLICK 버튼 다시 보이기
-        balanceContent.style.opacity = '1';
-        if (balanceClickIndicator) {
-          balanceClickIndicator.style.opacity = '1';
+    balanceCard.addEventListener('click', function(e) {
+      e.stopPropagation();
+      
+      if (this.classList.contains('active')) {
+        if (!balanceVideoPlaying) {
+          // 비디오 재생
+          if (balanceVideo && balanceContent) {
+            balanceVideo.style.opacity = '1';
+            balanceVideo.volume = 0.3; // 소리 설정
+            balanceVideo.play().then(() => {
+              balanceVideoPlaying = true;
+              // 콘텐츠와 CLICK 버튼 숨기기
+              balanceContent.style.opacity = '0';
+              if (balanceClickIndicator) {
+                balanceClickIndicator.style.opacity = '0';
+              }
+            }).catch(e => console.log('Video play failed:', e));
+          }
+        } else {
+          // 비디오 정지
+          if (balanceVideo && balanceContent) {
+            balanceVideo.style.opacity = '0';
+            balanceVideo.pause();
+            balanceVideo.currentTime = 0;
+            balanceVideoPlaying = false;
+            // 콘텐츠와 CLICK 버튼 다시 보이기
+            balanceContent.style.opacity = '1';
+            if (balanceClickIndicator) {
+              balanceClickIndicator.style.opacity = '1';
+            }
+          }
         }
       }
     });
