@@ -21,22 +21,22 @@
   
   /* 페이지 로딩 시 즉시 적용되는 모바일 전용 transform */
   .mobile-ui-position-adjustment {
-    transform: translateY(-320px) !important;
-    -webkit-transform: translateY(-320px) !important;
+    transform: translateY(-280px) !important;
+    -webkit-transform: translateY(-280px) !important;
     position: relative !important;
     z-index: 9999 !important;
   }
   
   #mobile-moved-merged-box {
-    transform: translateY(-260px) !important;
-    -webkit-transform: translateY(-260px) !important;
+    transform: translateY(-220px) !important;
+    -webkit-transform: translateY(-220px) !important;
     position: relative !important;
     z-index: 10 !important;
   }
   
   .core-value-fresh-mobile {
-    transform: translateY(-300px) !important;
-    -webkit-transform: translateY(-300px) !important;
+    transform: translateY(-260px) !important;
+    -webkit-transform: translateY(-260px) !important;
     position: relative !important;
     display: flex !important;
     flex-direction: row !important;
@@ -45,14 +45,14 @@
   }
   
   .mobile-system-box-wrapper {
-    transform: translateY(-480px) !important;
-    -webkit-transform: translateY(-480px) !important;
+    transform: translateY(-420px) !important;
+    -webkit-transform: translateY(-420px) !important;
     position: relative !important;
   }
   
   #smart {
-    transform: translateY(-380px) !important;
-    -webkit-transform: translateY(-380px) !important;
+    transform: translateY(-320px) !important;
+    -webkit-transform: translateY(-320px) !important;
     position: relative !important;
   }
   
@@ -92,7 +92,7 @@
   }
   
   #benefits {
-    margin-top: -420px !important;
+    margin-top: -360px !important;
   }
   
   /* 섹션별 패딩 개별 조정 */
@@ -11131,11 +11131,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // 즉시 실행 함수로 스타일 강제 적용
     function forceApplyMobileStyles() {
                       const elements = [
-          { selector: '.mobile-ui-position-adjustment', transform: 'translateY(-444px)' },
-          { selector: '#mobile-moved-merged-box', transform: 'translateY(-312px)' },
-          { selector: '.core-value-fresh-mobile', transform: 'translateY(-388.8px)' },
-          { selector: '.mobile-system-box-wrapper', transform: 'translateY(-600px)' },
-          { selector: '#smart', transform: 'translateY(-416px)' }
+          { selector: '.mobile-ui-position-adjustment', transform: 'translateY(-280px)' },
+          { selector: '#mobile-moved-merged-box', transform: 'translateY(-220px)' },
+          { selector: '.core-value-fresh-mobile', transform: 'translateY(-260px)' },
+          { selector: '.mobile-system-box-wrapper', transform: 'translateY(-420px)' },
+          { selector: '#smart', transform: 'translateY(-320px)' }
       ];
       
       elements.forEach(({ selector, transform }) => {
@@ -11275,7 +11275,7 @@ document.addEventListener('DOMContentLoaded', function() {
       // benefits 섹션 강제 위치 조정 - 모바일에서만 적용
       const benefitsSection = document.querySelector('section#benefits');
       if (benefitsSection && window.innerWidth <= 768) {
-        benefitsSection.style.setProperty('margin-top', '-420px', 'important');
+        benefitsSection.style.setProperty('margin-top', '-360px', 'important');
         benefitsSection.style.setProperty('transform', 'translateY(0)', 'important');
         benefitsSection.style.setProperty('background', '#000', 'important');
         benefitsSection.style.setProperty('padding-top', '60px', 'important');
