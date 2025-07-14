@@ -6877,94 +6877,138 @@ document.addEventListener('DOMContentLoaded', function() {
     card.addEventListener('click', function() {
       // 모바일에서는 모든 카드 클릭 시 중앙으로 이동
       if (isMobile || !this.classList.contains('active')) {
-        // 모바일에서 다른 카드로 전환 시 모든 비디오 초기화
-        if (isMobile) {
-          // 모든 카드의 비디오 초기화
-          Object.values(cards).forEach(c => {
-            const video = c.querySelector('.sync-hover-video, .balance-hover-video, .boost-hover-video');
-            const content = c.querySelector('.card-front > div[style*="z-index: 2"]');
-            const indicator = c.querySelector('.click-indicator');
-            
-            if (video) {
-              video.pause();
-              video.currentTime = 0;
-              video.style.opacity = '0';
-              video.style.display = 'none';
-              video.classList.remove('playing');
-            }
-            if (content) {
-              content.style.opacity = '1';
-              content.style.visibility = 'visible';
-            }
-            if (indicator) {
-              indicator.style.display = 'block';
-            }
-          });
-        }
         switchCard(cardId);
       }
       
-      // 모바일에서 카드가 중앙에 있고 클릭된 경우에만 비디오 재생
-      if (isMobile && this.classList.contains('active')) {
-        const video = this.querySelector('.sync-hover-video, .balance-hover-video, .boost-hover-video');
-        const content = this.querySelector('.card-front > div[style*="z-index: 2"]');
+      // 모바일에서 네오 싱크 카드가 활성화되고 클릭된 경우 비디오 재생
+      if (isMobile && cardId === 'sync' && this.classList.contains('active')) {
+        const syncVideo = this.querySelector('.sync-hover-video');
+        const syncContent = this.querySelector('.card-front > div[style*="z-index: 2"]');
         const clickIndicator = this.querySelector('.click-indicator');
         
-        if (video && !video.classList.contains('playing')) {
+        if (syncVideo && !syncVideo.classList.contains('playing')) {
           // 비디오가 카드 전체를 덮도록 스타일 설정
-          video.style.position = 'absolute';
-          video.style.top = '0';
-          video.style.left = '0';
-          video.style.width = '100%';
-          video.style.height = '100%';
-          video.style.objectFit = 'cover';
-          video.style.borderRadius = '20px';
-          video.style.zIndex = '999';
-          video.style.opacity = '1';
-          video.style.display = 'block';
-          video.style.backgroundColor = '#000';
-          video.classList.add('playing');
+          syncVideo.style.position = 'absolute';
+          syncVideo.style.top = '0';
+          syncVideo.style.left = '0';
+          syncVideo.style.width = '100%';
+          syncVideo.style.height = '100%';
+          syncVideo.style.objectFit = 'cover';
+          syncVideo.style.borderRadius = '20px';
+          syncVideo.style.zIndex = '999';  // z-index를 더 높게
+          syncVideo.style.opacity = '1';
+          syncVideo.style.display = 'block';
+          syncVideo.style.backgroundColor = '#000';  // 검은 배경 추가
+          syncVideo.classList.add('playing');
           
           // 비디오 재생 (소리와 함께)
-          video.volume = 0.3; // 볼륨 30%로 설정
-          video.play().catch(e => console.log('Video play failed:', e));
+          syncVideo.volume = 0.3; // 볼륨 30%로 설정
+          syncVideo.play().catch(e => console.log('Video play failed:', e));
           
           // 콘텐츠 완전히 숨기기
-          if (content) {
-            content.style.opacity = '0';
-            content.style.visibility = 'hidden';
+          if (syncContent) {
+            syncContent.style.opacity = '0';
+            syncContent.style.visibility = 'hidden';
           }
           if (clickIndicator) {
             clickIndicator.style.display = 'none';
           }
           
           // 비디오 종료 시 원상복구
-          video.addEventListener('ended', function() {
-            video.style.opacity = '0';
-            video.classList.remove('playing');
+          syncVideo.addEventListener('ended', function() {
+            syncVideo.style.opacity = '0';
+            syncVideo.classList.remove('playing');
             setTimeout(() => {
-              video.style.display = 'none';
+              syncVideo.style.display = 'none';
             }, 300);
-            if (content) {
-              content.style.opacity = '1';
-              content.style.visibility = 'visible';
+            if (syncContent) {
+              syncContent.style.opacity = '1';
+              syncContent.style.visibility = 'visible';
             }
             if (clickIndicator) {
               clickIndicator.style.display = 'block';
             }
           }, { once: true });
-        } else if (video && video.classList.contains('playing')) {
+        } else if (syncVideo && syncVideo.classList.contains('playing')) {
           // 재생 중인 비디오 정지
-          video.pause();
-          video.currentTime = 0;
-          video.style.opacity = '0';
-          video.classList.remove('playing');
+          syncVideo.pause();
+          syncVideo.currentTime = 0;
+          syncVideo.style.opacity = '0';
+          syncVideo.classList.remove('playing');
           setTimeout(() => {
-            video.style.display = 'none';
+            syncVideo.style.display = 'none';
           }, 300);
-          if (content) {
-            content.style.opacity = '1';
-            content.style.visibility = 'visible';
+          if (syncContent) {
+            syncContent.style.opacity = '1';
+            syncContent.style.visibility = 'visible';
+          }
+          if (clickIndicator) {
+            clickIndicator.style.display = 'block';
+          }
+        }
+      }
+      
+      // 모바일에서 네오 밸런스 카드가 활성화되고 클릭된 경우 비디오 재생
+      if (isMobile && cardId === 'balance' && this.classList.contains('active')) {
+        const balanceVideo = this.querySelector('.balance-hover-video');
+        const balanceContent = this.querySelector('.card-front > div[style*="z-index: 2"]');
+        const clickIndicator = this.querySelector('.click-indicator');
+        
+        if (balanceVideo && !balanceVideo.classList.contains('playing')) {
+          // 비디오가 카드 전체를 덮도록 스타일 설정
+          balanceVideo.style.position = 'absolute';
+          balanceVideo.style.top = '0';
+          balanceVideo.style.left = '0';
+          balanceVideo.style.width = '100%';
+          balanceVideo.style.height = '100%';
+          balanceVideo.style.objectFit = 'cover';
+          balanceVideo.style.borderRadius = '20px';
+          balanceVideo.style.zIndex = '999';
+          balanceVideo.style.opacity = '1';
+          balanceVideo.style.display = 'block';
+          balanceVideo.style.backgroundColor = '#000';
+          balanceVideo.classList.add('playing');
+          
+          // 비디오 재생 (소리와 함께)
+          balanceVideo.volume = 0.3; // 볼륨 30%로 설정
+          balanceVideo.play().catch(e => console.log('Video play failed:', e));
+          
+          // 콘텐츠 완전히 숨기기
+          if (balanceContent) {
+            balanceContent.style.opacity = '0';
+            balanceContent.style.visibility = 'hidden';
+          }
+          if (clickIndicator) {
+            clickIndicator.style.display = 'none';
+          }
+          
+          // 비디오 종료 시 원상복구
+          balanceVideo.addEventListener('ended', function() {
+            balanceVideo.style.opacity = '0';
+            balanceVideo.classList.remove('playing');
+            setTimeout(() => {
+              balanceVideo.style.display = 'none';
+            }, 300);
+            if (balanceContent) {
+              balanceContent.style.opacity = '1';
+              balanceContent.style.visibility = 'visible';
+            }
+            if (clickIndicator) {
+              clickIndicator.style.display = 'block';
+            }
+          }, { once: true });
+        } else if (balanceVideo && balanceVideo.classList.contains('playing')) {
+          // 재생 중인 비디오 정지
+          balanceVideo.pause();
+          balanceVideo.currentTime = 0;
+          balanceVideo.style.opacity = '0';
+          balanceVideo.classList.remove('playing');
+          setTimeout(() => {
+            balanceVideo.style.display = 'none';
+          }, 300);
+          if (balanceContent) {
+            balanceContent.style.opacity = '1';
+            balanceContent.style.visibility = 'visible';
           }
           if (clickIndicator) {
             clickIndicator.style.display = 'block';
