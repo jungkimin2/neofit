@@ -2613,6 +2613,10 @@ document.addEventListener('DOMContentLoaded', function() {
       <div class="training-card" id="balance-card" style="position: absolute; width: 350px; height: 450px; left: 50%; top: 50%; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; background: transparent; border: none; border-radius: 20px; overflow: hidden;">
         <div class="card-inner" style="width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.3s; background: transparent; border: none;">
           <div class="card-front" style="position: absolute; width: 100%; height: 100%; backface-visibility: hidden; background: linear-gradient(135deg, #0A0D0F 0%, rgba(147,197,253,0.015) 100%); border: 2px solid #93C5FD; border-radius: 20px; padding: 30px; display: flex; flex-direction: column; align-items: center; overflow: hidden;">
+            <!-- 비디오 요소 추가 -->
+            <video class="balance-hover-video" src="./videos/neobalance.mp4" muted loop playsinline style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.3s ease; z-index: 1; pointer-events: none;"></video>
+            
+            <!-- 기존 콘텐츠를 relative로 변경하여 비디오 위에 표시 -->
             <div style="position: relative; z-index: 2; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center;">
               <h3 style="color: #93C5FD; font-size: 2rem; margin-bottom: 20px; text-shadow: 0 0 20px rgba(147,197,253,0.8);">NEO BALANCE</h3>
               <img src="./images/neoblance.png" alt="네오 밸런스" style="width: 80%; height: auto; margin-bottom: 20px; filter: drop-shadow(0 0 20px rgba(147,197,253,0.5));">
@@ -6630,10 +6634,15 @@ document.addEventListener('DOMContentLoaded', function() {
   const syncCard = document.getElementById('sync-card');
   const syncVideo = syncCard.querySelector('.sync-hover-video');
   
+  // 네오밸런스 카드 비디오 호버 효과
+  const balanceCard = document.getElementById('balance-card');
+  const balanceVideo = balanceCard.querySelector('.balance-hover-video');
+  
   // PC 환경에서만 비디오 호버 효과 적용
   if (window.innerWidth > 768) {
+    // 네오싱크 카드
     const syncContent = syncCard.querySelector('.card-front > div[style*="z-index: 2"]');
-    const clickIndicator = syncCard.querySelector('.click-indicator');
+    const syncClickIndicator = syncCard.querySelector('.click-indicator');
     
     syncCard.addEventListener('mouseenter', function() {
       if (syncVideo && syncContent && this.classList.contains('active')) {
@@ -6641,8 +6650,8 @@ document.addEventListener('DOMContentLoaded', function() {
         syncVideo.play().catch(e => console.log('Video play failed:', e));
         // 콘텐츠와 CLICK 버튼 숨기기
         syncContent.style.opacity = '0';
-        if (clickIndicator) {
-          clickIndicator.style.opacity = '0';
+        if (syncClickIndicator) {
+          syncClickIndicator.style.opacity = '0';
         }
       }
     });
@@ -6654,8 +6663,37 @@ document.addEventListener('DOMContentLoaded', function() {
         syncVideo.currentTime = 0;
         // 콘텐츠와 CLICK 버튼 다시 보이기
         syncContent.style.opacity = '1';
-        if (clickIndicator) {
-          clickIndicator.style.opacity = '1';
+        if (syncClickIndicator) {
+          syncClickIndicator.style.opacity = '1';
+        }
+      }
+    });
+    
+    // 네오밸런스 카드
+    const balanceContent = balanceCard.querySelector('.card-front > div[style*="z-index: 2"]');
+    const balanceClickIndicator = balanceCard.querySelector('.click-indicator');
+    
+    balanceCard.addEventListener('mouseenter', function() {
+      if (balanceVideo && balanceContent && this.classList.contains('active')) {
+        balanceVideo.style.opacity = '1';
+        balanceVideo.play().catch(e => console.log('Video play failed:', e));
+        // 콘텐츠와 CLICK 버튼 숨기기
+        balanceContent.style.opacity = '0';
+        if (balanceClickIndicator) {
+          balanceClickIndicator.style.opacity = '0';
+        }
+      }
+    });
+    
+    balanceCard.addEventListener('mouseleave', function() {
+      if (balanceVideo && balanceContent) {
+        balanceVideo.style.opacity = '0';
+        balanceVideo.pause();
+        balanceVideo.currentTime = 0;
+        // 콘텐츠와 CLICK 버튼 다시 보이기
+        balanceContent.style.opacity = '1';
+        if (balanceClickIndicator) {
+          balanceClickIndicator.style.opacity = '1';
         }
       }
     });
