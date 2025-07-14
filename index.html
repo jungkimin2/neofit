@@ -59,14 +59,21 @@
   }
   
   #smart {
-    transform: translateY(-368px) !important;  /* 3칸 추가 (-320px - 48px) */
-    -webkit-transform: translateY(-368px) !important;
+    transform: translateY(-320px) !important;
+    -webkit-transform: translateY(-320px) !important;
     position: relative !important;
   }
   
   /* 네오 스마트 섹션 내부 요소 정렬 수정 */
   #smart .container {
     padding: 0 20px !important;
+  }
+  
+  /* NFC 기반 영상 재생 섹션 위로 이동 */
+  #smart .slide-container {
+    transform: translateY(-48px) !important;
+    -webkit-transform: translateY(-48px) !important;
+    position: relative !important;
   }
   
   #smart h2 {
@@ -11159,7 +11166,7 @@ document.addEventListener('DOMContentLoaded', function() {
           { selector: '#mobile-moved-merged-box', transform: 'translateY(-220px)' },
           { selector: '.core-value-fresh-mobile', transform: 'translateY(-260px)' },
           { selector: '.mobile-system-box-wrapper', transform: 'translateY(-420px)' },
-          { selector: '#smart', transform: 'translateY(-368px)' },  /* 3칸 추가 */
+          { selector: '#smart', transform: 'translateY(-320px)' },
           { selector: '#hive', transform: 'translateY(-180px)' }
       ];
       
