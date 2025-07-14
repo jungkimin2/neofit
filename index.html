@@ -64,6 +64,15 @@
     position: relative !important;
   }
   
+  /* 높은 특이도로 강제 적용 */
+  body #smart,
+  html body #smart,
+  #scrollable-content #smart {
+    transform: translateY(-608px) !important;  /* 더 위로 이동: -560px - 48px */
+    -webkit-transform: translateY(-608px) !important;
+    margin-top: -180px !important;
+  }
+  
   /* 네오 스마트 섹션 내부 요소 정렬 수정 */
   #smart .container {
     padding: 0 20px !important;
@@ -11159,7 +11168,7 @@ document.addEventListener('DOMContentLoaded', function() {
           { selector: '#mobile-moved-merged-box', transform: 'translateY(-220px)' },
           { selector: '.core-value-fresh-mobile', transform: 'translateY(-260px)' },
           { selector: '.mobile-system-box-wrapper', transform: 'translateY(-420px)' },
-          { selector: '#smart', transform: 'translateY(-368px)' },  /* 3칸 추가 */
+          { selector: '#smart', transform: 'translateY(-608px)' },  /* 더 위로 이동 */
           { selector: '#hive', transform: 'translateY(-180px)' }
       ];
       
