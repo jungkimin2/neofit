@@ -2607,7 +2607,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="card-inner" style="width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.3s; background: transparent; border: none;">
           <div class="card-front" style="position: absolute; width: 100%; height: 100%; backface-visibility: hidden; background: linear-gradient(135deg, #0A0F0D 0%, rgba(123,228,149,0.015) 100%); border: 2px solid #7BE495; border-radius: 20px; padding: 30px; display: flex; flex-direction: column; align-items: center; overflow: hidden;">
             <!-- 비디오 요소 추가 -->
-            <video class="sync-hover-video" src="./videos/neosyncvido.mp4" loop playsinline style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.3s ease; z-index: 1; pointer-events: none;"></video>
+            <video class="sync-hover-video" src="./videos/neosyncvido.mp4" loop playsinline preload="auto" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.3s ease; z-index: 1; pointer-events: none;"></video>
             
             <!-- 기존 콘텐츠를 relative로 변경하여 비디오 위에 표시 -->
             <div style="position: relative; z-index: 2; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center;">
@@ -2627,7 +2627,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="card-inner" style="width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.3s; background: transparent; border: none;">
           <div class="card-front" style="position: absolute; width: 100%; height: 100%; backface-visibility: hidden; background: linear-gradient(135deg, #0A0D0F 0%, rgba(147,197,253,0.015) 100%); border: 2px solid #93C5FD; border-radius: 20px; padding: 30px; display: flex; flex-direction: column; align-items: center; overflow: hidden;">
             <!-- 비디오 요소 추가 -->
-            <video class="balance-hover-video" src="./videos/neobalance.mp4" loop playsinline style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.3s ease; z-index: 1; pointer-events: none;"></video>
+            <video class="balance-hover-video" src="./videos/neobalance.mp4" loop playsinline preload="auto" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.3s ease; z-index: 1; pointer-events: none;"></video>
             
             <div style="position: relative; z-index: 2; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center;">
               <h3 style="color: #93C5FD; font-size: 2rem; margin-bottom: 20px; text-shadow: 0 0 20px rgba(147,197,253,0.8);">NEO BALANCE</h3>
@@ -6650,6 +6650,28 @@ document.addEventListener('DOMContentLoaded', function() {
   const balanceCard = document.getElementById('balance-card');
   const balanceVideo = balanceCard.querySelector('.balance-hover-video');
   
+  // 모바일에서 비디오 미리 로드하여 재생 지연 방지
+  if (isMobile) {
+    // 비디오 preload 설정
+    syncVideo.setAttribute('preload', 'auto');
+    balanceVideo.setAttribute('preload', 'auto');
+    
+    // 비디오를 미리 로드하고 준비
+    const preloadVideo = (video) => {
+      video.load();
+      // 비디오가 충분히 로드되면 잠시 재생했다가 정지하여 버퍼링
+      video.addEventListener('canplaythrough', function() {
+        video.play().then(() => {
+          video.pause();
+          video.currentTime = 0;
+        }).catch(e => console.log('Video preload failed:', e));
+      }, { once: true });
+    };
+    
+    preloadVideo(syncVideo);
+    preloadVideo(balanceVideo);
+  }
+  
   // PC 환경에서 비디오 클릭 효과 적용
   let isSyncVideoPlaying = false;
   let isBalanceVideoPlaying = false;
@@ -7103,8 +7125,12 @@ document.addEventListener('DOMContentLoaded', function() {
           `;
           this.querySelector('.card-front').appendChild(glassOverlay);
           
-          // 비디오 재생
-          syncVideo.play().catch(e => console.log('Video play failed:', e));
+          // 비디오 즉시 재생
+          syncVideo.currentTime = 0; // 처음부터 재생
+          const playPromise = syncVideo.play();
+          if (playPromise !== undefined) {
+            playPromise.catch(e => console.log('Video play failed:', e));
+          }
           
           // 콘텐츠 완전히 숨기기
           if (syncContent) {
@@ -7219,8 +7245,12 @@ document.addEventListener('DOMContentLoaded', function() {
           `;
           this.querySelector('.card-front').appendChild(glassOverlay);
           
-          // 비디오 재생
-          balanceVideo.play().catch(e => console.log('Video play failed:', e));
+          // 비디오 즉시 재생
+          balanceVideo.currentTime = 0; // 처음부터 재생
+          const playPromise = balanceVideo.play();
+          if (playPromise !== undefined) {
+            playPromise.catch(e => console.log('Video play failed:', e));
+          }
           
           // 콘텐츠 완전히 숨기기
           if (balanceContent) {
