@@ -6994,13 +6994,20 @@ document.addEventListener('DOMContentLoaded', function() {
   // 카드 클릭 이벤트 - 모바일에서 좌우 카드 클릭 시 중앙으로 이동
   Object.entries(cards).forEach(([cardId, card]) => {
     card.addEventListener('click', function() {
-      // 모바일에서는 모든 카드 클릭 시 중앙으로 이동
-      if (isMobile || !this.classList.contains('active')) {
+      // 카드 전환 로직 수정 - 모바일에서는 중앙 카드 클릭 시 전환하지 않음
+      if (isMobile) {
+        // 모바일에서는 활성화되지 않은 카드만 중앙으로 이동
+        if (!this.classList.contains('active')) {
+          switchCard(cardId);
+        }
+        // 활성화된 카드 클릭 시에는 아래에서 비디오 재생 처리
+      } else if (!this.classList.contains('active')) {
+        // PC에서도 활성화되지 않은 카드만 전환
         switchCard(cardId);
       }
       
-      // 모바일에서 네오 싱크 카드가 활성화되고 클릭된 경우 비디오 재생
-      if (isMobile && cardId === 'sync' && this.classList.contains('active')) {
+      // 네오 싱크 카드가 활성화되고 클릭된 경우 비디오 재생 (PC와 모바일 모두)
+      if (cardId === 'sync' && this.classList.contains('active')) {
         const syncVideo = this.querySelector('.sync-hover-video');
         const syncContent = this.querySelector('.card-front > div[style*="z-index: 2"]');
         const clickIndicator = this.querySelector('.click-indicator');
@@ -7014,14 +7021,32 @@ document.addEventListener('DOMContentLoaded', function() {
           syncVideo.style.height = '100%';
           syncVideo.style.objectFit = 'cover';
           syncVideo.style.borderRadius = '20px';
-          syncVideo.style.zIndex = '999';  // z-index를 더 높게
+          syncVideo.style.zIndex = '999';
           syncVideo.style.opacity = '1';
           syncVideo.style.display = 'block';
-          syncVideo.style.backgroundColor = '#000';  // 검은 배경 추가
+          syncVideo.style.backgroundColor = '#000';
           syncVideo.classList.add('playing');
           
+          // 비디오 재생 - 즉시 소리와 함께
+          syncVideo.muted = false;
+          syncVideo.volume = 0.7;
+          
           // 비디오 재생
-          syncVideo.play().catch(e => console.log('Video play failed:', e));
+          const playPromise = syncVideo.play();
+          
+          if (playPromise !== undefined) {
+            playPromise.catch(error => {
+              console.log('Video play failed, trying muted:', error);
+              // 실패 시 음소거로 재시도 후 소리 켜기
+              syncVideo.muted = true;
+              syncVideo.play().then(() => {
+                setTimeout(() => {
+                  syncVideo.muted = false;
+                  syncVideo.volume = 0.7;
+                }, 100);
+              }).catch(e => console.log('Muted play also failed:', e));
+            });
+          }
           
           // 콘텐츠 완전히 숨기기
           if (syncContent) {
@@ -7059,6 +7084,91 @@ document.addEventListener('DOMContentLoaded', function() {
           if (syncContent) {
             syncContent.style.opacity = '1';
             syncContent.style.visibility = 'visible';
+          }
+          if (clickIndicator) {
+            clickIndicator.style.display = 'block';
+          }
+        }
+      }
+      
+      // 네오 밸런스 카드가 활성화되고 클릭된 경우 비디오 재생 (PC와 모바일 모두)
+      if (cardId === 'balance' && this.classList.contains('active')) {
+        const balanceVideo = this.querySelector('.balance-hover-video');
+        const balanceContent = this.querySelector('.card-front > div[style*="z-index: 2"]');
+        const clickIndicator = this.querySelector('.click-indicator');
+        
+        if (balanceVideo && !balanceVideo.classList.contains('playing')) {
+          // 비디오가 카드 전체를 덮도록 스타일 설정
+          balanceVideo.style.position = 'absolute';
+          balanceVideo.style.top = '0';
+          balanceVideo.style.left = '0';
+          balanceVideo.style.width = '100%';
+          balanceVideo.style.height = '100%';
+          balanceVideo.style.objectFit = 'cover';
+          balanceVideo.style.borderRadius = '20px';
+          balanceVideo.style.zIndex = '999';
+          balanceVideo.style.opacity = '1';
+          balanceVideo.style.display = 'block';
+          balanceVideo.style.backgroundColor = '#000';
+          balanceVideo.classList.add('playing');
+          
+          // 비디오 재생 - 즉시 소리와 함께
+          balanceVideo.muted = false;
+          balanceVideo.volume = 0.7;
+          
+          // 비디오 재생
+          const playPromise = balanceVideo.play();
+          
+          if (playPromise !== undefined) {
+            playPromise.catch(error => {
+              console.log('Balance video play failed, trying muted:', error);
+              // 실패 시 음소거로 재시도 후 소리 켜기
+              balanceVideo.muted = true;
+              balanceVideo.play().then(() => {
+                setTimeout(() => {
+                  balanceVideo.muted = false;
+                  balanceVideo.volume = 0.7;
+                }, 100);
+              }).catch(e => console.log('Balance muted play also failed:', e));
+            });
+          }
+          
+          // 콘텐츠 완전히 숨기기
+          if (balanceContent) {
+            balanceContent.style.opacity = '0';
+            balanceContent.style.visibility = 'hidden';
+          }
+          if (clickIndicator) {
+            clickIndicator.style.display = 'none';
+          }
+          
+          // 비디오 종료 시 원상복구
+          balanceVideo.addEventListener('ended', function() {
+            balanceVideo.style.opacity = '0';
+            balanceVideo.classList.remove('playing');
+            setTimeout(() => {
+              balanceVideo.style.display = 'none';
+            }, 300);
+            if (balanceContent) {
+              balanceContent.style.opacity = '1';
+              balanceContent.style.visibility = 'visible';
+            }
+            if (clickIndicator) {
+              clickIndicator.style.display = 'block';
+            }
+          }, { once: true });
+        } else if (balanceVideo && balanceVideo.classList.contains('playing')) {
+          // 재생 중인 비디오 정지
+          balanceVideo.pause();
+          balanceVideo.currentTime = 0;
+          balanceVideo.style.opacity = '0';
+          balanceVideo.classList.remove('playing');
+          setTimeout(() => {
+            balanceVideo.style.display = 'none';
+          }, 300);
+          if (balanceContent) {
+            balanceContent.style.opacity = '1';
+            balanceContent.style.visibility = 'visible';
           }
           if (clickIndicator) {
             clickIndicator.style.display = 'block';
