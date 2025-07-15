@@ -36,8 +36,8 @@
   }
   
   #mobile-moved-merged-box {
-    transform: translateY(-220px) !important;
-    -webkit-transform: translateY(-220px) !important;
+    transform: translateY(-280px) !important;
+    -webkit-transform: translateY(-280px) !important;
     position: relative !important;
     z-index: 10 !important;
   }
@@ -2420,16 +2420,30 @@ document.addEventListener('DOMContentLoaded', function() {
 <!-- PC 환경 비디오 볼륨 조정 -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  // PC 환경에서만 실행
-  if (window.innerWidth > 768) {
-    // 네오 하이브 비디오 볼륨 30% 감소 (0.7배)
+  // 모든 비디오 요소를 찾아서 처리
+  const allVideos = document.querySelectorAll('video');
+  
+  // 모바일 환경에서는 무조건 음소거
+  if (window.innerWidth <= 768) {
+    allVideos.forEach(video => {
+      video.muted = true;
+      video.defaultMuted = true;
+      // 음소거 상태를 유지하도록 이벤트 리스너 추가
+      video.addEventListener('volumechange', function() {
+        if (!this.muted) {
+          this.muted = true;
+        }
+      });
+    });
+    console.log('Mobile: All videos muted');
+  } else {
+    // PC 환경에서만 볼륨 조정
     const centerVideo = document.getElementById('centerVideo');
     if (centerVideo) {
       centerVideo.volume = 0.7;
       console.log('Neo Hive video volume set to 70%');
     }
     
-    // 네오 스마트 비디오 (기존 설정 유지)
     const neofitsVideo = document.getElementById('neofitsVideo');
     if (neofitsVideo) {
       neofitsVideo.volume = 1.0;
@@ -2899,24 +2913,49 @@ document.addEventListener('DOMContentLoaded', function() {
               </div>
             </div>
           </div>
-          <!-- 모바일 전용: 새로운 핵심 가치 박스 (핵심 가치) -->
-          <!-- 기존 mobile-core-value-block은 아래에서 주석 처리됨 -->
+          <!-- 모바일 전용: 통합된 보상 시스템 카드 -->
           <div id="mobile-moved-merged-box" class="mobile-merged-box mobile-transform-target">
-            <div class="mobile-merged-row">
-              <div class="mobile-merged-icon">
-                <img src="./images/neo125.png" alt="선물 아이콘" />
+            <div class="mobile-unified-card">
+              <!-- 헤더 섹션 -->
+              <div class="unified-card-header">
+                <div class="header-icon-wrapper">
+                  <img src="./images/neo123.png" alt="팀워크" class="header-icon" />
+                </div>
+                <div class="header-content">
+                  <h4 class="card-title">팀워크 보상으로 재등록까지</h4>
+                  <div class="reward-process">
+                    <span class="process-item">1일 무료</span>
+                    <span class="arrow">→</span>
+                    <span class="process-item">팀 구성</span>
+                    <span class="arrow">→</span>
+                    <span class="process-item">센터 경험</span>
+                    <span class="arrow">→</span>
+                    <span class="process-item highlight">재등록</span>
+                  </div>
+                </div>
               </div>
-            <div class="mobile-merged-text">
-                1일 무료 체험, 출석 보상으로 팀 활동과 센터<br>경험을 쌓고, 자연스럽게 사용자는 재등록으로 이어집니다.
-              </div>
-            </div>
-            <div class="mobile-merged-row">
-              <div class="mobile-merged-icon">
-                <img src="./images/noes56.png" alt="통계 아이콘" />
-              </div>
-              <div class="mobile-merged-text">
-                출석 변화를 관리자 페이지에서 한눈에 파악하여<br>
-                운영 전략에 즉시 반영 가능합니다.
+              
+              <!-- 통합된 기능 설명 -->
+              <div class="unified-features">
+                <div class="feature-row">
+                  <div class="feature-icon-small">
+                    <img src="./images/neo125.png" alt="선물" />
+                  </div>
+                  <p class="feature-description">
+                    1일 무료 체험, 출석 보상으로 팀 활동과 센터 경험을 쌓고, 자연스럽게 사용자는 재등록으로 이어집니다.
+                  </p>
+                </div>
+                
+                <div class="feature-divider"></div>
+                
+                <div class="feature-row">
+                  <div class="feature-icon-small">
+                    <img src="./images/noes56.png" alt="통계" />
+                  </div>
+                  <p class="feature-description">
+                    출석 변화를 관리자 페이지에서 한눈에 파악하여 운영 전략에 즉시 반영 가능합니다.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -3025,40 +3064,7 @@ document.addEventListener('DOMContentLoaded', function() {
   position: relative !important;
   z-index: 10 !important; /* z-index 추가로 겹침 방지 */
 }
-.mobile-merged-row {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  gap: 16px !important; /* 14px → 16px로 다시 늘림 */
-  margin-bottom: 8px !important; /* 4px → 8px로 행 간 간격 증가 */
-  padding: 4px 0 !important; /* 상하 패딩 추가 */
-}
-.mobile-merged-icon {
-  width: 38px;
-  height: 38px;
-  background: #7BE495;
-  border-radius: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-.mobile-merged-icon img {
-  width: 28px;
-  height: 28px;
-  object-fit: contain;
-}
-.mobile-merged-text {
-  text-align: left;
-  color: #fff;
-  line-height: 1.6 !important; /* 1.7 → 1.6으로 줄임 */
-  font-weight: 500;
-  word-break: keep-all;
-  margin-left: 0;
-  padding-left: 0;
-  font-size: 0.72rem !important; /* 0.68rem → 0.72rem로 약간 키움 */
-  margin-top: 2px !important; /* 아이콘과 텍스트 정렬 개선 */
-}
+/* 기존 mobile-merged 스타일은 새로운 통합 디자인으로 대체됨 */
 }
 @media (min-width: 769px) {
 .mobile-merged-box { display: none !important; }
@@ -8057,6 +8063,152 @@ document.addEventListener('DOMContentLoaded', function() {
     -webkit-transform: translateY(-436.8px) !important;
   }
 }
+
+/* 모바일 전용: 통합된 보상 시스템 카드 - 심플하고 깔끔한 디자인 */
+@media (max-width: 768px) {
+  /* 모바일에서 body overflow 제어 */
+  body, html {
+    overflow-x: hidden !important;
+    max-width: 100vw !important;
+  }
+  
+  #mobile-moved-merged-box {
+    width: calc(100% - 20px) !important;
+    margin: 10px !important;
+    padding: 0 !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    position: relative !important;
+  }
+  
+  .mobile-unified-card {
+    background: linear-gradient(135deg, 
+      rgba(12, 25, 20, 0.95) 0%, 
+      rgba(8, 20, 15, 0.98) 100%) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    border: 1px solid rgba(123, 228, 149, 0.3) !important;
+    border-radius: 18px !important;
+    overflow: hidden !important;
+    box-shadow: 
+      0 10px 30px rgba(0, 0, 0, 0.4),
+      0 0 30px rgba(123, 228, 149, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+  }
+  
+  /* 헤더 섹션 */
+  .unified-card-header {
+    display: flex !important;
+    align-items: flex-start !important;
+    gap: 14px !important;
+    padding: 20px !important;
+    background: rgba(123, 228, 149, 0.05) !important;
+    border-bottom: 1px solid rgba(123, 228, 149, 0.2) !important;
+  }
+  
+  .header-icon-wrapper {
+    width: 44px !important;
+    height: 44px !important;
+    background: rgba(123, 228, 149, 0.15) !important;
+    border-radius: 14px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-shrink: 0 !important;
+  }
+  
+  .header-icon {
+    width: 28px !important;
+    height: 28px !important;
+    object-fit: contain !important;
+    filter: brightness(1.2) !important;
+  }
+  
+  .header-content {
+    flex: 1 !important;
+  }
+  
+  .card-title {
+    font-size: 0.95rem !important;
+    font-weight: 600 !important;
+    color: #fff !important;
+    margin: 0 0 8px 0 !important;
+    line-height: 1.2 !important;
+  }
+  
+  .reward-process {
+    display: flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+    flex-wrap: wrap !important;
+  }
+  
+  .process-item {
+    font-size: 0.65rem !important;
+    color: #9DF3C4 !important;
+    padding: 3px 8px !important;
+    background: rgba(123, 228, 149, 0.1) !important;
+    border: 1px solid rgba(123, 228, 149, 0.2) !important;
+    border-radius: 6px !important;
+  }
+  
+  .process-item.highlight {
+    background: #000 !important;
+    border-color: #7BE495 !important;
+    color: #7BE495 !important;
+    font-weight: 600 !important;
+  }
+  
+  .arrow {
+    color: #62D2A2 !important;
+    font-size: 0.6rem !important;
+  }
+  
+  /* 통합된 기능 설명 */
+  .unified-features {
+    padding: 16px !important;
+  }
+  
+  .feature-row {
+    display: flex !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+    padding: 12px 0 !important;
+  }
+  
+  .feature-icon-small {
+    width: 36px !important;
+    height: 36px !important;
+    background: #7BE495 !important;
+    border-radius: 12px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-shrink: 0 !important;
+  }
+  
+  .feature-icon-small img {
+    width: 20px !important;
+    height: 20px !important;
+    object-fit: contain !important;
+    filter: brightness(0.1) !important;
+  }
+  
+  .feature-description {
+    flex: 1 !important;
+    font-size: 0.7rem !important;
+    color: #ccc !important;
+    line-height: 1.4 !important;
+    margin: 0 !important;
+  }
+  
+  .feature-divider {
+    height: 1px !important;
+    background: rgba(123, 228, 149, 0.15) !important;
+    margin: 0 !important;
+  }
+}
 </style>
 </body>
 <script>
@@ -11636,7 +11788,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function forceApplyMobileStyles() {
                       const elements = [
           { selector: '.mobile-ui-position-adjustment', transform: 'translateY(-280px)' },
-          { selector: '#mobile-moved-merged-box', transform: 'translateY(-304px)' },
+          { selector: '#mobile-moved-merged-box', transform: 'translateY(-364px)' },
           { selector: '.core-value-fresh-mobile', transform: 'translateY(-380px)' },
           { selector: '.mobile-system-box-wrapper', transform: 'translateY(-420px)' },
           { selector: '#smart', transform: 'translateY(-320px)' },
