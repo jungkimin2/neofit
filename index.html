@@ -8024,6 +8024,25 @@ document.addEventListener('DOMContentLoaded', function() {
   clip-path: inset(0 round 20px);
 }
 </style>
+<style>
+/* 모바일 환경에서 텍스트 박스를 2칸(24px) 위로 이동 */
+@media (max-width: 768px) {
+  body #mobile-moved-merged-box,
+  html body #mobile-moved-merged-box {
+    transform: translateY(-388.8px) !important;
+    -webkit-transform: translateY(-388.8px) !important;
+    position: relative !important;
+    z-index: 100 !important;
+    margin-top: 0 !important;
+  }
+  
+  /* JavaScript에서 설정하는 값도 override */
+  #mobile-moved-merged-box[style*="translateY"] {
+    transform: translateY(-388.8px) !important;
+    -webkit-transform: translateY(-388.8px) !important;
+  }
+}
+</style>
 </body>
 <script>
 // 즉시 실행 - DOM 파싱 전에도 실행 (네오 스마트 + 네오 하이브 영상 모두 처리)
@@ -11602,7 +11621,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function forceApplyMobileStyles() {
                       const elements = [
           { selector: '.mobile-ui-position-adjustment', transform: 'translateY(-280px)' },
-          { selector: '#mobile-moved-merged-box', transform: 'translateY(-220px)' },
+          { selector: '#mobile-moved-merged-box', transform: 'translateY(-244px)' },
           { selector: '.core-value-fresh-mobile', transform: 'translateY(-260px)' },
           { selector: '.mobile-system-box-wrapper', transform: 'translateY(-420px)' },
           { selector: '#smart', transform: 'translateY(-320px)' },
