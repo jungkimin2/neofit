@@ -43,8 +43,8 @@
   }
   
   .core-value-fresh-mobile {
-    transform: translateY(-260px) !important;
-    -webkit-transform: translateY(-260px) !important;
+    transform: translateY(-296px) !important;
+    -webkit-transform: translateY(-296px) !important;
     position: relative !important;
     display: flex !important;
     flex-direction: row !important;
@@ -3082,9 +3082,9 @@ html body #mobile-moved-merged-box {
 body .core-value-fresh-mobile,
 html body .core-value-fresh-mobile {
   margin-top: 52px !important;
-  /* 0.3칸(4.8px) 위로 이동: -424px → -364.8px (이전 수정 반영) */
-  transform: translateY(-364.8px) !important;
-  -webkit-transform: translateY(-364.8px) !important;
+  /* 3칸(36px) 추가로 위로 이동: -364.8px → -400.8px */
+  transform: translateY(-400.8px) !important;
+  -webkit-transform: translateY(-400.8px) !important;
   display: flex !important;
   flex-direction: row !important;
   align-items: center !important;
@@ -8025,12 +8025,12 @@ document.addEventListener('DOMContentLoaded', function() {
 }
 </style>
 <style>
-/* 모바일 환경에서 텍스트 박스를 5칸(60px) 위로 이동 */
+/* 모바일 환경에서 텍스트 박스를 7칸(84px) 위로 이동 */
 @media (max-width: 768px) {
   body #mobile-moved-merged-box,
   html body #mobile-moved-merged-box {
-    transform: translateY(-424.8px) !important;
-    -webkit-transform: translateY(-424.8px) !important;
+    transform: translateY(-448.8px) !important;
+    -webkit-transform: translateY(-448.8px) !important;
     position: relative !important;
     z-index: 100 !important;
     margin-top: 0 !important;
@@ -8038,8 +8038,23 @@ document.addEventListener('DOMContentLoaded', function() {
   
   /* JavaScript에서 설정하는 값도 override */
   #mobile-moved-merged-box[style*="translateY"] {
-    transform: translateY(-424.8px) !important;
-    -webkit-transform: translateY(-424.8px) !important;
+    transform: translateY(-448.8px) !important;
+    -webkit-transform: translateY(-448.8px) !important;
+  }
+  
+  /* 핵심가치 박스를 3칸(36px) 위로 이동 - 최종 override */
+  body .core-value-fresh-mobile,
+  html body .core-value-fresh-mobile {
+    transform: translateY(-400.8px) !important;
+    -webkit-transform: translateY(-400.8px) !important;
+    position: relative !important;
+    z-index: 99 !important;
+  }
+  
+  /* JavaScript에서 설정하는 값도 override */
+  .core-value-fresh-mobile[style*="translateY"] {
+    transform: translateY(-400.8px) !important;
+    -webkit-transform: translateY(-400.8px) !important;
   }
 }
 </style>
@@ -11621,8 +11636,8 @@ document.addEventListener('DOMContentLoaded', function() {
     function forceApplyMobileStyles() {
                       const elements = [
           { selector: '.mobile-ui-position-adjustment', transform: 'translateY(-280px)' },
-          { selector: '#mobile-moved-merged-box', transform: 'translateY(-280px)' },
-          { selector: '.core-value-fresh-mobile', transform: 'translateY(-260px)' },
+          { selector: '#mobile-moved-merged-box', transform: 'translateY(-304px)' },
+          { selector: '.core-value-fresh-mobile', transform: 'translateY(-296px)' },
           { selector: '.mobile-system-box-wrapper', transform: 'translateY(-420px)' },
           { selector: '#smart', transform: 'translateY(-320px)' },
           { selector: '#hive', transform: 'translateY(-180px)' }
@@ -11977,5 +11992,25 @@ document.addEventListener('DOMContentLoaded', function() {
 })();
 </script>
 
+<!-- 모바일 핵심가치 박스 최종 위치 조정 -->
+<style>
+@media (max-width: 768px) {
+  /* 핵심가치 박스를 3칸(36px) 더 위로 이동 - 최종 override */
+  body .core-value-fresh-mobile,
+  html body .core-value-fresh-mobile,
+  .core-value-fresh-mobile[style*="translateY"] {
+    transform: translateY(-436.8px) !important;
+    -webkit-transform: translateY(-436.8px) !important;
+    position: relative !important;
+    z-index: 99 !important;
+  }
+  
+  /* JavaScript로 설정되는 인라인 스타일도 override */
+  .core-value-fresh-mobile {
+    transform: translateY(-436.8px) !important;
+    -webkit-transform: translateY(-436.8px) !important;
+  }
+}
+</style>
 
 </html>
