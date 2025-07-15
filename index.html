@@ -6959,9 +6959,18 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
       }
       
-      // 모바일에서는 모든 카드 클릭 시 중앙으로 이동
-      if (isMobile || !this.classList.contains('active')) {
+      // 모바일에서 카드 클릭 처리
+      if (isMobile) {
+        // 카드가 중앙에 있지 않으면 중앙으로 이동
+        if (!this.classList.contains('active')) {
+          switchCard(cardId);
+          return; // 중앙으로 이동만 하고 비디오는 재생하지 않음
+        }
+        // 이미 중앙에 있는 카드를 클릭한 경우에만 비디오 재생 처리 계속 진행
+      } else if (!this.classList.contains('active')) {
+        // PC에서 비활성 카드 클릭 시 중앙으로 이동
         switchCard(cardId);
+        return;
       }
       
       // 모바일에서 네오 싱크 카드가 활성화되고 클릭된 경우 비디오 재생
