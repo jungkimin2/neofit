@@ -2607,7 +2607,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="card-inner" style="width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.3s; background: transparent; border: none;">
           <div class="card-front" style="position: absolute; width: 100%; height: 100%; backface-visibility: hidden; background: linear-gradient(135deg, #0A0F0D 0%, rgba(123,228,149,0.015) 100%); border: 2px solid #7BE495; border-radius: 20px; padding: 30px; display: flex; flex-direction: column; align-items: center; overflow: hidden;">
             <!-- 비디오 요소 추가 -->
-            <video class="sync-hover-video" src="./videos/neosyncvido.mp4" loop playsinline style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.3s ease; z-index: 1; pointer-events: none;"></video>
+            <video class="sync-hover-video" src="./videos/neosyncvido.mp4" loop playsinline preload="auto" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.3s ease; z-index: 1; pointer-events: none;"></video>
             
             <!-- 기존 콘텐츠를 relative로 변경하여 비디오 위에 표시 -->
             <div style="position: relative; z-index: 2; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center;">
@@ -2627,7 +2627,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="card-inner" style="width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.3s; background: transparent; border: none;">
           <div class="card-front" style="position: absolute; width: 100%; height: 100%; backface-visibility: hidden; background: linear-gradient(135deg, #0A0D0F 0%, rgba(147,197,253,0.015) 100%); border: 2px solid #93C5FD; border-radius: 20px; padding: 30px; display: flex; flex-direction: column; align-items: center; overflow: hidden;">
             <!-- 비디오 요소 추가 -->
-            <video class="balance-hover-video" src="./videos/neobalance.mp4" loop playsinline style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.3s ease; z-index: 1; pointer-events: none;"></video>
+            <video class="balance-hover-video" src="./videos/neobalance.mp4" loop playsinline preload="auto" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.3s ease; z-index: 1; pointer-events: none;"></video>
             
             <div style="position: relative; z-index: 2; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center;">
               <h3 style="color: #93C5FD; font-size: 2rem; margin-bottom: 20px; text-shadow: 0 0 20px rgba(147,197,253,0.8);">NEO BALANCE</h3>
@@ -6650,6 +6650,28 @@ document.addEventListener('DOMContentLoaded', function() {
   const balanceCard = document.getElementById('balance-card');
   const balanceVideo = balanceCard.querySelector('.balance-hover-video');
   
+  // 모바일에서 비디오 미리 로드하여 재생 지연 방지
+  if (isMobile) {
+    // 비디오 preload 설정
+    syncVideo.setAttribute('preload', 'auto');
+    balanceVideo.setAttribute('preload', 'auto');
+    
+    // 비디오를 미리 로드하고 준비
+    const preloadVideo = (video) => {
+      video.load();
+      // 비디오가 충분히 로드되면 잠시 재생했다가 정지하여 버퍼링
+      video.addEventListener('canplaythrough', function() {
+        video.play().then(() => {
+          video.pause();
+          video.currentTime = 0;
+        }).catch(e => console.log('Video preload failed:', e));
+      }, { once: true });
+    };
+    
+    preloadVideo(syncVideo);
+    preloadVideo(balanceVideo);
+  }
+  
   // PC 환경에서 비디오 클릭 효과 적용
   let isSyncVideoPlaying = false;
   let isBalanceVideoPlaying = false;
@@ -7066,13 +7088,14 @@ document.addEventListener('DOMContentLoaded', function() {
         if (syncVideo && !syncVideo.classList.contains('playing')) {
           // 비디오가 카드 전체를 덮도록 스타일 설정
           syncVideo.style.position = 'absolute';
-          syncVideo.style.top = '0';
-          syncVideo.style.left = '0';
-          syncVideo.style.width = '100%';
-          syncVideo.style.height = '100%';
+          syncVideo.style.top = '10px';
+          syncVideo.style.left = '10px';
+          syncVideo.style.width = 'calc(100% - 20px)';
+          syncVideo.style.height = 'calc(100% - 20px)';
           syncVideo.style.objectFit = 'cover';
           syncVideo.style.borderRadius = '16px';
-          syncVideo.style.transform = 'scale(0.95)';
+          syncVideo.style.border = '3px solid rgba(123, 228, 149, 0.6)';
+          syncVideo.style.boxShadow = 'inset 0 0 30px rgba(123, 228, 149, 0.3), 0 0 50px rgba(123, 228, 149, 0.4)';
           syncVideo.style.zIndex = '999';
           syncVideo.style.opacity = '1';
           syncVideo.style.display = 'block';
@@ -7089,21 +7112,25 @@ document.addEventListener('DOMContentLoaded', function() {
             right: 0;
             bottom: 0;
             border-radius: 16px;
-            border: 2px solid rgba(123, 228, 149, 0.5);
+            border: 6px solid rgba(123, 228, 149, 0.7);
             background: linear-gradient(135deg, 
-              rgba(123, 228, 149, 0.15) 0%, 
-              transparent 40%, 
-              transparent 60%,
-              rgba(123, 228, 149, 0.15) 100%);
+              rgba(123, 228, 149, 0.3) 0%, 
+              transparent 30%, 
+              transparent 70%,
+              rgba(123, 228, 149, 0.3) 100%);
             pointer-events: none;
-            z-index: 1000;
-            box-shadow: inset 0 0 25px rgba(123, 228, 149, 0.2),
-                        0 0 40px rgba(123, 228, 149, 0.3);
+            z-index: 10000;
+            box-shadow: inset 0 0 50px rgba(123, 228, 149, 0.4),
+                        0 0 80px rgba(123, 228, 149, 0.5);
           `;
           this.querySelector('.card-front').appendChild(glassOverlay);
           
-          // 비디오 재생
-          syncVideo.play().catch(e => console.log('Video play failed:', e));
+          // 비디오 즉시 재생
+          syncVideo.currentTime = 0; // 처음부터 재생
+          const playPromise = syncVideo.play();
+          if (playPromise !== undefined) {
+            playPromise.catch(e => console.log('Video play failed:', e));
+          }
           
           // 콘텐츠 완전히 숨기기
           if (syncContent) {
@@ -7117,8 +7144,13 @@ document.addEventListener('DOMContentLoaded', function() {
           // 비디오 종료 시 원상복구
           syncVideo.addEventListener('ended', function() {
             syncVideo.style.opacity = '0';
+            syncVideo.style.top = '';
+            syncVideo.style.left = '';
+            syncVideo.style.width = '';
+            syncVideo.style.height = '';
             syncVideo.style.borderRadius = '';
-            syncVideo.style.transform = '';
+            syncVideo.style.border = '';
+            syncVideo.style.boxShadow = '';
             syncVideo.classList.remove('playing');
             
             // 글래스 오버레이 제거
@@ -7141,7 +7173,19 @@ document.addEventListener('DOMContentLoaded', function() {
           syncVideo.pause();
           syncVideo.currentTime = 0;
           syncVideo.style.opacity = '0';
+          syncVideo.style.top = '';
+          syncVideo.style.left = '';
+          syncVideo.style.width = '';
+          syncVideo.style.height = '';
+          syncVideo.style.borderRadius = '';
+          syncVideo.style.border = '';
+          syncVideo.style.boxShadow = '';
           syncVideo.classList.remove('playing');
+          
+          // 글래스 오버레이 제거
+          const overlay = cards['sync'].querySelector('.video-glass-overlay');
+          if (overlay) overlay.remove();
+          
           setTimeout(() => {
             syncVideo.style.display = 'none';
           }, 300);
@@ -7164,20 +7208,49 @@ document.addEventListener('DOMContentLoaded', function() {
         if (balanceVideo && !balanceVideo.classList.contains('playing')) {
           // 비디오가 카드 전체를 덮도록 스타일 설정
           balanceVideo.style.position = 'absolute';
-          balanceVideo.style.top = '0';
-          balanceVideo.style.left = '0';
-          balanceVideo.style.width = '100%';
-          balanceVideo.style.height = '100%';
+          balanceVideo.style.top = '10px';
+          balanceVideo.style.left = '10px';
+          balanceVideo.style.width = 'calc(100% - 20px)';
+          balanceVideo.style.height = 'calc(100% - 20px)';
           balanceVideo.style.objectFit = 'cover';
-          balanceVideo.style.borderRadius = '20px';
+          balanceVideo.style.borderRadius = '16px';
+          balanceVideo.style.border = '3px solid rgba(147, 197, 253, 0.6)';
+          balanceVideo.style.boxShadow = 'inset 0 0 30px rgba(147, 197, 253, 0.3), 0 0 50px rgba(147, 197, 253, 0.4)';
           balanceVideo.style.zIndex = '999';
           balanceVideo.style.opacity = '1';
           balanceVideo.style.display = 'block';
           balanceVideo.style.backgroundColor = '#000';
           balanceVideo.classList.add('playing');
           
-          // 비디오 재생
-          balanceVideo.play().catch(e => console.log('Video play failed:', e));
+          // 글래스모피즘 테두리 오버레이 추가
+          const glassOverlay = document.createElement('div');
+          glassOverlay.className = 'video-glass-overlay';
+          glassOverlay.style.cssText = `
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 16px;
+            border: 6px solid rgba(147, 197, 253, 0.7);
+            background: linear-gradient(135deg, 
+              rgba(147, 197, 253, 0.3) 0%, 
+              transparent 30%, 
+              transparent 70%,
+              rgba(147, 197, 253, 0.3) 100%);
+            pointer-events: none;
+            z-index: 10000;
+            box-shadow: inset 0 0 50px rgba(147, 197, 253, 0.4),
+                        0 0 80px rgba(147, 197, 253, 0.5);
+          `;
+          this.querySelector('.card-front').appendChild(glassOverlay);
+          
+          // 비디오 즉시 재생
+          balanceVideo.currentTime = 0; // 처음부터 재생
+          const playPromise = balanceVideo.play();
+          if (playPromise !== undefined) {
+            playPromise.catch(e => console.log('Video play failed:', e));
+          }
           
           // 콘텐츠 완전히 숨기기
           if (balanceContent) {
@@ -7191,7 +7264,19 @@ document.addEventListener('DOMContentLoaded', function() {
           // 비디오 종료 시 원상복구
           balanceVideo.addEventListener('ended', function() {
             balanceVideo.style.opacity = '0';
+            balanceVideo.style.top = '';
+            balanceVideo.style.left = '';
+            balanceVideo.style.width = '';
+            balanceVideo.style.height = '';
+            balanceVideo.style.borderRadius = '';
+            balanceVideo.style.border = '';
+            balanceVideo.style.boxShadow = '';
             balanceVideo.classList.remove('playing');
+            
+            // 글래스 오버레이 제거
+            const overlay = cards['balance'].querySelector('.video-glass-overlay');
+            if (overlay) overlay.remove();
+            
             setTimeout(() => {
               balanceVideo.style.display = 'none';
             }, 300);
@@ -7208,7 +7293,19 @@ document.addEventListener('DOMContentLoaded', function() {
           balanceVideo.pause();
           balanceVideo.currentTime = 0;
           balanceVideo.style.opacity = '0';
+          balanceVideo.style.top = '';
+          balanceVideo.style.left = '';
+          balanceVideo.style.width = '';
+          balanceVideo.style.height = '';
+          balanceVideo.style.borderRadius = '';
+          balanceVideo.style.border = '';
+          balanceVideo.style.boxShadow = '';
           balanceVideo.classList.remove('playing');
+          
+          // 글래스 오버레이 제거
+          const overlay = cards['balance'].querySelector('.video-glass-overlay');
+          if (overlay) overlay.remove();
+          
           setTimeout(() => {
             balanceVideo.style.display = 'none';
           }, 300);
@@ -7832,6 +7929,13 @@ document.addEventListener('DOMContentLoaded', function() {
 @media (max-width: 768px) {
   .training-card:active {
     transform: translateX(-50%) translateY(-50%) translateZ(0) scale(0.98) !important;
+  }
+  
+  /* 모바일에서 비디오 글래스 오버레이 강화 */
+  .video-glass-overlay {
+    border-width: 4px !important;
+    box-shadow: inset 0 0 40px rgba(255, 255, 255, 0.2),
+                0 0 60px currentColor !important;
   }
   
   .card-indicators .indicator:active {
