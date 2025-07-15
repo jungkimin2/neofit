@@ -6744,6 +6744,63 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
   
+  // 모든 비디오 정지 및 UI 복구 함수
+  function stopAllVideos() {
+    // 네오 싱크 비디오 정지
+    const syncVideo = syncCard.querySelector('.sync-hover-video');
+    const syncContent = syncCard.querySelector('.card-front > div[style*="z-index: 2"]');
+    const syncClickIndicator = syncCard.querySelector('.click-indicator');
+    
+    if (syncVideo && (syncVideo.classList.contains('playing') || isSyncVideoPlaying)) {
+      syncVideo.pause();
+      syncVideo.currentTime = 0;
+      syncVideo.style.opacity = '0';
+      syncVideo.classList.remove('playing');
+      if (isMobile) {
+        setTimeout(() => {
+          syncVideo.style.display = 'none';
+        }, 300);
+      }
+      
+      if (syncContent) {
+        syncContent.style.opacity = '1';
+        syncContent.style.visibility = 'visible';
+      }
+      if (syncClickIndicator) {
+        syncClickIndicator.style.opacity = '1';
+        syncClickIndicator.style.display = 'block';
+      }
+      isSyncVideoPlaying = false;
+    }
+    
+    // 네오 밸런스 비디오 정지
+    const balanceVideo = balanceCard.querySelector('.balance-hover-video');
+    const balanceContent = balanceCard.querySelector('.card-front > div[style*="z-index: 2"]');
+    const balanceClickIndicator = balanceCard.querySelector('.click-indicator');
+    
+    if (balanceVideo && (balanceVideo.classList.contains('playing') || isBalanceVideoPlaying)) {
+      balanceVideo.pause();
+      balanceVideo.currentTime = 0;
+      balanceVideo.style.opacity = '0';
+      balanceVideo.classList.remove('playing');
+      if (isMobile) {
+        setTimeout(() => {
+          balanceVideo.style.display = 'none';
+        }, 300);
+      }
+      
+      if (balanceContent) {
+        balanceContent.style.opacity = '1';
+        balanceContent.style.visibility = 'visible';
+      }
+      if (balanceClickIndicator) {
+        balanceClickIndicator.style.opacity = '1';
+        balanceClickIndicator.style.display = 'block';
+      }
+      isBalanceVideoPlaying = false;
+    }
+  }
+  
   // 카드 위치 설정 함수
   function setCardPosition(cardId, position) {
     const card = cards[cardId];
@@ -6800,6 +6857,9 @@ document.addEventListener('DOMContentLoaded', function() {
   function switchCard(targetId) {
     if (isAnimating || targetId === currentCard) return;
     isAnimating = true;
+    
+    // 현재 활성화된 카드의 비디오 정지 및 UI 복구
+    stopAllVideos();
     
     // 모바일에서 컨테이너 클래스 업데이트
     if (window.innerWidth <= 768) {
