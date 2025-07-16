@@ -7192,9 +7192,9 @@ document.addEventListener('DOMContentLoaded', function() {
           `;
           this.querySelector('.card-front').appendChild(glassOverlay);
           
-          // 비디오 즉시 재생 (모바일에서는 음소거 유지)
-          syncVideo.muted = true; // 모바일에서는 음소거 유지
-          syncVideo.volume = 0;
+          // 비디오 즉시 재생 (카드 클릭 시에는 소리 재생)
+          syncVideo.muted = false; // 카드 클릭 시 소리 재생
+          syncVideo.volume = 0.3;
           syncVideo.currentTime = 0; // 처음부터 재생
           const playPromise = syncVideo.play();
           if (playPromise !== undefined) {
@@ -7314,9 +7314,9 @@ document.addEventListener('DOMContentLoaded', function() {
           `;
           this.querySelector('.card-front').appendChild(glassOverlay);
           
-          // 비디오 즉시 재생 (모바일에서는 음소거 유지)
-          balanceVideo.muted = true; // 모바일에서는 음소거 유지
-          balanceVideo.volume = 0;
+          // 비디오 즉시 재생 (카드 클릭 시에는 소리 재생)
+          balanceVideo.muted = false; // 카드 클릭 시 소리 재생
+          balanceVideo.volume = 0.3;
           balanceVideo.currentTime = 0; // 처음부터 재생
           const playPromise = balanceVideo.play();
           if (playPromise !== undefined) {
