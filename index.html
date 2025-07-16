@@ -3021,8 +3021,10 @@ document.addEventListener('DOMContentLoaded', function() {
   border-radius: 22px;
   background: linear-gradient(135deg, #0C1F13 0%, #04120A 100%) !important;
   box-shadow: 0 4px 18px 0 rgba(123,228,149,0.08);
-  padding: 36px 28px !important; /* 28px 24px → 36px 28px로 더 넓힘 */
-  width: 100%;
+  padding: 36px 16px !important; /* 좌우 패딩 축소하여 콘텐츠 영역 확대 */
+  width: calc(100% - 20px) !important; /* 좌우 여백 축소 */
+  margin-left: 10px !important;
+  margin-right: 10px !important;
   position: relative !important;
   z-index: 10 !important; /* z-index 추가로 겹침 방지 */
 }
@@ -4718,10 +4720,24 @@ if (window.innerWidth <= 768) {
     <h2 style="font-size: 2.2rem; font-weight: bold; margin-bottom: 16px; letter-spacing: -1px; line-height: 1.2;">
       <span style="color: #FFFFFF;">운동은 팀으로</span><span class="neon-green">, 기구는 스마트하게</span>
     </h2>
-    <div style="font-size: 1.1rem; color: #ccc; margin-bottom: 40px; line-height: 1.7; font-weight: 400;">
+    <div class="intro-text-desktop" style="font-size: 1.1rem; color: #ccc; margin-bottom: 40px; line-height: 1.7; font-weight: 400;">
       <span class="neon-green">네오 하이브</span>는 지역 기반 팀 매칭을 통해 헬스장에 유입률과 재등록률을 높이는 팀 문화를 만들고,<br>
       <span class="neon-green">네오 스마트</span>는 운동 기구에 NFC 솔루션을 더해 트레이너 개입 없이도 학습 가능한 스마트 시스템을 구현합니다.
     </div>
+    <div class="intro-text-mobile" style="display: none; font-size: 1.1rem; color: #ccc; margin-bottom: 40px; line-height: 1.7; font-weight: 400; text-align: left; padding: 0 20px;">
+      <span class="neon-green">네오 하이브</span>는 지역 기반 턀 매칭을 통해 헬스장에 유입률과 재등록률을 높이는 팀 문화를 만들고,<br><br>
+      <span class="neon-green">네오 스마트</span>는 운동 기구에 NFC 솔루션을 더해 트레이너 개입 없이도 학습 가능한 스마트 시스템을 구현합니다.
+    </div>
+    <style>
+    @media (max-width: 768px) {
+      .intro-text-desktop { display: none !important; }
+      .intro-text-mobile { display: block !important; }
+    }
+    @media (min-width: 769px) {
+      .intro-text-desktop { display: block !important; }
+      .intro-text-mobile { display: none !important; }
+    }
+    </style>
     <!-- (네오 하이브/네오 스마트 설명 상자와 4개 아이콘 블록 삭제됨) -->
     <div class="testimonial-card" style="margin: 0 auto; max-width: 600px; background: linear-gradient(135deg, rgba(123,228,149,0.10), rgba(62,200,168,0.08)); border: 1px solid #7BE495; border-radius: 18px; box-shadow: 0 0 18px #7BE49522; padding: 4px 30px 28px 30px; text-align: left; position: relative; overflow: hidden;">
       <div style="position: relative; z-index: 1;">
