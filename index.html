@@ -4737,7 +4737,7 @@ if (window.innerWidth <= 768) {
       <span class="neon-green">네오 하이브</span>는 지역 기반 팀 매칭을 통해 헬스장에 유입률과 재등록률을 높이는 팀 문화를 만들고,<br>
       <span class="neon-green">네오 스마트</span>는 운동 기구에 NFC 솔루션을 더해 트레이너 개입 없이도 학습 가능한 스마트 시스템을 구현합니다.
     </div>
-    <div class="intro-text-mobile" style="display: none; font-size: 1.1rem; color: #ccc; margin-bottom: 40px; line-height: 1.7; font-weight: 400; text-align: left; padding: 0 20px;">
+    <div class="intro-text-mobile" style="display: none; font-size: 0.9rem; color: #ccc; margin-bottom: 40px; line-height: 1.6; font-weight: 400; text-align: left; padding: 0 20px;">
       <span class="neon-green">네오 하이브</span>는 지역 기반 턀 매칭을 통해 헬스장에 유입률과 재등록률을 높이는 팀 문화를 만들고,<br><br>
       <span class="neon-green">네오 스마트</span>는 운동 기구에 NFC 솔루션을 더해 트레이너 개입 없이도 학습 가능한 스마트 시스템을 구현합니다.
     </div>
@@ -4751,8 +4751,19 @@ if (window.innerWidth <= 768) {
       .intro-text-mobile { display: none !important; }
     }
     </style>
+    <style>
+    /* 모바일에서 초록색 테두리 박스 좌우 크기 늘리기 */
+    @media (max-width: 768px) {
+      .testimonial-card-mobile {
+        max-width: calc(100% - 20px) !important;
+        margin-left: 10px !important;
+        margin-right: 10px !important;
+        padding: 20px 16px 24px 16px !important;
+      }
+    }
+    </style>
     <!-- (네오 하이브/네오 스마트 설명 상자와 4개 아이콘 블록 삭제됨) -->
-    <div class="testimonial-card" style="margin: 0 auto; max-width: 600px; background: linear-gradient(135deg, rgba(123,228,149,0.10), rgba(62,200,168,0.08)); border: 1px solid #7BE495; border-radius: 18px; box-shadow: 0 0 18px #7BE49522; padding: 4px 30px 28px 30px; text-align: left; position: relative; overflow: hidden;">
+    <div class="testimonial-card testimonial-card-mobile" style="margin: 0 auto; max-width: 600px; background: linear-gradient(135deg, rgba(123,228,149,0.10), rgba(62,200,168,0.08)); border: 1px solid #7BE495; border-radius: 18px; box-shadow: 0 0 18px #7BE49522; padding: 4px 30px 28px 30px; text-align: left; position: relative; overflow: hidden;">
       <div style="position: relative; z-index: 1;">
                 <!-- PC 환경용 문단 구조 -->
         <div class="testimonial-content-desktop" style="display: none;">
