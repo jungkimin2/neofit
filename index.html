@@ -4151,6 +4151,15 @@ if (window.innerWidth <= 768) {
   /* NFC 섹션 전체를 위로 3칸 이동 */
   .smart-section-mobile {
     margin-top: -48px !important;
+    position: relative !important;
+  }
+  /* 더 구체적인 선택자로 우선순위 높이기 */
+  div.slide-container.smart-section-mobile {
+    margin-top: -48px !important;
+  }
+  /* 추가로 transform 사용 */
+  .smart-section-mobile {
+    transform: translateY(-48px) !important;
   }
 }
 </style>
