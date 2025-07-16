@@ -4137,19 +4137,32 @@ if (window.innerWidth <= 768) {
   }
 }
 </style>
+<style>
+/* 모바일에서 NFC 제목과 설명 문구 정렬 맞추기 */
+@media (max-width: 768px) {
+  .smart-title-mobile {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+  .smart-desc-mobile {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+}
+</style>
     <!-- 네오 스마트 주요 기능 (features) 블록 삭제됨, 대신 UX 흐름 블록으로 교체 -->
     <!-- 핵심 UX 흐름: 네오 하이브 counterpart와 동일한 구조로 삽입 -->
     <!-- <div id="smart"></div> -->
     <div class="slide-container p-10" style="margin-top: 2.5rem; max-width: 1100px; margin-left: auto; margin-right: auto;">
       <div class="flex items-center mb-8">
-        <h1 class="text-4xl font-bold" style="text-align: left; margin-top: 6rem; margin-bottom: 12px;">
+        <h1 class="text-4xl font-bold smart-title-mobile" style="text-align: left; margin-top: 6rem; margin-bottom: 12px;">
           <span style="color: #FFFFFF;">NFC 기반 영상 재생</span>
           <span class="neon-green" style="color: #7BE495; text-shadow: 0 0 8px rgba(123, 228, 149, 0.8), 0 0 16px rgba(123, 228, 149, 0.6);"> + 자동화 시스템</span>
         </h1>
         <div class="flex-grow mx-5 h-px bg-gradient-to-r from-transparent via-gray-500 to-transparent"></div>
       </div>
       <div class="mb-6">
-        <p class="text-xl text-gray-300" style="margin-top: 0; font-weight: 500; text-align: left; color: #888;">
+        <p class="text-xl text-gray-300 smart-desc-mobile" style="margin-top: 0; font-weight: 500; text-align: left; color: #888;">
           <span class="neon-green">NEO SMART</span> <span style="color: #888;">솔루션은 간단한 설치만으로 헬스장의 모든 운동 기구를 스마트하게 변화시킵니다.<br>
           NFC 태그와 스마트폰의 연결로 즉각적인 운동 가이드를 제공합니다.</span>
         </p>
