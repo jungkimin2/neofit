@@ -1,5 +1,6 @@
 
 
+
 <meta name="google-site-verification" content="OeM-YMo4NpQshyIm3m5H59IikSDp0BMe4sXKQmCu7NM" />
 <!DOCTYPE html>
 <html lang="ko">
@@ -21,8 +22,8 @@
   
   /* 페이지 로딩 시 즉시 적용되는 모바일 전용 transform */
   .mobile-ui-position-adjustment {
-    transform: translateY(-300px) !important;
-    -webkit-transform: translateY(-300px) !important;
+    transform: translateY(-280px) !important;
+    -webkit-transform: translateY(-280px) !important;
     position: relative !important;
     z-index: 9999 !important;
   }
@@ -36,8 +37,8 @@
   }
   
   #mobile-moved-merged-box {
-    transform: translateY(-200px) !important;
-    -webkit-transform: translateY(-200px) !important;
+    transform: translateY(-220px) !important;
+    -webkit-transform: translateY(-220px) !important;
     position: relative !important;
     z-index: 10 !important;
   }
@@ -2420,30 +2421,16 @@ document.addEventListener('DOMContentLoaded', function() {
 <!-- PC 환경 비디오 볼륨 조정 -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  // 모든 비디오 요소를 찾아서 처리
-  const allVideos = document.querySelectorAll('video');
-  
-  // 모바일 환경에서는 무조건 음소거
-  if (window.innerWidth <= 768) {
-    allVideos.forEach(video => {
-      video.muted = true;
-      video.defaultMuted = true;
-      // 음소거 상태를 유지하도록 이벤트 리스너 추가
-      video.addEventListener('volumechange', function() {
-        if (!this.muted) {
-          this.muted = true;
-        }
-      });
-    });
-    console.log('Mobile: All videos muted');
-  } else {
-    // PC 환경에서만 볼륨 조정
+  // PC 환경에서만 실행
+  if (window.innerWidth > 768) {
+    // 네오 하이브 비디오 볼륨 30% 감소 (0.7배)
     const centerVideo = document.getElementById('centerVideo');
     if (centerVideo) {
       centerVideo.volume = 0.7;
       console.log('Neo Hive video volume set to 70%');
     }
     
+    // 네오 스마트 비디오 (기존 설정 유지)
     const neofitsVideo = document.getElementById('neofitsVideo');
     if (neofitsVideo) {
       neofitsVideo.volume = 1.0;
@@ -2913,56 +2900,24 @@ document.addEventListener('DOMContentLoaded', function() {
               </div>
             </div>
           </div>
-          <!-- 모바일 전용: 완전 통합된 팀워크 보상 시스템 박스 -->
+          <!-- 모바일 전용: 새로운 핵심 가치 박스 (핵심 가치) -->
+          <!-- 기존 mobile-core-value-block은 아래에서 주석 처리됨 -->
           <div id="mobile-moved-merged-box" class="mobile-merged-box mobile-transform-target">
-            <div class="mobile-integrated-card">
-              <!-- 상단 그래프 아이콘과 타이틀 -->
-              <div class="integrated-header">
-                <img src="./images/neo123.png" alt="팀워크" class="main-graph-icon" />
-                <div class="header-text">
-                  <h3 class="main-title">팀워크 보상으로, 신규 유입과 재등록까지 연결</h3>
-                </div>
+            <div class="mobile-merged-row">
+              <div class="mobile-merged-icon">
+                <img src="./images/neo125.png" alt="선물 아이콘" />
               </div>
-              
-              <!-- 프로세스 플로우 -->
-              <div class="process-flow-container">
-                <div class="flow-row">
-                  <div class="flow-box">1일 무료 입장</div>
-                  <span class="flow-arrow">→</span>
-                  <div class="flow-box">팀 구성/결성</div>
-                  <span class="flow-arrow">→</span>
-                  <div class="flow-box">센터 경험</div>
-                </div>
-                <div class="flow-row">
-                  <div class="flow-box">팀출석 보상</div>
-                  <span class="flow-arrow">→</span>
-                  <div class="flow-box">커뮤니티 형성</div>
-                  <span class="flow-arrow">→</span>
-                  <div class="flow-box highlight">신규 및 재등록</div>
-                </div>
+            <div class="mobile-merged-text">
+                1일 무료 체험, 출석 보상으로 팀 활동과 센터<br>경험을 쌓고, 자연스럽게 사용자는 재등록으로 이어집니다.
               </div>
-              
-              <!-- 통합된 설명 섹션 -->
-              <div class="integrated-features">
-                <div class="feature-item">
-                  <div class="feature-icon-circle">
-                    <img src="./images/neo125.png" alt="선물" />
-                  </div>
-                  <p class="feature-text">
-                    1일 무료 체험, 출석 보상으로 팀 활동과 센터<br>
-                    경험을 쌓고, 자연스럽게 사용자는 재등록으로 이어집니다.
-                  </p>
-                </div>
-                
-                <div class="feature-item">
-                  <div class="feature-icon-circle">
-                    <img src="./images/noes56.png" alt="통계" />
-                  </div>
-                  <p class="feature-text">
-                    출석 변화를 관리자 페이지에서 한눈에 파악하여<br>
-                    운영 전략에 즉시 반영 가능합니다.
-                  </p>
-                </div>
+            </div>
+            <div class="mobile-merged-row">
+              <div class="mobile-merged-icon">
+                <img src="./images/noes56.png" alt="통계 아이콘" />
+              </div>
+              <div class="mobile-merged-text">
+                출석 변화를 관리자 페이지에서 한눈에 파악하여<br>
+                운영 전략에 즉시 반영 가능합니다.
               </div>
             </div>
           </div>
@@ -3071,7 +3026,40 @@ document.addEventListener('DOMContentLoaded', function() {
   position: relative !important;
   z-index: 10 !important; /* z-index 추가로 겹침 방지 */
 }
-/* 기존 mobile-merged 스타일은 새로운 통합 디자인으로 대체됨 */
+.mobile-merged-row {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 16px !important; /* 14px → 16px로 다시 늘림 */
+  margin-bottom: 8px !important; /* 4px → 8px로 행 간 간격 증가 */
+  padding: 4px 0 !important; /* 상하 패딩 추가 */
+}
+.mobile-merged-icon {
+  width: 38px;
+  height: 38px;
+  background: #7BE495;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.mobile-merged-icon img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
+.mobile-merged-text {
+  text-align: left;
+  color: #fff;
+  line-height: 1.6 !important; /* 1.7 → 1.6으로 줄임 */
+  font-weight: 500;
+  word-break: keep-all;
+  margin-left: 0;
+  padding-left: 0;
+  font-size: 0.72rem !important; /* 0.68rem → 0.72rem로 약간 키움 */
+  margin-top: 2px !important; /* 아이콘과 텍스트 정렬 개선 */
+}
 }
 @media (min-width: 769px) {
 .mobile-merged-box { display: none !important; }
@@ -3080,9 +3068,9 @@ document.addEventListener('DOMContentLoaded', function() {
 @media (max-width: 768px) {
 body #mobile-moved-merged-box,
 html body #mobile-moved-merged-box {
-  /* 아래로 이동 */
-  transform: translateY(-320px) !important;
-  -webkit-transform: translateY(-320px) !important;
+  /* 0.3칸(4.8px) 위로 이동: -360px → -364.8px */
+  transform: translateY(-364.8px) !important;
+  -webkit-transform: translateY(-364.8px) !important;
   position: relative !important;
   z-index: 100 !important; /* 더 높은 우선순위 */
   margin-top: 0 !important; /* 기존 margin과 충돌 방지 */
@@ -4244,17 +4232,9 @@ if (window.innerWidth <= 768) {
   color: #9DF5A4;
   text-shadow: 0 0 12px rgba(157, 243, 164, 1);
 }
-/* 모바일에서 PC용 콘텐츠 완전히 숨기기 */
 @media (max-width: 768px) {
-  .mobile-hide,
-  .pc-only,
-  div.mobile-hide,
-  .mobile-hide *,
-  .neohive-twobox-col > div:first-child {
+  .mobile-hide {
     display: none !important;
-    visibility: hidden !important;
-    height: 0 !important;
-    overflow: hidden !important;
   }
 }
 @media (max-width: 600px) {
@@ -8050,8 +8030,8 @@ document.addEventListener('DOMContentLoaded', function() {
 @media (max-width: 768px) {
   body #mobile-moved-merged-box,
   html body #mobile-moved-merged-box {
-    transform: translateY(-380px) !important;
-    -webkit-transform: translateY(-380px) !important;
+    transform: translateY(-448.8px) !important;
+    -webkit-transform: translateY(-448.8px) !important;
     position: relative !important;
     z-index: 100 !important;
     margin-top: 0 !important;
@@ -8059,8 +8039,8 @@ document.addEventListener('DOMContentLoaded', function() {
   
   /* JavaScript에서 설정하는 값도 override */
   #mobile-moved-merged-box[style*="translateY"] {
-    transform: translateY(-380px) !important;
-    -webkit-transform: translateY(-380px) !important;
+    transform: translateY(-448.8px) !important;
+    -webkit-transform: translateY(-448.8px) !important;
   }
   
   /* 핵심가치 박스를 3칸(36px) 위로 이동 - 최종 override */
@@ -8076,177 +8056,6 @@ document.addEventListener('DOMContentLoaded', function() {
   .core-value-fresh-mobile[style*="translateY"] {
     transform: translateY(-436.8px) !important;
     -webkit-transform: translateY(-436.8px) !important;
-  }
-}
-
-/* 모바일 전용: 완전 통합된 팀워크 보상 시스템 박스 */
-@media (max-width: 768px) {
-  /* 모바일에서 body overflow 제어 */
-  body, html {
-    overflow-x: hidden !important;
-    max-width: 100vw !important;
-  }
-  
-  #mobile-moved-merged-box {
-    width: calc(100vw - 24px) !important;
-    max-width: 100% !important;
-    margin: 12px auto !important;
-    margin-top: 24px !important;  /* 한 칸 더 아래로 이동 */
-    padding: 0 !important;
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-    position: relative !important;
-    box-sizing: border-box !important;
-  }
-  
-  .mobile-integrated-card {
-    background: linear-gradient(135deg, #0C1F13 0%, #04120A 100%) !important;
-    border: 1px solid rgba(123, 228, 149, 0.3) !important;
-    border-radius: 18px !important;
-    overflow: hidden !important;
-    box-shadow: 0 0 30px rgba(123, 228, 149, 0.1) !important;
-  }
-  
-  /* 상단 그린 바 */
-  .mobile-integrated-card::before {
-    content: '' !important;
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    height: 6px !important;
-    background: linear-gradient(to right, #62D2A2, #7BE495) !important;
-  }
-  
-  /* 헤더 섹션 */
-  .integrated-header {
-    display: flex !important;
-    align-items: center !important;
-    gap: 12px !important;
-    padding: 24px 20px 16px !important;
-  }
-  
-  .main-graph-icon {
-    width: 42px !important;
-    height: 42px !important;
-    object-fit: contain !important;
-  }
-  
-  .header-text {
-    flex: 1 !important;
-  }
-  
-  .main-title {
-    color: #ffffff !important;
-    font-size: 1rem !important;
-    font-weight: bold !important;
-    margin: 0 !important;
-    line-height: 1.3 !important;
-  }
-  
-  /* 프로세스 플로우 */
-  .process-flow-container {
-    padding: 0 20px 20px !important;
-  }
-  
-  .flow-row {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: space-between !important;
-    margin-bottom: 10px !important;
-    gap: 4px !important;
-  }
-  
-  .flow-row:last-child {
-    margin-bottom: 0 !important;
-  }
-  
-  .flow-box {
-    flex: 1 !important;
-    padding: 5px 6px !important;
-    background: rgba(98, 210, 162, 0.15) !important;
-    border: 1px solid rgba(98, 210, 162, 0.3) !important;
-    border-radius: 8px !important;
-    text-align: center !important;
-    font-size: 0.65rem !important;
-    color: #fff !important;
-    white-space: nowrap !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-    min-width: 0 !important;
-  }
-  
-  .flow-box.highlight {
-    background: #000 !important;
-    border: 1px solid #7BE495 !important;
-    color: #7BE495 !important;
-    text-shadow: 0 0 8px rgba(123, 228, 149, 0.8) !important;
-  }
-  
-  .flow-arrow {
-    color: #62D2A2 !important;
-    font-size: 0.65rem !important;
-    flex-shrink: 0 !important;
-    margin: 0 2px !important;
-  }
-  
-  /* 통합된 설명 섹션 */
-  .integrated-features {
-    padding: 20px !important;
-    padding-top: 48px !important;  /* 한 칸 더 아래로 이동 */
-    background: rgba(123, 228, 149, 0.05) !important;
-    border-top: 1px solid rgba(123, 228, 149, 0.2) !important;
-    margin-top: 16px !important;  /* 전체 섹션을 추가로 아래로 이동 */
-  }
-  
-  .feature-item {
-    display: flex !important;
-    align-items: center !important;
-    gap: 12px !important;
-    margin-bottom: 16px !important;
-  }
-  
-  .feature-item:last-child {
-    margin-bottom: 0 !important;
-  }
-  
-  .feature-icon-circle {
-    width: 44px !important;
-    height: 44px !important;
-    background: #7BE495 !important;
-    border-radius: 50% !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    flex-shrink: 0 !important;
-  }
-  
-  .feature-icon-circle img {
-    width: 24px !important;
-    height: 24px !important;
-    object-fit: contain !important;
-    filter: brightness(0.1) !important;
-  }
-  
-  .feature-text {
-    flex: 1 !important;
-    font-size: 0.72rem !important;
-    color: #ccc !important;
-    line-height: 1.5 !important;
-    margin: 0 !important;
-  }
-}
-</style>
-<!-- 모바일 UI 박스 위치 최종 조정 -->
-<style>
-@media (max-width: 768px) {
-  body #mobile-moved-merged-box,
-  html body #mobile-moved-merged-box,
-  #mobile-moved-merged-box[style] {
-    transform: translateY(-300px) !important;
-    -webkit-transform: translateY(-300px) !important;
-    margin-top: 24px !important;
   }
 }
 </style>
@@ -11828,7 +11637,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function forceApplyMobileStyles() {
                       const elements = [
           { selector: '.mobile-ui-position-adjustment', transform: 'translateY(-280px)' },
-          { selector: '#mobile-moved-merged-box', transform: 'translateY(-280px)' },
+          { selector: '#mobile-moved-merged-box', transform: 'translateY(-304px)' },
           { selector: '.core-value-fresh-mobile', transform: 'translateY(-380px)' },
           { selector: '.mobile-system-box-wrapper', transform: 'translateY(-420px)' },
           { selector: '#smart', transform: 'translateY(-320px)' },
@@ -12206,3 +12015,26 @@ document.addEventListener('DOMContentLoaded', function() {
 </style>
 
 </html>
+<style>
+  /* 혜택 안내 박스 스타일 */
+  .clickable-benefit-box {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 16px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, rgba(123, 228, 149, 0.15) 0%, rgba(62, 200, 162, 0.1) 100%);
+    box-shadow: 
+      0 12px 30px rgba(123, 228, 149, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    border: solid 1px rgba(123, 228, 149, 0.5);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    overflow: hidden;
+    z-index: 10; /* 네오 스마트 영상 위에 위치 */
+  }
