@@ -4753,9 +4753,9 @@ if (window.innerWidth <= 768) {
         <div class="testimonial-content-mobile">
           <div style="padding: 8px 4px; margin-top: 0px;">
             <!-- 첫 번째 문구 -->
-            <div style="margin-bottom: 20px; margin-left: -24px;">
-              <p style="font-size: 0.8rem; color: #fff; font-weight: 500; line-height: 1.7; text-align: left; margin: 0; padding: 0;">
-                팀을 이루어 운동하는 문화를 즐기며 센터 방문 빈도가 높아지고,
+            <div style="margin-bottom: 24px; text-align: center;">
+              <p style="font-size: 0.85rem; color: #fff; font-weight: 500; line-height: 1.6; margin: 0; padding: 0;">
+                팀을 이루어 운동하는 문화를 즐기며 센터 방문 빈도가 높아지고,<br>
                 자연스럽게 재등록률도 <span class='neon-green'>40% 이상</span> 상승했습니다.
               </p>
             </div>
@@ -4766,7 +4766,7 @@ if (window.innerWidth <= 768) {
                 background: linear-gradient(135deg, rgba(7, 25, 15, 0.95) 0%, rgba(15, 45, 25, 0.95) 50%, rgba(7, 25, 15, 0.95) 100%);
                 border: 1px solid rgba(123, 228, 149, 0.3);
                 border-radius: 16px;
-                padding: 24px 20px;
+                padding: 16px 24px;
                 position: relative;
                 overflow: hidden;
                 box-shadow: 
@@ -4787,13 +4787,13 @@ if (window.innerWidth <= 768) {
                 
                 <!-- 텍스트 -->
                 <p style="
-                  font-size: 0.9rem;
+                  font-size: 0.85rem;
                   color: #fff;
                   font-weight: 600;
-                  line-height: 1.7;
+                  line-height: 1.6;
                   margin: 0;
-                  text-align: left;
-                  padding-left: 29px;
+                  text-align: center;
+                  padding: 0;
                   position: relative;
                   z-index: 1;
                   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
@@ -4819,16 +4819,17 @@ if (window.innerWidth <= 768) {
             </style>
             
                           <!-- 두 번째 문구 -->
-              <div style="margin-bottom: 24px; margin-left: -24px;">
-                <p style="font-size: 0.8rem; color: #fff; font-weight: 500; line-height: 1.7; text-align: left; margin: 0; padding: 0;">
-                  트레이너는 반복 설명에서 벗어나 레슨 집중할 수 있었고,
-                회원들은 언제든 NFC 태그로 운동법을 확인하며 자기 주도적 운동 환경을 경험하고 있습니다.
+              <div style="margin-bottom: 24px; text-align: center;">
+                <p style="font-size: 0.85rem; color: #fff; font-weight: 500; line-height: 1.6; margin: 0; padding: 0;">
+                  트레이너는 반복 설명에서 벗어나 레슨 집중할 수 있었고, 회원들<br>
+                  은 언제든 NFC 태그로 운동법을 확인하며 자기 주도적 운동 환경<br>
+                  을 경험하고 있습니다.
               </p>
             </div>
             
             <!-- 콜투액션 -->
-            <div style="text-align: center; padding: 0; margin-left: -8px;">
-              <p style="font-size: 0.85rem; color: #fff; font-weight: 600; line-height: 1.7; margin: 0;">
+            <div style="text-align: center; padding: 0; margin-bottom: 20px;">
+              <p style="font-size: 0.85rem; color: #fff; font-weight: 600; line-height: 1.6; margin: 0;">
                 👉 지금 바로 <span class='neon-green'>NEO HIVE + NEO SMART</span>로<br>
                 헬스장의 <span class='neon-green'>새로운 가능성</span>을 경험해보세요.
               </p>
@@ -4840,6 +4841,41 @@ if (window.innerWidth <= 768) {
       <!-- Decorative background images -->
       <img src="./images/hive3.png" alt="" style="opacity: 0.07; position: absolute; top: 180px; left: 250px; width: 480px; z-index: 0; pointer-events: none;" />
     </div>
+    
+    <!-- 모바일 전용 파트너 신청하기 버튼 -->
+    <div class="mobile-partner-button" style="display: none;">
+      <button onclick="openForm();return false;" style="
+        display: block;
+        width: calc(100% - 48px);
+        margin: 24px auto;
+        padding: 16px 32px;
+        background: transparent;
+        border: 1px solid #7BE495;
+        border-radius: 12px;
+        color: #7BE495;
+        font-size: 0.95rem;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      ">
+        파트너 신청하기 ↗
+      </button>
+    </div>
+    
+    <style>
+    @media (max-width: 768px) {
+      .mobile-partner-button {
+        display: block !important;
+      }
+      
+      .mobile-partner-button button:hover {
+        background: rgba(123, 228, 149, 0.1);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(123, 228, 149, 0.3);
+      }
+    }
+    </style>
           <!-- 클릭 가능한 사전 예약 혜택 안내 -->
         <div class="reservation-benefit-notice clickable-benefit-box desktop-only" 
              onclick="openForm();return false;" 
