@@ -4755,11 +4755,11 @@ if (window.innerWidth <= 768) {
     /* 모바일에서 초록색 테두리 박스 좌우 크기 늘리기 */
     @media (max-width: 768px) {
       .testimonial-card-mobile {
-        max-width: 100% !important;
-        margin-left: 0 !important;
-        margin-right: 0 !important;
-        padding: 24px 20px 28px 20px !important;
-        border-radius: 0 !important; /* 화면 끝까지 확장 */
+        max-width: calc(100% - 10px) !important;
+        margin-left: 5px !important;
+        margin-right: 5px !important;
+        padding: 24px 16px 28px 16px !important;
+        border-radius: 18px !important; /* 둥근 모서리 유지 */
       }
     }
     </style>
