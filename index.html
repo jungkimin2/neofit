@@ -4733,7 +4733,7 @@ if (window.innerWidth <= 768) {
 
 
 <section id="benefits" class="section animate-on-scroll" style="background: #000; padding-bottom: 80px;">
-  <div class="container" style="max-width: 900px; margin: 0 auto; text-align: center;">
+  <div class="container benefits-container-mobile" style="max-width: 900px; margin: 0 auto; text-align: center;">
     <h2 style="font-size: 2.2rem; font-weight: bold; margin-bottom: 16px; letter-spacing: -1px; line-height: 1.2;">
       <span style="color: #FFFFFF;">운동은 팀으로</span><span class="neon-green">, 기구는 스마트하게</span>
     </h2>
@@ -4758,12 +4758,23 @@ if (window.innerWidth <= 768) {
     <style>
     /* 모바일에서 초록색 테두리 박스 좌우 크기 늘리기 */
     @media (max-width: 768px) {
+      /* 상위 컨테이너 제한 해제 */
+      .benefits-container-mobile {
+        max-width: 100% !important;
+        padding: 0 !important;
+      }
       .testimonial-card-mobile {
-        max-width: calc(100% - 10px) !important;
-        margin-left: 5px !important;
-        margin-right: 5px !important;
-        padding: 24px 16px 28px 16px !important;
+        max-width: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        padding: 24px 20px 28px 20px !important;
         border-radius: 18px !important; /* 둥근 모서리 유지 */
+        margin: 0 10px !important; /* 좌우 약간의 여백 */
+      }
+      /* 박스 내부 콘텐츠도 화면 전체 활용 */
+      .testimonial-card-mobile > div > div {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
       }
     }
     </style>
