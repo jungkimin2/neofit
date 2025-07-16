@@ -3390,7 +3390,7 @@ html body .core-value-fresh-mobile {
 
 
 <!-- <div id="hive"></div> -->
-          <section id="smart" class="section animate-on-scroll mobile-transform-target" style="background: #000; padding-top: 80px;">
+          <section id="smart" class="section animate-on-scroll mobile-transform-target smart-trainer-section-mobile" style="background: #000; padding-top: 80px;">
   <div class="container" style="text-align:left; max-width: 1100px; margin: 0 auto; padding: 0 20px;">
     <h2 style="font-size: 2rem; text-align: left;">
       <span style="color: #FFFFFF;">네오 스마트 :</span>
@@ -4159,6 +4159,16 @@ if (window.innerWidth <= 768) {
   }
   /* 추가로 transform 사용 */
   .smart-section-mobile {
+    transform: translateY(-48px) !important;
+  }
+  /* 네오 스마트 트레이너 섹션 위로 3칸 이동 */
+  .smart-trainer-section-mobile {
+    margin-top: -48px !important;
+    position: relative !important;
+  }
+  /* 더 구체적인 선택자로 우선순위 높이기 */
+  section#smart.smart-trainer-section-mobile {
+    margin-top: -48px !important;
     transform: translateY(-48px) !important;
   }
 }
@@ -11734,7 +11744,7 @@ document.addEventListener('DOMContentLoaded', function() {
           { selector: '#mobile-moved-merged-box', transform: 'translateY(-272px)' },
           { selector: '.core-value-fresh-mobile', transform: 'translateY(-356px)' },
           { selector: '.mobile-system-box-wrapper', transform: 'translateY(-420px)' },
-          { selector: '#smart', transform: 'translateY(-320px)' },
+          { selector: '#smart', transform: 'translateY(-368px)' }, // 기존 -320px에서 -48px 더 위로
           { selector: '#hive', transform: 'translateY(-180px)' }
       ];
       
