@@ -4244,9 +4244,17 @@ if (window.innerWidth <= 768) {
   color: #9DF5A4;
   text-shadow: 0 0 12px rgba(157, 243, 164, 1);
 }
+/* 모바일에서 PC용 콘텐츠 완전히 숨기기 */
 @media (max-width: 768px) {
-  .mobile-hide {
+  .mobile-hide,
+  .pc-only,
+  div.mobile-hide,
+  .mobile-hide *,
+  .neohive-twobox-col > div:first-child {
     display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    overflow: hidden !important;
   }
 }
 @media (max-width: 600px) {
@@ -8080,13 +8088,15 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   #mobile-moved-merged-box {
-    width: calc(100% - 24px) !important;
-    margin: 12px !important;
+    width: calc(100vw - 24px) !important;
+    max-width: 100% !important;
+    margin: 12px auto !important;
     padding: 0 !important;
     background: transparent !important;
     border: none !important;
     box-shadow: none !important;
     position: relative !important;
+    box-sizing: border-box !important;
   }
   
   .mobile-integrated-card {
@@ -8144,7 +8154,7 @@ document.addEventListener('DOMContentLoaded', function() {
     align-items: center !important;
     justify-content: space-between !important;
     margin-bottom: 10px !important;
-    gap: 8px !important;
+    gap: 4px !important;
   }
   
   .flow-row:last-child {
@@ -8153,16 +8163,17 @@ document.addEventListener('DOMContentLoaded', function() {
   
   .flow-box {
     flex: 1 !important;
-    padding: 6px 8px !important;
+    padding: 5px 6px !important;
     background: rgba(98, 210, 162, 0.15) !important;
     border: 1px solid rgba(98, 210, 162, 0.3) !important;
     border-radius: 8px !important;
     text-align: center !important;
-    font-size: 0.7rem !important;
+    font-size: 0.65rem !important;
     color: #fff !important;
     white-space: nowrap !important;
     overflow: hidden !important;
     text-overflow: ellipsis !important;
+    min-width: 0 !important;
   }
   
   .flow-box.highlight {
@@ -8174,8 +8185,9 @@ document.addEventListener('DOMContentLoaded', function() {
   
   .flow-arrow {
     color: #62D2A2 !important;
-    font-size: 0.8rem !important;
+    font-size: 0.65rem !important;
     flex-shrink: 0 !important;
+    margin: 0 2px !important;
   }
   
   /* 통합된 설명 섹션 */
