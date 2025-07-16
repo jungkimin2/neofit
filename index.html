@@ -12074,3 +12074,16 @@ document.addEventListener('DOMContentLoaded', function() {
     overflow: hidden;
     z-index: 10; /* 네오 스마트 영상 위에 위치 */
   }
+  
+  /* 모바일에서 clickable-benefit-box 숨기기 */
+  @media (max-width: 768px) {
+    .clickable-benefit-box,
+    .reservation-benefit-notice.clickable-benefit-box {
+      display: none !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
+      height: 0 !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+  }
