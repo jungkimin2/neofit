@@ -797,14 +797,17 @@ pointer-events: auto !important;
   text-shadow: 0 0 12px rgba(123, 228, 149, 0.8);
 }
 
-/* 모바일 환경에서 자물쇠 이모티콘 좌측 이동 및 예시 문구 크기 조정 */
+/* 모바일 환경에서 자물쇠 이모티콘과 텍스트 정렬 */
 .lock-icon {
-  margin-left: -32px !important;
+  margin-left: 0 !important;
+  margin-right: 12px !important;
   margin-top: 2px !important;
+  flex-shrink: 0 !important;
 }
 
 .example-text {
   font-size: 0.75rem !important;
+  color: #aaa !important;
 }
 
 /* 모바일 환경에서 무인 출입 시스템과 이벤트 시스템 UI 완전 숨김 */
@@ -816,16 +819,19 @@ pointer-events: auto !important;
   display: none !important;
 }
 
-/* 모바일 환경에서 전체 스마트 가이드 텍스트를 우측으로 2칸 이동 */
+/* 모바일 환경에서 스마트 가이드 텍스트 정렬 수정 */
 p.smart-guide-text {
-  transform: translateX(32px) !important;
+  transform: none !important;
   position: relative !important;
   z-index: 999 !important;
+  display: flex !important;
+  align-items: flex-start !important;
+  padding: 12px !important;
 }
 
 /* 추가적인 우선순위 강화 */
 div > p.smart-guide-text {
-  padding-left: 32px !important;
+  padding-left: 12px !important;
 }
 
 .mobile-system-list li {
@@ -4390,7 +4396,7 @@ if (window.innerWidth <= 768) {
             </div>
           </div>
           <p style="color: #62D2A2; font-size: 0.85rem; line-height: 1.6; margin-top: 0px; text-align: left; display: flex; align-items: flex-start;" class="smart-guide-text">
-            <img src="./images/neo35.png" alt="출입 코드 아이콘" style="width: 24px; height: 24px; margin-right: 12px; margin-left: 8px; margin-top: 2px; flex-shrink: 0;" class="lock-icon"> 
+            <img src="./images/neo35.png" alt="출입 코드 아이콘" style="width: 24px; height: 24px; flex-shrink: 0;" class="lock-icon"> 
             <span style="display: block;">
               각 운동 기구에 최적화된 전용 영상 가이드 탑재<br>
               <span class="example-text">(예: 하체 기구에는 하체 기구 사용법 영상 자동 제공)</span>
