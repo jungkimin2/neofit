@@ -3570,21 +3570,32 @@ html body .core-value-fresh-mobile {
                   padding: 20px !important;
                 }
                 
+                /* PC의 필터 효과 제거 */
+                .card-image-outline {
+                  filter: none !important;
+                }
+                
                 #pc-card-image {
-                  width: 100% !important;
-                  max-width: 500px !important;
+                  width: auto !important;
+                  max-width: 600px !important;
                   height: auto !important;
-                  border: 3px solid #7BE495 !important;
-                  border-radius: 20px !important;
-                  box-shadow: 0 0 20px rgba(123, 228, 149, 0.6) !important;
-                  box-sizing: border-box !important;
+                  border: none !important;
+                  box-shadow: none !important;
+                  margin: 0 !important;
+                  display: block !important;
+                  filter: drop-shadow(0 0 0 3px #7BE495) drop-shadow(0 0 20px rgba(123, 228, 149, 0.6)) !important;
+                }
+                
+                /* 이미지를 감싸는 div 스타일 */
+                #pc-card-image:parent {
+                  display: inline-block !important;
                   margin: 0 auto 20px !important;
                 }
                 
                 /* 화면이 작은 모바일에서도 크게 표시 */
-                @media (max-width: 500px) {
+                @media (max-width: 600px) {
                   #pc-card-image {
-                    max-width: 95vw !important;
+                    max-width: 92vw !important;
                   }
                 }
               }
