@@ -825,8 +825,8 @@ p.smart-guide-text {
   position: relative !important;
   z-index: 999 !important;
   display: flex !important;
-  align-items: flex-start !important;
-  padding: 12px !important;
+  align-items: center !important;
+  padding: 16px !important;
 }
 
 /* 추가적인 우선순위 강화 */
@@ -4218,14 +4218,14 @@ if (window.innerWidth <= 768) {
 @media (max-width: 768px) {
   .smart-guide-text {
     display: flex !important;
-    align-items: flex-start !important;
-    padding: 12px;
+    align-items: center !important;
+    padding: 16px;
     background: rgba(98, 210, 162, 0.05);
     border-radius: 12px;
     border: 1px solid rgba(98, 210, 162, 0.15);
   }
   .smart-guide-text .lock-icon {
-    margin-top: 2px !important;
+    margin-top: 0 !important;
     flex-shrink: 0 !important;
   }
   .smart-guide-text > span {
@@ -4476,12 +4476,12 @@ if (window.innerWidth <= 768) {
   .smart-guide-text {
     background: rgba(123, 228, 149, 0.05) !important;
     border-radius: 8px !important;
-    padding: 12px 8px !important;
+    padding: 16px !important;
     border: 1px solid rgba(123, 228, 149, 0.3) !important;
     display: flex !important;
     align-items: center !important;
-    gap: 8px !important;
-    justify-content: center !important;
+    gap: 12px !important;
+    justify-content: flex-start !important;
   }
   
   .smart-guide-text .lock-icon {
@@ -4489,13 +4489,14 @@ if (window.innerWidth <= 768) {
     margin-left: 0 !important;
     margin-right: 8px !important;
     flex-shrink: 0 !important;
+    align-self: center !important;
   }
   
   .smart-guide-text span[style*="display: block"] {
     flex: 1 !important;
-    font-size: 0.75rem !important;
-    line-height: 1.4 !important;
-    text-align: center !important;
+    font-size: 0.8rem !important;
+    line-height: 1.5 !important;
+    text-align: left !important;
   }
   
   .smart-guide-text .example-text {
