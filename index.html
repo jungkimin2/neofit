@@ -4206,6 +4206,31 @@ if (window.innerWidth <= 768) {
   }
 }
 </style>
+<style>
+/* 모바일에서 자물쇠 아이콘과 문구 정렬 */
+@media (max-width: 768px) {
+  .smart-guide-text {
+    display: flex !important;
+    align-items: flex-start !important;
+    padding: 12px;
+    background: rgba(98, 210, 162, 0.05);
+    border-radius: 12px;
+    border: 1px solid rgba(98, 210, 162, 0.15);
+  }
+  .smart-guide-text .lock-icon {
+    margin-top: 2px !important;
+    flex-shrink: 0 !important;
+  }
+  .smart-guide-text > span {
+    flex: 1;
+    text-align: left !important;
+  }
+  .example-text {
+    font-size: 0.75rem !important;
+    opacity: 0.8;
+  }
+}
+</style>
     <!-- 네오 스마트 주요 기능 (features) 블록 삭제됨, 대신 UX 흐름 블록으로 교체 -->
     <!-- 핵심 UX 흐름: 네오 하이브 counterpart와 동일한 구조로 삽입 -->
     <!-- <div id="smart"></div> -->
@@ -4364,8 +4389,8 @@ if (window.innerWidth <= 768) {
               스마트 헬스 가이드 시스템입니다.
             </div>
           </div>
-          <p style="color: #62D2A2; font-size: 0.85rem; line-height: 1.6; margin-top: 0px; text-align: left; display: flex; align-items: center;" class="smart-guide-text">
-            <img src="./images/neo35.png" alt="출입 코드 아이콘" style="width: 24px; height: 24px; margin-right: 12px; margin-left: 8px;" class="lock-icon"> 
+          <p style="color: #62D2A2; font-size: 0.85rem; line-height: 1.6; margin-top: 0px; text-align: left; display: flex; align-items: flex-start;" class="smart-guide-text">
+            <img src="./images/neo35.png" alt="출입 코드 아이콘" style="width: 24px; height: 24px; margin-right: 12px; margin-left: 8px; margin-top: 2px; flex-shrink: 0;" class="lock-icon"> 
             <span style="display: block;">
               각 운동 기구에 최적화된 전용 영상 가이드 탑재<br>
               <span class="example-text">(예: 하체 기구에는 하체 기구 사용법 영상 자동 제공)</span>
