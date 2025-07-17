@@ -101,7 +101,7 @@
   }
   
   #benefits {
-    margin-top: -360px !important;
+    margin-top: -640px !important;
   }
   
   /* 섹션별 패딩 개별 조정 */
@@ -1104,6 +1104,21 @@ div > p.smart-guide-text {
   /* smart와 benefits 사이 모든 요소 제거 */
   #smart ~ *:not(#benefits) {
     display: none !important;
+  }
+  
+  /* 회색 공간 완전 제거를 위한 추가 조치 */
+  #smart::after,
+  #smart ~ ::before,
+  #smart ~ ::after {
+    display: none !important;
+    content: none !important;
+    height: 0 !important;
+  }
+  
+  /* benefits 섹션 확실한 위치 지정 */
+  body section#benefits {
+    margin-top: -640px !important;
+    padding-top: 0 !important;
   }
 }
 </style>
@@ -12072,10 +12087,10 @@ document.addEventListener('DOMContentLoaded', function() {
       // benefits 섹션 강제 위치 조정 - 모바일에서만 적용
       const benefitsSection = document.querySelector('section#benefits');
       if (benefitsSection && window.innerWidth <= 768) {
-        benefitsSection.style.setProperty('margin-top', '-360px', 'important');
+        benefitsSection.style.setProperty('margin-top', '-640px', 'important');
         benefitsSection.style.setProperty('transform', 'translateY(0)', 'important');
         benefitsSection.style.setProperty('background', '#000', 'important');
-        benefitsSection.style.setProperty('padding-top', '60px', 'important');
+        benefitsSection.style.setProperty('padding-top', '0', 'important');
         benefitsSection.style.setProperty('position', 'relative', 'important');
         benefitsSection.style.setProperty('z-index', '10', 'important');
         benefitsSection.style.setProperty('display', 'block', 'important');
