@@ -1080,6 +1080,31 @@ div > p.smart-guide-text {
   #smart::after {
     display: none !important;
   }
+  
+  /* 회색 가로선 특별 타겟팅 */
+  .flex-grow.mx-5.h-px.bg-gradient-to-r.from-transparent.via-gray-500.to-transparent,
+  .desktop-only.flex-grow.mx-5.h-px.bg-gradient-to-r,
+  div[class*="via-gray-500"] {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+  }
+  
+  /* benefits 섹션 상단 패딩 강제 제거 */
+  #benefits,
+  section#benefits,
+  .section#benefits {
+    padding-top: 0 !important;
+    margin-top: -620px !important;
+  }
+  
+  /* smart와 benefits 사이 모든 요소 제거 */
+  #smart ~ *:not(#benefits) {
+    display: none !important;
+  }
 }
 </style>
 </body>
@@ -2793,7 +2818,7 @@ document.addEventListener('DOMContentLoaded', function() {
     <div class="slide-container p-10 mobile-flow-rounded-box" style="margin-top: 64px; max-width: 1100px; margin-left: auto; margin-right: auto;">
       <div class="flex items-center mb-8">
         <h1 class="text-4xl font-bold neon-green" style="text-align: left; margin-top: 48px;">UX 흐름 + 무인 예약 시스템</h1>
-        <div class="flex-grow mx-5 h-px bg-gradient-to-r from-transparent via-gray-500 to-transparent desktop-only"></div>
+        <div class="flex-grow mx-5 h-px bg-gradient-to-r from-transparent via-gray-500 to-transparent desktop-only" style="display: none !important;"></div>
       </div>
       <div class="mb-6">
         <p class="text-xl text-gray-300" style="text-align: left;">
@@ -4281,7 +4306,7 @@ if (window.innerWidth <= 768) {
           <span style="color: #FFFFFF;">NFC 기반 영상 재생</span>
           <span class="neon-green" style="color: #7BE495; text-shadow: 0 0 8px rgba(123, 228, 149, 0.8), 0 0 16px rgba(123, 228, 149, 0.6);"> + 자동화 시스템</span>
         </h1>
-        <div class="flex-grow mx-5 h-px bg-gradient-to-r from-transparent via-gray-500 to-transparent desktop-only"></div>
+        <div class="flex-grow mx-5 h-px bg-gradient-to-r from-transparent via-gray-500 to-transparent desktop-only" style="display: none !important;"></div>
       </div>
       <div class="mb-6">
         <p class="text-xl text-gray-300 smart-desc-mobile" style="margin-top: 0; font-weight: 500; text-align: left; color: #888;">
@@ -4847,7 +4872,7 @@ if (window.innerWidth <= 768) {
     </div>
   </div>
 </section>
-<section id="benefits" class="section animate-on-scroll" style="background: #000; padding-bottom: 80px;">
+<section id="benefits" class="section animate-on-scroll" style="background: #000; padding-bottom: 80px; padding-top: 0; margin-top: 0;">
   <div class="container benefits-container-mobile" style="max-width: 900px; margin: 0 auto; text-align: center;">
     <h2 style="font-size: 2.2rem; font-weight: bold; margin-bottom: 16px; letter-spacing: -1px; line-height: 1.2;">
       <span style="color: #FFFFFF;">운동은 팀으로</span><span class="neon-green">, 기구는 스마트하게</span>
