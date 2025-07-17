@@ -3552,7 +3552,7 @@ html body .core-value-fresh-mobile {
         <!-- 카드 섹션 -->
         <div class="card-section" style="flex: 1; max-width: 500px; min-width: 300px; position: relative; perspective: 1000px;">
           <!-- 카드 디스플레이 영역 -->
-          <div class="card-display-area" style="background: linear-gradient(135deg, #0A0F0D 0%, #000 100%); border-radius: 20px; padding: 40px; border: 1px solid rgba(123, 228, 149, 0.3); box-shadow: 0 0 30px rgba(123, 228, 149, 0.2); text-align: center; transition: transform 0.3s ease-in-out; display: flex; flex-direction: column; align-items: center;">
+          <div class="card-display-area" style="background: linear-gradient(135deg, #0A0F0D 0%, #000 100%); border-radius: 20px; padding: 40px; border: 1px solid rgba(123, 228, 149, 0.3); box-shadow: 0 0 30px rgba(123, 228, 149, 0.2); text-align: center; transition: transform 0.3s ease-in-out;">
             <style>
               @media (min-width: 769px) {
                 .card-image-outline {
@@ -3570,22 +3570,15 @@ html body .core-value-fresh-mobile {
                   padding: 20px !important;
                 }
                 
-                /* 테두리 제거하고 이미지만 표시 */
-                .card-image-outline {
-                  filter: none !important;
-                  border: none !important;
-                  box-shadow: none !important;
-                }
-                
-                /* 이미지를 감싸는 div에 테두리 적용 */
                 #pc-card-image {
-                  width: auto !important;
+                  width: 100% !important;
                   max-width: 500px !important;
                   height: auto !important;
                   border: 3px solid #7BE495 !important;
                   border-radius: 20px !important;
                   box-shadow: 0 0 20px rgba(123, 228, 149, 0.6) !important;
-                  margin: 0 !important;
+                  box-sizing: border-box !important;
+                  margin: 0 auto 20px !important;
                 }
                 
                 /* 화면이 작은 모바일에서도 크게 표시 */
@@ -3596,11 +3589,9 @@ html body .core-value-fresh-mobile {
                 }
               }
             </style>
-            <div style="display: inline-block; margin: 0 auto 30px;">
-              <img id="pc-card-image" src="./images/neost.png" alt="NEO-S Card" 
-                   class="card-image-outline"
-                   style="width: 380px; height: auto; display: block; transition: all 0.3s ease;">
-            </div>
+            <img id="pc-card-image" src="./images/neost.png" alt="NEO-S Card" 
+                 class="card-image-outline"
+                 style="width: 380px; height: auto; margin: 0 auto 30px; display: block; transition: all 0.3s ease;">
             <h3 id="pc-card-title" style="color: #7BE495; font-size: 1.8rem; margin-bottom: 15px;">NEO-S</h3>
             <p id="pc-card-desc" style="color: #ccc; font-size: 1rem; line-height: 1.6;">
               스마트폰 태그만으로<br>나만의 운동 영상을 즉시 확인
