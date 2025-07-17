@@ -1068,6 +1068,18 @@ div > p.smart-guide-text {
     height: 0 !important;
     overflow: hidden !important;
   }
+  
+  /* benefits 섹션 바로 위의 모든 요소 숨김 */
+  #benefits::before,
+  section#benefits::before {
+    content: none !important;
+    display: none !important;
+  }
+  
+  /* smart 섹션 하단 완전 정리 */
+  #smart::after {
+    display: none !important;
+  }
 }
 </style>
 </body>
@@ -4835,9 +4847,6 @@ if (window.innerWidth <= 768) {
     </div>
   </div>
 </section>
-
-
-
 <section id="benefits" class="section animate-on-scroll" style="background: #000; padding-bottom: 80px;">
   <div class="container benefits-container-mobile" style="max-width: 900px; margin: 0 auto; text-align: center;">
     <h2 style="font-size: 2.2rem; font-weight: bold; margin-bottom: 16px; letter-spacing: -1px; line-height: 1.2;">
@@ -5390,7 +5399,7 @@ if (window.innerWidth <= 768) {
       
       /* 모바일에서 benefits 섹션을 강제로 위로 이동 및 배경 연장 */
       section#benefits {
-        margin-top: -600px !important;
+        margin-top: -620px !important;
         transform: translateY(0) !important; /* -16px에서 0으로 변경하여 아래로 1칸 더 이동 */
         position: relative !important;
         z-index: 10 !important;
@@ -5401,6 +5410,7 @@ if (window.innerWidth <= 768) {
         padding-top: 0 !important; /* 상단 패딩 제거 */
         border-top: none !important; /* 상단 경계선 제거 */
         box-shadow: none !important; /* 그림자 제거 */
+        background: #000 !important; /* 배경색 강제 적용 */
       }
       
       /* 파트너 신청하기 버튼과 benefits 섹션 사이의 경계 제거 */
@@ -5413,6 +5423,18 @@ if (window.innerWidth <= 768) {
       #smart .slide-container {
         margin-bottom: 0 !important;
         padding-bottom: 0 !important;
+      }
+      
+      /* smart 섹션 전체의 하단 처리 */
+      #smart {
+        padding-bottom: 0 !important;
+        margin-bottom: 0 !important;
+        border-bottom: none !important;
+      }
+      
+      /* smart 섹션과 benefits 섹션 사이 공백 완전 제거 */
+      #smart + #benefits {
+        margin-top: -620px !important;
       }
       
       /* 섹션 사이의 회색 선 완전 제거 */
