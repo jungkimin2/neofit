@@ -831,7 +831,28 @@ p.smart-guide-text {
 
 /* 추가적인 우선순위 강화 */
 div > p.smart-guide-text {
-  padding-left: 12px !important;
+  padding-left: 16px !important;
+}
+
+/* 모바일에서 smart-guide-text 내부 요소 정렬 */
+@media (max-width: 768px) {
+  p.smart-guide-text {
+    flex-direction: row !important;
+    gap: 12px !important;
+  }
+  
+  p.smart-guide-text .lock-icon {
+    width: 24px !important;
+    height: 24px !important;
+    margin: 0 !important;
+    align-self: flex-start !important;
+    margin-top: 2px !important;
+  }
+  
+  p.smart-guide-text > span {
+    flex: 1 !important;
+    display: block !important;
+  }
 }
 
 .mobile-system-list li {
