@@ -3570,15 +3570,22 @@ html body .core-value-fresh-mobile {
                   padding: 20px !important;
                 }
                 
+                /* 테두리 제거하고 이미지만 표시 */
+                .card-image-outline {
+                  filter: none !important;
+                  border: none !important;
+                  box-shadow: none !important;
+                }
+                
+                /* 이미지를 감싸는 div에 테두리 적용 */
                 #pc-card-image {
-                  width: 100% !important;
+                  width: auto !important;
                   max-width: 500px !important;
                   height: auto !important;
                   border: 3px solid #7BE495 !important;
                   border-radius: 20px !important;
                   box-shadow: 0 0 20px rgba(123, 228, 149, 0.6) !important;
-                  box-sizing: border-box !important;
-                  margin: 0 auto 20px !important;
+                  margin: 0 !important;
                 }
                 
                 /* 화면이 작은 모바일에서도 크게 표시 */
