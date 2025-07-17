@@ -5361,7 +5361,7 @@ if (window.innerWidth <= 768) {
       
       /* 모바일에서 benefits 섹션을 강제로 위로 이동 및 배경 연장 */
       section#benefits {
-        margin-top: -552px !important;
+        margin-top: -600px !important;
         transform: translateY(0) !important; /* -16px에서 0으로 변경하여 아래로 1칸 더 이동 */
         position: relative !important;
         z-index: 10 !important;
@@ -5369,6 +5369,7 @@ if (window.innerWidth <= 768) {
         visibility: visible !important;
         opacity: 1 !important;
         padding-bottom: 60px !important; /* 모바일에서 하단 여백 축소 */
+        padding-top: 0 !important; /* 상단 패딩 제거 */
         border-top: none !important; /* 상단 경계선 제거 */
         box-shadow: none !important; /* 그림자 제거 */
       }
@@ -5376,7 +5377,13 @@ if (window.innerWidth <= 768) {
       /* 파트너 신청하기 버튼과 benefits 섹션 사이의 경계 제거 */
       .mobile-partner-button + section#benefits {
         border-top: none !important;
-        margin-top: -528px !important; /* 아래로 추가 1칸 이동하도록 조정 */
+        margin-top: -576px !important; /* 아래로 추가 1칸 이동하도록 조정 */
+      }
+      
+      /* smart 섹션의 slide-container 하단 여백 제거 */
+      #smart .slide-container {
+        margin-bottom: 0 !important;
+        padding-bottom: 0 !important;
       }
       
       /* 섹션 사이의 회색 선 완전 제거 */
@@ -9250,6 +9257,24 @@ section:last-of-type,
 .slide-container:last-child {
   margin-bottom: 0 !important;
   padding-bottom: 20px !important;
+}
+/* benefits 섹션 위의 회색 공간 추가 제거 */
+#benefits .container.benefits-container-mobile {
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+}
+#benefits h2 {
+  margin-top: 0 !important;
+  padding-top: 20px !important;
+}
+/* smart 섹션 하단 여백 완전 제거 */
+#smart {
+  padding-bottom: 0 !important;
+  margin-bottom: 0 !important;
+}
+#smart .slide-container.smart-section-mobile {
+  padding-bottom: 0 !important;
+  margin-bottom: 0 !important;
 }
 }
 </style>
