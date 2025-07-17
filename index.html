@@ -797,17 +797,14 @@ pointer-events: auto !important;
   text-shadow: 0 0 12px rgba(123, 228, 149, 0.8);
 }
 
-/* 모바일 환경에서 자물쇠 이모티콘과 텍스트 정렬 */
+/* 모바일 환경에서 자물쇠 이모티콘 좌측 이동 및 예시 문구 크기 조정 */
 .lock-icon {
-  margin-left: 0 !important;
-  margin-right: 12px !important;
+  margin-left: -32px !important;
   margin-top: 2px !important;
-  flex-shrink: 0 !important;
 }
 
 .example-text {
   font-size: 0.75rem !important;
-  color: #aaa !important;
 }
 
 /* 모바일 환경에서 무인 출입 시스템과 이벤트 시스템 UI 완전 숨김 */
@@ -819,40 +816,16 @@ pointer-events: auto !important;
   display: none !important;
 }
 
-/* 모바일 환경에서 스마트 가이드 텍스트 정렬 수정 */
+/* 모바일 환경에서 전체 스마트 가이드 텍스트를 우측으로 2칸 이동 */
 p.smart-guide-text {
-  transform: none !important;
+  transform: translateX(32px) !important;
   position: relative !important;
   z-index: 999 !important;
-  display: flex !important;
-  align-items: center !important;
-  padding: 16px !important;
 }
 
 /* 추가적인 우선순위 강화 */
 div > p.smart-guide-text {
-  padding-left: 16px !important;
-}
-
-/* 모바일에서 smart-guide-text 내부 요소 정렬 */
-@media (max-width: 768px) {
-  p.smart-guide-text {
-    flex-direction: row !important;
-    gap: 12px !important;
-  }
-  
-  p.smart-guide-text .lock-icon {
-    width: 24px !important;
-    height: 24px !important;
-    margin: 0 !important;
-    align-self: flex-start !important;
-    margin-top: 2px !important;
-  }
-  
-  p.smart-guide-text > span {
-    flex: 1 !important;
-    display: block !important;
-  }
+  padding-left: 32px !important;
 }
 
 .mobile-system-list li {
@@ -1079,9 +1052,8 @@ div > p.smart-guide-text {
   border-top-right-radius: 18px !important;
   padding-bottom: 12px !important;
 }
-/* Hide all gray lines in mobile */
-.mobile-flow-rounded-box .bg-gradient-to-r.from-transparent.via-gray-500.to-transparent,
-.bg-gradient-to-r.from-transparent.via-gray-500.to-transparent {
+/* Hide the gray line in mobile */
+.mobile-flow-rounded-box .bg-gradient-to-r.from-transparent.via-gray-500.to-transparent {
   display: none !important;
 }
 
@@ -4239,14 +4211,14 @@ if (window.innerWidth <= 768) {
 @media (max-width: 768px) {
   .smart-guide-text {
     display: flex !important;
-    align-items: center !important;
-    padding: 16px;
+    align-items: flex-start !important;
+    padding: 12px;
     background: rgba(98, 210, 162, 0.05);
     border-radius: 12px;
     border: 1px solid rgba(98, 210, 162, 0.15);
   }
   .smart-guide-text .lock-icon {
-    margin-top: 0 !important;
+    margin-top: 2px !important;
     flex-shrink: 0 !important;
   }
   .smart-guide-text > span {
@@ -4418,7 +4390,7 @@ if (window.innerWidth <= 768) {
             </div>
           </div>
           <p style="color: #62D2A2; font-size: 0.85rem; line-height: 1.6; margin-top: 0px; text-align: left; display: flex; align-items: flex-start;" class="smart-guide-text">
-            <img src="./images/neo35.png" alt="출입 코드 아이콘" style="width: 24px; height: 24px; flex-shrink: 0;" class="lock-icon"> 
+            <img src="./images/neo35.png" alt="출입 코드 아이콘" style="width: 24px; height: 24px; margin-right: 12px; margin-left: 8px; margin-top: 2px; flex-shrink: 0;" class="lock-icon"> 
             <span style="display: block;">
               각 운동 기구에 최적화된 전용 영상 가이드 탑재<br>
               <span class="example-text">(예: 하체 기구에는 하체 기구 사용법 영상 자동 제공)</span>
@@ -4497,12 +4469,12 @@ if (window.innerWidth <= 768) {
   .smart-guide-text {
     background: rgba(123, 228, 149, 0.05) !important;
     border-radius: 8px !important;
-    padding: 16px !important;
+    padding: 12px 8px !important;
     border: 1px solid rgba(123, 228, 149, 0.3) !important;
     display: flex !important;
     align-items: center !important;
-    gap: 12px !important;
-    justify-content: flex-start !important;
+    gap: 8px !important;
+    justify-content: center !important;
   }
   
   .smart-guide-text .lock-icon {
@@ -4510,14 +4482,13 @@ if (window.innerWidth <= 768) {
     margin-left: 0 !important;
     margin-right: 8px !important;
     flex-shrink: 0 !important;
-    align-self: center !important;
   }
   
   .smart-guide-text span[style*="display: block"] {
     flex: 1 !important;
-    font-size: 0.8rem !important;
-    line-height: 1.5 !important;
-    text-align: left !important;
+    font-size: 0.75rem !important;
+    line-height: 1.4 !important;
+    text-align: center !important;
   }
   
   .smart-guide-text .example-text {
@@ -5413,17 +5384,6 @@ if (window.innerWidth <= 768) {
       #smart .slide-container {
         margin-bottom: 0 !important;
         padding-bottom: 0 !important;
-      }
-      
-      /* 모바일에서 모든 회색 가로선 숨기기 */
-      .flex-grow.h-px.bg-gradient-to-r {
-        display: none !important;
-      }
-      
-      /* smart 섹션의 회색선 특별히 제거 */
-      .smart-section-mobile .bg-gradient-to-r,
-      #smart .bg-gradient-to-r {
-        display: none !important;
       }
       
       /* 섹션 사이의 회색 선 완전 제거 */
@@ -12279,4 +12239,4 @@ document.addEventListener('DOMContentLoaded', function() {
       margin: 0 !important;
       padding: 0 !important;
     }
-  }
+  } 
