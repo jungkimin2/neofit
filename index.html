@@ -3015,16 +3015,20 @@ document.addEventListener('DOMContentLoaded', function() {
 .mobile-merged-box {
   display: flex !important;
   flex-direction: column;
-  gap: 32px !important; /* 20px → 32px로 더 넓힘 */
-  margin-top: -40px !important; /* -72px → -40px로 상단 겹침 해결 */
-  margin-bottom: 36px !important; /* 24px → 36px로 하단 간격 더 증가 */
-  border-radius: 22px;
-  background: linear-gradient(135deg, #0C1F13 0%, #04120A 100%) !important;
-  box-shadow: 0 4px 18px 0 rgba(123,228,149,0.08);
-  padding: 36px 16px !important; /* 좌우 패딩 축소하여 콘텐츠 영역 확대 */
-  width: calc(100% - 20px) !important; /* 좌우 여백 축소 */
-  margin-left: 10px !important;
-  margin-right: 10px !important;
+  gap: 28px !important;
+  margin-top: -40px !important;
+  margin-bottom: 36px !important;
+  border-radius: 24px;
+  background: linear-gradient(145deg, #0A1811 0%, #051209 50%, #030906 100%) !important;
+  border: 1px solid rgba(123, 228, 149, 0.2);
+  box-shadow: 
+    0 8px 32px rgba(123, 228, 149, 0.15),
+    0 4px 16px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(123, 228, 149, 0.1);
+  padding: 36px 20px !important; /* 적절한 패딩 유지 */
+  width: calc(100% - 10px) !important; /* 좌우 여백 최소화 */
+  margin-left: 5px !important;
+  margin-right: 5px !important;
   position: relative !important;
   z-index: 10 !important; /* z-index 추가로 겹침 방지 */
 }
@@ -3032,24 +3036,53 @@ document.addEventListener('DOMContentLoaded', function() {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  gap: 16px !important; /* 14px → 16px로 다시 늘림 */
-  margin-bottom: 8px !important; /* 4px → 8px로 행 간 간격 증가 */
-  padding: 4px 0 !important; /* 상하 패딩 추가 */
+  gap: 18px !important;
+  margin-bottom: 0 !important;
+  padding: 16px !important;
+  background: rgba(123, 228, 149, 0.03);
+  border-radius: 16px;
+  border: 1px solid rgba(123, 228, 149, 0.12);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+.mobile-merged-row:last-child {
+  margin-bottom: 0 !important;
+}
+.mobile-merged-row::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(123, 228, 149, 0.3), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.mobile-merged-row:active {
+  background: rgba(123, 228, 149, 0.08);
+  border-color: rgba(123, 228, 149, 0.2);
+  transform: scale(0.98);
 }
 .mobile-merged-icon {
-  width: 38px;
-  height: 38px;
-  background: #7BE495;
+  width: 46px;
+  height: 46px;
+  background: linear-gradient(135deg, #7BE495 0%, #62D2A2 100%);
   border-radius: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  box-shadow: 
+    0 4px 12px rgba(123, 228, 149, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 .mobile-merged-icon img {
-  width: 28px;
-  height: 28px;
+  width: 26px;
+  height: 26px;
   object-fit: contain;
+  filter: brightness(0) invert(1);
 }
 .mobile-merged-text {
   text-align: left;
