@@ -1058,8 +1058,9 @@ div > p.smart-guide-text {
   border-top-right-radius: 18px !important;
   padding-bottom: 12px !important;
 }
-/* Hide the gray line in mobile */
-.mobile-flow-rounded-box .bg-gradient-to-r.from-transparent.via-gray-500.to-transparent {
+/* Hide all gray lines in mobile */
+.mobile-flow-rounded-box .bg-gradient-to-r.from-transparent.via-gray-500.to-transparent,
+.bg-gradient-to-r.from-transparent.via-gray-500.to-transparent {
   display: none !important;
 }
 
@@ -5390,6 +5391,17 @@ if (window.innerWidth <= 768) {
       #smart .slide-container {
         margin-bottom: 0 !important;
         padding-bottom: 0 !important;
+      }
+      
+      /* 모바일에서 모든 회색 가로선 숨기기 */
+      .flex-grow.h-px.bg-gradient-to-r {
+        display: none !important;
+      }
+      
+      /* smart 섹션의 회색선 특별히 제거 */
+      .smart-section-mobile .bg-gradient-to-r,
+      #smart .bg-gradient-to-r {
+        display: none !important;
       }
       
       /* 섹션 사이의 회색 선 완전 제거 */
