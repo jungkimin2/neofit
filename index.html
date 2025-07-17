@@ -110,7 +110,7 @@
   /* 모바일에서만 benefits 마진 조정 */
   @media (max-width: 768px) {
     #benefits {
-      margin-top: -640px !important;
+      margin-top: -576px !important;
     }
   }
   
@@ -1127,7 +1127,7 @@ div > p.smart-guide-text {
   
   /* benefits 섹션 확실한 위치 지정 */
   body section#benefits {
-    margin-top: -640px !important;
+    margin-top: -576px !important;
     padding-top: 0 !important;
   }
 }
@@ -12116,7 +12116,7 @@ document.addEventListener('DOMContentLoaded', function() {
       // benefits 섹션 강제 위치 조정 - 모바일에서만 적용
       const benefitsSection = document.querySelector('section#benefits');
       if (benefitsSection && window.innerWidth <= 768) {
-        benefitsSection.style.setProperty('margin-top', '-640px', 'important');
+        benefitsSection.style.setProperty('margin-top', '-576px', 'important');
         benefitsSection.style.setProperty('transform', 'translateY(0)', 'important');
         benefitsSection.style.setProperty('background', '#000', 'important');
         benefitsSection.style.setProperty('padding-top', '0', 'important');
