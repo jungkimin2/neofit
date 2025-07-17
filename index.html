@@ -100,8 +100,18 @@
     padding-bottom: 40px !important;
   }
   
-  #benefits {
-    margin-top: -640px !important;
+  /* PC에서는 benefits 마진 조정 안함 */
+  @media (min-width: 769px) {
+    #benefits {
+      margin-top: 0 !important;
+    }
+  }
+  
+  /* 모바일에서만 benefits 마진 조정 */
+  @media (max-width: 768px) {
+    #benefits {
+      margin-top: -640px !important;
+    }
   }
   
   /* 섹션별 패딩 개별 조정 */
@@ -1119,6 +1129,25 @@ div > p.smart-guide-text {
   body section#benefits {
     margin-top: -640px !important;
     padding-top: 0 !important;
+  }
+}
+
+/* PC에서 benefits 섹션 정상 위치로 복구 */
+@media (min-width: 769px) {
+  #benefits,
+  section#benefits,
+  body section#benefits,
+  .section#benefits {
+    margin-top: 0 !important;
+    padding-top: 80px !important;
+    transform: none !important;
+    position: relative !important;
+  }
+  
+  /* PC에서 smart 섹션도 정상화 */
+  #smart {
+    padding-bottom: 80px !important;
+    margin-bottom: 0 !important;
   }
 }
 </style>
