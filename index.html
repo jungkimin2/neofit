@@ -1117,6 +1117,7 @@ div > p.smart-guide-text {
   border-top-left-radius: 18px !important;
   border-top-right-radius: 18px !important;
   padding-bottom: 12px !important;
+  margin-bottom: 0 !important;
 }
 /* Hide the gray line in mobile */
 .mobile-flow-rounded-box .bg-gradient-to-r.from-transparent.via-gray-500.to-transparent {
@@ -4315,7 +4316,7 @@ if (window.innerWidth <= 768) {
         </p>
       </div>
       <!-- Circular Flow Steps UI for NEO SMART 핵심 흐름 -->
-      <div class="circular-flow-container" style="position: relative; width: 580px; height: 580px; margin: 56px auto 36px;">
+      <div class="circular-flow-container" style="position: relative; width: 580px; height: 580px; margin: 56px auto 0;">
         <div class="circular-bg-glow"></div>
         <div style="position:absolute; left:50%; top:50%; transform:translate(-50%, -50%); width: 580px; height: 580px; background: radial-gradient(circle, rgba(123, 228, 149, 0.1) 0%, rgba(0, 0, 0, 0) 75%); border-radius: 50%; z-index:0; pointer-events: none;"></div>
         <div class="circle-center-title">
@@ -5424,7 +5425,7 @@ if (window.innerWidth <= 768) {
       
       /* 모바일에서 benefits 섹션을 강제로 위로 이동 및 배경 연장 */
       section#benefits {
-        margin-top: -620px !important;
+        margin-top: -640px !important; /* 증가시켜 gray space 완전 제거 */
         transform: translateY(0) !important; /* -16px에서 0으로 변경하여 아래로 1칸 더 이동 */
         position: relative !important;
         z-index: 10 !important;
@@ -9312,6 +9313,19 @@ h3 {
 /* 모바일에서 슬라이드 컨테이너 하단 공간 제거 */
 .slide-container {
   margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+/* 스마트 섹션의 슬라이드 컨테이너 하단 공간 완전 제거 */
+.slide-container.smart-section-mobile {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+/* circular-flow-container 하단 여백 제거 */
+.slide-container.smart-section-mobile .circular-flow-container {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
 }
 
 /* 파트너 신청하기 버튼 영역 하단 정리 */
@@ -9347,10 +9361,22 @@ section:last-of-type,
 #smart {
   padding-bottom: 0 !important;
   margin-bottom: 0 !important;
+  background: #000 !important;
 }
 #smart .slide-container.smart-section-mobile {
   padding-bottom: 0 !important;
   margin-bottom: 0 !important;
+}
+/* smart 섹션 끝에서 benefits 섹션 시작까지 배경색 통일 */
+#smart::after {
+  content: '';
+  position: absolute;
+  bottom: -50px;
+  left: 0;
+  right: 0;
+  height: 100px;
+  background: #000;
+  z-index: 1;
 }
 }
 </style>
