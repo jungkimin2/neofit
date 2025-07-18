@@ -694,46 +694,6 @@ pointer-events: auto !important;
 /* 기존 모바일에서 .neo-smart-logo.front 숨김 처리 코드는 삭제됨 */
 </style>
 <style>
-/* 모바일에서 NEO SMART 다이얼그램 고도화 */
-@media (max-width: 768px) {
-  .circular-flow-container {
-    transform: scale(0.75) !important;
-    margin: 20px auto !important;
-  }
-  
-  /* 중앙 원형 그라데이션 효과 강화 */
-  .center-circle-neon {
-    background: radial-gradient(circle, 
-      rgba(7, 25, 15, 1) 0%, 
-      rgba(0, 0, 0, 0.95) 50%,
-      rgba(7, 25, 15, 0.9) 100%) !important;
-    animation: centerPulse 3s ease-in-out infinite !important;
-  }
-  
-  @keyframes centerPulse {
-    0%, 100% { 
-      box-shadow: 0 0 30px rgba(123, 228, 149, 0.6), 
-                  inset 0 0 20px rgba(123, 228, 149, 0.3),
-                  0 0 50px rgba(123, 228, 149, 0.3);
-    }
-    50% { 
-      box-shadow: 0 0 40px rgba(123, 228, 149, 0.8), 
-                  inset 0 0 30px rgba(123, 228, 149, 0.4),
-                  0 0 70px rgba(123, 228, 149, 0.4);
-    }
-  }
-  
-  /* 연결선 애니메이션 */
-  .connection-lines line {
-    animation: dashFlow 2s linear infinite !important;
-  }
-  
-  @keyframes dashFlow {
-    to { stroke-dashoffset: -10; }
-  }
-}
-</style>
-<style>
 /* PC 네비게이션에서 사전 예약하기 네온 효과 */
 .nav-neon-green {
   color: #7BE495 !important;
@@ -4444,41 +4404,21 @@ if (window.innerWidth <= 768) {
       <div class="circular-flow-container" style="position: relative; width: 580px; height: 580px; margin: 56px auto 0;">
         <div class="circular-bg-glow"></div>
         <div style="position:absolute; left:50%; top:50%; transform:translate(-50%, -50%); width: 580px; height: 580px; background: radial-gradient(circle, rgba(123, 228, 149, 0.1) 0%, rgba(0, 0, 0, 0) 75%); border-radius: 50%; z-index:0; pointer-events: none;"></div>
-        <!-- 중앙 원형 네온 효과 추가 -->
-        <div class="center-circle-neon" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 180px; height: 180px; background: radial-gradient(circle, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.8) 100%); border: 3px solid #7BE495; border-radius: 50%; box-shadow: 0 0 30px rgba(123, 228, 149, 0.6), inset 0 0 20px rgba(123, 228, 149, 0.3); z-index: 2;"></div>
-        <div class="circle-center-title" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 3; text-align: center; color: #7BE495; font-size: 1.2rem; font-weight: bold; text-shadow: 0 0 20px rgba(123, 228, 149, 0.8); line-height: 1.4;">
+        <div class="circle-center-title">
           NEO SMART의<br>핵심 흐름
         </div>
-        <!-- 연결선 SVG 추가 -->
-        <svg class="connection-lines" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none;">
-          <defs>
-            <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" style="stop-color:#7BE495;stop-opacity:0" />
-              <stop offset="50%" style="stop-color:#7BE495;stop-opacity:0.6" />
-              <stop offset="100%" style="stop-color:#7BE495;stop-opacity:0" />
-            </linearGradient>
-          </defs>
-          <!-- 연결선들 -->
-          <line x1="290" y1="90" x2="290" y2="180" stroke="url(#lineGradient)" stroke-width="2" stroke-dasharray="5,5" opacity="0.5"/>
-          <line x1="370" y1="140" x2="440" y2="210" stroke="url(#lineGradient)" stroke-width="2" stroke-dasharray="5,5" opacity="0.5"/>
-          <line x1="440" y1="370" x2="370" y2="440" stroke="url(#lineGradient)" stroke-width="2" stroke-dasharray="5,5" opacity="0.5"/>
-          <line x1="290" y1="490" x2="290" y2="400" stroke="url(#lineGradient)" stroke-width="2" stroke-dasharray="5,5" opacity="0.5"/>
-          <line x1="210" y1="440" x2="140" y2="370" stroke="url(#lineGradient)" stroke-width="2" stroke-dasharray="5,5" opacity="0.5"/>
-          <line x1="140" y1="210" x2="210" y2="140" stroke="url(#lineGradient)" stroke-width="2" stroke-dasharray="5,5" opacity="0.5"/>
-        </svg>
-        
         <!-- 6 Steps: Top, Top-right, Bottom-right, Bottom, Bottom-left, Top-left -->
-          <div class="circle-step neo-step-1" style="position: absolute; left: 50%; top: 0%; transform: translate(-50%, 0); width: 140px; height: 140px; display: flex; flex-direction: column; align-items: center; justify-content: center; background: linear-gradient(135deg, rgba(0, 0, 0, 0.9), rgba(7, 25, 15, 0.95)); border-radius: 50%; border: 2px solid #7BE495; box-shadow: 0 0 30px rgba(123, 228, 149, 0.6), inset 0 0 20px rgba(123, 228, 149, 0.2); z-index: 1; backdrop-filter: blur(10px); transition: all 0.3s ease;">
-          <div class="circle-step-number" style="position: absolute; top: -12px; left: 50%; transform: translateX(-50%); width: 32px; height: 32px; background: #7BE495; color: #000; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1rem; box-shadow: 0 0 15px rgba(123, 228, 149, 0.8);">1</div>
-          <img src="./images/neo19.png" alt="NFC 아이콘" style="width: 40px; height: 40px; margin-bottom: 8px; filter: brightness(1.2);">
-          <div style="font-weight: bold; color: #7BE495; margin-bottom: 2px; font-size: 0.9rem; text-shadow: 0 0 10px rgba(123, 228, 149, 0.6);">NFC 운동 가이드</div>
-          <div style="font-size: 0.75rem; color: #aaa; text-align:center; line-height: 1.3;">태그 한 번으로<br>간편하게 학습</div>
+          <div class="circle-step" style="position: absolute; left: 50%; top: 0%; transform: translate(-50%, 0); width: 140px; height: 140px; display: flex; flex-direction: column; align-items: center; justify-content: center; background: linear-gradient(135deg, rgba(123,228,149,0.10), rgba(62,200,168,0.08)); border-radius: 50%; border: 2px solid #7BE495; box-shadow: 0 0 24px #7BE49555; z-index: 1;">
+          <div class="circle-step-number">1</div>
+          <img src="./images/neo19.png" alt="NFC 아이콘" style="width: 36px; height: 36px; margin-bottom: 8px;">
+          <div style="font-weight: bold; color: #fff; margin-bottom: 2px; font-size: 0.9rem;">NFC 운동 가이드</div>
+          <div style="font-size: 0.75rem; color: #ccc; text-align:center;">태그 한 번으로<br>간편하게 학습</div>
         </div>
-          <div class="circle-step neo-step-2" style="position: absolute; left: 85%; top: 12%; transform: translate(-50%, 0); width: 140px; height: 140px; display: flex; flex-direction: column; align-items: center; justify-content: center; background: linear-gradient(135deg, rgba(0, 0, 0, 0.9), rgba(7, 25, 15, 0.95)); border-radius: 50%; border: 2px solid #7BE495; box-shadow: 0 0 30px rgba(123, 228, 149, 0.6), inset 0 0 20px rgba(123, 228, 149, 0.2); z-index: 1; backdrop-filter: blur(10px); transition: all 0.3s ease;">
-          <div class="circle-step-number" style="position: absolute; top: -12px; left: 50%; transform: translateX(-50%); width: 32px; height: 32px; background: #7BE495; color: #000; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1rem; box-shadow: 0 0 15px rgba(123, 228, 149, 0.8);">2</div>
-          <img src="./images/neo100.png" alt="숏폼 영상 아이콘" style="width: 40px; height: 40px; margin-bottom: 8px; filter: brightness(1.2);">
-          <div style="font-weight: bold; color: #7BE495; margin-bottom: 2px; font-size: 0.8rem; text-shadow: 0 0 10px rgba(123, 228, 149, 0.6);">이해하기 쉬운 숏폼</div>
-          <div style="font-size: 0.75rem; color: #aaa; text-align:center; line-height: 1.3;">1분 이내, 핵심만 담은<br>숏폼 영상</div>
+          <div class="circle-step" style="position: absolute; left: 85%; top: 12%; transform: translate(-50%, 0); width: 140px; height: 140px; display: flex; flex-direction: column; align-items: center; justify-content: center; background: linear-gradient(135deg, rgba(123,228,149,0.10), rgba(62,200,168,0.08)); border-radius: 50%; border: 2px solid #7BE495; box-shadow: 0 0 24px #7BE49555; z-index: 1;">
+          <div class="circle-step-number">2</div>
+          <img src="./images/neo100.png" alt="숏폼 영상 아이콘" style="width: 36px; height: 36px; margin-bottom: 8px;">
+          <div style="font-weight: bold; color: #fff; margin-bottom: 2px; font-size: 0.8rem;">이해하기 쉬운 숏폼</div>
+          <div style="font-size: 0.75rem; color: #ccc; text-align:center;">1분 이내, 핵심만 담은<br>숏폼 영상</div>
         </div>
           <div class="circle-step" style="position: absolute; left: 85%; top: 73%; transform: translate(-50%, -50%); width: 140px; height: 140px; display: flex; flex-direction: column; align-items: center; justify-content: center; background: linear-gradient(135deg, rgba(123,228,149,0.10), rgba(62,200,168,0.08)); border-radius: 50%; border: 2px solid #7BE495; box-shadow: 0 0 24px #7BE49555; z-index: 1;">
           <div class="circle-step-number">3</div>
