@@ -5145,16 +5145,17 @@ if (window.innerWidth <= 768) {
 
       </div>
       <!-- Decorative background images -->
-      <img src="./images/hive3.png" alt="" style="opacity: 0.07; position: absolute; top: 196px; left: 250px; width: 480px; z-index: 0; pointer-events: none;" />
+      <img src="./images/hive3.png" alt="" class="hive-bg-logo" style="opacity: 0.07; position: absolute; top: 196px; left: 250px; width: 480px; z-index: 0; pointer-events: none;" />
     </div>
     
     <!-- 모바일 전용 파트너 신청하기 버튼 (첫 번째 버튼 삭제됨) -->
     
     <style>
     @media (max-width: 768px) {
-      /* 모바일에서 hive3.png 로고 위치 조정 */
-      .testimonial-card img[src*="hive3.png"] {
-        top: 196px !important;
+      /* 모바일에서 hive3.png 로고 위치 조정 - 클래스 사용 */
+      .hive-bg-logo {
+        top: 230px !important;
+        transform: translateY(16px) !important;
       }
       
       .mobile-partner-button {
