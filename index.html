@@ -3566,8 +3566,30 @@ html body .core-value-fresh-mobile {
               }
               
               @media (max-width: 768px) {
+                .new-neos-showcase {
+                  display: flex !important;
+                  justify-content: center !important;
+                  align-items: center !important;
+                  padding: 0 20px !important;
+                }
+                
+                .new-neos-showcase .card-section {
+                  display: flex !important;
+                  justify-content: center !important;
+                  align-items: center !important;
+                  width: 100% !important;
+                  max-width: 100% !important;
+                }
+                
                 .card-display-area {
-                  padding: 20px !important;
+                  padding: 40px 20px !important;
+                  margin: 0 auto !important;
+                  display: flex !important;
+                  flex-direction: column !important;
+                  align-items: center !important;
+                  justify-content: center !important;
+                  position: relative !important;
+                  overflow: visible !important;
                 }
                 
                 /* PC의 필터 효과 제거 */
@@ -3577,12 +3599,15 @@ html body .core-value-fresh-mobile {
                 
                 #pc-card-image {
                   width: auto !important;
-                  max-width: 600px !important;
+                  max-width: 280px !important;
                   height: auto !important;
                   border: none !important;
-                  margin: 0 !important;
+                  margin: 0 auto 30px !important;
                   display: block !important;
-                  filter: drop-shadow(0 0 30px #7BE495) drop-shadow(0 0 60px rgba(123, 228, 149, 0.5)) drop-shadow(0 0 90px rgba(123, 228, 149, 0.3)) !important;
+                  filter: drop-shadow(0 0 20px #7BE495) drop-shadow(0 0 40px rgba(123, 228, 149, 0.5)) drop-shadow(0 0 60px rgba(123, 228, 149, 0.3)) !important;
+                  position: relative !important;
+                  top: 0 !important;
+                  transform: none !important;
                 }
                 
                 /* 이미지를 감싸는 div 스타일 */
