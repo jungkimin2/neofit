@@ -5399,7 +5399,7 @@ if (window.innerWidth <= 768) {
              tabindex="0"
              role="button"
              aria-label="파트너 신청하기"
-             style="margin-top: 40px; margin-bottom: 20px; text-align: center; display: none; cursor: pointer;">
+             style="margin-top: 40px; margin-bottom: 20px; text-align: center; cursor: pointer;">
           <!-- CTA 버튼 - PC와 동일한 프리미엄 디자인 -->
           <div style="
             margin: 0 auto;
@@ -5502,6 +5502,10 @@ if (window.innerWidth <= 768) {
       .mobile-only {
         display: none !important;
       }
+      /* 모바일 파트너 버튼은 PC에서 숨김 */
+      .mobile-partner-button {
+        display: none !important;
+      }
     }
     
     /* 모바일 환경에서는 모바일 레이아웃 표시, 데스크톱 레이아웃 숨김 */
@@ -5516,6 +5520,10 @@ if (window.innerWidth <= 768) {
         display: none !important;
       }
       .mobile-only {
+        display: block !important;
+      }
+      /* 모바일 파트너 버튼은 모바일에서 표시 */
+      .mobile-partner-button {
         display: block !important;
       }
       
