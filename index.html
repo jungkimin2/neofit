@@ -37,15 +37,15 @@
   }
   
   #mobile-moved-merged-box {
-    transform: translateY(-124px) !important;
-    -webkit-transform: translateY(-124px) !important;
+    transform: translateY(-188px) !important;
+    -webkit-transform: translateY(-188px) !important;
     position: relative !important;
     z-index: 10 !important;
   }
   
   .core-value-fresh-mobile {
-    transform: translateY(-244px) !important;
-    -webkit-transform: translateY(-244px) !important;
+    transform: translateY(-308px) !important;
+    -webkit-transform: translateY(-308px) !important;
     position: relative !important;
     display: flex !important;
     flex-direction: row !important;
@@ -54,8 +54,8 @@
   }
   
   .mobile-system-box-wrapper {
-    transform: translateY(-356px) !important;
-    -webkit-transform: translateY(-356px) !important;
+    transform: translateY(-420px) !important;
+    -webkit-transform: translateY(-420px) !important;
     position: relative !important;
   }
   
@@ -2962,7 +2962,7 @@ document.addEventListener('DOMContentLoaded', function() {
           </div>
         </div>
       
-      <!-- 모바일에서만 표시되는 통합 레이아웃 -->
+      <!-- 모바일에서만 표시되는 원래 레이아웃 -->
       <div class="mobile-only" style="max-width:480px; flex: 1 1 480px;">
         <div style="border-radius: 18px; overflow: hidden; box-shadow: 0 0 30px rgba(123, 228, 149, 0.1);">
           <div style="height: 6px; background: linear-gradient(to right, #62D2A2, #7BE495); width: 100%; margin: 0;"></div>
@@ -2976,26 +2976,26 @@ document.addEventListener('DOMContentLoaded', function() {
             <p style="color: #fff; font-size: 1rem; line-height: 1.6; margin-bottom: 20px;">
               지역 기반 <span style="color:#62D2A2; font-weight:600;">헬스 소모임 커뮤니티 플랫폼</span>
             </p>
-            <div style="border-left: 4px solid #62D2A2; padding-left: 16px; margin-bottom: 32px;">
+            <div style="border-left: 4px solid #62D2A2; padding-left: 16px; margin-bottom: 24px;">
               <p style="color: #ccc;">지역과 운동 목적이 유사한 사용자들을 연결하여 함께 운동하는 문화를 만들고, 지속 가능한 운동 생태계를 구축합니다.</p>
             </div>
-            <!-- 두 개의 박스 내용 통합 -->
-            <div style="display: flex; flex-direction: column; gap: 24px; background: rgba(123, 228, 149, 0.05); border-radius: 12px; padding: 24px; border: 1px solid rgba(123, 228, 149, 0.2);">
+            <div style="display: flex; flex-direction: column; gap: 20px; margin-top: 40px;">
               <div style="display: flex; align-items: center;">
-                <div style="width: 48px; height: 48px; border-radius: 50%; background: #7BE395; display: flex; align-items: center; justify-content: center; margin-right: 16px; flex-shrink: 0;">
-                  <img src="./images/neo125.png" alt="선물 아이콘" style="width: 28px; height: 28px;">
+                <div style="width: 40px; height: 40px; border-radius: 50%; background: #7BE395; display: flex; align-items: center; justify-content: center; margin-right: 16px;">
+                  <img src="./images/neo40.png" alt="지역 기반 연결 아이콘" style="width: 28px; height: 28px;">
                 </div>
-                <div style="color: #ccc; font-size: 0.95rem; line-height: 1.5;">
-                  1일 무료 체험, 출석 보상으로 팀 활동과 센터<br>경험을 쌓고, 자연스럽게 사용자는 재등록으로 이어집니다.
+                <div style="display: flex; flex-direction: column;">
+                  <span class="hive-feature-title" style="color: #fff; font-weight: bold; font-size: 1rem; margin: 0 0 0 0; padding: 0;">지역 기반 연결</span>
+                  <span class="hive-feature-desc" style="color: #ccc; font-size: 0.85rem; margin: 0; padding: 0;">가까운 거리의 사용자들과 함께 운동</span>
                 </div>
               </div>
               <div style="display: flex; align-items: center;">
-                <div style="width: 48px; height: 48px; border-radius: 50%; background: #7BE395; display: flex; align-items: center; justify-content: center; margin-right: 16px; flex-shrink: 0;">
-                  <img src="./images/noes56.png" alt="통계 아이콘" style="width: 28px; height: 28px;">
+                <div style="width: 40px; height: 40px; border-radius: 50%; background: #7BE395; display: flex; align-items: center; justify-content: center; margin-right: 16px;">
+                  <img src="./images/neo22.png" alt="팀 기반 시스템" style="width: 24px; height: 24px;">
                 </div>
-                <div style="color: #ccc; font-size: 0.95rem; line-height: 1.5;">
-                  출석 변화를 관리자 페이지에서 한눈에 파악하여<br>
-                  운영 전략에 즉시 반영 가능합니다.
+                <div style="display: flex; flex-direction: column;">
+                  <span class="hive-feature-title" style="color: #fff; font-weight: bold; font-size: 1rem; margin: 0 0 0 0; padding: 0;">팀 기반 시스템</span>
+                  <span class="hive-feature-desc" style="color: #ccc; font-size: 0.85rem; margin: 0; padding: 0;">3~4인 팀 구성으로 함께 운동하는 즐거움</span>
                 </div>
               </div>
             </div>
@@ -3007,8 +3007,24 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="neohive-twobox-col" style="display: flex; flex-direction: column; gap: 40px; max-width: 480px; flex: 1 1 480px;">
           <!-- 모바일 전용: 새로운 핵심 가치 박스 (핵심 가치) -->
           <!-- 기존 mobile-core-value-block은 아래에서 주석 처리됨 -->
-          <!-- 모바일에서 두 개의 박스가 하나로 통합되어 위에 포함됨 -->
-          <div id="mobile-moved-merged-box" class="mobile-merged-box mobile-transform-target" style="display: none !important;">
+          <div id="mobile-moved-merged-box" class="mobile-merged-box mobile-transform-target">
+            <div class="mobile-merged-row">
+              <div class="mobile-merged-icon">
+                <img src="./images/neo125.png" alt="선물 아이콘" style="filter: brightness(0) saturate(100%);" />
+              </div>
+            <div class="mobile-merged-text">
+                1일 무료 체험, 출석 보상으로 팀 활동과 센터<br>경험을 쌓고, 자연스럽게 사용자는 재등록으로 이어집니다.
+              </div>
+            </div>
+            <div class="mobile-merged-row">
+              <div class="mobile-merged-icon">
+                <img src="./images/noes56.png" alt="통계 아이콘" style="filter: brightness(0) saturate(100%);" />
+              </div>
+              <div class="mobile-merged-text">
+                출석 변화를 관리자 페이지에서 한눈에 파악하여<br>
+                운영 전략에 즉시 반영 가능합니다.
+              </div>
+            </div>
           </div>
                                   <div class="core-value-fresh-mobile pc-core-value-adjust mobile-transform-target">
 <style>
@@ -3192,9 +3208,9 @@ document.addEventListener('DOMContentLoaded', function() {
 @media (max-width: 768px) {
 body #mobile-moved-merged-box,
 html body #mobile-moved-merged-box {
-  /* 4칸 아래로 이동 */
-  transform: translateY(-268.8px) !important;
-  -webkit-transform: translateY(-268.8px) !important;
+  /* 한 칸 아래로 이동 */
+  transform: translateY(-332.8px) !important;
+  -webkit-transform: translateY(-332.8px) !important;
   position: relative !important;
   z-index: 100 !important; /* 더 높은 우선순위 */
   margin-top: 0 !important; /* 기존 margin과 충돌 방지 */
@@ -3207,9 +3223,9 @@ html body #mobile-moved-merged-box {
 body .core-value-fresh-mobile,
 html body .core-value-fresh-mobile {
   margin-top: 52px !important;
-  /* 4칸 아래로 이동 */
-  transform: translateY(-372.8px) !important;
-  -webkit-transform: translateY(-372.8px) !important;
+  /* 3칸(36px) 추가로 위로 이동: -364.8px → -436.8px */
+  transform: translateY(-436.8px) !important;
+  -webkit-transform: translateY(-436.8px) !important;
   display: flex !important;
   flex-direction: row !important;
   align-items: center !important;
@@ -3394,14 +3410,9 @@ html body .core-value-fresh-mobile {
   }
   .core-value-desktop-only { display: none !important; }
   /* 기존 core-value-box-mobile 모바일 스타일 완전 제거 */
-  /* neohive-twobox-col 모바일에서 너비 제한 해제 */
-  .neohive-twobox-col {
-    max-width: 100% !important;
-    padding: 0 !important;
-  }
   /* 새 모바일 전용 핵심 가치 박스 스타일 - 글라스모피즘 효과 */
   .mobile-core-value-fresh {
-    margin: 28px 5px 12px 5px !important;
+    margin: 28px 0 12px 0 !important;
     padding: 20px 16px 20px 16px !important;
     /* 글라스모피즘 배경 */
     background: linear-gradient(135deg, 
@@ -3417,7 +3428,7 @@ html body .core-value-fresh-mobile {
       0 4px 16px rgba(123, 228, 149, 0.15),
       inset 0 1px 0 rgba(255, 255, 255, 0.1),
       inset 0 -1px 0 rgba(123, 228, 149, 0.2) !important;
-    width: calc(100% - 10px) !important;
+    width: 100% !important;
     display: block !important;
     /* 글라스 테두리 효과 */
     border: 1px solid rgba(123, 228, 149, 0.3) !important;
@@ -8355,8 +8366,8 @@ document.addEventListener('DOMContentLoaded', function() {
 @media (max-width: 768px) {
   body #mobile-moved-merged-box,
   html body #mobile-moved-merged-box {
-    transform: translateY(-352px) !important;
-    -webkit-transform: translateY(-352px) !important;
+    transform: translateY(-416px) !important;
+    -webkit-transform: translateY(-416px) !important;
     position: relative !important;
     z-index: 100 !important;
     margin-top: 0 !important;
@@ -8364,23 +8375,23 @@ document.addEventListener('DOMContentLoaded', function() {
   
   /* JavaScript에서 설정하는 값도 override */
   #mobile-moved-merged-box[style*="translateY"] {
-    transform: translateY(-352px) !important;
-    -webkit-transform: translateY(-352px) !important;
+    transform: translateY(-416px) !important;
+    -webkit-transform: translateY(-416px) !important;
   }
   
-  /* 핵심가치 박스를 4칸 아래로 이동 - 최종 override */
+  /* 핵심가치 박스를 3칸(36px) 위로 이동 - 최종 override */
   body .core-value-fresh-mobile,
   html body .core-value-fresh-mobile {
-    transform: translateY(-372.8px) !important;
-    -webkit-transform: translateY(-372.8px) !important;
+    transform: translateY(-436.8px) !important;
+    -webkit-transform: translateY(-436.8px) !important;
     position: relative !important;
     z-index: 99 !important;
   }
   
   /* JavaScript에서 설정하는 값도 override */
   .core-value-fresh-mobile[style*="translateY"] {
-    transform: translateY(-372.8px) !important;
-    -webkit-transform: translateY(-372.8px) !important;
+    transform: translateY(-436.8px) !important;
+    -webkit-transform: translateY(-436.8px) !important;
   }
 }
 </style>
@@ -9503,8 +9514,8 @@ html body .mobile-system-box-wrapper {
 @media (max-width: 768px) {
 body #smart,
 html body #smart {
-  transform: translateY(-448px) !important; /* 4칸 아래로 이동 */
-  -webkit-transform: translateY(-448px) !important;
+  transform: translateY(-512px) !important; /* 1칸(16px) 아래로 이동: -528px → -512px */
+  -webkit-transform: translateY(-512px) !important;
   margin-top: -180px !important;
   padding-top: 0 !important;
 }
@@ -9544,8 +9555,8 @@ html body #smart p {
 
 body #smart,
 html body #smart {
-  transform: translateY(-448px) !important; /* 4칸 아래로 이동 */
-  -webkit-transform: translateY(-448px) !important;
+  transform: translateY(-512px) !important; /* 1칸(16px) 아래로 이동: -528px → -512px */
+  -webkit-transform: translateY(-512px) !important;
   margin-top: -180px !important;
   padding-top: 0 !important;
 }
@@ -9590,8 +9601,8 @@ html body #smart p {
 
 body #smart,
 html body #smart {
-  transform: translateY(-448px) !important; /* 4칸 아래로 이동 */
-  -webkit-transform: translateY(-448px) !important;
+  transform: translateY(-512px) !important; /* 1칸(16px) 아래로 이동: -528px → -512px */
+  -webkit-transform: translateY(-512px) !important;
   margin-top: -180px !important;
   padding-top: 0 !important;
 }
@@ -12004,12 +12015,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // 즉시 실행 함수로 스타일 강제 적용
     function forceApplyMobileStyles() {
                       const elements = [
-          { selector: '.mobile-ui-position-adjustment', transform: 'translateY(-216px)' },
-          { selector: '#mobile-moved-merged-box', transform: 'translateY(-208px)' },
-          { selector: '.core-value-fresh-mobile', transform: 'translateY(-292px)' },
-          { selector: '.mobile-system-box-wrapper', transform: 'translateY(-356px)' },
-          { selector: '#smart', transform: 'translateY(-320px)' },
-          { selector: '#hive', transform: 'translateY(-116px)' }
+          { selector: '.mobile-ui-position-adjustment', transform: 'translateY(-280px)' },
+          { selector: '#mobile-moved-merged-box', transform: 'translateY(-272px)' },
+          { selector: '.core-value-fresh-mobile', transform: 'translateY(-356px)' },
+          { selector: '.mobile-system-box-wrapper', transform: 'translateY(-420px)' },
+          { selector: '#smart', transform: 'translateY(-384px)' }, // 기존 -368px에서 -16px 더 위로
+          { selector: '#hive', transform: 'translateY(-180px)' }
       ];
       
       elements.forEach(({ selector, transform }) => {
