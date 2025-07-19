@@ -112,7 +112,7 @@
     body section#benefits.section.animate-on-scroll,
     html body section#benefits.section.animate-on-scroll,
     section#benefits[style] {
-      margin-top: -800px !important;  /* 더 위로 올리기 */
+      margin-top: -900px !important;  /* 100px 더 위로 올리기 */
       transform: translateY(-100px) !important;  /* 추가로 위로 이동 */
       position: relative !important;
       z-index: 100 !important;
@@ -123,8 +123,8 @@
     /* smart 섹션에 하단 패딩 줄이기 */
     body section#smart,
     html body section#smart {
-      padding-bottom: 20px !important;  /* 패딩 더 줄이기 */
-      margin-bottom: -100px !important;  /* 음수 마진으로 공간 줄이기 */
+      padding-bottom: 0px !important;  /* 패딩 완전 제거 */
+      margin-bottom: -150px !important;  /* 음수 마진 더 늘려서 공간 줄이기 */
     }
     
     /* benefits 섹션 상단 패딩 제거 - 이미 위에서 처리됨 */
@@ -8720,7 +8720,7 @@ document.addEventListener('DOMContentLoaded', function() {
   body section#benefits,
   html body section#benefits,
   section#benefits.section.animate-on-scroll {
-    margin-top: -850px !important;
+    margin-top: -950px !important;
     transform: translateY(-120px) !important;
     -webkit-transform: translateY(-120px) !important;
     position: relative !important;
