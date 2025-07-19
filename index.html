@@ -111,7 +111,7 @@
   @media (max-width: 768px) {
     body section#benefits,
     html body section#benefits {
-      margin-top: -650px !important;  /* 더 위로 올리기 */
+      margin-top: -714px !important;  /* 4칸(64px) 더 위로 올리기 */
       transform: translateY(-50px) !important;  /* 추가로 위로 이동 */
       position: relative !important;
       z-index: 100 !important;
@@ -133,6 +133,13 @@
     body section#benefits .container,
     html body section#benefits .container {
       padding-top: 10px !important;
+    }
+    
+    /* 모바일에서 제목 크기 조정 */
+    body section#benefits h2,
+    html body section#benefits h2 {
+      font-size: 1.5rem !important;
+      margin-bottom: 10px !important;
     }
   }
   
@@ -5000,9 +5007,8 @@ if (window.innerWidth <= 768) {
       <span class="neon-green">네오 하이브</span>는 지역 기반 팀 매칭을 통해 헬스장에 유입률과 재등록률을 높이는 팀 문화를 만들고,<br>
       <span class="neon-green">네오 스마트</span>는 운동 기구에 NFC 솔루션을 더해 트레이너 개입 없이도 학습 가능한 스마트 시스템을 구현합니다.
     </div>
-    <div class="intro-text-mobile" style="display: none; font-size: 0.9rem; color: #ccc; margin-bottom: 40px; line-height: 1.6; font-weight: 400; text-align: left; padding: 0 20px;">
-      <span class="neon-green">네오 하이브</span>는 지역 기반 턀 매칭을 통해 헬스장에 유입률과 재등록률을 높이는 팀 문화를 만들고,<br><br>
-      <span class="neon-green">네오 스마트</span>는 운동 기구에 NFC 솔루션을 더해 트레이너 개입 없이도 학습 가능한 스마트 시스템을 구현합니다.
+    <div class="intro-text-mobile" style="display: none;">
+      <!-- 모바일에서는 설명 문구 삭제 -->
     </div>
     <style>
     @media (max-width: 768px) {
