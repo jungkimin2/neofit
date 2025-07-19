@@ -2779,7 +2779,7 @@ document.addEventListener('DOMContentLoaded', function() {
   </div>
 </section>
 
-<section id="hive" class="section animate-on-scroll mobile-transform-target" style="background:#000; padding-top:24px; padding-bottom: 200px;">
+<section id="hive" class="section animate-on-scroll mobile-transform-target" style="background:#000; padding-top:24px; padding-bottom: 100px;">
   <div class="container" style="text-align:center; padding-top:0; max-width: 1100px; margin: 0 auto; padding: 0 20px;">
     <h2 style="font-size: 2rem; text-align: left; color: #FFFFFF; margin-top:0;">
       네오 하이브 : <span class="neon-green">"하나되는 우리"</span>
@@ -3466,11 +3466,11 @@ html body .core-value-fresh-mobile {
 
 
 <!-- <div id="hive"></div> -->
-          <section id="smart" class="section animate-on-scroll mobile-transform-target smart-trainer-section-mobile" style="background: #000; padding-top: 80px;">
+          <section id="smart" class="section animate-on-scroll mobile-transform-target smart-trainer-section-mobile" style="background: #000; padding-top: 0px; margin-top: -80px; position: relative; z-index: 100;">
   <div class="container" style="text-align:left; max-width: 1100px; margin: 0 auto; padding: 0 20px;">
-    <h2 style="font-size: 2rem; text-align: left;">
+    <h2 style="font-size: 2rem; text-align: left; margin-top: 20px; line-height: 1.4; padding-bottom: 10px; overflow: visible;">
       <span style="color: #FFFFFF;">네오 스마트 :</span>
-      <span class="neon-green smart-trainer-text" style="font-size: 2.2rem;">"내 손안의 스마트 트레이너"</span>
+      <span class="neon-green smart-trainer-text" style="font-size: 2.2rem; display: inline-block;">"내 손안의 스마트 트레이너"</span>
     </h2>
     <p style="margin: 10px 0 40px; color: #aaa; text-align: left; line-height: 1.6;">
       회원이 언제 어디서나 쉽고 빠르게 복습할 수 있는 시스템<br>
@@ -3478,7 +3478,7 @@ html body .core-value-fresh-mobile {
     </p>
     
     <!-- 새로운 통합 NEO-S 쇼케이스 (PC/모바일 공통) -->
-    <div class="new-neos-showcase" style="position: relative; width: 100%; margin-top: 40px;">
+    <div class="new-neos-showcase" style="position: relative; width: 100%; margin-top: calc(40px - 48px);">
       <!-- 레이아웃 래퍼 -->
       <div class="showcase-wrapper" style="display: flex; gap: 40px; align-items: center; justify-content: center; flex-wrap: wrap;">
         <!-- 카드 섹션 -->
@@ -4280,13 +4280,13 @@ if (window.innerWidth <= 768) {
   }
   /* 네오 스마트 트레이너 섹션 위로 3칸 이동 */
   .smart-trainer-section-mobile {
-    margin-top: -48px !important;
+    margin-top: -80px !important;
     position: relative !important;
   }
   /* 더 구체적인 선택자로 우선순위 높이기 */
   section#smart.smart-trainer-section-mobile {
-    margin-top: -48px !important;
-    transform: translateY(-48px) !important;
+    margin-top: -80px !important;
+    transform: translateY(-32px) !important;
   }
 }
 </style>
@@ -11984,8 +11984,8 @@ document.addEventListener('DOMContentLoaded', function() {
           { selector: '#mobile-moved-merged-box', transform: 'translateY(-48px)' },
           { selector: '.core-value-fresh-mobile', transform: 'translateY(-132px)' },
           { selector: '.mobile-system-box-wrapper', transform: 'translateY(-164px)' },
-          { selector: '#smart', transform: 'translateY(-128px)' },
-          { selector: '#hive', transform: 'translateY(-100px)' }
+          { selector: '#smart', transform: 'translateY(-240px)' },
+          { selector: '#hive', transform: 'translateY(-260px)' }
       ];
       
       elements.forEach(({ selector, transform }) => {
