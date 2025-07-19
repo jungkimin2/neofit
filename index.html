@@ -107,18 +107,32 @@
     }
   }
   
-  /* 모바일에서만 benefits 마진 조정 - 여백 줄이기 */
+  /* 모바일에서만 benefits 마진 조정 - 강제로 위로 올리기 */
   @media (max-width: 768px) {
     body section#benefits,
     html body section#benefits {
-      margin-top: -520px !important;  /* 적절한 여백으로 조정 */
-      transform: translateY(0) !important;
+      margin-top: -650px !important;  /* 더 위로 올리기 */
+      transform: translateY(-50px) !important;  /* 추가로 위로 이동 */
+      position: relative !important;
+      z-index: 100 !important;
     }
     
     /* smart 섹션에 하단 패딩 줄이기 */
     body section#smart,
     html body section#smart {
-      padding-bottom: 60px !important;  /* 패딩 줄여서 여백 감소 */
+      padding-bottom: 20px !important;  /* 패딩 더 줄이기 */
+      margin-bottom: -100px !important;  /* 음수 마진으로 공간 줄이기 */
+    }
+    
+    /* benefits 섹션 상단 패딩도 줄이기 */
+    body section#benefits,
+    html body section#benefits {
+      padding-top: 20px !important;
+    }
+    
+    body section#benefits .container,
+    html body section#benefits .container {
+      padding-top: 10px !important;
     }
   }
   
