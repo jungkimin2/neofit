@@ -109,13 +109,15 @@
   
   /* 모바일에서만 benefits 마진 조정 - 강제로 위로 올리기 */
   @media (max-width: 768px) {
-    body section#benefits,
-    html body section#benefits {
-      margin-top: -750px !important;  /* 더 위로 올리기 */
-      transform: translateY(-50px) !important;  /* 추가로 위로 이동 */
+    body section#benefits.section.animate-on-scroll,
+    html body section#benefits.section.animate-on-scroll,
+    section#benefits[style] {
+      margin-top: -800px !important;  /* 더 위로 올리기 */
+      transform: translateY(-100px) !important;  /* 추가로 위로 이동 */
       position: relative !important;
       z-index: 100 !important;
-      padding-top: 10px !important;  /* 인라인 스타일 덮어쓰기 */
+      padding-top: 0px !important;  /* 패딩 완전 제거 */
+      padding: 0 !important;
     }
     
     /* smart 섹션에 하단 패딩 줄이기 */
@@ -8439,6 +8441,32 @@ document.addEventListener('DOMContentLoaded', function() {
   .core-value-fresh-mobile[style*="translateY"] {
     transform: translateY(-436.8px) !important;
     -webkit-transform: translateY(-436.8px) !important;
+  }
+}
+</style>
+<!-- 모바일에서 시설 정보 및 위치 안내 강제 위치 조정 -->
+<style>
+@media (max-width: 768px) {
+  /* 최종 강제 적용 - 모든 스타일 덮어쓰기 */
+  #benefits,
+  section#benefits,
+  body section#benefits,
+  html body section#benefits,
+  section#benefits.section.animate-on-scroll {
+    margin-top: -850px !important;
+    transform: translateY(-120px) !important;
+    -webkit-transform: translateY(-120px) !important;
+    position: relative !important;
+    z-index: 9999 !important;
+    padding: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 20px !important;
+  }
+  
+  #benefits h2,
+  section#benefits h2 {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
   }
 }
 </style>
