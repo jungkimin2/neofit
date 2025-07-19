@@ -3186,11 +3186,10 @@ html body #mobile-moved-merged-box {
 @media (max-width: 768px) {
 body .core-value-fresh-mobile,
 html body .core-value-fresh-mobile {
-  margin-top: 52px !important;
-  /* 3칸(36px) 추가로 위로 이동: -364.8px → -436.8px */
-  transform: translateY(-436.8px) !important;
-  -webkit-transform: translateY(-436.8px) !important;
-  display: flex !important;
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  overflow: hidden !important;
   flex-direction: row !important;
   align-items: center !important;
   justify-content: flex-start !important;
