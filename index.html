@@ -107,18 +107,18 @@
     }
   }
   
-  /* 모바일에서만 benefits 마진 조정 - 위로 4칸 올리기 */
+  /* 모바일에서만 benefits 마진 조정 - 여백 줄이기 */
   @media (max-width: 768px) {
     body section#benefits,
     html body section#benefits {
-      margin-top: -600px !important;  /* 4칸(64px) 위로 올림 - 강제 적용 */
+      margin-top: -520px !important;  /* 적절한 여백으로 조정 */
       transform: translateY(0) !important;
     }
     
-    /* smart 섹션에 하단 패딩 추가하여 UI가 가려지지 않도록 */
+    /* smart 섹션에 하단 패딩 줄이기 */
     body section#smart,
     html body section#smart {
-      padding-bottom: 150px !important;  /* 패딩 더 늘려서 공간 확보 */
+      padding-bottom: 60px !important;  /* 패딩 줄여서 여백 감소 */
     }
   }
   
@@ -10686,7 +10686,7 @@ document.addEventListener('DOMContentLoaded', function() {
      
      /* "운동은 팀으로, 기구는 스마트하게" 섹션 위로 이동 - 여백 제거 강화 */
      section#benefits {
-       margin-top: -600px !important;  /* 4칸(64px) 위로 이동 */
+       margin-top: -536px !important;  /* 원래대로 복원 */
        position: relative !important;
        z-index: 10 !important;
        background: #000 !important;
