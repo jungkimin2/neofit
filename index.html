@@ -3861,13 +3861,15 @@ function toggleMobilePreviewMute() {
     position: relative !important;
   }
   
-  /* 네오 스마트 제목과 설명도 함께 아래로 이동 */
-  #smart h2 {
+  /* 네오 스마트 제목과 설명도 함께 아래로 이동 - 강제 적용 */
+  body section#smart h2,
+  html body section#smart h2 {
     transform: translateY(80px) !important;
     position: relative !important;
   }
   
-  #smart > .container > p {
+  body section#smart > .container > p,
+  html body section#smart > .container > p {
     transform: translateY(80px) !important;
     position: relative !important;
   }
