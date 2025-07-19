@@ -12451,6 +12451,18 @@ document.addEventListener('DOMContentLoaded', function() {
     z-index: 10; /* 네오 스마트 영상 위에 위치 */
   }
   
+  /* PC에서 reservation-benefit-notice 외부 박스 제거 */
+  @media (min-width: 769px) {
+    .reservation-benefit-notice.clickable-benefit-box {
+      background: none !important;
+      border: none !important;
+      box-shadow: none !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      max-width: none !important;
+    }
+  }
+  
   /* 모바일에서 clickable-benefit-box 숨기기 */
   @media (max-width: 768px) {
     .clickable-benefit-box,
