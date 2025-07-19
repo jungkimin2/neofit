@@ -107,15 +107,15 @@
     }
   }
   
-  /* 모바일에서만 benefits 마진 조정 - 여백 줄이기 */
+  /* 모바일에서만 benefits 마진 조정 - 위로 4칸 올리기 */
   @media (max-width: 768px) {
     #benefits {
-      margin-top: -450px !important;  /* UI가 가려지지 않도록 더 아래로 조정 */
+      margin-top: -514px !important;  /* 4칸(64px) 위로 올림 */
     }
     
     /* smart 섹션에 하단 패딩 추가하여 UI가 가려지지 않도록 */
     #smart {
-      padding-bottom: 100px !important;
+      padding-bottom: 150px !important;  /* 패딩 더 늘려서 공간 확보 */
     }
   }
   
@@ -3895,15 +3895,15 @@ function toggleMobilePreviewMute() {
     font-size: 1.1rem !important;
   }
   
-  /* NEOS 카드 리스트(기구 사용법, 체형 교정 영상 등) 위치 조정 - 아래로 3칸, 우측으로 2칸 */
+  /* NEOS 카드 리스트(기구 사용법, 체형 교정 영상 등) 위치 조정 - 한 칸 더 내림 */
   body .neos-card-list,
   html body .neos-card-list,
   body div.neos-card-list[style*="margin-top"],
   body section#smart div.neos-card-list {
-    transform: translateY(-32px) translateX(32px) !important;
+    transform: translateY(-16px) translateX(32px) !important;
     position: relative !important;
     z-index: 20 !important;
-    margin-top: calc(56px - 16px - 32px) !important;
+    margin-top: calc(56px - 16px - 16px) !important;
     margin-bottom: 60px !important;  /* 하단 여백 추가 */
   }
   
@@ -11575,9 +11575,9 @@ document.addEventListener('DOMContentLoaded', function() {
 <!-- 모바일 환경에서 뒤집기 효과 안의 NEOS 이미지만 2칸 아래로 이동 -->
 <style>
 @media (max-width: 768px) {
-  /* NEOS 카드 리스트 위치 조정 - 아래로 3칸, 우측으로 2칸 */
+  /* NEOS 카드 리스트 위치 조정 - 한 칸 더 내림 */
   div.neos-card-list[style*="margin-top"] {
-    transform: translateY(-32px) translateX(32px) !important;
+    transform: translateY(-16px) translateX(32px) !important;
     position: relative !important;
     z-index: 15 !important;
   }
@@ -12074,10 +12074,10 @@ document.addEventListener('DOMContentLoaded', function() {
         backTextOverlay.style.setProperty('opacity', '0', 'important');
       }
       
-      // NEOS 카드 리스트 위치 조정 - 아래로 3칸, 우측으로 2칸
+      // NEOS 카드 리스트 위치 조정 - 한 칸 더 내림
       const neosCardList = document.querySelector('div.neos-card-list[style*="margin-top"]');
       if (neosCardList) {
-        neosCardList.style.setProperty('transform', 'translateY(-32px) translateX(32px)', 'important');
+        neosCardList.style.setProperty('transform', 'translateY(-16px) translateX(32px)', 'important');
         neosCardList.style.setProperty('position', 'relative', 'important');
         neosCardList.style.setProperty('z-index', '15', 'important');
         neosCardList.style.setProperty('grid-template-columns', 'repeat(2, 1fr)', 'important');
