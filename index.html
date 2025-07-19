@@ -3885,11 +3885,15 @@ function toggleMobilePreviewMute() {
     font-size: 1.3rem !important;
   }
   
-  /* NEOS 카드 리스트(기구 사용법, 체형 교정 영상 등)를 위로 5칸(80px) 이동 */
-  .neos-card-list {
+  /* NEOS 카드 리스트(기구 사용법, 체형 교정 영상 등)를 위로 5칸(80px) 이동 - 강제 적용 */
+  body .neos-card-list,
+  html body .neos-card-list,
+  body div.neos-card-list[style*="margin-top"],
+  body section#smart div.neos-card-list {
     transform: translateY(-80px) !important;
     position: relative !important;
     z-index: 20 !important;
+    margin-top: calc(56px - 16px - 80px) !important;
   }
   
   /* 카드 섹션 스타일 */
@@ -11560,9 +11564,9 @@ document.addEventListener('DOMContentLoaded', function() {
 <!-- 모바일 환경에서 뒤집기 효과 안의 NEOS 이미지만 2칸 아래로 이동 -->
 <style>
 @media (max-width: 768px) {
-  /* NEOS 카드 리스트는 원래 위치 유지 */
-  div.neos-card-list[style*="margin-top: 120px"] {
-    margin-top: 120px !important; /* 원래 값으로 복원 */
+  /* NEOS 카드 리스트를 위로 5칸 이동 */
+  div.neos-card-list[style*="margin-top"] {
+    transform: translateY(-80px) !important;
     position: relative !important;
     z-index: 15 !important;
   }
@@ -12059,10 +12063,10 @@ document.addEventListener('DOMContentLoaded', function() {
         backTextOverlay.style.setProperty('opacity', '0', 'important');
       }
       
-      // NEOS 카드 리스트는 기본 모바일 스타일만 적용
-      const neosCardList = document.querySelector('div.neos-card-list[style*="margin-top: 120px"]');
+      // NEOS 카드 리스트는 위로 5칸 이동
+      const neosCardList = document.querySelector('div.neos-card-list[style*="margin-top"]');
       if (neosCardList) {
-        neosCardList.style.setProperty('margin-top', '120px', 'important'); // 원래 값 유지
+        neosCardList.style.setProperty('transform', 'translateY(-80px)', 'important');
         neosCardList.style.setProperty('position', 'relative', 'important');
         neosCardList.style.setProperty('z-index', '15', 'important');
         neosCardList.style.setProperty('grid-template-columns', 'repeat(2, 1fr)', 'important');
