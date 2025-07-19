@@ -4320,20 +4320,20 @@ if (window.innerWidth <= 768) {
     <!-- <div id="smart"></div> -->
     <div class="slide-container p-10 smart-section-mobile" style="margin-top: 2.5rem; max-width: 1100px; margin-left: auto; margin-right: auto;">
       <div class="flex items-center mb-8">
-        <h1 class="text-4xl font-bold smart-title-mobile" style="text-align: left; margin-top: 6rem; margin-bottom: 12px;">
-          <span style="color: #FFFFFF;">NFC 기반 영상 재생</span>
-          <span class="neon-green" style="color: #7BE495; text-shadow: 0 0 8px rgba(123, 228, 149, 0.8), 0 0 16px rgba(123, 228, 149, 0.6);"> + 자동화 시스템</span>
+        <h1 class="text-4xl font-bold smart-title-mobile" style="text-align: left; margin-top: calc(6rem - 16px); margin-bottom: 12px;">
+          <span style="color: #FFFFFF;">태그 한 번,</span>
+          <span class="neon-green" style="color: #7BE495; text-shadow: 0 0 8px rgba(123, 228, 149, 0.8), 0 0 16px rgba(123, 228, 149, 0.6);"> 자동 학습 시작!</span>
         </h1>
         <div class="flex-grow mx-5 h-px bg-gradient-to-r from-transparent via-gray-500 to-transparent desktop-only" style="display: none !important;"></div>
       </div>
       <div class="mb-6">
-        <p class="text-xl text-gray-300 smart-desc-mobile" style="margin-top: 0; font-weight: 500; text-align: left; color: #888;">
+        <p class="text-xl text-gray-300 smart-desc-mobile" style="margin-top: -16px; font-weight: 500; text-align: left; color: #888;">
           <span class="neon-green">NEO SMART</span> <span style="color: #888;">솔루션은 간단한 설치만으로 헬스장의 모든 운동 기구를 스마트하게 변화시킵니다.<br>
           NFC 태그와 스마트폰의 연결로 즉각적인 운동 가이드를 제공합니다.</span>
         </p>
       </div>
       <!-- Circular Flow Steps UI for NEO SMART 핵심 흐름 -->
-      <div class="circular-flow-container mobile-hide" style="position: relative; width: 580px; height: 580px; margin: 56px auto 0;">
+      <div class="circular-flow-container" style="display: none !important; position: relative; width: 580px; height: 580px; margin: 56px auto 0;">
         <div class="circular-bg-glow"></div>
         <div style="position:absolute; left:50%; top:50%; transform:translate(-50%, -50%); width: 580px; height: 580px; background: radial-gradient(circle, rgba(123, 228, 149, 0.1) 0%, rgba(0, 0, 0, 0) 75%); border-radius: 50%; z-index:0; pointer-events: none;"></div>
         <div class="circle-center-title">
@@ -4436,7 +4436,7 @@ if (window.innerWidth <= 768) {
         </svg>
       </div>
       <!-- NEO SMART 카드형 주요 UI -->
-      <div class="neos-card-list" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; justify-items: center; margin-top: 56px;">
+      <div class="neos-card-list" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; justify-items: center; margin-top: calc(56px - 16px);">
 <style>
 @media (max-width: 768px) {
   .neos-card-list {
@@ -4485,7 +4485,7 @@ if (window.innerWidth <= 768) {
         </div>
       </div>
       <!-- 추가 UI: 출입 코드 생성 방식/이벤트 시스템 연동 -->
-      <div class="smart-health-system-box mobile-hide" style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 16px; color: #ccc; font-size: 0.85rem; line-height: 1.6; text-align: left; background: linear-gradient(135deg, #112921 0%, #0C1612 100%); border-radius: 16px; border: 1px solid #7BE495; box-shadow: 0 0 20px rgba(123, 228, 149, 0.15); padding: 20px 40px; margin: 20px auto; max-width: 1100px; position: relative; overflow: hidden;">
+      <div class="smart-health-system-box" style="display: none !important; flex-direction: row; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 16px; color: #ccc; font-size: 0.85rem; line-height: 1.6; text-align: left; background: linear-gradient(135deg, #112921 0%, #0C1612 100%); border-radius: 16px; border: 1px solid #7BE495; box-shadow: 0 0 20px rgba(123, 228, 149, 0.15); padding: 20px 40px; margin: 20px auto; max-width: 1100px; position: relative; overflow: hidden;">
         <div style="flex: 1 1 48%; min-width: 280px; text-align: left;">
           <h4 style="color:#7BE495; font-size: 1.1rem; font-weight: bold; margin-bottom: 12px; text-align: left;">설치 한 번으로 스마트 헬스장 완성</h4>
           <div class="code-method-box" style="background: linear-gradient(135deg, #112921 0%, #0C1612 100%); border-left:4px solid #62D2A2; border-radius:8px; padding:20px; margin-bottom:24px;">
@@ -4964,7 +4964,7 @@ if (window.innerWidth <= 768) {
     }
     </style>
     <!-- (네오 하이브/네오 스마트 설명 상자와 4개 아이콘 블록 삭제됨) -->
-    <div class="testimonial-card testimonial-card-mobile" style="margin: 0 auto; max-width: 600px; background: linear-gradient(135deg, rgba(123,228,149,0.10), rgba(62,200,168,0.08)); border: 1px solid #7BE495; border-radius: 18px; box-shadow: 0 0 18px #7BE49522; padding: 4px 30px 28px 30px; text-align: left; position: relative; overflow: hidden;">
+    <div class="testimonial-card testimonial-card-mobile" style="display: none !important; margin: 0 auto; max-width: 600px; background: linear-gradient(135deg, rgba(123,228,149,0.10), rgba(62,200,168,0.08)); border: 1px solid #7BE495; border-radius: 18px; box-shadow: 0 0 18px #7BE49522; padding: 4px 30px 28px 30px; text-align: left; position: relative; overflow: hidden;">
       <div style="position: relative; z-index: 1;">
                 <!-- PC 환경용 문단 구조 -->
         <div class="testimonial-content-desktop" style="display: none;">
