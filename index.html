@@ -110,7 +110,12 @@
   /* 모바일에서만 benefits 마진 조정 - 여백 줄이기 */
   @media (max-width: 768px) {
     #benefits {
-      margin-top: -500px !important;  /* 76px 아래로 내려서 상단 여백 줄임 */
+      margin-top: -450px !important;  /* UI가 가려지지 않도록 더 아래로 조정 */
+    }
+    
+    /* smart 섹션에 하단 패딩 추가하여 UI가 가려지지 않도록 */
+    #smart {
+      padding-bottom: 100px !important;
     }
   }
   
@@ -3894,6 +3899,7 @@ function toggleMobilePreviewMute() {
     position: relative !important;
     z-index: 20 !important;
     margin-top: calc(56px - 16px - 32px) !important;
+    margin-bottom: 60px !important;  /* 하단 여백 추가 */
   }
   
   /* 카드 섹션 스타일 */
