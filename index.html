@@ -8929,6 +8929,9 @@ function showFacilityPopup(index) {
   const popupImage = document.getElementById('popupImage');
   
   if (popup && popupImage) {
+    // 팝업을 body의 맨 끝으로 이동
+    document.body.appendChild(popup);
+    
     // 이미지 설정
     popupImage.src = facilityImages[currentFacilityIndex];
     
@@ -8939,7 +8942,11 @@ function showFacilityPopup(index) {
     popup.style.setProperty('left', '0', 'important');
     popup.style.setProperty('width', '100vw', 'important');
     popup.style.setProperty('height', '100vh', 'important');
-    popup.style.setProperty('z-index', '2147483647', 'important');
+    popup.style.setProperty('z-index', '9999999999', 'important');
+    
+    // body에 높은 z-index 설정
+    document.body.style.position = 'relative';
+    document.body.style.zIndex = '1';
     
     document.body.style.overflow = 'hidden';
     
@@ -8960,6 +8967,8 @@ function closeFacilityPopup() {
   const popup = document.getElementById('facilityPopup');
   popup.style.display = 'none';
   document.body.style.overflow = '';
+  document.body.style.position = '';
+  document.body.style.zIndex = '';
   
   // 블러 제거
   const sections = document.querySelectorAll('section');
