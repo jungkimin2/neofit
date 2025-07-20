@@ -5191,13 +5191,13 @@ if (window.innerWidth <= 768) {
             } else if (offset === 1) {
               // 오른쪽 카드
               card.style.left = 'auto';
-              card.style.right = '-15%';
+              card.style.right = '-40%';
               card.style.transform = 'translateY(-50%) scale(0.85)';
               card.style.zIndex = '50';
               card.style.opacity = '1';
             } else {
               // 왼쪽 카드
-              card.style.left = '-15%';
+              card.style.left = '-40%';
               card.style.right = 'auto';
               card.style.transform = 'translateY(-50%) scale(0.85)';
               card.style.zIndex = '50';
@@ -5471,7 +5471,7 @@ if (window.innerWidth <= 768) {
       /* 모바일에서 필라테스 캐러셀을 다시 구성 */
       .pilates-carousel-container {
         height: 480px !important;
-        overflow: hidden !important;
+        overflow: visible !important;
         padding: 0 !important;
         margin-top: 20px !important;
         perspective: none !important;
@@ -5493,6 +5493,8 @@ if (window.innerWidth <= 768) {
         transform: none !important;
         transition: all 0.3s ease !important;
         top: 50% !important;
+        pointer-events: auto !important;
+        cursor: pointer !important;
       }
       
       /* 첫 번째 카드 - 김하정 (초기 가운데) */
@@ -5506,7 +5508,7 @@ if (window.innerWidth <= 768) {
       
       /* 두 번째 카드 - 그룹 시너지 (초기 왼쪽) */
       .pilates-card[data-index="1"] {
-        left: -15% !important;
+        left: -40% !important;
         top: 50% !important;
         transform: translateY(-50%) scale(0.85) !important;
         z-index: 50 !important;
@@ -5515,7 +5517,7 @@ if (window.innerWidth <= 768) {
       
       /* 세 번째 카드 - 박유빈 (초기 오른쪽) */
       .pilates-card[data-index="2"] {
-        right: -15% !important;
+        right: -40% !important;
         left: auto !important;
         top: 50% !important;
         transform: translateY(-50%) scale(0.85) !important;
