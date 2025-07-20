@@ -5193,16 +5193,19 @@ if (window.innerWidth <= 768) {
       
       /* 닫기 버튼 모바일 스타일 강화 */
       .facility-modal-close {
+        position: fixed !important;
         top: 20px !important;
         right: 20px !important;
-        width: 50px !important;
-        height: 50px !important;
+        width: 60px !important;
+        height: 60px !important;
         background: rgba(0,0,0,0.9) !important;
         border: 2px solid #7BE495 !important;
         box-shadow: 0 0 20px rgba(123,228,149,0.5) !important;
         z-index: 2147483648 !important;
         cursor: pointer !important;
         touch-action: manipulation !important;
+        -webkit-tap-highlight-color: transparent !important;
+        user-select: none !important;
       }
       
       .facility-modal-close svg {
@@ -5393,18 +5396,32 @@ if (window.innerWidth <= 768) {
       });
     });
     
+    // 팝업 닫기 함수
+    function closeModal() {
+      modal.style.setProperty('display', 'none', 'important');
+      document.body.classList.remove('facility-modal-open');
+      // 스크롤 방지 해제
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+    }
+    
     // 팝업 닫기 - 통합 이벤트 핸들러
     modal.addEventListener('click', (e) => {
-      // X 버튼 클릭 또는 배경 클릭
-      if (e.target.closest('.facility-modal-close') || 
-          e.target === modal || 
-          e.target === modal.querySelector('.facility-modal-content')) {
-        modal.style.setProperty('display', 'none', 'important');
-        document.body.classList.remove('facility-modal-open');
-        // 스크롤 방지 해제
-        document.body.style.overflow = '';
-        document.body.style.position = '';
-        document.body.style.width = '';
+      console.log('Modal clicked:', e.target.className);
+      
+      // X 버튼 클릭 확인
+      if (e.target.closest('.facility-modal-close')) {
+        console.log('Close button clicked');
+        closeModal();
+        return;
+      }
+      
+      // 배경 클릭 확인 (이미지나 네비게이션 버튼 클릭 제외)
+      if (e.target === modal || 
+          e.target.classList.contains('facility-modal-content')) {
+        console.log('Background clicked');
+        closeModal();
       }
     });
     
@@ -5457,6 +5474,24 @@ if (window.innerWidth <= 768) {
       }
     }
     
+    // X버튼에 직접 이벤트 추가 (모바일 대응)
+    const closeButton = document.querySelector('.facility-modal-close');
+    if (closeButton) {
+      closeButton.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log('Close button touched');
+        closeModal();
+      });
+      
+      closeButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log('Close button clicked directly');
+        closeModal();
+      });
+    }
+    
     // 팝업에서도 터치 스와이프 지원
     let modalTouchStartX = 0;
     let modalTouchEndX = 0;
@@ -5477,11 +5512,8 @@ if (window.innerWidth <= 768) {
       // 아래로 스와이프하면 모달 닫기
       const swipeDistanceY = modalTouchEndY - modalTouchStartY;
       if (swipeDistanceY > 100) {
-        modal.style.setProperty('display', 'none', 'important');
-        document.body.classList.remove('facility-modal-open');
-        document.body.style.overflow = '';
-        document.body.style.position = '';
-        document.body.style.width = '';
+        console.log('Swipe down detected - closing modal');
+        closeModal();
         return;
       }
       
