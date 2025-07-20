@@ -5137,9 +5137,8 @@ if (window.innerWidth <= 768) {
       }
       
       .facility-modal-slider {
-        width: 100vw !important;
-        max-width: none !important;
-        height: 100vh !important;
+        width: 100% !important;
+        height: 100% !important;
         position: relative !important;
         overflow: hidden !important;
       }
@@ -5149,17 +5148,17 @@ if (window.innerWidth <= 768) {
         transition: transform 0.3s ease !important;
         height: 100% !important;
         align-items: center !important;
-        width: 400vw !important; /* 4개 이미지를 위한 너비 */
+        width: 400% !important; /* 4개 이미지를 위한 너비 */
       }
       
       .facility-modal-slide {
-        flex: 0 0 100vw !important;
-        width: 100vw !important;
+        flex: 0 0 100% !important;
+        width: 100% !important;
         height: 100% !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
-        padding: 40px 20px !important;
+        padding: 20px !important;
         box-sizing: border-box !important;
       }
       
@@ -5369,9 +5368,15 @@ if (window.innerWidth <= 768) {
         // 강제로 display block 설정
         modal.style.setProperty('display', 'block', 'important');
         document.body.classList.add('facility-modal-open');
+        
+        // 클릭한 이미지로 슬라이드 설정
         modalCurrentSlide = index;
         console.log('Setting modalCurrentSlide to:', modalCurrentSlide);
-        updateModalSlider();
+        
+        // 즉시 슬라이더 위치 업데이트
+        setTimeout(() => {
+          updateModalSlider();
+        }, 10);
         
         // 모바일에서 body 스크롤 방지
         if (window.innerWidth <= 768) {
@@ -5403,18 +5408,14 @@ if (window.innerWidth <= 768) {
       }
     });
     
-    // 모달 슬라이더 업데이트
+    // 모달 슬라이더 업데이트 - 단순화
     function updateModalSlider() {
+      // PC와 모바일 모두 동일한 방식으로 처리
       const translateValue = -modalCurrentSlide * 100;
-      console.log('Updating modal slider:', modalCurrentSlide, translateValue);
+      modalTrack.style.setProperty('transform', `translateX(${translateValue}%)`, 'important');
+      modalTrack.style.setProperty('-webkit-transform', `translateX(${translateValue}%)`, 'important');
       
-      // 모바일에서는 vw 단위 사용
-      if (window.innerWidth <= 768) {
-        modalTrack.style.setProperty('transform', `translateX(${-modalCurrentSlide * 100}vw)`, 'important');
-        modalTrack.style.setProperty('-webkit-transform', `translateX(${-modalCurrentSlide * 100}vw)`, 'important');
-      } else {
-        modalTrack.style.transform = `translateX(${translateValue}%)`;
-      }
+      console.log('Modal slider updated to slide:', modalCurrentSlide);
     }
     
     // 모달 네비게이션
@@ -5534,27 +5535,7 @@ if (window.innerWidth <= 768) {
         -webkit-backdrop-filter: none !important;
       }
       
-      /* 팝업 이미지 중앙 정렬 강화 */
-      .facility-modal-slide {
-        position: relative !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        width: 100vw !important;
-        height: 100vh !important;
-        padding: 60px 10px !important;
-      }
-      
-      .facility-modal-slide img {
-        position: absolute !important;
-        top: 50% !important;
-        left: 50% !important;
-        transform: translate(-50%, -50%) !important;
-        max-width: 85% !important;
-        max-height: 50vh !important;
-        width: auto !important;
-        height: auto !important;
-      }
+      /* 팝업 이미지 중앙 정렬 - 삭제 (위에서 이미 처리됨) */
     }
     </style>
     <style>
