@@ -8872,32 +8872,26 @@ document.addEventListener('DOMContentLoaded', function() {
 }
 </style>
 
-<!-- 새로운 시설 정보 팝업 -->
-<div id="facilityPopup" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 2147483647;">
+<!-- 새로운 시설 정보 팝업 - 모바일 최적화 -->
+<div id="facilityPopup" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 2147483647;">
   <!-- 배경 오버레이 -->
   <div id="popupOverlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9);"></div>
   
   <!-- 팝업 컨텐츠 -->
-  <div style="position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; padding: 20px; box-sizing: border-box;">
+  <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; flex-direction: column;">
     <!-- X 버튼 -->
-    <button id="popupClose" onclick="closeFacilityPopup()" style="position: fixed; top: 20px; right: 20px; width: 60px; height: 60px; background: rgba(0,0,0,0.8); border: 2px solid #7BE495; border-radius: 50%; cursor: pointer; z-index: 2147483648; display: flex; align-items: center; justify-content: center; -webkit-tap-highlight-color: transparent;">
-      <span style="color: #7BE495; font-size: 30px; line-height: 1; pointer-events: none;">×</span>
+    <button id="popupClose" onclick="closeFacilityPopup()" style="position: absolute; top: 20px; right: 20px; width: 50px; height: 50px; background: #000; border: 2px solid #7BE495; border-radius: 50%; cursor: pointer; z-index: 10;">
+      <span style="color: #7BE495; font-size: 24px;">×</span>
     </button>
     
-    <!-- 이미지 컨테이너 -->
-    <div style="position: relative; max-width: 90%; max-height: 80%; display: flex; align-items: center; justify-content: center;">
-      <!-- 이전 버튼 -->
-      <button id="popupPrev" onclick="prevFacilityImage()" style="position: absolute; left: -30px; width: 40px; height: 40px; background: rgba(0,0,0,0.8); border: 1px solid #7BE495; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center;">
-        <span style="color: #7BE495; font-size: 20px;">‹</span>
-      </button>
-      
+    <!-- 이미지와 네비게이션 -->
+    <div style="position: relative; width: 90%; max-width: 500px;">
       <!-- 이미지 -->
-      <img id="popupImage" src="" alt="시설 이미지" style="max-width: 100%; max-height: 70vh; object-fit: contain;">
+      <img id="popupImage" src="" alt="시설 이미지" style="width: 100%; height: auto; max-height: 60vh; object-fit: contain; display: block;">
       
-      <!-- 다음 버튼 -->
-      <button id="popupNext" onclick="nextFacilityImage()" style="position: absolute; right: -30px; width: 40px; height: 40px; background: rgba(0,0,0,0.8); border: 1px solid #7BE495; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center;">
-        <span style="color: #7BE495; font-size: 20px;">›</span>
-      </button>
+      <!-- 네비게이션 버튼들 -->
+      <button id="popupPrev" onclick="prevFacilityImage()" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; background: rgba(0,0,0,0.8); border: 1px solid #7BE495; border-radius: 50%; color: #7BE495;">‹</button>
+      <button id="popupNext" onclick="nextFacilityImage()" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; background: rgba(0,0,0,0.8); border: 1px solid #7BE495; border-radius: 50%; color: #7BE495;">›</button>
     </div>
   </div>
 </div>
@@ -8935,8 +8929,18 @@ function showFacilityPopup(index) {
   const popupImage = document.getElementById('popupImage');
   
   if (popup && popupImage) {
+    // 이미지 설정
     popupImage.src = facilityImages[currentFacilityIndex];
-    popup.style.display = 'block';
+    
+    // 팝업 강제 표시
+    popup.style.setProperty('display', 'block', 'important');
+    popup.style.setProperty('position', 'fixed', 'important');
+    popup.style.setProperty('top', '0', 'important');
+    popup.style.setProperty('left', '0', 'important');
+    popup.style.setProperty('width', '100vw', 'important');
+    popup.style.setProperty('height', '100vh', 'important');
+    popup.style.setProperty('z-index', '2147483647', 'important');
+    
     document.body.style.overflow = 'hidden';
     
     // 배경 블러
@@ -8944,6 +8948,8 @@ function showFacilityPopup(index) {
     sections.forEach(section => {
       section.style.filter = 'blur(5px)';
     });
+    
+    console.log('팝업 표시됨');
   } else {
     console.error('팝업 요소를 찾을 수 없음');
   }
