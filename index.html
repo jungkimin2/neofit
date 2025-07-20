@@ -9298,6 +9298,38 @@ function prevFacilityImage() {
 }
 </script>
 
+<script>
+// 모바일에서 네오 필라테스 섹션 강제로 위로 올리기
+function forceNeoPilatesPosition() {
+  if (window.innerWidth <= 768) {
+    const neoPilates = document.getElementById('neo-pilates');
+    if (neoPilates) {
+      // 기존 스타일 완전히 덮어쓰기
+      neoPilates.style.setProperty('transform', 'translateY(-200px)', 'important');
+      neoPilates.style.setProperty('margin-top', '-100px', 'important');
+      neoPilates.style.setProperty('position', 'relative', 'important');
+      neoPilates.style.setProperty('z-index', '100', 'important');
+      console.log('네오 필라테스 섹션 강제로 위로 이동 완료');
+    }
+  }
+}
+
+// 즉시 실행
+forceNeoPilatesPosition();
+
+// DOM 로드 후 재실행
+document.addEventListener('DOMContentLoaded', forceNeoPilatesPosition);
+
+// 페이지 완전 로드 후 재실행
+window.addEventListener('load', forceNeoPilatesPosition);
+
+// 0.5초 후 다시 실행 (다른 스크립트 대응)
+setTimeout(forceNeoPilatesPosition, 500);
+
+// 1초 후 다시 실행 (최종 보장)
+setTimeout(forceNeoPilatesPosition, 1000);
+</script>
+
 </body>
 <script>
 // 즉시 실행 - DOM 파싱 전에도 실행 (네오 스마트 + 네오 하이브 영상 모두 처리)
