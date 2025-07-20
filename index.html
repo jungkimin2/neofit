@@ -5318,93 +5318,9 @@ if (window.innerWidth <= 768) {
       });
     });
     
-    // ========== 팝업 기능 시작 ==========
-    const modal = document.querySelector('.facility-modal');
-    const modalTrack = document.querySelector('.facility-modal-track');
-    let modalCurrentSlide = 0;
+    // 기존 팝업 코드 제거 - 새로운 팝업과 충돌 방지
     
-    console.log('Modal element:', modal);
-    console.log('Modal track:', modalTrack);
-    console.log('Slides:', slides);
-    
-    // 미리보기 이미지 클릭 시 팝업 열기
-    slides.forEach((slide, index) => {
-      slide.addEventListener('click', function(e) {
-        e.preventDefault();
-        console.log('Slide clicked!', index);
-        
-        // 현재 보이는 슬라이드로 팝업 시작
-        modalCurrentSlide = currentSlide;
-        console.log('Current slide:', currentSlide);
-        
-        // 팝업 표시
-        modal.style.setProperty('display', 'block', 'important');
-        document.body.classList.add('facility-modal-open');
-        console.log('Modal display set to block');
-        
-        // 모바일에서 스크롤 방지
-        if (window.innerWidth <= 768) {
-          document.body.style.overflow = 'hidden';
-        }
-        
-        // 팝업 슬라이더 위치 설정
-        updateModalSlider();
-      });
-    });
-    
-    // 팝업 슬라이더 업데이트
-    function updateModalSlider() {
-      if (!modalTrack) {
-        console.error('Modal track not found!');
-        return;
-      }
-      const translateValue = -modalCurrentSlide * 100;
-      modalTrack.style.transform = `translateX(${translateValue}%)`;
-      console.log('Modal slider updated to:', modalCurrentSlide);
-    }
-    
-    // 팝업 닫기 함수
-    function closeModal() {
-      if (!modal) return;
-      modal.style.display = 'none';
-      document.body.classList.remove('facility-modal-open');
-      document.body.style.overflow = '';
-    }
-    
-    // X버튼 클릭 이벤트
-    const closeBtn = document.querySelector('.facility-modal-close');
-    if (closeBtn) {
-      closeBtn.addEventListener('click', closeModal);
-    }
-    
-    // 배경 클릭시 닫기
-    if (modal) {
-      modal.addEventListener('click', function(e) {
-        if (e.target === modal || e.target.classList.contains('facility-modal-content')) {
-          closeModal();
-        }
-      });
-    } else {
-      console.error('Modal element not found!')
-    }
-    
-    // 모달 네비게이션
-    const prevBtn = document.querySelector('.facility-modal-prev');
-    const nextBtn = document.querySelector('.facility-modal-next');
-    
-    if (prevBtn) {
-      prevBtn.addEventListener('click', () => {
-        modalCurrentSlide = (modalCurrentSlide - 1 + totalSlides) % totalSlides;
-        updateModalSlider();
-      });
-    }
-    
-    if (nextBtn) {
-      nextBtn.addEventListener('click', () => {
-        modalCurrentSlide = (modalCurrentSlide + 1) % totalSlides;
-        updateModalSlider();
-      });
-    }
+    // 기존 팝업 관련 코드 모두 제거
     
     // 터치 스와이프 지원 (모바일)
     let touchStartX = 0;
@@ -8957,15 +8873,15 @@ document.addEventListener('DOMContentLoaded', function() {
 </style>
 
 <!-- 새로운 시설 정보 팝업 -->
-<div id="facilityPopup" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 999999;">
+<div id="facilityPopup" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 2147483647;">
   <!-- 배경 오버레이 -->
-  <div id="popupOverlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);"></div>
+  <div id="popupOverlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9);"></div>
   
   <!-- 팝업 컨텐츠 -->
   <div style="position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; padding: 20px; box-sizing: border-box;">
     <!-- X 버튼 -->
-    <button id="popupClose" style="position: absolute; top: 20px; right: 20px; width: 50px; height: 50px; background: rgba(0,0,0,0.8); border: 2px solid #7BE495; border-radius: 50%; cursor: pointer; z-index: 10; display: flex; align-items: center; justify-content: center;">
-      <span style="color: #7BE495; font-size: 24px; line-height: 1;">×</span>
+    <button id="popupClose" style="position: fixed; top: 20px; right: 20px; width: 60px; height: 60px; background: rgba(0,0,0,0.8); border: 2px solid #7BE495; border-radius: 50%; cursor: pointer; z-index: 2147483648; display: flex; align-items: center; justify-content: center; -webkit-tap-highlight-color: transparent;">
+      <span style="color: #7BE495; font-size: 30px; line-height: 1; pointer-events: none;">×</span>
     </button>
     
     <!-- 이미지 컨테이너 -->
@@ -8987,8 +8903,10 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 
 <script>
-// 새로운 팝업 기능
-(function() {
+// 새로운 팝업 기능 - 모바일 최적화
+document.addEventListener('DOMContentLoaded', function() {
+  console.log('새로운 팝업 스크립트 시작');
+  
   const images = [
     './images/IMG7216.jpeg',
     './images/IMG7217.jpeg', 
@@ -9004,18 +8922,35 @@ document.addEventListener('DOMContentLoaded', function() {
   const prevBtn = document.getElementById('popupPrev');
   const nextBtn = document.getElementById('popupNext');
   
+  console.log('팝업 요소들:', {popup, popupImage, closeBtn});
+  
   // 팝업 열기
   function openPopup(index) {
+    console.log('팝업 열기:', index);
     currentImageIndex = index;
     popupImage.src = images[currentImageIndex];
-    popup.style.display = 'block';
+    popup.style.setProperty('display', 'block', 'important');
     document.body.style.overflow = 'hidden';
+    
+    // 배경 블러 효과 추가
+    const allElements = document.querySelectorAll('body > *:not(#facilityPopup)');
+    allElements.forEach(el => {
+      el.style.filter = 'blur(5px)';
+      el.style.transition = 'filter 0.3s';
+    });
   }
   
   // 팝업 닫기
   function closePopup() {
+    console.log('팝업 닫기');
     popup.style.display = 'none';
     document.body.style.overflow = '';
+    
+    // 배경 블러 효과 제거
+    const allElements = document.querySelectorAll('body > *:not(#facilityPopup)');
+    allElements.forEach(el => {
+      el.style.filter = '';
+    });
   }
   
   // 이미지 업데이트
@@ -9035,35 +8970,44 @@ document.addEventListener('DOMContentLoaded', function() {
     updateImage();
   }
   
-  // 이벤트 리스너
+  // 이벤트 리스너 - 터치 이벤트 추가
   closeBtn.addEventListener('click', closePopup);
+  closeBtn.addEventListener('touchend', function(e) {
+    e.preventDefault();
+    closePopup();
+  });
+  
   overlay.addEventListener('click', closePopup);
   prevBtn.addEventListener('click', prevImage);
   nextBtn.addEventListener('click', nextImage);
   
   // 슬라이드 이미지 클릭 이벤트
-  document.addEventListener('DOMContentLoaded', function() {
-    const slides = document.querySelectorAll('.facility-slide');
-    const currentSlideElement = document.querySelector('.facility-track');
-    
-    slides.forEach((slide, index) => {
-      slide.addEventListener('click', function() {
-        // 현재 보이는 슬라이드 계산
-        const transform = window.getComputedStyle(currentSlideElement).transform;
-        let currentSlide = 0;
-        
-        if (transform !== 'none') {
-          const matrix = new DOMMatrix(transform);
-          const translateX = matrix.m41;
-          const slideWidth = slide.offsetWidth;
-          currentSlide = Math.round(Math.abs(translateX) / slideWidth);
-        }
-        
-        openPopup(currentSlide);
-      });
+  const slides = document.querySelectorAll('.facility-slide');
+  console.log('슬라이드 개수:', slides.length);
+  
+  slides.forEach((slide, index) => {
+    slide.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      console.log('슬라이드 클릭됨');
+      
+      // 현재 보이는 슬라이드 계산
+      const track = document.querySelector('.facility-track');
+      const transform = window.getComputedStyle(track).transform;
+      let currentSlide = 0;
+      
+      if (transform && transform !== 'none') {
+        const values = transform.match(/matrix.*\((.+)\)/)[1].split(', ');
+        const translateX = parseFloat(values[4]);
+        const slideWidth = slide.offsetWidth;
+        currentSlide = Math.round(Math.abs(translateX) / slideWidth);
+      }
+      
+      console.log('현재 슬라이드:', currentSlide);
+      openPopup(currentSlide);
     });
   });
-})();
+});
 </script>
 
 </body>
