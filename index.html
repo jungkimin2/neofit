@@ -9479,9 +9479,9 @@ document.addEventListener('DOMContentLoaded', function() {
   body section#benefits,
   html body section#benefits,
   section#benefits.section.animate-on-scroll {
-    margin-top: -950px !important;
-    transform: translateY(-120px) !important;
-    -webkit-transform: translateY(-120px) !important;
+    margin-top: 0px !important;
+    transform: translateY(144px) !important;
+    -webkit-transform: translateY(144px) !important;
     position: relative !important;
     z-index: 9999 !important;
     padding: 0 !important;
@@ -11993,9 +11993,10 @@ document.addEventListener('DOMContentLoaded', function() {
        overflow: hidden !important;
      }
      
-     /* "시설 정보 및 위치 안내" 섹션 위로 이동 - 여백 제거 강화 */
+     /* "시설 정보 및 위치 안내" 섹션 위치 조정 */
      section#benefits {
-       margin-top: -552px !important;  /* 16px 더 위로 (1칸) */
+       margin-top: 0px !important;
+       transform: translateY(144px) !important;
        position: relative !important;
        z-index: 10 !important;
        background: #000 !important;
@@ -13360,7 +13361,8 @@ document.addEventListener('DOMContentLoaded', function() {
           { selector: '.mobile-system-box-wrapper', transform: 'translateY(-164px)' },
           { selector: '#smart', transform: 'translateY(-240px)' },
           { selector: '#hive', transform: 'translateY(-196px)' },
-          { selector: '#neo-pilates', transform: 'translateY(144px)' }
+          { selector: '#neo-pilates', transform: 'translateY(144px)' },
+          { selector: '#benefits', transform: 'translateY(144px)' }
       ];
       
       elements.forEach(({ selector, transform }) => {
