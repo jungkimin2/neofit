@@ -5162,8 +5162,8 @@ if (window.innerWidth <= 768) {
       body section#neo-pilates,
       html body section#neo-pilates,
       #neo-pilates {
-        margin-top: -100px !important;
-        transform: translateY(-48px) !important;
+        margin-top: 0px !important;
+        transform: translateY(64px) !important;
         position: relative !important;
         padding: 16px 16px 60px 16px !important;
         z-index: 10 !important;
@@ -9312,10 +9312,10 @@ function forceNeoPilatesPosition() {
         benefits.style.setProperty('margin-bottom', '0px', 'important');
       }
       
-      // 네오 필라테스 강제로 위로 올리기
+      // 네오 필라테스를 아래로 4칸(64px) 이동
       neoPilates.style.cssText = `
-        transform: translateY(-300px) !important;
-        margin-top: -200px !important;
+        transform: translateY(64px) !important;
+        margin-top: 0px !important;
         position: relative !important;
         z-index: 100 !important;
         background: #000 !important;
