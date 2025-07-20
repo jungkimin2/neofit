@@ -1,4 +1,4 @@
-
+ㅍ
 
 
 <meta name="google-site-verification" content="OeM-YMo4NpQshyIm3m5H59IikSDp0BMe4sXKQmCu7NM" />
@@ -1475,6 +1475,20 @@ section {
     footer {
       padding-bottom: 150px !important;
       margin-top: 50px !important;
+    }
+    
+    /* 모바일에서 팝업 X 버튼 확실히 앞에 표시 */
+    #popupClose {
+      position: absolute !important;
+      z-index: 2147483647 !important;
+      pointer-events: auto !important;
+      touch-action: manipulation !important;
+      -webkit-tap-highlight-color: transparent !important;
+    }
+    
+    #popupImage {
+      position: relative !important;
+      z-index: 1 !important;
     }
   }
   a, a:visited, a:hover { color: inherit; }
@@ -8927,7 +8941,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <span style="color: #7BE495; font-size: 20px; line-height: 1;">×</span>
       </button>
       <!-- 이미지 -->
-      <img id="popupImage" src="" alt="시설 이미지" style="width: 100%; height: auto; max-height: 60vh; object-fit: contain; display: block; transition: all 0.3s ease-in-out; opacity: 1; transform: scale(1);">
+      <img id="popupImage" src="" alt="시설 이미지" style="width: 100%; height: auto; max-height: 60vh; object-fit: contain; display: block; transition: all 0.3s ease-in-out; opacity: 1; transform: scale(1); position: relative; z-index: 1;">
       
       <!-- 네비게이션 버튼들 - 새로운 디자인 -->
       <button id="popupPrev" onclick="prevFacilityImage()" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); width: 35px; height: 60px; background: rgba(0,0,0,0.6); border: none; border-radius: 0 30px 30px 0; color: #7BE495; display: flex; align-items: center; justify-content: center; font-size: 20px; transition: background 0.3s;">
