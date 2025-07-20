@@ -13731,17 +13731,17 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 }
 
-/* 모바일에서 네오 필라테스 섹션 위로 이동 - 최종 override */
+/* 모바일에서 네오 필라테스 섹션 아래로 이동 - 최종 override */
 @media screen and (max-width: 768px) {
-  /* 네오 필라테스 섹션 강제로 위로 이동 - 최고 우선순위 */
+  /* 네오 필라테스 섹션 강제로 아래로 이동 - 최고 우선순위 */
   body section#neo-pilates.section.animate-on-scroll.mobile-transform-target,
   html body section#neo-pilates.section.animate-on-scroll.mobile-transform-target,
   section#neo-pilates[style],
   body #neo-pilates,
   html body #neo-pilates {
-    margin-top: -300px !important;
-    transform: translateY(-150px) !important;
-    -webkit-transform: translateY(-150px) !important;
+    margin-top: 0px !important;
+    transform: translateY(144px) !important;
+    -webkit-transform: translateY(144px) !important;
     position: relative !important;
     z-index: 50 !important;
     padding-top: 20px !important;
@@ -13751,9 +13751,9 @@ document.addEventListener('DOMContentLoaded', function() {
   
   /* JavaScript로 설정되는 인라인 스타일도 override */
   section#neo-pilates.section.animate-on-scroll.mobile-transform-target {
-    margin-top: -300px !important;
-    transform: translateY(-150px) !important;
-    -webkit-transform: translateY(-150px) !important;
+    margin-top: 0px !important;
+    transform: translateY(144px) !important;
+    -webkit-transform: translateY(144px) !important;
   }
   
   /* benefits 섹션의 하단 여백 제거 */
