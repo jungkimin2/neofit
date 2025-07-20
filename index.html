@@ -5014,16 +5014,16 @@ if (window.innerWidth <= 768) {
     <div class="facility-gallery-container" style="margin: 40px 0; position: relative;">
       <div class="facility-slider" style="overflow: hidden; border-radius: 16px; background: #000;">
         <div class="facility-track" style="display: flex; transition: transform 0.3s ease;">
-          <div class="facility-slide" style="flex: 0 0 100%; cursor: pointer;">
+          <div class="facility-slide" style="flex: 0 0 100%; cursor: pointer;" onclick="showFacilityPopup(0)">
             <img src="./images/IMG7216.jpeg" alt="시설 이미지 1" style="width: 100%; height: 400px; object-fit: cover;">
           </div>
-          <div class="facility-slide" style="flex: 0 0 100%; cursor: pointer;">
+          <div class="facility-slide" style="flex: 0 0 100%; cursor: pointer;" onclick="showFacilityPopup(1)">
             <img src="./images/IMG7217.jpeg" alt="시설 이미지 2" style="width: 100%; height: 400px; object-fit: cover;">
           </div>
-          <div class="facility-slide" style="flex: 0 0 100%; cursor: pointer;">
+          <div class="facility-slide" style="flex: 0 0 100%; cursor: pointer;" onclick="showFacilityPopup(2)">
             <img src="./images/IMG7218.jpeg" alt="시설 이미지 3" style="width: 100%; height: 400px; object-fit: cover;">
           </div>
-          <div class="facility-slide" style="flex: 0 0 100%; cursor: pointer;">
+          <div class="facility-slide" style="flex: 0 0 100%; cursor: pointer;" onclick="showFacilityPopup(3)">
             <img src="./images/IMG7222.JPG" alt="시설 이미지 4" style="width: 100%; height: 400px; object-fit: cover;">
           </div>
         </div>
@@ -8880,14 +8880,14 @@ document.addEventListener('DOMContentLoaded', function() {
   <!-- 팝업 컨텐츠 -->
   <div style="position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; padding: 20px; box-sizing: border-box;">
     <!-- X 버튼 -->
-    <button id="popupClose" style="position: fixed; top: 20px; right: 20px; width: 60px; height: 60px; background: rgba(0,0,0,0.8); border: 2px solid #7BE495; border-radius: 50%; cursor: pointer; z-index: 2147483648; display: flex; align-items: center; justify-content: center; -webkit-tap-highlight-color: transparent;">
+    <button id="popupClose" onclick="closeFacilityPopup()" style="position: fixed; top: 20px; right: 20px; width: 60px; height: 60px; background: rgba(0,0,0,0.8); border: 2px solid #7BE495; border-radius: 50%; cursor: pointer; z-index: 2147483648; display: flex; align-items: center; justify-content: center; -webkit-tap-highlight-color: transparent;">
       <span style="color: #7BE495; font-size: 30px; line-height: 1; pointer-events: none;">×</span>
     </button>
     
     <!-- 이미지 컨테이너 -->
     <div style="position: relative; max-width: 90%; max-height: 80%; display: flex; align-items: center; justify-content: center;">
       <!-- 이전 버튼 -->
-      <button id="popupPrev" style="position: absolute; left: -30px; width: 40px; height: 40px; background: rgba(0,0,0,0.8); border: 1px solid #7BE495; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center;">
+      <button id="popupPrev" onclick="prevFacilityImage()" style="position: absolute; left: -30px; width: 40px; height: 40px; background: rgba(0,0,0,0.8); border: 1px solid #7BE495; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center;">
         <span style="color: #7BE495; font-size: 20px;">‹</span>
       </button>
       
@@ -8895,7 +8895,7 @@ document.addEventListener('DOMContentLoaded', function() {
       <img id="popupImage" src="" alt="시설 이미지" style="max-width: 100%; max-height: 70vh; object-fit: contain;">
       
       <!-- 다음 버튼 -->
-      <button id="popupNext" style="position: absolute; right: -30px; width: 40px; height: 40px; background: rgba(0,0,0,0.8); border: 1px solid #7BE495; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center;">
+      <button id="popupNext" onclick="nextFacilityImage()" style="position: absolute; right: -30px; width: 40px; height: 40px; background: rgba(0,0,0,0.8); border: 1px solid #7BE495; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center;">
         <span style="color: #7BE495; font-size: 20px;">›</span>
       </button>
     </div>
@@ -8903,111 +8903,76 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 
 <script>
-// 새로운 팝업 기능 - 모바일 최적화
-document.addEventListener('DOMContentLoaded', function() {
-  console.log('새로운 팝업 스크립트 시작');
+// 간단한 팝업 기능
+const facilityImages = [
+  './images/IMG7216.jpeg',
+  './images/IMG7217.jpeg', 
+  './images/IMG7218.jpeg',
+  './images/IMG7222.JPG'
+];
+
+let currentFacilityIndex = 0;
+
+// 팝업 열기
+function showFacilityPopup(index) {
+  console.log('팝업 열기 시도:', index);
   
-  const images = [
-    './images/IMG7216.jpeg',
-    './images/IMG7217.jpeg', 
-    './images/IMG7218.jpeg',
-    './images/IMG7222.JPG'
-  ];
+  // 현재 슬라이드 인덱스 계산
+  const track = document.querySelector('.facility-track');
+  const transform = window.getComputedStyle(track).transform;
+  let currentSlide = 0;
   
-  let currentImageIndex = 0;
+  if (transform && transform !== 'none') {
+    const values = transform.match(/matrix.*\((.+)\)/)[1].split(', ');
+    const translateX = parseFloat(values[4]);
+    const slideWidth = document.querySelector('.facility-slide').offsetWidth;
+    currentSlide = Math.round(Math.abs(translateX) / slideWidth);
+  }
+  
+  currentFacilityIndex = currentSlide;
+  
   const popup = document.getElementById('facilityPopup');
   const popupImage = document.getElementById('popupImage');
-  const overlay = document.getElementById('popupOverlay');
-  const closeBtn = document.getElementById('popupClose');
-  const prevBtn = document.getElementById('popupPrev');
-  const nextBtn = document.getElementById('popupNext');
   
-  console.log('팝업 요소들:', {popup, popupImage, closeBtn});
-  
-  // 팝업 열기
-  function openPopup(index) {
-    console.log('팝업 열기:', index);
-    currentImageIndex = index;
-    popupImage.src = images[currentImageIndex];
-    popup.style.setProperty('display', 'block', 'important');
+  if (popup && popupImage) {
+    popupImage.src = facilityImages[currentFacilityIndex];
+    popup.style.display = 'block';
     document.body.style.overflow = 'hidden';
     
-    // 배경 블러 효과 추가
-    const allElements = document.querySelectorAll('body > *:not(#facilityPopup)');
-    allElements.forEach(el => {
-      el.style.filter = 'blur(5px)';
-      el.style.transition = 'filter 0.3s';
+    // 배경 블러
+    const sections = document.querySelectorAll('section');
+    sections.forEach(section => {
+      section.style.filter = 'blur(5px)';
     });
+  } else {
+    console.error('팝업 요소를 찾을 수 없음');
   }
+}
+
+// 팝업 닫기
+function closeFacilityPopup() {
+  const popup = document.getElementById('facilityPopup');
+  popup.style.display = 'none';
+  document.body.style.overflow = '';
   
-  // 팝업 닫기
-  function closePopup() {
-    console.log('팝업 닫기');
-    popup.style.display = 'none';
-    document.body.style.overflow = '';
-    
-    // 배경 블러 효과 제거
-    const allElements = document.querySelectorAll('body > *:not(#facilityPopup)');
-    allElements.forEach(el => {
-      el.style.filter = '';
-    });
-  }
-  
-  // 이미지 업데이트
-  function updateImage() {
-    popupImage.src = images[currentImageIndex];
-  }
-  
-  // 이전 이미지
-  function prevImage() {
-    currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
-    updateImage();
-  }
-  
-  // 다음 이미지
-  function nextImage() {
-    currentImageIndex = (currentImageIndex + 1) % images.length;
-    updateImage();
-  }
-  
-  // 이벤트 리스너 - 터치 이벤트 추가
-  closeBtn.addEventListener('click', closePopup);
-  closeBtn.addEventListener('touchend', function(e) {
-    e.preventDefault();
-    closePopup();
+  // 블러 제거
+  const sections = document.querySelectorAll('section');
+  sections.forEach(section => {
+    section.style.filter = '';
   });
-  
-  overlay.addEventListener('click', closePopup);
-  prevBtn.addEventListener('click', prevImage);
-  nextBtn.addEventListener('click', nextImage);
-  
-  // 슬라이드 이미지 클릭 이벤트
-  const slides = document.querySelectorAll('.facility-slide');
-  console.log('슬라이드 개수:', slides.length);
-  
-  slides.forEach((slide, index) => {
-    slide.addEventListener('click', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      console.log('슬라이드 클릭됨');
-      
-      // 현재 보이는 슬라이드 계산
-      const track = document.querySelector('.facility-track');
-      const transform = window.getComputedStyle(track).transform;
-      let currentSlide = 0;
-      
-      if (transform && transform !== 'none') {
-        const values = transform.match(/matrix.*\((.+)\)/)[1].split(', ');
-        const translateX = parseFloat(values[4]);
-        const slideWidth = slide.offsetWidth;
-        currentSlide = Math.round(Math.abs(translateX) / slideWidth);
-      }
-      
-      console.log('현재 슬라이드:', currentSlide);
-      openPopup(currentSlide);
-    });
-  });
-});
+}
+
+// 다음 이미지
+function nextFacilityImage() {
+  currentFacilityIndex = (currentFacilityIndex + 1) % facilityImages.length;
+  document.getElementById('popupImage').src = facilityImages[currentFacilityIndex];
+}
+
+// 이전 이미지
+function prevFacilityImage() {
+  currentFacilityIndex = (currentFacilityIndex - 1 + facilityImages.length) % facilityImages.length;
+  document.getElementById('popupImage').src = facilityImages[currentFacilityIndex];
+}
 </script>
 
 </body>
