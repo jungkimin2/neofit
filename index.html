@@ -1469,6 +1469,13 @@ section {
     margin-top: 0;
   }
   footer { background: #000; color: #fff; text-align: center; padding: 20px; font-size: 0.9rem; }
+  
+  /* 모바일에서 footer 하단 패딩 추가 */
+  @media (max-width: 768px) {
+    footer {
+      padding-bottom: 100px !important;
+    }
+  }
   a, a:visited, a:hover { color: inherit; }
 
   .animate-on-scroll {
@@ -6133,7 +6140,7 @@ if (window.innerWidth <= 768) {
 
 
 <!-- Removed "3개월 무료 파트너십 신청" section and NEO HIVE green gradient hero box as requested. -->
-<footer style="background: #000; margin: 0; padding: 20px; color: #fff;">
+<footer style="background: #000; margin: 0; padding: 20px 20px 80px 20px; color: #fff;">
   &copy; 2025 Neo Hive. All Rights Reserved.<br>
   경기도 김포시 김포한강2로 361, 701동 204호 | 사업자등록번호: 476-24-01901
 </footer>
