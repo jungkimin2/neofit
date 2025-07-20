@@ -5157,22 +5157,15 @@ if (window.innerWidth <= 768) {
       padding-bottom: 30px;
     }
     
-    /* 모바일 최적화 */
+    /* 모바일 최적화 - 통합된 규칙 */
     @media (max-width: 768px) {
-      #neo-pilates {
-        padding: 60px 16px !important;
-        margin-top: -64px !important;
-        transform: translateY(-64px) !important;
-        position: relative !important;
-        z-index: 1;
-      }
-      
       body section#neo-pilates,
-      html body section#neo-pilates {
-        margin-top: -64px !important;
-        transform: translateY(-112px) !important;
+      html body section#neo-pilates,
+      #neo-pilates {
+        margin-top: -100px !important;
+        transform: translateY(-48px) !important;
         position: relative !important;
-        padding-top: 16px !important;
+        padding: 16px 16px 60px 16px !important;
         z-index: 10 !important;
       }
       
