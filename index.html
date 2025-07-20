@@ -5370,6 +5370,7 @@ if (window.innerWidth <= 768) {
         modal.style.setProperty('display', 'block', 'important');
         document.body.classList.add('facility-modal-open');
         modalCurrentSlide = index;
+        console.log('Setting modalCurrentSlide to:', modalCurrentSlide);
         updateModalSlider();
         
         // 모바일에서 body 스크롤 방지
@@ -5404,7 +5405,16 @@ if (window.innerWidth <= 768) {
     
     // 모달 슬라이더 업데이트
     function updateModalSlider() {
-      modalTrack.style.transform = `translateX(-${modalCurrentSlide * 100}%)`;
+      const translateValue = -modalCurrentSlide * 100;
+      console.log('Updating modal slider:', modalCurrentSlide, translateValue);
+      
+      // 모바일에서는 vw 단위 사용
+      if (window.innerWidth <= 768) {
+        modalTrack.style.setProperty('transform', `translateX(${-modalCurrentSlide * 100}vw)`, 'important');
+        modalTrack.style.setProperty('-webkit-transform', `translateX(${-modalCurrentSlide * 100}vw)`, 'important');
+      } else {
+        modalTrack.style.transform = `translateX(${translateValue}%)`;
+      }
     }
     
     // 모달 네비게이션
