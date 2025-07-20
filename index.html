@@ -5056,11 +5056,13 @@ if (window.innerWidth <= 768) {
     /* 모바일 반응형 스타일 */
     @media (max-width: 768px) {
       .facility-gallery-container {
-        margin: 20px -20px !important;
+        margin: 20px auto !important;
+        max-width: 85% !important;
+        padding: 0 !important;
       }
       
       .facility-slider {
-        border-radius: 0 !important;
+        border-radius: 12px !important;
       }
       
       .facility-slide img {
@@ -5070,6 +5072,14 @@ if (window.innerWidth <= 768) {
       .facility-nav {
         width: 35px !important;
         height: 35px !important;
+      }
+      
+      .facility-nav.facility-prev {
+        left: 10px !important;
+      }
+      
+      .facility-nav.facility-next {
+        right: 10px !important;
       }
       
       .facility-indicators {
