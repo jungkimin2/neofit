@@ -8872,6 +8872,29 @@ document.addEventListener('DOMContentLoaded', function() {
 }
 </style>
 
+<style>
+/* 팝업 버튼 호버 효과 */
+#popupPrev:active, #popupNext:active {
+  background: rgba(123,228,149,0.2) !important;
+}
+
+#popupClose:active {
+  background: rgba(123,228,149,0.2) !important;
+  transform: scale(0.95);
+}
+
+/* 모바일에서 터치 피드백 */
+@media (max-width: 768px) {
+  #popupPrev, #popupNext {
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  #popupClose {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+</style>
+
 <!-- 새로운 시설 정보 팝업 - 모바일 최적화 -->
 <div id="facilityPopup" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 2147483647;">
   <!-- 배경 오버레이 -->
@@ -8879,9 +8902,9 @@ document.addEventListener('DOMContentLoaded', function() {
   
   <!-- 팝업 컨텐츠 -->
   <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; flex-direction: column;">
-    <!-- X 버튼 -->
-    <button id="popupClose" onclick="closeFacilityPopup()" style="position: absolute; top: 20px; right: 20px; width: 50px; height: 50px; background: #000; border: 2px solid #7BE495; border-radius: 50%; cursor: pointer; z-index: 10;">
-      <span style="color: #7BE495; font-size: 24px;">×</span>
+    <!-- X 버튼 - 모바일 최적화 -->
+    <button id="popupClose" onclick="closeFacilityPopup()" style="position: absolute; top: 50px; right: 20px; width: 40px; height: 40px; background: rgba(0,0,0,0.7); border: 1.5px solid #7BE495; border-radius: 50%; cursor: pointer; z-index: 10;">
+      <span style="color: #7BE495; font-size: 20px; line-height: 1;">×</span>
     </button>
     
     <!-- 이미지와 네비게이션 -->
@@ -8889,9 +8912,17 @@ document.addEventListener('DOMContentLoaded', function() {
       <!-- 이미지 -->
       <img id="popupImage" src="" alt="시설 이미지" style="width: 100%; height: auto; max-height: 60vh; object-fit: contain; display: block;">
       
-      <!-- 네비게이션 버튼들 -->
-      <button id="popupPrev" onclick="prevFacilityImage()" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; background: rgba(0,0,0,0.8); border: 1px solid #7BE495; border-radius: 50%; color: #7BE495;">‹</button>
-      <button id="popupNext" onclick="nextFacilityImage()" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; background: rgba(0,0,0,0.8); border: 1px solid #7BE495; border-radius: 50%; color: #7BE495;">›</button>
+      <!-- 네비게이션 버튼들 - 새로운 디자인 -->
+      <button id="popupPrev" onclick="prevFacilityImage()" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); width: 35px; height: 60px; background: rgba(0,0,0,0.6); border: none; border-radius: 0 30px 30px 0; color: #7BE495; display: flex; align-items: center; justify-content: center; font-size: 20px; transition: background 0.3s;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M15 18L9 12L15 6" stroke="#7BE495" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <button id="popupNext" onclick="nextFacilityImage()" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); width: 35px; height: 60px; background: rgba(0,0,0,0.6); border: none; border-radius: 30px 0 0 30px; color: #7BE495; display: flex; align-items: center; justify-content: center; font-size: 20px; transition: background 0.3s;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M9 18L15 12L9 6" stroke="#7BE495" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
     </div>
   </div>
 </div>
