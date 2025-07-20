@@ -5116,7 +5116,7 @@ if (window.innerWidth <= 768) {
         bottom: 10px !important;
       }
       
-      /* 모바일 팝업 스타일 */
+      /* 모바일 팝업 스타일 - 강화된 블러 효과 */
       .facility-modal {
         display: none;
         position: fixed !important;
@@ -5124,9 +5124,10 @@ if (window.innerWidth <= 768) {
         left: 0 !important;
         width: 100vw !important;
         height: 100vh !important;
-        background: rgba(0,0,0,0.9) !important;
-        backdrop-filter: blur(10px) !important;
-        -webkit-backdrop-filter: blur(10px) !important;
+        background: rgba(0,0,0,0.85) !important;
+        backdrop-filter: blur(20px) saturate(180%) !important;
+        -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+        z-index: 99999 !important;
       }
       
       .facility-modal-content {
@@ -5189,12 +5190,21 @@ if (window.innerWidth <= 768) {
         right: 10px !important;
       }
       
-      /* 닫기 버튼 모바일 위치 */
+      /* 닫기 버튼 모바일 스타일 강화 */
       .facility-modal-close {
-        top: 60px !important;
-        right: 15px !important;
-        width: 35px !important;
-        height: 35px !important;
+        top: 20px !important;
+        right: 20px !important;
+        width: 44px !important;
+        height: 44px !important;
+        background: rgba(0,0,0,0.9) !important;
+        border: 2px solid #7BE495 !important;
+        box-shadow: 0 0 20px rgba(123,228,149,0.5) !important;
+        z-index: 100000 !important;
+      }
+      
+      .facility-modal-close svg {
+        width: 24px !important;
+        height: 24px !important;
       }
     }
     
@@ -5243,6 +5253,19 @@ if (window.innerWidth <= 768) {
     
     .facility-slide:hover::after {
       opacity: 1;
+    }
+    
+    /* 모바일에서는 항상 표시 */
+    @media (max-width: 768px) {
+      .facility-slide::after {
+        opacity: 0.8 !important;
+        bottom: 10px !important;
+        right: 10px !important;
+        font-size: 0.8rem !important;
+        padding: 6px 12px !important;
+        background: rgba(0,0,0,0.9) !important;
+        border: 1px solid #7BE495 !important;
+      }
     }
     </style>
     
@@ -5374,15 +5397,30 @@ if (window.innerWidth <= 768) {
     // 팝업에서도 터치 스와이프 지원
     let modalTouchStartX = 0;
     let modalTouchEndX = 0;
+    let modalTouchStartY = 0;
+    let modalTouchEndY = 0;
     
     const modalElement = document.querySelector('.facility-modal-slider');
     
     modalElement.addEventListener('touchstart', (e) => {
       modalTouchStartX = e.touches[0].clientX;
+      modalTouchStartY = e.touches[0].clientY;
     });
     
     modalElement.addEventListener('touchend', (e) => {
       modalTouchEndX = e.changedTouches[0].clientX;
+      modalTouchEndY = e.changedTouches[0].clientY;
+      
+      // 아래로 스와이프하면 모달 닫기
+      const swipeDistanceY = modalTouchEndY - modalTouchStartY;
+      if (swipeDistanceY > 100) {
+        modal.style.display = 'none';
+        document.body.style.overflow = '';
+        document.body.style.position = '';
+        document.body.style.width = '';
+        return;
+      }
+      
       handleModalSwipe();
     });
     
