@@ -9303,12 +9303,25 @@ function prevFacilityImage() {
 function forceNeoPilatesPosition() {
   if (window.innerWidth <= 768) {
     const neoPilates = document.getElementById('neo-pilates');
+    const benefits = document.getElementById('benefits');
+    
     if (neoPilates) {
-      // 기존 스타일 완전히 덮어쓰기
-      neoPilates.style.setProperty('transform', 'translateY(-200px)', 'important');
-      neoPilates.style.setProperty('margin-top', '-100px', 'important');
-      neoPilates.style.setProperty('position', 'relative', 'important');
-      neoPilates.style.setProperty('z-index', '100', 'important');
+      // benefits 섹션 하단 여백 제거
+      if (benefits) {
+        benefits.style.setProperty('padding-bottom', '0px', 'important');
+        benefits.style.setProperty('margin-bottom', '0px', 'important');
+      }
+      
+      // 네오 필라테스 강제로 위로 올리기
+      neoPilates.style.cssText = `
+        transform: translateY(-300px) !important;
+        margin-top: -200px !important;
+        position: relative !important;
+        z-index: 100 !important;
+        background: #000 !important;
+        padding: 16px 16px 60px 16px !important;
+      `;
+      
       console.log('네오 필라테스 섹션 강제로 위로 이동 완료');
     }
   }
@@ -13326,7 +13339,125 @@ document.addEventListener('DOMContentLoaded', function() {
     -webkit-transform: translateY(-380px) !important;
   }
 }
+
+/* 모바일에서 네오 필라테스 섹션 위로 이동 - 최종 override */
+@media screen and (max-width: 768px) {
+  /* 네오 필라테스 섹션 강제로 위로 이동 - 최고 우선순위 */
+  body section#neo-pilates.section.animate-on-scroll.mobile-transform-target,
+  html body section#neo-pilates.section.animate-on-scroll.mobile-transform-target,
+  section#neo-pilates[style],
+  body #neo-pilates,
+  html body #neo-pilates {
+    margin-top: -300px !important;
+    transform: translateY(-150px) !important;
+    -webkit-transform: translateY(-150px) !important;
+    position: relative !important;
+    z-index: 50 !important;
+    padding-top: 20px !important;
+    background: #000 !important;
+    display: block !important;
+  }
+  
+  /* JavaScript로 설정되는 인라인 스타일도 override */
+  section#neo-pilates.section.animate-on-scroll.mobile-transform-target {
+    margin-top: -300px !important;
+    transform: translateY(-150px) !important;
+    -webkit-transform: translateY(-150px) !important;
+  }
+  
+  /* benefits 섹션의 하단 여백 제거 */
+  body section#benefits,
+  html body section#benefits {
+    margin-bottom: 0 !important;
+    padding-bottom: 20px !important;
+  }
+  
+  /* neo-pilates 내부 컨테이너 패딩 조정 */
+  body #neo-pilates .container,
+  html body #neo-pilates .container {
+    padding-top: 0 !important;
+  }
+  
+  /* neo-pilates 제목 크기 조정 */
+  body #neo-pilates h2,
+  html body #neo-pilates h2 {
+    font-size: 1.8rem !important;
+    margin-bottom: 15px !important;
+  }
+  
+  body #neo-pilates h2 span:last-child,
+  html body #neo-pilates h2 span:last-child {
+    font-size: 1.3rem !important;
+  }
+  
+  /* 부모 컨테이너의 overflow 제한 해제 */
+  body,
+  html,
+  main,
+  .main-content,
+  body > *,
+  html > * {
+    overflow: visible !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+  }
+  
+  /* 섹션 간 여백 조정 */
+  section#benefits + section#neo-pilates {
+    margin-top: -350px !important;
+  }
+  
+  /* 애니메이션 및 트랜지션 비활성화 */
+  section#neo-pilates,
+  section#neo-pilates * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
 </style>
+
+<!-- 네오 필라테스 섹션 모바일 위치 강제 조정 스크립트 -->
+<script>
+(function() {
+  // 모바일에서 네오 필라테스 섹션 위치 조정
+  function adjustNeoPilatesPosition() {
+    if (window.innerWidth <= 768) {
+      const neoPilatesSection = document.querySelector('#neo-pilates');
+      if (neoPilatesSection) {
+        // 인라인 스타일로 직접 설정하여 최우선순위 보장
+        neoPilatesSection.style.setProperty('margin-top', '-300px', 'important');
+        neoPilatesSection.style.setProperty('transform', 'translateY(-150px)', 'important');
+        neoPilatesSection.style.setProperty('-webkit-transform', 'translateY(-150px)', 'important');
+        neoPilatesSection.style.setProperty('position', 'relative', 'important');
+        neoPilatesSection.style.setProperty('z-index', '50', 'important');
+        neoPilatesSection.style.setProperty('padding-top', '20px', 'important');
+        neoPilatesSection.style.setProperty('background', '#000', 'important');
+        
+        console.log('Neo Pilates section position adjusted for mobile');
+      }
+    }
+  }
+  
+  // DOM 로드 시 실행
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', adjustNeoPilatesPosition);
+  } else {
+    adjustNeoPilatesPosition();
+  }
+  
+  // 윈도우 리사이즈 시에도 실행
+  window.addEventListener('resize', adjustNeoPilatesPosition);
+  
+  // 페이지 완전 로드 후에도 한 번 더 실행
+  window.addEventListener('load', function() {
+    adjustNeoPilatesPosition();
+    // 다른 스크립트가 실행된 후에도 위치 조정
+    setTimeout(adjustNeoPilatesPosition, 100);
+    setTimeout(adjustNeoPilatesPosition, 500);
+    setTimeout(adjustNeoPilatesPosition, 1000);
+  });
+})();
+</script>
 
 </html>
 <style>
