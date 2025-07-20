@@ -5374,7 +5374,10 @@ if (window.innerWidth <= 768) {
           document.body.style.width = '100%';
           
           // 모바일에서 z-index 강제 설정
-          modal.style.setProperty('z-index', '999999', 'important');
+          modal.style.setProperty('z-index', '2147483647', 'important');
+          
+          // 팝업을 body 끝으로 이동 (블러 효과에서 제외)
+          document.body.appendChild(modal);
         }
       });
     });
@@ -5493,16 +5496,34 @@ if (window.innerWidth <= 768) {
     <style>
     /* 모바일에서 시설 정보 팝업 열릴 때 배경 블러 처리 */
     @media (max-width: 768px) {
-      body.facility-modal-open > *:not(.facility-modal) {
-        filter: blur(12px) brightness(0.5) !important;
-        -webkit-filter: blur(12px) brightness(0.5) !important;
-        transition: all 0.3s ease !important;
+      /* 모달 배경을 위한 가상 요소 */
+      body.facility-modal-open::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        z-index: 999998;
       }
       
-      /* 팝업 콘텐츠는 블러 효과 제외하고 선명하게 */
+      /* 팝업은 가장 위에 표시 */
       .facility-modal {
+        position: fixed !important;
+        z-index: 2147483647 !important;
+        isolation: isolate !important;
+      }
+      
+      /* 팝업 내부는 선명하게 */
+      .facility-modal,
+      .facility-modal * {
         filter: none !important;
         -webkit-filter: none !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
       }
       
       /* 팝업 이미지 중앙 정렬 강화 */
