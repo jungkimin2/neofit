@@ -5363,15 +5363,24 @@ if (window.innerWidth <= 768) {
     const modalTrack = document.querySelector('.facility-modal-track');
     let modalCurrentSlide = 0;
     
+    console.log('Modal element:', modal);
+    console.log('Modal track:', modalTrack);
+    console.log('Slides:', slides);
+    
     // 미리보기 이미지 클릭 시 팝업 열기
     slides.forEach((slide, index) => {
-      slide.addEventListener('click', function() {
+      slide.addEventListener('click', function(e) {
+        e.preventDefault();
+        console.log('Slide clicked!', index);
+        
         // 현재 보이는 슬라이드로 팝업 시작
         modalCurrentSlide = currentSlide;
+        console.log('Current slide:', currentSlide);
         
         // 팝업 표시
-        modal.style.display = 'block';
+        modal.style.setProperty('display', 'block', 'important');
         document.body.classList.add('facility-modal-open');
+        console.log('Modal display set to block');
         
         // 모바일에서 스크롤 방지
         if (window.innerWidth <= 768) {
@@ -5385,37 +5394,57 @@ if (window.innerWidth <= 768) {
     
     // 팝업 슬라이더 업데이트
     function updateModalSlider() {
+      if (!modalTrack) {
+        console.error('Modal track not found!');
+        return;
+      }
       const translateValue = -modalCurrentSlide * 100;
       modalTrack.style.transform = `translateX(${translateValue}%)`;
+      console.log('Modal slider updated to:', modalCurrentSlide);
     }
     
     // 팝업 닫기 함수
     function closeModal() {
+      if (!modal) return;
       modal.style.display = 'none';
       document.body.classList.remove('facility-modal-open');
       document.body.style.overflow = '';
     }
     
     // X버튼 클릭 이벤트
-    document.querySelector('.facility-modal-close').addEventListener('click', closeModal);
+    const closeBtn = document.querySelector('.facility-modal-close');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', closeModal);
+    }
     
     // 배경 클릭시 닫기
-    modal.addEventListener('click', function(e) {
-      if (e.target === modal || e.target.classList.contains('facility-modal-content')) {
-        closeModal();
-      }
-    });
+    if (modal) {
+      modal.addEventListener('click', function(e) {
+        if (e.target === modal || e.target.classList.contains('facility-modal-content')) {
+          closeModal();
+        }
+      });
+    } else {
+      console.error('Modal element not found!')
+    }
     
     // 모달 네비게이션
-    document.querySelector('.facility-modal-prev').addEventListener('click', () => {
-      modalCurrentSlide = (modalCurrentSlide - 1 + totalSlides) % totalSlides;
-      updateModalSlider();
-    });
+    const prevBtn = document.querySelector('.facility-modal-prev');
+    const nextBtn = document.querySelector('.facility-modal-next');
     
-    document.querySelector('.facility-modal-next').addEventListener('click', () => {
-      modalCurrentSlide = (modalCurrentSlide + 1) % totalSlides;
-      updateModalSlider();
-    });
+    if (prevBtn) {
+      prevBtn.addEventListener('click', () => {
+        modalCurrentSlide = (modalCurrentSlide - 1 + totalSlides) % totalSlides;
+        updateModalSlider();
+      });
+    }
+    
+    if (nextBtn) {
+      nextBtn.addEventListener('click', () => {
+        modalCurrentSlide = (modalCurrentSlide + 1) % totalSlides;
+        updateModalSlider();
+      });
+    }
     
     // 터치 스와이프 지원 (모바일)
     let touchStartX = 0;
