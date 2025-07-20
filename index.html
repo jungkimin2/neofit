@@ -5156,6 +5156,14 @@ if (window.innerWidth <= 768) {
   <script>
     // 필라테스 캐러셀 기능
     (function() {
+      // 모바일 체크
+      const isMobile = window.innerWidth <= 768;
+      
+      // 모바일에서는 캐러셀 기능 비활성화
+      if (isMobile) {
+        return;
+      }
+      
       let currentIndex = 0;
       const cards = document.querySelectorAll('.pilates-card');
       const indicators = document.querySelectorAll('.pilates-indicator');
@@ -5396,6 +5404,55 @@ if (window.innerWidth <= 768) {
       #neo-pilates > div > div:first-child p {
         font-size: 1rem !important;
         padding: 0 20px;
+      }
+      
+      /* 모바일에서 필라테스 캐러셀을 가로 스크롤로 변경 */
+      .pilates-carousel-container {
+        height: 550px !important;
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+        -webkit-overflow-scrolling: touch !important;
+        scroll-snap-type: x mandatory !important;
+        padding: 20px 0 !important;
+      }
+      
+      .pilates-carousel {
+        display: flex !important;
+        gap: 16px !important;
+        padding: 0 20px !important;
+        width: max-content !important;
+        transform: none !important;
+      }
+      
+      .pilates-card {
+        position: relative !important;
+        width: 280px !important;
+        height: 400px !important;
+        flex-shrink: 0 !important;
+        transform: none !important;
+        opacity: 1 !important;
+        z-index: 1 !important;
+        scroll-snap-align: center !important;
+        margin: 0 !important;
+        left: auto !important;
+        top: auto !important;
+      }
+      
+      .pilates-card[data-index="0"] {
+        transform: none !important;
+      }
+      
+      .pilates-card[data-index="1"] {
+        transform: none !important;
+      }
+      
+      .pilates-card[data-index="2"] {
+        transform: none !important;
+      }
+      
+      /* 인디케이터는 모바일에서 숨김 */
+      .pilates-indicators {
+        display: none !important;
       }
       
       .instructor-grid {
