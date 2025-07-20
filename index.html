@@ -5274,17 +5274,34 @@ if (window.innerWidth <= 768) {
       -webkit-backdrop-filter: none !important;
     }
     
-    /* 모달이 표시될 때 body 내용에만 블러 적용 - 팝업 제외 */
-    body.modal-open > *:not(.facility-modal) {
-      filter: blur(8px);
-      -webkit-filter: blur(8px);
-      transition: filter 0.3s ease;
+    /* 시설 정보 모달이 표시될 때 배경에만 블러 적용 */
+    body.facility-modal-open > *:not(.facility-modal) {
+      filter: blur(10px) !important;
+      -webkit-filter: blur(10px) !important;
+      transition: filter 0.3s ease !important;
     }
     
-    /* 팝업 자체는 블러 효과 제외 */
-    body.modal-open .facility-modal {
+    /* 팝업 자체는 블러 효과 완전히 제외 */
+    body.facility-modal-open .facility-modal {
       filter: none !important;
       -webkit-filter: none !important;
+    }
+    
+    /* 모바일에서 팝업 중앙 정렬 강제 적용 */
+    @media (max-width: 768px) {
+      .facility-modal-content {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        padding: 0 !important;
+      }
+      
+      .facility-modal-slider {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        height: 100vh !important;
+      }
     }
     </style>
     
@@ -5340,7 +5357,7 @@ if (window.innerWidth <= 768) {
     document.querySelectorAll('.facility-slide').forEach((slide, index) => {
       slide.addEventListener('click', () => {
         modal.style.display = 'block';
-        document.body.classList.add('modal-open');
+        document.body.classList.add('facility-modal-open');
         modalCurrentSlide = index;
         updateModalSlider();
         // 모바일에서 body 스크롤 방지
@@ -5355,7 +5372,7 @@ if (window.innerWidth <= 768) {
     // 팝업 닫기
     document.querySelector('.facility-modal-close').addEventListener('click', () => {
       modal.style.display = 'none';
-      document.body.classList.remove('modal-open');
+      document.body.classList.remove('facility-modal-open');
       // 스크롤 방지 해제
       document.body.style.overflow = '';
       document.body.style.position = '';
@@ -5366,7 +5383,7 @@ if (window.innerWidth <= 768) {
     modal.addEventListener('click', (e) => {
       if (e.target === modal || e.target === modal.querySelector('.facility-modal-content')) {
         modal.style.display = 'none';
-        document.body.classList.remove('modal-open');
+        document.body.classList.remove('facility-modal-open');
         // 스크롤 방지 해제
         document.body.style.overflow = '';
         document.body.style.position = '';
@@ -5439,7 +5456,7 @@ if (window.innerWidth <= 768) {
       const swipeDistanceY = modalTouchEndY - modalTouchStartY;
       if (swipeDistanceY > 100) {
         modal.style.display = 'none';
-        document.body.classList.remove('modal-open');
+        document.body.classList.remove('facility-modal-open');
         document.body.style.overflow = '';
         document.body.style.position = '';
         document.body.style.width = '';
@@ -5463,6 +5480,44 @@ if (window.innerWidth <= 768) {
     }
     }); // DOMContentLoaded 끝
     </script>
+    <style>
+    /* 모바일에서 시설 정보 팝업 열릴 때 배경 블러 처리 */
+    @media (max-width: 768px) {
+      body.facility-modal-open > *:not(.facility-modal) {
+        filter: blur(12px) brightness(0.5) !important;
+        -webkit-filter: blur(12px) brightness(0.5) !important;
+        transition: all 0.3s ease !important;
+      }
+      
+      /* 팝업 콘텐츠는 블러 효과 제외하고 선명하게 */
+      .facility-modal {
+        filter: none !important;
+        -webkit-filter: none !important;
+      }
+      
+      /* 팝업 이미지 중앙 정렬 강화 */
+      .facility-modal-slide {
+        position: relative !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        padding: 60px 10px !important;
+      }
+      
+      .facility-modal-slide img {
+        position: absolute !important;
+        top: 50% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        max-width: 85% !important;
+        max-height: 50vh !important;
+        width: auto !important;
+        height: auto !important;
+      }
+    }
+    </style>
     <style>
     @media (max-width: 768px) {
       .intro-text-desktop { display: none !important; }
