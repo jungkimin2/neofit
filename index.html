@@ -5116,16 +5116,15 @@ if (window.innerWidth <= 768) {
         bottom: 10px !important;
       }
       
-      /* 모바일 팝업 스타일 */
+      /* 모바일 팝업 스타일 - display 설정 제거 */
       .facility-modal {
-        display: none;
         position: fixed !important;
         top: 0 !important;
         left: 0 !important;
         width: 100vw !important;
         height: 100vh !important;
         background: rgba(0,0,0,0.9) !important;
-        z-index: 99999 !important;
+        z-index: 999999 !important;
       }
       
       .facility-modal-content {
@@ -5356,22 +5355,29 @@ if (window.innerWidth <= 768) {
     // 슬라이드 클릭 시 팝업 열기
     document.querySelectorAll('.facility-slide').forEach((slide, index) => {
       slide.addEventListener('click', () => {
-        modal.style.display = 'block';
+        console.log('Slide clicked:', index);
+        
+        // 강제로 display block 설정
+        modal.style.setProperty('display', 'block', 'important');
         document.body.classList.add('facility-modal-open');
         modalCurrentSlide = index;
         updateModalSlider();
+        
         // 모바일에서 body 스크롤 방지
         if (window.innerWidth <= 768) {
           document.body.style.overflow = 'hidden';
           document.body.style.position = 'fixed';
           document.body.style.width = '100%';
+          
+          // 모바일에서 z-index 강제 설정
+          modal.style.setProperty('z-index', '999999', 'important');
         }
       });
     });
     
     // 팝업 닫기
     document.querySelector('.facility-modal-close').addEventListener('click', () => {
-      modal.style.display = 'none';
+      modal.style.setProperty('display', 'none', 'important');
       document.body.classList.remove('facility-modal-open');
       // 스크롤 방지 해제
       document.body.style.overflow = '';
@@ -5382,7 +5388,7 @@ if (window.innerWidth <= 768) {
     // 팝업 배경 클릭 시 닫기
     modal.addEventListener('click', (e) => {
       if (e.target === modal || e.target === modal.querySelector('.facility-modal-content')) {
-        modal.style.display = 'none';
+        modal.style.setProperty('display', 'none', 'important');
         document.body.classList.remove('facility-modal-open');
         // 스크롤 방지 해제
         document.body.style.overflow = '';
@@ -5455,7 +5461,7 @@ if (window.innerWidth <= 768) {
       // 아래로 스와이프하면 모달 닫기
       const swipeDistanceY = modalTouchEndY - modalTouchStartY;
       if (swipeDistanceY > 100) {
-        modal.style.display = 'none';
+        modal.style.setProperty('display', 'none', 'important');
         document.body.classList.remove('facility-modal-open');
         document.body.style.overflow = '';
         document.body.style.position = '';
