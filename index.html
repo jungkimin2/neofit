@@ -5137,23 +5137,25 @@ if (window.innerWidth <= 768) {
       }
       
       .facility-modal-slider {
-        width: 100% !important;
+        width: 100vw !important;
         max-width: none !important;
-        height: auto !important;
+        height: 100vh !important;
         position: relative !important;
+        overflow: hidden !important;
       }
       
       .facility-modal-track {
         display: flex !important;
         transition: transform 0.3s ease !important;
-        height: 100vh !important;
+        height: 100% !important;
         align-items: center !important;
+        width: 400vw !important; /* 4개 이미지를 위한 너비 */
       }
       
       .facility-modal-slide {
         flex: 0 0 100vw !important;
         width: 100vw !important;
-        height: 100vh !important;
+        height: 100% !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
@@ -5194,17 +5196,20 @@ if (window.innerWidth <= 768) {
       .facility-modal-close {
         top: 20px !important;
         right: 20px !important;
-        width: 44px !important;
-        height: 44px !important;
+        width: 50px !important;
+        height: 50px !important;
         background: rgba(0,0,0,0.9) !important;
         border: 2px solid #7BE495 !important;
         box-shadow: 0 0 20px rgba(123,228,149,0.5) !important;
-        z-index: 100000 !important;
+        z-index: 2147483648 !important;
+        cursor: pointer !important;
+        touch-action: manipulation !important;
       }
       
       .facility-modal-close svg {
-        width: 24px !important;
-        height: 24px !important;
+        width: 26px !important;
+        height: 26px !important;
+        pointer-events: none !important;
       }
     }
     
@@ -5382,19 +5387,12 @@ if (window.innerWidth <= 768) {
       });
     });
     
-    // 팝업 닫기
-    document.querySelector('.facility-modal-close').addEventListener('click', () => {
-      modal.style.setProperty('display', 'none', 'important');
-      document.body.classList.remove('facility-modal-open');
-      // 스크롤 방지 해제
-      document.body.style.overflow = '';
-      document.body.style.position = '';
-      document.body.style.width = '';
-    });
-    
-    // 팝업 배경 클릭 시 닫기
+    // 팝업 닫기 - 통합 이벤트 핸들러
     modal.addEventListener('click', (e) => {
-      if (e.target === modal || e.target === modal.querySelector('.facility-modal-content')) {
+      // X 버튼 클릭 또는 배경 클릭
+      if (e.target.closest('.facility-modal-close') || 
+          e.target === modal || 
+          e.target === modal.querySelector('.facility-modal-content')) {
         modal.style.setProperty('display', 'none', 'important');
         document.body.classList.remove('facility-modal-open');
         // 스크롤 방지 해제
