@@ -5473,7 +5473,8 @@ if (window.innerWidth <= 768) {
         width: 100% !important;
         height: 100% !important;
         transform: none !important;
-        transform-style: flat !important;
+        transform-style: preserve-3d !important;
+        perspective: 1000px !important;
       }
       
       .pilates-card {
@@ -5606,17 +5607,22 @@ if (window.innerWidth <= 768) {
       let positions = [0, 1, 2]; // 카드 위치 인덱스 (중앙, 왼쪽, 오른쪽)
       
       // 카드 위치 업데이트 함수
-      function updatePilatesCards() {
+      function updatePilatesCards(animate = false) {
         pilatesCards.forEach((card, index) => {
           const position = positions[index];
           
           // 각 카드에 position 정보 저장
           card.setAttribute('data-position', position);
           
+          if (animate) {
+            // 애니메이션 효과를 위한 transition 설정
+            card.style.setProperty('transition', 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)', 'important');
+          }
+          
           if (position === 0) {
             // 중앙 카드
             card.style.setProperty('left', '50%', 'important');
-            card.style.setProperty('transform', 'translate(-50%, -50%) scale(1)', 'important');
+            card.style.setProperty('transform', 'translate(-50%, -50%) scale(1) rotateY(0deg)', 'important');
             card.style.setProperty('z-index', '100', 'important');
             card.style.setProperty('opacity', '1', 'important');
             card.style.setProperty('width', '280px', 'important');
@@ -5626,7 +5632,7 @@ if (window.innerWidth <= 768) {
           } else if (position === 1) {
             // 왼쪽 카드
             card.style.setProperty('left', '15%', 'important');
-            card.style.setProperty('transform', 'translate(-50%, -50%) scale(0.75)', 'important');
+            card.style.setProperty('transform', 'translate(-50%, -50%) scale(0.75) rotateY(25deg)', 'important');
             card.style.setProperty('z-index', '10', 'important');
             card.style.setProperty('opacity', '0.9', 'important');
             card.style.setProperty('width', '280px', 'important');
@@ -5636,7 +5642,7 @@ if (window.innerWidth <= 768) {
           } else {
             // 오른쪽 카드
             card.style.setProperty('left', '85%', 'important');
-            card.style.setProperty('transform', 'translate(-50%, -50%) scale(0.75)', 'important');
+            card.style.setProperty('transform', 'translate(-50%, -50%) scale(0.75) rotateY(-25deg)', 'important');
             card.style.setProperty('z-index', '10', 'important');
             card.style.setProperty('opacity', '0.9', 'important');
             card.style.setProperty('width', '280px', 'important');
@@ -5665,13 +5671,13 @@ if (window.innerWidth <= 768) {
           }
           // 중앙 카드 클릭은 무시
           
-          updatePilatesCards();
+          updatePilatesCards(true); // 애니메이션 활성화
         });
       });
       
       // 초기 설정 - 김하정 강사(인덱스 1)를 중앙에 배치
       positions = [1, 2, 0]; // 김하정이 중앙, 다른 카드들이 좌우에
-      updatePilatesCards();
+      updatePilatesCards(false); // 초기 설정은 애니메이션 없이
       
       // 스크롤 이벤트 시 카드 위치 유지
       let isScrolling = false;
@@ -5682,13 +5688,13 @@ if (window.innerWidth <= 768) {
           const currentPosition = card.getAttribute('data-position');
           if (currentPosition === '0') {
             card.style.setProperty('left', '50%', 'important');
-            card.style.setProperty('transform', 'translate(-50%, -50%) scale(1)', 'important');
+            card.style.setProperty('transform', 'translate(-50%, -50%) scale(1) rotateY(0deg)', 'important');
           } else if (currentPosition === '1') {
             card.style.setProperty('left', '15%', 'important');
-            card.style.setProperty('transform', 'translate(-50%, -50%) scale(0.75)', 'important');
+            card.style.setProperty('transform', 'translate(-50%, -50%) scale(0.75) rotateY(25deg)', 'important');
           } else if (currentPosition === '2') {
             card.style.setProperty('left', '85%', 'important');
-            card.style.setProperty('transform', 'translate(-50%, -50%) scale(0.75)', 'important');
+            card.style.setProperty('transform', 'translate(-50%, -50%) scale(0.75) rotateY(-25deg)', 'important');
           }
         });
         
