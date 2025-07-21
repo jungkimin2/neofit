@@ -9746,6 +9746,40 @@ setTimeout(forceNeoPilatesPosition, 500);
 setTimeout(forceNeoPilatesPosition, 1000);
 </script>
 
+<!-- Talk Talk Banner Script start -->
+<script type="text/javascript" src="https://partner.talk.naver.com/banners/script"></script>
+<div class="talk_banner_div" data-id="144115"></div>
+<!-- Talk Talk Banner Script end -->
+
+<style>
+/* 모바일에서 네이버 톡톡 고정 위치 */
+@media (max-width: 768px) {
+  .talk_banner_div {
+    position: fixed !important;
+    bottom: 20px !important;
+    right: 20px !important;
+    z-index: 9999 !important;
+    /* 스크롤 시에도 항상 보이도록 */
+    transform: translateZ(0) !important;
+    -webkit-transform: translateZ(0) !important;
+  }
+  
+  /* 톡톡 아이콘에 네온 효과 추가 (선택사항) */
+  .talk_banner_div > * {
+    box-shadow: 0 0 20px rgba(123, 228, 149, 0.5) !important;
+    border-radius: 50% !important;
+  }
+}
+
+/* PC에서는 일반 위치 */
+@media (min-width: 769px) {
+  .talk_banner_div {
+    margin: 20px auto;
+    text-align: center;
+  }
+}
+</style>
+
 </body>
 <script>
 // 즉시 실행 - DOM 파싱 전에도 실행 (네오 스마트 + 네오 하이브 영상 모두 처리)
