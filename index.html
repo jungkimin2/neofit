@@ -1875,6 +1875,7 @@ section {
        object-fit: cover !important;
        display: block !important;
        visibility: visible !important;
+       pointer-events: auto !important; /* 클릭 가능하게 설정 */
      }
      
      /* 모바일 중앙 기점 좌우 배치 - nth-of-type 사용 */
@@ -1915,12 +1916,12 @@ section {
        z-index: 1 !important;
      }
      
-     /* 모바일 활성 이미지 */
+     /* 모바일 활성 이미지 - 가장 앞에 표시 */
      .hive-image.active {
        left: 50% !important;
        top: 50% !important;
        transform: translate(-50%, -50%) scale(1.2) !important;
-       z-index: 10 !important;
+       z-index: 100 !important;  /* z-index를 10에서 100으로 증가 */
        width: 140px !important;
        height: 280px !important;
        border: 3px solid #7BE495 !important;
@@ -10628,6 +10629,59 @@ if (video) {
           }
         }
       }
+    }
+    
+    // 모바일에서 하이브 이미지 클릭 이벤트 추가
+    if (window.innerWidth <= 768) {
+      const hiveImages = document.querySelectorAll('.hive-image');
+      let activeIndex = -1; // 현재 활성화된 이미지 없음
+      
+      hiveImages.forEach((img, index) => {
+        img.addEventListener('click', function() {
+          // 현재 active 이미지 찾기
+          const currentActive = document.querySelector('.hive-image.active');
+          if (currentActive) {
+            currentActive.classList.remove('active');
+          }
+          
+          // 클릭한 이미지가 이미 active가 아닌 경우에만 처리
+          if (!this.classList.contains('active')) {
+            // 모든 이미지의 위치를 재배열
+            hiveImages.forEach((image, idx) => {
+              if (idx === index) {
+                // 클릭한 이미지를 가운데로
+                image.classList.add('active');
+                image.style.left = '50%';
+                image.style.top = '50%';
+                image.style.transform = 'translate(-50%, -50%) scale(1.2)';
+                image.style.zIndex = '100';
+                image.style.width = '140px';
+                image.style.height = '280px';
+              } else if (idx < 3) {
+                // 왼쪽 그룹
+                const offset = idx < index ? idx : idx - 1;
+                image.style.left = '50%';
+                image.style.top = '60%';
+                image.style.transform = `translate(${-160 - offset * 50}%, -50%) scale(${0.9 - offset * 0.1})`;
+                image.style.zIndex = 3 - offset;
+                image.style.width = '70px';
+                image.style.height = 'auto';
+              } else {
+                // 오른쪽 그룹
+                const offset = idx > index ? idx - 3 : idx - 2;
+                image.style.left = '50%';
+                image.style.top = '60%';
+                image.style.transform = `translate(${60 + offset * 50}%, -50%) scale(${0.9 - offset * 0.1})`;
+                image.style.zIndex = 3 - offset;
+                image.style.width = '70px';
+                image.style.height = 'auto';
+              }
+            });
+            
+            activeIndex = index;
+          }
+        });
+      });
     }
   });
 </script>
