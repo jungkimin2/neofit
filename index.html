@@ -5098,7 +5098,7 @@ if (window.innerWidth <= 768) {
       <div class="pilates-carousel" style="position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);">
         
         <!-- 카드 1 -->
-        <div class="pilates-card" data-index="0" style="position: absolute; width: 320px; height: 420px; left: 50%; top: 50%; transform: translate(-50%, -50%); transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1); z-index: 10000;">
+        <div class="pilates-card" data-index="0" style="position: absolute; width: 320px; height: 420px; left: 50%; top: 50%; transform: translate(-50%, -50%) translateZ(0) scale(1.2); transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1); z-index: 3;">
           <div style="position: relative; width: 100%; height: 100%; border-radius: 20px; background: #0F1A1C; border: 3px solid #e293ef; overflow: hidden; box-shadow: 0 0 40px rgba(226,147,239,0.8), 0 0 80px rgba(226,147,239,0.4), inset 0 0 30px rgba(226,147,239,0.3);">
             <img src="./images/neopp.jpg" alt="네오 필라테스 강사 1" style="width: 100%; height: 100%; object-fit: cover;">
             <div class="instructor-overlay" style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, transparent 60%); padding: 30px 20px; opacity: 0; transition: opacity 0.3s; display: none;">
@@ -5110,7 +5110,7 @@ if (window.innerWidth <= 768) {
         </div>
         
         <!-- 카드 2 -->
-        <div class="pilates-card" data-index="1" style="position: absolute; width: 320px; height: 420px; left: -40%; top: 50%; transform: translateY(-50%) scale(0.85); transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1); z-index: 50; opacity: 1;">
+        <div class="pilates-card" data-index="1" style="position: absolute; width: 320px; height: 420px; left: 50%; top: 50%; transform: translate(-170%, -50%) translateZ(-100px) scale(0.8); transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1); z-index: 2; opacity: 0.7;">
           <div style="position: relative; width: 100%; height: 100%; border-radius: 20px; background: #0F1A1C; border: 2px solid #00BFFF; overflow: hidden; box-shadow: 0 0 20px rgba(0,191,255,0.6), inset 0 0 20px rgba(0,191,255,0.2);">
             <img src="./images/neopp2.jpg" alt="네오 필라테스 강사 2" style="width: 100%; height: 100%; object-fit: cover;">
             <div class="instructor-overlay" style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, transparent 60%); padding: 30px 20px; opacity: 0; transition: opacity 0.3s; display: none;">
@@ -5122,7 +5122,7 @@ if (window.innerWidth <= 768) {
         </div>
         
         <!-- 카드 3 -->
-        <div class="pilates-card" data-index="2" style="position: absolute; width: 320px; height: 420px; right: -40%; left: auto; top: 50%; transform: translateY(-50%) scale(0.85); transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1); z-index: 50; opacity: 1;">
+        <div class="pilates-card" data-index="2" style="position: absolute; width: 320px; height: 420px; left: 50%; top: 50%; transform: translate(70%, -50%) translateZ(-100px) scale(0.8); transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1); z-index: 2; opacity: 0.7;">
           <div style="position: relative; width: 100%; height: 100%; border-radius: 20px; background: #0F1A1C; border: 2px solid #7BE495; overflow: hidden; box-shadow: 0 0 20px rgba(123,228,149,0.6), inset 0 0 20px rgba(123,228,149,0.2);">
             <img src="./images/neopp3.jpg" alt="네오 필라테스 강사 3" style="width: 100%; height: 100%; object-fit: cover;">
             <div class="instructor-overlay" style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, transparent 60%); padding: 30px 20px; opacity: 0; transition: opacity 0.3s; display: none;">
@@ -5175,24 +5175,13 @@ if (window.innerWidth <= 768) {
       const indicators = document.querySelectorAll('.pilates-indicator');
       let autoRotateInterval;
       
+      // 모바일에서는 CSS로만 제어, JavaScript 초기 설정 제거
+      
       // 카드 위치 업데이트
       function updateCarousel() {
         if (isMobile) {
-          // 모바일에서의 카드 배치
-          cards.forEach((card, index) => {
-            const offset = (index - currentIndex + 3) % 3;
-            
-            if (offset === 0) {
-              // 중앙 카드
-              card.style.cssText = 'position: absolute !important; left: 50% !important; right: auto !important; transform: translate(-50%, -50%) !important; z-index: 10000 !important; opacity: 1 !important; top: 50% !important; width: 300px !important; height: 400px !important; transition: all 0.3s ease !important;';
-            } else if (offset === 1) {
-              // 오른쪽 카드
-              card.style.cssText = 'position: absolute !important; left: auto !important; right: -40% !important; transform: translateY(-50%) scale(0.85) !important; z-index: 50 !important; opacity: 1 !important; top: 50% !important; width: 300px !important; height: 400px !important; transition: all 0.3s ease !important;';
-            } else {
-              // 왼쪽 카드
-              card.style.cssText = 'position: absolute !important; left: -40% !important; right: auto !important; transform: translateY(-50%) scale(0.85) !important; z-index: 50 !important; opacity: 1 !important; top: 50% !important; width: 300px !important; height: 400px !important; transition: all 0.3s ease !important;';
-            }
-          });
+          // 모바일에서는 updateCarousel 실행하지 않음 - CSS로만 제어
+          return;
         } else {
           // PC에서의 카드 배치
           cards.forEach((card, index) => {
@@ -5357,13 +5346,75 @@ if (window.innerWidth <= 768) {
         });
       });
       
+      // 모바일 전용 슬라이드 함수
+      function mobileSlide() {
+        cards.forEach((card, index) => {
+          const offset = (index - currentIndex + 3) % 3;
+          
+          if (offset === 0) {
+            // 중앙 카드
+            card.setAttribute('data-position', 'center');
+            card.style.cssText = 'position: absolute !important; left: 50% !important; right: auto !important; top: 50% !important; transform: translate(-50%, -50%) !important; z-index: 10000 !important; opacity: 1 !important; width: 300px !important; height: 400px !important; transition: all 0.3s ease !important;';
+          } else if (offset === 1) {
+            // 오른쪽 카드
+            card.setAttribute('data-position', 'right');
+            card.style.cssText = 'position: absolute !important; left: auto !important; right: -40% !important; top: 50% !important; transform: translateY(-50%) scale(0.85) rotateY(-25deg) !important; z-index: 50 !important; opacity: 1 !important; width: 300px !important; height: 400px !important; transition: all 0.3s ease !important; transform-style: preserve-3d !important;';
+          } else {
+            // 왼쪽 카드
+            card.setAttribute('data-position', 'left');
+            card.style.cssText = 'position: absolute !important; left: -40% !important; right: auto !important; top: 50% !important; transform: translateY(-50%) scale(0.85) rotateY(25deg) !important; z-index: 50 !important; opacity: 1 !important; width: 300px !important; height: 400px !important; transition: all 0.3s ease !important; transform-style: preserve-3d !important;';
+          }
+        });
+        
+        // 인디케이터 업데이트
+        indicators.forEach((indicator, index) => {
+          if (index === currentIndex) {
+            indicator.classList.add('active');
+            if (currentIndex === 0) {
+              indicator.style.background = '#e293ef';
+              indicator.style.boxShadow = '0 0 8px rgba(226,147,239,0.6)';
+            } else if (currentIndex === 1) {
+              indicator.style.background = '#00BFFF';
+              indicator.style.boxShadow = '0 0 8px rgba(0,191,255,0.6)';
+            } else {
+              indicator.style.background = '#7BE495';
+              indicator.style.boxShadow = '0 0 8px rgba(123,228,149,0.6)';
+            }
+          } else {
+            indicator.classList.remove('active');
+            indicator.style.background = 'rgba(123,228,149,0.3)';
+            indicator.style.boxShadow = 'none';
+          }
+        });
+        
+        // 모바일 강사 정보 업데이트
+        const titleEl = document.querySelector('.mobile-instructor-title');
+        const descEl = document.querySelector('.mobile-instructor-desc');
+        
+        if (titleEl && descEl) {
+          if (currentIndex === 0) {
+            titleEl.textContent = '전문 강사진';
+            titleEl.style.color = '#e293ef';
+            descEl.innerHTML = '체계적인 커리큘럼으로<br>개인별 맞춤 지도';
+          } else if (currentIndex === 1) {
+            titleEl.textContent = '그룹 시너지';
+            titleEl.style.color = '#00BFFF';
+            descEl.innerHTML = '함께하는 운동의 즐거움<br>동기부여와 성취감';
+          } else {
+            titleEl.textContent = '정밀한 운동';
+            titleEl.style.color = '#7BE495';
+            descEl.innerHTML = '최신 기구로 정확한 자세<br>효과적인 근력 강화';
+          }
+        }
+      }
+      
       // 카드 클릭
       cards.forEach((card, index) => {
         card.addEventListener('click', () => {
           // 모바일에서는 모든 카드 클릭 시 해당 카드를 중앙으로 이동
           if (isMobile) {
             currentIndex = index;
-            updateCarousel();
+            mobileSlide();
             stopAutoRotate();
           } else if (index !== currentIndex) {
             currentIndex = index;
@@ -5373,37 +5424,41 @@ if (window.innerWidth <= 768) {
         });
       });
       
-      // 터치/스와이프 지원
-      let startX = 0;
-      let endX = 0;
-      const container = document.querySelector('.pilates-carousel-container');
-      
-      container.addEventListener('touchstart', (e) => {
-        startX = e.touches[0].clientX;
-        stopAutoRotate();
-      });
-      
-      container.addEventListener('touchmove', (e) => {
-        endX = e.touches[0].clientX;
-      });
-      
-      container.addEventListener('touchend', () => {
-        const diff = startX - endX;
-        if (Math.abs(diff) > 50) {
-          if (diff > 0) {
-            nextCard();
-          } else {
-            prevCard();
+      // 터치/스와이프 지원 - 모바일에서는 비활성화
+      if (!isMobile) {
+        let startX = 0;
+        let endX = 0;
+        const container = document.querySelector('.pilates-carousel-container');
+        
+        container.addEventListener('touchstart', (e) => {
+          startX = e.touches[0].clientX;
+          stopAutoRotate();
+        });
+        
+        container.addEventListener('touchmove', (e) => {
+          endX = e.touches[0].clientX;
+        });
+        
+        container.addEventListener('touchend', () => {
+          const diff = startX - endX;
+          if (Math.abs(diff) > 50) {
+            if (diff > 0) {
+              nextCard();
+            } else {
+              prevCard();
+            }
           }
-        }
-        // startAutoRotate();
-      });
+          // startAutoRotate();
+        });
+      }
       
       // 자동 회전 시작 (비활성화)
       // startAutoRotate();
       
       // 초기 캐러셀 상태 설정
-      updateCarousel();
+      if (!isMobile) {
+        updateCarousel();
+      }
       
       // 모바일에서 추가 최적화
       if (isMobile) {
@@ -5415,17 +5470,6 @@ if (window.innerWidth <= 768) {
       
       // 페이지 이탈 시 정리
       window.addEventListener('beforeunload', stopAutoRotate);
-      
-      // 스크롤 시에도 위치 유지
-      if (isMobile) {
-        let scrollTimeout;
-        window.addEventListener('scroll', function() {
-          clearTimeout(scrollTimeout);
-          scrollTimeout = setTimeout(function() {
-            updateCarousel();
-          }, 100);
-        });
-      }
     })();
   </script>
   
@@ -5486,7 +5530,7 @@ if (window.innerWidth <= 768) {
         overflow: visible !important;
         padding: 0 !important;
         margin-top: -28px !important;  /* -44px에서 -28px로 변경 (1칸 아래로) */
-        perspective: none !important;
+        perspective: 1200px !important;
       }
       
       .pilates-carousel {
@@ -5515,6 +5559,49 @@ if (window.innerWidth <= 768) {
       }
       
       /* 초기 위치는 JavaScript에서 즉시 설정 */
+      
+      /* 모바일에서 카드 초기 위치 강제 설정 - 모든 상황에 적용 */
+      #neo-pilates .pilates-card[data-index="0"],
+      body #neo-pilates .pilates-card[data-index="0"],
+      html body #neo-pilates .pilates-card[data-index="0"] {
+        position: absolute !important;
+        left: 50% !important;
+        right: auto !important;
+        top: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        z-index: 10000 !important;
+        opacity: 1 !important;
+        width: 300px !important;
+        height: 400px !important;
+      }
+      
+      #neo-pilates .pilates-card[data-index="1"],
+      body #neo-pilates .pilates-card[data-index="1"],
+      html body #neo-pilates .pilates-card[data-index="1"] {
+        position: absolute !important;
+        left: -40% !important;
+        right: auto !important;
+        top: 50% !important;
+        transform: translateY(-50%) scale(0.85) rotateY(25deg) !important;
+        z-index: 50 !important;
+        opacity: 1 !important;
+        width: 300px !important;
+        height: 400px !important;
+      }
+      
+      #neo-pilates .pilates-card[data-index="2"],
+      body #neo-pilates .pilates-card[data-index="2"],
+      html body #neo-pilates .pilates-card[data-index="2"] {
+        position: absolute !important;
+        right: -40% !important;
+        left: auto !important;
+        top: 50% !important;
+        transform: translateY(-50%) scale(0.85) rotateY(-25deg) !important;
+        z-index: 50 !important;
+        opacity: 1 !important;
+        width: 300px !important;
+        height: 400px !important;
+      }
       
       /* 카드 내부 div 스타일 조정 */
       .pilates-card > div {
@@ -14133,4 +14220,60 @@ document.addEventListener('DOMContentLoaded', function() {
       margin: 0 !important;
       padding: 0 !important;
     }
-  } 
+  }
+  
+  /* 모바일 필라테스 카드 최종 강제 설정 - 페이지 끝에 위치 */
+  @media (max-width: 768px) {
+    /* 스크롤에 영향받지 않는 절대 위치 고정 */
+    html body section#neo-pilates .pilates-carousel-container .pilates-carousel .pilates-card[data-index="0"] {
+      position: absolute !important;
+      left: 50% !important;
+      right: auto !important;
+      top: 50% !important;
+      transform: translate(-50%, -50%) !important;
+      -webkit-transform: translate(-50%, -50%) !important;
+      z-index: 10000 !important;
+      opacity: 1 !important;
+      width: 300px !important;
+      height: 400px !important;
+      will-change: auto !important;
+    }
+    
+    html body section#neo-pilates .pilates-carousel-container .pilates-carousel .pilates-card[data-index="1"] {
+      position: absolute !important;
+      left: -40% !important;
+      right: auto !important;
+      top: 50% !important;
+      transform: translateY(-50%) scale(0.85) rotateY(25deg) !important;
+      -webkit-transform: translateY(-50%) scale(0.85) rotateY(25deg) !important;
+      z-index: 50 !important;
+      opacity: 1 !important;
+      width: 300px !important;
+      height: 400px !important;
+      will-change: auto !important;
+    }
+    
+    html body section#neo-pilates .pilates-carousel-container .pilates-carousel .pilates-card[data-index="2"] {
+      position: absolute !important;
+      right: -40% !important;
+      left: auto !important;
+      top: 50% !important;
+      transform: translateY(-50%) scale(0.85) rotateY(-25deg) !important;
+      -webkit-transform: translateY(-50%) scale(0.85) rotateY(-25deg) !important;
+      z-index: 50 !important;
+      opacity: 1 !important;
+      width: 300px !important;
+      height: 400px !important;
+      will-change: auto !important;
+    }
+    
+    /* 캐러셀 컨테이너 고정 */
+    .pilates-carousel-container,
+    .pilates-carousel {
+      transform: none !important;
+      -webkit-transform: none !important;
+    }
+  }
+</style>
+</body>
+</html> 
