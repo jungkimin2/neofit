@@ -5490,48 +5490,7 @@ if (window.innerWidth <= 768) {
       
       /* 초기 위치는 JavaScript에서 즉시 설정 */
       
-      /* 모바일에서 카드 초기 위치 강제 설정 - 모든 상황에 적용 */
-      #neo-pilates .pilates-card[data-index="0"],
-      body #neo-pilates .pilates-card[data-index="0"],
-      html body #neo-pilates .pilates-card[data-index="0"] {
-        position: absolute !important;
-        left: 50% !important;
-        right: auto !important;
-        top: 50% !important;
-        transform: translate(-50%, -50%) !important;
-        z-index: 10000 !important;
-        opacity: 1 !important;
-        width: 300px !important;
-        height: 400px !important;
-      }
-      
-      #neo-pilates .pilates-card[data-index="1"],
-      body #neo-pilates .pilates-card[data-index="1"],
-      html body #neo-pilates .pilates-card[data-index="1"] {
-        position: absolute !important;
-        left: -40% !important;
-        right: auto !important;
-        top: 50% !important;
-        transform: translateY(-50%) scale(0.85) rotateY(25deg) !important;
-        z-index: 50 !important;
-        opacity: 1 !important;
-        width: 300px !important;
-        height: 400px !important;
-      }
-      
-      #neo-pilates .pilates-card[data-index="2"],
-      body #neo-pilates .pilates-card[data-index="2"],
-      html body #neo-pilates .pilates-card[data-index="2"] {
-        position: absolute !important;
-        right: -40% !important;
-        left: auto !important;
-        top: 50% !important;
-        transform: translateY(-50%) scale(0.85) rotateY(-25deg) !important;
-        z-index: 50 !important;
-        opacity: 1 !important;
-        width: 300px !important;
-        height: 400px !important;
-      }
+      /* 모바일에서 카드는 JavaScript로 위치 제어 */
       
       /* 카드 내부 div 스타일 조정 */
       .pilates-card > div {
@@ -5640,37 +5599,37 @@ if (window.innerWidth <= 768) {
     // 모바일에서만 실행
     if (window.innerWidth <= 768) {
       const pilatesCards = document.querySelectorAll('.pilates-card');
-      let currentCenter = 0;
+      let positions = [0, 1, 2]; // 카드 위치 인덱스 (중앙, 왼쪽, 오른쪽)
       
       // 카드 위치 업데이트 함수
       function updatePilatesCards() {
         pilatesCards.forEach((card, index) => {
-          const relativeIndex = (index - currentCenter + 3) % 3;
+          const position = positions[index];
           
-          if (relativeIndex === 0) {
+          if (position === 0) {
             // 중앙 카드
             card.style.setProperty('left', '50%', 'important');
             card.style.setProperty('transform', 'translate(-50%, -50%)', 'important');
             card.style.setProperty('z-index', '100', 'important');
             card.style.setProperty('opacity', '1', 'important');
-            card.style.setProperty('width', '300px', 'important');
-            card.style.setProperty('height', '400px', 'important');
-          } else if (relativeIndex === 1) {
-            // 오른쪽 카드
-            card.style.setProperty('left', '85%', 'important');
-            card.style.setProperty('transform', 'translate(-50%, -50%) scale(0.8)', 'important');
-            card.style.setProperty('z-index', '10', 'important');
-            card.style.setProperty('opacity', '0.7', 'important');
-            card.style.setProperty('width', '300px', 'important');
-            card.style.setProperty('height', '400px', 'important');
-          } else {
+            card.style.setProperty('width', '280px', 'important');
+            card.style.setProperty('height', '360px', 'important');
+          } else if (position === 1) {
             // 왼쪽 카드
-            card.style.setProperty('left', '15%', 'important');
-            card.style.setProperty('transform', 'translate(-50%, -50%) scale(0.8)', 'important');
+            card.style.setProperty('left', '10%', 'important');
+            card.style.setProperty('transform', 'translate(0, -50%) scale(0.8)', 'important');
             card.style.setProperty('z-index', '10', 'important');
-            card.style.setProperty('opacity', '0.7', 'important');
-            card.style.setProperty('width', '300px', 'important');
-            card.style.setProperty('height', '400px', 'important');
+            card.style.setProperty('opacity', '0.8', 'important');
+            card.style.setProperty('width', '280px', 'important');
+            card.style.setProperty('height', '360px', 'important');
+          } else {
+            // 오른쪽 카드
+            card.style.setProperty('left', '90%', 'important');
+            card.style.setProperty('transform', 'translate(-100%, -50%) scale(0.8)', 'important');
+            card.style.setProperty('z-index', '10', 'important');
+            card.style.setProperty('opacity', '0.8', 'important');
+            card.style.setProperty('width', '280px', 'important');
+            card.style.setProperty('height', '360px', 'important');
           }
         });
       }
@@ -5678,14 +5637,14 @@ if (window.innerWidth <= 768) {
       // 카드 클릭 이벤트
       pilatesCards.forEach((card, index) => {
         card.addEventListener('click', function() {
-          const relativeIndex = (index - currentCenter + 3) % 3;
+          const position = positions[index];
           
-          if (relativeIndex === 1) {
-            // 오른쪽 카드 클릭 - 시계방향 회전
-            currentCenter = (currentCenter + 1) % 3;
-          } else if (relativeIndex === 2) {
-            // 왼쪽 카드 클릭 - 반시계방향 회전
-            currentCenter = (currentCenter - 1 + 3) % 3;
+          if (position === 1) {
+            // 왼쪽 카드 클릭 - 왼쪽으로 회전
+            positions = [positions[1], positions[2], positions[0]];
+          } else if (position === 2) {
+            // 오른쪽 카드 클릭 - 오른쪽으로 회전
+            positions = [positions[2], positions[0], positions[1]];
           }
           // 중앙 카드 클릭은 무시
           
@@ -5693,7 +5652,8 @@ if (window.innerWidth <= 768) {
         });
       });
       
-      // 초기 설정
+      // 초기 설정 - 김하정 강사(인덱스 1)를 중앙에 배치
+      positions = [1, 2, 0]; // 김하정이 중앙, 다른 카드들이 좌우에
       updatePilatesCards();
     }
   });
@@ -14214,26 +14174,7 @@ document.addEventListener('DOMContentLoaded', function() {
       transition: all 0.3s ease !important;
     }
     
-    /* 초기 위치 - 중앙 배치 */
-    .pilates-card[data-index="0"] {
-      left: 50% !important;
-      transform: translate(-50%, -50%) !important;
-      z-index: 100 !important;
-    }
-    
-    .pilates-card[data-index="1"] {
-      left: 15% !important;
-      transform: translate(-50%, -50%) scale(0.8) !important;
-      z-index: 10 !important;
-      opacity: 0.7 !important;
-    }
-    
-    .pilates-card[data-index="2"] {
-      left: 85% !important;
-      transform: translate(-50%, -50%) scale(0.8) !important;
-      z-index: 10 !important;
-      opacity: 0.7 !important;
-    }
+    /* 카드 위치는 JavaScript로 제어 */
   }
 </style>
 </body>
