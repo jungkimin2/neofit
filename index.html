@@ -5422,17 +5422,6 @@ if (window.innerWidth <= 768) {
       
       // 페이지 이탈 시 정리
       window.addEventListener('beforeunload', stopAutoRotate);
-      
-      // 스크롤 시에도 위치 유지
-      if (isMobile) {
-        let scrollTimeout;
-        window.addEventListener('scroll', function() {
-          clearTimeout(scrollTimeout);
-          scrollTimeout = setTimeout(function() {
-            updateCarousel();
-          }, 100);
-        });
-      }
     })();
   </script>
   
@@ -5524,7 +5513,8 @@ if (window.innerWidth <= 768) {
       /* 초기 위치는 JavaScript에서 즉시 설정 */
       
       /* 모바일에서 카드 초기 위치 강제 설정 - 모든 상황에 적용 */
-      .pilates-card[data-index="0"] {
+      body .pilates-card[data-index="0"],
+      html body .pilates-card[data-index="0"] {
         position: absolute !important;
         left: 50% !important;
         right: auto !important;
@@ -5536,7 +5526,8 @@ if (window.innerWidth <= 768) {
         height: 400px !important;
       }
       
-      .pilates-card[data-index="1"] {
+      body .pilates-card[data-index="1"],
+      html body .pilates-card[data-index="1"] {
         position: absolute !important;
         left: -40% !important;
         right: auto !important;
@@ -5548,7 +5539,8 @@ if (window.innerWidth <= 768) {
         height: 400px !important;
       }
       
-      .pilates-card[data-index="2"] {
+      body .pilates-card[data-index="2"],
+      html body .pilates-card[data-index="2"] {
         position: absolute !important;
         right: -40% !important;
         left: auto !important;
