@@ -5424,19 +5424,26 @@ if (window.innerWidth <= 768) {
           cards.forEach((card, index) => {
             const offset = (index - currentIndex + 3) % 3;
             if (offset === 0) {
-              card.style.cssText += 'z-index: 10000 !important;';
+              // 중앙 카드
+              card.style.setProperty('z-index', '10000', 'important');
             } else {
-              card.style.cssText += 'z-index: 50 !important;';
+              // 좌우 카드
+              card.style.setProperty('z-index', '50', 'important');
             }
           });
         }
         
-        // 초기 적용 및 DOM 변화 감지
+        // 초기 적용
         enforceZIndex();
-        const observer = new MutationObserver(() => {
-          enforceZIndex();
-        });
-        observer.observe(container, { childList: true, subtree: true, attributes: true, attributeFilter: ['style'] });
+        
+        // 컨테이너 다시 찾기
+        const carouselContainer = document.querySelector('.pilates-carousel-container');
+        if (carouselContainer) {
+          const observer = new MutationObserver(() => {
+            enforceZIndex();
+          });
+          observer.observe(carouselContainer, { childList: true, subtree: true, attributes: true, attributeFilter: ['style'] });
+        }
         
         // 터치 이벤트 보강
         cards.forEach((card) => {
