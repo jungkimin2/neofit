@@ -5459,11 +5459,12 @@ if (window.innerWidth <= 768) {
       
       /* 모바일에서 필라테스 캐러셀을 다시 구성 */
       .pilates-carousel-container {
-        height: 480px !important;
+        height: 420px !important;
         overflow: visible !important;
-        padding: 0 !important;
+        padding: 0 40px !important;  /* 좌우 패딩 추가로 카드가 잘리지 않게 */
         margin-top: -28px !important;  /* -44px에서 -28px로 변경 (1칸 아래로) */
         perspective: 1200px !important;
+        position: relative !important;
       }
       
       .pilates-carousel {
@@ -5612,25 +5613,25 @@ if (window.innerWidth <= 768) {
           if (position === 0) {
             // 중앙 카드
             card.style.setProperty('left', '50%', 'important');
-            card.style.setProperty('transform', 'translate(-50%, -50%)', 'important');
+            card.style.setProperty('transform', 'translate(-50%, -50%) scale(1)', 'important');
             card.style.setProperty('z-index', '100', 'important');
             card.style.setProperty('opacity', '1', 'important');
             card.style.setProperty('width', '280px', 'important');
             card.style.setProperty('height', '360px', 'important');
           } else if (position === 1) {
             // 왼쪽 카드
-            card.style.setProperty('left', '10%', 'important');
-            card.style.setProperty('transform', 'translate(0, -50%) scale(0.8)', 'important');
+            card.style.setProperty('left', '15%', 'important');
+            card.style.setProperty('transform', 'translate(-50%, -50%) scale(0.75)', 'important');
             card.style.setProperty('z-index', '10', 'important');
-            card.style.setProperty('opacity', '0.8', 'important');
+            card.style.setProperty('opacity', '0.9', 'important');
             card.style.setProperty('width', '280px', 'important');
             card.style.setProperty('height', '360px', 'important');
           } else {
             // 오른쪽 카드
-            card.style.setProperty('left', '90%', 'important');
-            card.style.setProperty('transform', 'translate(-100%, -50%) scale(0.8)', 'important');
+            card.style.setProperty('left', '85%', 'important');
+            card.style.setProperty('transform', 'translate(-50%, -50%) scale(0.75)', 'important');
             card.style.setProperty('z-index', '10', 'important');
-            card.style.setProperty('opacity', '0.8', 'important');
+            card.style.setProperty('opacity', '0.9', 'important');
             card.style.setProperty('width', '280px', 'important');
             card.style.setProperty('height', '360px', 'important');
           }
