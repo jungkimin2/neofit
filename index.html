@@ -5165,73 +5165,16 @@ if (window.innerWidth <= 768) {
   </div>
   
   <script>
-    // 필라테스 캐러셀 기능 - 간단한 버전
+    // 필라테스 캐러셀 기능 - PC 버전
     (function() {
       // PC에서만 실행
       if (window.innerWidth > 768) {
+        let currentIndex = 0;
+        const cards = document.querySelectorAll('.pilates-card');
+        const indicators = document.querySelectorAll('.pilates-indicator');
       
-      // 모바일 체크
-      const isMobile = window.innerWidth <= 768;
-      
-      let currentIndex = 0;
-      const cards = document.querySelectorAll('.pilates-card');
-      const indicators = document.querySelectorAll('.pilates-indicator');
-      
-      // 카드 위치 업데이트
-      function updateCarousel() {
-        if (isMobile) {
-          // 모바일에서 간단한 슬라이드
-          cards.forEach((card, index) => {
-            const position = (index - currentIndex + 3) % 3;
-            
-            if (position === 0) {
-              // 중앙
-              card.style.left = '50%';
-              card.style.transform = 'translate(-50%, -50%) scale(1)';
-              card.style.zIndex = '100';
-              card.style.opacity = '1';
-            } else if (position === 1) {
-              // 오른쪽
-              card.style.left = '85%';
-              card.style.transform = 'translate(-50%, -50%) scale(0.8)';
-              card.style.zIndex = '10';
-              card.style.opacity = '0.7';
-            } else {
-              // 왼쪽
-              card.style.left = '15%';
-              card.style.transform = 'translate(-50%, -50%) scale(0.8)';
-              card.style.zIndex = '10';
-              card.style.opacity = '0.7';
-            }
-          });
-          
-          // 인디케이터 업데이트
-          indicators.forEach((indicator, index) => {
-            if (index === currentIndex) {
-              indicator.classList.add('active');
-              indicator.style.background = ['#e293ef', '#00BFFF', '#7BE495'][currentIndex];
-            } else {
-              indicator.classList.remove('active');
-              indicator.style.background = 'rgba(123,228,149,0.3)';
-            }
-          });
-          
-          // 모바일 강사 정보 업데이트
-          const titleEl = document.querySelector('.mobile-instructor-title');
-          const descEl = document.querySelector('.mobile-instructor-desc');
-          
-          if (titleEl && descEl) {
-            const info = [
-              { title: '전문 강사진', desc: '체계적인 커리큘럼으로<br>개인별 맞춤 지도', color: '#e293ef' },
-              { title: '그룹 시너지', desc: '함께하는 운동의 즐거움<br>동기부여와 성취감', color: '#00BFFF' },
-              { title: '정밀한 운동', desc: '최신 기구로 정확한 자세<br>효과적인 근력 강화', color: '#7BE495' }
-            ][currentIndex];
-            
-            titleEl.textContent = info.title;
-            titleEl.style.color = info.color;
-            descEl.innerHTML = info.desc;
-          }
-        } else {
+        // 카드 위치 업데이트
+        function updateCarousel() {
           // PC에서의 카드 배치
           cards.forEach((card, index) => {
             const offset = (index - currentIndex + 3) % 3;
@@ -5313,7 +5256,6 @@ if (window.innerWidth <= 768) {
             card.querySelector('.card-title').style.opacity = '1';
           }
         });
-        }
         
         // 인디케이터 업데이트
         indicators.forEach((indicator, index) => {
@@ -5340,50 +5282,29 @@ if (window.innerWidth <= 768) {
           }
         });
         
-        // 모바일에서 강사 정보 업데이트
-        if (isMobile) {
-          const titleEl = document.querySelector('.mobile-instructor-title');
-          const descEl = document.querySelector('.mobile-instructor-desc');
-          
-          if (titleEl && descEl) {
-            if (currentIndex === 0) {
-              titleEl.textContent = '전문 강사진';
-              titleEl.style.color = '#e293ef';
-              descEl.innerHTML = '체계적인 커리큘럼으로<br>개인별 맞춤 지도';
-            } else if (currentIndex === 1) {
-              titleEl.textContent = '그룹 시너지';
-              titleEl.style.color = '#00BFFF';
-              descEl.innerHTML = '함께하는 운동의 즐거움<br>동기부여와 성취감';
-            } else {
-              titleEl.textContent = '정밀한 운동';
-              titleEl.style.color = '#7BE495';
-              descEl.innerHTML = '최신 기구로 정확한 자세<br>효과적인 근력 강화';
-            }
-          }
         }
+        
+        // 카드 클릭 이벤트
+        cards.forEach((card, index) => {
+          card.addEventListener('click', () => {
+            currentIndex = index;
+            updateCarousel();
+          });
+        });
+        
+        // 인디케이터 클릭
+        indicators.forEach((indicator, index) => {
+          indicator.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            currentIndex = index;
+            updateCarousel();
+          });
+        });
+      
+        // 초기 실행
+        updateCarousel();
       }
-      
-      
-      // 카드 클릭 이벤트
-      cards.forEach((card, index) => {
-        card.addEventListener('click', () => {
-          currentIndex = index;
-          updateCarousel();
-        });
-      });
-      
-      // 인디케이터 클릭
-      indicators.forEach((indicator, index) => {
-        indicator.addEventListener('click', (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          currentIndex = index;
-          updateCarousel();
-        });
-      });
-      
-      // 초기 실행
-      updateCarousel();
     })();
   </script>
   
@@ -5648,20 +5569,20 @@ if (window.innerWidth <= 768) {
             card.style.setProperty('top', '50%', 'important');
           } else if (position === 1) {
             // 왼쪽 카드
-            card.style.setProperty('left', '15%', 'important');
-            card.style.setProperty('transform', 'translate(-50%, -50%) scale(0.85) rotateY(15deg)', 'important');
+            card.style.setProperty('left', '10%', 'important');
+            card.style.setProperty('transform', 'translate(-50%, -50%) scale(0.7) rotateY(20deg)', 'important');
             card.style.setProperty('z-index', '10', 'important');
-            card.style.setProperty('opacity', '1', 'important');
+            card.style.setProperty('opacity', '0.9', 'important');
             card.style.setProperty('width', '280px', 'important');
             card.style.setProperty('height', '360px', 'important');
             card.style.setProperty('position', 'absolute', 'important');
             card.style.setProperty('top', '50%', 'important');
           } else {
             // 오른쪽 카드
-            card.style.setProperty('left', '85%', 'important');
-            card.style.setProperty('transform', 'translate(-50%, -50%) scale(0.85) rotateY(-15deg)', 'important');
+            card.style.setProperty('left', '90%', 'important');
+            card.style.setProperty('transform', 'translate(-50%, -50%) scale(0.7) rotateY(-20deg)', 'important');
             card.style.setProperty('z-index', '10', 'important');
-            card.style.setProperty('opacity', '1', 'important');
+            card.style.setProperty('opacity', '0.9', 'important');
             card.style.setProperty('width', '280px', 'important');
             card.style.setProperty('height', '360px', 'important');
             card.style.setProperty('position', 'absolute', 'important');
@@ -5754,30 +5675,6 @@ if (window.innerWidth <= 768) {
         initialDescEl.innerHTML = '그룹 시너지로<br>함께 성장해요';
       }
       
-      // 스크롤 이벤트 시 카드 위치만 유지 (섹션은 건드리지 않음)
-      let isScrolling = false;
-      window.addEventListener('scroll', function() {
-        isScrolling = true;
-        
-        // 스크롤 중에는 카드 위치만 고정
-        pilatesCards.forEach((card) => {
-          const currentPosition = card.getAttribute('data-position');
-          if (currentPosition === '0') {
-            card.style.setProperty('left', '50%', 'important');
-            card.style.setProperty('transform', 'translate(-50%, -50%) scale(1) rotateY(0deg)', 'important');
-          } else if (currentPosition === '1') {
-            card.style.setProperty('left', '15%', 'important');
-            card.style.setProperty('transform', 'translate(-50%, -50%) scale(0.85) rotateY(15deg)', 'important');
-          } else if (currentPosition === '2') {
-            card.style.setProperty('left', '85%', 'important');
-            card.style.setProperty('transform', 'translate(-50%, -50%) scale(0.85) rotateY(-15deg)', 'important');
-          }
-        });
-        
-        setTimeout(() => {
-          isScrolling = false;
-        }, 100);
-      });
     }
   });
   </script>
