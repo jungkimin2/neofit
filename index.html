@@ -13794,6 +13794,19 @@ document.addEventListener('DOMContentLoaded', function() {
     overflow-y: auto !important;
   }
   
+  /* 모바일에서 페이지 전체 높이 증가 - 하단 콘텐츠 잘림 방지 */
+  body {
+    min-height: calc(100vh + 400px) !important;
+    padding-bottom: 200px !important;
+  }
+  
+  /* 마지막 섹션에 추가 여백 */
+  body > section:last-of-type,
+  main > section:last-of-type {
+    padding-bottom: 150px !important;
+    margin-bottom: 100px !important;
+  }
+  
   /* 섹션 간 여백 조정 */
   section#benefits + section#neo-pilates {
     margin-top: 0px !important;
