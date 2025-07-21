@@ -5473,7 +5473,7 @@ if (window.innerWidth <= 768) {
         height: 480px !important;
         overflow: visible !important;
         padding: 0 !important;
-        margin-top: 20px !important;
+        margin-top: -12px !important;
         perspective: none !important;
       }
       
@@ -5569,7 +5569,7 @@ if (window.innerWidth <= 768) {
       /* 모바일에서 강사 정보 표시 */
       .mobile-pilates-info {
         display: block !important;
-        margin-top: 80px !important;
+        margin-top: 48px !important;
       }
       
       /* 추가 정보 섹션도 여백 조정 */
@@ -5617,6 +5617,11 @@ if (window.innerWidth <= 768) {
       /* 모바일에서 강사 정보 위치 조정 */
       .mobile-pilates-info {
         margin-top: 28px !important;  /* 60px - 32px(2칸) */
+      }
+      
+      /* 필라테스 섹션 하단 추가 정보 여백 조정 */
+      #neo-pilates + div {
+        margin-top: 88px !important;  /* 120px - 32px(2칸) */
       }
     }
   </style>
@@ -9511,8 +9516,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <style>
 /* 팝업 버튼 호버 효과 */
+#popupPrev:hover, #popupNext:hover {
+  background: rgba(0, 0, 0, 0.9) !important;
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
 #popupPrev:active, #popupNext:active {
-  background: rgba(123,228,149,0.2) !important;
+  transform: translateY(-50%) scale(0.95);
 }
 
 #popupClose:active {
@@ -9520,7 +9531,16 @@ document.addEventListener('DOMContentLoaded', function() {
   transform: scale(0.95);
 }
 
-/* 모바일에서 터치 피드백 */
+/* PC에서 더 큰 이미지 */
+@media (min-width: 769px) {
+  #popupImage {
+    max-height: 85vh !important;
+    max-width: 90% !important;
+    margin: 0 auto !important;
+  }
+}
+
+/* 모바일에서 터치 피드백 및 작은 이미지 */
 @media (max-width: 768px) {
   #popupPrev, #popupNext {
     -webkit-tap-highlight-color: transparent;
@@ -9528,6 +9548,10 @@ document.addEventListener('DOMContentLoaded', function() {
   
   #popupClose {
     -webkit-tap-highlight-color: transparent;
+  }
+  
+  #popupImage {
+    max-height: 60vh !important;
   }
 }
 </style>
@@ -9546,16 +9570,16 @@ document.addEventListener('DOMContentLoaded', function() {
         <span style="color: #7BE495; font-size: 20px; line-height: 1;">×</span>
       </button>
       <!-- 이미지 -->
-      <img id="popupImage" src="" alt="시설 이미지" style="width: 100%; height: auto; max-height: 60vh; object-fit: contain; display: block; transition: all 0.3s ease-in-out; opacity: 1; transform: scale(1); position: relative; z-index: 1;">
+      <img id="popupImage" src="" alt="시설 이미지" style="width: 100%; height: auto; max-height: 85vh; object-fit: contain; display: block; transition: all 0.3s ease-in-out; opacity: 1; transform: scale(1); position: relative; z-index: 1;">
       
       <!-- 네비게이션 버튼들 - 새로운 디자인 -->
-      <button id="popupPrev" onclick="prevFacilityImage()" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); width: 50px; height: 80px; background: transparent; border: none; color: #7BE495; display: flex; align-items: center; justify-content: center; font-size: 20px; transition: all 0.3s; z-index: 1000; cursor: pointer;">
+      <button id="popupPrev" onclick="prevFacilityImage()" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); width: 50px; height: 50px; background: rgba(0, 0, 0, 0.7); border: none; border-radius: 50%; color: #7BE495; display: flex; align-items: center; justify-content: center; font-size: 20px; transition: all 0.3s; z-index: 1000; cursor: pointer; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M15 18L9 12L15 6" stroke="#7BE495" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
           <path d="M15 18L9 12L15 6" stroke="#7BE495" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity="0.5" transform="translate(-3, 0)"/>
         </svg>
       </button>
-      <button id="popupNext" onclick="nextFacilityImage()" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); width: 50px; height: 80px; background: transparent; border: none; color: #7BE495; display: flex; align-items: center; justify-content: center; font-size: 20px; transition: all 0.3s; z-index: 1000; cursor: pointer;">
+      <button id="popupNext" onclick="nextFacilityImage()" style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); width: 50px; height: 50px; background: rgba(0, 0, 0, 0.7); border: none; border-radius: 50%; color: #7BE495; display: flex; align-items: center; justify-content: center; font-size: 20px; transition: all 0.3s; z-index: 1000; cursor: pointer; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M9 18L15 12L9 6" stroke="#7BE495" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
           <path d="M9 18L15 12L9 6" stroke="#7BE495" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity="0.5" transform="translate(3, 0)"/>
@@ -9746,38 +9770,139 @@ setTimeout(forceNeoPilatesPosition, 500);
 setTimeout(forceNeoPilatesPosition, 1000);
 </script>
 
-<!-- Talk Talk Banner Script start -->
-<script type="text/javascript" src="https://partner.talk.naver.com/banners/script"></script>
-<div class="talk_banner_div" data-id="144115"></div>
-<!-- Talk Talk Banner Script end -->
+<!-- 커스텀 톡톡 문의 버튼 -->
+<div class="custom-talk-button" onclick="window.open('https://talk.naver.com/ct/w4eeth?frm=mnmb&frm=nmb_detail#nafullscreen', 'naverTalkChat', 'width=500,height=800,toolbar=no,menubar=no,scrollbars=yes,resizable=yes')">
+  <div class="talk-icon">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 2C6.48 2 2 6.48 2 12C2 13.19 2.23 14.32 2.64 15.36L2 22L8.64 21.36C9.68 21.77 10.81 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2Z" fill="#7BE495"/>
+      <path d="M8 11H8.01M12 11H12.01M16 11H16.01" stroke="#000" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+  </div>
+  <div class="talk-text">톡톡 문의</div>
+  <div class="talk-pulse"></div>
+</div>
 
 <style>
-/* 모바일에서 네이버 톡톡 고정 위치 */
-@media (max-width: 768px) {
-  .talk_banner_div {
-    position: fixed !important;
-    bottom: 20px !important;
-    right: 20px !important;
-    z-index: 9999 !important;
-    /* 스크롤 시에도 항상 보이도록 */
-    transform: translateZ(0) !important;
-    -webkit-transform: translateZ(0) !important;
+/* 커스텀 톡톡 문의 버튼 스타일 */
+.custom-talk-button {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: linear-gradient(135deg, #0A0F0D 0%, #1a2f1a 100%);
+  border: 2px solid #7BE495;
+  border-radius: 40px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 15px rgba(123, 228, 149, 0.5), 
+              0 3px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* 아이콘 스타일 */
+.talk-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: rgba(123, 228, 149, 0.1);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.talk-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* 텍스트 스타일 */
+.talk-text {
+  color: #7BE495;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+}
+
+/* 펄스 애니메이션 */
+.talk-pulse {
+  position: absolute;
+  top: 50%;
+  left: 16px;
+  transform: translate(-50%, -50%);
+  width: 28px;
+  height: 28px;
+  background: #7BE495;
+  border-radius: 50%;
+  opacity: 0;
+  animation: pulse 2s infinite;
+  pointer-events: none;
+}
+
+@keyframes pulse {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.5;
   }
-  
-  /* 톡톡 아이콘에 네온 효과 추가 (선택사항) */
-  .talk_banner_div > * {
-    box-shadow: 0 0 20px rgba(123, 228, 149, 0.5) !important;
-    border-radius: 50% !important;
+  100% {
+    transform: translate(-50%, -50%) scale(2);
+    opacity: 0;
   }
 }
 
-/* PC에서는 일반 위치 */
-@media (min-width: 769px) {
-  .talk_banner_div {
-    margin: 20px auto;
-    text-align: center;
+/* 호버 효과 */
+.custom-talk-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 30px rgba(123, 228, 149, 0.7), 
+              0 6px 20px rgba(0, 0, 0, 0.4);
+  background: linear-gradient(135deg, #0F1A0F 0%, #2a4f2a 100%);
+}
+
+.custom-talk-button:hover .talk-text {
+  color: #fff;
+}
+
+.custom-talk-button:hover .talk-icon {
+  background: rgba(123, 228, 149, 0.2);
+}
+
+/* 모바일 반응형 - 원형 아이콘만 표시 */
+@media (max-width: 768px) {
+  .custom-talk-button {
+    bottom: 20px;
+    right: 20px;
+    padding: 10px;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    justify-content: center;
+  }
+  
+  .talk-text {
+    display: none;
+  }
+  
+  .talk-icon {
+    width: 25px;
+    height: 25px;
+  }
+  
+  .talk-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .talk-pulse {
+    left: 50%;
+    width: 25px;
+    height: 25px;
   }
 }
+
 </style>
 
 </body>
