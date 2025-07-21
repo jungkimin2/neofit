@@ -5184,7 +5184,7 @@ if (window.innerWidth <= 768) {
             if (position === 0) {
               // 중앙
               card.style.left = '50%';
-              card.style.transform = 'translate(-50%, -50%)';
+              card.style.transform = 'translate(-50%, -50%) scale(1)';
               card.style.zIndex = '100';
               card.style.opacity = '1';
             } else if (position === 1) {
@@ -5364,10 +5364,8 @@ if (window.innerWidth <= 768) {
       // 카드 클릭 이벤트
       cards.forEach((card, index) => {
         card.addEventListener('click', () => {
-          if (isMobile) {
-            currentIndex = index;
-            updateCarousel();
-          }
+          currentIndex = index;
+          updateCarousel();
         });
       });
       
