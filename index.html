@@ -5424,31 +5424,33 @@ if (window.innerWidth <= 768) {
         });
       });
       
-      // 터치/스와이프 지원
-      let startX = 0;
-      let endX = 0;
-      const container = document.querySelector('.pilates-carousel-container');
-      
-      container.addEventListener('touchstart', (e) => {
-        startX = e.touches[0].clientX;
-        stopAutoRotate();
-      });
-      
-      container.addEventListener('touchmove', (e) => {
-        endX = e.touches[0].clientX;
-      });
-      
-      container.addEventListener('touchend', () => {
-        const diff = startX - endX;
-        if (Math.abs(diff) > 50) {
-          if (diff > 0) {
-            nextCard();
-          } else {
-            prevCard();
+      // 터치/스와이프 지원 - 모바일에서는 비활성화
+      if (!isMobile) {
+        let startX = 0;
+        let endX = 0;
+        const container = document.querySelector('.pilates-carousel-container');
+        
+        container.addEventListener('touchstart', (e) => {
+          startX = e.touches[0].clientX;
+          stopAutoRotate();
+        });
+        
+        container.addEventListener('touchmove', (e) => {
+          endX = e.touches[0].clientX;
+        });
+        
+        container.addEventListener('touchend', () => {
+          const diff = startX - endX;
+          if (Math.abs(diff) > 50) {
+            if (diff > 0) {
+              nextCard();
+            } else {
+              prevCard();
+            }
           }
-        }
-        // startAutoRotate();
-      });
+          // startAutoRotate();
+        });
+      }
       
       // 자동 회전 시작 (비활성화)
       // startAutoRotate();
@@ -5463,6 +5465,28 @@ if (window.innerWidth <= 768) {
         // 터치 이벤트 보강
         cards.forEach((card) => {
           card.style.pointerEvents = 'auto';
+        });
+        
+        // 스크롤 이벤트로 인한 스타일 변경 차단
+        const observer = new MutationObserver((mutations) => {
+          mutations.forEach((mutation) => {
+            if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
+              const card = mutation.target;
+              const index = card.getAttribute('data-index');
+              if (index === '0') {
+                card.style.cssText = 'position: absolute !important; left: 50% !important; right: auto !important; top: 50% !important; transform: translate(-50%, -50%) !important; z-index: 10000 !important; opacity: 1 !important; width: 300px !important; height: 400px !important; transition: all 0.3s ease !important;';
+              } else if (index === '1') {
+                card.style.cssText = 'position: absolute !important; left: -40% !important; right: auto !important; top: 50% !important; transform: translateY(-50%) scale(0.85) rotateY(25deg) !important; z-index: 50 !important; opacity: 1 !important; width: 300px !important; height: 400px !important; transition: all 0.3s ease !important; transform-style: preserve-3d !important;';
+              } else if (index === '2') {
+                card.style.cssText = 'position: absolute !important; left: auto !important; right: -40% !important; top: 50% !important; transform: translateY(-50%) scale(0.85) rotateY(-25deg) !important; z-index: 50 !important; opacity: 1 !important; width: 300px !important; height: 400px !important; transition: all 0.3s ease !important; transform-style: preserve-3d !important;';
+              }
+            }
+          });
+        });
+        
+        // 각 카드에 observer 적용
+        cards.forEach((card) => {
+          observer.observe(card, { attributes: true, attributeFilter: ['style'] });
         });
       }
       
@@ -14229,10 +14253,12 @@ document.addEventListener('DOMContentLoaded', function() {
       right: auto !important;
       top: 50% !important;
       transform: translate(-50%, -50%) !important;
+      -webkit-transform: translate(-50%, -50%) !important;
       z-index: 10000 !important;
       opacity: 1 !important;
       width: 300px !important;
       height: 400px !important;
+      will-change: auto !important;
     }
     
     html body section#neo-pilates .pilates-carousel-container .pilates-carousel .pilates-card[data-index="1"] {
@@ -14241,10 +14267,12 @@ document.addEventListener('DOMContentLoaded', function() {
       right: auto !important;
       top: 50% !important;
       transform: translateY(-50%) scale(0.85) rotateY(25deg) !important;
+      -webkit-transform: translateY(-50%) scale(0.85) rotateY(25deg) !important;
       z-index: 50 !important;
       opacity: 1 !important;
       width: 300px !important;
       height: 400px !important;
+      will-change: auto !important;
     }
     
     html body section#neo-pilates .pilates-carousel-container .pilates-carousel .pilates-card[data-index="2"] {
@@ -14253,10 +14281,19 @@ document.addEventListener('DOMContentLoaded', function() {
       left: auto !important;
       top: 50% !important;
       transform: translateY(-50%) scale(0.85) rotateY(-25deg) !important;
+      -webkit-transform: translateY(-50%) scale(0.85) rotateY(-25deg) !important;
       z-index: 50 !important;
       opacity: 1 !important;
       width: 300px !important;
       height: 400px !important;
+      will-change: auto !important;
+    }
+    
+    /* 캐러셀 컨테이너 고정 */
+    .pilates-carousel-container,
+    .pilates-carousel {
+      transform: none !important;
+      -webkit-transform: none !important;
     }
   }
 </style>
