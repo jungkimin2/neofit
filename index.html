@@ -5412,6 +5412,18 @@ if (window.innerWidth <= 768) {
         position: relative !important;
         transform: translateY(0) !important;
       }
+      
+      /* 모바일에서 네오 필라테스 제목 줄간격 축소 */
+      body #neo-pilates h2,
+      html body #neo-pilates h2 {
+        line-height: 1.1 !important;  /* 줄 간격 축소 */
+      }
+      
+      body #neo-pilates h2 span:last-child,
+      html body #neo-pilates h2 span:last-child {
+        margin-top: -8px !important;  /* 더 가깝게 조정 */
+        line-height: 1 !important;
+      }
       body section#neo-pilates,
       html body section#neo-pilates,
       #neo-pilates {
@@ -5429,7 +5441,7 @@ if (window.innerWidth <= 768) {
       #neo-pilates h2 span:last-child {
         font-size: 1.4rem !important;
         display: block;
-        margin-top: 10px;
+        margin-top: -5px;  /* 줄 간격 축소 - 10px에서 -5px로 변경 */
       }
       
       #neo-pilates > div > div:first-child {
