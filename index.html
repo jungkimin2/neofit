@@ -5404,6 +5404,14 @@ if (window.innerWidth <= 768) {
     
     /* 모바일 최적화 - 통합된 규칙 */
     @media (max-width: 768px) {
+      /* 필라테스 설명 문구를 더 구체적으로 타겟팅하여 하단으로 이동 */
+      body #neo-pilates > div > div:first-child p,
+      html body #neo-pilates > div > div:first-child p,
+      #neo-pilates .container > div:first-child p {
+        margin-top: 56px !important;  /* 3.5칸(56px) 아래로 이동 */
+        position: relative !important;
+        transform: translateY(0) !important;
+      }
       body section#neo-pilates,
       html body section#neo-pilates,
       #neo-pilates {
@@ -5431,7 +5439,7 @@ if (window.innerWidth <= 768) {
       #neo-pilates > div > div:first-child p {
         font-size: 1rem !important;
         padding: 0 20px;
-        margin-top: 32px !important;  /* 2칸(32px) 아래로 이동 */
+        margin-top: 56px !important;  /* 3.5칸(56px) 아래로 이동 - 기존 32px + 24px 추가 */
       }
       
       /* 모바일에서 필라테스 캐러셀을 다시 구성 */
