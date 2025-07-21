@@ -9482,8 +9482,8 @@ document.addEventListener('DOMContentLoaded', function() {
   html body section#benefits,
   section#benefits.section.animate-on-scroll {
     margin-top: 0px !important;
-    transform: translateY(272px) !important;
-    -webkit-transform: translateY(272px) !important;
+    transform: translateY(144px) !important;
+    -webkit-transform: translateY(144px) !important;
     position: relative !important;
     z-index: 9999 !important;
     padding: 80px 16px 100px 16px !important;
@@ -11993,9 +11993,9 @@ document.addEventListener('DOMContentLoaded', function() {
        overflow: hidden !important;
      }
      
-     /* "시설 정보 및 위치 안내" 섹션 8칸 아래로 이동 */
+     /* "시설 정보 및 위치 안내" 섹션 위로 이동 - 여백 제거 강화 */
      section#benefits {
-       margin-top: 0px !important;
+       margin-top: -552px !important;  /* 16px 더 위로 (1칸) */
        position: relative !important;
        z-index: 10 !important;
        background: #000 !important;
@@ -13360,8 +13360,7 @@ document.addEventListener('DOMContentLoaded', function() {
           { selector: '.mobile-system-box-wrapper', transform: 'translateY(-164px)' },
           { selector: '#smart', transform: 'translateY(-240px)' },
           { selector: '#hive', transform: 'translateY(-196px)' },
-          { selector: '#neo-pilates', transform: 'translateY(144px)' },
-          { selector: '#benefits', transform: 'translateY(272px)' }
+          { selector: '#neo-pilates', transform: 'translateY(144px)' }
       ];
       
       elements.forEach(({ selector, transform }) => {
@@ -13831,9 +13830,9 @@ document.addEventListener('DOMContentLoaded', function() {
       const neoPilatesSection = document.querySelector('#neo-pilates');
       if (neoPilatesSection) {
         // 인라인 스타일로 직접 설정하여 최우선순위 보장
-        neoPilatesSection.style.setProperty('margin-top', '0px', 'important');
-        neoPilatesSection.style.setProperty('transform', 'translateY(144px)', 'important');
-        neoPilatesSection.style.setProperty('-webkit-transform', 'translateY(144px)', 'important');
+        neoPilatesSection.style.setProperty('margin-top', '-300px', 'important');
+        neoPilatesSection.style.setProperty('transform', 'translateY(-150px)', 'important');
+        neoPilatesSection.style.setProperty('-webkit-transform', 'translateY(-150px)', 'important');
         neoPilatesSection.style.setProperty('position', 'relative', 'important');
         neoPilatesSection.style.setProperty('z-index', '50', 'important');
         neoPilatesSection.style.setProperty('padding-top', '20px', 'important');
@@ -13865,6 +13864,7 @@ document.addEventListener('DOMContentLoaded', function() {
 })();
 </script>
 
+</html>
 <style>
   /* 혜택 안내 박스 스타일 */
   .clickable-benefit-box {
@@ -13912,7 +13912,4 @@ document.addEventListener('DOMContentLoaded', function() {
       margin: 0 !important;
       padding: 0 !important;
     }
-  }
-</style>
-
-</html>
+  } 
