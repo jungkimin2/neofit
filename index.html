@@ -5610,6 +5610,9 @@ if (window.innerWidth <= 768) {
         pilatesCards.forEach((card, index) => {
           const position = positions[index];
           
+          // 각 카드에 position 정보 저장
+          card.setAttribute('data-position', position);
+          
           if (position === 0) {
             // 중앙 카드
             card.style.setProperty('left', '50%', 'important');
@@ -5618,6 +5621,8 @@ if (window.innerWidth <= 768) {
             card.style.setProperty('opacity', '1', 'important');
             card.style.setProperty('width', '280px', 'important');
             card.style.setProperty('height', '360px', 'important');
+            card.style.setProperty('position', 'absolute', 'important');
+            card.style.setProperty('top', '50%', 'important');
           } else if (position === 1) {
             // 왼쪽 카드
             card.style.setProperty('left', '15%', 'important');
@@ -5626,6 +5631,8 @@ if (window.innerWidth <= 768) {
             card.style.setProperty('opacity', '0.9', 'important');
             card.style.setProperty('width', '280px', 'important');
             card.style.setProperty('height', '360px', 'important');
+            card.style.setProperty('position', 'absolute', 'important');
+            card.style.setProperty('top', '50%', 'important');
           } else {
             // 오른쪽 카드
             card.style.setProperty('left', '85%', 'important');
@@ -5634,6 +5641,8 @@ if (window.innerWidth <= 768) {
             card.style.setProperty('opacity', '0.9', 'important');
             card.style.setProperty('width', '280px', 'important');
             card.style.setProperty('height', '360px', 'important');
+            card.style.setProperty('position', 'absolute', 'important');
+            card.style.setProperty('top', '50%', 'important');
           }
         });
       }
@@ -5663,6 +5672,30 @@ if (window.innerWidth <= 768) {
       // 초기 설정 - 김하정 강사(인덱스 1)를 중앙에 배치
       positions = [1, 2, 0]; // 김하정이 중앙, 다른 카드들이 좌우에
       updatePilatesCards();
+      
+      // 스크롤 이벤트 시 카드 위치 유지
+      let isScrolling = false;
+      window.addEventListener('scroll', function() {
+        isScrolling = true;
+        // 스크롤 중에는 카드 위치 고정
+        pilatesCards.forEach((card) => {
+          const currentPosition = card.getAttribute('data-position');
+          if (currentPosition === '0') {
+            card.style.setProperty('left', '50%', 'important');
+            card.style.setProperty('transform', 'translate(-50%, -50%) scale(1)', 'important');
+          } else if (currentPosition === '1') {
+            card.style.setProperty('left', '15%', 'important');
+            card.style.setProperty('transform', 'translate(-50%, -50%) scale(0.75)', 'important');
+          } else if (currentPosition === '2') {
+            card.style.setProperty('left', '85%', 'important');
+            card.style.setProperty('transform', 'translate(-50%, -50%) scale(0.75)', 'important');
+          }
+        });
+        
+        setTimeout(() => {
+          isScrolling = false;
+        }, 100);
+      });
     }
   });
   </script>
