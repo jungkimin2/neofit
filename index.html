@@ -9874,13 +9874,16 @@ setTimeout(forceNeoPilatesPosition, 1000);
 /* 모바일 반응형 - 원형 아이콘만 표시 */
 @media (max-width: 768px) {
   .custom-talk-button {
-    bottom: 20px;
-    right: 20px;
-    padding: 10px;
-    border-radius: 50%;
-    width: 45px;
-    height: 45px;
-    justify-content: center;
+    bottom: 20px !important;
+    right: 20px !important;
+    padding: 10px !important;
+    border-radius: 50% !important;
+    width: 45px !important;
+    height: 45px !important;
+    justify-content: center !important;
+    z-index: 2147483647 !important; /* 최상위 z-index 강제 적용 */
+    position: fixed !important;
+    display: flex !important;
   }
   
   .talk-text {
@@ -10023,6 +10026,16 @@ window.addEventListener('load', () => {
       video.style.setProperty('display', 'block', 'important');
       video.style.setProperty('animation', 'none', 'important');
       // transition은 CSS에서 관리하므로 제거
+    }
+    
+    // 톡톡문의하기 버튼도 최상위로 강제 설정
+    const talkButton = document.querySelector('.custom-talk-button');
+    if (talkButton) {
+      talkButton.style.setProperty('z-index', '2147483647', 'important');
+      talkButton.style.setProperty('position', 'fixed', 'important');
+      talkButton.style.setProperty('bottom', '20px', 'important');
+      talkButton.style.setProperty('right', '20px', 'important');
+      talkButton.style.setProperty('display', 'flex', 'important');
     }
   } else {
     // PC에서는 기존 슬라이드 애니메이션
