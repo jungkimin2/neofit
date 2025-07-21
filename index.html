@@ -5477,7 +5477,7 @@ if (window.innerWidth <= 768) {
         width: 300px !important;
         height: 400px !important;
         transform: none !important;
-        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        transition: all 0.3s ease !important;
         top: 50% !important;
         pointer-events: auto !important;
         cursor: pointer !important;
@@ -5633,71 +5633,6 @@ if (window.innerWidth <= 768) {
       }
     }
   </style>
-  
-  <!-- 모바일 필라테스 카드 클릭 이벤트 -->
-  <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    // 모바일에서만 실행
-    if (window.innerWidth <= 768) {
-      const pilatesCards = document.querySelectorAll('.pilates-card');
-      let currentCenter = 0;
-      
-      // 카드 위치 업데이트 함수
-      function updatePilatesCards() {
-        pilatesCards.forEach((card, index) => {
-          const relativeIndex = (index - currentCenter + 3) % 3;
-          
-          if (relativeIndex === 0) {
-            // 중앙 카드
-            card.style.left = '50%';
-            card.style.transform = 'translate(-50%, -50%)';
-            card.style.zIndex = '100';
-            card.style.opacity = '1';
-            card.style.width = '300px';
-            card.style.height = '400px';
-          } else if (relativeIndex === 1) {
-            // 오른쪽 카드
-            card.style.left = '85%';
-            card.style.transform = 'translate(-50%, -50%) scale(0.8)';
-            card.style.zIndex = '10';
-            card.style.opacity = '0.7';
-            card.style.width = '300px';
-            card.style.height = '400px';
-          } else {
-            // 왼쪽 카드
-            card.style.left = '15%';
-            card.style.transform = 'translate(-50%, -50%) scale(0.8)';
-            card.style.zIndex = '10';
-            card.style.opacity = '0.7';
-            card.style.width = '300px';
-            card.style.height = '400px';
-          }
-        });
-      }
-      
-      // 카드 클릭 이벤트
-      pilatesCards.forEach((card, index) => {
-        card.addEventListener('click', function() {
-          const relativeIndex = (index - currentCenter + 3) % 3;
-          
-          if (relativeIndex === 1) {
-            // 오른쪽 카드 클릭 - 시계방향 회전
-            currentCenter = (currentCenter + 1) % 3;
-          } else if (relativeIndex === 2) {
-            // 왼쪽 카드 클릭 - 반시계방향 회전
-            currentCenter = (currentCenter - 1 + 3) % 3;
-          }
-          // 중앙 카드 클릭은 무시
-          
-          updatePilatesCards();
-        });
-      });
-      
-      // 초기 설정
-      updatePilatesCards();
-    }
-  });
-  </script>
 </section>
 
 <section id="benefits" class="section animate-on-scroll" style="background: #000; padding-bottom: 20px; padding-top: 20px; margin-top: 0;">
