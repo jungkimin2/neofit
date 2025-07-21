@@ -5624,47 +5624,37 @@ if (window.innerWidth <= 768) {
             card.style.setProperty('transition', 'none', 'important');
           }
           
-          // 딜레이를 추가하여 애니메이션 실행
-          setTimeout(() => {
-            if (position === 0) {
-              // 중앙 카드
-              card.style.setProperty('left', '50%', 'important');
-              card.style.setProperty('transform', 'translate(-50%, -50%) scale(1) rotateY(0deg)', 'important');
-              card.style.setProperty('z-index', '100', 'important');
-              card.style.setProperty('opacity', '1', 'important');
-              card.style.setProperty('width', '280px', 'important');
-              card.style.setProperty('height', '360px', 'important');
-              card.style.setProperty('position', 'absolute', 'important');
-              card.style.setProperty('top', '50%', 'important');
-            } else if (position === 1) {
-              // 왼쪽 카드
-              card.style.setProperty('left', '15%', 'important');
-              card.style.setProperty('transform', 'translate(-50%, -50%) scale(0.75) rotateY(25deg)', 'important');
-              card.style.setProperty('z-index', '10', 'important');
-              card.style.setProperty('opacity', '0.9', 'important');
-              card.style.setProperty('width', '280px', 'important');
-              card.style.setProperty('height', '360px', 'important');
-              card.style.setProperty('position', 'absolute', 'important');
-              card.style.setProperty('top', '50%', 'important');
-            } else {
-              // 오른쪽 카드
-              card.style.setProperty('left', '85%', 'important');
-              card.style.setProperty('transform', 'translate(-50%, -50%) scale(0.75) rotateY(-25deg)', 'important');
-              card.style.setProperty('z-index', '10', 'important');
-              card.style.setProperty('opacity', '0.9', 'important');
-              card.style.setProperty('width', '280px', 'important');
-              card.style.setProperty('height', '360px', 'important');
-              card.style.setProperty('position', 'absolute', 'important');
-              card.style.setProperty('top', '50%', 'important');
-            }
-            
-            // 애니메이션 후 transition 제거
-            if (animate) {
-              setTimeout(() => {
-                card.style.setProperty('transition', 'none', 'important');
-              }, 800);
-            }
-          }, animate ? 50 : 0);
+          if (position === 0) {
+            // 중앙 카드
+            card.style.setProperty('left', '50%', 'important');
+            card.style.setProperty('transform', 'translate(-50%, -50%) scale(1) rotateY(0deg)', 'important');
+            card.style.setProperty('z-index', '100', 'important');
+            card.style.setProperty('opacity', '1', 'important');
+            card.style.setProperty('width', '280px', 'important');
+            card.style.setProperty('height', '360px', 'important');
+            card.style.setProperty('position', 'absolute', 'important');
+            card.style.setProperty('top', '50%', 'important');
+          } else if (position === 1) {
+            // 왼쪽 카드
+            card.style.setProperty('left', '15%', 'important');
+            card.style.setProperty('transform', 'translate(-50%, -50%) scale(0.75) rotateY(25deg)', 'important');
+            card.style.setProperty('z-index', '10', 'important');
+            card.style.setProperty('opacity', '0.9', 'important');
+            card.style.setProperty('width', '280px', 'important');
+            card.style.setProperty('height', '360px', 'important');
+            card.style.setProperty('position', 'absolute', 'important');
+            card.style.setProperty('top', '50%', 'important');
+          } else {
+            // 오른쪽 카드
+            card.style.setProperty('left', '85%', 'important');
+            card.style.setProperty('transform', 'translate(-50%, -50%) scale(0.75) rotateY(-25deg)', 'important');
+            card.style.setProperty('z-index', '10', 'important');
+            card.style.setProperty('opacity', '0.9', 'important');
+            card.style.setProperty('width', '280px', 'important');
+            card.style.setProperty('height', '360px', 'important');
+            card.style.setProperty('position', 'absolute', 'important');
+            card.style.setProperty('top', '50%', 'important');
+          }
         });
       }
       
@@ -5694,18 +5684,12 @@ if (window.innerWidth <= 768) {
       positions = [1, 2, 0]; // 김하정이 중앙, 다른 카드들이 좌우에
       updatePilatesCards(false); // 초기 설정은 애니메이션 없이
       
-      // 스크롤 이벤트 시 카드 위치 유지
+      // 스크롤 이벤트 시 카드 위치만 유지 (섹션은 건드리지 않음)
       let isScrolling = false;
       window.addEventListener('scroll', function() {
         isScrolling = true;
         
-        // 필라테스 섹션의 transform 고정
-        const pilatesSection = document.getElementById('neo-pilates');
-        if (pilatesSection) {
-          pilatesSection.style.setProperty('transform', 'translateY(144px)', 'important');
-        }
-        
-        // 스크롤 중에는 카드 위치 고정
+        // 스크롤 중에는 카드 위치만 고정
         pilatesCards.forEach((card) => {
           const currentPosition = card.getAttribute('data-position');
           if (currentPosition === '0') {
@@ -5724,21 +5708,6 @@ if (window.innerWidth <= 768) {
           isScrolling = false;
         }, 100);
       });
-      
-      // 애니메이션 프레임마다 위치 강제 고정
-      function maintainPositions() {
-        if (window.innerWidth <= 768) {
-          const pilatesSection = document.getElementById('neo-pilates');
-          if (pilatesSection) {
-            const currentTransform = pilatesSection.style.transform;
-            if (!currentTransform.includes('translateY(144px)')) {
-              pilatesSection.style.setProperty('transform', 'translateY(144px)', 'important');
-            }
-          }
-        }
-        requestAnimationFrame(maintainPositions);
-      }
-      maintainPositions();
     }
   });
   </script>
