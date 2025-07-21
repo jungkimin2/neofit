@@ -5152,7 +5152,7 @@ if (window.innerWidth <= 768) {
     </div>
     
     <!-- 추가 정보 -->
-    <div style="text-align: center; margin-top: 82px; padding: 40px; background: rgba(123,228,149,0.05); border-radius: 20px; border: 1px solid rgba(123,228,149,0.2);" class="neo-pilates-info-box">
+    <div style="text-align: center; margin-top: 82px; padding: 40px; background: rgba(123,228,149,0.05); border-radius: 20px; border: 1px solid rgba(123,228,149,0.2);" class="neo-pilates-info-box" id="neo-pilates-info-box">
       <p style="color: #7BE495; font-size: 1.3rem; font-weight: 600; margin-bottom: 15px;">
         네오 필라테스와 함께 새로운 운동 경험을 시작하세요
       </p>
@@ -13519,6 +13519,12 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // 강제로 스타일 재적용
         benefitsSection.offsetHeight; // 리플로우 강제 트리거
+      }
+      
+      // 네오 필라테스 정보 박스 위치 조정
+      const neoPilatesInfoBox = document.getElementById('neo-pilates-info-box');
+      if (neoPilatesInfoBox && window.innerWidth <= 768) {
+        neoPilatesInfoBox.style.setProperty('margin-top', '114px', 'important');
       }
       
       // 모바일에서 비용 회수 텍스트 강제 우측 이동 - transform 사용
