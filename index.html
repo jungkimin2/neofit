@@ -9482,12 +9482,11 @@ document.addEventListener('DOMContentLoaded', function() {
   html body section#benefits,
   section#benefits.section.animate-on-scroll {
     margin-top: 0px !important;
-    padding-top: 224px !important;
+    transform: translateY(192px) !important;
+    -webkit-transform: translateY(192px) !important;
     position: relative !important;
     z-index: 9999 !important;
-    padding-left: 16px !important;
-    padding-right: 16px !important;
-    padding-bottom: 100px !important;
+    padding: 200px 16px 100px 16px !important;
   }
   
   #benefits h2,
@@ -11994,9 +11993,9 @@ document.addEventListener('DOMContentLoaded', function() {
        overflow: hidden !important;
      }
      
-     /* "시설 정보 및 위치 안내" 섹션 5칸 아래로 이동 */
+     /* "시설 정보 및 위치 안내" 섹션 - 안전하게 조정 */
      section#benefits {
-       margin-top: 0px !important;
+       margin-top: -450px !important;  /* 조금만 위로 */
        position: relative !important;
        z-index: 10 !important;
        background: #000 !important;
@@ -13361,7 +13360,8 @@ document.addEventListener('DOMContentLoaded', function() {
           { selector: '.mobile-system-box-wrapper', transform: 'translateY(-164px)' },
           { selector: '#smart', transform: 'translateY(-240px)' },
           { selector: '#hive', transform: 'translateY(-196px)' },
-          { selector: '#neo-pilates', transform: 'translateY(64px)' }
+          { selector: '#neo-pilates', transform: 'translateY(144px)' },
+          { selector: '#benefits', transform: 'translateY(192px)' }
       ];
       
       elements.forEach(({ selector, transform }) => {
