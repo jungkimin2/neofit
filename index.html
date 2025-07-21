@@ -5141,7 +5141,7 @@ if (window.innerWidth <= 768) {
       </div>
       
       <!-- 모바일에서 표시될 강사 정보 -->
-      <div class="mobile-pilates-info" style="display: none; text-align: center; margin-top: 60px; color: #fff;">
+      <div class="mobile-pilates-info" style="display: none; text-align: center; margin-top: 60px; color: #fff;" id="mobile-pilates-info">
         <h3 style="font-size: 1.3rem; margin-bottom: 10px;">
           <span class="mobile-instructor-title">전문 강사진</span>
         </h3>
@@ -5612,6 +5612,11 @@ if (window.innerWidth <= 768) {
     @media (max-width: 768px) {
       .neo-pilates-info-box {
         margin-top: 114px !important;  /* 82px + 32px(2칸) */
+      }
+      
+      /* 모바일에서 강사 정보 위치 조정 */
+      .mobile-pilates-info {
+        margin-top: 28px !important;  /* 60px - 32px(2칸) */
       }
     }
   </style>
