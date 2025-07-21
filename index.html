@@ -5408,7 +5408,7 @@ if (window.innerWidth <= 768) {
       body #neo-pilates > div > div:first-child p,
       html body #neo-pilates > div > div:first-child p,
       #neo-pilates .container > div:first-child p {
-        margin-top: 56px !important;  /* 3.5칸(56px) 아래로 이동 */
+        margin-top: 10px !important;  /* 위쪽 여백 줄여서 제목과 가깝게 */
         position: relative !important;
         transform: translateY(0) !important;
       }
@@ -5417,8 +5417,9 @@ if (window.innerWidth <= 768) {
       body #neo-pilates h2,
       html body #neo-pilates h2 {
         line-height: 1.1 !important;  /* 줄 간격 축소 */
-        margin-top: 32px !important;  /* 2칸(32px) 아래로 이동 - 기존 16px에서 32px로 변경 */
+        margin-top: 56px !important;  /* 3.5칸(56px) 아래로 이동 - 기존 32px에서 56px로 변경 */
         position: relative !important;
+        margin-bottom: 0px !important;  /* 아래 여백 제거 */
       }
       
       body #neo-pilates h2 span:last-child,
@@ -5438,7 +5439,8 @@ if (window.innerWidth <= 768) {
       
       #neo-pilates h2 {
         font-size: 1.8rem !important;
-        margin-top: 32px !important;  /* 2칸(32px) 아래로 이동 */
+        margin-top: 56px !important;  /* 3.5칸(56px) 아래로 이동 */
+        margin-bottom: 0px !important;  /* 아래 여백 제거 */
       }
       
       #neo-pilates h2 span:last-child {
@@ -5454,7 +5456,7 @@ if (window.innerWidth <= 768) {
       #neo-pilates > div > div:first-child p {
         font-size: 1rem !important;
         padding: 0 20px;
-        margin-top: 56px !important;  /* 3.5칸(56px) 아래로 이동 - 기존 32px + 24px 추가 */
+        margin-top: 10px !important;  /* 위쪽 여백 줄여서 제목과 가깝게 */
       }
       
       /* 모바일에서 필라테스 캐러셀을 다시 구성 */
