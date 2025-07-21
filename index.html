@@ -11998,14 +11998,10 @@ document.addEventListener('DOMContentLoaded', function() {
        overflow: hidden !important;
      }
      
-     /* "시설 정보 및 위치 안내" 섹션 - 여백 위에 겹쳐지도록 */
+     /* "시설 정보 및 위치 안내" 섹션 8칸 아래로 이동 */
      section#benefits {
        margin-top: 0px !important;
-       position: absolute !important;
-       bottom: 272px !important;
-       left: 0 !important;
-       right: 0 !important;
-       width: 100% !important;
+       position: relative !important;
        z-index: 10 !important;
        background: #000 !important;
        padding-top: 112px !important;  /* 32px 추가하여 내부 콘텐츠도 함께 아래로 이동 */
@@ -13369,7 +13365,8 @@ document.addEventListener('DOMContentLoaded', function() {
           { selector: '.mobile-system-box-wrapper', transform: 'translateY(-164px)' },
           { selector: '#smart', transform: 'translateY(-240px)' },
           { selector: '#hive', transform: 'translateY(-196px)' },
-          { selector: '#neo-pilates', transform: 'translateY(144px)' }
+          { selector: '#neo-pilates', transform: 'translateY(144px)' },
+          { selector: '#benefits', transform: 'translateY(272px)' }
       ];
       
       elements.forEach(({ selector, transform }) => {
