@@ -5175,31 +5175,13 @@ if (window.innerWidth <= 768) {
       const indicators = document.querySelectorAll('.pilates-indicator');
       let autoRotateInterval;
       
-      // 모바일에서만 초기 위치 설정
-      if (isMobile && cards.length >= 3) {
-        cards[0].style.cssText = 'position: absolute !important; left: 50% !important; right: auto !important; transform: translate(-50%, -50%) !important; z-index: 10000 !important; opacity: 1 !important; top: 50% !important; width: 300px !important; height: 400px !important; transition: all 0.3s ease !important;';
-        cards[1].style.cssText = 'position: absolute !important; left: -40% !important; right: auto !important; transform: translateY(-50%) scale(0.85) rotateY(25deg) !important; z-index: 50 !important; opacity: 1 !important; top: 50% !important; width: 300px !important; height: 400px !important; transition: all 0.3s ease !important; transform-style: preserve-3d !important;';
-        cards[2].style.cssText = 'position: absolute !important; left: auto !important; right: -40% !important; transform: translateY(-50%) scale(0.85) rotateY(-25deg) !important; z-index: 50 !important; opacity: 1 !important; top: 50% !important; width: 300px !important; height: 400px !important; transition: all 0.3s ease !important; transform-style: preserve-3d !important;';
-      }
+      // 모바일에서는 CSS로만 제어, JavaScript 초기 설정 제거
       
       // 카드 위치 업데이트
       function updateCarousel() {
         if (isMobile) {
-          // 모바일에서의 카드 배치
-          cards.forEach((card, index) => {
-            const offset = (index - currentIndex + 3) % 3;
-            
-            if (offset === 0) {
-              // 중앙 카드
-              card.style.cssText = 'position: absolute !important; left: 50% !important; right: auto !important; transform: translate(-50%, -50%) !important; z-index: 10000 !important; opacity: 1 !important; top: 50% !important; width: 300px !important; height: 400px !important; transition: all 0.3s ease !important;';
-            } else if (offset === 1) {
-              // 오른쪽 카드
-              card.style.cssText = 'position: absolute !important; left: auto !important; right: -40% !important; transform: translateY(-50%) scale(0.85) rotateY(-25deg) !important; z-index: 50 !important; opacity: 1 !important; top: 50% !important; width: 300px !important; height: 400px !important; transition: all 0.3s ease !important; transform-style: preserve-3d !important;';
-            } else {
-              // 왼쪽 카드
-              card.style.cssText = 'position: absolute !important; left: -40% !important; right: auto !important; transform: translateY(-50%) scale(0.85) rotateY(25deg) !important; z-index: 50 !important; opacity: 1 !important; top: 50% !important; width: 300px !important; height: 400px !important; transition: all 0.3s ease !important; transform-style: preserve-3d !important;';
-            }
-          });
+          // 모바일에서는 updateCarousel 실행하지 않음 - CSS로만 제어
+          return;
         } else {
           // PC에서의 카드 배치
           cards.forEach((card, index) => {
@@ -5364,13 +5346,75 @@ if (window.innerWidth <= 768) {
         });
       });
       
+      // 모바일 전용 슬라이드 함수
+      function mobileSlide() {
+        cards.forEach((card, index) => {
+          const offset = (index - currentIndex + 3) % 3;
+          
+          if (offset === 0) {
+            // 중앙 카드
+            card.setAttribute('data-position', 'center');
+            card.style.cssText = 'position: absolute !important; left: 50% !important; right: auto !important; top: 50% !important; transform: translate(-50%, -50%) !important; z-index: 10000 !important; opacity: 1 !important; width: 300px !important; height: 400px !important; transition: all 0.3s ease !important;';
+          } else if (offset === 1) {
+            // 오른쪽 카드
+            card.setAttribute('data-position', 'right');
+            card.style.cssText = 'position: absolute !important; left: auto !important; right: -40% !important; top: 50% !important; transform: translateY(-50%) scale(0.85) rotateY(-25deg) !important; z-index: 50 !important; opacity: 1 !important; width: 300px !important; height: 400px !important; transition: all 0.3s ease !important; transform-style: preserve-3d !important;';
+          } else {
+            // 왼쪽 카드
+            card.setAttribute('data-position', 'left');
+            card.style.cssText = 'position: absolute !important; left: -40% !important; right: auto !important; top: 50% !important; transform: translateY(-50%) scale(0.85) rotateY(25deg) !important; z-index: 50 !important; opacity: 1 !important; width: 300px !important; height: 400px !important; transition: all 0.3s ease !important; transform-style: preserve-3d !important;';
+          }
+        });
+        
+        // 인디케이터 업데이트
+        indicators.forEach((indicator, index) => {
+          if (index === currentIndex) {
+            indicator.classList.add('active');
+            if (currentIndex === 0) {
+              indicator.style.background = '#e293ef';
+              indicator.style.boxShadow = '0 0 8px rgba(226,147,239,0.6)';
+            } else if (currentIndex === 1) {
+              indicator.style.background = '#00BFFF';
+              indicator.style.boxShadow = '0 0 8px rgba(0,191,255,0.6)';
+            } else {
+              indicator.style.background = '#7BE495';
+              indicator.style.boxShadow = '0 0 8px rgba(123,228,149,0.6)';
+            }
+          } else {
+            indicator.classList.remove('active');
+            indicator.style.background = 'rgba(123,228,149,0.3)';
+            indicator.style.boxShadow = 'none';
+          }
+        });
+        
+        // 모바일 강사 정보 업데이트
+        const titleEl = document.querySelector('.mobile-instructor-title');
+        const descEl = document.querySelector('.mobile-instructor-desc');
+        
+        if (titleEl && descEl) {
+          if (currentIndex === 0) {
+            titleEl.textContent = '전문 강사진';
+            titleEl.style.color = '#e293ef';
+            descEl.innerHTML = '체계적인 커리큘럼으로<br>개인별 맞춤 지도';
+          } else if (currentIndex === 1) {
+            titleEl.textContent = '그룹 시너지';
+            titleEl.style.color = '#00BFFF';
+            descEl.innerHTML = '함께하는 운동의 즐거움<br>동기부여와 성취감';
+          } else {
+            titleEl.textContent = '정밀한 운동';
+            titleEl.style.color = '#7BE495';
+            descEl.innerHTML = '최신 기구로 정확한 자세<br>효과적인 근력 강화';
+          }
+        }
+      }
+      
       // 카드 클릭
       cards.forEach((card, index) => {
         card.addEventListener('click', () => {
           // 모바일에서는 모든 카드 클릭 시 해당 카드를 중앙으로 이동
           if (isMobile) {
             currentIndex = index;
-            updateCarousel();
+            mobileSlide();
             stopAutoRotate();
           } else if (index !== currentIndex) {
             currentIndex = index;
@@ -5410,7 +5454,9 @@ if (window.innerWidth <= 768) {
       // startAutoRotate();
       
       // 초기 캐러셀 상태 설정
-      updateCarousel();
+      if (!isMobile) {
+        updateCarousel();
+      }
       
       // 모바일에서 추가 최적화
       if (isMobile) {
