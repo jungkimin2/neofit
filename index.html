@@ -5417,40 +5417,11 @@ if (window.innerWidth <= 768) {
       // 초기 캐러셀 상태 설정
       updateCarousel();
       
-      // 모바일에서 z-index 강제 적용
+      // 모바일에서 추가 최적화
       if (isMobile) {
-        // z-index 강제 적용 함수
-        function enforceZIndex() {
-          cards.forEach((card, index) => {
-            const offset = (index - currentIndex + 3) % 3;
-            if (offset === 0) {
-              // 중앙 카드
-              card.style.setProperty('z-index', '10000', 'important');
-            } else {
-              // 좌우 카드
-              card.style.setProperty('z-index', '50', 'important');
-            }
-          });
-        }
-        
-        // 초기 적용
-        enforceZIndex();
-        
-        // 컨테이너 다시 찾기
-        const carouselContainer = document.querySelector('.pilates-carousel-container');
-        if (carouselContainer) {
-          const observer = new MutationObserver(() => {
-            enforceZIndex();
-          });
-          observer.observe(carouselContainer, { childList: true, subtree: true, attributes: true, attributeFilter: ['style'] });
-        }
-        
         // 터치 이벤트 보강
         cards.forEach((card) => {
           card.style.pointerEvents = 'auto';
-          card.addEventListener('touchstart', (e) => {
-            e.stopPropagation();
-          }, { passive: true });
         });
       }
       
