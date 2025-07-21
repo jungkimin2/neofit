@@ -5167,6 +5167,9 @@ if (window.innerWidth <= 768) {
   <script>
     // 필라테스 캐러셀 기능 - 간단한 버전
     (function() {
+      // 새로운 코드와 충돌 방지를 위해 비활성화
+      return;
+      
       // 모바일 체크
       const isMobile = window.innerWidth <= 768;
       
@@ -5371,7 +5374,9 @@ if (window.innerWidth <= 768) {
       
       // 인디케이터 클릭
       indicators.forEach((indicator, index) => {
-        indicator.addEventListener('click', () => {
+        indicator.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
           currentIndex = index;
           updateCarousel();
         });
@@ -5538,6 +5543,11 @@ if (window.innerWidth <= 768) {
         z-index: 200 !important;
       }
       
+      /* 필라테스 섹션의 transform 고정 */
+      #neo-pilates {
+        transform: translateY(144px) !important;
+      }
+      
       .pilates-indicator {
         width: 10px !important;
         height: 10px !important;
@@ -5638,24 +5648,37 @@ if (window.innerWidth <= 768) {
             card.style.setProperty('top', '50%', 'important');
           } else if (position === 1) {
             // 왼쪽 카드
-            card.style.setProperty('left', '18%', 'important');
+            card.style.setProperty('left', '15%', 'important');
             card.style.setProperty('transform', 'translate(-50%, -50%) scale(0.85) rotateY(15deg)', 'important');
             card.style.setProperty('z-index', '10', 'important');
-            card.style.setProperty('opacity', '0.95', 'important');
+            card.style.setProperty('opacity', '1', 'important');
             card.style.setProperty('width', '280px', 'important');
             card.style.setProperty('height', '360px', 'important');
             card.style.setProperty('position', 'absolute', 'important');
             card.style.setProperty('top', '50%', 'important');
           } else {
             // 오른쪽 카드
-            card.style.setProperty('left', '82%', 'important');
+            card.style.setProperty('left', '85%', 'important');
             card.style.setProperty('transform', 'translate(-50%, -50%) scale(0.85) rotateY(-15deg)', 'important');
             card.style.setProperty('z-index', '10', 'important');
-            card.style.setProperty('opacity', '0.95', 'important');
+            card.style.setProperty('opacity', '1', 'important');
             card.style.setProperty('width', '280px', 'important');
             card.style.setProperty('height', '360px', 'important');
             card.style.setProperty('position', 'absolute', 'important');
             card.style.setProperty('top', '50%', 'important');
+          }
+        });
+        
+        // 인디케이터 업데이트
+        const indicators = document.querySelectorAll('.pilates-indicator');
+        const centerIndex = positions.indexOf(0);
+        indicators.forEach((indicator, index) => {
+          if (index === centerIndex) {
+            indicator.style.background = ['#e293ef', '#00BFFF', '#7BE495'][centerIndex];
+            indicator.style.boxShadow = `0 0 8px ${['rgba(226,147,239,0.6)', 'rgba(0,191,255,0.6)', 'rgba(123,228,149,0.6)'][centerIndex]}`;
+          } else {
+            indicator.style.background = 'rgba(123,228,149,0.3)';
+            indicator.style.boxShadow = 'none';
           }
         });
       }
@@ -5682,22 +5705,31 @@ if (window.innerWidth <= 768) {
         });
       });
       
-      // 초기 설정 - 김하정 강사(인덱스 1)를 중앙에 배치
-      positions = [1, 2, 0]; // 김하정이 중앙, 다른 카드들이 좌우에
-      
-      // 초기 설정 전에 모든 카드의 transition 제거
-      pilatesCards.forEach(card => {
-        card.style.setProperty('transition', 'none', 'important');
+      // 인디케이터 클릭 이벤트 추가
+      const indicators = document.querySelectorAll('.pilates-indicator');
+      indicators.forEach((indicator, targetIndex) => {
+        indicator.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          
+          // 현재 중앙에 있는 카드의 인덱스 찾기
+          const currentCenterIndex = positions.indexOf(0);
+          
+          // 타겟 카드를 중앙으로 이동
+          if (currentCenterIndex !== targetIndex) {
+            // 위치 교체
+            const targetPosition = positions[targetIndex];
+            positions[currentCenterIndex] = targetPosition;
+            positions[targetIndex] = 0;
+            
+            updatePilatesCards(true); // 애니메이션 활성화
+          }
+        });
       });
       
+      // 초기 설정 - 김하정 강사(인덱스 1)를 중앙에 배치
+      positions = [1, 2, 0]; // 김하정이 중앙, 다른 카드들이 좌우에
       updatePilatesCards(false); // 초기 설정은 애니메이션 없이
-      
-      // 약간의 딜레이 후 transition 활성화 준비
-      setTimeout(() => {
-        pilatesCards.forEach(card => {
-          card.style.removeProperty('transition');
-        });
-      }, 100);
       
       // 스크롤 이벤트 시 카드 위치만 유지 (섹션은 건드리지 않음)
       let isScrolling = false;
@@ -5711,10 +5743,10 @@ if (window.innerWidth <= 768) {
             card.style.setProperty('left', '50%', 'important');
             card.style.setProperty('transform', 'translate(-50%, -50%) scale(1) rotateY(0deg)', 'important');
           } else if (currentPosition === '1') {
-            card.style.setProperty('left', '18%', 'important');
+            card.style.setProperty('left', '15%', 'important');
             card.style.setProperty('transform', 'translate(-50%, -50%) scale(0.85) rotateY(15deg)', 'important');
           } else if (currentPosition === '2') {
-            card.style.setProperty('left', '82%', 'important');
+            card.style.setProperty('left', '85%', 'important');
             card.style.setProperty('transform', 'translate(-50%, -50%) scale(0.85) rotateY(-15deg)', 'important');
           }
         });
