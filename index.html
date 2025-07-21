@@ -5152,7 +5152,7 @@ if (window.innerWidth <= 768) {
     </div>
     
     <!-- 추가 정보 -->
-    <div style="text-align: center; margin-top: 82px; padding: 40px; background: rgba(123,228,149,0.05); border-radius: 20px; border: 1px solid rgba(123,228,149,0.2);">
+    <div style="text-align: center; margin-top: 82px; padding: 40px; background: rgba(123,228,149,0.05); border-radius: 20px; border: 1px solid rgba(123,228,149,0.2);" class="neo-pilates-info-box">
       <p style="color: #7BE495; font-size: 1.3rem; font-weight: 600; margin-bottom: 15px;">
         네오 필라테스와 함께 새로운 운동 경험을 시작하세요
       </p>
@@ -5605,6 +5605,13 @@ if (window.innerWidth <= 768) {
       
       #neo-pilates > div > div:last-child p:last-child {
         font-size: 0.9rem !important;
+      }
+    }
+    
+    /* 모바일에서 네오 필라테스 정보 박스 위치 조정 */
+    @media (max-width: 768px) {
+      .neo-pilates-info-box {
+        margin-top: 114px !important;  /* 82px + 32px(2칸) */
       }
     }
   </style>
