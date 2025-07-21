@@ -5683,6 +5683,13 @@ if (window.innerWidth <= 768) {
       let isScrolling = false;
       window.addEventListener('scroll', function() {
         isScrolling = true;
+        
+        // 필라테스 섹션의 transform 고정
+        const pilatesSection = document.getElementById('neo-pilates');
+        if (pilatesSection) {
+          pilatesSection.style.setProperty('transform', 'translateY(144px)', 'important');
+        }
+        
         // 스크롤 중에는 카드 위치 고정
         pilatesCards.forEach((card) => {
           const currentPosition = card.getAttribute('data-position');
@@ -5702,6 +5709,21 @@ if (window.innerWidth <= 768) {
           isScrolling = false;
         }, 100);
       });
+      
+      // 애니메이션 프레임마다 위치 강제 고정
+      function maintainPositions() {
+        if (window.innerWidth <= 768) {
+          const pilatesSection = document.getElementById('neo-pilates');
+          if (pilatesSection) {
+            const currentTransform = pilatesSection.style.transform;
+            if (!currentTransform.includes('translateY(144px)')) {
+              pilatesSection.style.setProperty('transform', 'translateY(144px)', 'important');
+            }
+          }
+        }
+        requestAnimationFrame(maintainPositions);
+      }
+      maintainPositions();
     }
   });
   </script>
@@ -7824,6 +7846,14 @@ if (window.innerWidth <= 768) {
   });
 
   document.querySelectorAll(".animate-on-scroll, .section.animate-on-scroll, .slide-in-left, .slide-in-right, .feature-item").forEach(el => {
+    // 필라테스 섹션은 스크롤 애니메이션에서 제외
+    if (el.id === 'neo-pilates' || el.closest('#neo-pilates')) {
+      el.classList.add("visible");
+      el.style.opacity = "1";
+      // transform은 변경하지 않음 (기존 값 유지)
+      return;
+    }
+    
     // 모바일에서는 초기부터 visible 클래스 추가
     if (window.innerWidth <= 768) {
       el.classList.add("visible");
