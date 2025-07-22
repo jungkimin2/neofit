@@ -5554,6 +5554,50 @@ if (window.innerWidth <= 768) {
   document.addEventListener('DOMContentLoaded', function() {
     // 모바일에서만 실행
     if (window.innerWidth <= 768) {
+      // 필라테스 섹션의 transform 고정
+      const pilatesSection = document.getElementById('neo-pilates');
+      if (pilatesSection) {
+        // 초기 transform 설정
+        pilatesSection.style.transform = 'translateY(144px)';
+        pilatesSection.style.webkitTransform = 'translateY(144px)';
+        
+        // MutationObserver로 transform 변경 감지 및 차단
+        const observer = new MutationObserver(function(mutations) {
+          mutations.forEach(function(mutation) {
+            if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
+              const currentTransform = pilatesSection.style.transform;
+              if (currentTransform !== 'translateY(144px)') {
+                pilatesSection.style.transform = 'translateY(144px)';
+                pilatesSection.style.webkitTransform = 'translateY(144px)';
+              }
+            }
+          });
+        });
+        
+        observer.observe(pilatesSection, {
+          attributes: true,
+          attributeFilter: ['style']
+        });
+        
+        // 스크롤 이벤트에서도 transform 고정
+        window.addEventListener('scroll', function() {
+          if (pilatesSection) {
+            pilatesSection.style.transform = 'translateY(144px)';
+            pilatesSection.style.webkitTransform = 'translateY(144px)';
+          }
+        });
+        
+        // requestAnimationFrame을 사용한 추가 보호
+        function maintainPosition() {
+          if (pilatesSection) {
+            pilatesSection.style.transform = 'translateY(144px)';
+            pilatesSection.style.webkitTransform = 'translateY(144px)';
+          }
+          requestAnimationFrame(maintainPosition);
+        }
+        maintainPosition();
+      }
+      
       const pilatesCards = document.querySelectorAll('.pilates-card');
       let positions = [0, 1, 2]; // 카드 위치 인덱스 (중앙, 왼쪽, 오른쪽)
       
