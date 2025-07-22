@@ -1519,9 +1519,11 @@ section {
       perspective: 1000px !important;
     }
     
-    /* PC 필라테스 카드 모바일에서 숨기기 */
+    /* 모바일에서도 필라테스 컨테이너 표시 */
     .pilates-carousel-container {
       display: block !important;
+      perspective: 1000px !important;
+      transform-style: preserve-3d !important;
     }
     
     /* 모바일에서 필라테스 카드 표시 및 3D 효과 */
@@ -5577,10 +5579,18 @@ if (window.innerWidth <= 768) {
   
   <!-- 모바일 필라테스 카드 클릭 이벤트 -->
   <script>
-  document.addEventListener('DOMContentLoaded', function() {
+  (function() {
     // 모바일에서만 실행
     if (window.innerWidth <= 768) {
+      // DOM 요소들이 준비될 때까지 대기
+      function waitForElements() {
       const pilatesCards = document.querySelectorAll('.pilates-card');
+      if (pilatesCards.length === 0) {
+        // 요소가 아직 없으면 재시도
+        setTimeout(waitForElements, 10);
+        return;
+      }
+      
       let positions = [0, 1, 2]; // 카드 위치 인덱스 (중앙, 왼쪽, 오른쪽)
       
       // 카드 위치 업데이트 함수
@@ -5713,18 +5723,7 @@ if (window.innerWidth <= 768) {
       // 초기 설정 - 첫 번째 카드를 중앙에 배치
       positions = [0, 1, 2]; // 첫 번째 카드가 중앙
       
-      // 모바일에서 PC 스타일 제거하고 모바일 스타일 적용
-      pilatesCards.forEach(card => {
-        // PC 인라인 스타일 제거
-        card.style.removeProperty('left');
-        card.style.removeProperty('top');
-        card.style.removeProperty('transform');
-        card.style.removeProperty('width');
-        card.style.removeProperty('height');
-        card.style.removeProperty('z-index');
-        card.style.removeProperty('opacity');
-      });
-      
+      // 즉시 3D 효과 적용
       updatePilatesCards(false); // 초기 설정은 애니메이션 없이
       
       // 약간의 지연 후 transition 활성화 (초기 위치 설정 완료 보장)
@@ -5775,8 +5774,12 @@ if (window.innerWidth <= 768) {
         }, 100);
       });
       } // PC only
+      } // waitForElements end
+      
+      // 초기화 시작
+      waitForElements();
     }
-  });
+  })();
   </script>
 </section>
 
