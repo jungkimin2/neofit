@@ -12420,11 +12420,11 @@ document.addEventListener('DOMContentLoaded', function() {
      
      /* "시설 정보 및 위치 안내" 섹션 위치 조정 */
      section#benefits {
-       margin-top: -472px !important;  /* 5칸(80px) 아래로 조정 */
+       margin-top: -408px !important;  /* -472px + 64px(4칸) = -408px (위로 4칸 이동) */
        position: relative !important;
        z-index: 10 !important;
        background: #000 !important;
-       padding-top: 112px !important;  /* 32px 추가하여 내부 콘텐츠도 함께 아래로 이동 */
+       padding-top: 48px !important;  /* 112px - 64px(4칸) = 48px */
      }
      
      section#benefits .container {
