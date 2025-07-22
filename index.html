@@ -5079,7 +5079,7 @@ if (window.innerWidth <= 768) {
 </section>
 
 <!-- 네오 필라테스 섹션 -->
-<section id="neo-pilates" class="section animate-on-scroll mobile-transform-target" style="background: #000; padding: 16px 20px 80px 20px;">
+<section id="neo-pilates" class="section animate-on-scroll" style="background: #000; padding: 16px 20px 80px 20px;">
   <div class="container" style="max-width: 1200px; margin: 0 auto;">
     <!-- 제목과 설명 -->
     <div style="text-align: center; margin-bottom: 5px; margin-top: 48px;">
@@ -5358,9 +5358,17 @@ if (window.innerWidth <= 768) {
       #neo-pilates {
         margin-top: 0px !important;
         transform: translateY(144px) !important;
+        -webkit-transform: translateY(144px) !important;
         position: relative !important;
         padding: 16px 16px 120px 16px !important;
         z-index: 10 !important;
+        will-change: auto !important;
+      }
+      
+      /* 스크롤 시에도 위치 절대 고정 */
+      #neo-pilates[style*="transform"] {
+        transform: translateY(144px) !important;
+        -webkit-transform: translateY(144px) !important;
       }
       
       #neo-pilates h2 {
@@ -5466,6 +5474,13 @@ if (window.innerWidth <= 768) {
       
       /* 필라테스 섹션의 transform 고정 */
       #neo-pilates {
+        transform: translateY(144px) !important;
+        position: relative !important;
+        will-change: auto !important;
+      }
+      
+      /* 스크롤 시에도 위치 고정 */
+      body.scrolling #neo-pilates {
         transform: translateY(144px) !important;
       }
       
@@ -14043,8 +14058,16 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   /* JavaScript로 설정되는 인라인 스타일도 override */
-  section#neo-pilates.section.animate-on-scroll.mobile-transform-target {
+  section#neo-pilates.section.animate-on-scroll {
     margin-top: 0px !important;
+    transform: translateY(144px) !important;
+    -webkit-transform: translateY(144px) !important;
+  }
+  
+  /* 모든 경우에 대해 transform 고정 */
+  #neo-pilates,
+  #neo-pilates[style],
+  #neo-pilates.section {
     transform: translateY(144px) !important;
     -webkit-transform: translateY(144px) !important;
   }
