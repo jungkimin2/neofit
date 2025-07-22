@@ -5427,7 +5427,7 @@ if (window.innerWidth <= 768) {
         overflow: visible !important;
         padding: 0 !important;  /* 패딩 제거 */
         margin: 0 auto !important;
-        margin-top: 40px !important;  /* 위쪽 여백 조정 */
+        margin-top: 120px !important;  /* 40px에서 120px로 변경 (5칸 = 80px 추가) */
         perspective: 1200px !important;
         position: relative !important;
         width: 100% !important;
@@ -13954,10 +13954,26 @@ document.addEventListener('DOMContentLoaded', function() {
       
       // 네오 필라테스 정보 박스 위치 조정 - 스크롤 점프 방지
       const neoPilatesInfoBox = document.getElementById('neo-pilates-info-box');
-      if (neoPilatesInfoBox && window.innerWidth <= 768) {
-        // margin-top 설정 제거하여 스크롤 점프 방지
+      const neoPilatesSection = document.getElementById('neo-pilates');
+      if (neoPilatesInfoBox && neoPilatesSection && window.innerWidth <= 768) {
+        // 스크롤 점프 방지 설정
         neoPilatesInfoBox.style.scrollBehavior = 'auto';
         neoPilatesInfoBox.style.scrollSnapType = 'none';
+        neoPilatesInfoBox.style.scrollMarginTop = '0';
+        neoPilatesInfoBox.style.scrollSnapAlign = 'none';
+        
+        // 섹션 전체 스크롤 동작 수정
+        neoPilatesSection.style.scrollSnapType = 'none';
+        neoPilatesSection.style.scrollBehavior = 'auto';
+        neoPilatesSection.style.scrollSnapAlign = 'none';
+        neoPilatesSection.style.scrollMarginTop = '0';
+        
+        // IntersectionObserver 비활성화
+        neoPilatesSection.classList.remove('animate-on-scroll');
+        
+        // position 안정화
+        neoPilatesInfoBox.style.position = 'relative';
+        neoPilatesInfoBox.style.willChange = 'auto';
       }
       
       // 모바일에서 비용 회수 텍스트 강제 우측 이동 - transform 사용
