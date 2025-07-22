@@ -5561,23 +5561,21 @@ if (window.innerWidth <= 768) {
   document.addEventListener('DOMContentLoaded', function() {
     // 모바일에서만 실행
     if (window.innerWidth <= 768) {
-      // 필라테스 섹션의 위치 고정
+      // 필라테스 섹션의 transform 고정
       const pilatesSection = document.getElementById('neo-pilates');
       if (pilatesSection) {
-        // 초기 설정 - transform 제거하고 margin-top만 사용
-        pilatesSection.style.transform = 'none';
-        pilatesSection.style.webkitTransform = 'none';
-        pilatesSection.style.marginTop = '144px';
+        // 초기 transform 설정
+        pilatesSection.style.transform = 'translateY(144px)';
+        pilatesSection.style.webkitTransform = 'translateY(144px)';
         
-        // MutationObserver로 스타일 변경 감지 및 차단
+        // MutationObserver로 transform 변경 감지 및 차단
         const observer = new MutationObserver(function(mutations) {
           mutations.forEach(function(mutation) {
             if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
-              // transform이 설정되면 제거
-              if (pilatesSection.style.transform && pilatesSection.style.transform !== 'none') {
-                pilatesSection.style.transform = 'none';
-                pilatesSection.style.webkitTransform = 'none';
-                pilatesSection.style.marginTop = '144px';
+              const currentTransform = pilatesSection.style.transform;
+              if (currentTransform !== 'translateY(144px)') {
+                pilatesSection.style.transform = 'translateY(144px)';
+                pilatesSection.style.webkitTransform = 'translateY(144px)';
               }
             }
           });
@@ -5587,6 +5585,24 @@ if (window.innerWidth <= 768) {
           attributes: true,
           attributeFilter: ['style']
         });
+        
+        // 스크롤 이벤트에서도 transform 고정
+        window.addEventListener('scroll', function() {
+          if (pilatesSection) {
+            pilatesSection.style.transform = 'translateY(144px)';
+            pilatesSection.style.webkitTransform = 'translateY(144px)';
+          }
+        });
+        
+        // requestAnimationFrame을 사용한 추가 보호
+        function maintainPosition() {
+          if (pilatesSection) {
+            pilatesSection.style.transform = 'translateY(144px)';
+            pilatesSection.style.webkitTransform = 'translateY(144px)';
+          }
+          requestAnimationFrame(maintainPosition);
+        }
+        maintainPosition();
       }
       
       const pilatesCards = document.querySelectorAll('.pilates-card');
