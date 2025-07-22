@@ -5356,20 +5356,23 @@ if (window.innerWidth <= 768) {
       body section#neo-pilates,
       html body section#neo-pilates,
       #neo-pilates {
-        margin-top: 144px !important;
+        margin-top: 80px !important;
         transform: none !important;
         -webkit-transform: none !important;
         position: relative !important;
         padding: 16px 16px 120px 16px !important;
         z-index: 10 !important;
         will-change: auto !important;
+        min-height: 100vh !important;
+        display: flex !important;
+        align-items: center !important;
       }
       
       /* transform이 설정되어도 무시하고 margin-top 사용 */
       #neo-pilates[style*="transform"] {
         transform: none !important;
         -webkit-transform: none !important;
-        margin-top: 144px !important;
+        margin-top: 80px !important;
       }
       
       #neo-pilates h2 {
@@ -5398,10 +5401,12 @@ if (window.innerWidth <= 768) {
       .pilates-carousel-container {
         height: 420px !important;
         overflow: visible !important;
-        padding: 0 40px !important;  /* 좌우 패딩 추가로 카드가 잘리지 않게 */
-        margin-top: -28px !important;  /* -44px에서 -28px로 변경 (1칸 아래로) */
+        padding: 0 !important;  /* 패딩 제거 */
+        margin: 0 auto !important;
+        margin-top: 40px !important;  /* 위쪽 여백 조정 */
         perspective: 1200px !important;
         position: relative !important;
+        width: 100% !important;
       }
       
       .pilates-carousel {
@@ -5416,18 +5421,35 @@ if (window.innerWidth <= 768) {
       
       .pilates-card {
         position: absolute !important;
-        width: 300px !important;
-        height: 400px !important;
-        transform: none !important;
+        width: 280px !important;
+        height: 360px !important;
         top: 50% !important;
         pointer-events: auto !important;
         cursor: pointer !important;
-        /* transition은 JavaScript에서 제어 */
+        /* transform과 left는 JavaScript에서 설정 */
       }
       
-      /* 초기 위치는 JavaScript에서 즉시 설정 */
+      /* 카드 초기 위치 설정 - JavaScript 실행 전 기본값 */
+      .pilates-card:nth-child(1) {
+        left: 10% !important;
+        transform: translate(-50%, -50%) scale(0.7) rotateY(20deg) !important;
+        opacity: 0.9 !important;
+        z-index: 10 !important;
+      }
       
-      /* 모바일에서 카드는 JavaScript로 위치 제어 */
+      .pilates-card:nth-child(2) {
+        left: 50% !important;
+        transform: translate(-50%, -50%) scale(1) rotateY(0deg) !important;
+        opacity: 1 !important;
+        z-index: 100 !important;
+      }
+      
+      .pilates-card:nth-child(3) {
+        left: 90% !important;
+        transform: translate(-50%, -50%) scale(0.7) rotateY(-20deg) !important;
+        opacity: 0.9 !important;
+        z-index: 10 !important;
+      }
       
       /* 카드 내부 div 스타일 조정 */
       .pilates-card > div {
@@ -5473,13 +5495,17 @@ if (window.innerWidth <= 768) {
         z-index: 200 !important;
       }
       
-      /* 필라테스 섹션의 위치를 완전히 고정 - 가장 높은 우선순위 */
+      /* 필라테스 섹션의 위치를 화면 중앙에 고정 */
       #neo-pilates {
         transform: none !important;
         -webkit-transform: none !important;
         position: relative !important;
         will-change: auto !important;
-        margin-top: 144px !important;
+        margin-top: 80px !important;
+        min-height: 100vh !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
       }
       
       /* 스크롤이나 다른 상황에서도 위치 유지 */
@@ -5489,7 +5515,13 @@ if (window.innerWidth <= 768) {
       #neo-pilates[style] {
         transform: none !important;
         -webkit-transform: none !important;
-        margin-top: 144px !important;
+        margin-top: 80px !important;
+      }
+      
+      /* 컨테이너 중앙 정렬 */
+      #neo-pilates .container {
+        margin: 0 auto !important;
+        padding: 0 !important;
       }
       
       .pilates-indicator {
@@ -5568,7 +5600,10 @@ if (window.innerWidth <= 768) {
         // 초기 설정 - transform 제거하고 margin-top만 사용
         pilatesSection.style.transform = 'none';
         pilatesSection.style.webkitTransform = 'none';
-        pilatesSection.style.marginTop = '144px';
+        pilatesSection.style.marginTop = '80px';
+        pilatesSection.style.minHeight = '100vh';
+        pilatesSection.style.display = 'flex';
+        pilatesSection.style.alignItems = 'center';
         
         // MutationObserver로 스타일 변경 감지 및 차단
         const observer = new MutationObserver(function(mutations) {
@@ -5578,7 +5613,7 @@ if (window.innerWidth <= 768) {
               if (pilatesSection.style.transform && pilatesSection.style.transform !== 'none') {
                 pilatesSection.style.transform = 'none';
                 pilatesSection.style.webkitTransform = 'none';
-                pilatesSection.style.marginTop = '144px';
+                pilatesSection.style.marginTop = '80px';
               }
             }
           });
@@ -5716,15 +5751,19 @@ if (window.innerWidth <= 768) {
       
       // 초기 설정 - 김하정 강사(인덱스 1)를 중앙에 배치
       positions = [1, 2, 0]; // 김하정이 중앙, 다른 카드들이 좌우에
-      updatePilatesCards(false); // 초기 설정은 애니메이션 없이
       
-      // 초기 강사 정보 설정
-      const initialTitleEl = document.querySelector('.mobile-instructor-title');
-      const initialDescEl = document.querySelector('.mobile-instructor-desc');
-      if (initialTitleEl && initialDescEl) {
-        initialTitleEl.textContent = '최서현 강사';
-        initialDescEl.innerHTML = '그룹 시너지로<br>함께 성장해요';
-      }
+      // 초기 위치 즉시 설정 (DOM 로드 직후)
+      setTimeout(() => {
+        updatePilatesCards(false); // 초기 설정은 애니메이션 없이
+        
+        // 초기 강사 정보 설정
+        const initialTitleEl = document.querySelector('.mobile-instructor-title');
+        const initialDescEl = document.querySelector('.mobile-instructor-desc');
+        if (initialTitleEl && initialDescEl) {
+          initialTitleEl.textContent = '최서현 강사';
+          initialDescEl.innerHTML = '그룹 시너지로<br>함께 성장해요';
+        }
+      }, 0);
       
     }
   });
@@ -14083,19 +14122,21 @@ document.addEventListener('DOMContentLoaded', function() {
   section#neo-pilates[style],
   body #neo-pilates,
   html body #neo-pilates {
-    margin-top: 144px !important;
+    margin-top: 80px !important;
     transform: none !important;
     -webkit-transform: none !important;
     position: relative !important;
     z-index: 50 !important;
     padding-top: 20px !important;
     background: #000 !important;
-    display: block !important;
+    display: flex !important;
+    align-items: center !important;
+    min-height: 100vh !important;
   }
   
   /* JavaScript로 설정되는 인라인 스타일도 override */
   section#neo-pilates.section.animate-on-scroll {
-    margin-top: 144px !important;
+    margin-top: 80px !important;
     transform: none !important;
     -webkit-transform: none !important;
   }
@@ -14106,7 +14147,7 @@ document.addEventListener('DOMContentLoaded', function() {
   #neo-pilates.section {
     transform: none !important;
     -webkit-transform: none !important;
-    margin-top: 144px !important;
+    margin-top: 80px !important;
   }
   
   /* benefits 섹션의 하단 여백 추가 */
