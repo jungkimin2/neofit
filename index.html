@@ -1526,11 +1526,44 @@ section {
       transform-style: preserve-3d !important;
     }
     
-    /* 모바일에서 필라테스 카드 표시 및 3D 효과 */
+    /* 모바일에서 필라테스 카드 초기 3D 설정 */
     .pilates-card {
       display: block !important;
       opacity: 1 !important;
       visibility: visible !important;
+      position: absolute !important;
+      top: 50% !important;
+      width: 280px !important;
+      height: 360px !important;
+    }
+    
+    /* 초기 카드 위치 - 3D 효과 포함 */
+    /* 첫 번째 카드 - 중앙 */
+    .pilates-card:nth-child(1) {
+      left: 50% !important;
+      transform: translate(-50%, -50%) scale(1) rotateY(0deg) !important;
+      z-index: 100 !important;
+    }
+    
+    /* 두 번째 카드 - 왼쪽 */
+    .pilates-card:nth-child(2) {
+      left: 15% !important;
+      transform: translate(-50%, -50%) scale(0.85) rotateY(15deg) !important;
+      z-index: 10 !important;
+      opacity: 1 !important;
+    }
+    
+    /* 세 번째 카드 - 오른쪽 */
+    .pilates-card:nth-child(3) {
+      left: 85% !important;
+      transform: translate(-50%, -50%) scale(0.85) rotateY(-15deg) !important;
+      z-index: 10 !important;
+      opacity: 0.7 !important;
+    }
+    
+    /* 모든 transition 제거하여 처음부터 3D 형태로 */
+    .pilates-card {
+      transition: none !important;
     }
     
     /* 모든 상위 코드 제한 해제 */
@@ -5723,15 +5756,23 @@ if (window.innerWidth <= 768) {
       // 초기 설정 - 첫 번째 카드를 중앙에 배치
       positions = [0, 1, 2]; // 첫 번째 카드가 중앙
       
-      // 즉시 3D 효과 적용
-      updatePilatesCards(false); // 초기 설정은 애니메이션 없이
+      // CSS로 이미 배치되어 있으므로 data-position만 설정
+      pilatesCards.forEach((card, index) => {
+        card.setAttribute('data-position', positions[index]);
+        card.classList.add('mobile-initialized');
+      });
       
-      // 약간의 지연 후 transition 활성화 (초기 위치 설정 완료 보장)
+      // 약간의 지연 후 3D 효과 확실히 적용
+      setTimeout(() => {
+        updatePilatesCards(false); // 초기 설정은 애니메이션 없이
+      }, 50);
+      
+      // transition은 초기 세팅 후에만 활성화
       setTimeout(() => {
         pilatesCards.forEach(card => {
           card.style.setProperty('transition', 'left 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), z-index 0.8s cubic-bezier(0.4, 0, 0.2, 1)', 'important');
         });
-      }, 100);
+      }, 300); // 충분한 시간 후 transition 활성화
       
       // 초기 강사 정보 설정 - 첫 번째 카드
       const initialTitleEl = document.querySelector('.mobile-instructor-title');
