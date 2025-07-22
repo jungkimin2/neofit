@@ -5661,24 +5661,8 @@ if (window.innerWidth <= 768) {
         pilatesSection.style.display = 'flex';
         pilatesSection.style.alignItems = 'center';
         
-        // MutationObserver로 스타일 변경 감지 및 차단
-        const observer = new MutationObserver(function(mutations) {
-          mutations.forEach(function(mutation) {
-            if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
-              // transform이 설정되면 제거
-              if (pilatesSection.style.transform && pilatesSection.style.transform !== 'none') {
-                pilatesSection.style.transform = 'none';
-                pilatesSection.style.webkitTransform = 'none';
-                pilatesSection.style.marginTop = '80px';
-              }
-            }
-          });
-        });
-        
-        observer.observe(pilatesSection, {
-          attributes: true,
-          attributeFilter: ['style']
-        });
+        // 모바일에서는 MutationObserver 비활성화 - 스크롤 점프 방지
+        // MutationObserver가 스크롤 시 점프를 일으킬 수 있음
       }
       
       const pilatesCards = document.querySelectorAll('.pilates-card');
@@ -14398,6 +14382,30 @@ document.addEventListener('DOMContentLoaded', function() {
     transform: none !important;
     -webkit-transform: none !important;
     padding-top: 236px !important;
+  }
+  
+  /* 필라테스 강사 정보 박스 스크롤 점프 완전 방지 */
+  #neo-pilates-info-box,
+  .neo-pilates-info-box {
+    position: relative !important;
+    will-change: auto !important;
+    scroll-snap-align: none !important;
+    scroll-margin: 0 !important;
+    scroll-padding: 0 !important;
+    overflow: visible !important;
+  }
+  
+  /* 필라테스 섹션 전체 스크롤 안정화 */
+  #neo-pilates {
+    scroll-snap-type: none !important;
+    scroll-behavior: auto !important;
+    will-change: auto !important;
+  }
+  
+  /* 이 영역의 모든 자식 요소들도 스크롤 점프 방지 */
+  #neo-pilates * {
+    scroll-snap-align: none !important;
+    scroll-margin: 0 !important;
   }
 }
 </style>
