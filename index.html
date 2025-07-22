@@ -1514,22 +1514,21 @@ section {
       transition: none !important;
     }
     
-    /* 모바일 필라테스 카드 초기 위치 설정 */
-    .mobile-pilates-card {
-      opacity: 0 !important;
-      visibility: hidden !important;
+    /* 모바일 필라테스 슬라이더 기본 설정 */
+    .mobile-pilates-slider {
+      perspective: 1000px !important;
     }
     
-    .mobile-pilates-card.mobile-initialized {
+    /* PC 필라테스 카드 모바일에서 숨기기 */
+    .pilates-carousel-container {
+      display: block !important;
+    }
+    
+    /* 모바일에서 필라테스 카드 표시 및 3D 효과 */
+    .pilates-card {
+      display: block !important;
       opacity: 1 !important;
       visibility: visible !important;
-    }
-    
-    /* PC 스타일 재설정 - 모바일에서 초기 위치 */
-    .pilates-card {
-      left: 50% !important;
-      transform: translate(-50%, -50%) !important;
-      -webkit-transform: translate(-50%, -50%) !important;
     }
     
     /* 모든 상위 코드 제한 해제 */
@@ -5713,6 +5712,19 @@ if (window.innerWidth <= 768) {
       
       // 초기 설정 - 첫 번째 카드를 중앙에 배치
       positions = [0, 1, 2]; // 첫 번째 카드가 중앙
+      
+      // 모바일에서 PC 스타일 제거하고 모바일 스타일 적용
+      pilatesCards.forEach(card => {
+        // PC 인라인 스타일 제거
+        card.style.removeProperty('left');
+        card.style.removeProperty('top');
+        card.style.removeProperty('transform');
+        card.style.removeProperty('width');
+        card.style.removeProperty('height');
+        card.style.removeProperty('z-index');
+        card.style.removeProperty('opacity');
+      });
+      
       updatePilatesCards(false); // 초기 설정은 애니메이션 없이
       
       // 약간의 지연 후 transition 활성화 (초기 위치 설정 완료 보장)
