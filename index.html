@@ -4080,12 +4080,15 @@ function toggleMobilePreviewMute() {
   html body .neos-card-list,
   body div.neos-card-list[style*="margin-top"],
   body section#smart div.neos-card-list {
-    transform: translateY(16px) translateX(32px) !important;
+    transform: translateY(16px) translateX(0) !important;
     position: relative !important;
     z-index: 200 !important;
     margin-top: 56px !important;
     margin-bottom: 60px !important;  /* 하단 여백 추가 */
-    display: block !important;
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+    padding: 0 20px !important;
     visibility: visible !important;
     opacity: 1 !important;
   }
@@ -4696,11 +4699,24 @@ if (window.innerWidth <= 768) {
   }
   
   .neos-card {
-    justify-content: center !important;
-    text-align: center !important;
-    min-width: 160px !important;
-    max-width: 180px !important;
+    justify-content: flex-start !important;
+    text-align: left !important;
+    min-width: 150px !important;
+    max-width: 170px !important;
     margin: 0 auto !important;
+    padding: 8px !important;
+  }
+  
+  /* 모바일에서 아이콘 크기 조정 */
+  .neos-card .neos-icon {
+    width: 36px !important;
+    height: 36px !important;
+    margin-right: 12px !important;
+  }
+  
+  /* 모바일에서 텍스트 크기 조정 */
+  .neos-card .neos-text {
+    font-size: 0.85rem !important;
   }
 }
 </style>
