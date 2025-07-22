@@ -5578,6 +5578,25 @@ if (window.innerWidth <= 768) {
     @media (max-width: 768px) {
       .neo-pilates-info-box {
         margin-top: 114px !important;  /* 82px + 32px(2칸) */
+        scroll-behavior: auto !important;
+        scroll-snap-type: none !important;
+      }
+      
+      /* 스크롤 점프 방지 */
+      #neo-pilates-info-box {
+        scroll-margin-top: 0 !important;
+        scroll-snap-align: none !important;
+      }
+      
+      /* 전체 필라테스 섹션 스크롤 동작 수정 */
+      #neo-pilates {
+        scroll-snap-type: none !important;
+        scroll-behavior: auto !important;
+      }
+      
+      /* animate-on-scroll 클래스의 스크롤 동작 비활성화 */
+      .animate-on-scroll {
+        scroll-snap-align: none !important;
       }
       
       /* 모바일에서 강사 정보 위치 조정 - 2칸 위로 */
@@ -9649,9 +9668,9 @@ document.addEventListener('DOMContentLoaded', function() {
   body section#benefits,
   html body section#benefits,
   section#benefits.section.animate-on-scroll {
-    margin-top: 0px !important;
-    transform: translateY(16px) !important;  /* 80px - 64px(4칸) = 16px */
-    -webkit-transform: translateY(16px) !important;
+    margin-top: -64px !important;  /* 위로 4칸 더 올리기 */
+    transform: none !important;
+    -webkit-transform: none !important;
     position: relative !important;
     z-index: 9999 !important;
     padding: 160px 16px 100px 16px !important;
@@ -13893,10 +13912,12 @@ document.addEventListener('DOMContentLoaded', function() {
         benefitsSection.offsetHeight; // 리플로우 강제 트리거
       }
       
-      // 네오 필라테스 정보 박스 위치 조정
+      // 네오 필라테스 정보 박스 위치 조정 - 스크롤 점프 방지
       const neoPilatesInfoBox = document.getElementById('neo-pilates-info-box');
       if (neoPilatesInfoBox && window.innerWidth <= 768) {
-        neoPilatesInfoBox.style.setProperty('margin-top', '114px', 'important');
+        // margin-top 설정 제거하여 스크롤 점프 방지
+        neoPilatesInfoBox.style.scrollBehavior = 'auto';
+        neoPilatesInfoBox.style.scrollSnapType = 'none';
       }
       
       // 모바일에서 비용 회수 텍스트 강제 우측 이동 - transform 사용
