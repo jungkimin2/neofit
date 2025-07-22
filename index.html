@@ -5624,9 +5624,9 @@ if (window.innerWidth <= 768) {
         
         if (titleEl && descEl) {
           const instructorInfo = [
-            { name: '박유빈 강사', desc: '정밀한 운동의<br>매력에 빠져보세요' },
-            { name: '김하정 강사', desc: '그룹 시너지로<br>함께 성장해요' },
-            { name: '최서현 강사', desc: '전문적인 지도로<br>목표를 달성하세요' }
+            { name: '최서현 강사', desc: '정밀한 운동의<br>매력에 빠져보세요' },
+            { name: '박유빈 강사', desc: '그룹 시너지로<br>함께 성장해요' },
+            { name: '김하정 강사', desc: '전문적인 지도로<br>목표를 달성하세요' }
           ];
           
           titleEl.textContent = instructorInfo[centerIndex].name;
@@ -5678,15 +5678,15 @@ if (window.innerWidth <= 768) {
         });
       });
       
-      // 초기 설정 - 김하정 강사(인덱스 1)를 중앙에 배치
-      positions = [1, 2, 0]; // 김하정이 중앙, 다른 카드들이 좌우에
+      // 초기 설정 - 박유빈 강사(인덱스 1)를 중앙에 배치
+      positions = [1, 2, 0]; // 박유빈이 중앙, 다른 카드들이 좌우에
       updatePilatesCards(false); // 초기 설정은 애니메이션 없이
       
       // 초기 강사 정보 설정
       const initialTitleEl = document.querySelector('.mobile-instructor-title');
       const initialDescEl = document.querySelector('.mobile-instructor-desc');
       if (initialTitleEl && initialDescEl) {
-        initialTitleEl.textContent = '김하정 강사';
+        initialTitleEl.textContent = '박유빈 강사';
         initialDescEl.innerHTML = '그룹 시너지로<br>함께 성장해요';
       }
       
