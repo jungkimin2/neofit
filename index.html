@@ -5430,13 +5430,15 @@ if (window.innerWidth <= 768) {
       }
       
       /* 카드 초기 위치 설정 - JavaScript 실행 전 기본값 */
+      /* 첫 번째 카드(전문 강사진)는 오른쪽에 */
       .pilates-card:nth-child(1) {
-        left: 10% !important;
-        transform: translate(-50%, -50%) scale(0.7) rotateY(20deg) !important;
+        left: 90% !important;
+        transform: translate(-50%, -50%) scale(0.7) rotateY(-20deg) !important;
         opacity: 0.9 !important;
         z-index: 10 !important;
       }
       
+      /* 두 번째 카드(그룹 시너지)는 중앙에 */
       .pilates-card:nth-child(2) {
         left: 50% !important;
         transform: translate(-50%, -50%) scale(1) rotateY(0deg) !important;
@@ -5444,9 +5446,10 @@ if (window.innerWidth <= 768) {
         z-index: 100 !important;
       }
       
+      /* 세 번째 카드(정밀한 운동)는 왼쪽에 */
       .pilates-card:nth-child(3) {
-        left: 90% !important;
-        transform: translate(-50%, -50%) scale(0.7) rotateY(-20deg) !important;
+        left: 10% !important;
+        transform: translate(-50%, -50%) scale(0.7) rotateY(20deg) !important;
         opacity: 0.9 !important;
         z-index: 10 !important;
       }
@@ -5749,19 +5752,19 @@ if (window.innerWidth <= 768) {
         });
       });
       
-      // 초기 설정 - 김하정 강사(인덱스 1)를 중앙에 배치
-      positions = [1, 2, 0]; // 김하정이 중앙, 다른 카드들이 좌우에
+      // 초기 설정 - 그룹 시너지(인덱스 1)를 중앙에 배치
+      positions = [2, 0, 1]; // 그룹 시너지가 중앙, 전문 강사진이 오른쪽, 정밀한 운동이 왼쪽
       
       // 초기 위치 즉시 설정 (DOM 로드 직후)
       setTimeout(() => {
         updatePilatesCards(false); // 초기 설정은 애니메이션 없이
         
-        // 초기 강사 정보 설정
+        // 초기 강사 정보 설정 - 그룹 시너지(인덱스 1)가 중앙에 있으므로
         const initialTitleEl = document.querySelector('.mobile-instructor-title');
         const initialDescEl = document.querySelector('.mobile-instructor-desc');
         if (initialTitleEl && initialDescEl) {
-          initialTitleEl.textContent = '최서현 강사';
-          initialDescEl.innerHTML = '그룹 시너지로<br>함께 성장해요';
+          initialTitleEl.textContent = '김하정 강사';
+          initialDescEl.innerHTML = '정밀한 운동의<br>매력에 빠져보세요';
         }
       }, 0);
       
