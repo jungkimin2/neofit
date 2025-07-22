@@ -5144,7 +5144,7 @@ if (window.innerWidth <= 768) {
       <!-- 모바일에서 표시될 강사 정보 -->
       <div class="mobile-pilates-info" style="display: none; text-align: center; margin-top: 60px; color: #fff;" id="mobile-pilates-info">
         <h3 style="font-size: 1.3rem; margin-bottom: 10px;">
-          <span class="mobile-instructor-title" style="color: #00BFFF;">전문 강사진</span>
+          <span class="mobile-instructor-title">전문 강사진</span>
         </h3>
         <p style="font-size: 1rem; color: #ccc;">
           <span class="mobile-instructor-desc">체계적인 커리큘럼으로<br>개인별 맞춤 지도</span>
@@ -5464,12 +5464,9 @@ if (window.innerWidth <= 768) {
         z-index: 200 !important;
       }
       
-      /* 필라테스 섹션의 transform 고정 - 스크롤에 영향받지 않도록 */
+      /* 필라테스 섹션의 transform 고정 */
       #neo-pilates {
-        transform: none !important;
-        -webkit-transform: none !important;
-        margin-top: 80px !important;
-        position: relative !important;
+        transform: translateY(144px) !important;
       }
       
       .pilates-indicator {
@@ -5612,13 +5609,12 @@ if (window.innerWidth <= 768) {
         
         if (titleEl && descEl) {
           const instructorInfo = [
-            { name: '박유빈 강사', desc: '정밀한 운동의<br>매력에 빠져보세요', color: '#7BE495' },  // 초록색
-            { name: '김하정 강사', desc: '그룹 시너지로<br>함께 성장해요', color: '#e293ef' },  // 보라색
-            { name: '최서현 강사', desc: '전문적인 지도로<br>목표를 달성하세요', color: '#00BFFF' }  // 파란색
+            { name: '박유빈 강사', desc: '정밀한 운동의<br>매력에 빠져보세요' },
+            { name: '김하정 강사', desc: '그룹 시너지로<br>함께 성장해요' },
+            { name: '최서현 강사', desc: '전문적인 지도로<br>목표를 달성하세요' }
           ];
           
           titleEl.textContent = instructorInfo[centerIndex].name;
-          titleEl.style.color = instructorInfo[centerIndex].color;
           descEl.innerHTML = instructorInfo[centerIndex].desc;
         }
       }
@@ -5676,7 +5672,6 @@ if (window.innerWidth <= 768) {
       const initialDescEl = document.querySelector('.mobile-instructor-desc');
       if (initialTitleEl && initialDescEl) {
         initialTitleEl.textContent = '김하정 강사';
-        initialTitleEl.style.color = '#e293ef';  // 보라색
         initialDescEl.innerHTML = '그룹 시너지로<br>함께 성장해요';
       }
       
@@ -13674,8 +13669,8 @@ document.addEventListener('DOMContentLoaded', function() {
           { selector: '.core-value-fresh-mobile', transform: 'translateY(-132px)' },
           { selector: '.mobile-system-box-wrapper', transform: 'translateY(-164px)' },
           { selector: '#smart', transform: 'translateY(-240px)' },
-          { selector: '#hive', transform: 'translateY(-196px)' }
-          // { selector: '#neo-pilates', transform: 'translateY(144px)' } // 필라테스 섹션은 제외
+          { selector: '#hive', transform: 'translateY(-196px)' },
+          { selector: '#neo-pilates', transform: 'translateY(144px)' }
       ];
       
       elements.forEach(({ selector, transform }) => {
