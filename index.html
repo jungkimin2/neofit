@@ -1538,32 +1538,33 @@ section {
     }
     
     /* 초기 카드 위치 - 3D 효과 포함 */
-    /* 첫 번째 카드 - 중앙 */
-    .pilates-card:nth-child(1) {
+    /* data-position 속성을 기반으로 위치 설정 */
+    .pilates-card[data-position="0"] {
       left: 50% !important;
       transform: translate(-50%, -50%) scale(1) rotateY(0deg) !important;
       z-index: 100 !important;
+      opacity: 1 !important;
     }
     
-    /* 두 번째 카드 - 왼쪽 */
-    .pilates-card:nth-child(2) {
+    .pilates-card[data-position="1"] {
       left: 15% !important;
       transform: translate(-50%, -50%) scale(0.85) rotateY(15deg) !important;
       z-index: 10 !important;
       opacity: 1 !important;
     }
     
-    /* 세 번째 카드 - 오른쪽 */
-    .pilates-card:nth-child(3) {
+    .pilates-card[data-position="2"] {
       left: 85% !important;
       transform: translate(-50%, -50%) scale(0.85) rotateY(-15deg) !important;
       z-index: 10 !important;
-      opacity: 0.7 !important;
+      opacity: 1 !important;
     }
     
-    /* 모든 transition 제거하여 처음부터 3D 형태로 */
-    .pilates-card {
-      transition: none !important;
+    /* 초기화 전 기본 위치 */
+    .pilates-card:not([data-position]) {
+      left: 50% !important;
+      transform: translate(-50%, -50%) !important;
+      opacity: 0 !important;
     }
     
     /* 모든 상위 코드 제한 해제 */
@@ -5243,7 +5244,9 @@ if (window.innerWidth <= 768) {
   <script>
     // 필라테스 캐러셀 기능 - PC 버전
     (function() {
-      // PC에서만 실행
+      // PC에서만 실행 - 모바일에서는 아예 실행하지 않음
+      if (window.innerWidth <= 768) return;
+      
       if (window.innerWidth > 768) {
         let currentIndex = 0;
         const cards = document.querySelectorAll('.pilates-card');
@@ -5433,7 +5436,7 @@ if (window.innerWidth <= 768) {
       html body section#neo-pilates,
       #neo-pilates {
         margin-top: 0px !important;
-        transform: translateY(144px) !important;
+        /* transform 제거 - 카드 배열 문제 해결 */
         position: relative !important;
         padding: 16px 16px 120px 16px !important;
         z-index: 10 !important;
