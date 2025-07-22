@@ -5788,33 +5788,7 @@ if (window.innerWidth <= 768) {
         initialDescEl.innerHTML = instructorInfo[0].desc;
       }
       
-      // 스크롤 이벤트 시 카드 위치만 유지 (셉션은 건드리지 않음)
-      // PC에서만 실행
-      let isScrolling = false;
-      if (window.innerWidth > 768) {
-        window.addEventListener('scroll', function() {
-        isScrolling = true;
-        
-        // 스크롤 중에는 카드 위치만 고정
-        pilatesCards.forEach((card) => {
-          const currentPosition = card.getAttribute('data-position');
-          if (currentPosition === '0') {
-            card.style.setProperty('left', '50%', 'important');
-            card.style.setProperty('transform', 'translate(-50%, -50%) scale(1) rotateY(0deg)', 'important');
-          } else if (currentPosition === '1') {
-            card.style.setProperty('left', '15%', 'important');
-            card.style.setProperty('transform', 'translate(-50%, -50%) scale(0.85) rotateY(15deg)', 'important');
-          } else if (currentPosition === '2') {
-            card.style.setProperty('left', '85%', 'important');
-            card.style.setProperty('transform', 'translate(-50%, -50%) scale(0.85) rotateY(-15deg)', 'important');
-          }
-        });
-        
-        setTimeout(() => {
-          isScrolling = false;
-        }, 100);
-      });
-      } // PC only
+      // 모바일에서는 스크롤 이벤트 제거 - 위치 고정을 위해
       } // waitForElements end
       
       // 초기화 시작
