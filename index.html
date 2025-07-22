@@ -9650,8 +9650,8 @@ document.addEventListener('DOMContentLoaded', function() {
   html body section#benefits,
   section#benefits.section.animate-on-scroll {
     margin-top: 0px !important;
-    transform: translateY(144px) !important;
-    -webkit-transform: translateY(144px) !important;
+    transform: translateY(80px) !important;  /* 144px - 64px(4칸) = 80px */
+    -webkit-transform: translateY(80px) !important;
     position: relative !important;
     z-index: 9999 !important;
     padding: 160px 16px 100px 16px !important;
@@ -12383,7 +12383,7 @@ document.addEventListener('DOMContentLoaded', function() {
      
      /* "시설 정보 및 위치 안내" 섹션 위치 조정 */
      section#benefits {
-       margin-top: -472px !important;  /* 5칸(80px) 아래로 조정 */
+       margin-top: -536px !important;  /* -472px - 64px(4칸) = -536px */
        position: relative !important;
        z-index: 10 !important;
        background: #000 !important;
