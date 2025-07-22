@@ -5628,7 +5628,12 @@ if (window.innerWidth <= 768) {
       /* 모바일에서 강사 정보 표시 */
       .mobile-pilates-info {
         display: block !important;
-        margin-top: 24px !important;  /* 48px - 24px(1.5칸) = 24px */
+        margin-top: 0px !important;  /* 24px - 24px(1.5칸) = 0px */
+      }
+      
+      /* 모바일에서 카드 설명 텍스트 위치 조정 */
+      .pilates-card .card-description {
+        bottom: -66px !important;  /* -90px + 24px(1.5칸) = -66px */
       }
       
       /* 필라테스 섹션 하단 추가 정보 여백 조정 - 위로 1칸 올림 */
