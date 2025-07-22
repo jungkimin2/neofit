@@ -109,11 +109,13 @@
   
   /* 모바일에서만 benefits 마진 조정 - 강제로 위로 올리기 */
   @media (max-width: 768px) {
+    /* 가장 높은 우선순위로 시설 정보 섹션 위치 조정 */
     body section#benefits.section.animate-on-scroll,
     html body section#benefits.section.animate-on-scroll,
-    section#benefits[style] {
-      margin-top: -900px !important;  /* 100px 더 위로 올리기 */
-      transform: translateY(-100px) !important;  /* 추가로 위로 이동 */
+    section#benefits[style],
+    #benefits[style] {
+      margin-top: -144px !important;  /* 인라인 스타일과 동일하게 설정 */
+      transform: none !important;  /* transform 제거 */
       position: relative !important;
       z-index: 100 !important;
       padding-top: 0px !important;  /* 패딩 완전 제거 */
@@ -5831,7 +5833,7 @@ if (window.innerWidth <= 768) {
   </script>
 </section>
 
-<section id="benefits" class="section animate-on-scroll" style="background: #000; padding-bottom: 20px; padding-top: 20px; margin-top: -64px;">
+<section id="benefits" class="section animate-on-scroll" style="background: #000; padding-bottom: 20px; padding-top: 20px; margin-top: -144px;">
   <div class="container benefits-container-mobile" style="max-width: 900px; margin: 0 auto; text-align: center;">
     <h2 style="font-size: 2.2rem; font-weight: bold; margin-bottom: 16px; letter-spacing: -1px; line-height: 1.2;">
       <span style="color: #FFFFFF;">시설 정보 및 위치 안내</span>
