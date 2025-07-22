@@ -5356,9 +5356,8 @@ if (window.innerWidth <= 768) {
       body section#neo-pilates,
       html body section#neo-pilates,
       #neo-pilates {
-        margin-top: 144px !important;  /* transform 대신 margin-top 사용 */
-        transform: none !important;  /* transform 제거 */
-        -webkit-transform: none !important;
+        margin-top: 0px !important;
+        transform: translateY(144px) !important;
         position: relative !important;
         padding: 16px 16px 120px 16px !important;
         z-index: 10 !important;
