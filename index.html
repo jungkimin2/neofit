@@ -13669,8 +13669,8 @@ document.addEventListener('DOMContentLoaded', function() {
           { selector: '.core-value-fresh-mobile', transform: 'translateY(-132px)' },
           { selector: '.mobile-system-box-wrapper', transform: 'translateY(-164px)' },
           { selector: '#smart', transform: 'translateY(-240px)' },
-          { selector: '#hive', transform: 'translateY(-196px)' }
-          // { selector: '#neo-pilates', transform: 'translateY(144px)' } // 스크롤 시 위치 고정을 위해 제외
+          { selector: '#hive', transform: 'translateY(-196px)' },
+          { selector: '#neo-pilates', transform: 'translateY(144px)' }
       ];
       
       elements.forEach(({ selector, transform }) => {
@@ -14133,9 +14133,9 @@ document.addEventListener('DOMContentLoaded', function() {
       const neoPilatesSection = document.querySelector('#neo-pilates');
       if (neoPilatesSection) {
         // 인라인 스타일로 직접 설정하여 최우선순위 보장
-        neoPilatesSection.style.setProperty('margin-top', '144px', 'important');
-        neoPilatesSection.style.setProperty('transform', 'none', 'important');
-        neoPilatesSection.style.setProperty('-webkit-transform', 'none', 'important');
+        neoPilatesSection.style.setProperty('margin-top', '-300px', 'important');
+        neoPilatesSection.style.setProperty('transform', 'translateY(-150px)', 'important');
+        neoPilatesSection.style.setProperty('-webkit-transform', 'translateY(-150px)', 'important');
         neoPilatesSection.style.setProperty('position', 'relative', 'important');
         neoPilatesSection.style.setProperty('z-index', '50', 'important');
         neoPilatesSection.style.setProperty('padding-top', '20px', 'important');
