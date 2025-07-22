@@ -1490,6 +1490,21 @@ section {
       padding-bottom: 150px !important;
     }
     
+    /* 네오 필라테스 스크롤 버그 수정 */
+    #neo-pilates {
+      transform: none !important;
+      -webkit-transform: none !important;
+      position: relative !important;
+      margin-top: -300px !important;
+      will-change: auto !important;
+    }
+    
+    /* 스크롤 시 transform 변경 방지 */
+    #neo-pilates.section {
+      transform: none !important;
+      -webkit-transform: none !important;
+    }
+    
     /* 모든 상위 코드 제한 해제 */
     body footer,
     html body footer,
@@ -5079,7 +5094,7 @@ if (window.innerWidth <= 768) {
 </section>
 
 <!-- 네오 필라테스 섹션 -->
-<section id="neo-pilates" class="section mobile-transform-target" style="background: #000; padding: 16px 20px 80px 20px;">
+<section id="neo-pilates" class="section" style="background: #000; padding: 16px 20px 80px 20px; position: relative !important; transform: none !important; -webkit-transform: none !important;">
   <div class="container" style="max-width: 1200px; margin: 0 auto;">
     <!-- 제목과 설명 -->
     <div style="text-align: center; margin-bottom: 5px; margin-top: 48px;">
@@ -13669,8 +13684,8 @@ document.addEventListener('DOMContentLoaded', function() {
           { selector: '.core-value-fresh-mobile', transform: 'translateY(-132px)' },
           { selector: '.mobile-system-box-wrapper', transform: 'translateY(-164px)' },
           { selector: '#smart', transform: 'translateY(-240px)' },
-          { selector: '#hive', transform: 'translateY(-196px)' },
-          { selector: '#neo-pilates', transform: 'translateY(144px)' }
+          { selector: '#hive', transform: 'translateY(-196px)' }
+          // { selector: '#neo-pilates', transform: 'translateY(144px)' } // 제거 - 스크롤 버그 수정
       ];
       
       elements.forEach(({ selector, transform }) => {
@@ -14127,22 +14142,30 @@ document.addEventListener('DOMContentLoaded', function() {
 <!-- 네오 필라테스 섹션 모바일 위치 강제 조정 스크립트 -->
 <script>
 (function() {
-  // 모바일에서 네오 필라테스 섹션 위치 조정
+  // 모바일에서 네오 필라테스 셉션 위치 조정 (다른 UI에 영향 없이)
   function adjustNeoPilatesPosition() {
+    const neoPilatesSection = document.querySelector('#neo-pilates');
+    if (!neoPilatesSection) return;
+    
     if (window.innerWidth <= 768) {
-      const neoPilatesSection = document.querySelector('#neo-pilates');
-      if (neoPilatesSection) {
-        // 인라인 스타일로 직접 설정하여 최우선순위 보장
-        neoPilatesSection.style.setProperty('margin-top', '-300px', 'important');
-        neoPilatesSection.style.setProperty('transform', 'translateY(-150px)', 'important');
-        neoPilatesSection.style.setProperty('-webkit-transform', 'translateY(-150px)', 'important');
-        neoPilatesSection.style.setProperty('position', 'relative', 'important');
-        neoPilatesSection.style.setProperty('z-index', '50', 'important');
-        neoPilatesSection.style.setProperty('padding-top', '20px', 'important');
-        neoPilatesSection.style.setProperty('background', '#000', 'important');
-        
-        console.log('Neo Pilates section position adjusted for mobile');
-      }
+      // 모바일: margin-top만 사용하여 위치 조정
+      neoPilatesSection.style.setProperty('margin-top', '-300px', 'important');
+      neoPilatesSection.style.setProperty('transform', 'none', 'important');
+      neoPilatesSection.style.setProperty('-webkit-transform', 'none', 'important');
+      neoPilatesSection.style.setProperty('position', 'relative', 'important');
+      neoPilatesSection.style.setProperty('z-index', '50', 'important');
+      
+      // animate-on-scroll 클래스 제거 (스크롤 애니메이션 방지)
+      neoPilatesSection.classList.remove('animate-on-scroll');
+      neoPilatesSection.classList.add('visible');
+      neoPilatesSection.style.setProperty('opacity', '1', 'important');
+      
+      console.log('Neo Pilates section fixed for mobile');
+    } else {
+      // PC: 기본 스타일로 복원
+      neoPilatesSection.style.removeProperty('margin-top');
+      neoPilatesSection.style.setProperty('transform', 'none', 'important');
+      neoPilatesSection.style.setProperty('-webkit-transform', 'none', 'important');
     }
   }
   
