@@ -5222,7 +5222,7 @@ if (window.innerWidth <= 768) {
       </div>
       
       <!-- 모바일에서 표시될 강사 정보 -->
-      <div class="mobile-pilates-info" style="display: none; text-align: center; margin-top: 12px; color: #fff;" id="mobile-pilates-info">
+      <div class="mobile-pilates-info" style="display: none; text-align: center; margin-top: -12px; color: #fff;" id="mobile-pilates-info">
         <h3 style="font-size: 1.3rem; margin-bottom: 10px; font-weight: bold;">
           <span class="mobile-instructor-title" style="color: #e293ef;">전문 강사진</span>
         </h3>
@@ -12428,6 +12428,15 @@ document.addEventListener('DOMContentLoaded', function() {
        z-index: 10 !important;
        background: #000 !important;
        padding-top: 48px !important;  /* 112px - 64px(4칸) = 48px */
+       transform: none !important;
+     }
+     
+     /* 모바일에서 benefits 강제 적용 */
+     html body section#benefits,
+     body section#benefits.section,
+     section#benefits.animate-on-scroll {
+       margin-top: -408px !important;
+       transform: none !important;
      }
      
      section#benefits .container {
