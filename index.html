@@ -5220,10 +5220,10 @@ if (window.innerWidth <= 768) {
       
       <!-- 모바일에서 표시될 강사 정보 -->
       <div class="mobile-pilates-info" style="display: none; text-align: center; margin-top: 60px; color: #fff;" id="mobile-pilates-info">
-        <h3 style="font-size: 1.3rem; margin-bottom: 10px;">
-          <span class="mobile-instructor-title">전문 강사진</span>
+        <h3 style="font-size: 1.3rem; margin-bottom: 10px; font-weight: bold;">
+          <span class="mobile-instructor-title" style="color: #e293ef;">전문 강사진</span>
         </h3>
-        <p style="font-size: 1rem; color: #ccc;">
+        <p style="font-size: 1rem; color: #ccc; line-height: 1.6;">
           <span class="mobile-instructor-desc">체계적인 커리큘럼으로<br>개인별 맞춤 지도</span>
         </p>
       </div>
@@ -5553,9 +5553,10 @@ if (window.innerWidth <= 768) {
         height: 10px !important;
       }
       
-      /* 모바일에서 강사 정보 숨김 */
+      /* 모바일에서 강사 정보 표시 */
       .mobile-pilates-info {
-        display: none !important;
+        display: block !important;
+        margin-top: 48px !important;
       }
       
       /* 추가 정보 섹션도 여백 조정 */
@@ -5600,9 +5601,10 @@ if (window.innerWidth <= 768) {
         margin-top: 114px !important;  /* 82px + 32px(2칸) */
       }
       
-      /* 모바일에서 강사 정보 숨김 */
+      /* 모바일에서 강사 정보 표시 */
       .mobile-pilates-info {
-        display: none !important;
+        display: block !important;
+        margin-top: 48px !important;
       }
       
       /* 필라테스 섹션 하단 추가 정보 여백 조정 - 위로 1칸 올림 */
@@ -5701,12 +5703,12 @@ if (window.innerWidth <= 768) {
         
         if (titleEl && descEl) {
           const instructorInfo = [
-            { name: '박유빈 강사', desc: '정밀한 운동의<br>매력에 빠져보세요' },
-            { name: '김하정 강사', desc: '그룹 시너지로<br>함께 성장해요' },
-            { name: '최서현 강사', desc: '전문적인 지도로<br>목표를 달성하세요' }
+            { name: '전문 강사진', desc: '체계적인 커리큘럼으로<br>개인별 맞춤 지도' },
+            { name: '그룹 시너지', desc: '함께하는 운동의 즐거움<br>동기부여와 성취감' },
+            { name: '정밀한 운동', desc: '최신 기구로 정확한 자세<br>효과적인 근력 강화' }
           ];
           
-          titleEl.textContent = instructorInfo[centerIndex].name;
+          titleEl.innerHTML = '<span style="color: ' + ['#e293ef', '#00BFFF', '#7BE495'][centerIndex] + ';">' + instructorInfo[centerIndex].name + '</span>';
           descEl.innerHTML = instructorInfo[centerIndex].desc;
         }
       }
@@ -5782,11 +5784,11 @@ if (window.innerWidth <= 768) {
       if (initialTitleEl && initialDescEl) {
         // 첫 번째 카드 정보로 설정
         const instructorInfo = [
-          { name: '김하정 강사', desc: '정밀한 운동의<br>매력에 빠져보세요' },
-          { name: '박유빈 강사', desc: '그룹 시너지로<br>함께 성장해요' },
-          { name: '최서현 강사', desc: '전문적인 지도로<br>목표를 달성하세요' }
+          { name: '전문 강사진', desc: '체계적인 커리큘럼으로<br>개인별 맞춤 지도' },
+          { name: '그룹 시너지', desc: '함께하는 운동의 즐거움<br>동기부여와 성취감' },
+          { name: '정밀한 운동', desc: '최신 기구로 정확한 자세<br>효과적인 근력 강화' }
         ];
-        initialTitleEl.textContent = instructorInfo[0].name;
+        initialTitleEl.innerHTML = '<span style="color: #e293ef;">' + instructorInfo[0].name + '</span>';
         initialDescEl.innerHTML = instructorInfo[0].desc;
       }
       
