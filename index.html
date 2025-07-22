@@ -5390,9 +5390,14 @@ if (window.innerWidth <= 768) {
         height: 420px !important;
         overflow: visible !important;
         padding: 0 40px !important;  /* 좌우 패딩 추가로 카드가 잘리지 않게 */
-        margin-top: -28px !important;  /* -44px에서 -28px로 변경 (1칸 아래로) */
+        margin-top: 70px !important;  /* 중앙 고정을 위한 위치 조정 */
         perspective: 1200px !important;
-        position: relative !important;
+        position: fixed !important;  /* 스크롤 시에도 고정 */
+        left: 0 !important;
+        right: 0 !important;
+        top: 50% !important;
+        transform: translateY(-50%) !important;  /* 화면 중앙 정렬 */
+        z-index: 100 !important;
       }
       
       .pilates-carousel {
@@ -5456,8 +5461,8 @@ if (window.innerWidth <= 768) {
       /* 인디케이터는 모바일에서 표시 */
       .pilates-indicators {
         display: flex !important;
-        position: absolute !important;
-        bottom: 20px !important;
+        position: fixed !important;  /* fixed로 변경하여 캐러셀과 함께 고정 */
+        bottom: calc(50% - 250px) !important;  /* 캐러셀 아래 위치 */
         left: 50% !important;
         transform: translateX(-50%) !important;
         gap: 8px !important;
