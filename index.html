@@ -5464,9 +5464,12 @@ if (window.innerWidth <= 768) {
         z-index: 200 !important;
       }
       
-      /* 필라테스 섹션의 transform 고정 */
+      /* 필라테스 섹션의 transform 고정 - 스크롤에 영향받지 않도록 */
       #neo-pilates {
-        transform: translateY(144px) !important;
+        transform: none !important;
+        -webkit-transform: none !important;
+        margin-top: 80px !important;
+        position: relative !important;
       }
       
       .pilates-indicator {
@@ -5609,9 +5612,9 @@ if (window.innerWidth <= 768) {
         
         if (titleEl && descEl) {
           const instructorInfo = [
-            { name: '박유빈 강사', desc: '정밀한 운동의<br>매력에 빠져보세요', color: '#e293ef' },
-            { name: '김하정 강사', desc: '그룹 시너지로<br>함께 성장해요', color: '#00BFFF' },
-            { name: '최서현 강사', desc: '전문적인 지도로<br>목표를 달성하세요', color: '#7BE495' }
+            { name: '박유빈 강사', desc: '정밀한 운동의<br>매력에 빠져보세요', color: '#7BE495' },  // 초록색
+            { name: '김하정 강사', desc: '그룹 시너지로<br>함께 성장해요', color: '#e293ef' },  // 보라색
+            { name: '최서현 강사', desc: '전문적인 지도로<br>목표를 달성하세요', color: '#00BFFF' }  // 파란색
           ];
           
           titleEl.textContent = instructorInfo[centerIndex].name;
@@ -5673,7 +5676,7 @@ if (window.innerWidth <= 768) {
       const initialDescEl = document.querySelector('.mobile-instructor-desc');
       if (initialTitleEl && initialDescEl) {
         initialTitleEl.textContent = '김하정 강사';
-        initialTitleEl.style.color = '#00BFFF';  // 파란색
+        initialTitleEl.style.color = '#e293ef';  // 보라색
         initialDescEl.innerHTML = '그룹 시너지로<br>함께 성장해요';
       }
       
@@ -13671,8 +13674,8 @@ document.addEventListener('DOMContentLoaded', function() {
           { selector: '.core-value-fresh-mobile', transform: 'translateY(-132px)' },
           { selector: '.mobile-system-box-wrapper', transform: 'translateY(-164px)' },
           { selector: '#smart', transform: 'translateY(-240px)' },
-          { selector: '#hive', transform: 'translateY(-196px)' },
-          { selector: '#neo-pilates', transform: 'translateY(144px)' }
+          { selector: '#hive', transform: 'translateY(-196px)' }
+          // { selector: '#neo-pilates', transform: 'translateY(144px)' } // 필라테스 섹션은 제외
       ];
       
       elements.forEach(({ selector, transform }) => {
