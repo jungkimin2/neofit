@@ -14133,9 +14133,9 @@ document.addEventListener('DOMContentLoaded', function() {
       const neoPilatesSection = document.querySelector('#neo-pilates');
       if (neoPilatesSection) {
         // 인라인 스타일로 직접 설정하여 최우선순위 보장
-        neoPilatesSection.style.setProperty('margin-top', '144px', 'important');
-        neoPilatesSection.style.setProperty('transform', 'none', 'important');
-        neoPilatesSection.style.setProperty('-webkit-transform', 'none', 'important');
+        neoPilatesSection.style.setProperty('margin-top', '-300px', 'important');
+        neoPilatesSection.style.setProperty('transform', 'translateY(-150px)', 'important');
+        neoPilatesSection.style.setProperty('-webkit-transform', 'translateY(-150px)', 'important');
         neoPilatesSection.style.setProperty('position', 'relative', 'important');
         neoPilatesSection.style.setProperty('z-index', '50', 'important');
         neoPilatesSection.style.setProperty('padding-top', '20px', 'important');
@@ -14159,10 +14159,10 @@ document.addEventListener('DOMContentLoaded', function() {
   // 페이지 완전 로드 후에도 한 번 더 실행
   window.addEventListener('load', function() {
     adjustNeoPilatesPosition();
-    // 다른 스크립트가 실행된 후에도 위치 조정 - 비활성화
-    // setTimeout(adjustNeoPilatesPosition, 100);
-    // setTimeout(adjustNeoPilatesPosition, 500);
-    // setTimeout(adjustNeoPilatesPosition, 1000);
+    // 다른 스크립트가 실행된 후에도 위치 조정
+    setTimeout(adjustNeoPilatesPosition, 100);
+    setTimeout(adjustNeoPilatesPosition, 500);
+    setTimeout(adjustNeoPilatesPosition, 1000);
   });
 })();
 </script>
