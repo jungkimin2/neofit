@@ -2658,31 +2658,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 </script>
-<style>
-/* 모바일에서 benefits 섹션 강제 위치 조정 - 최종 우선순위 */
-@media (max-width: 768px) {
-  html body section#benefits.section.animate-on-scroll {
-    margin-top: -368px !important; /* 8칸 위로 이동 */
-    transform: none !important;
-    -webkit-transform: none !important;
-    padding-top: 236px !important;
-  }
-  
-  /* 모바일에서 animate-on-scroll 비활성화 - 스크롤 점프 방지 */
-  .animate-on-scroll {
-    animation: none !important;
-    transition: none !important;
-    transform: none !important;
-    opacity: 1 !important;
-  }
-  
-  /* 네오 필라테스 섹션 스크롤 점프 방지 */
-  #neo-pilates-info-box {
-    scroll-behavior: auto !important;
-    scroll-snap-type: none !important;
-  }
-}
-</style>
+
 </head>
 <style>
 @media (max-width: 768px) {
@@ -5427,7 +5403,7 @@ if (window.innerWidth <= 768) {
         overflow: visible !important;
         padding: 0 !important;  /* 패딩 제거 */
         margin: 0 auto !important;
-        margin-top: 120px !important;  /* 40px에서 120px로 변경 (5칸 = 80px 추가) */
+        margin-top: 40px !important;  /* 위쪽 여백 조정 */
         perspective: 1200px !important;
         position: relative !important;
         width: 100% !important;
@@ -5602,35 +5578,6 @@ if (window.innerWidth <= 768) {
     @media (max-width: 768px) {
       .neo-pilates-info-box {
         margin-top: 114px !important;  /* 82px + 32px(2칸) */
-        scroll-behavior: auto !important;
-        scroll-snap-type: none !important;
-      }
-      
-      /* 스크롤 점프 방지 */
-      #neo-pilates-info-box {
-        scroll-margin-top: 0 !important;
-        scroll-snap-align: none !important;
-      }
-      
-      /* 전체 필라테스 섹션 스크롤 동작 수정 */
-      #neo-pilates {
-        scroll-snap-type: none !important;
-        scroll-behavior: auto !important;
-      }
-      
-      /* animate-on-scroll 클래스의 스크롤 동작 비활성화 */
-      .animate-on-scroll {
-        scroll-snap-align: none !important;
-        transform: none !important;
-        transition: none !important;
-      }
-      
-      /* 섹션의 애니메이션 비활성화 */
-      .section.animate-on-scroll,
-      .section.animate-on-scroll.visible {
-        transform: none !important;
-        opacity: 1 !important;
-        transition: none !important;
       }
       
       /* 모바일에서 강사 정보 위치 조정 - 2칸 위로 */
@@ -5661,8 +5608,24 @@ if (window.innerWidth <= 768) {
         pilatesSection.style.display = 'flex';
         pilatesSection.style.alignItems = 'center';
         
-        // 모바일에서는 MutationObserver 비활성화 - 스크롤 점프 방지
-        // MutationObserver가 스크롤 시 점프를 일으킬 수 있음
+        // MutationObserver로 스타일 변경 감지 및 차단
+        const observer = new MutationObserver(function(mutations) {
+          mutations.forEach(function(mutation) {
+            if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
+              // transform이 설정되면 제거
+              if (pilatesSection.style.transform && pilatesSection.style.transform !== 'none') {
+                pilatesSection.style.transform = 'none';
+                pilatesSection.style.webkitTransform = 'none';
+                pilatesSection.style.marginTop = '80px';
+              }
+            }
+          });
+        });
+        
+        observer.observe(pilatesSection, {
+          attributes: true,
+          attributeFilter: ['style']
+        });
       }
       
       const pilatesCards = document.querySelectorAll('.pilates-card');
@@ -9686,9 +9649,9 @@ document.addEventListener('DOMContentLoaded', function() {
   body section#benefits,
   html body section#benefits,
   section#benefits.section.animate-on-scroll {
-    margin-top: -64px !important;  /* 위로 4칸 더 올리기 */
-    transform: none !important;
-    -webkit-transform: none !important;
+    margin-top: 0px !important;
+    transform: translateY(144px) !important;
+    -webkit-transform: translateY(144px) !important;
     position: relative !important;
     z-index: 9999 !important;
     padding: 160px 16px 100px 16px !important;
@@ -12420,7 +12383,7 @@ document.addEventListener('DOMContentLoaded', function() {
      
      /* "시설 정보 및 위치 안내" 섹션 위치 조정 */
      section#benefits {
-       margin-top: -600px !important;  /* -536px - 64px(4칸) = -600px */
+       margin-top: -472px !important;  /* 5칸(80px) 아래로 조정 */
        position: relative !important;
        z-index: 10 !important;
        background: #000 !important;
@@ -13769,7 +13732,7 @@ document.addEventListener('DOMContentLoaded', function() {
   if (isMobile) {
     // 즉시 실행 함수로 스타일 강제 적용
     function forceApplyMobileStyles() {
-      const elements = [
+                      const elements = [
           { selector: '.mobile-ui-position-adjustment', transform: 'translateY(-168px)' },
           { selector: '#mobile-moved-merged-box', transform: 'translateY(-48px)' },
           { selector: '.core-value-fresh-mobile', transform: 'translateY(-132px)' },
@@ -13916,48 +13879,24 @@ document.addEventListener('DOMContentLoaded', function() {
       // benefits 섹션 강제 위치 조정 - 모바일에서만 적용
       const benefitsSection = document.querySelector('section#benefits');
       if (benefitsSection && window.innerWidth <= 768) {
-        // 이미 적용된 경우 확인
-        if (benefitsSection.getAttribute('data-position-fixed') !== 'true') {
-          benefitsSection.style.setProperty('margin-top', '-368px', 'important'); // -240px에서 -368px로 변경 (8칸 위로 = 128px)
-          benefitsSection.style.setProperty('transform', 'none', 'important'); // translateY 제거
-          benefitsSection.style.setProperty('background', '#000', 'important');
-          benefitsSection.style.setProperty('padding-top', '236px', 'important'); // 300px에서 236px로 조정 (위치에 맞춰 조정)
-          benefitsSection.style.setProperty('position', 'relative', 'important');
-          benefitsSection.style.setProperty('z-index', '10', 'important');
-          benefitsSection.style.setProperty('display', 'block', 'important');
-          benefitsSection.style.setProperty('visibility', 'visible', 'important');
-          benefitsSection.style.setProperty('opacity', '1', 'important');
-          
-          // 적용 완료 표시
-          benefitsSection.setAttribute('data-position-fixed', 'true');
-          
-          // 강제로 스타일 재적용
-          benefitsSection.offsetHeight; // 리플로우 강제 트리거
-        }
+        benefitsSection.style.setProperty('margin-top', '-176px', 'important');
+        benefitsSection.style.setProperty('transform', 'translateY(0)', 'important');
+        benefitsSection.style.setProperty('background', '#000', 'important');
+        benefitsSection.style.setProperty('padding-top', '364px', 'important');
+        benefitsSection.style.setProperty('position', 'relative', 'important');
+        benefitsSection.style.setProperty('z-index', '10', 'important');
+        benefitsSection.style.setProperty('display', 'block', 'important');
+        benefitsSection.style.setProperty('visibility', 'visible', 'important');
+        benefitsSection.style.setProperty('opacity', '1', 'important');
+        
+        // 강제로 스타일 재적용
+        benefitsSection.offsetHeight; // 리플로우 강제 트리거
       }
       
-      // 네오 필라테스 정보 박스 위치 조정 - 스크롤 점프 방지
+      // 네오 필라테스 정보 박스 위치 조정
       const neoPilatesInfoBox = document.getElementById('neo-pilates-info-box');
-      const neoPilatesSection = document.getElementById('neo-pilates');
-      if (neoPilatesInfoBox && neoPilatesSection && window.innerWidth <= 768) {
-        // 스크롤 점프 방지 설정
-        neoPilatesInfoBox.style.scrollBehavior = 'auto';
-        neoPilatesInfoBox.style.scrollSnapType = 'none';
-        neoPilatesInfoBox.style.scrollMarginTop = '0';
-        neoPilatesInfoBox.style.scrollSnapAlign = 'none';
-        
-        // 섹션 전체 스크롤 동작 수정
-        neoPilatesSection.style.scrollSnapType = 'none';
-        neoPilatesSection.style.scrollBehavior = 'auto';
-        neoPilatesSection.style.scrollSnapAlign = 'none';
-        neoPilatesSection.style.scrollMarginTop = '0';
-        
-        // IntersectionObserver 비활성화
-        neoPilatesSection.classList.remove('animate-on-scroll');
-        
-        // position 안정화
-        neoPilatesInfoBox.style.position = 'relative';
-        neoPilatesInfoBox.style.willChange = 'auto';
+      if (neoPilatesInfoBox && window.innerWidth <= 768) {
+        neoPilatesInfoBox.style.setProperty('margin-top', '114px', 'important');
       }
       
       // 모바일에서 비용 회수 텍스트 강제 우측 이동 - transform 사용
@@ -14141,8 +14080,6 @@ document.addEventListener('DOMContentLoaded', function() {
         attributes: true,
         attributeFilter: ['style', 'class']
       });
-      // 초기 실행
-      forceApplyMobileStyles();
     } else {
       document.addEventListener('DOMContentLoaded', function() {
         observer.observe(document.body, {
@@ -14151,8 +14088,6 @@ document.addEventListener('DOMContentLoaded', function() {
           attributes: true,
           attributeFilter: ['style', 'class']
         });
-        // 초기 실행
-        forceApplyMobileStyles();
       });
     }
   } else {
@@ -14373,41 +14308,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     /* 카드 위치는 JavaScript로 제어 */
   }
-</style>
-<style>
-/* 최종 우선순위 - benefits 섹션 위치 강제 고정 */
-@media (max-width: 768px) {
-  html body section#benefits.section.animate-on-scroll[data-position-fixed="true"] {
-    margin-top: -368px !important; /* 8칸 위로 이동 */
-    transform: none !important;
-    -webkit-transform: none !important;
-    padding-top: 236px !important;
-  }
-  
-  /* 필라테스 강사 정보 박스 스크롤 점프 완전 방지 */
-  #neo-pilates-info-box,
-  .neo-pilates-info-box {
-    position: relative !important;
-    will-change: auto !important;
-    scroll-snap-align: none !important;
-    scroll-margin: 0 !important;
-    scroll-padding: 0 !important;
-    overflow: visible !important;
-  }
-  
-  /* 필라테스 섹션 전체 스크롤 안정화 */
-  #neo-pilates {
-    scroll-snap-type: none !important;
-    scroll-behavior: auto !important;
-    will-change: auto !important;
-  }
-  
-  /* 이 영역의 모든 자식 요소들도 스크롤 점프 방지 */
-  #neo-pilates * {
-    scroll-snap-align: none !important;
-    scroll-margin: 0 !important;
-  }
-}
 </style>
 </body>
 </html> 
