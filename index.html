@@ -14234,25 +14234,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     /* 카드 위치는 JavaScript로 제어 */
   }
-  
-  /* 필라테스 섹션 스크롤 시 위치 고정 - 최종 우선순위 */
-  @media (max-width: 768px) {
-    html body section#neo-pilates,
-    html body section#neo-pilates.section {
-      margin-top: 144px !important;
-      transform: none !important;
-      -webkit-transform: none !important;
-      position: relative !important;
-      will-change: auto !important;
-    }
-    
-    /* 스크롤 시에도 위치 유지 */
-    html body section#neo-pilates[style*="transform"] {
-      transform: none !important;
-      -webkit-transform: none !important;
-    }
-  }
-}
 </style>
 </body>
 </html> 
