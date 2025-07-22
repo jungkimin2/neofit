@@ -1592,12 +1592,24 @@ section {
       pointer-events: auto;
     }
     
-    .mobile-pilates-card.left:active, .mobile-pilates-card.right:active {
-      transform: scale(0.75) rotateY(25deg) !important;
+    /* 스크롤 중 위치 고정 */
+    .mobile-pilates-slider {
+      contain: layout;
+      will-change: contents;
+      position: relative !important;
+      transform: none !important;
     }
     
-    .mobile-pilates-card.center:active {
-      transform: translateX(-50%) scale(0.95) !important;
+    .mobile-pilates-card {
+      will-change: transform;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+    
+    /* 스크롤 시 위치 고정을 위해 transform 대신 다른 방법 사용 */
+    #neo-pilates.mobile-transform-target {
+      transform: none !important;
+      -webkit-transform: none !important;
     }
     
     /* 인디케이터 활성화 스타일 */
@@ -5156,7 +5168,7 @@ if (window.innerWidth <= 768) {
 </section>
 
 <!-- 네오 필라테스 섹션 -->
-<section id="neo-pilates" class="section mobile-transform-target" style="background: #000; padding: 16px 20px 80px 20px;">
+<section id="neo-pilates" class="section mobile-transform-target" style="background: #000; padding: 16px 20px 80px 20px; transform: none !important;">
   <div class="container" style="max-width: 1200px; margin: 0 auto;">
     <!-- 제목과 설명 -->
     <div style="text-align: center; margin-bottom: 5px; margin-top: 48px;">
@@ -5817,19 +5829,21 @@ if (window.innerWidth <= 768) {
         initialDescEl.innerHTML = '그룹 시너지로<br>함께 성장해요';
       }
       
-      // 스크롤 이벤트 시 카드 위치만 유지 (섹션은 건드리지 않음)
+      // 스크롤 이벤트 시 카드 위치만 유지 (셉션은 건드리지 않음)
+      // 모바일에서는 새로운 UI를 사용하므로 이 코드 비활성화
       let isScrolling = false;
-      window.addEventListener('scroll', function() {
-        isScrolling = true;
-        
-        // 스크롤 중에는 카드 위치만 고정
-        pilatesCards.forEach((card) => {
-          const currentPosition = card.getAttribute('data-position');
-          if (currentPosition === '0') {
-            card.style.setProperty('left', '50%', 'important');
-            card.style.setProperty('transform', 'translate(-50%, -50%) scale(1) rotateY(0deg)', 'important');
-          } else if (currentPosition === '1') {
-            card.style.setProperty('left', '15%', 'important');
+      if (window.innerWidth > 768) { // PC에서만 실행
+        window.addEventListener('scroll', function() {
+          isScrolling = true;
+          
+          // 스크롤 중에는 카드 위치만 고정
+          pilatesCards.forEach((card) => {
+            const currentPosition = card.getAttribute('data-position');
+            if (currentPosition === '0') {
+              card.style.setProperty('left', '50%', 'important');
+              card.style.setProperty('transform', 'translate(-50%, -50%) scale(1) rotateY(0deg)', 'important');
+            } else if (currentPosition === '1') {
+              card.style.setProperty('left', '15%', 'important');
             card.style.setProperty('transform', 'translate(-50%, -50%) scale(0.85) rotateY(15deg)', 'important');
           } else if (currentPosition === '2') {
             card.style.setProperty('left', '85%', 'important');
@@ -5841,8 +5855,8 @@ if (window.innerWidth <= 768) {
           isScrolling = false;
         }, 100);
       });
-    }
-  });
+      } // PC에서만 실행 if문 닫기
+    });
   </script>
 </section>
 
@@ -13811,8 +13825,8 @@ document.addEventListener('DOMContentLoaded', function() {
           { selector: '.core-value-fresh-mobile', transform: 'translateY(-132px)' },
           { selector: '.mobile-system-box-wrapper', transform: 'translateY(-164px)' },
           { selector: '#smart', transform: 'translateY(-240px)' },
-          { selector: '#hive', transform: 'translateY(-196px)' },
-          { selector: '#neo-pilates', transform: 'translateY(144px)' }
+          { selector: '#hive', transform: 'translateY(-196px)' }
+          // { selector: '#neo-pilates', transform: 'translateY(144px)' } // 제거 - 스크롤 시 정렬 문제 방지
       ];
       
       elements.forEach(({ selector, transform }) => {
@@ -14274,14 +14288,30 @@ document.addEventListener('DOMContentLoaded', function() {
     if (window.innerWidth <= 768) {
       const neoPilatesSection = document.querySelector('#neo-pilates');
       if (neoPilatesSection) {
-        // 인라인 스타일로 직접 설정하여 최우선순위 보장
+        // margin-top만 사용하여 위치 조정 (transform 제거)
         neoPilatesSection.style.setProperty('margin-top', '-300px', 'important');
-        neoPilatesSection.style.setProperty('transform', 'translateY(-150px)', 'important');
-        neoPilatesSection.style.setProperty('-webkit-transform', 'translateY(-150px)', 'important');
+        neoPilatesSection.style.setProperty('transform', 'none', 'important');
+        neoPilatesSection.style.setProperty('-webkit-transform', 'none', 'important');
         neoPilatesSection.style.setProperty('position', 'relative', 'important');
         neoPilatesSection.style.setProperty('z-index', '50', 'important');
         neoPilatesSection.style.setProperty('padding-top', '20px', 'important');
         neoPilatesSection.style.setProperty('background', '#000', 'important');
+        
+        // 모바일 필라테스 슬라이더 위치 고정
+        const mobileSlider = neoPilatesSection.querySelector('.mobile-pilates-slider');
+        if (mobileSlider) {
+          mobileSlider.style.setProperty('position', 'relative', 'important');
+          mobileSlider.style.setProperty('transform', 'none', 'important');
+        }
+        
+        // 카드들의 transform 보호
+        const cards = neoPilatesSection.querySelectorAll('.mobile-pilates-card');
+        cards.forEach(card => {
+          const currentTransform = card.style.transform;
+          if (currentTransform) {
+            card.setAttribute('data-transform', currentTransform);
+          }
+        });
         
         console.log('Neo Pilates section position adjusted for mobile');
       }
