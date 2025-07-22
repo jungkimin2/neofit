@@ -5356,20 +5356,19 @@ if (window.innerWidth <= 768) {
       body section#neo-pilates,
       html body section#neo-pilates,
       #neo-pilates {
-        margin-top: 144px !important;
-        transform: none !important;
-        -webkit-transform: none !important;
+        margin-top: 0px !important;
+        transform: translateY(144px) !important;
+        -webkit-transform: translateY(144px) !important;
         position: relative !important;
         padding: 16px 16px 120px 16px !important;
         z-index: 10 !important;
         will-change: auto !important;
       }
       
-      /* transform이 설정되어도 무시하고 margin-top 사용 */
+      /* 스크롤 시에도 위치 절대 고정 */
       #neo-pilates[style*="transform"] {
-        transform: none !important;
-        -webkit-transform: none !important;
-        margin-top: 144px !important;
+        transform: translateY(144px) !important;
+        -webkit-transform: translateY(144px) !important;
       }
       
       #neo-pilates h2 {
@@ -14078,14 +14077,14 @@ document.addEventListener('DOMContentLoaded', function() {
 /* 모바일에서 네오 필라테스 섹션 아래로 이동 - 최종 override */
 @media screen and (max-width: 768px) {
   /* 네오 필라테스 섹션 강제로 아래로 이동 - 최고 우선순위 */
-  body section#neo-pilates.section.animate-on-scroll,
-  html body section#neo-pilates.section.animate-on-scroll,
+  body section#neo-pilates.section.animate-on-scroll.mobile-transform-target,
+  html body section#neo-pilates.section.animate-on-scroll.mobile-transform-target,
   section#neo-pilates[style],
   body #neo-pilates,
   html body #neo-pilates {
-    margin-top: 144px !important;
-    transform: none !important;
-    -webkit-transform: none !important;
+    margin-top: 0px !important;
+    transform: translateY(144px) !important;
+    -webkit-transform: translateY(144px) !important;
     position: relative !important;
     z-index: 50 !important;
     padding-top: 20px !important;
@@ -14095,18 +14094,17 @@ document.addEventListener('DOMContentLoaded', function() {
   
   /* JavaScript로 설정되는 인라인 스타일도 override */
   section#neo-pilates.section.animate-on-scroll {
-    margin-top: 144px !important;
-    transform: none !important;
-    -webkit-transform: none !important;
+    margin-top: 0px !important;
+    transform: translateY(144px) !important;
+    -webkit-transform: translateY(144px) !important;
   }
   
-  /* 모든 경우에 대해 transform 제거하고 margin-top 사용 */
+  /* 모든 경우에 대해 transform 고정 */
   #neo-pilates,
   #neo-pilates[style],
   #neo-pilates.section {
-    transform: none !important;
-    -webkit-transform: none !important;
-    margin-top: 144px !important;
+    transform: translateY(144px) !important;
+    -webkit-transform: translateY(144px) !important;
   }
   
   /* benefits 섹션의 하단 여백 추가 */
