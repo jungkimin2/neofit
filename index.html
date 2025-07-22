@@ -5159,7 +5159,7 @@ if (window.innerWidth <= 768) {
 <section id="neo-pilates" class="section" style="background: #000; padding: 16px 20px 80px 20px; position: relative !important; transform: none !important; -webkit-transform: none !important;">
   <div class="container" style="max-width: 1200px; margin: 0 auto;">
     <!-- 제목과 설명 -->
-    <div style="text-align: center; margin-bottom: 5px; margin-top: 48px;">
+    <div style="text-align: center; margin-bottom: 5px; margin-top: 48px;" class="pilates-title-section">
       <h2 style="font-size: 2.5rem; font-weight: bold; margin-bottom: 20px; color: #fff;">
         <span class="neon-green">네오 필라테스</span> : 
         <span style="font-size: 2rem;">기구로 더 정확하게, 함께해서 더 즐겁게</span>
@@ -5598,7 +5598,12 @@ if (window.innerWidth <= 768) {
     /* 모바일에서 네오 필라테스 정보 박스 위치 조정 */
     @media (max-width: 768px) {
       .neo-pilates-info-box {
-        margin-top: 114px !important;  /* 82px + 32px(2칸) */
+        margin-top: 178px !important;  /* 114px + 64px(4칸) = 178px */
+      }
+      
+      /* 모바일에서 필라테스 제목 섹션 아래로 이동 */
+      .pilates-title-section {
+        margin-top: 112px !important;  /* 48px + 64px(4칸) = 112px */
       }
       
       /* 모바일에서 강사 정보 표시 */
