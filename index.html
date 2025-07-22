@@ -4080,11 +4080,14 @@ function toggleMobilePreviewMute() {
   html body .neos-card-list,
   body div.neos-card-list[style*="margin-top"],
   body section#smart div.neos-card-list {
-    transform: translateY(-16px) translateX(32px) !important;
+    transform: translateY(16px) translateX(32px) !important;
     position: relative !important;
-    z-index: 20 !important;
-    margin-top: calc(56px - 16px - 16px) !important;
+    z-index: 200 !important;
+    margin-top: 56px !important;
     margin-bottom: 60px !important;  /* 하단 여백 추가 */
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
   }
   
   /* 카드 섹션 스타일 */
