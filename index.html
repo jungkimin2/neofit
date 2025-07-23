@@ -5744,38 +5744,49 @@ if (window.innerWidth <= 768) {
         }
       }
       
-      // 카드의 원래 위치 기억
-      const originalPositions = [0, 1, 2]; // 각 카드의 원래 위치
-      
       // 카드 클릭 이벤트
       pilatesCards.forEach((card, index) => {
         card.addEventListener('click', function() {
           const currentPosition = positions[index];
-          const originalPosition = originalPositions[index];
           
-          if (currentPosition === 1 || currentPosition === 2) {
-            // 좌측(1) 또는 우측(2) 카드 클릭 시 → 가운데로
-            const centerIndex = positions.indexOf(0);
-            positions[centerIndex] = positions[index];
-            positions[index] = 0;
-          } else if (currentPosition === 0) {
-            // 가운데 카드 클릭 시 → 원래 위치로 돌아가기
-            if (originalPosition === 1) {
-              // 원래 좌측 카드였으면 좌측으로
+          // 카드 0번 (김하정 강사): 가운데 ↔ 좌측만 이동
+          if (index === 0) {
+            if (currentPosition === 0) {
+              // 가운데에 있으면 좌측으로
               const leftIndex = positions.indexOf(1);
               if (leftIndex !== -1) {
                 positions[leftIndex] = 0;
               }
               positions[index] = 1;
-            } else if (originalPosition === 2) {
-              // 원래 우측 카드였으면 우측으로
+            } else if (currentPosition === 1) {
+              // 좌측에 있으면 가운데로
+              const centerIndex = positions.indexOf(0);
+              if (centerIndex !== -1) {
+                positions[centerIndex] = 1;
+              }
+              positions[index] = 0;
+            }
+          }
+          
+          // 카드 1번 (박유빈 강사): 항상 가운데 고정, 클릭해도 동작 안함
+          
+          // 카드 2번 (최서현 강사): 가운데 ↔ 우측만 이동
+          if (index === 2) {
+            if (currentPosition === 0) {
+              // 가운데에 있으면 우측으로
               const rightIndex = positions.indexOf(2);
               if (rightIndex !== -1) {
                 positions[rightIndex] = 0;
               }
               positions[index] = 2;
+            } else if (currentPosition === 2) {
+              // 우측에 있으면 가운데로
+              const centerIndex = positions.indexOf(0);
+              if (centerIndex !== -1) {
+                positions[centerIndex] = 2;
+              }
+              positions[index] = 0;
             }
-            // 원래 가운데 카드(originalPosition === 0)는 아무 동작 안함
           }
           
           updatePilatesCards(true); // 애니메이션 활성화
