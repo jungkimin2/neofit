@@ -114,7 +114,7 @@
     html body section#benefits.section.animate-on-scroll,
     section#benefits[style],
     #benefits[style] {
-      margin-top: -32px !important;  /* -112px + 80px = -32px (5칸 더 아래로) */
+      margin-top: -16px !important;  /* -32px + 16px = -16px (1칸 더 아래로) */
       transform: none !important;  /* transform 제거 */
       position: relative !important;
       z-index: 100 !important;
@@ -5833,7 +5833,7 @@ if (window.innerWidth <= 768) {
   </script>
 </section>
 
-<section id="benefits" class="section animate-on-scroll" style="background: #000; padding-bottom: 20px; padding-top: 20px; margin-top: -32px;">
+<section id="benefits" class="section animate-on-scroll" style="background: #000; padding-bottom: 20px; padding-top: 20px; margin-top: -16px;">
   <div class="container benefits-container-mobile" style="max-width: 900px; margin: 0 auto; text-align: center;">
     <h2 style="font-size: 2.2rem; font-weight: bold; margin-bottom: 16px; letter-spacing: -1px; line-height: 1.2;">
       <span style="color: #FFFFFF;">시설 정보 및 위치 안내</span>
@@ -13951,7 +13951,7 @@ document.addEventListener('DOMContentLoaded', function() {
       // benefits 섹션 강제 위치 조정 - 모바일에서만 적용
       const benefitsSection = document.querySelector('section#benefits');
       if (benefitsSection && window.innerWidth <= 768) {
-        benefitsSection.style.setProperty('margin-top', '-32px', 'important'); // -112px + 80px = -32px (5칸 더 아래로)
+        benefitsSection.style.setProperty('margin-top', '-16px', 'important'); // -32px + 16px = -16px (1칸 더 아래로)
         benefitsSection.style.setProperty('transform', 'translateY(0)', 'important');
         benefitsSection.style.setProperty('background', '#000', 'important');
         benefitsSection.style.setProperty('padding-top', '20px', 'important');
