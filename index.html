@@ -2845,7 +2845,7 @@ document.addEventListener('DOMContentLoaded', function() {
     <img src="./images/neohive3.png" alt="NeoHive" class="nav-logo">
     <button class="nav-menu-btn" onclick="toggleNav()">&#9776;</button>
   </div>
-  <div class="nav-menu" id="nav-menu" style="display: none;">
+  <div class="nav-menu" id="nav-menu" style="display: none !important;">
     <a href="#hive" onclick="return scrollToSection('hive')">하이브 시스템</a>
     <a href="#smart" onclick="return scrollToSection('smart')">스마트 시스템</a>
     <a href="#benefits" onclick="return scrollToSection('benefits')">도입 효과</a>
@@ -7666,14 +7666,24 @@ if (window.innerWidth <= 768) {
   function toggleNav() {
     const menu = document.getElementById('nav-menu');
     if (menu) {
-      menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+      // 강제로 display 속성 변경
+      if (menu.style.display === 'block') {
+        menu.style.cssText = 'display: none !important;';
+      } else {
+        menu.style.cssText = 'display: block !important;';
+      }
+      
+      // 디버깅을 위한 로그
+      console.log('Menu toggled:', menu.style.display);
+    } else {
+      console.error('nav-menu element not found!');
     }
   }
   
   function closeNav() {
     const menu = document.getElementById('nav-menu');
     if (menu) {
-      menu.style.display = 'none';
+      menu.style.cssText = 'display: none !important;';
     }
   }
   
@@ -7952,6 +7962,28 @@ if (window.innerWidth <= 768) {
   
   // 모바일 하단 고정 네비게이션 (항상 표시)
   // 스크롤 감지 로직 제거 - 이제 항상 보임
+  
+  // DOM이 완전히 로드된 후 네비게이션 버튼 이벤트 재설정
+  document.addEventListener('DOMContentLoaded', function() {
+    // 모바일 메뉴 버튼 클릭 이벤트 재설정
+    const menuBtn = document.querySelector('.nav-menu-btn');
+    if (menuBtn) {
+      menuBtn.removeEventListener('click', toggleNav); // 기존 이벤트 제거
+      menuBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        toggleNav();
+      });
+    }
+    
+    // 메뉴 아이템 클릭 시 메뉴 닫기
+    const menuItems = document.querySelectorAll('#nav-menu a');
+    menuItems.forEach(item => {
+      item.addEventListener('click', function() {
+        closeNav();
+      });
+    });
+  });
 
 </script>
 
@@ -12771,6 +12803,9 @@ document.addEventListener('DOMContentLoaded', function() {
     border-bottom: 1px solid #7BE495 !important;
     box-shadow: 0 4px 8px rgba(0,0,0,0.3) !important;
     z-index: 2147483646 !important;
+    width: 100% !important;
+    max-height: 400px !important;
+    overflow-y: auto !important;
   }
 
   /* 메뉴 아이템 - 일반 항목들은 흰색 */
