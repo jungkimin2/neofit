@@ -7670,18 +7670,6 @@ if (window.innerWidth <= 768) {
     }
   }
   
-  // 모바일 메뉴 버튼 이벤트 리스너 추가
-  document.addEventListener('DOMContentLoaded', function() {
-    const menuBtn = document.querySelector('.nav-menu-btn');
-    if (menuBtn) {
-      menuBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        toggleNav();
-      });
-    }
-  });
-  
   function closeNav() {
     const menu = document.getElementById('nav-menu');
     if (menu) {
@@ -8073,7 +8061,6 @@ if (window.innerWidth <= 768) {
         if (videoPhone) {
           if (window.innerWidth <= 768) {
             // 모바일에서만 !important 사용 - 트랜지션 먼저 설정
-            videoPhone.style.setProperty('position', 'absolute', 'important');
             videoPhone.style.setProperty('transition', 'all 0.4s cubic-bezier(0.4,0,0.2,1)', 'important');
             videoPhone.style.setProperty('-webkit-transition', 'all 0.4s cubic-bezier(0.4,0,0.2,1)', 'important');
             videoPhone.style.setProperty('left', '50%', 'important');
@@ -8115,7 +8102,6 @@ if (window.innerWidth <= 768) {
         if (videoPhone) {
           if (window.innerWidth <= 768) {
             // 모바일에서만 !important 사용 - 트랜지션 먼저 설정
-            videoPhone.style.setProperty('position', 'absolute', 'important');
             videoPhone.style.setProperty('transition', 'all 0.4s cubic-bezier(0.4,0,0.2,1)', 'important');
             videoPhone.style.setProperty('-webkit-transition', 'all 0.4s cubic-bezier(0.4,0,0.2,1)', 'important');
             videoPhone.style.setProperty('left', targetPosition.left, 'important');
@@ -8145,7 +8131,6 @@ if (window.innerWidth <= 768) {
         targetImg.classList.add('active');
         if (window.innerWidth <= 768) {
           // 모바일에서만 !important 사용 - 트랜지션 먼저 설정
-          targetImg.style.setProperty('position', 'absolute', 'important');
           targetImg.style.setProperty('transition', 'all 0.4s cubic-bezier(0.4,0,0.2,1)', 'important');
           targetImg.style.setProperty('-webkit-transition', 'all 0.4s cubic-bezier(0.4,0,0.2,1)', 'important');
           targetImg.style.setProperty('left', '50%', 'important');
@@ -8228,7 +8213,6 @@ if (window.innerWidth <= 768) {
      
      if (window.innerWidth <= 768) {
        // 모바일에서만 !important 사용 - 트랜지션 먼저 설정
-       img.style.setProperty('position', 'absolute', 'important');
        img.style.setProperty('transition', 'all 0.4s cubic-bezier(0.4,0,0.2,1)', 'important');
        img.style.setProperty('-webkit-transition', 'all 0.4s cubic-bezier(0.4,0,0.2,1)', 'important');
        img.style.setProperty('left', positions.left, 'important');
