@@ -2843,9 +2843,9 @@ document.addEventListener('DOMContentLoaded', function() {
 <div id="mobile-top-nav-fixed" style="position: fixed; top: 0; left: 0; right: 0; z-index: 2147483647;">
   <div class="nav-bar">
     <img src="./images/neohive3.png" alt="NeoHive" class="nav-logo">
-    <button class="nav-menu-btn" onclick="toggleNav()">&#9776;</button>
+    <button class="nav-menu-btn" id="mobile-menu-toggle-btn">&#9776;</button>
   </div>
-  <div class="nav-menu" id="nav-menu" style="display: none !important;">
+  <div class="nav-menu" id="nav-menu">
     <a href="#hive" onclick="return scrollToSection('hive')">하이브 시스템</a>
     <a href="#smart" onclick="return scrollToSection('smart')">스마트 시스템</a>
     <a href="#benefits" onclick="return scrollToSection('benefits')">도입 효과</a>
@@ -7666,15 +7666,19 @@ if (window.innerWidth <= 768) {
   function toggleNav() {
     const menu = document.getElementById('nav-menu');
     if (menu) {
+      // 현재 display 상태 확인 (getComputedStyle 사용)
+      const currentDisplay = window.getComputedStyle(menu).display;
+      console.log('Current display:', currentDisplay);
+      
       // 강제로 display 속성 변경
-      if (menu.style.display === 'block') {
-        menu.style.cssText = 'display: none !important;';
+      if (currentDisplay === 'none') {
+        menu.style.setProperty('display', 'block', 'important');
       } else {
-        menu.style.cssText = 'display: block !important;';
+        menu.style.setProperty('display', 'none', 'important');
       }
       
       // 디버깅을 위한 로그
-      console.log('Menu toggled:', menu.style.display);
+      console.log('Menu toggled to:', window.getComputedStyle(menu).display);
     } else {
       console.error('nav-menu element not found!');
     }
@@ -7683,7 +7687,7 @@ if (window.innerWidth <= 768) {
   function closeNav() {
     const menu = document.getElementById('nav-menu');
     if (menu) {
-      menu.style.cssText = 'display: none !important;';
+      menu.style.setProperty('display', 'none', 'important');
     }
   }
   
@@ -7963,17 +7967,28 @@ if (window.innerWidth <= 768) {
   // 모바일 하단 고정 네비게이션 (항상 표시)
   // 스크롤 감지 로직 제거 - 이제 항상 보임
   
-  // DOM이 완전히 로드된 후 네비게이션 버튼 이벤트 재설정
-  document.addEventListener('DOMContentLoaded', function() {
-    // 모바일 메뉴 버튼 클릭 이벤트 재설정
-    const menuBtn = document.querySelector('.nav-menu-btn');
+  // DOM이 완전히 로드된 후 네비게이션 버튼 이벤트 설정
+  function initMobileMenu() {
+    // 모바일 메뉴 버튼 클릭 이벤트
+    const menuBtn = document.getElementById('mobile-menu-toggle-btn');
     if (menuBtn) {
-      menuBtn.removeEventListener('click', toggleNav); // 기존 이벤트 제거
+      console.log('Menu button found!');
       menuBtn.addEventListener('click', function(e) {
         e.preventDefault();
         e.stopPropagation();
+        console.log('Menu button clicked!');
         toggleNav();
       });
+      
+      // 터치 이벤트 추가 (모바일 대응)
+      menuBtn.addEventListener('touchstart', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log('Menu button touched!');
+        toggleNav();
+      }, { passive: false });
+    } else {
+      console.error('Menu button not found!');
     }
     
     // 메뉴 아이템 클릭 시 메뉴 닫기
@@ -7983,7 +7998,24 @@ if (window.innerWidth <= 768) {
         closeNav();
       });
     });
-  });
+    
+    // 초기 메뉴 상태 확인
+    const menu = document.getElementById('nav-menu');
+    if (menu) {
+      console.log('Initial menu display:', window.getComputedStyle(menu).display);
+    }
+  }
+  
+  // 여러 시점에서 초기화 시도
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initMobileMenu);
+  } else {
+    initMobileMenu();
+  }
+  
+  // 추가 안전장치
+  window.addEventListener('load', initMobileMenu);
+  setTimeout(initMobileMenu, 100);
 
 </script>
 
@@ -12795,6 +12827,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   /* 드롭다운 메뉴 */
   #mobile-top-nav-fixed .nav-menu {
+    display: none !important; /* 초기 상태는 숨김 */
     position: absolute !important;
     top: 100% !important;
     left: 0 !important;
