@@ -2845,7 +2845,7 @@ document.addEventListener('DOMContentLoaded', function() {
     <img src="./images/neohive3.png" alt="NeoHive" class="nav-logo">
     <button class="nav-menu-btn" id="mobile-menu-toggle-btn" onclick="toggleNav()">&#9776;</button>
   </div>
-  <div class="nav-menu" id="nav-menu" style="display: none;">
+  <div class="nav-menu" id="nav-menu">
     <a href="#hive" onclick="return scrollToSection('hive')">하이브 시스템</a>
     <a href="#smart" onclick="return scrollToSection('smart')">스마트 시스템</a>
     <a href="#benefits" onclick="return scrollToSection('benefits')">도입 효과</a>
@@ -12827,7 +12827,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   /* 드롭다운 메뉴 */
   #mobile-top-nav-fixed .nav-menu {
-    display: none !important; /* 초기 상태는 숨김 */
+    display: none; /* !important 제거하여 JS로 제어 가능하도록 */
     position: absolute !important;
     top: 100% !important;
     left: 0 !important;
