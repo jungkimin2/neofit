@@ -1997,17 +1997,18 @@ section {
      }
      
      /* 모바일 활성 이미지 - 가장 앞에 표시 */
+     /* JavaScript에서 인라인 스타일로 처리하므로 주석 처리
      .hive-image.active {
        left: 50% !important;
        top: 50% !important;
        transform: translate(-50%, -50%) scale(1.2) !important;
-       z-index: 100 !important;  /* z-index를 10에서 100으로 증가 */
+       z-index: 100 !important;
        width: 140px !important;
        height: 280px !important;
        border: 3px solid #7BE495 !important;
        box-shadow: 0 0 15px rgba(123, 228, 149, 0.6), 0 0 30px rgba(123, 228, 149, 0.3) !important;
        border-radius: 16px !important;
-     }
+     } */
            .video-phone {
        position: absolute !important;
        border-radius: 18px !important;
@@ -2978,7 +2979,7 @@ document.addEventListener('DOMContentLoaded', function() {
       같이 운동한 횟수만큼 <span class="neon-green">리워드 보상!</span> '챌린지' <span class="neon-green">상금 혜택까지!</span>
     </p>
 
-    <div class="hive-showcase" style="position: relative; width: 100%; height: 620px; margin-top: 12px;">
+    <div class="hive-showcase" style="position: relative; width: 100%; height: 620px; margin-top: 12px; overflow: hidden;">
       <div class="hive-label-left" style="position: absolute; top: 100px; left: 130px; z-index: 20; background: rgba(0,0,0,0.6); padding: 6px 12px; border-radius: 20px; color: #7BE495; text-shadow: 0 0 8px rgba(123, 228, 149, 0.8), 0 0 16px rgba(123, 228, 149, 0.6); font-size: 0.85rem; font-weight: 500; animation: fadeInUp 1s ease forwards;">
         <img src="./images/neo33.png" alt="팀 결성 아이콘" style="width: 24px; height: 24px; margin-right: 6px; vertical-align: middle;"> <span class="label-text-pc">팀 결성</span><span class="label-text-mobile">팀 결성</span>
       </div>
@@ -10940,6 +10941,10 @@ if (video) {
           e.preventDefault();
           e.stopPropagation();
           
+          // 스크롤 위치 저장
+          const scrollY = window.scrollY;
+          const scrollX = window.scrollX;
+          
           // 현재 active 이미지 찾기
           const currentActive = document.querySelector('.hive-image.active');
           
@@ -11010,6 +11015,9 @@ if (video) {
             this.style.borderRadius = '20px';
             
             activeIndex = index;
+            
+            // 스크롤 위치 복원
+            window.scrollTo(scrollX, scrollY);
           } else {
             // active 이미지를 다시 클릭한 경우 원래 위치로 복원
             this.classList.remove('active');
@@ -11041,6 +11049,9 @@ if (video) {
             this.style.height = 'auto';
             
             activeIndex = -1;
+            
+            // 스크롤 위치 복원
+            window.scrollTo(scrollX, scrollY);
           }
         });
       });
