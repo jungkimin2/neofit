@@ -7670,6 +7670,18 @@ if (window.innerWidth <= 768) {
     }
   }
   
+  // 모바일 메뉴 버튼 이벤트 리스너 추가
+  document.addEventListener('DOMContentLoaded', function() {
+    const menuBtn = document.querySelector('.nav-menu-btn');
+    if (menuBtn) {
+      menuBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        toggleNav();
+      });
+    }
+  });
+  
   function closeNav() {
     const menu = document.getElementById('nav-menu');
     if (menu) {
@@ -8061,10 +8073,11 @@ if (window.innerWidth <= 768) {
         if (videoPhone) {
           if (window.innerWidth <= 768) {
             // 모바일에서만 !important 사용 - 트랜지션 먼저 설정
+            videoPhone.style.setProperty('position', 'absolute', 'important');
             videoPhone.style.setProperty('transition', 'all 0.4s cubic-bezier(0.4,0,0.2,1)', 'important');
             videoPhone.style.setProperty('-webkit-transition', 'all 0.4s cubic-bezier(0.4,0,0.2,1)', 'important');
             videoPhone.style.setProperty('left', '50%', 'important');
-            videoPhone.style.setProperty('top', '60%', 'important');
+            videoPhone.style.setProperty('top', '50%', 'important');
             videoPhone.style.setProperty('transform', 'translate(-50%, -50%)', 'important');
             videoPhone.style.setProperty('z-index', '10', 'important');
             videoPhone.style.setProperty('width', '180px', 'important');
@@ -8102,6 +8115,7 @@ if (window.innerWidth <= 768) {
         if (videoPhone) {
           if (window.innerWidth <= 768) {
             // 모바일에서만 !important 사용 - 트랜지션 먼저 설정
+            videoPhone.style.setProperty('position', 'absolute', 'important');
             videoPhone.style.setProperty('transition', 'all 0.4s cubic-bezier(0.4,0,0.2,1)', 'important');
             videoPhone.style.setProperty('-webkit-transition', 'all 0.4s cubic-bezier(0.4,0,0.2,1)', 'important');
             videoPhone.style.setProperty('left', targetPosition.left, 'important');
@@ -8131,10 +8145,11 @@ if (window.innerWidth <= 768) {
         targetImg.classList.add('active');
         if (window.innerWidth <= 768) {
           // 모바일에서만 !important 사용 - 트랜지션 먼저 설정
+          targetImg.style.setProperty('position', 'absolute', 'important');
           targetImg.style.setProperty('transition', 'all 0.4s cubic-bezier(0.4,0,0.2,1)', 'important');
           targetImg.style.setProperty('-webkit-transition', 'all 0.4s cubic-bezier(0.4,0,0.2,1)', 'important');
           targetImg.style.setProperty('left', '50%', 'important');
-          targetImg.style.setProperty('top', '60%', 'important');
+          targetImg.style.setProperty('top', '50%', 'important');
           targetImg.style.setProperty('transform', 'translate(-50%, -50%)', 'important');
           targetImg.style.setProperty('z-index', '10', 'important');
           targetImg.style.setProperty('width', '180px', 'important');
@@ -8167,12 +8182,12 @@ if (window.innerWidth <= 768) {
     if (window.innerWidth <= 768) {
       // 모바일용 위치 - CSS nth-of-type(1~6)과 정확히 일치
       const positions = [
-        { left: '50%', top: '60%', transform: 'translate(-160%, -50%) scale(0.9)', zIndex: 3 }, // nth-of-type(1) - z-index: 3
-        { left: '50%', top: '60%', transform: 'translate(-210%, -50%) scale(0.8)', zIndex: 2 }, // nth-of-type(2) - z-index: 2
-        { left: '50%', top: '60%', transform: 'translate(-260%, -50%) scale(0.7)', zIndex: 1 }, // nth-of-type(3) - z-index: 1
-        { left: '50%', top: '60%', transform: 'translate(60%, -50%) scale(0.9)', zIndex: 3 },  // nth-of-type(4) - z-index: 3
-        { left: '50%', top: '60%', transform: 'translate(110%, -50%) scale(0.8)', zIndex: 2 }, // nth-of-type(5) - z-index: 2
-        { left: '50%', top: '60%', transform: 'translate(160%, -50%) scale(0.7)', zIndex: 1 }  // nth-of-type(6) - z-index: 1
+        { left: '50%', top: '50%', transform: 'translate(-120%, -50%) scale(0.9)', zIndex: 3 }, // nth-of-type(1) - z-index: 3
+        { left: '50%', top: '50%', transform: 'translate(-140%, -50%) scale(0.8)', zIndex: 2 }, // nth-of-type(2) - z-index: 2
+        { left: '50%', top: '50%', transform: 'translate(-160%, -50%) scale(0.7)', zIndex: 1 }, // nth-of-type(3) - z-index: 1
+        { left: '50%', top: '50%', transform: 'translate(20%, -50%) scale(0.9)', zIndex: 3 },  // nth-of-type(4) - z-index: 3
+        { left: '50%', top: '50%', transform: 'translate(40%, -50%) scale(0.8)', zIndex: 2 }, // nth-of-type(5) - z-index: 2
+        { left: '50%', top: '50%', transform: 'translate(60%, -50%) scale(0.7)', zIndex: 1 }  // nth-of-type(6) - z-index: 1
       ];
       return positions[index] || positions[0];
     } else {
@@ -8192,8 +8207,12 @@ if (window.innerWidth <= 768) {
   // 이미지 클릭 이벤트 핸들러 추가
   hiveImages.forEach((image, idx) => {
     image.addEventListener('click', function (e) {
+      e.preventDefault(); // 기본 동작 방지 추가
       e.stopPropagation();
       if (isTransitioning) return;
+      
+      // 모바일에서 스크롤 위치 저장
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
       
       const isActive = image.classList.contains('active');
       if (!isActive) {
@@ -8202,6 +8221,13 @@ if (window.innerWidth <= 768) {
         slideIndex = -1;
       }
       showSlide(slideIndex);
+      
+      // 모바일에서 스크롤 위치 복원
+      if (window.innerWidth <= 768) {
+        setTimeout(() => {
+          window.scrollTo(0, scrollTop);
+        }, 10);
+      }
     });
   });
 
@@ -8213,6 +8239,7 @@ if (window.innerWidth <= 768) {
      
      if (window.innerWidth <= 768) {
        // 모바일에서만 !important 사용 - 트랜지션 먼저 설정
+       img.style.setProperty('position', 'absolute', 'important');
        img.style.setProperty('transition', 'all 0.4s cubic-bezier(0.4,0,0.2,1)', 'important');
        img.style.setProperty('-webkit-transition', 'all 0.4s cubic-bezier(0.4,0,0.2,1)', 'important');
        img.style.setProperty('left', positions.left, 'important');
@@ -8272,11 +8299,22 @@ if (window.innerWidth <= 768) {
   // 비디오 클릭 시 원래 상태로 복귀
   if (videoPhone) {
     videoPhone.addEventListener('click', (e) => {
+      e.preventDefault(); // 기본 동작 방지 추가
       e.stopPropagation();
       if (isTransitioning) return;
       
+      // 모바일에서 스크롤 위치 저장
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      
       slideIndex = -1;
       showSlide(slideIndex);
+      
+      // 모바일에서 스크롤 위치 복원
+      if (window.innerWidth <= 768) {
+        setTimeout(() => {
+          window.scrollTo(0, scrollTop);
+        }, 10);
+      }
     });
   }
 
@@ -10896,7 +10934,11 @@ if (video) {
       let activeIndex = -1; // 현재 활성화된 이미지 없음
       
       hiveImages.forEach((img, index) => {
-        img.addEventListener('click', function() {
+        img.addEventListener('click', function(e) {
+          // 이벤트 버블링 방지
+          e.preventDefault();
+          e.stopPropagation();
+          
           // 현재 active 이미지 찾기
           const currentActive = document.querySelector('.hive-image.active');
           if (currentActive) {
@@ -10908,14 +10950,15 @@ if (video) {
             // 모든 이미지의 위치를 재배열
             hiveImages.forEach((image, idx) => {
               if (idx === index) {
-                // 클릭한 이미지를 가운데로
+                // 클릭한 이미지를 가운데로 - CSS의 active 클래스 스타일 사용
                 image.classList.add('active');
-                image.style.left = '50%';
-                image.style.top = '50%';
-                image.style.transform = 'translate(-50%, -50%) scale(1.2)';
-                image.style.zIndex = '100';
-                image.style.width = '140px';
-                image.style.height = '280px';
+                // 인라인 스타일 제거하여 CSS의 active 스타일이 적용되도록 함
+                image.style.removeProperty('left');
+                image.style.removeProperty('top');
+                image.style.removeProperty('transform');
+                image.style.removeProperty('z-index');
+                image.style.removeProperty('width');
+                image.style.removeProperty('height');
               } else if (idx < 3) {
                 // 왼쪽 그룹
                 const offset = idx < index ? idx : idx - 1;
@@ -12997,14 +13040,35 @@ document.addEventListener('DOMContentLoaded', function() {
     -webkit-transform: translateZ(0) !important;
   }
   
+  /* hive-showcase 컨테이너 모바일 전용 설정 */
+  .hive-showcase {
+    position: relative !important;
+    width: 100% !important;
+    height: 400px !important; /* 고정 높이 설정 */
+    overflow: visible !important;
+  }
+  
+  /* 모바일에서 모든 hive-image 기본 설정 */
+  .hive-image {
+    position: absolute !important;
+    width: 90px !important;
+    height: 180px !important;
+    border-radius: 16px !important;
+    cursor: pointer !important;
+    touch-action: manipulation !important; /* 더블탭 줌 방지 */
+    -webkit-tap-highlight-color: transparent !important; /* 탭 하이라이트 제거 */
+    user-select: none !important; /* 텍스트 선택 방지 */
+    -webkit-user-select: none !important;
+  }
+  
   /* 네오 하이브 슬라이드 원래 위치 강제 복구 - 최고 우선순위 */
   .hive-image:nth-of-type(1),
   .hive-showcase .hive-image:nth-of-type(1),
   html body .hive-showcase .hive-image:nth-of-type(1) {
     left: 50% !important;
-    top: 60% !important;
-    transform: translate(-160%, -50%) scale(0.9) !important;
-    -webkit-transform: translate(-160%, -50%) scale(0.9) !important;
+    top: 50% !important;
+    transform: translate(-120%, -50%) scale(0.9) !important; /* -160% -> -120% 조정 */
+    -webkit-transform: translate(-120%, -50%) scale(0.9) !important;
     z-index: 3 !important;
     position: absolute !important;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
@@ -13012,6 +13076,61 @@ document.addEventListener('DOMContentLoaded', function() {
     will-change: transform, left, top, width, height, border, box-shadow !important;
     transform-style: preserve-3d !important;
     -webkit-transform-style: preserve-3d !important;
+  }
+  
+  .hive-image:nth-of-type(2),
+  .hive-showcase .hive-image:nth-of-type(2),
+  html body .hive-showcase .hive-image:nth-of-type(2) {
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(-140%, -50%) scale(0.8) !important; /* -210% -> -140% */
+    -webkit-transform: translate(-140%, -50%) scale(0.8) !important;
+    z-index: 2 !important;
+    position: absolute !important;
+  }
+  
+  .hive-image:nth-of-type(3),
+  .hive-showcase .hive-image:nth-of-type(3),
+  html body .hive-showcase .hive-image:nth-of-type(3) {
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(-160%, -50%) scale(0.7) !important; /* -260% -> -160% */
+    -webkit-transform: translate(-160%, -50%) scale(0.7) !important;
+    z-index: 1 !important;
+    position: absolute !important;
+  }
+  
+  .hive-image:nth-of-type(4),
+  .hive-showcase .hive-image:nth-of-type(4),
+  html body .hive-showcase .hive-image:nth-of-type(4) {
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(20%, -50%) scale(0.9) !important; /* 60% -> 20% */
+    -webkit-transform: translate(20%, -50%) scale(0.9) !important;
+    z-index: 3 !important;
+    position: absolute !important;
+  }
+  
+  .hive-image:nth-of-type(5),
+  .hive-showcase .hive-image:nth-of-type(5),
+  html body .hive-showcase .hive-image:nth-of-type(5) {
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(40%, -50%) scale(0.8) !important; /* 110% -> 40% */
+    -webkit-transform: translate(40%, -50%) scale(0.8) !important;
+    z-index: 2 !important;
+    position: absolute !important;
+  }
+  
+  .hive-image:nth-of-type(6),
+  .hive-showcase .hive-image:nth-of-type(6),
+  html body .hive-showcase .hive-image:nth-of-type(6) {
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(60%, -50%) scale(0.7) !important; /* 160% -> 60% */
+    -webkit-transform: translate(60%, -50%) scale(0.7) !important;
+    z-index: 1 !important;
+    position: absolute !important;
   }
   .hive-image:nth-of-type(2) {
     left: 50% !important;
