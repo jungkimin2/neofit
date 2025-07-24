@@ -2162,10 +2162,27 @@ section {
   /* 스크롤 위치 안정화 */
   html {
     scroll-behavior: auto;
+    overflow-x: hidden;
+    touch-action: pan-y;
   }
   
   body {
     position: relative;
+    overflow-x: hidden;
+    touch-action: pan-y;
+  }
+  
+  /* 모바일에서 하이브 섹션 고정 */
+  @media (max-width: 768px) {
+    #hive {
+      position: relative;
+      overflow: hidden;
+    }
+    
+    #hive .container {
+      position: relative;
+      min-height: 100vh;
+    }
   }
   
   /* 성능 최적화 */
@@ -10941,9 +10958,18 @@ if (video) {
           e.preventDefault();
           e.stopPropagation();
           
-          // 스크롤 위치 저장
+          // 스크롤 위치 저장 및 body 스크롤 방지
           const scrollY = window.scrollY;
           const scrollX = window.scrollX;
+          const bodyOverflow = document.body.style.overflow;
+          const htmlOverflow = document.documentElement.style.overflow;
+          
+          // 스크롤 임시 차단
+          document.body.style.overflow = 'hidden';
+          document.documentElement.style.overflow = 'hidden';
+          document.body.style.position = 'fixed';
+          document.body.style.top = `-${scrollY}px`;
+          document.body.style.width = '100%';
           
           // 현재 active 이미지 찾기
           const currentActive = document.querySelector('.hive-image.active');
@@ -11016,8 +11042,15 @@ if (video) {
             
             activeIndex = index;
             
-            // 스크롤 위치 복원
-            window.scrollTo(scrollX, scrollY);
+            // 애니메이션 후 스크롤 위치 복원
+            setTimeout(() => {
+              document.body.style.overflow = bodyOverflow || '';
+              document.documentElement.style.overflow = htmlOverflow || '';
+              document.body.style.position = '';
+              document.body.style.top = '';
+              document.body.style.width = '';
+              window.scrollTo(scrollX, scrollY);
+            }, 50);
           } else {
             // active 이미지를 다시 클릭한 경우 원래 위치로 복원
             this.classList.remove('active');
@@ -11050,8 +11083,15 @@ if (video) {
             
             activeIndex = -1;
             
-            // 스크롤 위치 복원
-            window.scrollTo(scrollX, scrollY);
+            // 애니메이션 후 스크롤 위치 복원
+            setTimeout(() => {
+              document.body.style.overflow = bodyOverflow || '';
+              document.documentElement.style.overflow = htmlOverflow || '';
+              document.body.style.position = '';
+              document.body.style.top = '';
+              document.body.style.width = '';
+              window.scrollTo(scrollX, scrollY);
+            }, 50);
           }
         });
       });
