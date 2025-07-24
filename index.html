@@ -2843,9 +2843,9 @@ document.addEventListener('DOMContentLoaded', function() {
 <div id="mobile-top-nav-fixed" style="position: fixed; top: 0; left: 0; right: 0; z-index: 2147483647;">
   <div class="nav-bar">
     <img src="./images/neohive3.png" alt="NeoHive" class="nav-logo">
-    <button class="nav-menu-btn" id="mobile-menu-toggle-btn">&#9776;</button>
+    <button class="nav-menu-btn" id="mobile-menu-toggle-btn" onclick="toggleNav()">&#9776;</button>
   </div>
-  <div class="nav-menu" id="nav-menu">
+  <div class="nav-menu" id="nav-menu" style="display: none;">
     <a href="#hive" onclick="return scrollToSection('hive')">하이브 시스템</a>
     <a href="#smart" onclick="return scrollToSection('smart')">스마트 시스템</a>
     <a href="#benefits" onclick="return scrollToSection('benefits')">도입 효과</a>
