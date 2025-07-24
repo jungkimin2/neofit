@@ -1883,19 +1883,15 @@ section {
     }
                   /* 하이브 쇼케이스 슬라이더 */
      .hive-showcase {
-       position: fixed !important;
-       left: 0 !important;
-       right: 0 !important;
-       top: 50% !important;
-       transform: translateY(-50%) !important;
+       position: relative !important;
        display: flex !important;
        align-items: center !important;
        justify-content: center !important;
+       margin: 80px 0 !important;
        padding: 0 16px !important;
        width: 100% !important;
        height: 350px !important;
        overflow: visible !important;
-       z-index: 1000 !important;
      }
     
     /* 모바일에서 하이브 라벨 위치 조정 */
@@ -1948,64 +1944,55 @@ section {
     }
            /* 모바일 하이브 이미지 기본 설정 */
      .hive-image {
-       position: fixed !important;
+       position: absolute !important;
        width: 70px !important;
        height: auto !important;
        border-radius: 12px !important;
        opacity: 1 !important;
-       transition: transform 0.4s ease-out, width 0.4s ease-out, height 0.4s ease-out !important;
+       transition: all 0.4s ease-out !important;
        cursor: pointer !important;
        object-fit: cover !important;
        display: block !important;
        visibility: visible !important;
        pointer-events: auto !important; /* 클릭 가능하게 설정 */
-       -webkit-backface-visibility: hidden !important;
-       backface-visibility: hidden !important;
-       will-change: transform !important;
      }
      
      /* 모바일 중앙 기점 좌우 배치 - nth-of-type 사용 */
      .hive-image:nth-of-type(1) {
-       position: fixed !important;
        left: 50% !important;
-       top: 50% !important;
+       top: 60% !important;
        transform: translate(-160%, -50%) scale(0.9) !important;
-       z-index: 1003 !important;
+       z-index: 3 !important;
      }
      .hive-image:nth-of-type(2) {
-       position: fixed !important;
        left: 50% !important;
-       top: 50% !important;
+       top: 60% !important;
        transform: translate(-210%, -50%) scale(0.8) !important;
-       z-index: 1002 !important;
+       z-index: 2 !important;
      }
      .hive-image:nth-of-type(3) {
-       position: fixed !important;
        left: 50% !important;
-       top: 50% !important;
+       top: 60% !important;
        transform: translate(-260%, -50%) scale(0.7) !important;
-       z-index: 1001 !important;
+       z-index: 1 !important;
      }
      .hive-image:nth-of-type(4) {
-       position: fixed !important;
        left: 50% !important;
-       top: 50% !important;
+       top: 60% !important;
        transform: translate(60%, -50%) scale(0.9) !important;
-       z-index: 1003 !important;
+       z-index: 3 !important;
      }
      .hive-image:nth-of-type(5) {
-       position: fixed !important;
        left: 50% !important;
-       top: 50% !important;
+       top: 60% !important;
        transform: translate(110%, -50%) scale(0.8) !important;
-       z-index: 1002 !important;
+       z-index: 2 !important;
      }
      .hive-image:nth-of-type(6) {
-       position: fixed !important;
        left: 50% !important;
-       top: 50% !important;
+       top: 60% !important;
        transform: translate(160%, -50%) scale(0.7) !important;
-       z-index: 1001 !important;
+       z-index: 1 !important;
      }
      
      /* 모바일 활성 이미지 - 가장 앞에 표시 */
@@ -10927,53 +10914,17 @@ if (video) {
           e.preventDefault();
           e.stopPropagation();
           
-          // 현재 active 이미지 찾기
-          const currentActive = document.querySelector('.hive-image.active');
-          
-          // 클릭한 이미지가 이미 active가 아닌 경우에만 처리
-          if (!this.classList.contains('active')) {
-            // 모든 이미지의 active 클래스 제거
-            hiveImages.forEach((image) => {
-              image.classList.remove('active');
-              image.style.border = '';
-              image.style.boxShadow = '';
-            });
-            
-            // 클릭한 이미지만 active로 설정 - transform만 변경
-            this.classList.add('active');
-            this.style.transform = 'translate(-50%, -50%) scale(2)';
-            this.style.zIndex = '9999';
-            this.style.width = '180px';
-            this.style.height = '360px';
-            this.style.border = '4px solid #7BE495';
-            this.style.boxShadow = '0 0 30px rgba(123, 228, 149, 0.8)';
-            
-            activeIndex = index;
+          // showSlide 함수를 사용하여 화살표 버튼과 동일하게 동작
+          if (slideIndex === index) {
+            // 이미 중앙에 있는 이미지를 클릭한 경우 비디오 중앙으로
+            slideIndex = -1;
           } else {
-            // active 이미지를 다시 클릭한 경우 원래 크기로 복원
-            this.classList.remove('active');
-            this.style.border = '';
-            this.style.boxShadow = '';
-            this.style.width = '70px';
-            this.style.height = 'auto';
-            
-            // 원래 transform 값으로 복원
-            const transforms = [
-              'translate(-160%, -50%) scale(0.9)',
-              'translate(-210%, -50%) scale(0.8)',
-              'translate(-260%, -50%) scale(0.7)',
-              'translate(60%, -50%) scale(0.9)',
-              'translate(110%, -50%) scale(0.8)',
-              'translate(160%, -50%) scale(0.7)'
-            ];
-            
-            const zIndexes = [1003, 1002, 1001, 1003, 1002, 1001];
-            
-            this.style.transform = transforms[index];
-            this.style.zIndex = zIndexes[index];
-            
-            activeIndex = -1;
+            // 다른 이미지를 클릭한 경우 해당 이미지를 중앙으로
+            slideIndex = index;
           }
+          
+          // 화살표 버튼과 동일한 showSlide 함수 호출
+          showSlide(slideIndex);
         });
       });
     }
