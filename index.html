@@ -7670,6 +7670,18 @@ if (window.innerWidth <= 768) {
     }
   }
   
+  // 모바일 메뉴 버튼 이벤트 리스너 추가
+  document.addEventListener('DOMContentLoaded', function() {
+    const menuBtn = document.querySelector('.nav-menu-btn');
+    if (menuBtn) {
+      menuBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        toggleNav();
+      });
+    }
+  });
+  
   function closeNav() {
     const menu = document.getElementById('nav-menu');
     if (menu) {
