@@ -14578,7 +14578,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     /* 드롭다운 메뉴 - 기본 숨김 */
     #mobile-top-nav-fixed .nav-menu {
-      display: none;
+      display: none !important;
       position: absolute !important;
       top: 100% !important;
       left: 0 !important;
@@ -14586,12 +14586,17 @@ document.addEventListener('DOMContentLoaded', function() {
       background: #111 !important;
       border-bottom: 2px solid #7BE495 !important;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8) !important;
-      z-index: 2147483646 !important;
+      z-index: 2147483647 !important;
+      max-height: calc(100vh - 60px) !important;
+      overflow-y: auto !important;
     }
     
-    /* 메뉴 표시 상태 */
-    #mobile-top-nav-fixed .nav-menu.show-menu {
+    /* 메뉴 표시 상태 - 최우선순위 */
+    body #mobile-top-nav-fixed .nav-menu.show-menu,
+    html body #mobile-top-nav-fixed .nav-menu.show-menu {
       display: block !important;
+      visibility: visible !important;
+      opacity: 1 !important;
     }
     
     /* 메뉴 아이템 */
@@ -14620,38 +14625,105 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <!-- 모바일 네비게이션 테스트를 위한 추가 스크립트 -->
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-  console.log('=== Mobile Navigation Debug ===');
+// 기존 함수들을 덮어쓰기
+window.toggleNav = function() {
+  console.log('=== toggleNav called (overridden) ===');
+  const menu = document.getElementById('nav-menu');
+  if (!menu) {
+    console.error('Menu not found!');
+    return;
+  }
   
-  // 버튼 존재 확인
+  // 현재 상태 확인
+  const currentDisplay = window.getComputedStyle(menu).display;
+  console.log('Current menu display:', currentDisplay);
+  console.log('Menu classes before:', menu.className);
+  
+  // 강제로 display 변경
+  if (currentDisplay === 'none' || !menu.classList.contains('show-menu')) {
+    menu.style.display = 'block';
+    menu.classList.add('show-menu');
+    console.log('Menu OPENED - display set to block');
+  } else {
+    menu.style.display = 'none';
+    menu.classList.remove('show-menu');
+    console.log('Menu CLOSED - display set to none');
+  }
+  
+  // 변경 후 상태
+  console.log('Menu classes after:', menu.className);
+  console.log('Menu display after:', window.getComputedStyle(menu).display);
+  console.log('Menu computed styles:', {
+    display: window.getComputedStyle(menu).display,
+    visibility: window.getComputedStyle(menu).visibility,
+    opacity: window.getComputedStyle(menu).opacity,
+    zIndex: window.getComputedStyle(menu).zIndex
+  });
+};
+
+document.addEventListener('DOMContentLoaded', function() {
+  console.log('=== Mobile Navigation Debug (Enhanced) ===');
+  
+  // 모든 관련 요소 확인
+  const navFixed = document.getElementById('mobile-top-nav-fixed');
   const btn = document.getElementById('mobile-menu-toggle-btn');
   const menu = document.getElementById('nav-menu');
   
+  console.log('Nav container exists:', !!navFixed);
   console.log('Button exists:', !!btn);
   console.log('Menu exists:', !!menu);
   
-  if (btn) {
-    // 직접 onclick 핸들러 설정
-    btn.onclick = function() {
-      console.log('Button clicked!');
-      if (menu) {
-        if (menu.classList.contains('show-menu')) {
-          menu.classList.remove('show-menu');
-          console.log('Menu closed');
-        } else {
-          menu.classList.add('show-menu');
-          console.log('Menu opened');
-        }
-      }
-      return false;
-    };
+  if (menu) {
+    // 메뉴 내용 확인
+    console.log('Menu HTML:', menu.innerHTML);
+    console.log('Menu children count:', menu.children.length);
     
-    // 버튼 스타일 정보
-    const styles = window.getComputedStyle(btn);
-    console.log('Button display:', styles.display);
-    console.log('Button pointer-events:', styles.pointerEvents);
-    console.log('Button z-index:', styles.zIndex);
+    // 메뉴 초기 스타일
+    const menuStyles = window.getComputedStyle(menu);
+    console.log('Initial menu styles:', {
+      display: menuStyles.display,
+      position: menuStyles.position,
+      zIndex: menuStyles.zIndex,
+      visibility: menuStyles.visibility,
+      opacity: menuStyles.opacity
+    });
   }
+  
+  if (btn) {
+    // 모든 이벤트 리스너 제거 후 새로 추가
+    const newBtn = btn.cloneNode(true);
+    btn.parentNode.replaceChild(newBtn, btn);
+    
+    // 새 버튼에 이벤트 추가
+    newBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      console.log('=== Button clicked (new handler) ===');
+      window.toggleNav();
+    });
+    
+    // 터치 이벤트도 추가
+    newBtn.addEventListener('touchend', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      console.log('=== Button touched (new handler) ===');
+      window.toggleNav();
+    });
+    
+    console.log('Event handlers attached to button');
+  }
+  
+  // 1초 후 자동으로 메뉴 열어보기 (테스트용)
+  setTimeout(function() {
+    console.log('=== Auto-testing menu after 1 second ===');
+    const testMenu = document.getElementById('nav-menu');
+    if (testMenu) {
+      testMenu.style.display = 'block';
+      testMenu.classList.add('show-menu');
+      console.log('Menu forcefully opened for testing');
+      console.log('You should see the menu now if CSS is working');
+    }
+  }, 1000);
 });
 </script>
 </body>
