@@ -2843,7 +2843,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <div id="mobile-top-nav-fixed" style="position: fixed; top: 0; left: 0; right: 0; z-index: 2147483647;">
   <div class="nav-bar">
     <img src="./images/neohive3.png" alt="NeoHive" class="nav-logo">
-    <button class="nav-menu-btn" id="mobile-menu-toggle-btn" onclick="toggleNav()">&#9776;</button>
+    <button class="nav-menu-btn" id="mobile-menu-toggle-btn">&#9776;</button>
   </div>
   <div class="nav-menu" id="nav-menu">
     <a href="#hive" onclick="return scrollToSection('hive')">하이브 시스템</a>
@@ -7664,21 +7664,25 @@ if (window.innerWidth <= 768) {
   
   // 간단한 모바일 네비게이션 함수들
   function toggleNav() {
+    console.log('toggleNav function called');
     const menu = document.getElementById('nav-menu');
     if (menu) {
       // 현재 display 상태 확인 (getComputedStyle 사용)
       const currentDisplay = window.getComputedStyle(menu).display;
       console.log('Current display:', currentDisplay);
       
-      // 강제로 display 속성 변경
-      if (currentDisplay === 'none') {
-        menu.style.setProperty('display', 'block', 'important');
+      // 클래스를 사용한 토글 방식으로 변경
+      if (menu.classList.contains('show-menu')) {
+        menu.classList.remove('show-menu');
+        menu.style.display = 'none';
       } else {
-        menu.style.setProperty('display', 'none', 'important');
+        menu.classList.add('show-menu');
+        menu.style.display = 'block';
       }
       
       // 디버깅을 위한 로그
       console.log('Menu toggled to:', window.getComputedStyle(menu).display);
+      console.log('Menu classes:', menu.className);
     } else {
       console.error('nav-menu element not found!');
     }
@@ -7969,24 +7973,27 @@ if (window.innerWidth <= 768) {
   
   // DOM이 완전히 로드된 후 네비게이션 버튼 이벤트 설정
   function initMobileMenu() {
+    console.log('initMobileMenu called');
     // 모바일 메뉴 버튼 클릭 이벤트
     const menuBtn = document.getElementById('mobile-menu-toggle-btn');
     if (menuBtn) {
-      console.log('Menu button found!');
-      menuBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
+      console.log('Menu button found!', menuBtn);
+      
+      // onclick 속성 설정
+      menuBtn.onclick = function(e) {
+        if (e) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
         console.log('Menu button clicked!');
         toggleNav();
-      });
+        return false;
+      };
       
-      // 터치 이벤트 추가 (모바일 대응)
-      menuBtn.addEventListener('touchstart', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        console.log('Menu button touched!');
-        toggleNav();
-      }, { passive: false });
+      // 버튼이 클릭 가능한지 확인
+      console.log('Button clickable:', !menuBtn.disabled);
+      console.log('Button style:', window.getComputedStyle(menuBtn).pointerEvents);
+      console.log('Button z-index:', window.getComputedStyle(menuBtn).zIndex);
     } else {
       console.error('Menu button not found!');
     }
@@ -8008,14 +8015,25 @@ if (window.innerWidth <= 768) {
   
   // 여러 시점에서 초기화 시도
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initMobileMenu);
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('DOMContentLoaded fired');
+      initMobileMenu();
+    });
   } else {
+    console.log('Document already loaded');
     initMobileMenu();
   }
   
   // 추가 안전장치
-  window.addEventListener('load', initMobileMenu);
-  setTimeout(initMobileMenu, 100);
+  window.addEventListener('load', function() {
+    console.log('Window load event fired');
+    initMobileMenu();
+  });
+  
+  setTimeout(function() {
+    console.log('Timeout initialization');
+    initMobileMenu();
+  }, 500);
 
 </script>
 
@@ -12823,11 +12841,15 @@ document.addEventListener('DOMContentLoaded', function() {
     padding: 8px !important;
     cursor: pointer !important;
     display: block !important;
+    z-index: 2147483647 !important;
+    position: relative !important;
+    pointer-events: auto !important;
+    -webkit-tap-highlight-color: transparent !important;
   }
 
   /* 드롭다운 메뉴 */
   #mobile-top-nav-fixed .nav-menu {
-    display: none; /* !important 제거하여 JS로 제어 가능하도록 */
+    display: none; /* 기본 상태는 숨김 */
     position: absolute !important;
     top: 100% !important;
     left: 0 !important;
@@ -12839,6 +12861,11 @@ document.addEventListener('DOMContentLoaded', function() {
     width: 100% !important;
     max-height: 400px !important;
     overflow-y: auto !important;
+  }
+  
+  /* 메뉴 표시 클래스 */
+  #mobile-top-nav-fixed .nav-menu.show-menu {
+    display: block !important;
   }
 
   /* 메뉴 아이템 - 일반 항목들은 흰색 */
