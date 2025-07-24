@@ -5747,69 +5747,20 @@ if (window.innerWidth <= 768) {
       // 카드 클릭 이벤트
       pilatesCards.forEach((card, index) => {
         card.addEventListener('click', function() {
-          const currentPosition = positions[index];
+          const position = positions[index];
           
-          // 카드 0번 (김하정 강사 - 원래 가운데): 모든 위치로 이동 가능
-          if (index === 0) {
-            if (currentPosition === 0) {
-              // 가운데에 있을 때 클릭하면 아무 동작 안함
-              return;
-            } else if (currentPosition === 1) {
-              // 좌측에 있으면 가운데로
-              const centerIndex = positions.indexOf(0);
-              if (centerIndex !== -1) {
-                positions[centerIndex] = 1;
-              }
-              positions[index] = 0;
-            } else if (currentPosition === 2) {
-              // 우측에 있으면 가운데로
-              const centerIndex = positions.indexOf(0);
-              if (centerIndex !== -1) {
-                positions[centerIndex] = 2;
-              }
-              positions[index] = 0;
-            }
+          if (position === 1) {
+            // 왼쪽 카드 클릭 - 중앙과 위치 교체
+            const centerIndex = positions.indexOf(0);
+            positions[centerIndex] = 1;
+            positions[index] = 0;
+          } else if (position === 2) {
+            // 오른쪽 카드 클릭 - 중앙과 위치 교체
+            const centerIndex = positions.indexOf(0);
+            positions[centerIndex] = 2;
+            positions[index] = 0;
           }
-          
-          // 카드 1번 (최서현 강사 - 원래 좌측): 좌측 ↔ 가운데만 이동
-          else if (index === 1) {
-            if (currentPosition === 1) {
-              // 좌측에 있으면 가운데로
-              const centerIndex = positions.indexOf(0);
-              if (centerIndex !== -1) {
-                positions[centerIndex] = 1;
-              }
-              positions[index] = 0;
-            } else if (currentPosition === 0) {
-              // 가운데에 있으면 좌측으로
-              const leftIndex = positions.indexOf(1);
-              if (leftIndex !== -1) {
-                positions[leftIndex] = 0;
-              }
-              positions[index] = 1;
-            }
-            // 우측(position 2)에 있을 때는 클릭해도 아무 동작 안함
-          }
-          
-          // 카드 2번 (박유빈 강사 - 원래 우측): 우측 ↔ 가운데만 이동
-          else if (index === 2) {
-            if (currentPosition === 2) {
-              // 우측에 있으면 가운데로
-              const centerIndex = positions.indexOf(0);
-              if (centerIndex !== -1) {
-                positions[centerIndex] = 2;
-              }
-              positions[index] = 0;
-            } else if (currentPosition === 0) {
-              // 가운데에 있으면 우측으로
-              const rightIndex = positions.indexOf(2);
-              if (rightIndex !== -1) {
-                positions[rightIndex] = 0;
-              }
-              positions[index] = 2;
-            }
-            // 좌측(position 1)에 있을 때는 클릭해도 아무 동작 안함
-          }
+          // 중앙 카드 클릭은 무시
           
           updatePilatesCards(true); // 애니메이션 활성화
         });
