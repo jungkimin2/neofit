@@ -10942,28 +10942,66 @@ if (video) {
           
           // 현재 active 이미지 찾기
           const currentActive = document.querySelector('.hive-image.active');
-          if (currentActive) {
-            currentActive.classList.remove('active');
-            // 원래 위치로 복원
-            const originalIndex = Array.from(hiveImages).indexOf(currentActive);
-            if (originalIndex !== -1) {
-              currentActive.style.left = currentActive.dataset.originalLeft || '50%';
-              currentActive.style.top = currentActive.dataset.originalTop || '60%';
-              currentActive.style.transform = currentActive.dataset.originalTransform || '';
-              currentActive.style.zIndex = currentActive.dataset.originalZIndex || '1';
-              currentActive.style.width = '70px';
-              currentActive.style.height = 'auto';
-            }
-          }
           
           // 클릭한 이미지가 이미 active가 아닌 경우에만 처리
           if (!this.classList.contains('active')) {
-            // 클릭한 이미지를 active로 설정
+            // 모든 이미지의 active 클래스 제거 및 원래 위치로 복원
+            hiveImages.forEach((image, idx) => {
+              image.classList.remove('active');
+              image.style.border = '';
+              image.style.boxShadow = '';
+              
+              // 원래 초기 위치로 복원
+              if (idx === 0) {
+                image.style.left = '50%';
+                image.style.top = '60%';
+                image.style.transform = 'translate(-160%, -50%) scale(0.9)';
+                image.style.zIndex = '3';
+                image.style.width = '70px';
+                image.style.height = 'auto';
+              } else if (idx === 1) {
+                image.style.left = '50%';
+                image.style.top = '60%';
+                image.style.transform = 'translate(-210%, -50%) scale(0.8)';
+                image.style.zIndex = '2';
+                image.style.width = '70px';
+                image.style.height = 'auto';
+              } else if (idx === 2) {
+                image.style.left = '50%';
+                image.style.top = '60%';
+                image.style.transform = 'translate(-260%, -50%) scale(0.7)';
+                image.style.zIndex = '1';
+                image.style.width = '70px';
+                image.style.height = 'auto';
+              } else if (idx === 3) {
+                image.style.left = '50%';
+                image.style.top = '60%';
+                image.style.transform = 'translate(60%, -50%) scale(0.9)';
+                image.style.zIndex = '3';
+                image.style.width = '70px';
+                image.style.height = 'auto';
+              } else if (idx === 4) {
+                image.style.left = '50%';
+                image.style.top = '60%';
+                image.style.transform = 'translate(110%, -50%) scale(0.8)';
+                image.style.zIndex = '2';
+                image.style.width = '70px';
+                image.style.height = 'auto';
+              } else if (idx === 5) {
+                image.style.left = '50%';
+                image.style.top = '60%';
+                image.style.transform = 'translate(160%, -50%) scale(0.7)';
+                image.style.zIndex = '1';
+                image.style.width = '70px';
+                image.style.height = 'auto';
+              }
+            });
+            
+            // 클릭한 이미지를 active로 설정 - 원래 위치 중심에서 확대
             this.classList.add('active');
-            // 중앙 위치 유지하면서 크기만 조정
             this.style.left = '50%';
-            this.style.top = '60%'; // 원래 위치 유지
-            this.style.transform = 'translate(-50%, -50%) scale(1.5)';
+            this.style.top = '50%'; // 화면 중앙 유지
+            this.style.transform = 'translate(-50%, -50%) scale(1.2)';
             this.style.zIndex = '100';
             this.style.width = '140px';
             this.style.height = '280px';
@@ -10972,6 +11010,37 @@ if (video) {
             this.style.borderRadius = '16px';
             
             activeIndex = index;
+          } else {
+            // active 이미지를 다시 클릭한 경우 원래 위치로 복원
+            this.classList.remove('active');
+            this.style.border = '';
+            this.style.boxShadow = '';
+            
+            // 원래 위치로 복원
+            if (index === 0) {
+              this.style.transform = 'translate(-160%, -50%) scale(0.9)';
+              this.style.zIndex = '3';
+            } else if (index === 1) {
+              this.style.transform = 'translate(-210%, -50%) scale(0.8)';
+              this.style.zIndex = '2';
+            } else if (index === 2) {
+              this.style.transform = 'translate(-260%, -50%) scale(0.7)';
+              this.style.zIndex = '1';
+            } else if (index === 3) {
+              this.style.transform = 'translate(60%, -50%) scale(0.9)';
+              this.style.zIndex = '3';
+            } else if (index === 4) {
+              this.style.transform = 'translate(110%, -50%) scale(0.8)';
+              this.style.zIndex = '2';
+            } else if (index === 5) {
+              this.style.transform = 'translate(160%, -50%) scale(0.7)';
+              this.style.zIndex = '1';
+            }
+            this.style.top = '60%';
+            this.style.width = '70px';
+            this.style.height = 'auto';
+            
+            activeIndex = -1;
           }
         });
       });
