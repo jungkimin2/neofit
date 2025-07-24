@@ -4528,17 +4528,6 @@ if (window.innerWidth <= 768) {
   .smart-section-mobile {
     transform: translateY(-48px) !important;
   }
-  /* 태그 한 번 제목과 설명 문구만 아래로 1.5칸 이동 - 더 구체적인 선택자 사용 */
-  body .smart-section-mobile h1.smart-title-mobile,
-  html body .smart-section-mobile h1.smart-title-mobile,
-  body div.smart-section-mobile h1.smart-title-mobile {
-    margin-top: calc(6rem - 16px + 24px) !important; /* 기존 위치에서 24px(1.5칸) 아래로 */
-  }
-  body .smart-section-mobile p.smart-desc-mobile,
-  html body .smart-section-mobile p.smart-desc-mobile,
-  body div.smart-section-mobile div p.smart-desc-mobile {
-    margin-top: calc(-16px + 24px) !important; /* 기존 -16px에서 24px(1.5칸) 아래로 = 8px */
-  }
   /* 네오 스마트 트레이너 섹션 위로 3칸 이동 */
   .smart-trainer-section-mobile {
     margin-top: -80px !important;
@@ -5264,15 +5253,11 @@ if (window.innerWidth <= 768) {
     <!-- 추가 정보 -->
     <div style="text-align: center; margin-top: 82px; padding: 40px; background: rgba(123,228,149,0.05); border-radius: 20px; border: 1px solid rgba(123,228,149,0.2);" class="neo-pilates-info-box" id="neo-pilates-info-box">
       <p style="color: #7BE495; font-size: 1.3rem; font-weight: 600; margin-bottom: 15px;">
-        네오 필라테스와 함께<br>
-        새로운 운동 경험을 시작하세요
+        네오 필라테스와 함께 새로운 운동 경험을 시작하세요
       </p>
-      <p style="color: #ccc; font-size: 1rem; line-height: 1.6;" class="pilates-info-desc">
-        <span class="desktop-text">전문 강사진의 세심한 지도와 최신 기구, 그리고 함께하는 즐거움까지<br>
-        당신의 건강한 라이프스타일을 완성합니다.</span>
-        <span class="mobile-text">전문 강사진의 세심한 지도와 최신 기구, 그리고<br>
-        함께하는 즐거움까지<br>
-        당신의 건강한 라이프스타일을 완성합니다.</span>
+      <p style="color: #ccc; font-size: 1rem; line-height: 1.6;">
+        전문 강사진의 세심한 지도와 최신 기구, 그리고 함께하는 즐거움까지<br>
+        당신의 건강한 라이프스타일을 완성합니다.
       </p>
     </div>
   </div>
@@ -5656,24 +5641,6 @@ if (window.innerWidth <= 768) {
       /* 필라테스 섹션 하단 추가 정보 여백 조정 - 위로 1칸 올림 */
       #neo-pilates + div {
         margin-top: 72px !important;  /* 88px - 16px(1칸) = 72px */
-      }
-      
-      /* 필라테스 설명 문구 줄바꿈 처리 */
-      .pilates-info-desc .desktop-text {
-        display: none !important;
-      }
-      .pilates-info-desc .mobile-text {
-        display: block !important;
-      }
-    }
-    
-    /* 데스크톱에서는 기존 텍스트 표시 */
-    @media (min-width: 769px) {
-      .pilates-info-desc .desktop-text {
-        display: block !important;
-      }
-      .pilates-info-desc .mobile-text {
-        display: none !important;
       }
     }
   </style>
