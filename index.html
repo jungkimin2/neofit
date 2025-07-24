@@ -2840,16 +2840,16 @@ document.addEventListener('DOMContentLoaded', function() {
 </style>
 <body>
 <!-- 모바일 전용 상단 고정 네비게이션 (body 직속) -->
-<div id="mobile-top-nav-fixed" style="position: fixed; top: 0; left: 0; right: 0; z-index: 2147483647;">
+<div id="mobile-top-nav-fixed">
   <div class="nav-bar">
     <img src="./images/neohive3.png" alt="NeoHive" class="nav-logo">
     <button class="nav-menu-btn" id="mobile-menu-toggle-btn" type="button" aria-label="메뉴 열기">&#9776;</button>
   </div>
   <div class="nav-menu" id="nav-menu">
-    <a href="#hive" onclick="return scrollToSection('hive')">하이브 시스템</a>
-    <a href="#smart" onclick="return scrollToSection('smart')">스마트 시스템</a>
-    <a href="#benefits" onclick="return scrollToSection('benefits')">도입 효과</a>
-    <a href="javascript:void(0)" onclick="openForm();closeNav();return false;">사전 예약하기</a>
+    <a href="#hive">하이브 시스템</a>
+    <a href="#smart">스마트 시스템</a>
+    <a href="#benefits">도입 효과</a>
+    <a href="javascript:void(0)" onclick="openForm(); return false;">사전 예약하기</a>
   </div>
 </div>
 
@@ -7664,27 +7664,36 @@ if (window.innerWidth <= 768) {
   
   // 간단한 모바일 네비게이션 함수들
   function toggleNav() {
-    console.log('toggleNav function called');
-    const menu = document.getElementById('nav-menu');
-    if (menu) {
-      // 현재 display 상태 확인 (getComputedStyle 사용)
-      const currentDisplay = window.getComputedStyle(menu).display;
-      console.log('Current display:', currentDisplay);
+    try {
+      console.log('toggleNav function called');
+      const menu = document.getElementById('nav-menu');
+      const button = document.getElementById('mobile-menu-toggle-btn');
       
-      // 클래스를 사용한 토글 방식으로 변경
-      if (menu.classList.contains('show-menu')) {
-        menu.classList.remove('show-menu');
-        menu.style.display = 'none';
-      } else {
-        menu.classList.add('show-menu');
-        menu.style.display = 'block';
+      if (!menu) {
+        console.error('nav-menu element not found!');
+        return;
       }
       
-      // 디버깅을 위한 로그
-      console.log('Menu toggled to:', window.getComputedStyle(menu).display);
-      console.log('Menu classes:', menu.className);
-    } else {
-      console.error('nav-menu element not found!');
+      if (!button) {
+        console.error('mobile-menu-toggle-btn element not found!');
+        return;
+      }
+      
+      // 단순한 클래스 토글
+      const isOpen = menu.classList.contains('show-menu');
+      
+      if (isOpen) {
+        menu.classList.remove('show-menu');
+        button.setAttribute('aria-label', '메뉴 열기');
+        console.log('Menu closed');
+      } else {
+        menu.classList.add('show-menu');
+        button.setAttribute('aria-label', '메뉴 닫기');
+        console.log('Menu opened');
+      }
+      
+    } catch (error) {
+      console.error('Error in toggleNav:', error);
     }
   }
   
@@ -7973,36 +7982,31 @@ if (window.innerWidth <= 768) {
   
   // DOM이 완전히 로드된 후 네비게이션 버튼 이벤트 설정
   function initMobileMenu() {
-    console.log('initMobileMenu called');
-    // 모바일 메뉴 버튼 클릭 이벤트
-    const menuBtn = document.getElementById('mobile-menu-toggle-btn');
-    if (menuBtn) {
+    try {
+      console.log('initMobileMenu called');
+      const menuBtn = document.getElementById('mobile-menu-toggle-btn');
+      
+      if (!menuBtn) {
+        console.error('Menu button not found!');
+        return;
+      }
+      
       console.log('Menu button found!', menuBtn);
       
-      // 모바일 터치 이벤트 처리
-      menuBtn.addEventListener('touchend', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        console.log('Menu button touched (touchend)!');
+      // 단순한 클릭 이벤트만 추가
+      menuBtn.onclick = function(e) {
+        console.log('Menu button clicked via onclick!');
+        if (e) {
+          e.preventDefault();
+        }
         toggleNav();
         return false;
-      }, { passive: false });
+      };
       
-      // 클릭 이벤트 처리 (PC 및 폴백)
-      menuBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        console.log('Menu button clicked!');
-        toggleNav();
-        return false;
-      }, { passive: false });
+      console.log('Menu button initialized successfully');
       
-      // 버튼이 클릭 가능한지 확인
-      console.log('Button clickable:', !menuBtn.disabled);
-      console.log('Button style:', window.getComputedStyle(menuBtn).pointerEvents);
-      console.log('Button z-index:', window.getComputedStyle(menuBtn).zIndex);
-    } else {
-      console.error('Menu button not found!');
+    } catch (error) {
+      console.error('Error in initMobileMenu:', error);
     }
     
     // 메뉴 아이템 클릭 시 메뉴 닫기
@@ -14519,6 +14523,136 @@ document.addEventListener('DOMContentLoaded', function() {
     
     /* 카드 위치는 JavaScript로 제어 */
   }
+  
+  /* 모바일 네비게이션 완전 새로운 스타일 - 최우선순위 */
+  @media screen and (max-width: 768px) {
+    /* 모바일 네비게이션 기본 스타일 */
+    #mobile-top-nav-fixed {
+      display: block !important;
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      width: 100% !important;
+      height: 60px !important;
+      background: #000 !important;
+      border-bottom: 2px solid #7BE495 !important;
+      z-index: 2147483647 !important;
+    }
+    
+    /* 네비게이션 바 */
+    #mobile-top-nav-fixed .nav-bar {
+      display: flex !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+      height: 100% !important;
+      padding: 0 16px !important;
+    }
+    
+    /* 햄버거 메뉴 버튼 - 확실하게 보이고 클릭 가능하도록 */
+    #mobile-top-nav-fixed .nav-menu-btn {
+      display: block !important;
+      background: rgba(123, 228, 149, 0.2) !important;
+      border: 2px solid #7BE495 !important;
+      color: #7BE495 !important;
+      font-size: 28px !important;
+      padding: 10px 15px !important;
+      cursor: pointer !important;
+      z-index: 2147483647 !important;
+      position: relative !important;
+      pointer-events: auto !important;
+      touch-action: manipulation !important;
+      -webkit-tap-highlight-color: rgba(123, 228, 149, 0.3) !important;
+      min-width: 50px !important;
+      min-height: 50px !important;
+      border-radius: 8px !important;
+      line-height: 1 !important;
+      margin: 0 !important;
+    }
+    
+    /* 버튼 호버/액티브 상태 */
+    #mobile-top-nav-fixed .nav-menu-btn:active {
+      background: rgba(123, 228, 149, 0.4) !important;
+      transform: scale(0.95) !important;
+    }
+    
+    /* 드롭다운 메뉴 - 기본 숨김 */
+    #mobile-top-nav-fixed .nav-menu {
+      display: none;
+      position: absolute !important;
+      top: 100% !important;
+      left: 0 !important;
+      right: 0 !important;
+      background: #111 !important;
+      border-bottom: 2px solid #7BE495 !important;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8) !important;
+      z-index: 2147483646 !important;
+    }
+    
+    /* 메뉴 표시 상태 */
+    #mobile-top-nav-fixed .nav-menu.show-menu {
+      display: block !important;
+    }
+    
+    /* 메뉴 아이템 */
+    #mobile-top-nav-fixed .nav-menu a {
+      display: block !important;
+      padding: 20px !important;
+      color: #fff !important;
+      text-decoration: none !important;
+      border-bottom: 1px solid #333 !important;
+      font-size: 18px !important;
+      text-align: center !important;
+    }
+    
+    /* 메뉴 아이템 호버 */
+    #mobile-top-nav-fixed .nav-menu a:active {
+      background: #222 !important;
+    }
+    
+    /* 사전 예약하기 특별 스타일 */
+    #mobile-top-nav-fixed .nav-menu a[onclick*="openForm"] {
+      color: #7BE495 !important;
+      font-weight: bold !important;
+    }
+  }
 </style>
+
+<!-- 모바일 네비게이션 테스트를 위한 추가 스크립트 -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  console.log('=== Mobile Navigation Debug ===');
+  
+  // 버튼 존재 확인
+  const btn = document.getElementById('mobile-menu-toggle-btn');
+  const menu = document.getElementById('nav-menu');
+  
+  console.log('Button exists:', !!btn);
+  console.log('Menu exists:', !!menu);
+  
+  if (btn) {
+    // 직접 onclick 핸들러 설정
+    btn.onclick = function() {
+      console.log('Button clicked!');
+      if (menu) {
+        if (menu.classList.contains('show-menu')) {
+          menu.classList.remove('show-menu');
+          console.log('Menu closed');
+        } else {
+          menu.classList.add('show-menu');
+          console.log('Menu opened');
+        }
+      }
+      return false;
+    };
+    
+    // 버튼 스타일 정보
+    const styles = window.getComputedStyle(btn);
+    console.log('Button display:', styles.display);
+    console.log('Button pointer-events:', styles.pointerEvents);
+    console.log('Button z-index:', styles.zIndex);
+  }
+});
+</script>
 </body>
 </html> 
