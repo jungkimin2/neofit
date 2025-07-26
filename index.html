@@ -2839,22 +2839,17 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 </style>
 <body>
-<!-- 새로운 모바일 전용 네비게이션 -->
-<div id="mobile-navigation" class="mobile-only">
-  <div class="mobile-nav-header">
-    <div class="mobile-nav-logo">NEOFIT & PILATES</div>
-    <button class="mobile-hamburger" id="mobile-hamburger">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
+<!-- 모바일 전용 상단 고정 네비게이션 (body 직속) -->
+<div id="mobile-top-nav-fixed" style="position: fixed; top: 0; left: 0; right: 0; z-index: 2147483647;">
+  <div class="nav-bar">
+    <img src="./images/neohive3.png" alt="NeoHive" class="nav-logo">
+    <button class="nav-menu-btn" onclick="toggleNav()">&#9776;</button>
   </div>
-  <div class="mobile-nav-menu" id="mobile-nav-menu">
-    <a href="#neofit-training" class="mobile-nav-item">네오핏</a>
-    <a href="#hive" class="mobile-nav-item">네오하이브</a>
-    <a href="#smart" class="mobile-nav-item">네오스마트</a>
-    <a href="#neo-pilates" class="mobile-nav-item">네오필라테스</a>
-    <a href="javascript:void(0)" onclick="openForm()" class="mobile-nav-item mobile-nav-cta">무료체험신청</a>
+  <div class="nav-menu" id="nav-menu" style="display: none;">
+    <a href="#hive" onclick="return scrollToSection('hive')">하이브 시스템</a>
+    <a href="#smart" onclick="return scrollToSection('smart')">스마트 시스템</a>
+    <a href="#benefits" onclick="return scrollToSection('benefits')">도입 효과</a>
+    <a href="javascript:void(0)" onclick="openForm();closeNav();return false;">사전 예약하기</a>
   </div>
 </div>
 
@@ -7667,44 +7662,24 @@ if (window.innerWidth <= 768) {
     }
   });
   
-  // 간단한 모바일 네비게이션 함수들 - window 객체에 등록하여 HTML에서 접근 가능하도록 함
-  window.toggleNav = function() {
-    console.log('toggleNav 함수 실행됨');
+  // 간단한 모바일 네비게이션 함수들
+  function toggleNav() {
     const menu = document.getElementById('nav-menu');
-    
     if (menu) {
-      console.log('nav-menu 요소 찾음');
-      // 현재 display 상태 확인
-      const currentDisplay = window.getComputedStyle(menu).display;
-      console.log('현재 display 상태:', currentDisplay);
-      console.log('menu.style.display:', menu.style.display);
-      
-      // toggle 로직 개선
-      if (currentDisplay === 'none' || menu.style.display === 'none') {
-        menu.style.display = 'block';
-        console.log('메뉴를 표시함');
-      } else {
-        menu.style.display = 'none';
-        console.log('메뉴를 숨김');
-      }
-    } else {
-      console.error('nav-menu element not found');
-      // 모든 nav-menu 클래스를 가진 요소 확인
-      const navMenus = document.querySelectorAll('.nav-menu');
-      console.log('nav-menu 클래스를 가진 요소 수:', navMenus.length);
+      menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
     }
   }
   
-  window.closeNav = function() {
+  function closeNav() {
     const menu = document.getElementById('nav-menu');
     if (menu) {
       menu.style.display = 'none';
     }
   }
   
-  // 모바일 네비게이션 부드러운 스크롤 - window 객체에 등록
-  window.scrollToSection = function(sectionId) {
-    window.closeNav();
+  // 모바일 네비게이션 부드러운 스크롤
+  function scrollToSection(sectionId) {
+    closeNav();
     
     // 하이브 시스템 클릭 시 특별 처리 - 페이지 최상단으로 스크롤
     if (sectionId === 'hive' && window.innerWidth <= 768) {
@@ -14434,220 +14409,5 @@ document.addEventListener('DOMContentLoaded', function() {
     /* 카드 위치는 JavaScript로 제어 */
   }
 </style>
-
-<!-- 새로운 모바일 네비게이션 스타일 -->
-<style>
-/* 모바일에서만 표시 */
-.mobile-only {
-  display: none;
-}
-
-@media screen and (max-width: 768px) {
-  .mobile-only {
-    display: block;
-  }
-  
-  /* 모바일 네비게이션 컨테이너 */
-  #mobile-navigation {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 9999999;
-    background: #000;
-  }
-  
-  /* 네비게이션 헤더 */
-  .mobile-nav-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 20px;
-    border-bottom: 3px solid #7BE495;
-    background: #000;
-  }
-  
-  /* 로고 텍스트 */
-  .mobile-nav-logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #fff;
-    letter-spacing: -0.5px;
-  }
-  
-  /* 햄버거 메뉴 버튼 */
-  .mobile-hamburger {
-    background: none;
-    border: none;
-    padding: 5px;
-    cursor: pointer;
-    width: 30px;
-    height: 24px;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-  
-  .mobile-hamburger span {
-    display: block;
-    width: 100%;
-    height: 3px;
-    background: #7BE495;
-    transition: all 0.3s ease;
-    transform-origin: center;
-  }
-  
-  /* 햄버거 메뉴 활성화 상태 */
-  .mobile-hamburger.active span:nth-child(1) {
-    transform: translateY(10.5px) rotate(45deg);
-  }
-  
-  .mobile-hamburger.active span:nth-child(2) {
-    opacity: 0;
-  }
-  
-  .mobile-hamburger.active span:nth-child(3) {
-    transform: translateY(-10.5px) rotate(-45deg);
-  }
-  
-  /* 메뉴 드롭다운 */
-  .mobile-nav-menu {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background: #111;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-    max-height: calc(100vh - 70px);
-    overflow-y: auto;
-  }
-  
-  .mobile-nav-menu.active {
-    display: block;
-  }
-  
-  /* 메뉴 아이템 */
-  .mobile-nav-item {
-    display: block;
-    padding: 20px;
-    color: #fff;
-    text-decoration: none;
-    font-size: 1.1rem;
-    border-bottom: 1px solid #333;
-    transition: all 0.3s ease;
-  }
-  
-  .mobile-nav-item:hover,
-  .mobile-nav-item:active {
-    background: #1a1a1a;
-    color: #7BE495;
-  }
-  
-  /* 무료체험신청 버튼 스타일 */
-  .mobile-nav-cta {
-    color: #7BE495;
-    font-weight: 600;
-    text-shadow: 0 0 10px rgba(123, 228, 149, 0.5);
-    border-bottom: none;
-  }
-  
-  .mobile-nav-cta:hover,
-  .mobile-nav-cta:active {
-    background: rgba(123, 228, 149, 0.1);
-    text-shadow: 0 0 15px rgba(123, 228, 149, 0.8);
-  }
-  
-  /* 페이지 콘텐츠 상단 여백 */
-  body {
-    padding-top: 70px;
-  }
-}
-</style>
-
-<!-- 새로운 모바일 네비게이션 JavaScript -->
-<script>
-(function() {
-  // 새로운 모바일 네비게이션 설정
-  function initMobileNavigation() {
-    const hamburger = document.getElementById('mobile-hamburger');
-    const navMenu = document.getElementById('mobile-nav-menu');
-    const navItems = document.querySelectorAll('.mobile-nav-item');
-    
-    if (!hamburger || !navMenu) {
-      console.error('모바일 네비게이션 요소를 찾을 수 없습니다.');
-      return;
-    }
-    
-    // 햄버거 메뉴 클릭 이벤트
-    hamburger.addEventListener('click', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      
-      // 토글 상태
-      const isActive = hamburger.classList.contains('active');
-      
-      if (!isActive) {
-        // 메뉴 열기
-        hamburger.classList.add('active');
-        navMenu.classList.add('active');
-      } else {
-        // 메뉴 닫기
-        hamburger.classList.remove('active');
-        navMenu.classList.remove('active');
-      }
-    });
-    
-    // 메뉴 아이템 클릭 시 메뉴 닫기 및 스크롤
-    navItems.forEach(item => {
-      item.addEventListener('click', function(e) {
-        // 무료체험신청 버튼이 아닌 경우에만 스크롤 처리
-        if (!item.classList.contains('mobile-nav-cta')) {
-          e.preventDefault();
-          
-          const targetId = item.getAttribute('href').substring(1);
-          const targetElement = document.getElementById(targetId);
-          
-          if (targetElement) {
-            // 메뉴 닫기
-            hamburger.classList.remove('active');
-            navMenu.classList.remove('active');
-            
-            // 부드러운 스크롤
-            const navHeight = document.getElementById('mobile-navigation').offsetHeight;
-            const targetPosition = targetElement.offsetTop - navHeight;
-            
-            window.scrollTo({
-              top: targetPosition,
-              behavior: 'smooth'
-            });
-          }
-        } else {
-          // 무료체험신청 클릭 시에도 메뉴 닫기
-          hamburger.classList.remove('active');
-          navMenu.classList.remove('active');
-        }
-      });
-    });
-    
-    // 페이지 외부 클릭 시 메뉴 닫기
-    document.addEventListener('click', function(e) {
-      if (!e.target.closest('#mobile-navigation')) {
-        hamburger.classList.remove('active');
-        navMenu.classList.remove('active');
-      }
-    });
-  }
-  
-  // DOM 로드 완료 시 실행
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initMobileNavigation);
-  } else {
-    initMobileNavigation();
-  }
-})();
-</script>
-
 </body>
 </html> 
