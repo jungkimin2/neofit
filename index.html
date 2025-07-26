@@ -2842,21 +2842,161 @@ document.addEventListener('DOMContentLoaded', function() {
       line-height: 1.2 !important;
     }
   }
+  
+  /* 새로운 모바일 네비게이션 스타일 */
+  .new-mobile-nav {
+    display: none;
+  }
+  
+  /* PC에서는 숨김 */
+  @media (min-width: 769px) {
+    .new-mobile-nav {
+      display: none !important;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    /* 새로운 모바일 네비게이션 표시 */
+    .new-mobile-nav {
+      display: block !important;
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      z-index: 9999999 !important;
+      background: rgba(0, 0, 0, 0.95) !important;
+    }
+    
+    .new-nav-header {
+      display: flex !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+      padding: 15px 20px !important;
+      height: 60px !important;
+      border-bottom: 1px solid rgba(123, 228, 149, 0.3) !important;
+    }
+    
+    .new-nav-logo {
+      height: 28px !important;
+      width: auto !important;
+    }
+    
+    /* 햄버거 메뉴 스타일 */
+    .new-hamburger {
+      width: 30px !important;
+      height: 25px !important;
+      position: relative !important;
+      cursor: pointer !important;
+      z-index: 10000000 !important;
+    }
+    
+    .new-hamburger span {
+      display: block !important;
+      position: absolute !important;
+      height: 3px !important;
+      width: 100% !important;
+      background: #7BE495 !important;
+      border-radius: 2px !important;
+      opacity: 1 !important;
+      left: 0 !important;
+      transform: rotate(0deg) !important;
+      transition: .25s ease-in-out !important;
+    }
+    
+    .new-hamburger span:nth-child(1) {
+      top: 0px !important;
+    }
+    
+    .new-hamburger span:nth-child(2) {
+      top: 11px !important;
+    }
+    
+    .new-hamburger span:nth-child(3) {
+      top: 22px !important;
+    }
+    
+    /* 햄버거 열린 상태 */
+    .new-hamburger.active span:nth-child(1) {
+      top: 11px !important;
+      transform: rotate(135deg) !important;
+    }
+    
+    .new-hamburger.active span:nth-child(2) {
+      opacity: 0 !important;
+      left: -60px !important;
+    }
+    
+    .new-hamburger.active span:nth-child(3) {
+      top: 11px !important;
+      transform: rotate(-135deg) !important;
+    }
+    
+    /* 네비게이션 메뉴 */
+    .new-nav-menu {
+      position: fixed !important;
+      top: 60px !important;
+      left: -100% !important;
+      width: 100% !important;
+      height: calc(100vh - 60px) !important;
+      background: rgba(0, 0, 0, 0.98) !important;
+      transition: left 0.3s ease-in-out !important;
+      overflow-y: auto !important;
+      padding: 20px 0 !important;
+    }
+    
+    .new-nav-menu.active {
+      left: 0 !important;
+    }
+    
+    .new-nav-item {
+      display: block !important;
+      padding: 20px 30px !important;
+      color: #ffffff !important;
+      text-decoration: none !important;
+      font-size: 18px !important;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+      transition: all 0.3s ease !important;
+    }
+    
+    .new-nav-item:hover {
+      background: rgba(123, 228, 149, 0.1) !important;
+      padding-left: 40px !important;
+    }
+    
+    .new-nav-cta {
+      color: #7BE495 !important;
+      font-weight: 600 !important;
+      text-shadow: 0 0 10px rgba(123, 228, 149, 0.5) !important;
+      margin-top: 20px !important;
+      border: 2px solid #7BE495 !important;
+      border-radius: 25px !important;
+      margin: 20px 30px !important;
+      text-align: center !important;
+    }
+    
+    .new-nav-cta:hover {
+      background: rgba(123, 228, 149, 0.2) !important;
+    }
+  }
 </style>
 <body>
-<!-- 모바일 전용 상단 고정 네비게이션 (body 직속) -->
-<div id="mobile-top-nav-fixed" style="position: fixed; top: 0; left: 0; right: 0; z-index: 2147483647;">
-  <div class="nav-bar">
-    <img src="./images/neohive3.png" alt="NeoHive" class="nav-logo">
-    <button class="nav-menu-btn" onclick="toggleNav(event)" style="pointer-events: auto !important; z-index: 2147483647 !important;">&#9776;</button>
+<!-- 새로운 모바일 전용 네비게이션 -->
+<div id="new-mobile-nav" class="new-mobile-nav">
+  <div class="new-nav-header">
+    <img src="./images/neohive3.png" alt="NeoHive" class="new-nav-logo">
+    <div class="new-hamburger" id="new-hamburger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
   </div>
-  <div class="nav-menu" id="nav-menu" style="display: none; position: absolute; top: 100%; left: 0; right: 0; background: #111; border-top: 1px solid #7BE495; z-index: 2147483646;">
-    <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); closeNav(); return false;">네오핏</a>
-    <a href="#hive" onclick="return scrollToSection('hive')">네오하이브</a>
-    <a href="#smart" onclick="return scrollToSection('smart')">네오스마트</a>
-    <a href="#neo-pilates" onclick="return scrollToSection('neo-pilates')">네오 필라테스</a>
-    <a href="javascript:void(0)" onclick="openForm();closeNav();return false;">무료 체험신청</a>
-  </div>
+  <nav class="new-nav-menu" id="new-nav-menu">
+    <a href="#" class="new-nav-item">네오핏</a>
+    <a href="#hive" class="new-nav-item">네오하이브</a>
+    <a href="#smart" class="new-nav-item">네오스마트</a>
+    <a href="#neo-pilates" class="new-nav-item">네오 필라테스</a>
+    <a href="#" class="new-nav-item new-nav-cta">무료 체험신청</a>
+  </nav>
 </div>
 
 
@@ -7668,41 +7808,66 @@ if (window.innerWidth <= 768) {
     }
   });
   
-  // 간단한 모바일 네비게이션 함수들
-  window.toggleNav = function(event) {
-    console.log('toggleNav called'); // 디버깅용
-    const menu = document.getElementById('nav-menu');
-    console.log('menu element:', menu); // 디버깅용
+  // 새로운 모바일 네비게이션 함수
+  document.addEventListener('DOMContentLoaded', function() {
+    const hamburger = document.getElementById('new-hamburger');
+    const navMenu = document.getElementById('new-nav-menu');
+    const navItems = document.querySelectorAll('.new-nav-item');
     
-    if (menu) {
-      if (menu.style.display === 'block' || menu.style.display === 'flex') {
-        menu.style.display = 'none';
-      } else {
-        menu.style.display = 'block';
-        // 강제로 보이도록 설정
-        menu.style.setProperty('display', 'block', 'important');
-        menu.style.setProperty('visibility', 'visible', 'important');
-        menu.style.setProperty('opacity', '1', 'important');
+    // 햄버거 메뉴 클릭 이벤트
+    if (hamburger) {
+      hamburger.addEventListener('click', function(e) {
+        e.stopPropagation();
+        console.log('햄버거 클릭됨');
+        
+        // 햄버거 애니메이션
+        this.classList.toggle('active');
+        
+        // 메뉴 열기/닫기
+        navMenu.classList.toggle('active');
+      });
+    }
+    
+    // 메뉴 아이템 클릭 시 처리
+    navItems.forEach(item => {
+      item.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        // 메뉴 닫기
+        hamburger.classList.remove('active');
+        navMenu.classList.remove('active');
+        
+        // 스크롤 처리
+        const href = this.getAttribute('href');
+        
+        if (href === '#') {
+          // 네오핏 클릭 시 최상단으로
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else if (this.classList.contains('new-nav-cta')) {
+          // 무료 체험신청 클릭 시
+          if (typeof openForm === 'function') {
+            openForm();
+          }
+        } else if (href) {
+          // 섹션으로 스크롤
+          const target = document.querySelector(href);
+          if (target) {
+            const offset = 60; // 네비게이션 높이
+            const targetPosition = target.offsetTop - offset;
+            window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+          }
+        }
+      });
+    });
+    
+    // 바깥 영역 클릭 시 메뉴 닫기
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.new-mobile-nav')) {
+        hamburger.classList.remove('active');
+        navMenu.classList.remove('active');
       }
-      console.log('menu display after toggle:', menu.style.display); // 디버깅용
-    } else {
-      console.error('Menu element not found!');
-    }
-    
-    // 이벤트 전파 중지
-    if (event) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-    return false;
-  }
-  
-  window.closeNav = function() {
-    const menu = document.getElementById('nav-menu');
-    if (menu) {
-      menu.style.display = 'none';
-    }
-  }
+    });
+  });
   
   // 모바일 네비게이션 부드러운 스크롤
   window.scrollToSection = function(sectionId) {
