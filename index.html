@@ -1,4 +1,4 @@
- 
+
 
 
 <meta name="google-site-verification" content="OeM-YMo4NpQshyIm3m5H59IikSDp0BMe4sXKQmCu7NM" />
@@ -577,10 +577,14 @@ br.mobile-only {
 }
 
 /* 새로운 모바일 네비게이션 스타일 */
-.mobile-only {
-  display: none;
+/* PC에서는 완전히 숨김 */
+@media screen and (min-width: 769px) {
+  #mobile-navigation {
+    display: none !important;
+  }
 }
 
+/* 모바일에서만 표시 */
 @media screen and (max-width: 768px) {
   .mobile-only {
     display: block !important;
@@ -691,6 +695,16 @@ br.mobile-only {
   /* 페이지 컨텐츠 여백 */
   body.mobile-nav-open {
     overflow: hidden;
+  }
+  
+  /* 모바일에서 body padding 추가 */
+  body {
+    padding-top: 60px !important;
+  }
+  
+  /* 디버깅을 위한 시각적 표시 */
+  #mobile-navigation {
+    display: block !important;
   }
 }
 </style>
@@ -7787,20 +7801,28 @@ if (window.innerWidth <= 768) {
   
   // 새로운 모바일 네비게이션 함수들
   function initMobileNavigation() {
+    console.log('initMobileNavigation 시작');
     const hamburger = document.getElementById('hamburger-menu');
     const mobileMenu = document.getElementById('mobile-menu');
     const mobileNavigation = document.getElementById('mobile-navigation');
     const mobileLogo = document.querySelector('.mobile-logo');
     
-    if (!hamburger || !mobileMenu) return;
+    console.log('hamburger:', hamburger, 'mobileMenu:', mobileMenu);
+    
+    if (!hamburger || !mobileMenu) {
+      console.error('햄버거 메뉴 요소를 찾을 수 없습니다');
+      return;
+    }
     
     // 햄버거 메뉴 클릭 이벤트
     hamburger.addEventListener('click', function(e) {
+      console.log('햄버거 메뉴 클릭됨');
       e.preventDefault();
       e.stopPropagation();
       this.classList.toggle('active');
       mobileMenu.classList.toggle('active');
       document.body.classList.toggle('mobile-nav-open');
+      console.log('메뉴 상태:', mobileMenu.classList.contains('active'));
     });
     
     // 터치 이벤트 추가 (모바일 최적화)
@@ -14632,5 +14654,68 @@ document.addEventListener('DOMContentLoaded', function() {
     /* 카드 위치는 JavaScript로 제어 */
   }
 </style>
+
+<!-- 모바일 네비게이션 동작 스크립트 -->
+<script>
+(function() {
+  // DOM이 로드되면 실행
+  function setupMobileNav() {
+    console.log('모바일 네비게이션 설정 시작');
+    
+    const hamburger = document.getElementById('hamburger-menu');
+    const mobileMenu = document.getElementById('mobile-menu');
+    
+    if (!hamburger || !mobileMenu) {
+      console.error('모바일 네비게이션 요소를 찾을 수 없습니다');
+      return;
+    }
+    
+    // 햄버거 메뉴 클릭
+    hamburger.onclick = function() {
+      console.log('햄버거 클릭!');
+      hamburger.classList.toggle('active');
+      mobileMenu.classList.toggle('active');
+      return false;
+    };
+    
+    // 메뉴 링크 클릭
+    const links = mobileMenu.querySelectorAll('a');
+    links.forEach(function(link) {
+      link.onclick = function(e) {
+        const action = this.getAttribute('data-action');
+        const section = this.getAttribute('data-section');
+        
+        // 메뉴 닫기
+        hamburger.classList.remove('active');
+        mobileMenu.classList.remove('active');
+        
+        if (action === 'openForm') {
+          e.preventDefault();
+          if (typeof openForm === 'function') {
+            openForm();
+          }
+        } else if (section === 'home') {
+          e.preventDefault();
+          window.scrollTo(0, 0);
+        } else if (section) {
+          // 기본 동작 허용 (href로 이동)
+        }
+      };
+    });
+    
+    console.log('모바일 네비게이션 설정 완료');
+  }
+  
+  // DOM이 로드되면 실행
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupMobileNav);
+  } else {
+    setupMobileNav();
+  }
+  
+  // 페이지 로드 후에도 한번 더 실행
+  window.addEventListener('load', setupMobileNav);
+})();
+</script>
 </body>
 </html> 
