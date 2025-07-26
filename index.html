@@ -2848,7 +2848,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <div id="mobile-top-nav-fixed" style="position: fixed; top: 0; left: 0; right: 0; z-index: 2147483647;">
   <div class="nav-bar">
     <img src="./images/neohive3.png" alt="NeoHive" class="nav-logo">
-    <button class="nav-menu-btn" onclick="toggleNav(event)">&#9776;</button>
+    <button class="nav-menu-btn" onclick="toggleNav(event)" style="pointer-events: auto !important; z-index: 2147483647 !important;">&#9776;</button>
   </div>
   <div class="nav-menu" id="nav-menu" style="display: none;">
     <a href="#hive" onclick="return scrollToSection('hive')">하이브 시스템</a>
@@ -12655,6 +12655,9 @@ document.addEventListener('DOMContentLoaded', function() {
        color: #7BE495 !important;
        font-size: 1.5rem !important;
        cursor: pointer !important;
+       pointer-events: auto !important;
+       -webkit-tap-highlight-color: transparent !important;
+       touch-action: manipulation !important;
        padding: 5px !important;
      }
      
@@ -12778,6 +12781,10 @@ document.addEventListener('DOMContentLoaded', function() {
     padding: 8px !important;
     cursor: pointer !important;
     display: block !important;
+    pointer-events: auto !important;
+    -webkit-tap-highlight-color: transparent !important;
+    user-select: none !important;
+    touch-action: manipulation !important;
   }
 
   /* 드롭다운 메뉴 */
@@ -13224,6 +13231,12 @@ document.addEventListener('DOMContentLoaded', function() {
       cursor: pointer !important;
       -webkit-tap-highlight-color: transparent !important;
       pointer-events: auto !important;
+      touch-action: manipulation !important;
+      user-select: none !important;
+      -webkit-user-select: none !important;
+      background-color: transparent !important;
+      opacity: 1 !important;
+      visibility: visible !important;
     }
     
     /* 네비게이션 메뉴 드롭다운 보장 */
