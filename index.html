@@ -9,94 +9,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Neo Hive - 스마트하게, 함께 하는 피트니스</title>
 
-<!-- 간단한 모바일 네비게이션 스타일 -->
-<style>
-/* 모바일 네비게이션 기본 스타일 */
-#simple-mobile-nav {
-  display: none;
-}
-
-@media screen and (max-width: 768px) {
-  #simple-mobile-nav {
-    display: block;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 9999999;
-  }
-  
-  #simple-menu-btn {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background: #7BE495;
-    color: #000;
-    border: none;
-    font-size: 30px;
-    padding: 10px 15px;
-    cursor: pointer;
-    border-radius: 5px;
-    z-index: 10000000;
-  }
-  
-  #simple-menu {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.95);
-    z-index: 9999999;
-    padding-top: 80px;
-  }
-  
-  #simple-menu.show {
-    display: block;
-  }
-  
-  #simple-menu button {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background: transparent;
-    color: #7BE495;
-    border: none;
-    font-size: 30px;
-    cursor: pointer;
-  }
-  
-  #simple-menu a {
-    display: block;
-    color: white;
-    text-decoration: none;
-    padding: 20px;
-    font-size: 20px;
-    text-align: center;
-    border-bottom: 1px solid #333;
-  }
-  
-  #simple-menu a:last-child {
-    background: #7BE495;
-    color: #000;
-    margin: 20px;
-    border-radius: 30px;
-    font-weight: bold;
-  }
-}
-</style>
-
-<!-- 간단한 모바일 네비게이션 JavaScript -->
-<script>
-function simpleToggleMenu() {
-  var menu = document.getElementById('simple-menu');
-  if (menu) {
-    menu.classList.toggle('show');
-  }
-}
-</script>
-
 <!-- 모바일 전용 즉시 적용 스타일 - 페이지 로딩 시 깜빡임 방지 -->
 <style>
 /* 모바일에서만 적용 - PC 환경 완전 보호 */
@@ -2927,16 +2839,17 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 </style>
 <body>
-<!-- 간단한 모바일 네비게이션 -->
-<div id="simple-mobile-nav">
-  <button id="simple-menu-btn" onclick="simpleToggleMenu()">☰</button>
-  <div id="simple-menu">
-    <button onclick="simpleToggleMenu()">✕</button>
-    <a href="#" onclick="simpleToggleMenu()">네오핏</a>
-    <a href="#hive" onclick="simpleToggleMenu()">네오 하이브</a>
-    <a href="#smart" onclick="simpleToggleMenu()">네오 스마트</a>
-    <a href="#neo-pilates" onclick="simpleToggleMenu()">네오 필라테스</a>
-    <a href="javascript:void(0)" onclick="openForm(); simpleToggleMenu()">무료 체험</a>
+<!-- 모바일 전용 상단 고정 네비게이션 (body 직속) -->
+<div id="mobile-top-nav-fixed">
+  <div class="nav-bar">
+    <img src="./images/neohive3.png" alt="NeoHive" class="nav-logo">
+    <button class="nav-menu-btn" id="mobile-menu-toggle-btn" type="button" aria-label="메뉴 열기">&#9776;</button>
+  </div>
+  <div class="nav-menu" id="nav-menu">
+    <a href="#hive">하이브 시스템</a>
+    <a href="#smart">스마트 시스템</a>
+    <a href="#benefits">도입 효과</a>
+    <a href="javascript:void(0)" onclick="openForm(); return false;">사전 예약하기</a>
   </div>
 </div>
 
