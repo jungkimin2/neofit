@@ -92,6 +92,11 @@
     font-size: 0.85rem !important;
   }
   
+  /* 모바일에서 네비게이션 바가 컨텐츠를 가리지 않도록 상단 패딩 추가 */
+  body {
+    padding-top: 60px !important;
+  }
+  
   /* 모바일에서 섹션 간 간격 축소 */
   section {
     margin-top: 20px !important;
@@ -7666,14 +7671,28 @@ if (window.innerWidth <= 768) {
   function toggleNav() {
     const menu = document.getElementById('nav-menu');
     if (menu) {
-      menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+      // display 속성 대신 classList를 사용하여 더 안정적으로 토글
+      if (menu.style.display === 'none' || menu.style.display === '') {
+        menu.style.display = 'block';
+        menu.style.visibility = 'visible';
+        menu.style.opacity = '1';
+      } else {
+        menu.style.display = 'none';
+        menu.style.visibility = 'hidden';
+        menu.style.opacity = '0';
+      }
     }
+    // 이벤트 전파 중지
+    event.stopPropagation();
+    return false;
   }
   
   function closeNav() {
     const menu = document.getElementById('nav-menu');
     if (menu) {
       menu.style.display = 'none';
+      menu.style.visibility = 'hidden';
+      menu.style.opacity = '0';
     }
   }
   
@@ -13190,6 +13209,46 @@ document.addEventListener('DOMContentLoaded', function() {
   #mobile-top-nav-fixed .nav-bar,
   #mobile-top-nav-fixed .nav-menu {
     z-index: 2147483647 !important;
+  }
+  
+  /* 모바일 네비게이션 메뉴 버튼 클릭 영역 확대 및 가시성 보장 */
+  @media (max-width: 768px) {
+    #mobile-top-nav-fixed .nav-menu-btn {
+      position: relative !important;
+      z-index: 2147483647 !important;
+      width: 44px !important;
+      height: 44px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      cursor: pointer !important;
+      -webkit-tap-highlight-color: transparent !important;
+      pointer-events: auto !important;
+    }
+    
+    /* 네비게이션 메뉴 드롭다운 보장 */
+    #mobile-top-nav-fixed .nav-menu {
+      z-index: 2147483646 !important;
+      position: fixed !important;
+      top: 60px !important;
+      left: 0 !important;
+      right: 0 !important;
+      background: #000 !important;
+      border-top: 1px solid #7BE495 !important;
+      max-height: calc(100vh - 60px) !important;
+      overflow-y: auto !important;
+    }
+    
+    /* 네비게이션 바 전체를 최상위로 */
+    #mobile-top-nav-fixed {
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      z-index: 2147483647 !important;
+      background: #000 !important;
+      height: 60px !important;
+    }
   }
   
   /* 네오 하이브/스마트 영상은 네비게이션 다음으로 높은 z-index (모바일만) */
