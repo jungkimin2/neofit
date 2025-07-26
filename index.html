@@ -2868,6 +2868,15 @@ document.addEventListener('DOMContentLoaded', function() {
   /* 모든 하위 요소들도 pointer-events 활성화 */
   .new-mobile-navigation * {
     pointer-events: auto !important;
+    transform: none !important;
+    -webkit-transform: none !important;
+  }
+  
+  /* 드롭다운과 그 하위 요소들의 transform 제거 */
+  .new-nav-dropdown,
+  .new-nav-dropdown * {
+    transform: none !important;
+    -webkit-transform: none !important;
   }
   
   /* 네비게이션 헤더 */
@@ -2958,10 +2967,17 @@ document.addEventListener('DOMContentLoaded', function() {
     border-bottom: 2px solid #7BE495 !important; /* 더 진한 테두리 */
     pointer-events: auto !important;
     isolation: isolate !important; /* 새로운 스택 컨텍스트 생성 */
+    transform: none !important;
+    -webkit-transform: none !important;
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
   }
   
   .new-nav-dropdown.active {
     top: 56px !important; /* 헤더 높이만큼 아래로 */
+    transform: none !important;
+    -webkit-transform: none !important;
   }
   
   /* 메뉴 아이템 */
@@ -3045,11 +3061,11 @@ document.addEventListener('DOMContentLoaded', function() {
   <div class="new-nav-overlay" id="newNavOverlay" onclick="toggleNewMobileMenu()"></div>
   
   <div class="new-nav-dropdown" id="newNavDropdown">
-    <a href="#" class="new-nav-item">네오핏</a>
-    <a href="#hive" class="new-nav-item">네오하이브</a>
-    <a href="#smart" class="new-nav-item">네오스마트</a>
-    <a href="#" class="new-nav-item">네오 필라테스</a>
-    <a href="#" class="new-nav-item new-nav-cta">무료신청하기</a>
+    <a href="#" class="new-nav-item" onclick="toggleNewMobileMenu()">네오핏</a>
+    <a href="#hive" class="new-nav-item" onclick="toggleNewMobileMenu()">네오하이브</a>
+    <a href="#smart" class="new-nav-item" onclick="toggleNewMobileMenu()">네오스마트</a>
+    <a href="#" class="new-nav-item" onclick="toggleNewMobileMenu()">네오 필라테스</a>
+    <a href="#" class="new-nav-item new-nav-cta" onclick="openForm(); toggleNewMobileMenu(); return false;">무료신청하기</a>
   </div>
 </div>
 
@@ -7889,16 +7905,38 @@ if (window.innerWidth <= 768) {
       return;
     }
     
+    // 현재 상태 확인
+    const isActive = navDropdown.classList.contains('active');
+    console.log('현재 active 상태:', isActive);
+    
     // 토글
     hamburgerBtn.classList.toggle('active');
     navOverlay.classList.toggle('active');
     navDropdown.classList.toggle('active');
     
-    // 스크롤 방지
+    // 토글 후 상태 확인
+    console.log('토글 후 active 상태:', navDropdown.classList.contains('active'));
+    console.log('드롭다운 스타일:', window.getComputedStyle(navDropdown).top);
+    console.log('드롭다운 display:', window.getComputedStyle(navDropdown).display);
+    console.log('드롭다운 z-index:', window.getComputedStyle(navDropdown).zIndex);
+    
+    // 스크롤 방지 및 강제 스타일 적용
     if (navDropdown.classList.contains('active')) {
       document.body.style.overflow = 'hidden';
+      // 강제로 스타일 적용
+      navDropdown.style.top = '56px';
+      navDropdown.style.display = 'block';
+      navDropdown.style.visibility = 'visible';
+      navDropdown.style.opacity = '1';
+      navDropdown.style.zIndex = '999999999';
+      navDropdown.style.position = 'fixed';
+      navDropdown.style.left = '0';
+      navDropdown.style.right = '0';
+      navDropdown.style.width = '100%';
     } else {
       document.body.style.overflow = '';
+      // 강제로 스타일 적용
+      navDropdown.style.top = '-400px';
     }
   }
   
@@ -14746,16 +14784,27 @@ document.addEventListener('DOMContentLoaded', function() {
       
       if (!isActive) {
         // 메뉴 열기
+        console.log('메뉴 열기');
         newHamburgerBtn.classList.add('active');
         navOverlay.classList.add('active');
         navDropdown.classList.add('active');
         document.body.style.overflow = 'hidden';
+        
+        // 강제로 스타일 적용
+        navDropdown.style.top = '56px';
+        navDropdown.style.display = 'block';
+        navDropdown.style.visibility = 'visible';
+        navDropdown.style.opacity = '1';
       } else {
         // 메뉴 닫기
+        console.log('메뉴 닫기');
         newHamburgerBtn.classList.remove('active');
         navOverlay.classList.remove('active');
         navDropdown.classList.remove('active');
         document.body.style.overflow = '';
+        
+        // 강제로 스타일 적용
+        navDropdown.style.top = '-400px';
       }
     };
     
