@@ -377,7 +377,7 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    z-index: 2147483645;
+    z-index: 999;
     pointer-events: none;
     background: radial-gradient(circle at center, transparent 30%, rgba(123, 228, 149, 0.1) 70%);
     opacity: 0;
@@ -2838,12 +2838,61 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 </style>
+<style>
+/* 모바일 네비게이션 터치 문제 해결을 위한 추가 스타일 */
+@media (max-width: 768px) {
+  /* 모든 요소의 z-index를 네비게이션보다 낮게 설정 */
+  body * {
+    z-index: auto !important;
+  }
+  
+  /* 네비게이션과 그 하위 요소만 최상위 z-index */
+  #mobile-top-nav-fixed,
+  #mobile-top-nav-fixed * {
+    z-index: 2147483647 !important;
+  }
+  
+  /* 폼 모달과 팝업만 두 번째로 높은 z-index */
+  #formModal,
+  #facilityPopup,
+  #modalOverlay {
+    z-index: 2147483646 !important;
+  }
+  
+  /* 비디오 요소들은 더 낮은 z-index */
+  .video-phone,
+  .neo-smart-video,
+  .floating-video {
+    z-index: 999999 !important;
+  }
+  
+  /* 배경 효과는 가장 낮은 z-index */
+  #mobileBackgroundEffect {
+    z-index: 999 !important;
+  }
+  
+  /* 네비게이션이 절대 가려지지 않도록 */
+  #mobile-top-nav-fixed {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    height: auto !important;
+    pointer-events: auto !important;
+  }
+  
+  #mobile-top-nav-fixed * {
+    pointer-events: auto !important;
+  }
+}
+</style>
 <body>
 <!-- 모바일 전용 상단 고정 네비게이션 (body 직속) -->
 <div id="mobile-top-nav-fixed" style="position: fixed; top: 0; left: 0; right: 0; z-index: 2147483647;">
   <div class="nav-bar">
     <img src="./images/neohive3.png" alt="NeoHive" class="nav-logo">
-    <button class="nav-menu-btn" onclick="toggleNav()">&#9776;</button>
+    <button class="nav-menu-btn" id="mobile-menu-btn" onclick="toggleNav()" style="position: relative !important; z-index: 2147483647 !important; pointer-events: auto !important; touch-action: manipulation !important; -webkit-tap-highlight-color: transparent !important; background: none !important; border: none !important; color: #7BE495 !important; font-size: 24px !important; padding: 8px !important; cursor: pointer !important; display: block !important;">&#9776;</button>
   </div>
   <div class="nav-menu" id="nav-menu">
     <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); closeNav(); return false;">네오핏</a>
@@ -3018,7 +3067,7 @@ document.addEventListener('DOMContentLoaded', function() {
            style="position:absolute; left:50%; top:65%; transform:translate(200%, -60%) scale(0.85); z-index:1; pointer-events:auto; transition-delay:0.36s; width:160px; height:auto;">
 
       <!-- Center phone -->
-      <div class="video-phone" style="position:absolute; left:50%; top:50%; transform:translate(-50%, -50%); width: 180px; height: 360px; border-radius: 20px; overflow: hidden; border: 4px solid #7BE495; background: radial-gradient(circle at center, rgba(123, 228, 149, 0.3), #0A0A0A); box-shadow: 0 0 20px rgba(123, 228, 149, 0.6); z-index: 2147483646; opacity: 1; visibility: visible; display: block;" data-original-left="50%" data-original-top="50%" data-original-transform="translate(-50%, -50%)" data-mobile-left="50%" data-mobile-top="50%" data-mobile-transform="translate(-50%, -50%)">
+      <div class="video-phone" style="position:absolute; left:50%; top:50%; transform:translate(-50%, -50%); width: 180px; height: 360px; border-radius: 20px; overflow: hidden; border: 4px solid #7BE495; background: radial-gradient(circle at center, rgba(123, 228, 149, 0.3), #0A0A0A); box-shadow: 0 0 20px rgba(123, 228, 149, 0.6); z-index: 999999; opacity: 1; visibility: visible; display: block;" data-original-left="50%" data-original-top="50%" data-original-transform="translate(-50%, -50%)" data-mobile-left="50%" data-mobile-top="50%" data-mobile-transform="translate(-50%, -50%)">
         <video id="centerVideo" src="./videos/neohivevideos22.mp4" autoplay loop muted playsinline preload="none" style="width: 100%; height: 100%; object-fit: contain;"></video>
         <!-- 스피커 버튼 -->
         <button class="speaker-button" onclick="toggleMute()" aria-label="음소거 토글">
@@ -7667,6 +7716,7 @@ if (window.innerWidth <= 768) {
     const menu = document.getElementById('nav-menu');
     if (menu) {
       menu.classList.toggle('show');
+      console.log('Menu toggled, show class:', menu.classList.contains('show'));
     }
   }
   
@@ -10654,14 +10704,7 @@ if (video) {
   box-shadow: 0 0 20px #7BE495, 0 0 40px #3AC8A8;
 }
 
-/* 3. 폼 모달 배경 오버레이 */
-#formModal::before {
-  content: '';
-  position: fixed;
-  top: 0; left: 0; width: 100vw; height: 100vh;
-  background: rgba(0,0,0,0.7);
-  z-index: -1;
-}
+/* 3. 폼 모달 배경 오버레이 - 삭제됨 (전체 화면을 덮어서 터치 문제 발생) */
 
 /* 4. 폼 입력 포커스 효과 */
 #formModal input:focus, #formModal textarea:focus, #formModal select:focus {
@@ -12737,8 +12780,10 @@ document.addEventListener('DOMContentLoaded', function() {
     align-items: center !important;
     height: 60px !important;
     padding: 0 16px !important;
-    background: transparent !important;
+    background: #000 !important; /* 투명 배경 대신 검은색으로 변경하여 터치 영역 확보 */
     position: relative !important;
+    z-index: 2147483647 !important;
+    pointer-events: auto !important;
   }
 
   /* 로고 스타일 */
@@ -12759,6 +12804,15 @@ document.addEventListener('DOMContentLoaded', function() {
     padding: 8px !important;
     cursor: pointer !important;
     display: block !important;
+    position: relative !important;
+    z-index: 2147483647 !important;
+    pointer-events: auto !important;
+    touch-action: manipulation !important;
+    -webkit-tap-highlight-color: transparent !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+    -webkit-user-select: none !important;
+    user-select: none !important;
   }
 
   /* 드롭다운 메뉴 */
@@ -14418,13 +14472,24 @@ document.addEventListener('DOMContentLoaded', function() {
     const menu = document.getElementById('nav-menu');
     
     if (menuBtn && menu) {
+      // 버튼이 다른 요소에 가려지지 않도록 확인
+      console.log('Menu button found:', menuBtn);
+      console.log('Menu button computed styles:', window.getComputedStyle(menuBtn));
+      
+      // 버튼의 z-index와 pointer-events 확인
+      const btnStyles = window.getComputedStyle(menuBtn);
+      console.log('Button z-index:', btnStyles.zIndex);
+      console.log('Button pointer-events:', btnStyles.pointerEvents);
+      console.log('Button position:', btnStyles.position);
+      
       // 기존 onclick 제거
       menuBtn.removeAttribute('onclick');
       
-      // 터치 이벤트 추가
+      // 터치 이벤트 처리
       menuBtn.addEventListener('touchstart', function(e) {
         e.preventDefault();
         e.stopPropagation();
+        console.log('Touch event fired on menu button');
         toggleNav();
       }, { passive: false });
       
@@ -14432,6 +14497,15 @@ document.addEventListener('DOMContentLoaded', function() {
       menuBtn.addEventListener('click', function(e) {
         e.preventDefault();
         e.stopPropagation();
+        console.log('Click event fired on menu button');
+        toggleNav();
+      });
+      
+      // pointer 이벤트 추가
+      menuBtn.addEventListener('pointerdown', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log('Pointer event fired on menu button');
         toggleNav();
       });
       
@@ -14440,6 +14514,15 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!menu.contains(e.target) && !menuBtn.contains(e.target) && menu.classList.contains('show')) {
           closeNav();
         }
+      });
+      
+      // 네비게이션 메뉴 링크에 터치 이벤트 추가
+      const menuLinks = menu.querySelectorAll('a');
+      menuLinks.forEach(link => {
+        link.addEventListener('touchstart', function(e) {
+          // preventDefault를 호출하지 않아 링크가 작동하도록 함
+          console.log('Menu link touched:', this.textContent);
+        });
       });
       
       console.log('Mobile nav initialized');
