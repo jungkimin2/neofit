@@ -2850,11 +2850,12 @@ document.addEventListener('DOMContentLoaded', function() {
     <img src="./images/neohive3.png" alt="NeoHive" class="nav-logo">
     <button class="nav-menu-btn" onclick="toggleNav(event)" style="pointer-events: auto !important; z-index: 2147483647 !important;">&#9776;</button>
   </div>
-  <div class="nav-menu" id="nav-menu" style="display: none;">
-    <a href="#hive" onclick="return scrollToSection('hive')">하이브 시스템</a>
-    <a href="#smart" onclick="return scrollToSection('smart')">스마트 시스템</a>
-    <a href="#benefits" onclick="return scrollToSection('benefits')">도입 효과</a>
-    <a href="javascript:void(0)" onclick="openForm();closeNav();return false;">사전 예약하기</a>
+  <div class="nav-menu" id="nav-menu" style="display: none; position: absolute; top: 100%; left: 0; right: 0; background: #111; border-top: 1px solid #7BE495; z-index: 2147483646;">
+    <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); closeNav(); return false;">네오핏</a>
+    <a href="#hive" onclick="return scrollToSection('hive')">네오하이브</a>
+    <a href="#smart" onclick="return scrollToSection('smart')">네오스마트</a>
+    <a href="#neo-pilates" onclick="return scrollToSection('neo-pilates')">네오 필라테스</a>
+    <a href="javascript:void(0)" onclick="openForm();closeNav();return false;">무료 체험신청</a>
   </div>
 </div>
 
@@ -7674,16 +7675,23 @@ if (window.innerWidth <= 768) {
     console.log('menu element:', menu); // 디버깅용
     
     if (menu) {
-      if (menu.style.display === 'block') {
+      if (menu.style.display === 'block' || menu.style.display === 'flex') {
         menu.style.display = 'none';
       } else {
         menu.style.display = 'block';
+        // 강제로 보이도록 설정
+        menu.style.setProperty('display', 'block', 'important');
+        menu.style.setProperty('visibility', 'visible', 'important');
+        menu.style.setProperty('opacity', '1', 'important');
       }
       console.log('menu display after toggle:', menu.style.display); // 디버깅용
+    } else {
+      console.error('Menu element not found!');
     }
     
     // 이벤트 전파 중지
-    if (event && event.stopPropagation) {
+    if (event) {
+      event.preventDefault();
       event.stopPropagation();
     }
     return false;
@@ -7750,6 +7758,21 @@ if (window.innerWidth <= 768) {
         // 파트너 버튼이 없거나 이미 보이는 경우 섹션 상단으로 스크롤
         const sectionTop = benefitsSection.getBoundingClientRect().top + window.pageYOffset - mobileNavHeight;
         window.scrollTo({ top: sectionTop, behavior: 'smooth' });
+        return false;
+      }
+    }
+    
+    // 필라테스 섹션 클릭 시 특별 처리
+    if (sectionId === 'neo-pilates' && window.innerWidth <= 768) {
+      const pilatesSection = document.getElementById('neo-pilates');
+      if (pilatesSection) {
+        const yOffset = -60; // 네비게이션 바 높이만큼 오프셋
+        const yPosition = pilatesSection.getBoundingClientRect().top + window.pageYOffset + yOffset;
+        
+        window.scrollTo({
+          top: yPosition,
+          behavior: 'smooth'
+        });
         return false;
       }
     }
