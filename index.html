@@ -2839,23 +2839,18 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 </style>
 <body>
-<!-- 새로운 모바일 네비게이션 -->
-<div id="new-mobile-nav" style="display: none;">
-  <div class="new-nav-header">
-    <img src="./images/neohive3.png" alt="NeoHive" class="new-nav-logo">
-    <button id="new-nav-toggle" class="new-nav-toggle" type="button">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
+<!-- 모바일 전용 상단 고정 네비게이션 (body 직속) -->
+<div id="mobile-top-nav-fixed">
+  <div class="nav-bar">
+    <img src="./images/neohive3.png" alt="NeoHive" class="nav-logo">
+    <button class="nav-menu-btn" id="mobile-menu-toggle-btn" type="button" aria-label="메뉴 열기">&#9776;</button>
   </div>
-  <nav id="new-nav-menu" class="new-nav-menu">
-    <a href="#home" class="new-nav-link">네오핏</a>
-    <a href="#hive" class="new-nav-link">네오 하이브</a>
-    <a href="#smart" class="new-nav-link">네오 스마트</a>
-    <a href="#neo-pilates" class="new-nav-link">네오 필라테스</a>
-    <a href="javascript:void(0)" class="new-nav-link new-nav-cta" onclick="openForm()">무료 체험</a>
-  </nav>
+  <div class="nav-menu" id="nav-menu">
+    <a href="#hive">하이브 시스템</a>
+    <a href="#smart">스마트 시스템</a>
+    <a href="#benefits">도입 효과</a>
+    <a href="javascript:void(0)" onclick="openForm(); return false;">사전 예약하기</a>
+  </div>
 </div>
 
 
