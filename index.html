@@ -2915,19 +2915,318 @@ document.addEventListener('DOMContentLoaded', function() {
 }
 </style>
 <body>
-<!-- 모바일 전용 상단 고정 네비게이션 (body 직속) -->
-<div id="mobile-top-nav-fixed" style="position: fixed; top: 0; left: 0; right: 0; z-index: 2147483647;">
-  <div class="nav-bar">
-    <img src="./images/neohive3.png" alt="NeoHive" class="nav-logo">
-    <button class="nav-menu-btn" id="mobile-menu-btn" onclick="toggleNav()" style="position: relative !important; z-index: 2147483647 !important; pointer-events: auto !important; touch-action: manipulation !important; -webkit-tap-highlight-color: transparent !important; background: none !important; border: none !important; color: #7BE495 !important; font-size: 24px !important; padding: 8px !important; cursor: pointer !important; display: block !important;">&#9776;</button>
+<!-- 새로운 모바일 네비게이션 -->
+<div id="new-mobile-nav" class="mobile-nav-container">
+  <div class="mobile-nav-header">
+    <img src="./images/neohive3.png" alt="NEOFIT" class="mobile-nav-logo">
+    <button class="mobile-hamburger" id="mobile-hamburger-btn" aria-label="메뉴 열기">
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+    </button>
   </div>
-  <div class="nav-menu" id="nav-menu">
-    <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); closeNav(); return false;">네오핏</a>
-    <a href="#hive" onclick="return scrollToSection('hive')">네오하이브</a>
-    <a href="#smart" onclick="return scrollToSection('smart')">네오스마트</a>
-    <a href="javascript:void(0)" onclick="openForm();closeNav();return false;">사전 예약하기</a>
+  
+  <div class="mobile-nav-overlay" id="mobile-nav-overlay"></div>
+  
+  <div class="mobile-nav-menu" id="mobile-nav-menu">
+    <div class="mobile-menu-header">
+      <img src="./images/neohive3.png" alt="NEOFIT" class="mobile-menu-logo">
+      <button class="mobile-menu-close" id="mobile-menu-close" aria-label="메뉴 닫기">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M18 6L6 18M6 6l12 12" stroke="#7BE495" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+    
+    <nav class="mobile-menu-items">
+      <a href="#" class="mobile-menu-item" data-section="home">
+        <span class="menu-item-text">네오핏</span>
+        <span class="menu-item-icon">→</span>
+      </a>
+      <a href="#hive" class="mobile-menu-item" data-section="hive">
+        <span class="menu-item-text">네오하이브</span>
+        <span class="menu-item-icon">→</span>
+      </a>
+      <a href="#smart" class="mobile-menu-item" data-section="smart">
+        <span class="menu-item-text">네오스마트</span>
+        <span class="menu-item-icon">→</span>
+      </a>
+      <a href="#" class="mobile-menu-item mobile-menu-cta" data-action="reserve">
+        <span class="menu-item-text">사전 예약하기</span>
+        <span class="menu-item-icon">→</span>
+      </a>
+    </nav>
   </div>
 </div>
+
+<style>
+/* 새로운 모바일 네비게이션 스타일 */
+@media (max-width: 768px) {
+  .mobile-nav-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 2147483647;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(123, 228, 149, 0.2);
+  }
+  
+  .mobile-nav-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px;
+    height: 60px;
+  }
+  
+  .mobile-nav-logo {
+    height: 32px;
+    width: auto;
+    filter: drop-shadow(0 0 10px rgba(123, 228, 149, 0.5));
+  }
+  
+  /* 햄버거 버튼 스타일 */
+  .mobile-hamburger {
+    width: 40px;
+    height: 40px;
+    background: none;
+    border: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    position: relative;
+    z-index: 2147483647;
+  }
+  
+  .hamburger-line {
+    width: 24px;
+    height: 2px;
+    background: #7BE495;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 5px rgba(123, 228, 149, 0.5);
+  }
+  
+  .mobile-hamburger:active .hamburger-line {
+    background: #9DF5B5;
+  }
+  
+  /* 오버레이 */
+  .mobile-nav-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 2147483646;
+  }
+  
+  .mobile-nav-overlay.active {
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  /* 슬라이드 메뉴 */
+  .mobile-nav-menu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 85%;
+    max-width: 320px;
+    height: 100vh;
+    background: linear-gradient(135deg, #0A0F0D 0%, #0D1A0F 100%);
+    transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 2147483647;
+    overflow-y: auto;
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+  }
+  
+  .mobile-nav-menu.active {
+    right: 0;
+  }
+  
+  .mobile-menu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid rgba(123, 228, 149, 0.2);
+  }
+  
+  .mobile-menu-logo {
+    height: 28px;
+    width: auto;
+    filter: drop-shadow(0 0 8px rgba(123, 228, 149, 0.4));
+  }
+  
+  .mobile-menu-close {
+    width: 36px;
+    height: 36px;
+    background: rgba(123, 228, 149, 0.1);
+    border: 1px solid rgba(123, 228, 149, 0.3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .mobile-menu-close:active {
+    background: rgba(123, 228, 149, 0.2);
+    transform: scale(0.95);
+  }
+  
+  /* 메뉴 아이템 */
+  .mobile-menu-items {
+    padding: 20px 0;
+  }
+  
+  .mobile-menu-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 24px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .mobile-menu-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 3px;
+    background: #7BE495;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+  
+  .mobile-menu-item:active {
+    background: rgba(123, 228, 149, 0.1);
+  }
+  
+  .mobile-menu-item:active::before {
+    transform: translateX(0);
+  }
+  
+  .menu-item-icon {
+    color: #7BE495;
+    font-size: 1.2rem;
+    transition: transform 0.3s ease;
+  }
+  
+  .mobile-menu-item:active .menu-item-icon {
+    transform: translateX(5px);
+  }
+  
+  /* CTA 버튼 스타일 */
+  .mobile-menu-cta {
+    margin: 20px 24px;
+    background: linear-gradient(135deg, #7BE495 0%, #62D2A2 100%);
+    border-radius: 12px;
+    color: #000;
+    font-weight: 600;
+    text-align: center;
+    padding: 16px;
+    box-shadow: 0 4px 20px rgba(123, 228, 149, 0.3);
+  }
+  
+  .mobile-menu-cta .menu-item-icon {
+    color: #000;
+  }
+  
+  .mobile-menu-cta:active {
+    transform: scale(0.98);
+    box-shadow: 0 2px 10px rgba(123, 228, 149, 0.2);
+  }
+}
+
+/* PC에서는 숨기기 */
+@media (min-width: 769px) {
+  .mobile-nav-container {
+    display: none !important;
+  }
+}
+</style>
+
+<script>
+// 새로운 모바일 네비게이션 스크립트
+document.addEventListener('DOMContentLoaded', function() {
+  const hamburgerBtn = document.getElementById('mobile-hamburger-btn');
+  const closeBtn = document.getElementById('mobile-menu-close');
+  const navMenu = document.getElementById('mobile-nav-menu');
+  const navOverlay = document.getElementById('mobile-nav-overlay');
+  const menuItems = document.querySelectorAll('.mobile-menu-item');
+  
+  // 햄버거 버튼 클릭
+  if (hamburgerBtn) {
+    hamburgerBtn.addEventListener('click', function() {
+      navMenu.classList.add('active');
+      navOverlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    });
+  }
+  
+  // 닫기 버튼 클릭
+  if (closeBtn) {
+    closeBtn.addEventListener('click', function() {
+      closeMenu();
+    });
+  }
+  
+  // 오버레이 클릭
+  if (navOverlay) {
+    navOverlay.addEventListener('click', function() {
+      closeMenu();
+    });
+  }
+  
+  // 메뉴 닫기 함수
+  function closeMenu() {
+    navMenu.classList.remove('active');
+    navOverlay.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+  
+  // 메뉴 아이템 클릭
+  menuItems.forEach(item => {
+    item.addEventListener('click', function(e) {
+      const section = this.getAttribute('data-section');
+      const action = this.getAttribute('data-action');
+      
+      if (action === 'reserve') {
+        e.preventDefault();
+        closeMenu();
+        openForm(); // 예약 폼 열기
+      } else if (section === 'home') {
+        e.preventDefault();
+        closeMenu();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        closeMenu();
+        // 기본 앵커 동작으로 스크롤
+      }
+    });
+  });
+});
+</script>
 
 
 
