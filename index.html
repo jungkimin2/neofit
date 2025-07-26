@@ -7666,64 +7666,81 @@ if (window.innerWidth <= 768) {
   window.toggleNav = function() {
     console.log('toggleNav 호출됨');
     
-    // 기존 메뉴 숨기기
-    const oldMenu = document.getElementById('nav-menu');
-    if (oldMenu) {
-      oldMenu.style.display = 'none';
-    }
+    // 모든 기존 메뉴 숨기기
+    const allMenus = document.querySelectorAll('.nav-menu, #nav-menu');
+    allMenus.forEach(menu => {
+      menu.style.display = 'none';
+    });
     
     // 모바일 드롭다운 메뉴 찾기 또는 생성
     let dropdown = document.getElementById('mobile-dropdown-overlay');
     
     if (!dropdown) {
-      console.log('드롭다운 생성');
+      console.log('드롭다운 생성 시작');
       // 드롭다운이 없으면 생성
       dropdown = document.createElement('div');
       dropdown.id = 'mobile-dropdown-overlay';
       dropdown.style.cssText = `
         display: none;
-        position: fixed;
-        top: 60px;
-        left: 0;
-        right: 0;
-        width: 100%;
-        background: #000;
-        z-index: 2147483647;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.8);
-        border-top: 2px solid #7BE495;
-        padding: 0;
-        margin: 0;
+        position: fixed !important;
+        top: 60px !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        background-color: #000000 !important;
+        z-index: 2147483647 !important;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.8) !important;
+        border-top: 2px solid #7BE495 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: none !important;
+        -webkit-transform: none !important;
       `;
       
       // 메뉴 아이템 추가
       dropdown.innerHTML = `
-        <a href="#hive" onclick="window.closeMobileMenu()" style="display: block; padding: 18px 20px; color: #fff; text-decoration: none; border-bottom: 1px solid rgba(123,228,149,0.2); font-size: 18px; background: #000;">하이브 시스템</a>
-        <a href="#smart" onclick="window.closeMobileMenu()" style="display: block; padding: 18px 20px; color: #fff; text-decoration: none; border-bottom: 1px solid rgba(123,228,149,0.2); font-size: 18px; background: #000;">스마트 시스템</a>
-        <a href="#benefits" onclick="window.closeMobileMenu()" style="display: block; padding: 18px 20px; color: #fff; text-decoration: none; border-bottom: 1px solid rgba(123,228,149,0.2); font-size: 18px; background: #000;">도입 효과</a>
-        <a href="javascript:void(0)" onclick="openForm();window.closeMobileMenu();return false;" style="display: block; padding: 18px 20px; color: #7BE495; text-decoration: none; font-weight: 600; font-size: 18px; background: #000;">사전 예약하기</a>
+        <a href="#hive" onclick="window.closeMobileMenu();return false;" style="display: block !important; padding: 18px 20px !important; color: #ffffff !important; text-decoration: none !important; border-bottom: 1px solid rgba(123,228,149,0.2) !important; font-size: 18px !important; background-color: #000000 !important; position: relative !important; z-index: 2147483647 !important;">하이브 시스템</a>
+        <a href="#smart" onclick="window.closeMobileMenu();return false;" style="display: block !important; padding: 18px 20px !important; color: #ffffff !important; text-decoration: none !important; border-bottom: 1px solid rgba(123,228,149,0.2) !important; font-size: 18px !important; background-color: #000000 !important; position: relative !important; z-index: 2147483647 !important;">스마트 시스템</a>
+        <a href="#benefits" onclick="window.closeMobileMenu();return false;" style="display: block !important; padding: 18px 20px !important; color: #ffffff !important; text-decoration: none !important; border-bottom: 1px solid rgba(123,228,149,0.2) !important; font-size: 18px !important; background-color: #000000 !important; position: relative !important; z-index: 2147483647 !important;">도입 효과</a>
+        <a href="javascript:void(0)" onclick="openForm();window.closeMobileMenu();return false;" style="display: block !important; padding: 18px 20px !important; color: #7BE495 !important; text-decoration: none !important; font-weight: 600 !important; font-size: 18px !important; background-color: #000000 !important; position: relative !important; z-index: 2147483647 !important;">사전 예약하기</a>
       `;
       
-      // body에 직접 추가
+      // body의 가장 마지막에 추가
       document.body.appendChild(dropdown);
+      console.log('드롭다운 생성 완료', dropdown);
     }
     
     const btn = document.querySelector('.nav-menu-btn');
     
+    // 현재 상태 확인
+    const currentDisplay = window.getComputedStyle(dropdown).display;
+    console.log('현재 드롭다운 display:', currentDisplay);
+    console.log('드롭다운 위치:', dropdown.getBoundingClientRect());
+    
     // 토글 동작
-    if (dropdown.style.display === 'none' || !dropdown.style.display) {
+    if (currentDisplay === 'none') {
       // 메뉴 열기
-      console.log('메뉴 열기');
-      dropdown.style.display = 'block';
+      console.log('드롭다운 메뉴 열기');
+      dropdown.style.setProperty('display', 'block', 'important');
       
       // 버튼 X로 변경
       if (btn) {
         btn.innerHTML = '✕';
         btn.style.fontSize = '20px';
       }
+      
+      // 디버깅: 열린 후 상태 확인
+      setTimeout(() => {
+        console.log('드롭다운 열림 확인:', window.getComputedStyle(dropdown).display);
+        console.log('드롭다운 z-index:', window.getComputedStyle(dropdown).zIndex);
+        console.log('드롭다운 위치:', dropdown.getBoundingClientRect());
+      }, 100);
     } else {
       // 메뉴 닫기
-      console.log('메뉴 닫기');
-      dropdown.style.display = 'none';
+      console.log('드롭다운 메뉴 닫기');
+      dropdown.style.setProperty('display', 'none', 'important');
       
       // 버튼 원래대로
       if (btn) {
@@ -14573,6 +14590,46 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // 1초 후 재실행
   setTimeout(ensureMobileNav, 1000);
+  
+  // 메뉴 디버깅 및 강제 표시 테스트
+  window.forceShowMenu = function() {
+    console.log('강제 메뉴 표시 테스트');
+    
+    // 새로운 테스트 메뉴 생성
+    let testMenu = document.getElementById('test-menu-overlay');
+    if (testMenu) {
+      testMenu.remove();
+    }
+    
+    testMenu = document.createElement('div');
+    testMenu.id = 'test-menu-overlay';
+    testMenu.innerHTML = `
+      <div style="position: fixed; top: 60px; left: 0; right: 0; width: 100%; background: red; z-index: 2147483647; padding: 20px; color: white; font-size: 20px; text-align: center;">
+        <p>테스트 메뉴가 보이면 z-index는 정상입니다!</p>
+        <a href="#" onclick="this.parentElement.parentElement.remove(); return false;" style="color: white; text-decoration: underline;">닫기</a>
+      </div>
+    `;
+    document.body.appendChild(testMenu);
+    
+    // 모든 요소의 z-index 확인
+    const elements = document.querySelectorAll('*');
+    const highZIndexElements = [];
+    
+    elements.forEach(el => {
+      const zIndex = window.getComputedStyle(el).zIndex;
+      if (zIndex !== 'auto' && parseInt(zIndex) > 1000) {
+        highZIndexElements.push({
+          element: el,
+          zIndex: parseInt(zIndex),
+          id: el.id,
+          className: el.className
+        });
+      }
+    });
+    
+    highZIndexElements.sort((a, b) => b.zIndex - a.zIndex);
+    console.log('높은 z-index 요소들:', highZIndexElements.slice(0, 10));
+  };
 })();
 </script>
 </html> 
