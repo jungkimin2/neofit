@@ -2843,7 +2843,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <div id="mobile-top-nav-fixed" style="position: fixed; top: 0; left: 0; right: 0; z-index: 2147483647;">
   <div class="nav-bar">
     <img src="./images/neohive3.png" alt="NeoHive" class="nav-logo">
-    <button class="nav-menu-btn" onclick="toggleNav()">&#9776;</button>
+    <button class="nav-menu-btn" onclick="toggleNav()" id="mobile-menu-toggle">&#9776;</button>
   </div>
   <div class="nav-menu" id="nav-menu">
     <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); closeNav(); return false;">네오핏</a>
@@ -7667,6 +7667,7 @@ if (window.innerWidth <= 768) {
     const menu = document.getElementById('nav-menu');
     if (menu) {
       menu.classList.toggle('show');
+      console.log('toggleNav called, menu show:', menu.classList.contains('show'));
     }
   }
   
@@ -7676,6 +7677,48 @@ if (window.innerWidth <= 768) {
       menu.classList.remove('show');
     }
   }
+  
+  // 모바일 햄버거 메뉴 버튼 이벤트 리스너 추가
+  document.addEventListener('DOMContentLoaded', function() {
+    const menuBtn = document.querySelector('.nav-menu-btn');
+    const menuBtnById = document.getElementById('mobile-menu-toggle');
+    const targetBtn = menuBtn || menuBtnById;
+    
+    if (targetBtn) {
+      // onclick 속성은 유지하되 추가 이벤트 리스너도 등록
+      
+      // 터치 이벤트 처리 (모바일 우선)
+      let touchHandled = false;
+      targetBtn.addEventListener('touchend', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        touchHandled = true;
+        toggleNav();
+        // 터치 후 클릭 이벤트 방지
+        setTimeout(() => { touchHandled = false; }, 300);
+      }, { passive: false });
+      
+      // 클릭 이벤트 처리 (터치가 없었을 때만)
+      targetBtn.addEventListener('click', function(e) {
+        if (!touchHandled) {
+          e.preventDefault();
+          e.stopPropagation();
+          toggleNav();
+        }
+      });
+      
+      // 포인터 이벤트 처리 (최신 브라우저)
+      targetBtn.addEventListener('pointerup', function(e) {
+        if (e.pointerType === 'touch' && !touchHandled) {
+          e.preventDefault();
+          e.stopPropagation();
+          toggleNav();
+        }
+      });
+      
+      console.log('Hamburger menu event listeners added');
+    }
+  });
   
   // 모바일 네비게이션 부드러운 스크롤
   function scrollToSection(sectionId) {
@@ -12739,6 +12782,8 @@ document.addEventListener('DOMContentLoaded', function() {
     padding: 0 16px !important;
     background: transparent !important;
     position: relative !important;
+    pointer-events: auto !important;
+    z-index: 2147483647 !important;
   }
 
   /* 로고 스타일 */
@@ -12756,7 +12801,7 @@ document.addEventListener('DOMContentLoaded', function() {
     border: none !important;
     color: #7BE495 !important;
     font-size: 24px !important;
-    padding: 8px !important;
+    padding: 12px !important;
     cursor: pointer !important;
     display: block !important;
     position: relative !important;
@@ -12764,6 +12809,16 @@ document.addEventListener('DOMContentLoaded', function() {
     pointer-events: auto !important;
     touch-action: manipulation !important;
     -webkit-tap-highlight-color: transparent !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+    -webkit-user-select: none !important;
+    user-select: none !important;
+    outline: none !important;
+  }
+  
+  /* 버튼 호버/터치 효과 */
+  #mobile-top-nav-fixed .nav-menu-btn:active {
+    opacity: 0.7 !important;
   }
 
   /* 드롭다운 메뉴 */
