@@ -7663,15 +7663,19 @@ if (window.innerWidth <= 768) {
     }
   });
   
-  // 간단한 모바일 네비게이션 함수들
-  function toggleNav() {
+  // 간단한 모바일 네비게이션 함수들 - 전역 스코프로 이동
+  window.toggleNav = function() {
+    console.log('toggleNav clicked');
     const menu = document.getElementById('nav-menu');
     if (menu) {
+      console.log('Menu found, toggling show class');
       menu.classList.toggle('show');
+    } else {
+      console.log('Menu not found');
     }
   }
   
-  function closeNav() {
+  window.closeNav = function() {
     const menu = document.getElementById('nav-menu');
     if (menu) {
       menu.classList.remove('show');
@@ -7902,14 +7906,34 @@ if (window.innerWidth <= 768) {
   }
   
   // 페이지 로드 시 강제 적용
-  document.addEventListener('DOMContentLoaded', forceMobileNavigation);
+  document.addEventListener('DOMContentLoaded', function() {
+    forceMobileNavigation();
+    
+    // 햄버거 메뉴 버튼 이벤트 다시 연결
+    const menuBtn = document.querySelector('.nav-menu-btn');
+    if (menuBtn) {
+      menuBtn.removeEventListener('click', window.toggleNav);
+      menuBtn.addEventListener('click', window.toggleNav);
+      console.log('Menu button event listener attached');
+    }
+  });
+  
   window.addEventListener('resize', forceMobileNavigation);
   
   // 즉시 실행 (DOM이 준비되기 전에도)
   forceMobileNavigation();
   
   // 추가 안전장치 - 1초 후 다시 실행
-  setTimeout(forceMobileNavigation, 1000);
+  setTimeout(function() {
+    forceMobileNavigation();
+    
+    // 햄버거 메뉴 버튼 이벤트 다시 확인
+    const menuBtn = document.querySelector('.nav-menu-btn');
+    if (menuBtn) {
+      menuBtn.removeEventListener('click', window.toggleNav);
+      menuBtn.addEventListener('click', window.toggleNav);
+    }
+  }, 1000);
   
   // 모바일에서 스크롤 시에도 네비게이션 고정 확인
   if (window.innerWidth <= 768) {
@@ -12760,6 +12784,14 @@ document.addEventListener('DOMContentLoaded', function() {
     padding: 8px !important;
     cursor: pointer !important;
     display: block !important;
+    position: relative !important;
+    z-index: 2147483647 !important;
+    -webkit-tap-highlight-color: transparent !important;
+    touch-action: manipulation !important;
+  }
+  
+  #mobile-top-nav-fixed .nav-menu-btn:active {
+    color: #9DF3C4 !important;
   }
 
   /* 드롭다운 메뉴 */
@@ -12793,6 +12825,8 @@ document.addEventListener('DOMContentLoaded', function() {
     font-size: 16px !important;
     text-align: center !important; /* 중앙 정렬 */
     font-weight: 400 !important;
+    opacity: 1 !important;
+    transition: background 0.3s ease !important;
   }
 
   #mobile-top-nav-fixed .nav-menu a:hover {
