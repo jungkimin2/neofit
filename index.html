@@ -92,17 +92,6 @@
     font-size: 0.85rem !important;
   }
   
-  /* 모바일에서 네비게이션 바가 컨텐츠를 가리지 않도록 상단 패딩 추가 */
-  body {
-    padding-top: 60px !important;
-    margin-top: 0 !important;
-  }
-  
-  /* 스크롤 시에도 네비게이션 바가 항상 보이도록 */
-  html {
-    scroll-behavior: smooth !important;
-  }
-  
   /* 모바일에서 섹션 간 간격 축소 */
   section {
     margin-top: 20px !important;
@@ -2848,204 +2837,20 @@ document.addEventListener('DOMContentLoaded', function() {
       line-height: 1.2 !important;
     }
   }
-  
-  /* 새로운 모바일 네비게이션 스타일 */
-  .new-mobile-nav {
-    display: none;
-  }
-  
-  /* PC에서는 숨김 */
-  @media (min-width: 769px) {
-    .new-mobile-nav {
-      display: none !important;
-    }
-  }
-  
-  @media (max-width: 768px) {
-    /* 새로운 모바일 네비게이션 표시 */
-    .new-mobile-nav {
-      display: block !important;
-      position: fixed !important; /* 스크롤해도 항상 고정 */
-      top: 0 !important;
-      left: 0 !important;
-      right: 0 !important;
-      width: 100% !important;
-      z-index: 2147483647 !important; /* 최대값으로 설정 */
-      background: rgba(0, 0, 0, 0.95) !important;
-      -webkit-position: fixed !important; /* iOS Safari 지원 */
-      -webkit-transform: translateZ(0) !important; /* 하드웨어 가속 */
-      transform: translateZ(0) !important;
-      will-change: transform !important; /* 성능 최적화 */
-    }
-    
-    .new-nav-header {
-      display: flex !important;
-      justify-content: space-between !important;
-      align-items: center !important;
-      padding: 15px 20px !important;
-      height: 60px !important;
-      border-bottom: 1px solid rgba(123, 228, 149, 0.3) !important;
-      position: relative !important;
-      z-index: 2147483647 !important; /* 헤더도 최상위로 */
-      background: rgba(0, 0, 0, 0.95) !important; /* 배경색 추가 */
-      backdrop-filter: blur(10px) !important; /* 블러 효과 */
-      -webkit-backdrop-filter: blur(10px) !important; /* iOS Safari 지원 */
-    }
-    
-    .new-nav-logo {
-      height: 28px !important;
-      width: auto !important;
-    }
-    
-    /* 햄버거 메뉴 스타일 */
-    .new-hamburger {
-      width: 30px !important;
-      height: 25px !important;
-      position: relative !important;
-      cursor: pointer !important;
-      z-index: 2147483647 !important; /* 최대값으로 설정 */
-    }
-    
-    .new-hamburger span {
-      display: block !important;
-      position: absolute !important;
-      height: 3px !important;
-      width: 100% !important;
-      background: #7BE495 !important;
-      border-radius: 2px !important;
-      opacity: 1 !important;
-      left: 0 !important;
-      transform: rotate(0deg) !important;
-      transition: .25s ease-in-out !important;
-    }
-    
-    .new-hamburger span:nth-child(1) {
-      top: 0px !important;
-    }
-    
-    .new-hamburger span:nth-child(2) {
-      top: 11px !important;
-    }
-    
-    .new-hamburger span:nth-child(3) {
-      top: 22px !important;
-    }
-    
-    /* 햄버거 열린 상태 */
-    .new-hamburger.active span:nth-child(1) {
-      top: 11px !important;
-      transform: rotate(135deg) !important;
-    }
-    
-    .new-hamburger.active span:nth-child(2) {
-      opacity: 0 !important;
-      left: -60px !important;
-    }
-    
-    .new-hamburger.active span:nth-child(3) {
-      top: 11px !important;
-      transform: rotate(-135deg) !important;
-    }
-    
-    /* 네비게이션 메뉴 */
-    .new-nav-menu {
-      position: fixed !important;
-      top: 60px !important;
-      left: -100% !important;
-      width: 100% !important;
-      height: calc(100vh - 60px) !important;
-      background: rgba(0, 0, 0, 0.98) !important;
-      transition: left 0.3s ease-in-out !important;
-      overflow-y: auto !important;
-      padding: 20px 0 !important;
-      z-index: 2147483646 !important; /* 헤더보다 약간 낮지만 여전히 최상위 */
-    }
-    
-    .new-nav-menu.active {
-      left: 0 !important;
-    }
-    
-    .new-nav-item {
-      display: block !important;
-      padding: 20px 30px !important;
-      color: #ffffff !important;
-      text-decoration: none !important;
-      font-size: 18px !important;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
-      transition: all 0.3s ease !important;
-    }
-    
-    .new-nav-item:hover {
-      background: rgba(123, 228, 149, 0.1) !important;
-      padding-left: 40px !important;
-    }
-    
-    .new-nav-cta {
-      color: #7BE495 !important;
-      font-weight: 600 !important;
-      text-shadow: 0 0 10px rgba(123, 228, 149, 0.5) !important;
-      margin-top: 20px !important;
-      border: 2px solid #7BE495 !important;
-      border-radius: 25px !important;
-      margin: 20px 30px !important;
-      text-align: center !important;
-    }
-    
-    .new-nav-cta:hover {
-      background: rgba(123, 228, 149, 0.2) !important;
-    }
-    
-    /* 메뉴 열렸을 때 배경 오버레이 */
-    .new-mobile-nav::before {
-      content: '' !important;
-      position: fixed !important;
-      top: 0 !important;
-      left: 0 !important;
-      width: 100% !important;
-      height: 100% !important;
-      background: rgba(0, 0, 0, 0.7) !important;
-      opacity: 0 !important;
-      visibility: hidden !important;
-      transition: all 0.3s ease !important;
-      z-index: 2147483645 !important;
-    }
-    
-    .new-mobile-nav.menu-open::before {
-      opacity: 1 !important;
-      visibility: visible !important;
-    }
-    
-    /* 스크롤 시 네비게이션 바 스타일 유지 */
-    .new-mobile-nav.scrolled {
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3) !important;
-    }
-    
-    /* iOS 바운스 스크롤 대응 */
-    .new-mobile-nav {
-      -webkit-overflow-scrolling: touch !important;
-      -webkit-backface-visibility: hidden !important;
-      backface-visibility: hidden !important;
-    }
-  }
 </style>
 <body>
-<!-- 새로운 모바일 전용 네비게이션 -->
-<div id="new-mobile-nav" class="new-mobile-nav">
-  <div class="new-nav-header">
-    <img src="./images/neohive3.png" alt="NeoHive" class="new-nav-logo">
-    <div class="new-hamburger" id="new-hamburger">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
+<!-- 모바일 전용 상단 고정 네비게이션 (body 직속) -->
+<div id="mobile-top-nav-fixed" style="position: fixed; top: 0; left: 0; right: 0; z-index: 2147483647; height: 60px;">
+  <div class="nav-bar">
+    <img src="./images/neohive3.png" alt="NeoHive" class="nav-logo">
+    <button class="nav-menu-btn" onclick="toggleNav()">&#9776;</button>
   </div>
-  <nav class="new-nav-menu" id="new-nav-menu">
-    <a href="#" class="new-nav-item">네오핏</a>
-    <a href="#hive" class="new-nav-item">네오하이브</a>
-    <a href="#smart" class="new-nav-item">네오스마트</a>
-    <a href="#neo-pilates" class="new-nav-item">네오 필라테스</a>
-    <a href="#" class="new-nav-item new-nav-cta">무료 체험신청</a>
-  </nav>
+  <div class="nav-menu" id="nav-menu" style="display: none; position: fixed; top: 60px; left: 0; right: 0; background: #111; z-index: 2147483646; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">
+    <a href="#hive" onclick="return scrollToSection('hive')">하이브 시스템</a>
+    <a href="#smart" onclick="return scrollToSection('smart')">스마트 시스템</a>
+    <a href="#benefits" onclick="return scrollToSection('benefits')">도입 효과</a>
+    <a href="javascript:void(0)" onclick="openForm();closeNav();return false;">사전 예약하기</a>
+  </div>
 </div>
 
 
@@ -7857,99 +7662,45 @@ if (window.innerWidth <= 768) {
     }
   });
   
-  // 새로운 모바일 네비게이션 함수
-  document.addEventListener('DOMContentLoaded', function() {
-    const hamburger = document.getElementById('new-hamburger');
-    const navMenu = document.getElementById('new-nav-menu');
-    const navItems = document.querySelectorAll('.new-nav-item');
-    const mobileNav = document.getElementById('new-mobile-nav');
-    
-    // 모바일 네비게이션 고정 보장
-    if (window.innerWidth <= 768 && mobileNav) {
-      // 스크롤 이벤트에서도 항상 고정 유지
-      window.addEventListener('scroll', function() {
-        mobileNav.style.position = 'fixed';
-        mobileNav.style.top = '0';
-        mobileNav.style.left = '0';
-        mobileNav.style.right = '0';
-        
-        // 스크롤 시 그림자 효과 추가
-        if (window.scrollY > 10) {
-          mobileNav.classList.add('scrolled');
-        } else {
-          mobileNav.classList.remove('scrolled');
-        }
-      }, { passive: true });
+  // 간단한 모바일 네비게이션 함수들
+  function toggleNav() {
+    console.log('toggleNav 함수 호출됨');
+    const menu = document.getElementById('nav-menu');
+    if (menu) {
+      console.log('현재 메뉴 display:', menu.style.display);
+      // getComputedStyle을 사용하여 실제 스타일 확인
+      const currentDisplay = window.getComputedStyle(menu).display;
+      console.log('계산된 display:', currentDisplay);
       
-      // 초기 설정
-      mobileNav.style.position = 'fixed';
-      mobileNav.style.top = '0';
-      mobileNav.style.left = '0';
-      mobileNav.style.right = '0';
-    }
-    
-    // 햄버거 메뉴 클릭 이벤트
-    if (hamburger) {
-      hamburger.addEventListener('click', function(e) {
-        e.stopPropagation();
-        console.log('햄버거 클릭됨');
-        
-        // 햄버거 애니메이션
-        this.classList.toggle('active');
-        
-        // 메뉴 열기/닫기
-        navMenu.classList.toggle('active');
-        
-        // 오버레이 효과를 위한 클래스 추가
-        document.getElementById('new-mobile-nav').classList.toggle('menu-open');
-      });
-    }
-    
-    // 메뉴 아이템 클릭 시 처리
-    navItems.forEach(item => {
-      item.addEventListener('click', function(e) {
-        e.preventDefault();
-        
-        // 메뉴 닫기
-        hamburger.classList.remove('active');
-        navMenu.classList.remove('active');
-        document.getElementById('new-mobile-nav').classList.remove('menu-open');
-        
-        // 스크롤 처리
-        const href = this.getAttribute('href');
-        
-        if (href === '#') {
-          // 네오핏 클릭 시 최상단으로
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        } else if (this.classList.contains('new-nav-cta')) {
-          // 무료 체험신청 클릭 시
-          if (typeof openForm === 'function') {
-            openForm();
-          }
-        } else if (href) {
-          // 섹션으로 스크롤
-          const target = document.querySelector(href);
-          if (target) {
-            const offset = 60; // 네비게이션 높이
-            const targetPosition = target.offsetTop - offset;
-            window.scrollTo({ top: targetPosition, behavior: 'smooth' });
-          }
-        }
-      });
-    });
-    
-    // 바깥 영역 클릭 시 메뉴 닫기
-    document.addEventListener('click', function(e) {
-      if (!e.target.closest('.new-mobile-nav')) {
-        hamburger.classList.remove('active');
-        navMenu.classList.remove('active');
-        document.getElementById('new-mobile-nav').classList.remove('menu-open');
+      if (currentDisplay === 'none' || menu.style.display === 'none') {
+        // 기존 스타일을 유지하면서 display만 변경
+        menu.style.setProperty('display', 'block', 'important');
+        menu.style.setProperty('position', 'fixed', 'important');
+        menu.style.setProperty('top', '60px', 'important');
+        menu.style.setProperty('left', '0', 'important');
+        menu.style.setProperty('right', '0', 'important');
+        menu.style.setProperty('background', '#111', 'important');
+        menu.style.setProperty('z-index', '2147483646', 'important');
+        menu.style.setProperty('box-shadow', '0 4px 8px rgba(0,0,0,0.3)', 'important');
+        console.log('메뉴 열림');
+      } else {
+        menu.style.setProperty('display', 'none', 'important');
+        console.log('메뉴 닫힘');
       }
-    });
-  });
+    } else {
+      console.error('nav-menu 요소를 찾을 수 없습니다');
+    }
+  }
+  
+  function closeNav() {
+    const menu = document.getElementById('nav-menu');
+    if (menu) {
+      menu.style.setProperty('display', 'none', 'important');
+    }
+  }
   
   // 모바일 네비게이션 부드러운 스크롤
-  window.scrollToSection = function(sectionId) {
+  function scrollToSection(sectionId) {
     closeNav();
     
     // 하이브 시스템 클릭 시 특별 처리 - 페이지 최상단으로 스크롤
@@ -8002,21 +7753,6 @@ if (window.innerWidth <= 768) {
         // 파트너 버튼이 없거나 이미 보이는 경우 섹션 상단으로 스크롤
         const sectionTop = benefitsSection.getBoundingClientRect().top + window.pageYOffset - mobileNavHeight;
         window.scrollTo({ top: sectionTop, behavior: 'smooth' });
-        return false;
-      }
-    }
-    
-    // 필라테스 섹션 클릭 시 특별 처리
-    if (sectionId === 'neo-pilates' && window.innerWidth <= 768) {
-      const pilatesSection = document.getElementById('neo-pilates');
-      if (pilatesSection) {
-        const yOffset = -60; // 네비게이션 바 높이만큼 오프셋
-        const yPosition = pilatesSection.getBoundingClientRect().top + window.pageYOffset + yOffset;
-        
-        window.scrollTo({
-          top: yPosition,
-          behavior: 'smooth'
-        });
         return false;
       }
     }
@@ -8195,6 +7931,34 @@ if (window.innerWidth <= 768) {
   
   // 추가 안전장치 - 1초 후 다시 실행
   setTimeout(forceMobileNavigation, 1000);
+  
+  // 메뉴 관련 요소 확인 및 이벤트 리스너 추가
+  setTimeout(function() {
+    console.log('메뉴 초기화 시작');
+    const menuBtn = document.querySelector('.nav-menu-btn');
+    const menu = document.getElementById('nav-menu');
+    const mobileNav = document.getElementById('mobile-top-nav-fixed');
+    
+    console.log('메뉴 버튼 찾음:', menuBtn);
+    console.log('메뉴 찾음:', menu);
+    console.log('모바일 네비게이션 찾음:', mobileNav);
+    
+    if (menuBtn) {
+      console.log('메뉴 버튼 onclick:', menuBtn.onclick);
+      // 클릭 이벤트를 다시 바인딩
+      menuBtn.onclick = function(e) {
+        console.log('메뉴 버튼 클릭됨 (onclick)');
+        e.preventDefault();
+        toggleNav();
+        return false;
+      };
+    }
+    
+    // 메뉴 초기 상태 확인
+    if (menu) {
+      console.log('메뉴 초기 display:', window.getComputedStyle(menu).display);
+    }
+  }, 500);
   
   // 모바일에서 스크롤 시에도 네비게이션 고정 확인
   if (window.innerWidth <= 768) {
@@ -12922,9 +12686,6 @@ document.addEventListener('DOMContentLoaded', function() {
        color: #7BE495 !important;
        font-size: 1.5rem !important;
        cursor: pointer !important;
-       pointer-events: auto !important;
-       -webkit-tap-highlight-color: transparent !important;
-       touch-action: manipulation !important;
        padding: 5px !important;
      }
      
@@ -13048,10 +12809,6 @@ document.addEventListener('DOMContentLoaded', function() {
     padding: 8px !important;
     cursor: pointer !important;
     display: block !important;
-    pointer-events: auto !important;
-    -webkit-tap-highlight-color: transparent !important;
-    user-select: none !important;
-    touch-action: manipulation !important;
   }
 
   /* 드롭다운 메뉴 */
@@ -13483,52 +13240,6 @@ document.addEventListener('DOMContentLoaded', function() {
   #mobile-top-nav-fixed .nav-bar,
   #mobile-top-nav-fixed .nav-menu {
     z-index: 2147483647 !important;
-  }
-  
-  /* 모바일 네비게이션 메뉴 버튼 클릭 영역 확대 및 가시성 보장 */
-  @media (max-width: 768px) {
-    #mobile-top-nav-fixed .nav-menu-btn {
-      position: relative !important;
-      z-index: 2147483647 !important;
-      width: 44px !important;
-      height: 44px !important;
-      display: flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      cursor: pointer !important;
-      -webkit-tap-highlight-color: transparent !important;
-      pointer-events: auto !important;
-      touch-action: manipulation !important;
-      user-select: none !important;
-      -webkit-user-select: none !important;
-      background-color: transparent !important;
-      opacity: 1 !important;
-      visibility: visible !important;
-    }
-    
-    /* 네비게이션 메뉴 드롭다운 보장 */
-    #mobile-top-nav-fixed .nav-menu {
-      z-index: 2147483646 !important;
-      position: fixed !important;
-      top: 60px !important;
-      left: 0 !important;
-      right: 0 !important;
-      background: #000 !important;
-      border-top: 1px solid #7BE495 !important;
-      max-height: calc(100vh - 60px) !important;
-      overflow-y: auto !important;
-    }
-    
-    /* 네비게이션 바 전체를 최상위로 */
-    #mobile-top-nav-fixed {
-      position: fixed !important;
-      top: 0 !important;
-      left: 0 !important;
-      right: 0 !important;
-      z-index: 2147483647 !important;
-      background: #000 !important;
-      height: 60px !important;
-    }
   }
   
   /* 네오 하이브/스마트 영상은 네비게이션 다음으로 높은 z-index (모바일만) */
