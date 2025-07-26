@@ -7662,8 +7662,8 @@ if (window.innerWidth <= 768) {
     }
   });
   
-  // 간단한 모바일 네비게이션 함수들
-  function toggleNav() {
+  // 간단한 모바일 네비게이션 함수들 - window 객체에 등록하여 HTML에서 접근 가능하도록 함
+  window.toggleNav = function() {
     const menu = document.getElementById('nav-menu');
     if (menu) {
       // 현재 display 상태 확인
@@ -7680,16 +7680,16 @@ if (window.innerWidth <= 768) {
     }
   }
   
-  function closeNav() {
+  window.closeNav = function() {
     const menu = document.getElementById('nav-menu');
     if (menu) {
       menu.style.display = 'none';
     }
   }
   
-  // 모바일 네비게이션 부드러운 스크롤
-  function scrollToSection(sectionId) {
-    closeNav();
+  // 모바일 네비게이션 부드러운 스크롤 - window 객체에 등록
+  window.scrollToSection = function(sectionId) {
+    window.closeNav();
     
     // 하이브 시스템 클릭 시 특별 처리 - 페이지 최상단으로 스크롤
     if (sectionId === 'hive' && window.innerWidth <= 768) {
