@@ -721,9 +721,6 @@ pointer-events: auto !important;
 }
 </style>
 <style>
-/* 기존 모바일에서 .neo-smart-logo.front 숨김 처리 코드는 삭제됨 */
-</style>
-<style>
 /* PC 네비게이션에서 사전 예약하기 네온 효과 */
 .nav-neon-green {
   color: #7BE495 !important;
@@ -2346,10 +2343,6 @@ section {
     box-shadow: 0 0 20px rgba(123, 228, 149, 0.4), 0 0 10px rgba(123, 228, 149, 0.3);
     animation: floatY 4s ease-in-out infinite;
   }
-  /* @keyframes floatY {
-    0%, 100% { transform: translate(-50%, -50%) rotate(-2deg) translateY(0px); }
-    50% { transform: translate(-50%, -50%) rotate(-2deg) translateY(-8px); }
-  } */
   .smart-caption {
     margin-top: 16px;
     font-size: 1rem !important;
@@ -2846,18 +2839,6 @@ document.addEventListener('DOMContentLoaded', function() {
     <button class="nav-menu-btn" style="background: none; border: none; color: #7BE495; font-size: 24px; padding: 8px; cursor: pointer; position: relative; z-index: 999999999;">&#9776;</button>
   </div>
 </div>
-
-<!-- 모바일 메뉴 오버레이 -->
-<div id="simple-mobile-menu" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.95); z-index: 2147483646;">
-  <div style="position: fixed; top: 60px; left: 0; right: 0; background: #000;">
-    <a href="#" onclick="document.getElementById('simple-mobile-menu').style.display='none'; return true;" style="display: block; padding: 20px; color: #fff; text-decoration: none; border-bottom: 1px solid rgba(123,228,149,0.2); font-size: 18px; text-align: center;">네오핏</a>
-    <a href="#hive" onclick="document.getElementById('simple-mobile-menu').style.display='none'; return true;" style="display: block; padding: 20px; color: #fff; text-decoration: none; border-bottom: 1px solid rgba(123,228,149,0.2); font-size: 18px; text-align: center;">네오 하이브</a>
-    <a href="#smart" onclick="document.getElementById('simple-mobile-menu').style.display='none'; return true;" style="display: block; padding: 20px; color: #fff; text-decoration: none; border-bottom: 1px solid rgba(123,228,149,0.2); font-size: 18px; text-align: center;">네오 스마트</a>
-    <a href="#pilates" onclick="document.getElementById('simple-mobile-menu').style.display='none'; return true;" style="display: block; padding: 20px; color: #fff; text-decoration: none; border-bottom: 1px solid rgba(123,228,149,0.2); font-size: 18px; text-align: center;">네오 필라테스</a>
-    <a href="javascript:void(0)" onclick="openForm(); document.getElementById('simple-mobile-menu').style.display='none'; return false;" style="display: block; padding: 20px; color: #7BE495; text-decoration: none; font-weight: 600; font-size: 18px; text-align: center; border-bottom: 2px solid #7BE495;">무료 체험하기</a>
-  </div>
-</div>
-
 
 
 <!-- PC 전용 네비게이션 바 -->
@@ -14783,43 +14764,4 @@ document.addEventListener('DOMContentLoaded', function() {
 })();
 </script>
 
-<!-- 간단한 메뉴 토글 스크립트 -->
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  // 버튼 찾기
-  const menuBtn = document.querySelector('.nav-menu-btn');
-  const simpleMenu = document.getElementById('simple-mobile-menu');
-  
-  if (menuBtn && simpleMenu) {
-    // 버튼 클릭 이벤트
-    menuBtn.addEventListener('click', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      
-      // 메뉴 토글
-      if (simpleMenu.style.display === 'none' || !simpleMenu.style.display) {
-        simpleMenu.style.display = 'block';
-        menuBtn.innerHTML = '✕';
-        console.log('메뉴 열림');
-      } else {
-        simpleMenu.style.display = 'none';
-        menuBtn.innerHTML = '&#9776;';
-        console.log('메뉴 닫힘');
-      }
-    });
-    
-    // 메뉴 바깥 클릭시 닫기
-    simpleMenu.addEventListener('click', function(e) {
-      if (e.target === simpleMenu) {
-        simpleMenu.style.display = 'none';
-        menuBtn.innerHTML = '&#9776;';
-      }
-    });
-    
-    console.log('메뉴 시스템 초기화 완료');
-  } else {
-    console.log('메뉴 요소를 찾을 수 없습니다');
-  }
-});
-</script>
 </html> 
