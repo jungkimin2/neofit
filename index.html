@@ -54,9 +54,7 @@
   }
   
   #simple-menu.show {
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
+    display: block;
   }
   
   #simple-menu button {
@@ -68,7 +66,6 @@
     border: none;
     font-size: 30px;
     cursor: pointer;
-    z-index: 2147483647;
   }
   
   #simple-menu a {
@@ -2956,26 +2953,18 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 </style>
 <body>
-<!-- 모바일 상단 고정 네비게이션 바 -->
-<nav id="mobile-navbar" class="mobile-navbar">
-  <div class="mobile-nav-container">
-    <div class="mobile-nav-header">
-      <img src="./images/neohive3.png" alt="NeoHive" class="mobile-nav-logo">
-      <button class="mobile-hamburger" id="mobile-hamburger" aria-label="메뉴">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-    </div>
-    <div class="mobile-nav-menu" id="mobile-nav-menu">
-      <a href="#" class="mobile-nav-item">네오핏</a>
-      <a href="#hive" class="mobile-nav-item">네오 하이브</a>
-      <a href="#smart" class="mobile-nav-item">네오 스마트</a>
-      <a href="#neo-pilates" class="mobile-nav-item">네오 필라테스</a>
-      <a href="javascript:void(0)" class="mobile-nav-item mobile-nav-cta" onclick="openForm()">무료 체험</a>
-    </div>
+<!-- 간단한 모바일 네비게이션 -->
+<div id="simple-mobile-nav">
+  <button id="simple-menu-btn" onclick="simpleToggleMenu()">☰</button>
+  <div id="simple-menu">
+    <button onclick="simpleToggleMenu()">✕</button>
+    <a href="#" onclick="simpleToggleMenu()">네오핏</a>
+    <a href="#hive" onclick="simpleToggleMenu()">네오 하이브</a>
+    <a href="#smart" onclick="simpleToggleMenu()">네오 스마트</a>
+    <a href="#neo-pilates" onclick="simpleToggleMenu()">네오 필라테스</a>
+    <a href="javascript:void(0)" onclick="openForm(); simpleToggleMenu()">무료 체험</a>
   </div>
-</nav>
+</div>
 
 
 
