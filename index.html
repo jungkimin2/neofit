@@ -2843,7 +2843,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <div id="mobile-top-nav-fixed" style="position: fixed; top: 0; left: 0; right: 0; z-index: 2147483647;">
   <div class="nav-bar">
     <img src="./images/neohive3.png" alt="NeoHive" class="nav-logo">
-    <button class="nav-menu-btn" onclick="toggleNav()">&#9776;</button>
+    <button class="nav-menu-btn" onclick="toggleNav()" style="background: none; border: none; color: #7BE495; font-size: 24px; padding: 8px; cursor: pointer; position: relative; z-index: 999999999;">&#9776;</button>
   </div>
   <div class="nav-menu" id="nav-menu" style="display: none;">
     <a href="#hive" onclick="return scrollToSection('hive')">하이브 시스템</a>
@@ -7663,61 +7663,84 @@ if (window.innerWidth <= 768) {
   });
   
   // 간단한 모바일 네비게이션 함수들
-  function toggleNav() {
+  window.toggleNav = function() {
+    console.log('toggleNav 호출됨');
+    
+    const menu = document.getElementById('nav-menu');
+    const btn = document.querySelector('.nav-menu-btn');
+    
+    if (!menu) {
+      console.error('nav-menu를 찾을 수 없습니다');
+      return;
+    }
+    
+    // 현재 display 상태 확인
+    const currentDisplay = window.getComputedStyle(menu).display;
+    console.log('현재 display:', currentDisplay);
+    
+    if (currentDisplay === 'none') {
+      // 메뉴 열기
+      console.log('메뉴 열기');
+      
+      // 먼저 display를 block으로 설정
+      menu.style.display = 'block';
+      
+      // 그 다음 다른 스타일 적용
+      menu.style.position = 'fixed';
+      menu.style.top = '60px';
+      menu.style.left = '0';
+      menu.style.right = '0';
+      menu.style.width = '100%';
+      menu.style.zIndex = '999999999';
+      menu.style.background = '#000';
+      menu.style.boxShadow = '0 4px 12px rgba(0,0,0,0.8)';
+      menu.style.transform = 'none';
+      menu.style.webkitTransform = 'none';
+      menu.style.opacity = '1';
+      menu.style.visibility = 'visible';
+      menu.style.borderTop = '2px solid #7BE495';
+      menu.style.padding = '0';
+      menu.style.margin = '0';
+      
+      // 버튼 X로 변경
+      if (btn) {
+        btn.innerHTML = '✕';
+        btn.style.fontSize = '20px';
+      }
+      
+      // 메뉴 항목들도 강제로 표시
+      const menuItems = menu.querySelectorAll('a');
+      menuItems.forEach(item => {
+        item.style.display = 'block';
+        item.style.opacity = '1';
+        item.style.visibility = 'visible';
+      });
+      
+    } else {
+      // 메뉴 닫기
+      console.log('메뉴 닫기');
+      menu.style.display = 'none';
+      
+      // 버튼 원래대로
+      if (btn) {
+        btn.innerHTML = '☰';
+        btn.style.fontSize = '24px';
+      }
+    }
+  }
+  
+  window.closeNav = function() {
     const menu = document.getElementById('nav-menu');
     const btn = document.querySelector('.nav-menu-btn');
     
     if (menu) {
-      if (menu.style.display === 'none' || !menu.style.display || menu.style.display === '') {
-        // 메뉴 열기
-        console.log('메뉴 열기 시도');
-        menu.style.cssText = `
-          display: block !important;
-          position: fixed !important;
-          top: 60px !important;
-          left: 0 !important;
-          right: 0 !important;
-          width: 100% !important;
-          z-index: 999999999 !important;
-          background: #000 !important;
-          box-shadow: 0 4px 12px rgba(0,0,0,0.8) !important;
-          transform: none !important;
-          -webkit-transform: none !important;
-          opacity: 1 !important;
-          visibility: visible !important;
-          border-top: 1px solid #7BE495 !important;
-        `;
-        
-        // 버튼 X로 변경
-        if (btn) {
-          btn.innerHTML = '✕';
-          btn.style.fontSize = '20px';
-          btn.style.color = '#7BE495';
-        }
-        
-        console.log('메뉴 열림');
-      } else {
-        // 메뉴 닫기
-        menu.style.display = 'none';
-        
-        // 버튼 원래대로
-        if (btn) {
-          btn.innerHTML = '☰';
-          btn.style.fontSize = '24px';
-          btn.style.color = '#7BE495';
-        }
-        
-        console.log('메뉴 닫힘');
-      }
-    } else {
-      console.error('nav-menu를 찾을 수 없습니다');
-    }
-  }
-  
-  function closeNav() {
-    const menu = document.getElementById('nav-menu');
-    if (menu) {
       menu.style.display = 'none';
+      
+      // 버튼 원래대로
+      if (btn) {
+        btn.innerHTML = '☰';
+        btn.style.fontSize = '24px';
+      }
     }
   }
   
@@ -14472,27 +14495,48 @@ document.addEventListener('DOMContentLoaded', function() {
     
     const navMenu = document.getElementById('nav-menu');
     const mobileNav = document.getElementById('mobile-top-nav-fixed');
+    const navBtn = document.querySelector('.nav-menu-btn');
     
     if (mobileNav) {
       // 네비게이션 바 최상위로
-      mobileNav.style.cssText = `
-        position: fixed !important;
-        top: 0 !important;
-        left: 0 !important;
-        right: 0 !important;
-        z-index: 999999999 !important;
-        width: 100% !important;
-        display: block !important;
-        transform: none !important;
-        -webkit-transform: none !important;
-      `;
+      mobileNav.style.position = 'fixed';
+      mobileNav.style.top = '0';
+      mobileNav.style.left = '0';
+      mobileNav.style.right = '0';
+      mobileNav.style.zIndex = '999999999';
+      mobileNav.style.width = '100%';
+      mobileNav.style.display = 'block';
+      mobileNav.style.transform = 'none';
+      mobileNav.style.webkitTransform = 'none';
     }
     
     if (navMenu) {
-      // 메뉴 기본 상태 설정
+      // 메뉴 기본 상태 설정 (숨김)
       navMenu.style.display = 'none';
-      navMenu.style.position = 'fixed';
-      navMenu.style.zIndex = '999999999';
+      
+      // 메뉴 항목들 확인
+      const menuItems = navMenu.querySelectorAll('a');
+      console.log('메뉴 항목 개수:', menuItems.length);
+      
+      menuItems.forEach((item, index) => {
+        console.log(`메뉴 항목 ${index + 1}:`, item.textContent);
+      });
+    }
+    
+    if (navBtn) {
+      // 버튼 클릭 가능하도록 설정
+      navBtn.style.pointerEvents = 'auto';
+      navBtn.style.cursor = 'pointer';
+      navBtn.style.zIndex = '999999999';
+      
+      // 클릭 이벤트 리스너 추가 (백업)
+      navBtn.removeEventListener('click', window.toggleNav);
+      navBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log('버튼 클릭됨 (백업 리스너)');
+        window.toggleNav();
+      });
     }
     
     console.log('모바일 네비게이션 강제 활성화 완료');
@@ -14504,6 +14548,8 @@ document.addEventListener('DOMContentLoaded', function() {
   // DOM 로드 후
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', ensureMobileNav);
+  } else {
+    ensureMobileNav();
   }
   
   // 1초 후 재실행
