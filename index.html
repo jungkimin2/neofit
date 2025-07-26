@@ -2849,8 +2849,7 @@ document.addEventListener('DOMContentLoaded', function() {
     <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); closeNav(); return false;">네오핏</a>
     <a href="#hive" onclick="return scrollToSection('hive')">네오하이브</a>
     <a href="#smart" onclick="return scrollToSection('smart')">네오스마트</a>
-    <a href="#pilates" onclick="return scrollToSection('pilates')">네오 필라테스</a>
-    <a href="javascript:void(0)" onclick="openForm();closeNav();return false;">무료신청하기</a>
+    <a href="javascript:void(0)" onclick="openForm();closeNav();return false;">사전 예약하기</a>
   </div>
 </div>
 
@@ -7663,22 +7662,18 @@ if (window.innerWidth <= 768) {
     }
   });
   
-  // 간단한 모바일 네비게이션 함수들 - 전역 스코프로 이동
-  window.toggleNav = function() {
-    console.log('toggleNav clicked');
+  // 간단한 모바일 네비게이션 함수들
+  function toggleNav() {
     const menu = document.getElementById('nav-menu');
     if (menu) {
-      console.log('Menu found, toggling show class');
-      menu.classList.toggle('show');
-    } else {
-      console.log('Menu not found');
+      menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
     }
   }
   
-  window.closeNav = function() {
+  function closeNav() {
     const menu = document.getElementById('nav-menu');
     if (menu) {
-      menu.classList.remove('show');
+      menu.style.display = 'none';
     }
   }
   
@@ -7906,34 +7901,14 @@ if (window.innerWidth <= 768) {
   }
   
   // 페이지 로드 시 강제 적용
-  document.addEventListener('DOMContentLoaded', function() {
-    forceMobileNavigation();
-    
-    // 햄버거 메뉴 버튼 이벤트 다시 연결
-    const menuBtn = document.querySelector('.nav-menu-btn');
-    if (menuBtn) {
-      menuBtn.removeEventListener('click', window.toggleNav);
-      menuBtn.addEventListener('click', window.toggleNav);
-      console.log('Menu button event listener attached');
-    }
-  });
-  
+  document.addEventListener('DOMContentLoaded', forceMobileNavigation);
   window.addEventListener('resize', forceMobileNavigation);
   
   // 즉시 실행 (DOM이 준비되기 전에도)
   forceMobileNavigation();
   
   // 추가 안전장치 - 1초 후 다시 실행
-  setTimeout(function() {
-    forceMobileNavigation();
-    
-    // 햄버거 메뉴 버튼 이벤트 다시 확인
-    const menuBtn = document.querySelector('.nav-menu-btn');
-    if (menuBtn) {
-      menuBtn.removeEventListener('click', window.toggleNav);
-      menuBtn.addEventListener('click', window.toggleNav);
-    }
-  }, 1000);
+  setTimeout(forceMobileNavigation, 1000);
   
   // 모바일에서 스크롤 시에도 네비게이션 고정 확인
   if (window.innerWidth <= 768) {
@@ -12786,12 +12761,9 @@ document.addEventListener('DOMContentLoaded', function() {
     display: block !important;
     position: relative !important;
     z-index: 2147483647 !important;
-    -webkit-tap-highlight-color: transparent !important;
+    pointer-events: auto !important;
     touch-action: manipulation !important;
-  }
-  
-  #mobile-top-nav-fixed .nav-menu-btn:active {
-    color: #9DF3C4 !important;
+    -webkit-tap-highlight-color: transparent !important;
   }
 
   /* 드롭다운 메뉴 */
@@ -12804,15 +12776,13 @@ document.addEventListener('DOMContentLoaded', function() {
     border-bottom: 1px solid #7BE495 !important;
     box-shadow: 0 4px 8px rgba(0,0,0,0.3) !important;
     z-index: 2147483646 !important;
-    max-height: 0 !important;
-    overflow: hidden !important;
-    transition: max-height 0.3s ease-out !important;
+    display: none !important;
+    pointer-events: auto !important;
   }
   
-  /* 드롭다운 메뉴 열렸을 때 */
+  /* 메뉴가 열렸을 때 */
   #mobile-top-nav-fixed .nav-menu.show {
-    max-height: 400px !important;
-    transition: max-height 0.5s ease-out !important;
+    display: block !important;
   }
 
   /* 메뉴 아이템 - 일반 항목들은 흰색 */
@@ -12825,8 +12795,6 @@ document.addEventListener('DOMContentLoaded', function() {
     font-size: 16px !important;
     text-align: center !important; /* 중앙 정렬 */
     font-weight: 400 !important;
-    opacity: 1 !important;
-    transition: background 0.3s ease !important;
   }
 
   #mobile-top-nav-fixed .nav-menu a:hover {
