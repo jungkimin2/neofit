@@ -2838,234 +2838,18 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 </style>
-<style>
-/* 새로운 모바일 네비게이션 스타일 */
-@media (max-width: 768px) {
-  /* 기존 모바일 네비게이션 완전히 숨기기 */
-  #mobile-top-nav-fixed {
-    display: none !important;
-    visibility: hidden !important;
-    opacity: 0 !important;
-    pointer-events: none !important;
-  }
-  
-  /* PC 네비게이션 숨기기 */
-  #pc-nav-container {
-    display: none !important;
-  }
-  
-  /* 새로운 모바일 네비게이션 표시 */
-  .new-mobile-navigation {
-    display: block !important;
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    z-index: 2147483647 !important;
-    pointer-events: auto !important;
-  }
-  
-  /* 모든 하위 요소들도 pointer-events 활성화 */
-  .new-mobile-navigation * {
-    pointer-events: auto !important;
-    transform: none !important;
-    -webkit-transform: none !important;
-  }
-  
-  /* 드롭다운과 그 하위 요소들의 transform 제거 */
-  .new-nav-dropdown,
-  .new-nav-dropdown * {
-    transform: none !important;
-    -webkit-transform: none !important;
-  }
-  
-  /* 네비게이션 헤더 */
-  .new-nav-header {
-    display: flex !important;
-    justify-content: space-between !important;
-    align-items: center !important;
-    background: #000 !important;
-    padding: 12px 20px !important;
-    border-bottom: 1px solid rgba(123, 228, 149, 0.3) !important;
-    height: 56px !important;
-  }
-  
-  /* 로고 스타일 */
-  .new-nav-logo {
-    height: 30px !important;
-    width: auto !important;
-  }
-  
-  /* 햄버거 버튼 */
-  .new-hamburger-btn {
-    background: none !important;
-    border: none !important;
-    padding: 5px !important;
-    cursor: pointer !important;
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 4px !important;
-    position: relative !important;
-    z-index: 2147483648 !important;
-    pointer-events: auto !important;
-    touch-action: manipulation !important;
-    -webkit-tap-highlight-color: transparent !important;
-  }
-  
-  .burger-line {
-    display: block !important;
-    width: 25px !important;
-    height: 2px !important;
-    background: #7BE495 !important;
-    transition: all 0.3s ease !important;
-  }
-  
-  /* 햄버거 버튼 활성화 시 애니메이션 */
-  .new-hamburger-btn.active .burger-line:nth-child(1) {
-    transform: rotate(45deg) translate(0, 6px) !important;
-  }
-  
-  .new-hamburger-btn.active .burger-line:nth-child(2) {
-    opacity: 0 !important;
-    transform: scaleX(0) !important;
-  }
-  
-  .new-hamburger-btn.active .burger-line:nth-child(3) {
-    transform: rotate(-45deg) translate(0, -6px) !important;
-  }
-  
-  /* 오버레이 */
-  .new-nav-overlay {
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    bottom: 0 !important;
-    background: rgba(0, 0, 0, 0.8) !important;
-    opacity: 0 !important;
-    visibility: hidden !important;
-    transition: all 0.3s ease !important;
-    z-index: 2147483646 !important;
-  }
-  
-  .new-nav-overlay.active {
-    opacity: 1 !important;
-    visibility: visible !important;
-  }
-  
-  /* 드롭다운 메뉴 */
-  .new-nav-dropdown {
-    position: fixed !important;
-    top: -400px !important; /* 화면 위로 숨김 */
-    left: 0 !important;
-    right: 0 !important;
-    width: 100% !important;
-    background: #000 !important; /* 완전히 불투명한 검은색 */
-    transition: top 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-    z-index: 999999999 !important; /* 최상위 z-index */
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8) !important;
-    border-bottom: 2px solid #7BE495 !important; /* 더 진한 테두리 */
-    pointer-events: auto !important;
-    isolation: isolate !important; /* 새로운 스택 컨텍스트 생성 */
-    transform: none !important;
-    -webkit-transform: none !important;
-    display: block !important;
-    opacity: 1 !important;
-    visibility: visible !important;
-  }
-  
-  .new-nav-dropdown.active {
-    top: 56px !important; /* 헤더 높이만큼 아래로 */
-    transform: none !important;
-    -webkit-transform: none !important;
-  }
-  
-  /* 메뉴 아이템 */
-  .new-nav-item {
-    display: block !important;
-    padding: 20px 24px !important;
-    color: #fff !important;
-    text-decoration: none !important;
-    border-bottom: 1px solid rgba(123, 228, 149, 0.2) !important;
-    font-size: 1.1rem !important;
-    font-weight: 500 !important;
-    transition: all 0.3s ease !important;
-    position: relative !important;
-    overflow: hidden !important;
-    background: #000 !important; /* 배경색 추가 */
-    z-index: 999999999 !important; /* 높은 z-index */
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5) !important;
-  }
-  
-  .new-nav-item::before {
-    content: '' !important;
-    position: absolute !important;
-    left: -100% !important;
-    top: 0 !important;
-    width: 100% !important;
-    height: 100% !important;
-    background: linear-gradient(90deg, transparent, rgba(123, 228, 149, 0.1), transparent) !important;
-    transition: left 0.3s ease !important;
-  }
-  
-  .new-nav-item:hover::before,
-  .new-nav-item:active::before {
-    left: 100% !important;
-  }
-  
-  .new-nav-item:last-child {
-    border-bottom: none !important;
-  }
-  
-  /* CTA 버튼 스타일 */
-  .new-nav-cta {
-    background: linear-gradient(135deg, #7BE495, #3AC8A8) !important;
-    color: #000 !important;
-    font-weight: 700 !important;
-    margin: 15px 20px 20px 20px !important;
-    padding: 16px !important;
-    text-align: center !important;
-    border-radius: 8px !important;
-    border: none !important;
-    font-size: 1.1rem !important;
-    box-shadow: 0 4px 12px rgba(123, 228, 149, 0.3) !important;
-    text-shadow: none !important;
-  }
-  
-  .new-nav-cta:hover,
-  .new-nav-cta:active {
-    background: linear-gradient(135deg, #9DF3C4, #7BE495) !important;
-    transform: scale(0.98) !important;
-  }
-}
-
-/* PC에서는 숨기기 */
-@media (min-width: 769px) {
-  .new-mobile-navigation {
-    display: none !important;
-  }
-}
-</style>
 <body>
-<!-- 새로운 모바일 네비게이션 -->
-<div id="new-mobile-nav" class="new-mobile-navigation">
-  <div class="new-nav-header">
-    <img src="./images/neohive3.png" alt="NEOFIT" class="new-nav-logo">
-    <button class="new-hamburger-btn" id="newHamburgerBtn" aria-label="메뉴 열기" onclick="toggleNewMobileMenu()">
-      <span class="burger-line"></span>
-      <span class="burger-line"></span>
-      <span class="burger-line"></span>
-    </button>
+<!-- 모바일 전용 상단 고정 네비게이션 (body 직속) -->
+<div id="mobile-top-nav-fixed" style="position: fixed; top: 0; left: 0; right: 0; z-index: 2147483647;">
+  <div class="nav-bar">
+    <img src="./images/neohive3.png" alt="NeoHive" class="nav-logo">
+    <button class="nav-menu-btn" onclick="toggleNav()">&#9776;</button>
   </div>
-  
-  <div class="new-nav-overlay" id="newNavOverlay" onclick="toggleNewMobileMenu()"></div>
-  
-  <div class="new-nav-dropdown" id="newNavDropdown">
-    <a href="#" class="new-nav-item" onclick="toggleNewMobileMenu()">네오핏</a>
-    <a href="#hive" class="new-nav-item" onclick="toggleNewMobileMenu()">네오하이브</a>
-    <a href="#smart" class="new-nav-item" onclick="toggleNewMobileMenu()">네오스마트</a>
-    <a href="#" class="new-nav-item" onclick="toggleNewMobileMenu()">네오 필라테스</a>
-    <a href="#" class="new-nav-item new-nav-cta" onclick="openForm(); toggleNewMobileMenu(); return false;">무료신청하기</a>
+  <div class="nav-menu" id="nav-menu" style="display: none;">
+    <a href="#hive" onclick="return scrollToSection('hive')">하이브 시스템</a>
+    <a href="#smart" onclick="return scrollToSection('smart')">스마트 시스템</a>
+    <a href="#benefits" onclick="return scrollToSection('benefits')">도입 효과</a>
+    <a href="javascript:void(0)" onclick="openForm();closeNav();return false;">사전 예약하기</a>
   </div>
 </div>
 
@@ -7878,7 +7662,7 @@ if (window.innerWidth <= 768) {
     }
   });
   
-  // 기존 모바일 네비게이션 함수들 (이전 버전 호환성을 위해 유지)
+  // 간단한 모바일 네비게이션 함수들
   function toggleNav() {
     const menu = document.getElementById('nav-menu');
     if (menu) {
@@ -7892,121 +7676,6 @@ if (window.innerWidth <= 768) {
       menu.style.display = 'none';
     }
   }
-  
-  // 새로운 모바일 네비게이션 토글 함수
-  function toggleNewMobileMenu() {
-    console.log('toggleNewMobileMenu 호출됨!');
-    const hamburgerBtn = document.getElementById('newHamburgerBtn');
-    const navOverlay = document.getElementById('newNavOverlay');
-    const navDropdown = document.getElementById('newNavDropdown');
-    
-    if (!hamburgerBtn || !navOverlay || !navDropdown) {
-      console.error('메뉴 요소를 찾을 수 없습니다');
-      return;
-    }
-    
-    // 현재 상태 확인
-    const isActive = navDropdown.classList.contains('active');
-    console.log('현재 active 상태:', isActive);
-    
-    // 토글
-    hamburgerBtn.classList.toggle('active');
-    navOverlay.classList.toggle('active');
-    navDropdown.classList.toggle('active');
-    
-    // 토글 후 상태 확인
-    console.log('토글 후 active 상태:', navDropdown.classList.contains('active'));
-    console.log('드롭다운 스타일:', window.getComputedStyle(navDropdown).top);
-    console.log('드롭다운 display:', window.getComputedStyle(navDropdown).display);
-    console.log('드롭다운 z-index:', window.getComputedStyle(navDropdown).zIndex);
-    
-    // 스크롤 방지 및 강제 스타일 적용
-    if (navDropdown.classList.contains('active')) {
-      document.body.style.overflow = 'hidden';
-      // 강제로 스타일 적용
-      navDropdown.style.top = '56px';
-      navDropdown.style.display = 'block';
-      navDropdown.style.visibility = 'visible';
-      navDropdown.style.opacity = '1';
-      navDropdown.style.zIndex = '999999999';
-      navDropdown.style.position = 'fixed';
-      navDropdown.style.left = '0';
-      navDropdown.style.right = '0';
-      navDropdown.style.width = '100%';
-    } else {
-      document.body.style.overflow = '';
-      // 강제로 스타일 적용
-      navDropdown.style.top = '-400px';
-    }
-  }
-  
-  // 새로운 모바일 네비게이션 기능
-  document.addEventListener('DOMContentLoaded', function() {
-    const hamburgerBtn = document.getElementById('newHamburgerBtn');
-    const navOverlay = document.getElementById('newNavOverlay');
-    const navDropdown = document.getElementById('newNavDropdown');
-    
-    console.log('새로운 네비게이션 초기화:', {hamburgerBtn, navOverlay, navDropdown});
-    
-    if (hamburgerBtn && navOverlay && navDropdown) {
-      // 햄버거 버튼 클릭
-      hamburgerBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        console.log('햄버거 버튼 클릭됨!');
-        
-        this.classList.toggle('active');
-        navOverlay.classList.toggle('active');
-        navDropdown.classList.toggle('active');
-        
-        console.log('클래스 상태:', {
-          btn: this.classList.contains('active'),
-          overlay: navOverlay.classList.contains('active'),
-          dropdown: navDropdown.classList.contains('active')
-        });
-        
-        // 스크롤 방지
-        if (navDropdown.classList.contains('active')) {
-          document.body.style.overflow = 'hidden';
-        } else {
-          document.body.style.overflow = '';
-        }
-      });
-      
-      // 터치 이벤트도 추가
-      hamburgerBtn.addEventListener('touchstart', function(e) {
-        console.log('터치 이벤트 발생!');
-      });
-      
-      // 오버레이 클릭 시 메뉴 닫기
-      navOverlay.addEventListener('click', function() {
-        hamburgerBtn.classList.remove('active');
-        navOverlay.classList.remove('active');
-        navDropdown.classList.remove('active');
-        document.body.style.overflow = '';
-      });
-      
-      // 메뉴 아이템 클릭 시 메뉴 닫기
-      const menuItems = document.querySelectorAll('.new-nav-item');
-      menuItems.forEach(item => {
-        item.addEventListener('click', function() {
-          hamburgerBtn.classList.remove('active');
-          navOverlay.classList.remove('active');
-          navDropdown.classList.remove('active');
-          document.body.style.overflow = '';
-        });
-      });
-      
-      // CTA 버튼 클릭 시 폼 열기
-      const ctaBtn = document.querySelector('.new-nav-cta');
-      if (ctaBtn) {
-        ctaBtn.addEventListener('click', function(e) {
-          e.preventDefault();
-          openForm();
-        });
-      }
-    }
-  });
   
   // 모바일 네비게이션 부드러운 스크롤
   function scrollToSection(sectionId) {
@@ -8128,26 +7797,19 @@ if (window.innerWidth <= 768) {
     console.log('Screen width:', window.innerWidth, 'Is Mobile:', isMobile);
     
     if (isMobile) {
-      // 기존 모바일 네비게이션은 무시하고 새 네비게이션만 사용
-      const newMobileNav = document.getElementById('new-mobile-nav');
-      const oldMobileNav = document.getElementById('mobile-top-nav-fixed');
+      const mobileNav = document.getElementById('mobile-top-nav-fixed');
       const pcNav = document.getElementById('pc-nav-container');
       const body = document.body;
       const scrollableContent = document.getElementById('scrollable-content');
       
-      // 기존 모바일 네비게이션 숨기기
-      if (oldMobileNav) {
-        oldMobileNav.style.display = 'none !important';
-      }
-      
-      if (newMobileNav) {
-        // 새 모바일 네비게이션을 body의 직접 자식으로 이동 (필요시)
-        if (newMobileNav.parentElement !== body) {
-          body.insertBefore(newMobileNav, body.firstChild);
+      if (mobileNav) {
+        // 모바일 네비게이션을 body의 직접 자식으로 이동 (필요시)
+        if (mobileNav.parentElement !== body) {
+          body.insertBefore(mobileNav, body.firstChild);
         }
         
         // 강력한 CSS 속성 설정
-        newMobileNav.style.cssText = `
+        mobileNav.style.cssText = `
           display: block !important;
           position: fixed !important;
           top: 0 !important;
@@ -8226,16 +7888,11 @@ if (window.innerWidth <= 768) {
       
     } else {
       // PC 환경
-      const newMobileNav = document.getElementById('new-mobile-nav');
-      const oldMobileNav = document.getElementById('mobile-top-nav-fixed');
+      const mobileNav = document.getElementById('mobile-top-nav-fixed');
       const pcNav = document.getElementById('pc-nav-container');
       
-      // PC 환경에서는 새 모바일 네비게이션 숨기기
-      if (newMobileNav) {
-        newMobileNav.style.display = 'none';
-      }
-      if (oldMobileNav) {
-        oldMobileNav.style.display = 'none';
+      if (mobileNav) {
+        mobileNav.style.display = 'none';
       }
       if (pcNav) {
         pcNav.style.display = 'block';
@@ -14753,84 +14410,4 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 </style>
 </body>
-<script>
-// 새로운 모바일 네비게이션 강제 초기화
-(function() {
-  function initNewMobileNav() {
-    if (window.innerWidth > 768) return;
-    
-    const hamburgerBtn = document.getElementById('newHamburgerBtn');
-    const navOverlay = document.getElementById('newNavOverlay');
-    const navDropdown = document.getElementById('newNavDropdown');
-    
-    console.log('모바일 네비게이션 강제 초기화 시도');
-    
-    if (!hamburgerBtn) {
-      console.error('햄버거 버튼을 찾을 수 없습니다!');
-      return;
-    }
-    
-    // 기존 이벤트 리스너 제거
-    const newHamburgerBtn = hamburgerBtn.cloneNode(true);
-    hamburgerBtn.parentNode.replaceChild(newHamburgerBtn, hamburgerBtn);
-    
-    // 새로운 이벤트 리스너 추가
-    newHamburgerBtn.onclick = function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      console.log('햄버거 클릭!');
-      
-      const isActive = navDropdown.classList.contains('active');
-      
-      if (!isActive) {
-        // 메뉴 열기
-        console.log('메뉴 열기');
-        newHamburgerBtn.classList.add('active');
-        navOverlay.classList.add('active');
-        navDropdown.classList.add('active');
-        document.body.style.overflow = 'hidden';
-        
-        // 강제로 스타일 적용
-        navDropdown.style.top = '56px';
-        navDropdown.style.display = 'block';
-        navDropdown.style.visibility = 'visible';
-        navDropdown.style.opacity = '1';
-      } else {
-        // 메뉴 닫기
-        console.log('메뉴 닫기');
-        newHamburgerBtn.classList.remove('active');
-        navOverlay.classList.remove('active');
-        navDropdown.classList.remove('active');
-        document.body.style.overflow = '';
-        
-        // 강제로 스타일 적용
-        navDropdown.style.top = '-400px';
-      }
-    };
-    
-    // 오버레이 클릭으로 닫기
-    if (navOverlay) {
-      navOverlay.onclick = function() {
-        newHamburgerBtn.classList.remove('active');
-        navOverlay.classList.remove('active');
-        navDropdown.classList.remove('active');
-        document.body.style.overflow = '';
-      };
-    }
-    
-    console.log('모바일 네비게이션 초기화 완료!');
-  }
-  
-  // 즉시 실행
-  initNewMobileNav();
-  
-  // DOM 로드 후
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initNewMobileNav);
-  }
-  
-  // 1초 후 재시도
-  setTimeout(initNewMobileNav, 1000);
-})();
-</script>
 </html> 
