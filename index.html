@@ -91,36 +91,11 @@
 <!-- 간단한 모바일 네비게이션 JavaScript -->
 <script>
 function simpleToggleMenu() {
-  console.log('simpleToggleMenu 함수 호출됨');
   var menu = document.getElementById('simple-menu');
-  console.log('메뉴 요소:', menu);
-  
   if (menu) {
-    var isShowing = menu.classList.contains('show');
-    console.log('현재 show 클래스 여부:', isShowing);
-    
     menu.classList.toggle('show');
-    console.log('토글 후 show 클래스 여부:', menu.classList.contains('show'));
-    
-    // 강제로 display 속성도 변경
-    if (menu.classList.contains('show')) {
-      menu.style.display = 'block';
-      console.log('메뉴 열림');
-    } else {
-      menu.style.display = 'none';
-      console.log('메뉴 닫힘');
-    }
-  } else {
-    console.error('simple-menu 요소를 찾을 수 없습니다!');
   }
 }
-
-// 페이지 로드 시 디버깅
-window.addEventListener('DOMContentLoaded', function() {
-  console.log('=== 모바일 네비게이션 디버깅 ===');
-  console.log('메뉴 버튼:', document.getElementById('simple-menu-btn'));
-  console.log('메뉴:', document.getElementById('simple-menu'));
-});
 </script>
 
 <!-- 모바일 전용 즉시 적용 스타일 - 페이지 로딩 시 깜빡임 방지 -->
