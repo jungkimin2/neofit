@@ -9,6 +9,168 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Neo Hive - 스마트하게, 함께 하는 피트니스</title>
 
+<!-- 모바일 네비게이션 바 스타일 -->
+<style>
+/* PC에서는 숨기기 */
+.mobile-navbar {
+  display: none;
+}
+
+/* 모바일에서만 표시 */
+@media screen and (max-width: 768px) {
+  /* 모바일 네비게이션 바 */
+  .mobile-navbar {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: #000;
+    border-bottom: 2px solid #7BE495;
+    z-index: 2147483647;
+    transition: all 0.3s ease;
+  }
+  
+  .mobile-nav-container {
+    position: relative;
+  }
+  
+  /* 헤더 부분 */
+  .mobile-nav-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    height: 60px;
+  }
+  
+  /* 로고 */
+  .mobile-nav-logo {
+    height: 30px;
+    width: auto;
+  }
+  
+  /* 햄버거 메뉴 버튼 */
+  .mobile-hamburger {
+    width: 30px;
+    height: 24px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    z-index: 2147483647;
+  }
+  
+  .mobile-hamburger span {
+    display: block;
+    width: 100%;
+    height: 3px;
+    background: #7BE495;
+    transition: all 0.3s ease;
+    border-radius: 2px;
+  }
+  
+  /* 햄버거 애니메이션 */
+  .mobile-hamburger.active span:nth-child(1) {
+    transform: rotate(45deg) translateY(10px);
+  }
+  
+  .mobile-hamburger.active span:nth-child(2) {
+    opacity: 0;
+  }
+  
+  .mobile-hamburger.active span:nth-child(3) {
+    transform: rotate(-45deg) translateY(-10px);
+  }
+  
+  /* 메뉴 부분 */
+  .mobile-nav-menu {
+    display: none;
+    background: #111;
+    padding: 20px 0;
+    border-top: 1px solid #333;
+  }
+  
+  /* 메뉴 열림 상태 */
+  .mobile-nav-menu.active {
+    display: block;
+  }
+  
+  /* 메뉴 아이템 */
+  .mobile-nav-item {
+    display: block;
+    padding: 15px 30px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+  }
+  
+  .mobile-nav-item:hover {
+    background: rgba(123, 228, 149, 0.1);
+    padding-left: 40px;
+    color: #7BE495;
+  }
+  
+  /* 무료 체험 버튼 */
+  .mobile-nav-cta {
+    color: #7BE495;
+    font-weight: bold;
+    text-align: center;
+    margin: 20px 30px;
+    border: 2px solid #7BE495;
+    border-radius: 30px;
+    background: transparent;
+  }
+  
+  .mobile-nav-cta:hover {
+    background: #7BE495;
+    color: #000;
+  }
+  
+  /* body 패딩 추가 */
+  body {
+    padding-top: 60px;
+  }
+}
+</style>
+
+<!-- 모바일 네비게이션 JavaScript -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const hamburger = document.getElementById('mobile-hamburger');
+  const navMenu = document.getElementById('mobile-nav-menu');
+  const navItems = document.querySelectorAll('.mobile-nav-item');
+  
+  if (hamburger && navMenu) {
+    // 햄버거 메뉴 클릭
+    hamburger.addEventListener('click', function() {
+      this.classList.toggle('active');
+      navMenu.classList.toggle('active');
+      console.log('메뉴 토글됨');
+    });
+    
+    // 메뉴 아이템 클릭시 메뉴 닫기
+    navItems.forEach(item => {
+      item.addEventListener('click', function() {
+        hamburger.classList.remove('active');
+        navMenu.classList.remove('active');
+      });
+    });
+    
+    // 네오핏 링크 클릭시 최상단으로
+    document.querySelector('.mobile-nav-item[href="#"]').addEventListener('click', function(e) {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+});
+</script>
+
 <!-- 모바일 전용 즉시 적용 스타일 - 페이지 로딩 시 깜빡임 방지 -->
 <style>
 /* 모바일에서만 적용 - PC 환경 완전 보호 */
@@ -2839,19 +3001,26 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 </style>
 <body>
-<!-- 모바일 전용 상단 고정 네비게이션 (body 직속) -->
-<div id="mobile-top-nav-fixed">
-  <div class="nav-bar">
-    <img src="./images/neohive3.png" alt="NeoHive" class="nav-logo">
-    <button class="nav-menu-btn" id="mobile-menu-toggle-btn" type="button" aria-label="메뉴 열기">&#9776;</button>
+<!-- 모바일 상단 고정 네비게이션 바 -->
+<nav id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-nav-container">
+    <div class="mobile-nav-header">
+      <img src="./images/neohive3.png" alt="NeoHive" class="mobile-nav-logo">
+      <button class="mobile-hamburger" id="mobile-hamburger" aria-label="메뉴">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div class="mobile-nav-menu" id="mobile-nav-menu">
+      <a href="#" class="mobile-nav-item">네오핏</a>
+      <a href="#hive" class="mobile-nav-item">네오 하이브</a>
+      <a href="#smart" class="mobile-nav-item">네오 스마트</a>
+      <a href="#neo-pilates" class="mobile-nav-item">네오 필라테스</a>
+      <a href="javascript:void(0)" class="mobile-nav-item mobile-nav-cta" onclick="openForm()">무료 체험</a>
+    </div>
   </div>
-  <div class="nav-menu" id="nav-menu">
-    <a href="#hive">하이브 시스템</a>
-    <a href="#smart">스마트 시스템</a>
-    <a href="#benefits">도입 효과</a>
-    <a href="javascript:void(0)" onclick="openForm(); return false;">사전 예약하기</a>
-  </div>
-</div>
+</nav>
 
 
 
