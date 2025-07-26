@@ -2843,7 +2843,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <div id="mobile-top-nav-fixed" style="position: fixed; top: 0; left: 0; right: 0; z-index: 2147483647; height: 60px;">
   <div class="nav-bar">
     <img src="./images/neohive3.png" alt="NeoHive" class="nav-logo">
-    <button class="nav-menu-btn" onclick="toggleNav()">&#9776;</button>
+    <button class="nav-menu-btn" onclick="toggleNav()" style="pointer-events: auto !important; cursor: pointer !important; z-index: 2147483647 !important;">&#9776;</button>
   </div>
   <div class="nav-menu" id="nav-menu" style="display: none; position: fixed; top: 60px; left: 0; right: 0; background: #111; z-index: 2147483646; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">
     <a href="#hive" onclick="return scrollToSection('hive')">하이브 시스템</a>
@@ -7949,9 +7949,24 @@ if (window.innerWidth <= 768) {
       menuBtn.onclick = function(e) {
         console.log('메뉴 버튼 클릭됨 (onclick)');
         e.preventDefault();
+        e.stopPropagation();
         toggleNav();
         return false;
       };
+      
+      // 추가 이벤트 리스너들
+      menuBtn.addEventListener('click', function(e) {
+        console.log('메뉴 버튼 클릭됨 (addEventListener)');
+        e.preventDefault();
+        e.stopPropagation();
+      }, true);
+      
+      menuBtn.addEventListener('touchstart', function(e) {
+        console.log('메뉴 버튼 터치됨 (touchstart)');
+        e.preventDefault();
+        e.stopPropagation();
+        toggleNav();
+      }, { passive: false });
     }
     
     // 메뉴 초기 상태 확인
@@ -12789,6 +12804,8 @@ document.addEventListener('DOMContentLoaded', function() {
     padding: 0 16px !important;
     background: transparent !important;
     position: relative !important;
+    pointer-events: auto !important;
+    z-index: 2147483647 !important;
   }
 
   /* 로고 스타일 */
@@ -12805,10 +12822,18 @@ document.addEventListener('DOMContentLoaded', function() {
     background: none !important;
     border: none !important;
     color: #7BE495 !important;
-    font-size: 24px !important;
-    padding: 8px !important;
+    font-size: 28px !important;
+    padding: 12px 16px !important;
     cursor: pointer !important;
     display: block !important;
+    pointer-events: auto !important;
+    z-index: 2147483647 !important;
+    position: relative !important;
+    -webkit-tap-highlight-color: transparent !important;
+    touch-action: manipulation !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+    margin: -8px !important;
   }
 
   /* 드롭다운 메뉴 */
@@ -13240,6 +13265,16 @@ document.addEventListener('DOMContentLoaded', function() {
   #mobile-top-nav-fixed .nav-bar,
   #mobile-top-nav-fixed .nav-menu {
     z-index: 2147483647 !important;
+    pointer-events: auto !important;
+  }
+  
+  /* 삼선바 버튼 특별 처리 */
+  #mobile-top-nav-fixed .nav-menu-btn {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+    -webkit-tap-highlight-color: rgba(123, 228, 149, 0.2) !important;
+    user-select: none !important;
+    -webkit-user-select: none !important;
   }
   
   /* 네오 하이브/스마트 영상은 네비게이션 다음으로 높은 z-index (모바일만) */
