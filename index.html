@@ -7664,19 +7664,29 @@ if (window.innerWidth <= 768) {
   
   // 간단한 모바일 네비게이션 함수들 - window 객체에 등록하여 HTML에서 접근 가능하도록 함
   window.toggleNav = function() {
+    console.log('toggleNav 함수 실행됨');
     const menu = document.getElementById('nav-menu');
+    
     if (menu) {
+      console.log('nav-menu 요소 찾음');
       // 현재 display 상태 확인
       const currentDisplay = window.getComputedStyle(menu).display;
+      console.log('현재 display 상태:', currentDisplay);
+      console.log('menu.style.display:', menu.style.display);
       
       // toggle 로직 개선
       if (currentDisplay === 'none' || menu.style.display === 'none') {
         menu.style.display = 'block';
+        console.log('메뉴를 표시함');
       } else {
         menu.style.display = 'none';
+        console.log('메뉴를 숨김');
       }
     } else {
       console.error('nav-menu element not found');
+      // 모든 nav-menu 클래스를 가진 요소 확인
+      const navMenus = document.querySelectorAll('.nav-menu');
+      console.log('nav-menu 클래스를 가진 요소 수:', navMenus.length);
     }
   }
   
@@ -14419,5 +14429,71 @@ document.addEventListener('DOMContentLoaded', function() {
     /* 카드 위치는 JavaScript로 제어 */
   }
 </style>
+
+<!-- 모바일 네비게이션 삼선바 수정 스크립트 -->
+<script>
+(function() {
+  // 모바일 네비게이션 이벤트 설정
+  function setupMobileNavigation() {
+    console.log('setupMobileNavigation 실행');
+    
+    const navMenuBtn = document.querySelector('.nav-menu-btn');
+    const navMenu = document.getElementById('nav-menu');
+    
+    if (navMenuBtn && navMenu) {
+      console.log('모바일 네비게이션 요소들 찾음');
+      
+      // 기존 onclick 속성 제거
+      navMenuBtn.removeAttribute('onclick');
+      
+      // 새로운 클릭 이벤트 추가
+      navMenuBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log('햄버거 메뉴 클릭됨!');
+        
+        // 현재 display 상태 확인
+        const isHidden = navMenu.style.display === 'none' || 
+                        window.getComputedStyle(navMenu).display === 'none';
+        
+        if (isHidden) {
+          navMenu.style.display = 'block';
+          navMenu.style.visibility = 'visible';
+          navMenu.style.opacity = '1';
+          console.log('메뉴 열림');
+        } else {
+          navMenu.style.display = 'none';
+          console.log('메뉴 닫힘');
+        }
+      });
+      
+      // 메뉴 아이템 클릭 시 메뉴 닫기
+      const menuLinks = navMenu.querySelectorAll('a');
+      menuLinks.forEach(link => {
+        link.addEventListener('click', function() {
+          navMenu.style.display = 'none';
+          console.log('메뉴 아이템 클릭 - 메뉴 닫힘');
+        });
+      });
+      
+    } else {
+      console.error('모바일 네비게이션 요소를 찾을 수 없음');
+      console.log('navMenuBtn:', navMenuBtn);
+      console.log('navMenu:', navMenu);
+    }
+  }
+  
+  // DOM이 로드되면 실행
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupMobileNavigation);
+  } else {
+    setupMobileNavigation();
+  }
+  
+  // 페이지 완전 로드 후에도 다시 실행 (보험)
+  window.addEventListener('load', setupMobileNavigation);
+})();
+</script>
+
 </body>
 </html> 
