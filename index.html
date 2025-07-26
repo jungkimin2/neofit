@@ -2839,8 +2839,70 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 </style>
 <body>
-<!-- 모바일 전용 상단 고정 네비게이션 (body 직속) -->
-<div id="mobile-top-nav-fixed" style="position: fixed; top: 0; left: 0; right: 0; z-index: 2147483649; height: 60px;">
+<!-- 새로운 모바일 네비게이션 시스템 -->
+<style>
+@media (max-width: 768px) {
+  #simple-mobile-nav {
+    display: block !important;
+  }
+  #mobile-top-nav-fixed {
+    display: none !important;
+  }
+}
+@media (min-width: 769px) {
+  #simple-mobile-nav {
+    display: none !important;
+  }
+}
+</style>
+
+<div id="simple-mobile-nav" style="position: fixed; top: 0; left: 0; right: 0; height: 60px; background: #000; border-bottom: 2px solid #7BE495; z-index: 2147483647; display: none;">
+  <div style="display: flex; justify-content: space-between; align-items: center; height: 100%; padding: 0 20px;">
+    <img src="./images/neohive3.png" alt="NeoHive" style="height: 30px;">
+    <div onclick="simpleToggleMenu()" style="width: 40px; height: 40px; cursor: pointer; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 4px; padding: 8px;">
+      <span style="width: 24px; height: 3px; background: #7BE495; display: block; transition: 0.3s;"></span>
+      <span style="width: 24px; height: 3px; background: #7BE495; display: block; transition: 0.3s;"></span>
+      <span style="width: 24px; height: 3px; background: #7BE495; display: block; transition: 0.3s;"></span>
+    </div>
+  </div>
+</div>
+
+<!-- 새로운 메뉴 드롭다운 -->
+<div id="simple-mobile-menu" style="position: fixed; top: 60px; left: 0; right: 0; background: #111; display: none; z-index: 2147483646; box-shadow: 0 4px 10px rgba(0,0,0,0.5);">
+  <a href="#neofit" onclick="simpleCloseMenu()" style="display: block; padding: 20px; color: #fff; text-decoration: none; border-bottom: 1px solid #333; font-size: 16px;">네오핏</a>
+  <a href="#hive" onclick="simpleCloseMenu()" style="display: block; padding: 20px; color: #fff; text-decoration: none; border-bottom: 1px solid #333; font-size: 16px;">네오하이브</a>
+  <a href="#smart" onclick="simpleCloseMenu()" style="display: block; padding: 20px; color: #fff; text-decoration: none; border-bottom: 1px solid #333; font-size: 16px;">네오스마트</a>
+  <a href="#pilates" onclick="simpleCloseMenu()" style="display: block; padding: 20px; color: #fff; text-decoration: none; border-bottom: 1px solid #333; font-size: 16px;">네오 필라테스</a>
+  <a href="#" onclick="openForm(); simpleCloseMenu(); return false;" style="display: block; padding: 20px; color: #7BE495; text-decoration: none; font-weight: bold; font-size: 16px;">무료체험</a>
+</div>
+
+<!-- 간단한 메뉴 토글 스크립트 -->
+<script>
+function simpleToggleMenu() {
+  var menu = document.getElementById('simple-mobile-menu');
+  if (menu.style.display === 'none' || menu.style.display === '') {
+    menu.style.display = 'block';
+  } else {
+    menu.style.display = 'none';
+  }
+}
+
+function simpleCloseMenu() {
+  document.getElementById('simple-mobile-menu').style.display = 'none';
+}
+
+// 페이지 클릭시 메뉴 닫기
+document.addEventListener('click', function(e) {
+  var nav = document.getElementById('simple-mobile-nav');
+  var menu = document.getElementById('simple-mobile-menu');
+  if (!nav.contains(e.target) && !menu.contains(e.target)) {
+    menu.style.display = 'none';
+  }
+});
+</script>
+
+<!-- 기존 모바일 네비게이션 (숨김 처리) -->
+<div id="mobile-top-nav-fixed" style="display: none;">
   <div class="nav-bar">
     <img src="./images/neohive3.png" alt="NeoHive" class="nav-logo">
     <button type="button" class="nav-menu-btn" id="mobile-menu-toggle-btn" style="pointer-events: auto !important; cursor: pointer !important; z-index: 2147483650 !important; position: relative !important; background: transparent !important; border: 1px solid #7BE495 !important; border-radius: 4px !important; padding: 8px 12px !important; touch-action: manipulation !important;">&#9776;</button>
