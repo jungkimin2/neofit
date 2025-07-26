@@ -2848,9 +2848,9 @@ document.addEventListener('DOMContentLoaded', function() {
 <div id="mobile-top-nav-fixed" style="position: fixed; top: 0; left: 0; right: 0; z-index: 2147483647;">
   <div class="nav-bar">
     <img src="./images/neohive3.png" alt="NeoHive" class="nav-logo">
-    <button class="nav-menu-btn" onclick="toggleNav()">&#9776;</button>
+    <button class="nav-menu-btn" onclick="toggleNav(event)">&#9776;</button>
   </div>
-  <div class="nav-menu" id="nav-menu" style="display: none;">
+  <div class="nav-menu" id="nav-menu" style="display: none; position: fixed; top: 60px; left: 0; right: 0; background: #000; z-index: 2147483646;">
     <a href="#hive" onclick="return scrollToSection('hive')">하이브 시스템</a>
     <a href="#smart" onclick="return scrollToSection('smart')">스마트 시스템</a>
     <a href="#benefits" onclick="return scrollToSection('benefits')">도입 효과</a>
@@ -7668,7 +7668,7 @@ if (window.innerWidth <= 768) {
   });
   
   // 간단한 모바일 네비게이션 함수들
-  function toggleNav() {
+  function toggleNav(event) {
     const menu = document.getElementById('nav-menu');
     if (menu) {
       // display 속성 대신 classList를 사용하여 더 안정적으로 토글
@@ -7683,7 +7683,9 @@ if (window.innerWidth <= 768) {
       }
     }
     // 이벤트 전파 중지
-    event.stopPropagation();
+    if (event) {
+      event.stopPropagation();
+    }
     return false;
   }
   
