@@ -2845,11 +2845,12 @@ document.addEventListener('DOMContentLoaded', function() {
     <img src="./images/neohive3.png" alt="NeoHive" class="nav-logo">
     <button class="nav-menu-btn" onclick="toggleNav()">&#9776;</button>
   </div>
-  <div class="nav-menu" id="nav-menu" style="display: none;">
-    <a href="#hive" onclick="return scrollToSection('hive')">하이브 시스템</a>
-    <a href="#smart" onclick="return scrollToSection('smart')">스마트 시스템</a>
-    <a href="#benefits" onclick="return scrollToSection('benefits')">도입 효과</a>
-    <a href="javascript:void(0)" onclick="openForm();closeNav();return false;">사전 예약하기</a>
+  <div class="nav-menu" id="nav-menu">
+    <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); closeNav(); return false;">네오핏</a>
+    <a href="#hive" onclick="return scrollToSection('hive')">네오하이브</a>
+    <a href="#smart" onclick="return scrollToSection('smart')">네오스마트</a>
+    <a href="#pilates" onclick="return scrollToSection('pilates')">네오 필라테스</a>
+    <a href="javascript:void(0)" onclick="openForm();closeNav();return false;">무료신청하기</a>
   </div>
 </div>
 
@@ -7666,14 +7667,14 @@ if (window.innerWidth <= 768) {
   function toggleNav() {
     const menu = document.getElementById('nav-menu');
     if (menu) {
-      menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+      menu.classList.toggle('show');
     }
   }
   
   function closeNav() {
     const menu = document.getElementById('nav-menu');
     if (menu) {
-      menu.style.display = 'none';
+      menu.classList.remove('show');
     }
   }
   
@@ -12771,6 +12772,15 @@ document.addEventListener('DOMContentLoaded', function() {
     border-bottom: 1px solid #7BE495 !important;
     box-shadow: 0 4px 8px rgba(0,0,0,0.3) !important;
     z-index: 2147483646 !important;
+    max-height: 0 !important;
+    overflow: hidden !important;
+    transition: max-height 0.3s ease-out !important;
+  }
+  
+  /* 드롭다운 메뉴 열렸을 때 */
+  #mobile-top-nav-fixed .nav-menu.show {
+    max-height: 400px !important;
+    transition: max-height 0.5s ease-out !important;
   }
 
   /* 메뉴 아이템 - 일반 항목들은 흰색 */
