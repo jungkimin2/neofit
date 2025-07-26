@@ -10439,7 +10439,6 @@ if (video) {
 }
 });
 </script>
-</html>
 <style>
   .hive-image {
     width: 160px; /* Default PC width, JS might override for mobile */
@@ -14476,8 +14475,6 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 })();
 </script>
-
-</html>
 <style>
   /* 혜택 안내 박스 스타일 */
   .clickable-benefit-box {
@@ -14848,13 +14845,9 @@ document.addEventListener('DOMContentLoaded', function() {
         // SVG path 요소들도 보호
         const paths = svg.querySelectorAll('path');
         paths.forEach(path => {
-          path.style.cssText = `
-            display: block !important;
-            visibility: visible !important;
-            opacity: 1 !important;
-            fill: ${path.getAttribute('fill') || '#7BE495'} !important;
-            stroke: ${path.getAttribute('stroke') || 'none'} !important;
-          `;
+          const fillColor = path.getAttribute('fill') || '#7BE495';
+          const strokeColor = path.getAttribute('stroke') || 'none';
+          path.style.cssText = 'display: block !important; visibility: visible !important; opacity: 1 !important; fill: ' + fillColor + ' !important; stroke: ' + strokeColor + ' !important;';
         });
       }
       
