@@ -2850,7 +2850,7 @@ document.addEventListener('DOMContentLoaded', function() {
     <img src="./images/neohive3.png" alt="NeoHive" class="nav-logo">
     <button class="nav-menu-btn" onclick="toggleNav(event)">&#9776;</button>
   </div>
-  <div class="nav-menu" id="nav-menu" style="display: none; position: fixed; top: 60px; left: 0; right: 0; background: #000; z-index: 2147483646;">
+  <div class="nav-menu" id="nav-menu" style="display: none;">
     <a href="#hive" onclick="return scrollToSection('hive')">하이브 시스템</a>
     <a href="#smart" onclick="return scrollToSection('smart')">스마트 시스템</a>
     <a href="#benefits" onclick="return scrollToSection('benefits')">도입 효과</a>
@@ -7668,38 +7668,36 @@ if (window.innerWidth <= 768) {
   });
   
   // 간단한 모바일 네비게이션 함수들
-  function toggleNav(event) {
+  window.toggleNav = function(event) {
+    console.log('toggleNav called'); // 디버깅용
     const menu = document.getElementById('nav-menu');
+    console.log('menu element:', menu); // 디버깅용
+    
     if (menu) {
-      // display 속성 대신 classList를 사용하여 더 안정적으로 토글
-      if (menu.style.display === 'none' || menu.style.display === '') {
-        menu.style.display = 'block';
-        menu.style.visibility = 'visible';
-        menu.style.opacity = '1';
-      } else {
+      if (menu.style.display === 'block') {
         menu.style.display = 'none';
-        menu.style.visibility = 'hidden';
-        menu.style.opacity = '0';
+      } else {
+        menu.style.display = 'block';
       }
+      console.log('menu display after toggle:', menu.style.display); // 디버깅용
     }
+    
     // 이벤트 전파 중지
-    if (event) {
+    if (event && event.stopPropagation) {
       event.stopPropagation();
     }
     return false;
   }
   
-  function closeNav() {
+  window.closeNav = function() {
     const menu = document.getElementById('nav-menu');
     if (menu) {
       menu.style.display = 'none';
-      menu.style.visibility = 'hidden';
-      menu.style.opacity = '0';
     }
   }
   
   // 모바일 네비게이션 부드러운 스크롤
-  function scrollToSection(sectionId) {
+  window.scrollToSection = function(sectionId) {
     closeNav();
     
     // 하이브 시스템 클릭 시 특별 처리 - 페이지 최상단으로 스크롤
