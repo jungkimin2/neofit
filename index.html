@@ -9,165 +9,120 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Neo Hive - 스마트하게, 함께 하는 피트니스</title>
 
-<!-- 모바일 네비게이션 바 스타일 -->
+<!-- 간단한 모바일 네비게이션 스타일 -->
 <style>
-/* PC에서는 숨기기 */
-.mobile-navbar {
+/* 모바일 네비게이션 기본 스타일 */
+#simple-mobile-nav {
   display: none;
 }
 
-/* 모바일에서만 표시 */
 @media screen and (max-width: 768px) {
-  /* 모바일 네비게이션 바 */
-  .mobile-navbar {
+  #simple-mobile-nav {
     display: block;
     position: fixed;
     top: 0;
     left: 0;
-    right: 0;
-    background: #000;
-    border-bottom: 2px solid #7BE495;
-    z-index: 2147483647;
-    transition: all 0.3s ease;
-  }
-  
-  .mobile-nav-container {
-    position: relative;
-  }
-  
-  /* 헤더 부분 */
-  .mobile-nav-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 20px;
-    height: 60px;
-  }
-  
-  /* 로고 */
-  .mobile-nav-logo {
-    height: 30px;
-    width: auto;
-  }
-  
-  /* 햄버거 메뉴 버튼 */
-  .mobile-hamburger {
-    width: 30px;
-    height: 24px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    z-index: 2147483647;
-  }
-  
-  .mobile-hamburger span {
-    display: block;
     width: 100%;
-    height: 3px;
-    background: #7BE495;
-    transition: all 0.3s ease;
-    border-radius: 2px;
+    z-index: 2147483647; /* 최대 z-index 값 */
   }
   
-  /* 햄버거 애니메이션 */
-  .mobile-hamburger.active span:nth-child(1) {
-    transform: rotate(45deg) translateY(10px);
-  }
-  
-  .mobile-hamburger.active span:nth-child(2) {
-    opacity: 0;
-  }
-  
-  .mobile-hamburger.active span:nth-child(3) {
-    transform: rotate(-45deg) translateY(-10px);
-  }
-  
-  /* 메뉴 부분 */
-  .mobile-nav-menu {
-    display: none;
-    background: #111;
-    padding: 20px 0;
-    border-top: 1px solid #333;
-  }
-  
-  /* 메뉴 열림 상태 */
-  .mobile-nav-menu.active {
-    display: block;
-  }
-  
-  /* 메뉴 아이템 */
-  .mobile-nav-item {
-    display: block;
-    padding: 15px 30px;
-    color: #fff;
-    text-decoration: none;
-    font-size: 16px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    transition: all 0.3s ease;
-  }
-  
-  .mobile-nav-item:hover {
-    background: rgba(123, 228, 149, 0.1);
-    padding-left: 40px;
-    color: #7BE495;
-  }
-  
-  /* 무료 체험 버튼 */
-  .mobile-nav-cta {
-    color: #7BE495;
-    font-weight: bold;
-    text-align: center;
-    margin: 20px 30px;
-    border: 2px solid #7BE495;
-    border-radius: 30px;
-    background: transparent;
-  }
-  
-  .mobile-nav-cta:hover {
+  #simple-menu-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
     background: #7BE495;
     color: #000;
+    border: none;
+    font-size: 30px;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    z-index: 2147483647; /* 최대 z-index 값 */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); /* 그림자 추가로 더 돋보이게 */
   }
   
-  /* body 패딩 추가 */
-  body {
-    padding-top: 60px;
+  #simple-menu {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 2147483647; /* 최대 z-index 값 */
+    padding-top: 80px;
+  }
+  
+  #simple-menu.show {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  
+  #simple-menu button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: transparent;
+    color: #7BE495;
+    border: none;
+    font-size: 30px;
+    cursor: pointer;
+    z-index: 2147483647;
+  }
+  
+  #simple-menu a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    padding: 20px;
+    font-size: 20px;
+    text-align: center;
+    border-bottom: 1px solid #333;
+  }
+  
+  #simple-menu a:last-child {
+    background: #7BE495;
+    color: #000;
+    margin: 20px;
+    border-radius: 30px;
+    font-weight: bold;
   }
 }
 </style>
 
-<!-- 모바일 네비게이션 JavaScript -->
+<!-- 간단한 모바일 네비게이션 JavaScript -->
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-  const hamburger = document.getElementById('mobile-hamburger');
-  const navMenu = document.getElementById('mobile-nav-menu');
-  const navItems = document.querySelectorAll('.mobile-nav-item');
+function simpleToggleMenu() {
+  console.log('simpleToggleMenu 함수 호출됨');
+  var menu = document.getElementById('simple-menu');
+  console.log('메뉴 요소:', menu);
   
-  if (hamburger && navMenu) {
-    // 햄버거 메뉴 클릭
-    hamburger.addEventListener('click', function() {
-      this.classList.toggle('active');
-      navMenu.classList.toggle('active');
-      console.log('메뉴 토글됨');
-    });
+  if (menu) {
+    var isShowing = menu.classList.contains('show');
+    console.log('현재 show 클래스 여부:', isShowing);
     
-    // 메뉴 아이템 클릭시 메뉴 닫기
-    navItems.forEach(item => {
-      item.addEventListener('click', function() {
-        hamburger.classList.remove('active');
-        navMenu.classList.remove('active');
-      });
-    });
+    menu.classList.toggle('show');
+    console.log('토글 후 show 클래스 여부:', menu.classList.contains('show'));
     
-    // 네오핏 링크 클릭시 최상단으로
-    document.querySelector('.mobile-nav-item[href="#"]').addEventListener('click', function(e) {
-      e.preventDefault();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
+    // 강제로 display 속성도 변경
+    if (menu.classList.contains('show')) {
+      menu.style.display = 'block';
+      console.log('메뉴 열림');
+    } else {
+      menu.style.display = 'none';
+      console.log('메뉴 닫힘');
+    }
+  } else {
+    console.error('simple-menu 요소를 찾을 수 없습니다!');
   }
+}
+
+// 페이지 로드 시 디버깅
+window.addEventListener('DOMContentLoaded', function() {
+  console.log('=== 모바일 네비게이션 디버깅 ===');
+  console.log('메뉴 버튼:', document.getElementById('simple-menu-btn'));
+  console.log('메뉴:', document.getElementById('simple-menu'));
 });
 </script>
 
