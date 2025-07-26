@@ -2843,15 +2843,76 @@ document.addEventListener('DOMContentLoaded', function() {
 <div id="mobile-top-nav-fixed" style="position: fixed; top: 0; left: 0; right: 0; z-index: 2147483647; height: 60px;">
   <div class="nav-bar">
     <img src="./images/neohive3.png" alt="NeoHive" class="nav-logo">
-    <button class="nav-menu-btn" onclick="toggleNav()" style="pointer-events: auto !important; cursor: pointer !important; z-index: 2147483647 !important;">&#9776;</button>
+    <button type="button" class="nav-menu-btn" id="mobile-menu-toggle-btn" style="pointer-events: auto !important; cursor: pointer !important; z-index: 2147483647 !important; position: relative !important; background: transparent !important; border: 1px solid #7BE495 !important; border-radius: 4px !important; padding: 8px 12px !important;">&#9776;</button>
   </div>
   <div class="nav-menu" id="nav-menu" style="display: none; position: fixed; top: 60px; left: 0; right: 0; background: #111; z-index: 2147483646; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">
-    <a href="#hive" onclick="return scrollToSection('hive')">하이브 시스템</a>
-    <a href="#smart" onclick="return scrollToSection('smart')">스마트 시스템</a>
-    <a href="#benefits" onclick="return scrollToSection('benefits')">도입 효과</a>
-    <a href="javascript:void(0)" onclick="openForm();closeNav();return false;">사전 예약하기</a>
+    <a href="#neofit" onclick="return scrollToSection('neofit')">네오핏</a>
+    <a href="#hive" onclick="return scrollToSection('hive')">네오하이브</a>
+    <a href="#smart" onclick="return scrollToSection('smart')">네오스마트</a>
+    <a href="#pilates" onclick="return scrollToSection('pilates')">네오 필라테스</a>
+    <a href="javascript:void(0)" onclick="openForm();closeNav();return false;">무료체험</a>
   </div>
 </div>
+
+<!-- 모바일 메뉴 토글 스크립트 - 즉시 실행 -->
+<script>
+(function() {
+  // 페이지 로드 즉시 실행
+  function initMobileMenu() {
+    console.log('모바일 메뉴 초기화 시작');
+    
+    // ID로 직접 버튼 찾기
+    var menuBtn = document.getElementById('mobile-menu-toggle-btn');
+    var menu = document.getElementById('nav-menu');
+    
+    if (menuBtn) {
+      console.log('메뉴 버튼을 찾았습니다');
+      
+      // 기존 이벤트 제거
+      menuBtn.onclick = null;
+      
+      // 새 이벤트 추가
+      menuBtn.addEventListener('click', function(e) {
+        console.log('메뉴 버튼 클릭됨!');
+        e.preventDefault();
+        e.stopPropagation();
+        
+        if (menu) {
+          if (menu.style.display === 'none' || menu.style.display === '') {
+            menu.style.display = 'block';
+            menu.style.setProperty('display', 'block', 'important');
+            console.log('메뉴 열림');
+          } else {
+            menu.style.display = 'none';
+            menu.style.setProperty('display', 'none', 'important');
+            console.log('메뉴 닫힘');
+          }
+        }
+      });
+      
+      // 터치 이벤트도 추가
+      menuBtn.addEventListener('touchend', function(e) {
+        console.log('메뉴 버튼 터치됨!');
+        e.preventDefault();
+        this.click();
+      });
+    } else {
+      console.error('메뉴 버튼을 찾을 수 없습니다');
+    }
+  }
+  
+  // 즉시 실행
+  initMobileMenu();
+  
+  // DOM 로드 후에도 실행
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initMobileMenu);
+  }
+  
+  // 100ms 후에도 실행 (안전장치)
+  setTimeout(initMobileMenu, 100);
+})();
+</script>
 
 
 
@@ -7662,34 +7723,10 @@ if (window.innerWidth <= 768) {
     }
   });
   
-  // 간단한 모바일 네비게이션 함수들
+  // 간단한 모바일 네비게이션 함수들 (레거시 - 새 스크립트로 대체됨)
   function toggleNav() {
-    console.log('toggleNav 함수 호출됨');
-    const menu = document.getElementById('nav-menu');
-    if (menu) {
-      console.log('현재 메뉴 display:', menu.style.display);
-      // getComputedStyle을 사용하여 실제 스타일 확인
-      const currentDisplay = window.getComputedStyle(menu).display;
-      console.log('계산된 display:', currentDisplay);
-      
-      if (currentDisplay === 'none' || menu.style.display === 'none') {
-        // 기존 스타일을 유지하면서 display만 변경
-        menu.style.setProperty('display', 'block', 'important');
-        menu.style.setProperty('position', 'fixed', 'important');
-        menu.style.setProperty('top', '60px', 'important');
-        menu.style.setProperty('left', '0', 'important');
-        menu.style.setProperty('right', '0', 'important');
-        menu.style.setProperty('background', '#111', 'important');
-        menu.style.setProperty('z-index', '2147483646', 'important');
-        menu.style.setProperty('box-shadow', '0 4px 8px rgba(0,0,0,0.3)', 'important');
-        console.log('메뉴 열림');
-      } else {
-        menu.style.setProperty('display', 'none', 'important');
-        console.log('메뉴 닫힘');
-      }
-    } else {
-      console.error('nav-menu 요소를 찾을 수 없습니다');
-    }
+    console.log('레거시 toggleNav 호출됨 - 새 메뉴 시스템 사용');
+    // 새로운 메뉴 토글 시스템이 작동하므로 이 함수는 비워둠
   }
   
   function closeNav() {
