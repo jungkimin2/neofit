@@ -575,6 +575,124 @@
 br.mobile-only {
   display: none !important;
 }
+
+/* 새로운 모바일 네비게이션 스타일 */
+.mobile-only {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  .mobile-only {
+    display: block !important;
+  }
+  
+  #mobile-navigation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 999999;
+    background: #000;
+    border-bottom: 2px solid #7BE495;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  }
+  
+  .mobile-nav-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 16px;
+    height: 60px;
+    background: #000;
+  }
+  
+  .mobile-logo {
+    height: 28px;
+    width: auto;
+    cursor: pointer;
+  }
+  
+  /* 햄버거 메뉴 스타일 */
+  .hamburger-menu {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    cursor: pointer;
+    padding: 8px;
+    -webkit-tap-highlight-color: transparent;
+    position: relative;
+    z-index: 999999;
+  }
+  
+  .hamburger-menu span {
+    display: block;
+    width: 24px;
+    height: 3px;
+    background: #7BE495;
+    transition: all 0.3s ease;
+    border-radius: 2px;
+  }
+  
+  .hamburger-menu.active span:nth-child(1) {
+    transform: rotate(45deg) translateY(8px);
+  }
+  
+  .hamburger-menu.active span:nth-child(2) {
+    opacity: 0;
+  }
+  
+  .hamburger-menu.active span:nth-child(3) {
+    transform: rotate(-45deg) translateY(-8px);
+  }
+  
+  /* 모바일 메뉴 */
+  .mobile-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #111;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  }
+  
+  .mobile-menu.active {
+    max-height: 400px;
+    border-bottom: 1px solid #7BE495;
+  }
+  
+  .mobile-menu a {
+    display: block;
+    padding: 15px 20px;
+    color: #fff;
+    text-decoration: none;
+    border-bottom: 1px solid #333;
+    text-align: center;
+    transition: all 0.2s ease;
+    font-size: 16px;
+  }
+  
+  .mobile-menu a:active {
+    background: #333;
+  }
+  
+  .mobile-menu a.cta-button {
+    color: #7BE495;
+    font-weight: 600;
+    text-shadow: 0 0 10px rgba(123, 228, 149, 0.5);
+    animation: neonPulse 2s ease-in-out infinite;
+  }
+  
+  /* 페이지 컨텐츠 여백 */
+  body.mobile-nav-open {
+    overflow: hidden;
+  }
+}
 </style>
 <style>
 @media (max-width: 768px) {
@@ -2839,18 +2957,22 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 </style>
 <body>
-<!-- 모바일 전용 상단 고정 네비게이션 (body 직속) -->
-<div id="mobile-top-nav-fixed" style="position: fixed; top: 0; left: 0; right: 0; z-index: 2147483647;">
-  <div class="nav-bar">
-    <img src="./images/neohive3.png" alt="NeoHive" class="nav-logo">
-    <button class="nav-menu-btn" onclick="toggleNav()" id="mobile-menu-toggle">&#9776;</button>
+<!-- 새로운 모바일 네비게이션 -->
+<div id="mobile-navigation" class="mobile-only">
+  <div class="mobile-nav-header">
+    <img src="./images/neohive3.png" alt="NeoHive" class="mobile-logo">
+    <div class="hamburger-menu" id="hamburger-menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
   </div>
-  <div class="nav-menu" id="nav-menu">
-    <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); closeNav(); return false;">네오핏</a>
-    <a href="#hive" onclick="return scrollToSection('hive')">네오하이브</a>
-    <a href="#smart" onclick="return scrollToSection('smart')">네오스마트</a>
-    <a href="javascript:void(0)" onclick="openForm();closeNav();return false;">사전 예약하기</a>
-  </div>
+  <nav class="mobile-menu" id="mobile-menu">
+    <a href="#" data-section="home">네오핏</a>
+    <a href="#hive" data-section="hive">네오하이브</a>
+    <a href="#smart" data-section="smart">네오스마트</a>
+    <a href="#" data-action="openForm" class="cta-button">사전 예약하기</a>
+  </nav>
 </div>
 
 
@@ -7662,63 +7784,96 @@ if (window.innerWidth <= 768) {
     }
   });
   
-  // 간단한 모바일 네비게이션 함수들
-  function toggleNav() {
-    const menu = document.getElementById('nav-menu');
-    if (menu) {
-      menu.classList.toggle('show');
-      console.log('toggleNav called, menu show:', menu.classList.contains('show'));
-    }
-  }
-  
-  function closeNav() {
-    const menu = document.getElementById('nav-menu');
-    if (menu) {
-      menu.classList.remove('show');
-    }
-  }
-  
-  // 모바일 햄버거 메뉴 버튼 이벤트 리스너 추가
-  document.addEventListener('DOMContentLoaded', function() {
-    const menuBtn = document.querySelector('.nav-menu-btn');
-    const menuBtnById = document.getElementById('mobile-menu-toggle');
-    const targetBtn = menuBtn || menuBtnById;
+  // 새로운 모바일 네비게이션 함수들
+  function initMobileNavigation() {
+    const hamburger = document.getElementById('hamburger-menu');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobileNavigation = document.getElementById('mobile-navigation');
+    const mobileLogo = document.querySelector('.mobile-logo');
     
-    if (targetBtn) {
-      // onclick 속성은 유지하되 추가 이벤트 리스너도 등록
-      
-      // 터치 이벤트 처리 (모바일 우선)
-      let touchHandled = false;
-      targetBtn.addEventListener('touchend', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        touchHandled = true;
-        toggleNav();
-        // 터치 후 클릭 이벤트 방지
-        setTimeout(() => { touchHandled = false; }, 300);
-      }, { passive: false });
-      
-      // 클릭 이벤트 처리 (터치가 없었을 때만)
-      targetBtn.addEventListener('click', function(e) {
-        if (!touchHandled) {
+    if (!hamburger || !mobileMenu) return;
+    
+    // 햄버거 메뉴 클릭 이벤트
+    hamburger.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      this.classList.toggle('active');
+      mobileMenu.classList.toggle('active');
+      document.body.classList.toggle('mobile-nav-open');
+    });
+    
+    // 터치 이벤트 추가 (모바일 최적화)
+    hamburger.addEventListener('touchend', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      this.classList.toggle('active');
+      mobileMenu.classList.toggle('active');
+      document.body.classList.toggle('mobile-nav-open');
+    }, { passive: false });
+    
+    // 메뉴 아이템 클릭 이벤트
+    const menuLinks = mobileMenu.querySelectorAll('a');
+    menuLinks.forEach(link => {
+      link.addEventListener('click', function(e) {
+        const section = this.getAttribute('data-section');
+        const action = this.getAttribute('data-action');
+        
+        // 메뉴 닫기
+        hamburger.classList.remove('active');
+        mobileMenu.classList.remove('active');
+        document.body.classList.remove('mobile-nav-open');
+        
+        if (action === 'openForm') {
           e.preventDefault();
-          e.stopPropagation();
-          toggleNav();
+          openForm();
+        } else if (section === 'home') {
+          e.preventDefault();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else if (section) {
+          e.preventDefault();
+          const targetElement = document.getElementById(section);
+          if (targetElement) {
+            const offset = 80; // 네비게이션 높이 보정
+            const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - offset;
+            window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+          }
         }
       });
-      
-      // 포인터 이벤트 처리 (최신 브라우저)
-      targetBtn.addEventListener('pointerup', function(e) {
-        if (e.pointerType === 'touch' && !touchHandled) {
-          e.preventDefault();
-          e.stopPropagation();
-          toggleNav();
-        }
+    });
+    
+    // 로고 클릭 시 홈으로 스크롤
+    if (mobileLogo) {
+      mobileLogo.addEventListener('click', function() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       });
-      
-      console.log('Hamburger menu event listeners added');
     }
-  });
+    
+    // 외부 클릭 시 메뉴 닫기
+    document.addEventListener('click', function(e) {
+      if (!mobileNavigation.contains(e.target)) {
+        hamburger.classList.remove('active');
+        mobileMenu.classList.remove('active');
+        document.body.classList.remove('mobile-nav-open');
+      }
+    });
+    
+    // ESC 키로 메뉴 닫기
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        hamburger.classList.remove('active');
+        mobileMenu.classList.remove('active');
+        document.body.classList.remove('mobile-nav-open');
+      }
+    });
+  }
+  
+  // DOM 로드 시 초기화
+  document.addEventListener('DOMContentLoaded', initMobileNavigation);
+  
+  // 즉시 실행 (DOM이 이미 로드된 경우)
+  if (document.readyState === 'interactive' || document.readyState === 'complete') {
+    initMobileNavigation();
+  }
   
   // 모바일 네비게이션 부드러운 스크롤
   function scrollToSection(sectionId) {
