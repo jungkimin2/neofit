@@ -2840,12 +2840,12 @@ document.addEventListener('DOMContentLoaded', function() {
 </style>
 <body>
 <!-- 모바일 전용 상단 고정 네비게이션 (body 직속) -->
-<div id="mobile-top-nav-fixed" style="position: fixed; top: 0; left: 0; right: 0; z-index: 2147483647; height: 60px;">
+<div id="mobile-top-nav-fixed" style="position: fixed; top: 0; left: 0; right: 0; z-index: 2147483649; height: 60px;">
   <div class="nav-bar">
     <img src="./images/neohive3.png" alt="NeoHive" class="nav-logo">
-    <button type="button" class="nav-menu-btn" id="mobile-menu-toggle-btn" style="pointer-events: auto !important; cursor: pointer !important; z-index: 2147483647 !important; position: relative !important; background: transparent !important; border: 1px solid #7BE495 !important; border-radius: 4px !important; padding: 8px 12px !important;">&#9776;</button>
+    <button type="button" class="nav-menu-btn" id="mobile-menu-toggle-btn" style="pointer-events: auto !important; cursor: pointer !important; z-index: 2147483650 !important; position: relative !important; background: transparent !important; border: 1px solid #7BE495 !important; border-radius: 4px !important; padding: 8px 12px !important; touch-action: manipulation !important;">&#9776;</button>
   </div>
-  <div class="nav-menu" id="nav-menu" style="display: none; position: fixed; top: 60px; left: 0; right: 0; background: #111; z-index: 2147483646; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">
+  <div class="nav-menu" id="nav-menu" style="display: none; position: fixed; top: 60px; left: 0; right: 0; background: #111; z-index: 2147483648; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">
     <a href="#neofit" onclick="return scrollToSection('neofit')">네오핏</a>
     <a href="#hive" onclick="return scrollToSection('hive')">네오하이브</a>
     <a href="#smart" onclick="return scrollToSection('smart')">네오스마트</a>
@@ -2864,23 +2864,39 @@ document.addEventListener('DOMContentLoaded', function() {
     // ID로 직접 버튼 찾기
     var menuBtn = document.getElementById('mobile-menu-toggle-btn');
     var menu = document.getElementById('nav-menu');
+    var mobileNav = document.getElementById('mobile-top-nav-fixed');
     
     if (menuBtn) {
       console.log('메뉴 버튼을 찾았습니다');
       
-      // 기존 이벤트 제거
-      menuBtn.onclick = null;
+      // 버튼과 네비게이션이 최상위에 있도록 z-index 설정
+      menuBtn.style.setProperty('pointer-events', 'auto', 'important');
+      menuBtn.style.setProperty('z-index', '2147483650', 'important');
+      menuBtn.style.setProperty('position', 'relative', 'important');
+      menuBtn.style.setProperty('touch-action', 'manipulation', 'important');
+      menuBtn.style.setProperty('cursor', 'pointer', 'important');
       
-      // 새 이벤트 추가
+      if (mobileNav) {
+        mobileNav.style.setProperty('z-index', '2147483649', 'important');
+      }
+      
+      // 기존 이벤트 제거를 위해 버튼을 클론하고 교체
+      var newBtn = menuBtn.cloneNode(true);
+      menuBtn.parentNode.replaceChild(newBtn, menuBtn);
+      menuBtn = newBtn;
+      
+      // 클릭 이벤트 추가 (캡처 단계에서 처리)
       menuBtn.addEventListener('click', function(e) {
         console.log('메뉴 버튼 클릭됨!');
         e.preventDefault();
         e.stopPropagation();
+        e.stopImmediatePropagation();
         
         if (menu) {
           if (menu.style.display === 'none' || menu.style.display === '') {
             menu.style.display = 'block';
             menu.style.setProperty('display', 'block', 'important');
+            menu.style.setProperty('z-index', '2147483648', 'important');
             console.log('메뉴 열림');
           } else {
             menu.style.display = 'none';
@@ -2888,14 +2904,25 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('메뉴 닫힘');
           }
         }
-      });
+        return false;
+      }, true);
       
-      // 터치 이벤트도 추가
+      // 터치 이벤트 개선
       menuBtn.addEventListener('touchend', function(e) {
         console.log('메뉴 버튼 터치됨!');
         e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
         this.click();
-      });
+        return false;
+      }, {passive: false, capture: true});
+      
+      // 포인터 다운 이벤트 추가 (터치와 마우스 모두 처리)
+      menuBtn.addEventListener('pointerdown', function(e) {
+        console.log('메뉴 버튼 포인터 다운!');
+        e.stopPropagation();
+      }, {passive: false});
+      
     } else {
       console.error('메뉴 버튼을 찾을 수 없습니다');
     }
@@ -2911,6 +2938,37 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // 100ms 후에도 실행 (안전장치)
   setTimeout(initMobileMenu, 100);
+  
+  // 추가 디버깅을 위한 전역 클릭 이벤트 감지
+  document.addEventListener('click', function(e) {
+    if (e.target && (e.target.id === 'mobile-menu-toggle-btn' || e.target.classList.contains('nav-menu-btn'))) {
+      console.log('버튼 클릭 감지됨 - 전역 이벤트');
+    }
+  }, true);
+  
+  // 버튼 클릭 가능 여부 확인
+  setTimeout(function() {
+    var btn = document.getElementById('mobile-menu-toggle-btn');
+    if (btn) {
+      var computed = window.getComputedStyle(btn);
+      console.log('버튼 스타일:', {
+        pointerEvents: computed.pointerEvents,
+        zIndex: computed.zIndex,
+        display: computed.display,
+        visibility: computed.visibility,
+        position: computed.position
+      });
+      
+      // 버튼 위치 확인
+      var rect = btn.getBoundingClientRect();
+      console.log('버튼 위치:', {
+        top: rect.top,
+        left: rect.left,
+        width: rect.width,
+        height: rect.height
+      });
+    }
+  }, 500);
 })();
 </script>
 
@@ -12739,6 +12797,10 @@ document.addEventListener('DOMContentLoaded', function() {
        font-size: 1.5rem !important;
        cursor: pointer !important;
        padding: 5px !important;
+       pointer-events: auto !important;
+       z-index: 2147483650 !important;
+       position: relative !important;
+       display: block !important;
      }
      
      .nav-menu {
@@ -12821,7 +12883,7 @@ document.addEventListener('DOMContentLoaded', function() {
     background: #000 !important;
     border-bottom: 2px solid #7BE495 !important;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5) !important;
-    z-index: 2147483647 !important; /* 최대 z-index */
+    z-index: 2147483649 !important; /* 최대 z-index + 2 */
     transform: translateZ(0) !important; /* GPU 가속 */
     -webkit-transform: translateZ(0) !important;
     -webkit-backface-visibility: hidden !important;
@@ -13299,19 +13361,43 @@ document.addEventListener('DOMContentLoaded', function() {
   /* 네비게이션은 예외 - 최상위 z-index 유지 */
   #mobile-top-nav-fixed,
   #mobile-top-nav-fixed *,
+  #mobile-top-nav-fixed,
   #mobile-top-nav-fixed .nav-bar,
-  #mobile-top-nav-fixed .nav-menu {
-    z-index: 2147483647 !important;
+  #mobile-top-nav-fixed .nav-menu,
+  #mobile-top-nav-fixed .nav-menu-btn,
+  #mobile-menu-toggle-btn {
     pointer-events: auto !important;
   }
   
+  /* 모바일 네비게이션 z-index 최우선 설정 */
+  #mobile-top-nav-fixed {
+    z-index: 2147483649 !important;
+  }
+  
+  #mobile-top-nav-fixed .nav-menu {
+    z-index: 2147483648 !important;
+  }
+  
+  #mobile-menu-toggle-btn {
+    z-index: 2147483650 !important;
+  }
+  
   /* 삼선바 버튼 특별 처리 */
-  #mobile-top-nav-fixed .nav-menu-btn {
+  #mobile-top-nav-fixed .nav-menu-btn,
+  #mobile-menu-toggle-btn {
     pointer-events: auto !important;
     cursor: pointer !important;
     -webkit-tap-highlight-color: rgba(123, 228, 149, 0.2) !important;
     user-select: none !important;
     -webkit-user-select: none !important;
+    touch-action: manipulation !important;
+    position: relative !important;
+    z-index: 2147483650 !important;
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
   }
   
   /* 네오 하이브/스마트 영상은 네비게이션 다음으로 높은 z-index (모바일만) */
