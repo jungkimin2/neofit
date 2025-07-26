@@ -2841,6 +2841,14 @@ document.addEventListener('DOMContentLoaded', function() {
 <style>
 /* 새로운 모바일 네비게이션 스타일 */
 @media (max-width: 768px) {
+  /* 기존 모바일 네비게이션 완전히 숨기기 */
+  #mobile-top-nav-fixed {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+  
   /* PC 네비게이션 숨기기 */
   #pc-nav-container {
     display: none !important;
@@ -2854,6 +2862,12 @@ document.addEventListener('DOMContentLoaded', function() {
     left: 0 !important;
     right: 0 !important;
     z-index: 2147483647 !important;
+    pointer-events: auto !important;
+  }
+  
+  /* 모든 하위 요소들도 pointer-events 활성화 */
+  .new-mobile-navigation * {
+    pointer-events: auto !important;
   }
   
   /* 네비게이션 헤더 */
@@ -2884,6 +2898,9 @@ document.addEventListener('DOMContentLoaded', function() {
     gap: 4px !important;
     position: relative !important;
     z-index: 2147483648 !important;
+    pointer-events: auto !important;
+    touch-action: manipulation !important;
+    -webkit-tap-highlight-color: transparent !important;
   }
   
   .burger-line {
@@ -3007,14 +3024,14 @@ document.addEventListener('DOMContentLoaded', function() {
 <div id="new-mobile-nav" class="new-mobile-navigation">
   <div class="new-nav-header">
     <img src="./images/neohive3.png" alt="NEOFIT" class="new-nav-logo">
-    <button class="new-hamburger-btn" id="newHamburgerBtn" aria-label="메뉴 열기">
+    <button class="new-hamburger-btn" id="newHamburgerBtn" aria-label="메뉴 열기" onclick="toggleNewMobileMenu()">
       <span class="burger-line"></span>
       <span class="burger-line"></span>
       <span class="burger-line"></span>
     </button>
   </div>
   
-  <div class="new-nav-overlay" id="newNavOverlay"></div>
+  <div class="new-nav-overlay" id="newNavOverlay" onclick="toggleNewMobileMenu()"></div>
   
   <div class="new-nav-dropdown" id="newNavDropdown">
     <a href="#" class="new-nav-item">네오핏</a>
@@ -7849,18 +7866,55 @@ if (window.innerWidth <= 768) {
     }
   }
   
+  // 새로운 모바일 네비게이션 토글 함수
+  function toggleNewMobileMenu() {
+    console.log('toggleNewMobileMenu 호출됨!');
+    const hamburgerBtn = document.getElementById('newHamburgerBtn');
+    const navOverlay = document.getElementById('newNavOverlay');
+    const navDropdown = document.getElementById('newNavDropdown');
+    
+    if (!hamburgerBtn || !navOverlay || !navDropdown) {
+      console.error('메뉴 요소를 찾을 수 없습니다');
+      return;
+    }
+    
+    // 토글
+    hamburgerBtn.classList.toggle('active');
+    navOverlay.classList.toggle('active');
+    navDropdown.classList.toggle('active');
+    
+    // 스크롤 방지
+    if (navDropdown.classList.contains('active')) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+  }
+  
   // 새로운 모바일 네비게이션 기능
   document.addEventListener('DOMContentLoaded', function() {
     const hamburgerBtn = document.getElementById('newHamburgerBtn');
     const navOverlay = document.getElementById('newNavOverlay');
     const navDropdown = document.getElementById('newNavDropdown');
     
+    console.log('새로운 네비게이션 초기화:', {hamburgerBtn, navOverlay, navDropdown});
+    
     if (hamburgerBtn && navOverlay && navDropdown) {
       // 햄버거 버튼 클릭
-      hamburgerBtn.addEventListener('click', function() {
+      hamburgerBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log('햄버거 버튼 클릭됨!');
+        
         this.classList.toggle('active');
         navOverlay.classList.toggle('active');
         navDropdown.classList.toggle('active');
+        
+        console.log('클래스 상태:', {
+          btn: this.classList.contains('active'),
+          overlay: navOverlay.classList.contains('active'),
+          dropdown: navDropdown.classList.contains('active')
+        });
         
         // 스크롤 방지
         if (navDropdown.classList.contains('active')) {
@@ -7868,6 +7922,11 @@ if (window.innerWidth <= 768) {
         } else {
           document.body.style.overflow = '';
         }
+      });
+      
+      // 터치 이벤트도 추가
+      hamburgerBtn.addEventListener('touchstart', function(e) {
+        console.log('터치 이벤트 발생!');
       });
       
       // 오버레이 클릭 시 메뉴 닫기
@@ -8020,19 +8079,26 @@ if (window.innerWidth <= 768) {
     console.log('Screen width:', window.innerWidth, 'Is Mobile:', isMobile);
     
     if (isMobile) {
-      const mobileNav = document.getElementById('mobile-top-nav-fixed');
+      // 기존 모바일 네비게이션은 무시하고 새 네비게이션만 사용
+      const newMobileNav = document.getElementById('new-mobile-nav');
+      const oldMobileNav = document.getElementById('mobile-top-nav-fixed');
       const pcNav = document.getElementById('pc-nav-container');
       const body = document.body;
       const scrollableContent = document.getElementById('scrollable-content');
       
-      if (mobileNav) {
-        // 모바일 네비게이션을 body의 직접 자식으로 이동 (필요시)
-        if (mobileNav.parentElement !== body) {
-          body.insertBefore(mobileNav, body.firstChild);
+      // 기존 모바일 네비게이션 숨기기
+      if (oldMobileNav) {
+        oldMobileNav.style.display = 'none !important';
+      }
+      
+      if (newMobileNav) {
+        // 새 모바일 네비게이션을 body의 직접 자식으로 이동 (필요시)
+        if (newMobileNav.parentElement !== body) {
+          body.insertBefore(newMobileNav, body.firstChild);
         }
         
         // 강력한 CSS 속성 설정
-        mobileNav.style.cssText = `
+        newMobileNav.style.cssText = `
           display: block !important;
           position: fixed !important;
           top: 0 !important;
@@ -8111,11 +8177,16 @@ if (window.innerWidth <= 768) {
       
     } else {
       // PC 환경
-      const mobileNav = document.getElementById('mobile-top-nav-fixed');
+      const newMobileNav = document.getElementById('new-mobile-nav');
+      const oldMobileNav = document.getElementById('mobile-top-nav-fixed');
       const pcNav = document.getElementById('pc-nav-container');
       
-      if (mobileNav) {
-        mobileNav.style.display = 'none';
+      // PC 환경에서는 새 모바일 네비게이션 숨기기
+      if (newMobileNav) {
+        newMobileNav.style.display = 'none';
+      }
+      if (oldMobileNav) {
+        oldMobileNav.style.display = 'none';
       }
       if (pcNav) {
         pcNav.style.display = 'block';
@@ -14633,4 +14704,73 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 </style>
 </body>
+<script>
+// 새로운 모바일 네비게이션 강제 초기화
+(function() {
+  function initNewMobileNav() {
+    if (window.innerWidth > 768) return;
+    
+    const hamburgerBtn = document.getElementById('newHamburgerBtn');
+    const navOverlay = document.getElementById('newNavOverlay');
+    const navDropdown = document.getElementById('newNavDropdown');
+    
+    console.log('모바일 네비게이션 강제 초기화 시도');
+    
+    if (!hamburgerBtn) {
+      console.error('햄버거 버튼을 찾을 수 없습니다!');
+      return;
+    }
+    
+    // 기존 이벤트 리스너 제거
+    const newHamburgerBtn = hamburgerBtn.cloneNode(true);
+    hamburgerBtn.parentNode.replaceChild(newHamburgerBtn, hamburgerBtn);
+    
+    // 새로운 이벤트 리스너 추가
+    newHamburgerBtn.onclick = function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      console.log('햄버거 클릭!');
+      
+      const isActive = navDropdown.classList.contains('active');
+      
+      if (!isActive) {
+        // 메뉴 열기
+        newHamburgerBtn.classList.add('active');
+        navOverlay.classList.add('active');
+        navDropdown.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      } else {
+        // 메뉴 닫기
+        newHamburgerBtn.classList.remove('active');
+        navOverlay.classList.remove('active');
+        navDropdown.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    };
+    
+    // 오버레이 클릭으로 닫기
+    if (navOverlay) {
+      navOverlay.onclick = function() {
+        newHamburgerBtn.classList.remove('active');
+        navOverlay.classList.remove('active');
+        navDropdown.classList.remove('active');
+        document.body.style.overflow = '';
+      };
+    }
+    
+    console.log('모바일 네비게이션 초기화 완료!');
+  }
+  
+  // 즉시 실행
+  initNewMobileNav();
+  
+  // DOM 로드 후
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initNewMobileNav);
+  }
+  
+  // 1초 후 재시도
+  setTimeout(initNewMobileNav, 1000);
+})();
+</script>
 </html> 
