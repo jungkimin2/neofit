@@ -7666,7 +7666,17 @@ if (window.innerWidth <= 768) {
   function toggleNav() {
     const menu = document.getElementById('nav-menu');
     if (menu) {
-      menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+      // 현재 display 상태 확인
+      const currentDisplay = window.getComputedStyle(menu).display;
+      
+      // toggle 로직 개선
+      if (currentDisplay === 'none' || menu.style.display === 'none') {
+        menu.style.display = 'block';
+      } else {
+        menu.style.display = 'none';
+      }
+    } else {
+      console.error('nav-menu element not found');
     }
   }
   
