@@ -3045,6 +3045,9 @@ document.addEventListener('DOMContentLoaded', function() {
       <div class="training-card" id="boost-card" style="position: absolute; width: 350px; height: 450px; left: 50%; top: 50%; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; background: transparent; border: none; border-radius: 20px; overflow: hidden;">
         <div class="card-inner" style="width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.3s; background: transparent; border: none;">
           <div class="card-front" style="position: absolute; width: 100%; height: 100%; backface-visibility: hidden; background: linear-gradient(135deg, #0F0A0A 0%, rgba(248,113,113,0.015) 100%); border: 2px solid #F87171; border-radius: 20px; padding: 30px; display: flex; flex-direction: column; align-items: center; overflow: hidden;">
+            <!-- 비디오 요소 추가 -->
+            <video class="boost-hover-video" src="./videos/neobootsmp4.mp4" loop playsinline muted preload="auto" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.3s ease; z-index: 1; pointer-events: none;"></video>
+            
             <div style="position: relative; z-index: 2; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center;">
               <h3 style="color: #F87171; font-size: 2rem; margin-bottom: 20px; text-shadow: 0 0 20px rgba(248,113,113,0.8);">NEO BOOST</h3>
               <img src="./images/neoboots.png" alt="네오 부스트" style="width: 80%; height: auto; margin-bottom: 20px; filter: drop-shadow(0 0 20px rgba(248,113,113,0.5));">
@@ -9278,55 +9281,13 @@ document.addEventListener('DOMContentLoaded', function() {
           `;
           this.querySelector('.card-front').appendChild(glassOverlay);
           
-          // 비디오 재생 전 상태 확인
-          console.log('비디오 준비 상태:', boostVideo.readyState);
-          console.log('비디오 네트워크 상태:', boostVideo.networkState);
-          
-          // 비디오 에러 이벤트 리스너 추가
-          boostVideo.addEventListener('error', function(e) {
-            console.error('비디오 에러 발생:', e);
-            console.error('에러 코드:', boostVideo.error ? boostVideo.error.code : 'N/A');
-            console.error('에러 메시지:', boostVideo.error ? boostVideo.error.message : 'N/A');
-          });
-          
-          // 모바일에서는 먼저 음소거로 시도
-          boostVideo.muted = true;
+          // 비디오 즉시 재생 (카드 클릭 시에는 소리 재생)
+          boostVideo.muted = false; // 카드 클릭 시 소리 재생
           boostVideo.volume = 0.3;
-          boostVideo.currentTime = 0;
-          
-          // 비디오 로드 및 재생
-          boostVideo.load();
-          
-          const playVideo = () => {
-            const playPromise = boostVideo.play();
-            if (playPromise !== undefined) {
-              playPromise
-                .then(() => {
-                  console.log('NEO BOOST 비디오 재생 성공');
-                  // 재생 성공 후 음소거 해제 시도
-                  setTimeout(() => {
-                    boostVideo.muted = false;
-                    console.log('음소거 해제 시도');
-                  }, 100);
-                })
-                .catch(e => {
-                  console.error('비디오 재생 실패:', e);
-                  console.error('에러 이름:', e.name);
-                  console.error('에러 메시지:', e.message);
-                });
-            }
-          };
-          
-          // 비디오가 로드되면 재생
-          if (boostVideo.readyState >= 3) {
-            console.log('비디오 이미 로드됨, 바로 재생');
-            playVideo();
-          } else {
-            console.log('비디오 로딩 대기');
-            boostVideo.addEventListener('canplay', function() {
-              console.log('비디오 로드 완료, 재생 시작');
-              playVideo();
-            }, { once: true });
+          boostVideo.currentTime = 0; // 처음부터 재생
+          const playPromise = boostVideo.play();
+          if (playPromise !== undefined) {
+            playPromise.catch(e => console.log('Video play failed:', e));
           }
           
           // 콘텐츠 완전히 숨기기
