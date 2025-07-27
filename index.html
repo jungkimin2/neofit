@@ -8576,11 +8576,12 @@ document.addEventListener('DOMContentLoaded', function() {
     preloadVideo(boostVideo);
   }
   
-  // PC 환경에서 비디오 클릭 효과 적용
+  // 비디오 재생 상태 변수 (PC와 모바일 공통 사용)
   let isSyncVideoPlaying = false;
   let isBalanceVideoPlaying = false;
   let isBoostVideoPlaying = false;
   
+  // PC 환경에서 비디오 클릭 효과 적용
   if (window.innerWidth > 768) {
     // 네오 싱크 카드 클릭 이벤트
     const syncContent = syncCard.querySelector('.card-front > div[style*="z-index: 2"]');
@@ -9326,25 +9327,15 @@ document.addEventListener('DOMContentLoaded', function() {
       // 모바일에서 네오 부스트 카드가 활성화되고 클릭된 경우 비디오 재생
       if (isMobile && cardId === 'boost' && this.classList.contains('active')) {
         console.log('NEO BOOST 카드 클릭됨 - 모바일');
-        let boostVideo = this.querySelector('.boost-hover-video');
+        console.log('this:', this);
+        const boostVideo = this.querySelector('.boost-hover-video');
         const boostContent = this.querySelector('.card-front > div[style*="z-index: 2"]');
         const clickIndicator = this.querySelector('.click-indicator');
         const cardFront = this.querySelector('.card-front');
         
-        console.log('기존 boostVideo 요소:', boostVideo);
-        
-        // 기존 비디오가 없거나 문제가 있으면 새로 생성
-        if (!boostVideo) {
-          console.log('비디오 요소가 없어서 새로 생성');
-          boostVideo = document.createElement('video');
-          boostVideo.className = 'boost-hover-video';
-          boostVideo.src = './videos/neobootsmp4.mp4';
-          boostVideo.loop = true;
-          boostVideo.playsinline = true;
-          boostVideo.muted = true;
-          boostVideo.setAttribute('preload', 'auto');
-          cardFront.appendChild(boostVideo);
-        }
+        console.log('boostVideo 요소:', boostVideo);
+        console.log('boostVideo src:', boostVideo ? boostVideo.src : 'N/A');
+        console.log('boostVideo parent:', boostVideo ? boostVideo.parentElement : 'N/A');
         
         if (boostVideo && !boostVideo.classList.contains('playing')) {
           console.log('NEO BOOST 비디오 재생 시작');
@@ -9471,6 +9462,9 @@ document.addEventListener('DOMContentLoaded', function() {
           
           // 비디오를 카드의 최상위로 이동
           this.querySelector('.card-front').appendChild(boostVideo);
+          
+          // 재생 상태 설정
+          isBoostVideoPlaying = true;
           
           // 비디오 종료 시 원상복구
           boostVideo.addEventListener('ended', function() {
