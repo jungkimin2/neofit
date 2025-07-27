@@ -2928,7 +2928,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <div id="mobile-top-nav-fixed" style="position: fixed; top: 0; left: 0; right: 0; z-index: 2147483647;">
   <div class="nav-bar">
     <img src="./images/neohive3.png" alt="NeoHive" class="nav-logo">
-    <button class="nav-menu-btn" style="background: none; border: none; color: #7BE495; font-size: 24px; padding: 8px; cursor: pointer; position: relative; z-index: 999999999;">&#9776;</button>
+    <button class="nav-menu-btn" onclick="toggleNav()" style="background: none; border: none; color: #7BE495; font-size: 24px; padding: 8px; cursor: pointer; position: relative; z-index: 999999999;">&#9776;</button>
   </div>
 </div>
 
@@ -7816,6 +7816,15 @@ if (window.innerWidth <= 768) {
       // 메뉴 열기
       console.log('드롭다운 메뉴 열기');
       dropdown.style.setProperty('display', 'block', 'important');
+      dropdown.style.setProperty('opacity', '0', 'important');
+      dropdown.style.setProperty('transform', 'translateY(-20px)', 'important');
+      dropdown.style.setProperty('transition', 'opacity 0.3s ease-out, transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)', 'important');
+      
+      // 애니메이션 트리거
+      setTimeout(() => {
+        dropdown.style.setProperty('opacity', '1', 'important');
+        dropdown.style.setProperty('transform', 'translateY(0)', 'important');
+      }, 10);
       
       // 버튼 X로 변경
       if (btn) {
@@ -7823,16 +7832,28 @@ if (window.innerWidth <= 768) {
         btn.style.fontSize = '20px';
       }
       
-      // 디버깅: 열린 후 상태 확인
-      setTimeout(() => {
-        console.log('드롭다운 열림 확인:', window.getComputedStyle(dropdown).display);
-        console.log('드롭다운 z-index:', window.getComputedStyle(dropdown).zIndex);
-        console.log('드롭다운 위치:', dropdown.getBoundingClientRect());
-      }, 100);
+      // 메뉴 아이템 애니메이션
+      const menuItems = dropdown.querySelectorAll('a');
+      menuItems.forEach((item, index) => {
+        item.style.setProperty('opacity', '0', 'important');
+        item.style.setProperty('transform', 'translateX(-20px)', 'important');
+        item.style.setProperty('transition', 'opacity 0.3s ease-out, transform 0.3s ease-out', 'important');
+        
+        setTimeout(() => {
+          item.style.setProperty('opacity', '1', 'important');
+          item.style.setProperty('transform', 'translateX(0)', 'important');
+        }, 100 + (index * 50));
+      });
     } else {
       // 메뉴 닫기
       console.log('드롭다운 메뉴 닫기');
-      dropdown.style.setProperty('display', 'none', 'important');
+      dropdown.style.setProperty('opacity', '0', 'important');
+      dropdown.style.setProperty('transform', 'translateY(-20px)', 'important');
+      
+      // 애니메이션 후 숨기기
+      setTimeout(() => {
+        dropdown.style.setProperty('display', 'none', 'important');
+      }, 300);
       
       // 버튼 원래대로
       if (btn) {
@@ -7848,7 +7869,12 @@ if (window.innerWidth <= 768) {
     const btn = document.querySelector('.nav-menu-btn');
     
     if (dropdown) {
-      dropdown.style.display = 'none';
+      dropdown.style.setProperty('opacity', '0', 'important');
+      dropdown.style.setProperty('transform', 'translateY(-20px)', 'important');
+      
+      setTimeout(() => {
+        dropdown.style.display = 'none';
+      }, 300);
     }
     
     if (btn) {
