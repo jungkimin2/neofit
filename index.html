@@ -645,10 +645,26 @@ br.mobile-only {
   .card-front img {
     width: 60% !important;
     margin-bottom: 15px !important;
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    position: relative !important;
+    z-index: 2 !important;
   }
   
   .card-front p {
     font-size: 0.9rem !important;
+  }
+  
+  /* 카드 내부 콘텐츠 컨테이너가 항상 보이도록 */
+  .card-front > div[style*="z-index: 2"] {
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    height: 100% !important;
+    width: 100% !important;
   }
   
   /* 모바일에서 비디오 스타일 */
@@ -1027,6 +1043,30 @@ div > p.smart-guide-text {
     height: 180px !important;
     margin: -15px 0 -15px 0 !important;  /* 음수 마진으로 공간 줄이기 */
     object-fit: contain !important;
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    position: relative !important;
+    z-index: 10 !important;
+  }
+  
+  /* NEO BOOST 카드 특별 처리 */
+  #boost-card .card-front img {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    width: 180px !important;
+    height: 180px !important;
+  }
+  
+  /* 모든 카드의 텍스트가 보이도록 */
+  .training-card h3,
+  .training-card p {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    position: relative !important;
+    z-index: 10 !important;
   }
   
   .training-card p {
