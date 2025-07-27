@@ -1318,7 +1318,7 @@ section {
     margin-left: -160px;
     padding: 8px 12px;
   }
-  nav a {
+  nav a, .desktop-nav span {
     color: #fff;
     margin-left: 20px;
     text-decoration: none;
@@ -1327,10 +1327,19 @@ section {
     letter-spacing: 0.05em;
     font-family: 'SUIT', 'Noto Sans KR', sans-serif;
     text-shadow: 0 0 6px rgba(123, 228, 149, 0.4);
+    transition: all 0.3s ease;
   }
   .desktop-nav {
     display: flex;
-    gap: 20px;
+    gap: 35px;
+  }
+  
+  /* Desktop nav hover effects */
+  .desktop-nav span:hover:not(.nav-neon-green) {
+    color: #7BE495 !important;
+    text-shadow: 0 0 10px rgba(123, 228, 149, 0.8), 0 0 20px rgba(123, 228, 149, 0.4) !important;
+    transform: translateY(-2px);
+    cursor: pointer;
   }
   .hero {
     padding: 60px 20px 40px 20px;
@@ -2713,6 +2722,25 @@ document.addEventListener('DOMContentLoaded', function() {
   } else {
     console.log('뒷면보기 버튼을 찾을 수 없음');
   }
+  
+  // PC 네비게이션 클릭 이벤트 추가
+  const desktopNavItems = document.querySelectorAll('.desktop-nav span[data-section]');
+  desktopNavItems.forEach(item => {
+    item.addEventListener('click', function() {
+      const section = this.getAttribute('data-section');
+      if (section) {
+        scrollToSectionPC(section);
+      }
+    });
+  });
+  
+  // 무료 체험신청 버튼 클릭 이벤트
+  const formBtn = document.querySelector('.desktop-nav span[data-action="form"]');
+  if (formBtn) {
+    formBtn.addEventListener('click', function() {
+      openForm();
+    });
+  }
 });
 </script>
 
@@ -2872,10 +2900,11 @@ document.addEventListener('DOMContentLoaded', function() {
         </a>
       </div>
       <nav class="desktop-nav">
-        <a href="#hive" onclick="return scrollToSectionPC('hive')">하이브 시스템</a>
-        <a href="#smart" onclick="return scrollToSectionPC('smart')">스마트 시스템</a>
-        <a href="#benefits" onclick="return scrollToSectionPC('benefits')">도입 효과</a>
-        <a href="javascript:void(0)" onclick="openForm();return false;" class="nav-neon-green">사전 예약하기</a>
+        <span role="button" tabindex="0" data-section="neofit-training" style="cursor: pointer;">네오핏</span>
+        <span role="button" tabindex="0" data-section="hive" style="cursor: pointer;">네오 하이브</span>
+        <span role="button" tabindex="0" data-section="smart" style="cursor: pointer;">네오 스마트</span>
+        <span role="button" tabindex="0" data-section="neo-pilates" style="cursor: pointer;">네오 필라테스</span>
+        <span role="button" tabindex="0" data-action="form" class="nav-neon-green" style="cursor: pointer;">무료 체험신청</span>
       </nav>
     </div>
     </header>
@@ -12734,7 +12763,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }
      
            .nav-logo {
-        height: 24px !important;
+        height: 20px !important;
         margin-left: -16px !important; /* 좌측으로 한 칸 이동 */
         margin-right: auto !important;
       }
@@ -12824,7 +12853,7 @@ document.addEventListener('DOMContentLoaded', function() {
     left: 0 !important;
     right: 0 !important;
     width: 100% !important;
-    height: 60px !important;
+    height: 48px !important;
     background: #000 !important;
     border-bottom: 2px solid #7BE495 !important;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5) !important;
@@ -12844,15 +12873,16 @@ document.addEventListener('DOMContentLoaded', function() {
     display: flex !important;
     justify-content: space-between !important;
     align-items: center !important;
-    height: 60px !important;
+    height: 48px !important;
     padding: 0 16px !important;
+    padding-top: 3px !important; /* 그린바 공간 확보 */
     background: transparent !important;
     position: relative !important;
   }
 
   /* 로고 스타일 */
   #mobile-top-nav-fixed .nav-logo {
-    height: 28px !important;
+    height: 20px !important;
     width: auto !important;
     display: block !important;
     margin-left: -16px !important; /* 좌측으로 한 칸 이동 */
@@ -12864,8 +12894,8 @@ document.addEventListener('DOMContentLoaded', function() {
     background: none !important;
     border: none !important;
     color: #7BE495 !important;
-    font-size: 24px !important;
-    padding: 8px !important;
+    font-size: 22px !important;
+    padding: 6px !important;
     cursor: pointer !important;
     display: block !important;
   }
@@ -12873,7 +12903,7 @@ document.addEventListener('DOMContentLoaded', function() {
   /* 드롭다운 메뉴 */
   #mobile-top-nav-fixed .nav-menu {
     position: fixed !important;
-    top: 60px !important;
+    top: 48px !important;
     left: 0 !important;
     right: 0 !important;
     width: 100% !important;
