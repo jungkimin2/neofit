@@ -7698,6 +7698,75 @@ if (window.innerWidth <= 768) {
   // 네오 하이브 비디오 재생 상태 관리
   let isHiveVideoPlaying = false;
   
+  // 네오 하이브 비디오 스크롤 자동 재생
+  function setupHiveVideoAutoplay() {
+    const centerVideo = document.getElementById('centerVideo');
+    const hiveSection = document.getElementById('hive');
+    
+    if (!centerVideo || !hiveSection) return;
+    
+    // 비디오가 사용자에 의해 수동으로 제어되고 있는지 추적
+    let manualControl = false;
+    
+    // 비디오 클릭 이벤트 추가 (스피커 버튼 제외)
+    const videoPhone = document.querySelector('.video-phone');
+    if (videoPhone) {
+      videoPhone.addEventListener('click', function(e) {
+        // 스피커 버튼을 클릭했을 때는 비디오 재생/정지 하지 않음
+        if (e.target.closest('.speaker-button')) {
+          return;
+        }
+        
+        e.stopPropagation();
+        manualControl = true;
+        
+        // 비디오 재생/정지 토글
+        if (centerVideo.paused) {
+          centerVideo.play().then(() => {
+            isHiveVideoPlaying = true;
+            console.log('Neo Hive video playing');
+          }).catch(err => {
+            console.log('Neo Hive video play failed:', err);
+          });
+        } else {
+          centerVideo.pause();
+          isHiveVideoPlaying = false;
+          console.log('Neo Hive video paused');
+        }
+        
+        setTimeout(() => { manualControl = false; }, 2000); // 2초 후 자동 재생 복원
+      });
+    }
+    
+    const videoObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          // 비디오가 화면에 보이고 수동 제어 중이 아니면 자동 재생
+          if (!manualControl && !isHiveVideoPlaying && centerVideo.paused) {
+            centerVideo.play().then(() => {
+              isHiveVideoPlaying = true;
+              console.log('Neo Hive video auto-playing on scroll');
+            }).catch(err => {
+              console.log('Neo Hive video autoplay failed:', err);
+            });
+          }
+        } else {
+          // 비디오가 화면에서 벗어나면 일시정지
+          if (!manualControl && isHiveVideoPlaying && !centerVideo.paused) {
+            centerVideo.pause();
+            isHiveVideoPlaying = false;
+            console.log('Neo Hive video paused - out of viewport');
+          }
+        }
+      });
+    }, {
+      threshold: 0.3, // 비디오가 30% 이상 보일 때 재생 (더 빨리 시작)
+      rootMargin: '0px'
+    });
+    
+    videoObserver.observe(hiveSection);
+  }
+  
   // 네오 하이브 메인 비디오 음소거 토글 함수
   function toggleMute() {
     const video = document.getElementById('centerVideo');
@@ -7745,6 +7814,9 @@ if (window.innerWidth <= 768) {
   
   // PC에서만 네비게이션 링크 클릭 시 정확한 위치로 스크롤
   document.addEventListener('DOMContentLoaded', function() {
+    // 네오 하이브 비디오 스크롤 자동 재생 설정
+    setupHiveVideoAutoplay();
+    
     if (window.innerWidth > 768) {
       const navLinks = document.querySelectorAll('nav a[href^="#"]');
       
@@ -8546,29 +8618,7 @@ if (window.innerWidth <= 768) {
     });
   }
 
-  // 비디오 클릭 시 원래 상태로 복귀
-  if (videoPhone) {
-    videoPhone.addEventListener('click', (e) => {
-      e.stopPropagation();
-      if (isTransitioning) return;
-      
-      slideIndex = -1;
-      showSlide(slideIndex);
-      
-      // 비디오 재생/일시정지 토글
-      const video = document.getElementById('centerVideo');
-      if (slideIndex === -1) {
-        // 중앙에 있을 때만 비디오 재생
-        if (!isHiveVideoPlaying && video) {
-          video.play();
-          isHiveVideoPlaying = true;
-        } else if (isHiveVideoPlaying && video) {
-          video.pause();
-          isHiveVideoPlaying = false;
-        }
-      }
-    });
-  }
+  // setupHiveVideoAutoplay에서 이미 클릭 이벤트를 처리하므로 중복 제거
 
   // Reset all if clicked outside
   document.querySelector('.hive-showcase').addEventListener('click', (e) => {
@@ -14760,25 +14810,7 @@ document.addEventListener('DOMContentLoaded', function() {
           });
         }
         
-        // 비디오 클릭 이벤트 추가
-        const videoPhone = document.querySelector('.video-phone');
-        if (videoPhone) {
-          videoPhone.addEventListener('click', function(e) {
-            e.stopPropagation();
-            const video = document.getElementById('centerVideo');
-            
-            // 중앙에 있을 때만 비디오 재생
-            if (slideIndex === -1 && video) {
-              if (!isHiveVideoPlaying) {
-                video.play();
-                isHiveVideoPlaying = true;
-              } else {
-                video.pause();
-                isHiveVideoPlaying = false;
-              }
-            }
-          });
-        }
+        // 모바일에서는 setupHiveVideoAutoplay에서 이미 클릭 이벤트를 처리하므로 중복 제거
       }
     }
     
