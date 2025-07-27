@@ -9224,6 +9224,51 @@ document.addEventListener('DOMContentLoaded', function() {
         }
       }
     });
+
+    // NEO BOOST 카드 클릭 이벤트 (모바일)
+    const boostCard = document.querySelector('.card[data-card="boost"]');
+    if (boostCard) {
+      boostCard.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        // 모바일에서 boost 카드 클릭 시
+        if (isMobile && !isAnimating && currentCard === 'boost') {
+          const boostVideo = document.getElementById('boostVideoCard');
+          const glass = boostCard.querySelector('.glass');
+          const clickIndicator = boostCard.querySelector('.click-indicator');
+          
+          if (!isBoostVideoPlaying) {
+            isBoostVideoPlaying = true;
+            isPaused = true;
+            boostVideo.style.display = 'block';
+            boostVideo.play();
+            boostVideo.muted = false;
+            boostVideo.volume = 0.3;
+            
+            if (glass) {
+              glass.style.display = 'none';
+            }
+            if (clickIndicator) {
+              clickIndicator.style.display = 'none';
+            }
+          } else {
+            stopAllVideos();
+            isBoostVideoPlaying = false;
+            isPaused = false;
+            boostVideo.style.display = 'none';
+            boostVideo.pause();
+            boostVideo.currentTime = 0;
+            
+            if (glass) {
+              glass.style.display = 'block';
+            }
+            if (clickIndicator) {
+              clickIndicator.style.display = 'block';
+            }
+          }
+        }
+      });
+    }
   });
   
   // 자동 회전 (옵션)
