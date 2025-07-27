@@ -751,6 +751,13 @@ pointer-events: auto !important;
   transform: scale(1.05) !important;
 }
 
+/* Desktop nav span hover effects */
+.desktop-nav span:hover {
+  color: #7BE495;
+  text-shadow: 0 0 10px rgba(123, 228, 149, 0.8);
+  transition: all 0.3s ease;
+}
+
 @keyframes neonPulse {
   0% {
     text-shadow: 
@@ -1013,8 +1020,8 @@ div > p.smart-guide-text {
   }
   
   .training-card img {
-    width: 120px !important;
-    height: 120px !important;
+    width: 150px !important;
+    height: 150px !important;
     margin: 15px 0 !important;
     object-fit: contain !important;
   }
@@ -1318,7 +1325,7 @@ section {
     margin-left: -160px;
     padding: 8px 12px;
   }
-  nav a {
+  nav a, nav span {
     color: #fff;
     margin-left: 20px;
     text-decoration: none;
@@ -1327,6 +1334,7 @@ section {
     letter-spacing: 0.05em;
     font-family: 'SUIT', 'Noto Sans KR', sans-serif;
     text-shadow: 0 0 6px rgba(123, 228, 149, 0.4);
+    display: inline-block;
   }
   .desktop-nav {
     display: flex;
@@ -2872,10 +2880,10 @@ document.addEventListener('DOMContentLoaded', function() {
         </a>
       </div>
       <nav class="desktop-nav">
-        <a href="#hive" onclick="return scrollToSectionPC('hive')">하이브 시스템</a>
-        <a href="#smart" onclick="return scrollToSectionPC('smart')">스마트 시스템</a>
-        <a href="#benefits" onclick="return scrollToSectionPC('benefits')">도입 효과</a>
-        <a href="javascript:void(0)" onclick="openForm();return false;" class="nav-neon-green">사전 예약하기</a>
+        <span role="button" tabindex="0" onclick="scrollToSectionPC('hive');return false;" style="cursor: pointer;">하이브 시스템</span>
+        <span role="button" tabindex="0" onclick="scrollToSectionPC('smart');return false;" style="cursor: pointer;">스마트 시스템</span>
+        <span role="button" tabindex="0" onclick="scrollToSectionPC('benefits');return false;" style="cursor: pointer;">도입 효과</span>
+        <span role="button" tabindex="0" onclick="openForm();return false;" class="nav-neon-green" style="cursor: pointer;">사전 예약하기</span>
       </nav>
     </div>
     </header>
@@ -12725,7 +12733,7 @@ document.addEventListener('DOMContentLoaded', function() {
         justify-content: space-between !important;
         align-items: center !important;
         padding: 8px 12px 8px 8px !important;
-        height: 50px !important;
+        height: 40px !important;
         background: #000 !important;
         width: 100% !important;
         position: relative !important;
@@ -12824,7 +12832,7 @@ document.addEventListener('DOMContentLoaded', function() {
     left: 0 !important;
     right: 0 !important;
     width: 100% !important;
-    height: 60px !important;
+    height: 45px !important;
     background: #000 !important;
     border-bottom: 2px solid #7BE495 !important;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5) !important;
@@ -12844,7 +12852,7 @@ document.addEventListener('DOMContentLoaded', function() {
     display: flex !important;
     justify-content: space-between !important;
     align-items: center !important;
-    height: 60px !important;
+    height: 45px !important;
     padding: 0 16px !important;
     background: transparent !important;
     position: relative !important;
@@ -12852,7 +12860,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   /* 로고 스타일 */
   #mobile-top-nav-fixed .nav-logo {
-    height: 20px !important;
+    height: 16px !important;
     width: auto !important;
     display: block !important;
     margin-left: -16px !important; /* 좌측으로 한 칸 이동 */
@@ -12873,7 +12881,7 @@ document.addEventListener('DOMContentLoaded', function() {
   /* 드롭다운 메뉴 */
   #mobile-top-nav-fixed .nav-menu {
     position: fixed !important;
-    top: 60px !important;
+    top: 45px !important;
     left: 0 !important;
     right: 0 !important;
     width: 100% !important;
