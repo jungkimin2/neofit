@@ -9326,60 +9326,86 @@ document.addEventListener('DOMContentLoaded', function() {
       // 모바일에서 네오 부스트 카드가 활성화되고 클릭된 경우 비디오 재생
       if (isMobile && cardId === 'boost' && this.classList.contains('active')) {
         console.log('NEO BOOST 카드 클릭됨 - 모바일');
-        const boostVideo = this.querySelector('.boost-hover-video');
+        let boostVideo = this.querySelector('.boost-hover-video');
         const boostContent = this.querySelector('.card-front > div[style*="z-index: 2"]');
         const clickIndicator = this.querySelector('.click-indicator');
+        const cardFront = this.querySelector('.card-front');
         
-        console.log('boostVideo 요소:', boostVideo);
-        console.log('boostVideo src:', boostVideo ? boostVideo.src : 'null');
-        console.log('boostVideo 위치:', boostVideo ? boostVideo.getBoundingClientRect() : 'null');
-        console.log('카드 위치:', this.getBoundingClientRect());
+        console.log('기존 boostVideo 요소:', boostVideo);
+        
+        // 기존 비디오가 없거나 문제가 있으면 새로 생성
+        if (!boostVideo) {
+          console.log('비디오 요소가 없어서 새로 생성');
+          boostVideo = document.createElement('video');
+          boostVideo.className = 'boost-hover-video';
+          boostVideo.src = './videos/neobootsmp4.mp4';
+          boostVideo.loop = true;
+          boostVideo.playsinline = true;
+          boostVideo.muted = true;
+          boostVideo.setAttribute('preload', 'auto');
+          cardFront.appendChild(boostVideo);
+        }
         
         if (boostVideo && !boostVideo.classList.contains('playing')) {
           console.log('NEO BOOST 비디오 재생 시작');
-          // 비디오 요소가 있는지 확인
-          console.log('비디오 파일 경로:', boostVideo.src);
+          console.log('비디오 src:', boostVideo.src);
           console.log('비디오 readyState:', boostVideo.readyState);
+          
+          // 비디오 에러 체크
+          boostVideo.addEventListener('error', function(e) {
+            console.error('비디오 로드 에러:', e);
+            console.error('에러 코드:', boostVideo.error ? boostVideo.error.code : 'N/A');
+            console.error('에러 메시지:', boostVideo.error ? boostVideo.error.message : 'N/A');
+          });
           
           // 비디오가 카드 전체를 덮도록 스타일 설정 - NEO SYNC와 동일하게
           boostVideo.style.position = 'absolute';
-          boostVideo.style.top = '0';
-          boostVideo.style.left = '0';
-          boostVideo.style.width = '100%';
-          boostVideo.style.height = '100%';
+          boostVideo.style.top = '10px';
+          boostVideo.style.left = '10px';
+          boostVideo.style.width = 'calc(100% - 20px)';
+          boostVideo.style.height = 'calc(100% - 20px)';
           boostVideo.style.objectFit = 'cover';
-          boostVideo.style.borderRadius = '20px';
-          boostVideo.style.zIndex = '9999';
+          boostVideo.style.borderRadius = '16px';
+          boostVideo.style.border = '3px solid rgba(248, 113, 113, 0.6)';
+          boostVideo.style.boxShadow = 'inset 0 0 30px rgba(248, 113, 113, 0.3), 0 0 50px rgba(248, 113, 113, 0.4)';
+          boostVideo.style.zIndex = '999';
           boostVideo.style.opacity = '1';
           boostVideo.style.display = 'block';
-          boostVideo.style.pointerEvents = 'auto';
+          boostVideo.style.backgroundColor = '#000';
+          boostVideo.style.pointerEvents = 'auto'; // Enable pointer events for video
           boostVideo.classList.add('playing');
           
-          // 글래스모피즘 테두리 오버레이 추가 - 일단 주석 처리
-          // const glassOverlay = document.createElement('div');
-          // glassOverlay.className = 'video-glass-overlay';
-          // glassOverlay.style.cssText = `
-          //   position: absolute;
-          //   top: 0;
-          //   left: 0;
-          //   right: 0;
-          //   bottom: 0;
-          //   border-radius: 16px;
-          //   border: 6px solid rgba(248, 113, 113, 0.7);
-          //   background: linear-gradient(135deg, 
-          //     rgba(248, 113, 113, 0.3) 0%, 
-          //     transparent 30%, 
-          //     transparent 70%,
-          //     rgba(248, 113, 113, 0.3) 100%);
-          //   pointer-events: none;
-          //   z-index: 10000;
-          //   box-shadow: inset 0 0 50px rgba(248, 113, 113, 0.4),
-          //               0 0 80px rgba(248, 113, 113, 0.5);
-          // `;
-          // this.querySelector('.card-front').appendChild(glassOverlay);
+          // 기존 glass overlay 제거
+          const existingOverlay = this.querySelector('.video-glass-overlay');
+          if (existingOverlay) {
+            existingOverlay.remove();
+          }
           
-          // 비디오 즉시 재생 - 먼저 음소거로 시도
-          boostVideo.muted = true; // 일단 음소거로 재생 시도
+          // 글래스모피즘 테두리 오버레이 추가
+          const glassOverlay = document.createElement('div');
+          glassOverlay.className = 'video-glass-overlay';
+          glassOverlay.style.cssText = `
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 16px;
+            border: 6px solid rgba(248, 113, 113, 0.7);
+            background: linear-gradient(135deg, 
+              rgba(248, 113, 113, 0.3) 0%, 
+              transparent 30%, 
+              transparent 70%,
+              rgba(248, 113, 113, 0.3) 100%);
+            pointer-events: none;
+            z-index: 10000;
+            box-shadow: inset 0 0 50px rgba(248, 113, 113, 0.4),
+                        0 0 80px rgba(248, 113, 113, 0.5);
+          `;
+          this.querySelector('.card-front').appendChild(glassOverlay);
+          
+          // 비디오 즉시 재생 (카드 클릭 시에는 소리 재생)
+          boostVideo.muted = false; // 카드 클릭 시 소리 재생
           boostVideo.volume = 0.3;
           boostVideo.currentTime = 0; // 처음부터 재생
           
@@ -9404,8 +9430,20 @@ document.addEventListener('DOMContentLoaded', function() {
                   readyState: boostVideo.readyState,
                   networkState: boostVideo.networkState,
                   width: boostVideo.videoWidth,
-                  height: boostVideo.videoHeight
+                  height: boostVideo.videoHeight,
+                  style: boostVideo.style.cssText
                 });
+                // 추가 디버깅
+                setTimeout(() => {
+                  console.log('1초 후 비디오 상태:', {
+                    display: window.getComputedStyle(boostVideo).display,
+                    opacity: window.getComputedStyle(boostVideo).opacity,
+                    zIndex: window.getComputedStyle(boostVideo).zIndex,
+                    position: window.getComputedStyle(boostVideo).position,
+                    width: window.getComputedStyle(boostVideo).width,
+                    height: window.getComputedStyle(boostVideo).height
+                  });
+                }, 1000);
               })
               .catch(e => {
                 console.error('NEO BOOST 비디오 재생 실패:', e);
