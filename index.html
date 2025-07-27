@@ -9347,6 +9347,8 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error('비디오 로드 에러:', e);
             console.error('에러 코드:', boostVideo.error ? boostVideo.error.code : 'N/A');
             console.error('에러 메시지:', boostVideo.error ? boostVideo.error.message : 'N/A');
+            console.error('비디오 네트워크 상태:', boostVideo.networkState);
+            console.error('비디오 준비 상태:', boostVideo.readyState);
           });
           
           // 비디오가 카드 전체를 덮도록 스타일 설정 - NEO SYNC와 동일하게
@@ -9422,7 +9424,9 @@ document.addEventListener('DOMContentLoaded', function() {
                   networkState: boostVideo.networkState,
                   width: boostVideo.videoWidth,
                   height: boostVideo.videoHeight,
-                  style: boostVideo.style.cssText
+                  style: boostVideo.style.cssText,
+                  src: boostVideo.src,
+                  currentSrc: boostVideo.currentSrc
                 });
                 // 추가 디버깅
                 setTimeout(() => {
@@ -9507,9 +9511,9 @@ document.addEventListener('DOMContentLoaded', function() {
           boostVideo.style.boxShadow = '';
           boostVideo.classList.remove('playing');
           
-          // 글래스 오버레이 제거 - 주석 처리
-          // const overlay = cards['boost'].querySelector('.video-glass-overlay');
-          // if (overlay) overlay.remove();
+          // 글래스 오버레이 제거
+          const overlay = boostCard.querySelector('.video-glass-overlay');
+          if (overlay) overlay.remove();
           
           setTimeout(() => {
             boostVideo.style.display = 'none';
