@@ -758,22 +758,6 @@ pointer-events: auto !important;
   transition: all 0.3s ease;
 }
 
-/* Mobile menu link hover effects */
-@media (max-width: 768px) {
-  .mobile-menu-content a:active {
-    background: rgba(123, 228, 149, 0.1) !important;
-  }
-  
-  .mobile-menu-content a:not(:last-child):hover {
-    background: rgba(255, 255, 255, 0.05) !important;
-  }
-  
-  .mobile-menu-content a:last-child:hover {
-    background: rgba(123, 228, 149, 0.1) !important;
-    color: #9DF3C4 !important;
-  }
-}
-
 @keyframes neonPulse {
   0% {
     text-shadow: 
@@ -2865,7 +2849,6 @@ document.addEventListener('DOMContentLoaded', function() {
 <body>
 <!-- 모바일 전용 상단 고정 네비게이션 (body 직속) -->
 <div id="mobile-top-nav-fixed" style="position: fixed; top: 0; left: 0; right: 0; z-index: 2147483647;">
-  <div class="mobile-green-bar" style="width: 100%; height: 3px; background: linear-gradient(to right, #7BE495, #3AC8A8); box-shadow: 0 0 8px rgba(123, 228, 149, 0.4); position: absolute; top: 0; left: 0; right: 0;"></div>
   <div class="nav-bar">
     <img src="./images/neohive3.png" alt="NeoHive" class="nav-logo">
     <button class="nav-menu-btn" style="background: none; border: none; color: #7BE495; font-size: 24px; padding: 8px; cursor: pointer; position: relative; z-index: 999999999;">&#9776;</button>
@@ -12809,8 +12792,7 @@ document.addEventListener('DOMContentLoaded', function() {
         justify-content: space-between !important;
         align-items: center !important;
         padding: 8px 12px 8px 8px !important;
-        padding-top: 5px !important; /* 그린바 공간 확보 */
-        height: 43px !important;
+        height: 40px !important;
         background: #000 !important;
         width: 100% !important;
         position: relative !important;
@@ -12931,7 +12913,6 @@ document.addEventListener('DOMContentLoaded', function() {
     align-items: center !important;
     height: 45px !important;
     padding: 0 16px !important;
-    padding-top: 3px !important; /* 그린바 공간 확보 */
     background: transparent !important;
     position: relative !important;
   }
