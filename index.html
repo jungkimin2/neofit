@@ -3071,7 +3071,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <!-- 비디오 요소 추가 -->
             <video class="boost-hover-video" src="./videos/neoboots.mp4" loop playsinline muted preload="auto" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.3s ease; z-index: 1; pointer-events: none;"></video>
             
-            <div style="position: relative; z-index: 2; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center;">
+            <div style="position: relative; z-index: 10; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center;">
               <h3 style="color: #F87171; font-size: 2rem; margin-bottom: 20px; text-shadow: 0 0 20px rgba(248,113,113,0.8);">NEO BOOST</h3>
               <img src="./images/neoboots.png" alt="네오 부스트" style="width: 80%; height: auto; margin-bottom: 20px; filter: drop-shadow(0 0 20px rgba(248,113,113,0.5));">
               <p style="color: #fff; font-size: 1.1rem; text-align: center;">폭발적인 퍼포먼스 향상</p>
@@ -8875,7 +8875,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // 네오 부스트 카드 클릭 이벤트
-    const boostContent = boostCard.querySelector('.card-front > div[style*="z-index: 2"]');
+    const boostContent = boostCard.querySelector('.card-front > div[style*="z-index"]');
     const boostClickIndicator = boostCard.querySelector('.click-indicator');
     
     boostCard.addEventListener('click', function(e) {
@@ -8901,7 +8901,7 @@ document.addEventListener('DOMContentLoaded', function() {
             right: 0;
             bottom: 0;
             border-radius: 20px;
-            border: 3px solid rgba(248, 113, 113, 0.5);
+            border: 2px solid rgba(248, 113, 113, 0.5);
             background: linear-gradient(135deg, 
               rgba(248, 113, 113, 0.15) 0%, 
               transparent 40%, 
@@ -9027,7 +9027,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // 네오 부스트 비디오 정지
     const boostVideo = boostCard.querySelector('.boost-hover-video');
-    const boostContent = boostCard.querySelector('.card-front > div[style*="z-index: 2"]');
+    const boostContent = boostCard.querySelector('.card-front > div[style*="z-index"]');
     const boostClickIndicator = boostCard.querySelector('.click-indicator');
     
     if (boostVideo && (boostVideo.classList.contains('playing') || isBoostVideoPlaying)) {
@@ -9478,7 +9478,7 @@ document.addEventListener('DOMContentLoaded', function() {
       // 모바일에서 네오 부스트 카드가 활성화되고 클릭된 경우 비디오 재생
       if (isMobile && cardId === 'boost' && this.classList.contains('active')) {
         const boostVideo = this.querySelector('.boost-hover-video');
-        const boostContent = this.querySelector('.card-front > div[style*="z-index: 2"]');
+        const boostContent = this.querySelector('.card-front > div[style*="z-index"]');
         const clickIndicator = this.querySelector('.click-indicator');
         
         if (boostVideo && !boostVideo.classList.contains('playing')) {
@@ -9490,7 +9490,7 @@ document.addEventListener('DOMContentLoaded', function() {
           boostVideo.style.height = 'calc(100% - 20px)';
           boostVideo.style.objectFit = 'cover';
           boostVideo.style.borderRadius = '16px';
-          boostVideo.style.border = '3px solid rgba(248, 113, 113, 0.6)';
+          boostVideo.style.border = '2px solid rgba(248, 113, 113, 0.6)';
           boostVideo.style.boxShadow = 'inset 0 0 30px rgba(248, 113, 113, 0.3), 0 0 50px rgba(248, 113, 113, 0.4)';
           boostVideo.style.zIndex = '999';
           boostVideo.style.opacity = '1';
@@ -10188,11 +10188,11 @@ document.addEventListener('DOMContentLoaded', function() {
     transform: translateX(-50%) translateY(-50%) translateZ(0) scale(0.98) !important;
   }
   
-  /* 모바일에서 비디오 글래스 오버레이 강화 */
+  /* 모바일에서 비디오 글래스 오버레이 - 얇게 수정 */
   .video-glass-overlay {
-    border-width: 4px !important;
-    box-shadow: inset 0 0 40px rgba(255, 255, 255, 0.2),
-                0 0 60px currentColor !important;
+    border-width: 2px !important;
+    box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.1),
+                0 0 40px currentColor !important;
   }
   
   .card-indicators .indicator:active {
