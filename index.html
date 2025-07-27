@@ -9383,11 +9383,27 @@ document.addEventListener('DOMContentLoaded', function() {
             playPromise
               .then(() => {
                 console.log('NEO BOOST 비디오 재생 성공');
+                console.log('비디오 현재 상태:', {
+                  currentTime: boostVideo.currentTime,
+                  duration: boostVideo.duration,
+                  paused: boostVideo.paused,
+                  readyState: boostVideo.readyState,
+                  networkState: boostVideo.networkState,
+                  width: boostVideo.videoWidth,
+                  height: boostVideo.videoHeight
+                });
               })
               .catch(e => {
                 console.error('NEO BOOST 비디오 재생 실패:', e);
                 console.error('에러 타입:', e.name);
                 console.error('에러 메시지:', e.message);
+                // 음소거 후 재시도
+                boostVideo.muted = true;
+                boostVideo.play().then(() => {
+                  console.log('음소거 후 재생 성공');
+                }).catch(err => {
+                  console.error('음소거 후에도 재생 실패:', err);
+                });
               });
           }
           
