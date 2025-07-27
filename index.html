@@ -9029,6 +9029,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // 카드 전환 함수
   function switchCard(targetId) {
+    console.log('switchCard 호출:', targetId, '현재 카드:', currentCard, 'isAnimating:', isAnimating);
     if (isAnimating || targetId === currentCard) return;
     isAnimating = true;
     
@@ -9128,15 +9129,17 @@ document.addEventListener('DOMContentLoaded', function() {
   // 카드 클릭 이벤트 - 모바일에서 좌우 카드 클릭 시 중앙으로 이동
   Object.entries(cards).forEach(([cardId, card]) => {
     card.addEventListener('click', function(e) {
-      // PC에서 sync나 balance 카드가 active일 때는 이미 클릭 이벤트 처리됨
-      if (!isMobile && (cardId === 'sync' || cardId === 'balance') && this.classList.contains('active')) {
+      // PC에서 sync, balance, boost 카드가 active일 때는 이미 클릭 이벤트 처리됨
+      if (!isMobile && (cardId === 'sync' || cardId === 'balance' || cardId === 'boost') && this.classList.contains('active')) {
         return;
       }
       
       // 모바일에서 카드 클릭 처리
       if (isMobile) {
+        console.log('모바일 카드 클릭:', cardId, 'active:', this.classList.contains('active'));
         // 카드가 중앙에 있지 않으면 중앙으로 이동
         if (!this.classList.contains('active')) {
+          console.log('비활성 카드 클릭 - 중앙으로 이동:', cardId);
           switchCard(cardId);
           return; // 중앙으로 이동만 하고 비디오는 재생하지 않음
         }
@@ -9565,6 +9568,7 @@ document.addEventListener('DOMContentLoaded', function() {
   function handleSwipe() {
     const swipeThreshold = 50;
     const diff = touchEndX - touchStartX;
+    console.log('스와이프 감지:', diff, 'threshold:', swipeThreshold);
     
     if (Math.abs(diff) > swipeThreshold) {
       const cardIds = ['sync', 'balance', 'boost'];
@@ -9573,10 +9577,12 @@ document.addEventListener('DOMContentLoaded', function() {
       if (diff > 0) {
         // 오른쪽으로 스와이프 (이전 카드)
         const prevIndex = (currentIndex - 1 + 3) % 3;
+        console.log('오른쪽 스와이프 - 이전 카드로:', cardIds[prevIndex]);
         switchCard(cardIds[prevIndex]);
       } else {
         // 왼쪽으로 스와이프 (다음 카드)
         const nextIndex = (currentIndex + 1) % 3;
+        console.log('왼쪽 스와이프 - 다음 카드로:', cardIds[nextIndex]);
         switchCard(cardIds[nextIndex]);
       }
     }
