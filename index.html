@@ -1020,9 +1020,9 @@ div > p.smart-guide-text {
   }
   
   .training-card img {
-    width: 180px !important;
-    height: 180px !important;
-    margin: 10px 0 !important;
+    width: 150px !important;
+    height: 150px !important;
+    margin: 15px 0 !important;
     object-fit: contain !important;
   }
   
@@ -2856,13 +2856,13 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 
 <!-- 모바일 메뉴 오버레이 -->
-<div id="simple-mobile-menu" class="mobile-menu-overlay" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0); z-index: 2147483646; opacity: 0; visibility: hidden; transition: background 0.3s ease, opacity 0.3s ease;">
-  <div class="mobile-menu-content" style="position: fixed; top: 45px; left: 0; right: 0; background: #000; transform: translateY(-100%); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); border-bottom: 2px solid #7BE495; box-shadow: 0 4px 20px rgba(0,0,0,0.8);">
-    <a href="#" onclick="closeMobileMenu(); return true;" style="display: block; padding: 20px; color: #fff; text-decoration: none; border-bottom: 1px solid rgba(123,228,149,0.2); font-size: 18px; text-align: center; transition: background 0.2s ease;">네오핏</a>
-    <a href="#hive" onclick="closeMobileMenu(); return true;" style="display: block; padding: 20px; color: #fff; text-decoration: none; border-bottom: 1px solid rgba(123,228,149,0.2); font-size: 18px; text-align: center; transition: background 0.2s ease;">네오 하이브</a>
-    <a href="#smart" onclick="closeMobileMenu(); return true;" style="display: block; padding: 20px; color: #fff; text-decoration: none; border-bottom: 1px solid rgba(123,228,149,0.2); font-size: 18px; text-align: center; transition: background 0.2s ease;">네오 스마트</a>
-    <a href="#pilates" onclick="closeMobileMenu(); return true;" style="display: block; padding: 20px; color: #fff; text-decoration: none; border-bottom: 1px solid rgba(123,228,149,0.2); font-size: 18px; text-align: center; transition: background 0.2s ease;">네오 필라테스</a>
-    <a href="javascript:void(0)" onclick="openForm(); closeMobileMenu(); return false;" style="display: block; padding: 20px; color: #7BE495; text-decoration: none; font-weight: 600; font-size: 18px; text-align: center; border-bottom: 2px solid #7BE495; transition: background 0.2s ease;">무료 체험하기</a>
+<div id="simple-mobile-menu" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.95); z-index: 2147483646;">
+  <div style="position: fixed; top: 60px; left: 0; right: 0; background: #000;">
+    <a href="#" onclick="document.getElementById('simple-mobile-menu').style.display='none'; return true;" style="display: block; padding: 20px; color: #fff; text-decoration: none; border-bottom: 1px solid rgba(123,228,149,0.2); font-size: 18px; text-align: center;">네오핏</a>
+    <a href="#hive" onclick="document.getElementById('simple-mobile-menu').style.display='none'; return true;" style="display: block; padding: 20px; color: #fff; text-decoration: none; border-bottom: 1px solid rgba(123,228,149,0.2); font-size: 18px; text-align: center;">네오 하이브</a>
+    <a href="#smart" onclick="document.getElementById('simple-mobile-menu').style.display='none'; return true;" style="display: block; padding: 20px; color: #fff; text-decoration: none; border-bottom: 1px solid rgba(123,228,149,0.2); font-size: 18px; text-align: center;">네오 스마트</a>
+    <a href="#pilates" onclick="document.getElementById('simple-mobile-menu').style.display='none'; return true;" style="display: block; padding: 20px; color: #fff; text-decoration: none; border-bottom: 1px solid rgba(123,228,149,0.2); font-size: 18px; text-align: center;">네오 필라테스</a>
+    <a href="javascript:void(0)" onclick="openForm(); document.getElementById('simple-mobile-menu').style.display='none'; return false;" style="display: block; padding: 20px; color: #7BE495; text-decoration: none; font-weight: 600; font-size: 18px; text-align: center; border-bottom: 2px solid #7BE495;">무료 체험하기</a>
   </div>
 </div>
 
@@ -2880,11 +2880,10 @@ document.addEventListener('DOMContentLoaded', function() {
         </a>
       </div>
       <nav class="desktop-nav">
-        <span role="button" tabindex="0" onclick="scrollToSectionPC('neofit-training');return false;" style="cursor: pointer;">네오핏</span>
-        <span role="button" tabindex="0" onclick="scrollToSectionPC('hive');return false;" style="cursor: pointer;">네오 하이브</span>
-        <span role="button" tabindex="0" onclick="scrollToSectionPC('smart');return false;" style="cursor: pointer;">네오 스마트</span>
-        <span role="button" tabindex="0" onclick="scrollToSectionPC('neo-pilates');return false;" style="cursor: pointer;">네오 필라테스</span>
-        <span role="button" tabindex="0" onclick="openForm();return false;" class="nav-neon-green" style="cursor: pointer;">무료 체험신청</span>
+        <span role="button" tabindex="0" onclick="scrollToSectionPC('hive');return false;" style="cursor: pointer;">하이브 시스템</span>
+        <span role="button" tabindex="0" onclick="scrollToSectionPC('smart');return false;" style="cursor: pointer;">스마트 시스템</span>
+        <span role="button" tabindex="0" onclick="scrollToSectionPC('benefits');return false;" style="cursor: pointer;">도입 효과</span>
+        <span role="button" tabindex="0" onclick="openForm();return false;" class="nav-neon-green" style="cursor: pointer;">사전 예약하기</span>
       </nav>
     </div>
     </header>
@@ -12743,7 +12742,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }
      
            .nav-logo {
-        height: 24px !important;
+        height: 20px !important;
         margin-left: -16px !important; /* 좌측으로 한 칸 이동 */
         margin-right: auto !important;
       }
@@ -12861,7 +12860,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   /* 로고 스타일 */
   #mobile-top-nav-fixed .nav-logo {
-    height: 24px !important;
+    height: 16px !important;
     width: auto !important;
     display: block !important;
     margin-left: -16px !important; /* 좌측으로 한 칸 이동 */
