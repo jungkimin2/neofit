@@ -8901,6 +8901,11 @@ document.addEventListener('DOMContentLoaded', function() {
       boostVideo.currentTime = 0;
       boostVideo.style.opacity = '0';
       boostVideo.classList.remove('playing');
+      
+      // 글래스 오버레이 제거
+      const overlay = boostCard.querySelector('.video-glass-overlay');
+      if (overlay) overlay.remove();
+      
       if (isMobile) {
         setTimeout(() => {
           boostVideo.style.display = 'none';
