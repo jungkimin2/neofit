@@ -2732,7 +2732,7 @@ transition: transform 0.4s ease-out, opacity 0.4s ease-out;
     margin-top: 0 !important;
   }
   
-  #boost-card .card-front > div[style*="z-index: 2"] {
+  #boost-card .card-front > div[style*="z-index"] {
     transform: translateY(0) !important;
     padding-top: 20px !important;
   }
@@ -8901,7 +8901,7 @@ document.addEventListener('DOMContentLoaded', function() {
             right: 0;
             bottom: 0;
             border-radius: 20px;
-            border: 2px solid rgba(248, 113, 113, 0.5);
+            border: 1px solid rgba(248, 113, 113, 0.4);
             background: linear-gradient(135deg, 
               rgba(248, 113, 113, 0.15) 0%, 
               transparent 40%, 
@@ -8910,7 +8910,7 @@ document.addEventListener('DOMContentLoaded', function() {
             pointer-events: none;
             z-index: 10;
             box-shadow: inset 0 0 30px rgba(248, 113, 113, 0.2),
-                        0 0 60px rgba(248, 113, 113, 0.3);
+                        0 0 40px rgba(248, 113, 113, 0.2);
           `;
           this.querySelector('.card-front').appendChild(glassOverlay);
           
@@ -9484,14 +9484,14 @@ document.addEventListener('DOMContentLoaded', function() {
         if (boostVideo && !boostVideo.classList.contains('playing')) {
           // 비디오가 카드 전체를 덮도록 스타일 설정
           boostVideo.style.position = 'absolute';
-          boostVideo.style.top = '10px';
-          boostVideo.style.left = '10px';
-          boostVideo.style.width = 'calc(100% - 20px)';
-          boostVideo.style.height = 'calc(100% - 20px)';
+          boostVideo.style.top = '5px';
+          boostVideo.style.left = '5px';
+          boostVideo.style.width = 'calc(100% - 10px)';
+          boostVideo.style.height = 'calc(100% - 10px)';
           boostVideo.style.objectFit = 'cover';
           boostVideo.style.borderRadius = '16px';
-          boostVideo.style.border = '2px solid rgba(248, 113, 113, 0.6)';
-          boostVideo.style.boxShadow = 'inset 0 0 30px rgba(248, 113, 113, 0.3), 0 0 50px rgba(248, 113, 113, 0.4)';
+          boostVideo.style.border = '1px solid rgba(248, 113, 113, 0.4)';
+          boostVideo.style.boxShadow = 'inset 0 0 15px rgba(248, 113, 113, 0.2), 0 0 30px rgba(248, 113, 113, 0.3)';
           boostVideo.style.zIndex = '999';
           boostVideo.style.opacity = '1';
           boostVideo.style.display = 'block';
@@ -9509,10 +9509,11 @@ document.addEventListener('DOMContentLoaded', function() {
             playPromise.catch(e => console.log('Video play failed:', e));
           }
           
-          // 콘텐츠 완전히 숨기기
+          // 모바일에서는 콘텐츠를 숨기지 않음
           if (boostContent) {
-            boostContent.style.opacity = '0';
-            boostContent.style.visibility = 'hidden';
+            // 콘텐츠 표시 유지
+            boostContent.style.opacity = '1';
+            boostContent.style.visibility = 'visible';
           }
           if (clickIndicator) {
             clickIndicator.style.display = 'none';
@@ -10190,9 +10191,32 @@ document.addEventListener('DOMContentLoaded', function() {
   
   /* 모바일에서 비디오 글래스 오버레이 - 얇게 수정 */
   .video-glass-overlay {
-    border-width: 2px !important;
-    box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.1),
-                0 0 40px currentColor !important;
+    border-width: 1px !important;
+    box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.05),
+                0 0 20px currentColor !important;
+  }
+  
+  /* 모바일에서 NEO BOOST 카드 콘텐츠 확실히 표시 */
+  #boost-card .card-front > div[style*="z-index"] {
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+  
+  #boost-card .card-front h3,
+  #boost-card .card-front img,
+  #boost-card .card-front p {
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: block !important;
+  }
+  
+  /* 모바일에서 트레이닝 카드 크기 유지 */
+  .training-card.active {
+    width: 280px !important;
+    height: 360px !important;
   }
   
   .card-indicators .indicator:active {
