@@ -7861,64 +7861,6 @@ if (window.innerWidth <= 768) {
     return false;
   }
   
-  // 모바일 메뉴 열기 함수
-  function openMobileMenu() {
-    const simpleMenu = document.getElementById('simple-mobile-menu');
-    const menuContent = simpleMenu.querySelector('.mobile-menu-content');
-    const menuBtn = document.querySelector('.nav-menu-btn');
-    
-    if (simpleMenu && menuContent) {
-      // 메뉴 표시
-      simpleMenu.style.visibility = 'visible';
-      simpleMenu.style.opacity = '1';
-      simpleMenu.style.background = 'rgba(0,0,0,0.95)';
-      
-      // 메뉴 내용 슬라이드 다운
-      setTimeout(() => {
-        menuContent.style.transform = 'translateY(0)';
-      }, 10);
-      
-      // 버튼 변경
-      if (menuBtn) {
-        menuBtn.innerHTML = '✕';
-      }
-      
-      // body 스크롤 막기
-      document.body.style.overflow = 'hidden';
-    }
-  }
-  
-  // 모바일 메뉴 닫기 함수
-  function closeMobileMenu() {
-    const simpleMenu = document.getElementById('simple-mobile-menu');
-    const menuContent = simpleMenu.querySelector('.mobile-menu-content');
-    const menuBtn = document.querySelector('.nav-menu-btn');
-    
-    if (simpleMenu && menuContent) {
-      // 메뉴 내용 슬라이드 업
-      menuContent.style.transform = 'translateY(-100%)';
-      
-      // 배경 페이드 아웃
-      setTimeout(() => {
-        simpleMenu.style.opacity = '0';
-        simpleMenu.style.background = 'rgba(0,0,0,0)';
-        
-        // 완전히 숨기기
-        setTimeout(() => {
-          simpleMenu.style.visibility = 'hidden';
-        }, 300);
-      }, 200);
-      
-      // 버튼 원래대로
-      if (menuBtn) {
-        menuBtn.innerHTML = '&#9776;';
-      }
-      
-      // body 스크롤 복원
-      document.body.style.overflow = '';
-    }
-  }
-
   // PC용 스크롤 함수
   function scrollToSectionPC(sectionId) {
     const section = document.getElementById(sectionId);
@@ -14864,11 +14806,14 @@ document.addEventListener('DOMContentLoaded', function() {
       e.stopPropagation();
       
       // 메뉴 토글
-      const menuContent = simpleMenu.querySelector('.mobile-menu-content');
-      if (simpleMenu.style.visibility === 'hidden' || !simpleMenu.style.visibility) {
-        openMobileMenu();
+      if (simpleMenu.style.display === 'none' || !simpleMenu.style.display) {
+        simpleMenu.style.display = 'block';
+        menuBtn.innerHTML = '✕';
+        console.log('메뉴 열림');
       } else {
-        closeMobileMenu();
+        simpleMenu.style.display = 'none';
+        menuBtn.innerHTML = '&#9776;';
+        console.log('메뉴 닫힘');
       }
     });
     
