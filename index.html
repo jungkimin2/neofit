@@ -1013,8 +1013,18 @@ div > p.smart-guide-text {
   }
   
   .training-card img {
-    width: 130px !important;
-    height: 130px !important;
+    width: 150px !important;
+    height: 150px !important;
+    margin: 15px 0 !important;
+    object-fit: contain !important;
+  }
+  
+  /* 더 구체적인 선택자로 강제 적용 */
+  #sync-card img[src*="neosync.png"],
+  #balance-card img[src*="neoblance.png"],
+  #boost-card img[src*="neoboots.png"] {
+    width: 150px !important;
+    height: 150px !important;
     margin: 15px 0 !important;
     object-fit: contain !important;
   }
