@@ -721,9 +721,6 @@ pointer-events: auto !important;
 }
 </style>
 <style>
-/* 기존 모바일에서 .neo-smart-logo.front 숨김 처리 코드는 삭제됨 */
-</style>
-<style>
 /* PC 네비게이션에서 사전 예약하기 네온 효과 */
 .nav-neon-green {
   color: #7BE495 !important;
@@ -985,6 +982,13 @@ div > p.smart-guide-text {
   .training-card .card-front {
     padding: 20px !important;
     border-width: 2px !important;
+  }
+  
+  /* 모바일에서 심볼 로고 이미지 크기 확대 */
+  .training-card img {
+    width: 70% !important;
+    height: auto !important;
+    margin-bottom: 15px !important;
   }
   
   /* 네오 싱크 카드 배경색 - 완전 불투명 배경 */
@@ -2346,10 +2350,6 @@ section {
     box-shadow: 0 0 20px rgba(123, 228, 149, 0.4), 0 0 10px rgba(123, 228, 149, 0.3);
     animation: floatY 4s ease-in-out infinite;
   }
-  /* @keyframes floatY {
-    0%, 100% { transform: translate(-50%, -50%) rotate(-2deg) translateY(0px); }
-    50% { transform: translate(-50%, -50%) rotate(-2deg) translateY(-8px); }
-  } */
   .smart-caption {
     margin-top: 16px;
     font-size: 1rem !important;
@@ -2846,18 +2846,6 @@ document.addEventListener('DOMContentLoaded', function() {
     <button class="nav-menu-btn" style="background: none; border: none; color: #7BE495; font-size: 24px; padding: 8px; cursor: pointer; position: relative; z-index: 999999999;">&#9776;</button>
   </div>
 </div>
-
-<!-- 모바일 메뉴 오버레이 -->
-<div id="simple-mobile-menu" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.95); z-index: 2147483646;">
-  <div style="position: fixed; top: 60px; left: 0; right: 0; background: #000;">
-    <a href="#" onclick="document.getElementById('simple-mobile-menu').style.display='none'; return true;" style="display: block; padding: 20px; color: #fff; text-decoration: none; border-bottom: 1px solid rgba(123,228,149,0.2); font-size: 18px; text-align: center;">네오핏</a>
-    <a href="#hive" onclick="document.getElementById('simple-mobile-menu').style.display='none'; return true;" style="display: block; padding: 20px; color: #fff; text-decoration: none; border-bottom: 1px solid rgba(123,228,149,0.2); font-size: 18px; text-align: center;">네오 하이브</a>
-    <a href="#smart" onclick="document.getElementById('simple-mobile-menu').style.display='none'; return true;" style="display: block; padding: 20px; color: #fff; text-decoration: none; border-bottom: 1px solid rgba(123,228,149,0.2); font-size: 18px; text-align: center;">네오 스마트</a>
-    <a href="#pilates" onclick="document.getElementById('simple-mobile-menu').style.display='none'; return true;" style="display: block; padding: 20px; color: #fff; text-decoration: none; border-bottom: 1px solid rgba(123,228,149,0.2); font-size: 18px; text-align: center;">네오 필라테스</a>
-    <a href="javascript:void(0)" onclick="openForm(); document.getElementById('simple-mobile-menu').style.display='none'; return false;" style="display: block; padding: 20px; color: #7BE495; text-decoration: none; font-weight: 600; font-size: 18px; text-align: center; border-bottom: 2px solid #7BE495;">무료 체험하기</a>
-  </div>
-</div>
-
 
 
 <!-- PC 전용 네비게이션 바 -->
@@ -7891,10 +7879,39 @@ if (window.innerWidth <= 768) {
         // 모바일 환경에서만 작동
         if (window.innerWidth <= 768) {
           e.preventDefault();
-          window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-          });
+          e.stopPropagation();
+          
+          // 톡톡 문의 버튼이 영향받지 않도록 보호
+          const talkButton = document.querySelector('.custom-talk-button');
+          if (talkButton) {
+            const currentZIndex = talkButton.style.zIndex;
+            const currentDisplay = talkButton.style.display;
+            
+            window.scrollTo({
+              top: 0,
+              behavior: 'smooth'
+            });
+            
+            // 스크롤 후 톡톡 버튼 스타일 복원
+            setTimeout(() => {
+              if (talkButton) {
+                talkButton.style.setProperty('z-index', '2147483647', 'important');
+                talkButton.style.setProperty('display', 'flex', 'important');
+                
+                // 아이콘 SVG도 확인
+                const talkIcon = talkButton.querySelector('.talk-icon svg');
+                if (talkIcon) {
+                  talkIcon.style.setProperty('display', 'block', 'important');
+                  talkIcon.style.setProperty('opacity', '1', 'important');
+                }
+              }
+            }, 100);
+          } else {
+            window.scrollTo({
+              top: 0,
+              behavior: 'smooth'
+            });
+          }
         }
       });
     }
@@ -10127,12 +10144,9 @@ setTimeout(forceNeoPilatesPosition, 1000);
 </script>
 
 <!-- 커스텀 톡톡 문의 버튼 -->
-<div class="custom-talk-button" onclick="window.open('https://talk.naver.com/ct/w4eeth?frm=mnmb&frm=nmb_detail#nafullscreen', 'naverTalkChat', 'width=500,height=800,toolbar=no,menubar=no,scrollbars=yes,resizable=yes')">
+<div class="custom-talk-button" id="custom-talk-button" onclick="window.open('https://talk.naver.com/ct/w4eeth?frm=mnmb&frm=nmb_detail#nafullscreen', 'naverTalkChat', 'width=500,height=800,toolbar=no,menubar=no,scrollbars=yes,resizable=yes')">
   <div class="talk-icon">
-    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M12 2C6.48 2 2 6.48 2 12C2 13.19 2.23 14.32 2.64 15.36L2 22L8.64 21.36C9.68 21.77 10.81 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2Z" fill="#7BE495"/>
-      <path d="M8 11H8.01M12 11H12.01M16 11H16.01" stroke="#000" stroke-width="2" stroke-linecap="round"/>
-    </svg>
+    <img src="./images/neo2020.png" alt="톡톡 문의" class="talk-icon-img" style="display: block !important; visibility: visible !important; opacity: 1 !important;">
   </div>
   <div class="talk-text">톡톡 문의</div>
   <div class="talk-pulse"></div>
@@ -10141,38 +10155,53 @@ setTimeout(forceNeoPilatesPosition, 1000);
 <style>
 /* 커스텀 톡톡 문의 버튼 스타일 */
 .custom-talk-button {
-  position: fixed;
-  bottom: 30px;
-  right: 30px;
-  z-index: 2147483647;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
-  background: linear-gradient(135deg, #0A0F0D 0%, #1a2f1a 100%);
-  border: 2px solid #7BE495;
-  border-radius: 40px;
-  cursor: pointer;
-  transition: all 0.3s ease;
+  position: fixed !important;
+  bottom: 30px !important;
+  right: 30px !important;
+  z-index: 2147483647 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  padding: 8px 16px !important;
+  background: linear-gradient(135deg, #0A0F0D 0%, #1a2f1a 100%) !important;
+  border: 2px solid #7BE495 !important;
+  border-radius: 40px !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
   box-shadow: 0 0 15px rgba(123, 228, 149, 0.5), 
-              0 3px 10px rgba(0, 0, 0, 0.3);
+              0 3px 10px rgba(0, 0, 0, 0.3) !important;
+  visibility: visible !important;
+  opacity: 1 !important;
 }
 
 /* 아이콘 스타일 */
 .talk-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 28px;
-  height: 28px;
-  background: rgba(123, 228, 149, 0.1);
-  border-radius: 50%;
-  flex-shrink: 0;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 28px !important;
+  height: 28px !important;
+  background: rgba(123, 228, 149, 0.1) !important;
+  border-radius: 50% !important;
+  flex-shrink: 0 !important;
+  visibility: visible !important;
+  opacity: 1 !important;
 }
 
 .talk-icon svg {
-  width: 20px;
-  height: 20px;
+  width: 20px !important;
+  height: 20px !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* 이미지 아이콘 스타일 */
+.talk-icon-img {
+  width: 20px !important;
+  height: 20px !important;
+  object-fit: contain !important;
+  display: block !important;
 }
 
 /* 텍스트 스타일 */
@@ -10231,28 +10260,44 @@ setTimeout(forceNeoPilatesPosition, 1000);
   .custom-talk-button {
     bottom: 20px !important;
     right: 20px !important;
-    padding: 10px !important;
+    padding: 8px !important;
     border-radius: 50% !important;
-    width: 45px !important;
-    height: 45px !important;
+    width: 50px !important;
+    height: 50px !important;
     justify-content: center !important;
-    z-index: 2147483647 !important; /* 최상위 z-index 강제 적용 */
+    z-index: 2147483647 !important;
     position: fixed !important;
     display: flex !important;
+    background: #000 !important;
+    border: 3px solid #7BE495 !important;
+    box-shadow: 0 0 20px rgba(123, 228, 149, 0.8), 
+                0 0 40px rgba(123, 228, 149, 0.4),
+                inset 0 0 10px rgba(123, 228, 149, 0.2) !important;
   }
   
   .talk-text {
-    display: none;
+    display: none !important;
   }
   
   .talk-icon {
-    width: 25px;
-    height: 25px;
+    width: 35px !important;
+    height: 35px !important;
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    background: transparent !important;
+    align-items: center !important;
+    justify-content: center !important;
   }
   
-  .talk-icon svg {
-    width: 20px;
-    height: 20px;
+  .talk-icon svg,
+  .talk-icon-img {
+    width: 28px !important;
+    height: 28px !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    object-fit: contain !important;
   }
   
   .talk-pulse {
@@ -10416,7 +10461,6 @@ if (video) {
 }
 });
 </script>
-</html>
 <style>
   .hive-image {
     width: 160px; /* Default PC width, JS might override for mobile */
@@ -14453,8 +14497,6 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 })();
 </script>
-
-</html>
 <style>
   /* 혜택 안내 박스 스타일 */
   .clickable-benefit-box {
@@ -14783,43 +14825,119 @@ document.addEventListener('DOMContentLoaded', function() {
 })();
 </script>
 
-<!-- 간단한 메뉴 토글 스크립트 -->
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-  // 버튼 찾기
-  const menuBtn = document.querySelector('.nav-menu-btn');
-  const simpleMenu = document.getElementById('simple-mobile-menu');
-  
-  if (menuBtn && simpleMenu) {
-    // 버튼 클릭 이벤트
-    menuBtn.addEventListener('click', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
+// 톡톡 문의 버튼 보호 스크립트
+(function() {
+  // 톡톡 버튼 스타일 강제 적용 함수
+  function protectTalkButton() {
+    const talkButton = document.getElementById('custom-talk-button');
+    if (talkButton) {
+      // 버튼 자체 스타일 보호
+      talkButton.style.cssText = `
+        position: fixed !important;
+        bottom: 20px !important;
+        right: 20px !important;
+        z-index: 2147483647 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        transform: none !important;
+        filter: none !important;
+        padding: 10px !important;
+        border-radius: 50% !important;
+        width: 50px !important;
+        height: 50px !important;
+        background: #000 !important;
+        border: 3px solid #7BE495 !important;
+        box-shadow: 0 0 20px rgba(123, 228, 149, 0.8), 0 0 40px rgba(123, 228, 149, 0.4), inset 0 0 10px rgba(123, 228, 149, 0.2) !important;
+      `;
       
-      // 메뉴 토글
-      if (simpleMenu.style.display === 'none' || !simpleMenu.style.display) {
-        simpleMenu.style.display = 'block';
-        menuBtn.innerHTML = '✕';
-        console.log('메뉴 열림');
-      } else {
-        simpleMenu.style.display = 'none';
-        menuBtn.innerHTML = '&#9776;';
-        console.log('메뉴 닫힘');
+      // 아이콘 이미지 보호
+      const img = talkButton.querySelector('.talk-icon-img');
+      if (img) {
+        img.style.cssText = `
+          display: block !important;
+          visibility: visible !important;
+          opacity: 1 !important;
+          width: 28px !important;
+          height: 28px !important;
+          object-fit: contain !important;
+        `;
       }
-    });
-    
-    // 메뉴 바깥 클릭시 닫기
-    simpleMenu.addEventListener('click', function(e) {
-      if (e.target === simpleMenu) {
-        simpleMenu.style.display = 'none';
-        menuBtn.innerHTML = '&#9776;';
+      
+      // 아이콘 SVG 보호 (fallback)
+      const svg = talkButton.querySelector('svg');
+      if (svg) {
+        svg.style.cssText = `
+          display: block !important;
+          visibility: visible !important;
+          opacity: 1 !important;
+          width: 20px !important;
+          height: 20px !important;
+        `;
+        
+        // SVG path 요소들도 보호
+        const paths = svg.querySelectorAll('path');
+        paths.forEach(path => {
+          const fillColor = path.getAttribute('fill') || '#7BE495';
+          const strokeColor = path.getAttribute('stroke') || 'none';
+          path.style.cssText = 'display: block !important; visibility: visible !important; opacity: 1 !important; fill: ' + fillColor + ' !important; stroke: ' + strokeColor + ' !important;';
+        });
       }
-    });
-    
-    console.log('메뉴 시스템 초기화 완료');
-  } else {
-    console.log('메뉴 요소를 찾을 수 없습니다');
+      
+      // 아이콘 컨테이너 보호
+      const icon = talkButton.querySelector('.talk-icon');
+      if (icon) {
+        icon.style.cssText = `
+          display: flex !important;
+          visibility: visible !important;
+          opacity: 1 !important;
+          width: 25px !important;
+          height: 25px !important;
+          align-items: center !important;
+          justify-content: center !important;
+          background: rgba(123, 228, 149, 0.1) !important;
+          border-radius: 50% !important;
+        `;
+      }
+    }
   }
-});
+  
+  // 초기 실행
+  protectTalkButton();
+  
+  // 주기적으로 스타일 보호 (100ms마다)
+  setInterval(protectTalkButton, 100);
+  
+  // 스크롤 이벤트 시에도 보호
+  let scrollTimeout;
+  window.addEventListener('scroll', function() {
+    clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(protectTalkButton, 50);
+  });
+  
+  // 클릭 이벤트 시에도 보호
+  document.addEventListener('click', function() {
+    setTimeout(protectTalkButton, 50);
+  });
+  
+  // MutationObserver로 DOM 변경 감지
+  const observer = new MutationObserver(function(mutations) {
+    protectTalkButton();
+  });
+  
+  // DOM이 준비되면 observer 시작
+  if (document.body) {
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ['style', 'class']
+    });
+  }
+})();
 </script>
+
 </html> 
