@@ -3054,9 +3054,9 @@ document.addEventListener('DOMContentLoaded', function() {
             <video class="sync-hover-video" src="./videos/neosyncvido.mp4" loop playsinline muted preload="auto" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.3s ease; z-index: 1; pointer-events: none;"></video>
             
             <!-- 기존 콘텐츠를 relative로 변경하여 비디오 위에 표시 -->
-            <div style="position: relative; z-index: 2; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center;">
+            <div style="position: relative; z-index: 2; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; padding-top: 32px;">
               <h3 style="color: #7BE495; font-size: 2rem; margin-bottom: 20px; text-shadow: 0 0 20px rgba(123,228,149,0.8);">NEO SYNC</h3>
-              <img src="./images/neosync.png" alt="네오 싱크" style="width: 80%; height: auto; margin-bottom: 20px; filter: drop-shadow(0 0 20px rgba(123,228,149,0.5));">
+              <img src="./images/neosync.png" alt="네오 싱크" style="width: 80%; height: auto; margin-bottom: 36px; filter: drop-shadow(0 0 20px rgba(123,228,149,0.5));">
               <p style="color: #fff; font-size: 1.1rem; text-align: center;">기초 체력과 움직임의 동기화</p>
               <p style="color: #aaa; font-size: 0.95rem; text-align: center; margin-top: 10px;">팀원들과 함께 기본기를 다지는 입문 프로그램</p>
             </div>
@@ -9581,17 +9581,20 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (boostVideo && !boostVideo.classList.contains('playing')) {
           // 비디오가 카드 전체를 덮도록 스타일 설정
-          boostVideo.style.position = 'absolute';
-          boostVideo.style.top = '-2px';  // 테두리를 덮기 위해 살짝 넘어감
-          boostVideo.style.left = '-2px';
-          boostVideo.style.width = 'calc(100% + 4px)';
-          boostVideo.style.height = 'calc(100% + 4px)';
+          boostVideo.style.position = 'fixed';  // fixed로 변경하여 전체 화면 커버
+          boostVideo.style.top = '50%';
+          boostVideo.style.left = '50%';
+          boostVideo.style.transform = 'translate(-50%, -50%)';
+          boostVideo.style.width = '90vw';  // 화면 너비의 90%
+          boostVideo.style.height = '70vh';  // 화면 높이의 70%
+          boostVideo.style.maxWidth = '400px';
+          boostVideo.style.maxHeight = '600px';
           boostVideo.style.objectFit = 'cover';
           boostVideo.style.borderRadius = '20px';
           boostVideo.style.border = 'none';
           boostVideo.style.display = 'block';
           boostVideo.style.boxShadow = 'none';
-          boostVideo.style.zIndex = '999';
+          boostVideo.style.zIndex = '9999';
           boostVideo.style.transition = 'opacity 0.3s ease';
           boostVideo.style.opacity = '1';
           boostVideo.style.backgroundColor = '#000';
@@ -9661,10 +9664,14 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // opacity 전환이 끝난 후 나머지 스타일 초기화
             setTimeout(() => {
+              boostVideo.style.position = '';
               boostVideo.style.top = '';
               boostVideo.style.left = '';
+              boostVideo.style.transform = '';
               boostVideo.style.width = '';
               boostVideo.style.height = '';
+              boostVideo.style.maxWidth = '';
+              boostVideo.style.maxHeight = '';
               boostVideo.style.borderRadius = '';
               boostVideo.style.border = '';
               boostVideo.style.boxShadow = '';
@@ -9715,10 +9722,14 @@ document.addEventListener('DOMContentLoaded', function() {
           
           // opacity 전환이 끝난 후 나머지 스타일 초기화
           setTimeout(() => {
+            boostVideo.style.position = '';
             boostVideo.style.top = '';
             boostVideo.style.left = '';
+            boostVideo.style.transform = '';
             boostVideo.style.width = '';
             boostVideo.style.height = '';
+            boostVideo.style.maxWidth = '';
+            boostVideo.style.maxHeight = '';
             boostVideo.style.borderRadius = '';
             boostVideo.style.border = '';
             boostVideo.style.boxShadow = '';
