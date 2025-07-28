@@ -2714,29 +2714,6 @@ transition: transform 0.4s ease-out, opacity 0.4s ease-out;
     color: #666 !important;
   }
 }
-
-/* 모바일 환경에서 네오 부스트 카드 초기 위치 정렬 */
-@media (max-width: 768px) {
-  #boost-card h3 {
-    transform: translateY(0) !important;
-    margin-top: 0 !important;
-  }
-  
-  #boost-card img[src*="neoboots.png"] {
-    transform: translateY(0) !important;
-    margin-top: 0 !important;
-  }
-  
-  #boost-card p {
-    transform: translateY(0) !important;
-    margin-top: 0 !important;
-  }
-  
-  #boost-card .card-front > div[style*="z-index"] {
-    transform: translateY(0) !important;
-    padding-top: 20px !important;
-  }
-}
 </style>
 
 <!-- 뒷면보기 버튼 클릭 테스트 -->
@@ -2958,13 +2935,11 @@ document.addEventListener('DOMContentLoaded', function() {
 </style>
 <body>
 <!-- 모바일 전용 상단 고정 네비게이션 (body 직속) -->
-<div id="mobile-top-nav-fixed" style="position: fixed; top: 0; left: 0; right: 0; z-index: 2147483647; height: 50px; background: #000;">
-  <div class="nav-bar" style="position: relative; height: 100%; display: flex; justify-content: space-between; align-items: center; padding: 0 16px;">
-    <img src="./images/neohive3.png" alt="NeoHive" class="nav-logo" style="height: 20px; position: relative; top: 8px;"> <!-- 로고 0.5칸 아래로 -->
+<div id="mobile-top-nav-fixed" style="position: fixed; top: 0; left: 0; right: 0; z-index: 2147483647;">
+  <div class="nav-bar">
+    <img src="./images/neohive3.png" alt="NeoHive" class="nav-logo">
     <button class="nav-menu-btn" onclick="toggleNav()" style="background: none; border: none; color: #7BE495; font-size: 24px; padding: 8px; cursor: pointer; position: relative; z-index: 999999999;">&#9776;</button>
   </div>
-  <!-- 그린바를 2칸 위로 -->
-  <div style="position: absolute; bottom: 32px; left: 0; right: 0; width: 100%; height: 3px; background: linear-gradient(to right, #7BE495, #3AC8A8); box-shadow: 0 0 8px rgba(123, 228, 149, 0.4);"></div>
 </div>
 
 <!-- 모바일 메뉴 오버레이 -->
@@ -3073,7 +3048,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <!-- 비디오 요소 추가 -->
             <video class="boost-hover-video" src="./videos/neoboots.mp4" loop playsinline muted preload="auto" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.3s ease; z-index: 1; pointer-events: none;"></video>
             
-            <div style="position: relative; z-index: 10; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center;">
+            <div style="position: relative; z-index: 2; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center;">
               <h3 style="color: #F87171; font-size: 2rem; margin-bottom: 20px; text-shadow: 0 0 20px rgba(248,113,113,0.8);">NEO BOOST</h3>
               <img src="./images/neoboots.png" alt="네오 부스트" style="width: 80%; height: auto; margin-bottom: 20px; filter: drop-shadow(0 0 20px rgba(248,113,113,0.5));">
               <p style="color: #fff; font-size: 1.1rem; text-align: center;">폭발적인 퍼포먼스 향상</p>
@@ -7700,75 +7675,6 @@ if (window.innerWidth <= 768) {
   // 네오 하이브 비디오 재생 상태 관리
   let isHiveVideoPlaying = false;
   
-  // 네오 하이브 비디오 스크롤 자동 재생
-  function setupHiveVideoAutoplay() {
-    const centerVideo = document.getElementById('centerVideo');
-    const hiveSection = document.getElementById('hive');
-    
-    if (!centerVideo || !hiveSection) return;
-    
-    // 비디오가 사용자에 의해 수동으로 제어되고 있는지 추적
-    let manualControl = false;
-    
-    // 비디오 클릭 이벤트 추가 (스피커 버튼 제외)
-    const videoPhone = document.querySelector('.video-phone');
-    if (videoPhone) {
-      videoPhone.addEventListener('click', function(e) {
-        // 스피커 버튼을 클릭했을 때는 비디오 재생/정지 하지 않음
-        if (e.target.closest('.speaker-button')) {
-          return;
-        }
-        
-        e.stopPropagation();
-        manualControl = true;
-        
-        // 비디오 재생/정지 토글
-        if (centerVideo.paused) {
-          centerVideo.play().then(() => {
-            isHiveVideoPlaying = true;
-            console.log('Neo Hive video playing');
-          }).catch(err => {
-            console.log('Neo Hive video play failed:', err);
-          });
-        } else {
-          centerVideo.pause();
-          isHiveVideoPlaying = false;
-          console.log('Neo Hive video paused');
-        }
-        
-        setTimeout(() => { manualControl = false; }, 2000); // 2초 후 자동 재생 복원
-      });
-    }
-    
-    const videoObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          // 비디오가 화면에 보이고 수동 제어 중이 아니면 자동 재생
-          if (!manualControl && !isHiveVideoPlaying && centerVideo.paused) {
-            centerVideo.play().then(() => {
-              isHiveVideoPlaying = true;
-              console.log('Neo Hive video auto-playing on scroll');
-            }).catch(err => {
-              console.log('Neo Hive video autoplay failed:', err);
-            });
-          }
-        } else {
-          // 비디오가 화면에서 벗어나면 일시정지
-          if (!manualControl && isHiveVideoPlaying && !centerVideo.paused) {
-            centerVideo.pause();
-            isHiveVideoPlaying = false;
-            console.log('Neo Hive video paused - out of viewport');
-          }
-        }
-      });
-    }, {
-      threshold: 0.3, // 비디오가 30% 이상 보일 때 재생 (더 빨리 시작)
-      rootMargin: '0px'
-    });
-    
-    videoObserver.observe(hiveSection);
-  }
-  
   // 네오 하이브 메인 비디오 음소거 토글 함수
   function toggleMute() {
     const video = document.getElementById('centerVideo');
@@ -7816,9 +7722,6 @@ if (window.innerWidth <= 768) {
   
   // PC에서만 네비게이션 링크 클릭 시 정확한 위치로 스크롤
   document.addEventListener('DOMContentLoaded', function() {
-    // 네오 하이브 비디오 스크롤 자동 재생 설정
-    setupHiveVideoAutoplay();
-    
     if (window.innerWidth > 768) {
       const navLinks = document.querySelectorAll('nav a[href^="#"]');
       
@@ -8620,7 +8523,29 @@ if (window.innerWidth <= 768) {
     });
   }
 
-  // setupHiveVideoAutoplay에서 이미 클릭 이벤트를 처리하므로 중복 제거
+  // 비디오 클릭 시 원래 상태로 복귀
+  if (videoPhone) {
+    videoPhone.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (isTransitioning) return;
+      
+      slideIndex = -1;
+      showSlide(slideIndex);
+      
+      // 비디오 재생/일시정지 토글
+      const video = document.getElementById('centerVideo');
+      if (slideIndex === -1) {
+        // 중앙에 있을 때만 비디오 재생
+        if (!isHiveVideoPlaying && video) {
+          video.play();
+          isHiveVideoPlaying = true;
+        } else if (isHiveVideoPlaying && video) {
+          video.pause();
+          isHiveVideoPlaying = false;
+        }
+      }
+    });
+  }
 
   // Reset all if clicked outside
   document.querySelector('.hive-showcase').addEventListener('click', (e) => {
@@ -8877,7 +8802,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // 네오 부스트 카드 클릭 이벤트
-    const boostContent = boostCard.querySelector('.card-front > div[style*="z-index"]');
+    const boostContent = boostCard.querySelector('.card-front > div[style*="z-index: 2"]');
     const boostClickIndicator = boostCard.querySelector('.click-indicator');
     
     boostCard.addEventListener('click', function(e) {
@@ -8903,7 +8828,7 @@ document.addEventListener('DOMContentLoaded', function() {
             right: 0;
             bottom: 0;
             border-radius: 20px;
-            border: 1px solid rgba(248, 113, 113, 0.4);
+            border: 3px solid rgba(248, 113, 113, 0.5);
             background: linear-gradient(135deg, 
               rgba(248, 113, 113, 0.15) 0%, 
               transparent 40%, 
@@ -8912,7 +8837,7 @@ document.addEventListener('DOMContentLoaded', function() {
             pointer-events: none;
             z-index: 10;
             box-shadow: inset 0 0 30px rgba(248, 113, 113, 0.2),
-                        0 0 40px rgba(248, 113, 113, 0.2);
+                        0 0 60px rgba(248, 113, 113, 0.3);
           `;
           this.querySelector('.card-front').appendChild(glassOverlay);
           
@@ -9029,7 +8954,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // 네오 부스트 비디오 정지
     const boostVideo = boostCard.querySelector('.boost-hover-video');
-    const boostContent = boostCard.querySelector('.card-front > div[style*="z-index"]');
+    const boostContent = boostCard.querySelector('.card-front > div[style*="z-index: 2"]');
     const boostClickIndicator = boostCard.querySelector('.click-indicator');
     
     if (boostVideo && (boostVideo.classList.contains('playing') || isBoostVideoPlaying)) {
@@ -9480,20 +9405,20 @@ document.addEventListener('DOMContentLoaded', function() {
       // 모바일에서 네오 부스트 카드가 활성화되고 클릭된 경우 비디오 재생
       if (isMobile && cardId === 'boost' && this.classList.contains('active')) {
         const boostVideo = this.querySelector('.boost-hover-video');
-        const boostContent = this.querySelector('.card-front > div[style*="z-index"]');
+        const boostContent = this.querySelector('.card-front > div[style*="z-index: 2"]');
         const clickIndicator = this.querySelector('.click-indicator');
         
         if (boostVideo && !boostVideo.classList.contains('playing')) {
           // 비디오가 카드 전체를 덮도록 스타일 설정
           boostVideo.style.position = 'absolute';
-          boostVideo.style.top = '5px';
-          boostVideo.style.left = '5px';
-          boostVideo.style.width = 'calc(100% - 10px)';
-          boostVideo.style.height = 'calc(100% - 10px)';
+          boostVideo.style.top = '10px';
+          boostVideo.style.left = '10px';
+          boostVideo.style.width = 'calc(100% - 20px)';
+          boostVideo.style.height = 'calc(100% - 20px)';
           boostVideo.style.objectFit = 'cover';
           boostVideo.style.borderRadius = '16px';
-          boostVideo.style.border = '1px solid rgba(248, 113, 113, 0.4)';
-          boostVideo.style.boxShadow = 'inset 0 0 15px rgba(248, 113, 113, 0.2), 0 0 30px rgba(248, 113, 113, 0.3)';
+          boostVideo.style.border = '3px solid rgba(248, 113, 113, 0.6)';
+          boostVideo.style.boxShadow = 'inset 0 0 30px rgba(248, 113, 113, 0.3), 0 0 50px rgba(248, 113, 113, 0.4)';
           boostVideo.style.zIndex = '999';
           boostVideo.style.opacity = '1';
           boostVideo.style.display = 'block';
@@ -9511,11 +9436,10 @@ document.addEventListener('DOMContentLoaded', function() {
             playPromise.catch(e => console.log('Video play failed:', e));
           }
           
-          // 모바일에서는 콘텐츠를 숨기지 않음
+          // 콘텐츠 완전히 숨기기
           if (boostContent) {
-            // 콘텐츠 표시 유지
-            boostContent.style.opacity = '1';
-            boostContent.style.visibility = 'visible';
+            boostContent.style.opacity = '0';
+            boostContent.style.visibility = 'hidden';
           }
           if (clickIndicator) {
             clickIndicator.style.display = 'none';
@@ -10191,34 +10115,11 @@ document.addEventListener('DOMContentLoaded', function() {
     transform: translateX(-50%) translateY(-50%) translateZ(0) scale(0.98) !important;
   }
   
-  /* 모바일에서 비디오 글래스 오버레이 - 얇게 수정 */
+  /* 모바일에서 비디오 글래스 오버레이 강화 */
   .video-glass-overlay {
-    border-width: 1px !important;
-    box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.05),
-                0 0 20px currentColor !important;
-  }
-  
-  /* 모바일에서 NEO BOOST 카드 콘텐츠 확실히 표시 */
-  #boost-card .card-front > div[style*="z-index"] {
-    opacity: 1 !important;
-    visibility: visible !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-  }
-  
-  #boost-card .card-front h3,
-  #boost-card .card-front img,
-  #boost-card .card-front p {
-    opacity: 1 !important;
-    visibility: visible !important;
-    display: block !important;
-  }
-  
-  /* 모바일에서 트레이닝 카드 크기 유지 */
-  .training-card.active {
-    width: 280px !important;
-    height: 360px !important;
+    border-width: 4px !important;
+    box-shadow: inset 0 0 40px rgba(255, 255, 255, 0.2),
+                0 0 60px currentColor !important;
   }
   
   .card-indicators .indicator:active {
@@ -13324,7 +13225,7 @@ document.addEventListener('DOMContentLoaded', function() {
     left: 0 !important;
     right: 0 !important;
     width: 100% !important;
-    height: 32px !important; /* 48px - 16px(1칸) = 32px */
+    height: 48px !important;
     background: #000 !important;
     border-bottom: 2px solid #7BE495 !important;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5) !important;
@@ -13344,7 +13245,7 @@ document.addEventListener('DOMContentLoaded', function() {
     display: flex !important;
     justify-content: space-between !important;
     align-items: center !important;
-    height: 32px !important; /* 48px - 16px(1칸) = 32px */
+    height: 48px !important;
     padding: 0 16px !important;
     padding-top: 3px !important; /* 그린바 공간 확보 */
     background: transparent !important;
@@ -13357,7 +13258,7 @@ document.addEventListener('DOMContentLoaded', function() {
     width: auto !important;
     display: block !important;
     margin-left: -16px !important; /* 좌측으로 한 칸 이동 */
-    margin-top: -11.2px !important; /* 4.8px - 16px(1칸) = -11.2px */
+    margin-top: 4.8px !important; /* 0.3칸 아래로 이동 */
     cursor: pointer !important; /* 클릭 가능함을 표시 */
   }
 
@@ -13375,7 +13276,7 @@ document.addEventListener('DOMContentLoaded', function() {
   /* 드롭다운 메뉴 */
   #mobile-top-nav-fixed .nav-menu {
     position: fixed !important;
-    top: 32px !important; /* 48px - 16px(1칸) = 32px */
+    top: 48px !important;
     left: 0 !important;
     right: 0 !important;
     width: 100% !important;
@@ -14836,7 +14737,25 @@ document.addEventListener('DOMContentLoaded', function() {
           });
         }
         
-        // 모바일에서는 setupHiveVideoAutoplay에서 이미 클릭 이벤트를 처리하므로 중복 제거
+        // 비디오 클릭 이벤트 추가
+        const videoPhone = document.querySelector('.video-phone');
+        if (videoPhone) {
+          videoPhone.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const video = document.getElementById('centerVideo');
+            
+            // 중앙에 있을 때만 비디오 재생
+            if (slideIndex === -1 && video) {
+              if (!isHiveVideoPlaying) {
+                video.play();
+                isHiveVideoPlaying = true;
+              } else {
+                video.pause();
+                isHiveVideoPlaying = false;
+              }
+            }
+          });
+        }
       }
     }
     
