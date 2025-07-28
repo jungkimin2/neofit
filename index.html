@@ -1029,13 +1029,21 @@ div > p.smart-guide-text {
     object-fit: contain !important;
   }
   
-  /* 모바일에서 비디오 숨기기 */
-  .training-card .boost-hover-video,
-  .training-card .sync-hover-video,
-  .training-card .balance-hover-video {
-    display: none !important;
+  /* 모바일에서 비디오 초기 설정 */
+  .training-card .boost-hover-video:not(.playing),
+  .training-card .sync-hover-video:not(.playing),
+  .training-card .balance-hover-video:not(.playing) {
     opacity: 0 !important;
     pointer-events: none !important;
+  }
+  
+  /* 재생 중인 비디오는 표시 */
+  .training-card .boost-hover-video.playing,
+  .training-card .sync-hover-video.playing,
+  .training-card .balance-hover-video.playing {
+    opacity: 1 !important;
+    display: block !important;
+    pointer-events: auto !important;
   }
   
   /* 모바일에서 NEO BOOST 카드 콘텐츠 표시 보장 */
