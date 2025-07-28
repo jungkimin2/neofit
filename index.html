@@ -2944,7 +2944,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <!-- 모바일 메뉴 오버레이 -->
 <div id="simple-mobile-menu" class="mobile-menu-overlay" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.95); z-index: 2147483646;">
-  <div class="mobile-menu-content" style="position: fixed; top: 60px; left: 0; right: 0; background: #000;">
+  <div class="mobile-menu-content" style="position: fixed; top: 52px; left: 0; right: 0; background: #000;">
     <a href="#" onclick="document.getElementById('simple-mobile-menu').style.display='none'; return true;" style="display: block; padding: 20px; color: #fff; text-decoration: none; border-bottom: 1px solid rgba(123,228,149,0.2); font-size: 18px; text-align: center;">네오핏</a>
     <a href="#hive" onclick="document.getElementById('simple-mobile-menu').style.display='none'; return true;" style="display: block; padding: 20px; color: #fff; text-decoration: none; border-bottom: 1px solid rgba(123,228,149,0.2); font-size: 18px; text-align: center;">네오 하이브</a>
     <a href="#smart" onclick="document.getElementById('simple-mobile-menu').style.display='none'; return true;" style="display: block; padding: 20px; color: #fff; text-decoration: none; border-bottom: 1px solid rgba(123,228,149,0.2); font-size: 18px; text-align: center;">네오 스마트</a>
@@ -13368,6 +13368,12 @@ document.addEventListener('DOMContentLoaded', function() {
     transform: none !important;
     -webkit-transform: none !important;
     display: none;
+  }
+  
+  /* 더 높은 우선순위로 강제 적용 */
+  html body #mobile-top-nav-fixed .nav-menu,
+  body #mobile-top-nav-fixed .nav-menu[style] {
+    top: 40px !important;
   }
 
   /* 메뉴 아이템 - 일반 항목들은 흰색 */
