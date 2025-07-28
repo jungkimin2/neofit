@@ -1023,20 +1023,42 @@ div > p.smart-guide-text {
   #sync-card img[src*="neosync.png"],
   #balance-card img[src*="neoblance.png"],
   #boost-card img[src*="neoboots.png"] {
-    width: 160px !important;
-    height: 160px !important;
-    margin: -10px 0 -10px 0 !important;  /* 음수 마진으로 공간 줄이기 */
+    width: 140px !important;
+    height: 140px !important;
+    margin: -5px 0 -5px 0 !important;  /* 음수 마진으로 공간 줄이기 */
     object-fit: contain !important;
   }
   
-  /* 모바일에서 NEO BOOST 카드 콘텐츠 표시 보장 */
-  #boost-card .card-front > div {
-    opacity: 1 !important;
-    visibility: visible !important;
+  /* 모바일에서 비디오 숨기기 */
+  .training-card .boost-hover-video,
+  .training-card .sync-hover-video,
+  .training-card .balance-hover-video {
+    display: none !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
   }
   
-  #boost-card h3,
-  #boost-card p,
+  /* 모바일에서 NEO BOOST 카드 콘텐츠 표시 보장 */
+  #boost-card .card-front > div[style*="z-index: 2"] {
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: flex !important;
+  }
+  
+  #boost-card h3 {
+    font-size: 1.5rem !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: block !important;
+  }
+  
+  #boost-card p {
+    font-size: 0.9rem !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: block !important;
+  }
+  
   #boost-card img {
     opacity: 1 !important;
     visibility: visible !important;
@@ -3060,7 +3082,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="card-inner" style="width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.3s; background: transparent; border: none;">
           <div class="card-front" style="position: absolute; width: 100%; height: 100%; backface-visibility: hidden; background: linear-gradient(135deg, #0F0A0A 0%, rgba(248,113,113,0.015) 100%); border: 2px solid #F87171; border-radius: 20px; padding: 30px; display: flex; flex-direction: column; align-items: center; overflow: hidden;">
             <!-- 비디오 요소 추가 -->
-            <video class="boost-hover-video" src="./videos/neoboots.mp4" loop playsinline muted preload="auto" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.3s ease; z-index: 1; pointer-events: none;"></video>
+            <video class="boost-hover-video" src="./videos/neoboots.mp4" loop playsinline muted preload="auto" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0 !important; transition: opacity 0.3s ease; z-index: 1; pointer-events: none; display: none;"></video>
             
             <div style="position: relative; z-index: 2; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;">
               <h3 style="color: #F87171; font-size: 2rem; margin-bottom: 20px; text-shadow: 0 0 20px rgba(248,113,113,0.8); display: block;">NEO BOOST</h3>
@@ -8716,6 +8738,16 @@ document.addEventListener('DOMContentLoaded', function() {
   let isBalanceVideoPlaying = false;
   let isBoostVideoPlaying = false;
   
+  // 모바일에서 비디오 초기화
+  if (window.innerWidth <= 768) {
+    const allVideos = document.querySelectorAll('.boost-hover-video, .sync-hover-video, .balance-hover-video');
+    allVideos.forEach(video => {
+      video.style.display = 'none';
+      video.style.opacity = '0';
+      video.pause();
+    });
+  }
+  
   if (window.innerWidth > 768) {
     // 네오 싱크 카드 클릭 이벤트
     const syncContent = syncCard.querySelector('.card-front > div[style*="z-index: 2"]');
@@ -8923,6 +8955,7 @@ document.addEventListener('DOMContentLoaded', function() {
             bottom: 0;
             border-radius: 20px;
             border: 1px solid rgba(248, 113, 113, 0.5);
+            display: block;
             background: linear-gradient(135deg, 
               rgba(248, 113, 113, 0.15) 0%, 
               transparent 40%, 
@@ -9512,6 +9545,7 @@ document.addEventListener('DOMContentLoaded', function() {
           boostVideo.style.objectFit = 'cover';
           boostVideo.style.borderRadius = '16px';
           boostVideo.style.border = '1px solid rgba(248, 113, 113, 0.6)';
+          boostVideo.style.display = 'block';
           boostVideo.style.boxShadow = 'inset 0 0 30px rgba(248, 113, 113, 0.3), 0 0 50px rgba(248, 113, 113, 0.4)';
           boostVideo.style.zIndex = '999';
           boostVideo.style.opacity = '1';
