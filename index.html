@@ -9326,7 +9326,7 @@ document.addEventListener('DOMContentLoaded', function() {
             right: 0;
             bottom: 0;
             border-radius: 16px;
-            border: 6px solid rgba(123, 228, 149, 0.7);
+            border: 1px solid rgba(123, 228, 149, 0.3);
             background: linear-gradient(135deg, 
               rgba(123, 228, 149, 0.3) 0%, 
               transparent 30%, 
@@ -9448,7 +9448,7 @@ document.addEventListener('DOMContentLoaded', function() {
             right: 0;
             bottom: 0;
             border-radius: 16px;
-            border: 6px solid rgba(147, 197, 253, 0.7);
+            border: 1px solid rgba(147, 197, 253, 0.3);
             background: linear-gradient(135deg, 
               rgba(147, 197, 253, 0.3) 0%, 
               transparent 30%, 
@@ -9561,11 +9561,30 @@ document.addEventListener('DOMContentLoaded', function() {
           boostVideo.style.backgroundColor = '#000';
           boostVideo.classList.add('playing');
           
-          // 모바일에서는 오버레이 없이 비디오만 표시
+          // 모바일에서도 글래스 오버레이 추가
+          const glassOverlay = document.createElement('div');
+          glassOverlay.className = 'video-glass-overlay';
+          glassOverlay.style.cssText = `
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 16px;
+            border: 1px solid rgba(248, 113, 113, 0.3);
+            background: linear-gradient(135deg, 
+              rgba(248, 113, 113, 0.05) 0%, 
+              transparent 40%, 
+              transparent 60%, 
+              rgba(248, 113, 113, 0.05) 100%);
+            pointer-events: none;
+            z-index: 1000;
+          `;
+          this.querySelector('.card-front').appendChild(glassOverlay);
           
-          // 비디오 즉시 재생 (카드 클릭 시에는 소리 재생)
-          boostVideo.muted = false; // 카드 클릭 시 소리 재생
-          boostVideo.volume = 0.3;
+          // 비디오 즉시 재생 (모바일에서는 무음)
+          boostVideo.muted = true; // 모바일에서는 무음
+          boostVideo.volume = 0;
           boostVideo.currentTime = 0; // 처음부터 재생
           const playPromise = boostVideo.play();
           if (playPromise !== undefined) {
