@@ -3125,7 +3125,7 @@ document.addEventListener('DOMContentLoaded', function() {
       <div class="video-phone" style="position:absolute; left:50%; top:50%; transform:translate(-50%, -50%); width: 180px; height: 360px; border-radius: 20px; overflow: hidden; border: 4px solid #7BE495; background: radial-gradient(circle at center, rgba(123, 228, 149, 0.3), #0A0A0A); box-shadow: 0 0 20px rgba(123, 228, 149, 0.6); z-index: 2147483646; opacity: 1; visibility: visible; display: block;" data-original-left="50%" data-original-top="50%" data-original-transform="translate(-50%, -50%)" data-mobile-left="50%" data-mobile-top="50%" data-mobile-transform="translate(-50%, -50%)">
         <video id="centerVideo" src="./videos/neohivevideos22.mp4" loop muted playsinline preload="none" style="width: 100%; height: 100%; object-fit: contain;"></video>
         <!-- 스피커 버튼 -->
-        <button class="speaker-button" onclick="toggleMute()" aria-label="음소거 토글">
+        <button class="speaker-button" onclick="toggleMute(event)" aria-label="음소거 토글">
           <svg id="speakerIcon" viewBox="0 0 24 24">
             <!-- 음소거 해제 아이콘 (기본) -->
             <path id="volumeOn" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
@@ -7674,9 +7674,53 @@ if (window.innerWidth <= 768) {
   
   // 네오 하이브 비디오 재생 상태 관리
   let isHiveVideoPlaying = false;
+  let hiveVideoObserver = null;
+  
+  // 네오 하이브 비디오 스크롤 자동재생 설정
+  function setupHiveVideoScrollPlay() {
+    const video = document.getElementById('centerVideo');
+    const hiveSection = document.getElementById('hive');
+    
+    if (!video || !hiveSection) return;
+    
+    // Intersection Observer로 스크롤 감지
+    hiveVideoObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && entry.intersectionRatio > 0.3) {
+          // 화면에 30% 이상 보이면 자동재생
+          if (!isHiveVideoPlaying && video.paused) {
+            video.play().then(() => {
+              isHiveVideoPlaying = true;
+              console.log('NEO HIVE video auto-play on scroll');
+            }).catch(err => {
+              console.log('Auto-play prevented:', err);
+            });
+          }
+        } else {
+          // 화면에서 벗어나면 일시정지
+          if (isHiveVideoPlaying && !video.paused) {
+            video.pause();
+            isHiveVideoPlaying = false;
+            console.log('NEO HIVE video paused on scroll out');
+          }
+        }
+      });
+    }, {
+      threshold: [0, 0.3, 0.5, 0.7, 1]
+    });
+    
+    // 섹션 관찰 시작
+    hiveVideoObserver.observe(hiveSection);
+  }
   
   // 네오 하이브 메인 비디오 음소거 토글 함수
-  function toggleMute() {
+  function toggleMute(event) {
+    // 이벤트 전파 방지
+    if (event) {
+      event.stopPropagation();
+      event.preventDefault();
+    }
+    
     const video = document.getElementById('centerVideo');
     const volumeOn = document.getElementById('volumeOn');
     const volumeOff = document.getElementById('volumeOff');
@@ -7691,6 +7735,8 @@ if (window.innerWidth <= 768) {
         volumeOn.style.display = 'block';
         volumeOff.style.display = 'none';
       }
+      
+      console.log('NEO HIVE video mute toggled:', video.muted ? 'muted' : 'unmuted');
     }
   }
   
@@ -8259,6 +8305,40 @@ if (window.innerWidth <= 768) {
         img.style.willChange = 'transform, opacity';
         img.style.transform = img.style.transform + ' translateZ(0)';
       });
+      
+      // NEO HIVE 비디오 스크롤 자동재생 설정
+      setupHiveVideoScrollPlay();
+      
+      // 비디오 요소 자체 클릭 이벤트 추가
+      const centerVideo = document.getElementById('centerVideo');
+      if (centerVideo) {
+        centerVideo.addEventListener('click', function(e) {
+          e.stopPropagation();
+          // 비디오 재생/일시정지 토글
+          if (this.paused) {
+            this.play().then(() => {
+              isHiveVideoPlaying = true;
+              console.log('NEO HIVE video played by click');
+            }).catch(err => {
+              console.log('Play prevented:', err);
+            });
+          } else {
+            this.pause();
+            isHiveVideoPlaying = false;
+            console.log('NEO HIVE video paused by click');
+          }
+        });
+      }
+      
+      // 스피커 버튼 이벤트 전파 방지
+      const speakerButton = document.querySelector('.video-phone .speaker-button');
+      if (speakerButton) {
+        speakerButton.addEventListener('click', function(e) {
+          e.stopPropagation();
+          e.preventDefault();
+          console.log('Speaker button clicked - preventing propagation');
+        });
+      }
       
       // 이미지 클릭 시 비디오 정지
       hiveImages.forEach((img) => {
