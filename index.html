@@ -9641,15 +9641,21 @@ document.addEventListener('DOMContentLoaded', function() {
           
           // 비디오 종료 시 원상복구
           boostVideo.addEventListener('ended', function() {
+            // 부드러운 전환을 위해 transition 설정
+            boostVideo.style.transition = 'opacity 0.3s ease';
             boostVideo.style.opacity = '0';
-            boostVideo.style.top = '';
-            boostVideo.style.left = '';
-            boostVideo.style.width = '';
-            boostVideo.style.height = '';
-            boostVideo.style.borderRadius = '';
-            boostVideo.style.border = '';
-            boostVideo.style.boxShadow = '';
-            boostVideo.classList.remove('playing');
+            
+            // opacity 전환이 끝난 후 나머지 스타일 초기화
+            setTimeout(() => {
+              boostVideo.style.top = '';
+              boostVideo.style.left = '';
+              boostVideo.style.width = '';
+              boostVideo.style.height = '';
+              boostVideo.style.borderRadius = '';
+              boostVideo.style.border = '';
+              boostVideo.style.boxShadow = '';
+              boostVideo.classList.remove('playing');
+            }, 300);
             
             // 글래스 오버레이 제거
             const overlay = cards['boost'].querySelector('.video-glass-overlay');
@@ -9658,44 +9664,58 @@ document.addEventListener('DOMContentLoaded', function() {
             
             setTimeout(() => {
               boostVideo.style.display = 'none';
+              // 콘텐츠 부드럽게 나타나기
+              if (boostContent) {
+                boostContent.style.transition = 'opacity 0.3s ease';
+                boostContent.style.opacity = '1';
+                boostContent.style.visibility = 'visible';
+              }
+              if (clickIndicator) {
+                clickIndicator.style.transition = 'opacity 0.3s ease';
+                clickIndicator.style.display = 'block';
+              }
             }, 300);
-            if (boostContent) {
-              boostContent.style.opacity = '1';
-              boostContent.style.visibility = 'visible';
-            }
-            if (clickIndicator) {
-              clickIndicator.style.display = 'block';
-            }
           }, { once: true });
         } else if (boostVideo && boostVideo.classList.contains('playing')) {
           // 재생 중인 비디오 정지
           boostVideo.pause();
           boostVideo.currentTime = 0;
+          
+          // 부드러운 전환을 위해 transition 설정
+          boostVideo.style.transition = 'opacity 0.3s ease';
           boostVideo.style.opacity = '0';
-          boostVideo.style.top = '';
-          boostVideo.style.left = '';
-          boostVideo.style.width = '';
-          boostVideo.style.height = '';
-          boostVideo.style.borderRadius = '';
-          boostVideo.style.border = '';
-          boostVideo.style.boxShadow = '';
-          boostVideo.classList.remove('playing');
           
-          // 글래스 오버레이 제거
+          // 글래스 오버레이 즉시 제거
           const overlay = cards['boost'].querySelector('.video-glass-overlay');
-          if (overlay) overlay.remove();
+          if (overlay) {
+            overlay.style.transition = 'opacity 0.3s ease';
+            overlay.style.opacity = '0';
+            setTimeout(() => overlay.remove(), 300);
+          }
           
-          
+          // opacity 전환이 끝난 후 나머지 스타일 초기화
           setTimeout(() => {
+            boostVideo.style.top = '';
+            boostVideo.style.left = '';
+            boostVideo.style.width = '';
+            boostVideo.style.height = '';
+            boostVideo.style.borderRadius = '';
+            boostVideo.style.border = '';
+            boostVideo.style.boxShadow = '';
+            boostVideo.classList.remove('playing');
             boostVideo.style.display = 'none';
+            
+            // 콘텐츠 부드럽게 나타나기
+            if (boostContent) {
+              boostContent.style.transition = 'opacity 0.3s ease';
+              boostContent.style.opacity = '1';
+              boostContent.style.visibility = 'visible';
+            }
+            if (clickIndicator) {
+              clickIndicator.style.transition = 'opacity 0.3s ease';
+              clickIndicator.style.display = 'block';
+            }
           }, 300);
-          if (boostContent) {
-            boostContent.style.opacity = '1';
-            boostContent.style.visibility = 'visible';
-          }
-          if (clickIndicator) {
-            clickIndicator.style.display = 'block';
-          }
         }
       }
     });
