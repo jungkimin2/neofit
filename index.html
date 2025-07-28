@@ -1023,10 +1023,24 @@ div > p.smart-guide-text {
   #sync-card img[src*="neosync.png"],
   #balance-card img[src*="neoblance.png"],
   #boost-card img[src*="neoboots.png"] {
-    width: 180px !important;
-    height: 180px !important;
-    margin: -15px 0 -15px 0 !important;  /* 음수 마진으로 공간 줄이기 */
+    width: 160px !important;
+    height: 160px !important;
+    margin: -10px 0 -10px 0 !important;  /* 음수 마진으로 공간 줄이기 */
     object-fit: contain !important;
+  }
+  
+  /* 모바일에서 NEO BOOST 카드 콘텐츠 표시 보장 */
+  #boost-card .card-front > div {
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+  
+  #boost-card h3,
+  #boost-card p,
+  #boost-card img {
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: block !important;
   }
   
   .training-card p {
@@ -3048,11 +3062,11 @@ document.addEventListener('DOMContentLoaded', function() {
             <!-- 비디오 요소 추가 -->
             <video class="boost-hover-video" src="./videos/neoboots.mp4" loop playsinline muted preload="auto" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.3s ease; z-index: 1; pointer-events: none;"></video>
             
-            <div style="position: relative; z-index: 2; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center;">
-              <h3 style="color: #F87171; font-size: 2rem; margin-bottom: 20px; text-shadow: 0 0 20px rgba(248,113,113,0.8);">NEO BOOST</h3>
-              <img src="./images/neoboots.png" alt="네오 부스트" style="width: 80%; height: auto; margin-bottom: 20px; filter: drop-shadow(0 0 20px rgba(248,113,113,0.5));">
-              <p style="color: #fff; font-size: 1.1rem; text-align: center;">폭발적인 퍼포먼스 향상</p>
-              <p style="color: #aaa; font-size: 0.95rem; text-align: center; margin-top: 10px;">상급자를 위한 고강도 프로그램</p>
+            <div style="position: relative; z-index: 2; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+              <h3 style="color: #F87171; font-size: 2rem; margin-bottom: 20px; text-shadow: 0 0 20px rgba(248,113,113,0.8); display: block;">NEO BOOST</h3>
+              <img src="./images/neoboots.png" alt="네오 부스트" style="width: 80%; height: auto; margin-bottom: 20px; filter: drop-shadow(0 0 20px rgba(248,113,113,0.5)); display: block; max-width: 280px;">
+              <p style="color: #fff; font-size: 1.1rem; text-align: center; display: block;">폭발적인 퍼포먼스 향상</p>
+              <p style="color: #aaa; font-size: 0.95rem; text-align: center; margin-top: 10px; display: block;">상급자를 위한 고강도 프로그램</p>
             </div>
             <!-- CLICK 표시 추가 -->
             <span class="click-indicator" style="position: absolute; bottom: -1px; left: 50%; transform: translateX(-50%); font-size: 0.7rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; animation: pulse 2s ease-in-out infinite; z-index: 3;">CLICK</span>
@@ -8729,7 +8743,7 @@ document.addEventListener('DOMContentLoaded', function() {
             right: 0;
             bottom: 0;
             border-radius: 20px;
-            border: 3px solid rgba(123, 228, 149, 0.5);
+            border: 1px solid rgba(123, 228, 149, 0.5);
             background: linear-gradient(135deg, 
               rgba(123, 228, 149, 0.15) 0%, 
               transparent 40%, 
@@ -8818,7 +8832,7 @@ document.addEventListener('DOMContentLoaded', function() {
             right: 0;
             bottom: 0;
             border-radius: 20px;
-            border: 3px solid rgba(147, 197, 253, 0.5);
+            border: 1px solid rgba(147, 197, 253, 0.5);
             background: linear-gradient(135deg, 
               rgba(147, 197, 253, 0.15) 0%, 
               transparent 40%, 
@@ -8908,7 +8922,7 @@ document.addEventListener('DOMContentLoaded', function() {
             right: 0;
             bottom: 0;
             border-radius: 20px;
-            border: 3px solid rgba(248, 113, 113, 0.5);
+            border: 1px solid rgba(248, 113, 113, 0.5);
             background: linear-gradient(135deg, 
               rgba(248, 113, 113, 0.15) 0%, 
               transparent 40%, 
@@ -9253,7 +9267,7 @@ document.addEventListener('DOMContentLoaded', function() {
           syncVideo.style.height = 'calc(100% - 20px)';
           syncVideo.style.objectFit = 'cover';
           syncVideo.style.borderRadius = '16px';
-          syncVideo.style.border = '3px solid rgba(123, 228, 149, 0.6)';
+          syncVideo.style.border = '1px solid rgba(123, 228, 149, 0.6)';
           syncVideo.style.boxShadow = 'inset 0 0 30px rgba(123, 228, 149, 0.3), 0 0 50px rgba(123, 228, 149, 0.4)';
           syncVideo.style.zIndex = '999';
           syncVideo.style.opacity = '1';
@@ -9375,7 +9389,7 @@ document.addEventListener('DOMContentLoaded', function() {
           balanceVideo.style.height = 'calc(100% - 20px)';
           balanceVideo.style.objectFit = 'cover';
           balanceVideo.style.borderRadius = '16px';
-          balanceVideo.style.border = '3px solid rgba(147, 197, 253, 0.6)';
+          balanceVideo.style.border = '1px solid rgba(147, 197, 253, 0.6)';
           balanceVideo.style.boxShadow = 'inset 0 0 30px rgba(147, 197, 253, 0.3), 0 0 50px rgba(147, 197, 253, 0.4)';
           balanceVideo.style.zIndex = '999';
           balanceVideo.style.opacity = '1';
@@ -9497,7 +9511,7 @@ document.addEventListener('DOMContentLoaded', function() {
           boostVideo.style.height = 'calc(100% - 20px)';
           boostVideo.style.objectFit = 'cover';
           boostVideo.style.borderRadius = '16px';
-          boostVideo.style.border = '3px solid rgba(248, 113, 113, 0.6)';
+          boostVideo.style.border = '1px solid rgba(248, 113, 113, 0.6)';
           boostVideo.style.boxShadow = 'inset 0 0 30px rgba(248, 113, 113, 0.3), 0 0 50px rgba(248, 113, 113, 0.4)';
           boostVideo.style.zIndex = '999';
           boostVideo.style.opacity = '1';
