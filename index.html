@@ -8950,7 +8950,11 @@ document.addEventListener('DOMContentLoaded', function() {
           // 비디오 보이기 및 재생
           boostVideo.style.opacity = '1';
           boostVideo.style.borderRadius = '20px';
-          boostVideo.style.transform = 'scale(0.94)';
+          boostVideo.style.transform = 'scale(1.02)';
+          boostVideo.style.top = '-2px';
+          boostVideo.style.left = '-2px';
+          boostVideo.style.width = 'calc(100% + 4px)';
+          boostVideo.style.height = 'calc(100% + 4px)';
           
           // 카드의 원래 테두리 숨기기
           const cardFront = this.querySelector('.card-front');
@@ -8998,6 +9002,10 @@ document.addEventListener('DOMContentLoaded', function() {
             boostVideo.style.opacity = '0';
             boostVideo.style.borderRadius = '';
             boostVideo.style.transform = '';
+            boostVideo.style.top = '';
+            boostVideo.style.left = '';
+            boostVideo.style.width = '';
+            boostVideo.style.height = '';
             boostVideo.pause();
             boostVideo.currentTime = 0;
             
@@ -9020,6 +9028,10 @@ document.addEventListener('DOMContentLoaded', function() {
           boostVideo.style.opacity = '0';
           boostVideo.style.borderRadius = '';
           boostVideo.style.transform = '';
+          boostVideo.style.top = '';
+          boostVideo.style.left = '';
+          boostVideo.style.width = '';
+          boostVideo.style.height = '';
           boostVideo.pause();
           boostVideo.currentTime = 0;
           
@@ -9108,6 +9120,10 @@ document.addEventListener('DOMContentLoaded', function() {
       boostVideo.style.opacity = '0';
       boostVideo.style.borderRadius = '';
       boostVideo.style.transform = '';
+      boostVideo.style.top = '';
+      boostVideo.style.left = '';
+      boostVideo.style.width = '';
+      boostVideo.style.height = '';
       boostVideo.classList.remove('playing');
       
       // 오버레이 제거
