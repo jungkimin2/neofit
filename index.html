@@ -2958,11 +2958,13 @@ document.addEventListener('DOMContentLoaded', function() {
 </style>
 <body>
 <!-- 모바일 전용 상단 고정 네비게이션 (body 직속) -->
-<div id="mobile-top-nav-fixed" style="position: fixed; top: 0; left: 0; right: 0; z-index: 2147483647;">
-  <div class="nav-bar">
-    <img src="./images/neohive3.png" alt="NeoHive" class="nav-logo">
+<div id="mobile-top-nav-fixed" style="position: fixed; top: 0; left: 0; right: 0; z-index: 2147483647; height: 50px; background: #000;">
+  <div class="nav-bar" style="position: relative; height: 100%; display: flex; justify-content: space-between; align-items: center; padding: 0 16px;">
+    <img src="./images/neohive3.png" alt="NeoHive" class="nav-logo" style="height: 20px; position: relative; top: 8px;"> <!-- 로고 0.5칸 아래로 -->
     <button class="nav-menu-btn" onclick="toggleNav()" style="background: none; border: none; color: #7BE495; font-size: 24px; padding: 8px; cursor: pointer; position: relative; z-index: 999999999;">&#9776;</button>
   </div>
+  <!-- 그린바를 2칸 위로 -->
+  <div style="position: absolute; bottom: 32px; left: 0; right: 0; width: 100%; height: 3px; background: linear-gradient(to right, #7BE495, #3AC8A8); box-shadow: 0 0 8px rgba(123, 228, 149, 0.4);"></div>
 </div>
 
 <!-- 모바일 메뉴 오버레이 -->
