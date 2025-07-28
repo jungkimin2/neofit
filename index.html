@@ -13324,7 +13324,7 @@ document.addEventListener('DOMContentLoaded', function() {
   #mobile-top-nav-fixed::after {
     content: '' !important;
     position: absolute !important;
-    bottom: 16px !important; /* 하단에서 16px(1칸) 위로 */
+    bottom: 8px !important; /* 하단에서 8px(0.5칸) 위로 */
     left: 0 !important;
     right: 0 !important;
     height: 2px !important;
@@ -13368,12 +13368,12 @@ document.addEventListener('DOMContentLoaded', function() {
   /* 드롭다운 메뉴 */
   #mobile-top-nav-fixed .nav-menu {
     position: fixed !important;
-    top: 34px !important; /* 48px - 14px (그린바가 올라간 만큼) */
+    top: 42px !important; /* 48px - 6px (그린바가 올라간 만큼) */
     left: 0 !important;
     right: 0 !important;
     width: 100% !important;
     background: #000 !important;
-    border-bottom: 2px solid #7BE495 !important;
+    border-bottom: none !important; /* 아래쪽 그린바 제거 */
     box-shadow: 0 6px 20px rgba(0,0,0,0.9) !important;
     z-index: 999999999 !important;
     transform: none !important;
