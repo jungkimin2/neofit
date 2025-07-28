@@ -9352,28 +9352,28 @@ document.addEventListener('DOMContentLoaded', function() {
           syncVideo.style.backgroundColor = '#000';
           syncVideo.classList.add('playing');
           
-          // 글래스모피즘 테두리 오버레이 추가
-          const glassOverlay = document.createElement('div');
-          glassOverlay.className = 'video-glass-overlay';
-          glassOverlay.style.cssText = `
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            border-radius: 16px;
-            border: 1px solid rgba(123, 228, 149, 0.3);
-            background: linear-gradient(135deg, 
-              rgba(123, 228, 149, 0.3) 0%, 
-              transparent 30%, 
-              transparent 70%,
-              rgba(123, 228, 149, 0.3) 100%);
-            pointer-events: none;
-            z-index: 10000;
-            box-shadow: inset 0 0 50px rgba(123, 228, 149, 0.4),
-                        0 0 80px rgba(123, 228, 149, 0.5);
-          `;
-          this.querySelector('.card-front').appendChild(glassOverlay);
+          // 모바일에서는 글래스 오버레이 제거
+          // const glassOverlay = document.createElement('div');
+          // glassOverlay.className = 'video-glass-overlay';
+          // glassOverlay.style.cssText = `
+          //   position: absolute;
+          //   top: 0;
+          //   left: 0;
+          //   right: 0;
+          //   bottom: 0;
+          //   border-radius: 16px;
+          //   border: 1px solid rgba(123, 228, 149, 0.3);
+          //   background: linear-gradient(135deg, 
+          //     rgba(123, 228, 149, 0.3) 0%, 
+          //     transparent 30%, 
+          //     transparent 70%,
+          //     rgba(123, 228, 149, 0.3) 100%);
+          //   pointer-events: none;
+          //   z-index: 10000;
+          //   box-shadow: inset 0 0 50px rgba(123, 228, 149, 0.4),
+          //                 0 0 80px rgba(123, 228, 149, 0.5);
+          // `;
+          // this.querySelector('.card-front').appendChild(glassOverlay);
           
           // 비디오 즉시 재생 (카드 클릭 시에는 소리 재생)
           syncVideo.muted = false; // 카드 클릭 시 소리 재생
@@ -9405,9 +9405,9 @@ document.addEventListener('DOMContentLoaded', function() {
             syncVideo.style.boxShadow = '';
             syncVideo.classList.remove('playing');
             
-            // 글래스 오버레이 제거
-            const overlay = cards['sync'].querySelector('.video-glass-overlay');
-            if (overlay) overlay.remove();
+            // 글래스 오버레이 제거 (모바일에서는 없으므로 주석 처리)
+            // const overlay = cards['sync'].querySelector('.video-glass-overlay');
+            // if (overlay) overlay.remove();
             
             setTimeout(() => {
               syncVideo.style.display = 'none';
@@ -9434,9 +9434,9 @@ document.addEventListener('DOMContentLoaded', function() {
           syncVideo.style.boxShadow = '';
           syncVideo.classList.remove('playing');
           
-          // 글래스 오버레이 제거
-          const overlay = cards['sync'].querySelector('.video-glass-overlay');
-          if (overlay) overlay.remove();
+          // 글래스 오버레이 제거 (모바일에서는 없으므로 주석 처리)
+          // const overlay = cards['sync'].querySelector('.video-glass-overlay');
+          // if (overlay) overlay.remove();
           
           setTimeout(() => {
             syncVideo.style.display = 'none';
@@ -9474,28 +9474,28 @@ document.addEventListener('DOMContentLoaded', function() {
           balanceVideo.style.backgroundColor = '#000';
           balanceVideo.classList.add('playing');
           
-          // 글래스모피즘 테두리 오버레이 추가
-          const glassOverlay = document.createElement('div');
-          glassOverlay.className = 'video-glass-overlay';
-          glassOverlay.style.cssText = `
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            border-radius: 16px;
-            border: 1px solid rgba(147, 197, 253, 0.3);
-            background: linear-gradient(135deg, 
-              rgba(147, 197, 253, 0.3) 0%, 
-              transparent 30%, 
-              transparent 70%,
-              rgba(147, 197, 253, 0.3) 100%);
-            pointer-events: none;
-            z-index: 10000;
-            box-shadow: inset 0 0 50px rgba(147, 197, 253, 0.4),
-                        0 0 80px rgba(147, 197, 253, 0.5);
-          `;
-          this.querySelector('.card-front').appendChild(glassOverlay);
+          // 모바일에서는 글래스 오버레이 제거
+          // const glassOverlay = document.createElement('div');
+          // glassOverlay.className = 'video-glass-overlay';
+          // glassOverlay.style.cssText = `
+          //   position: absolute;
+          //   top: 0;
+          //   left: 0;
+          //   right: 0;
+          //   bottom: 0;
+          //   border-radius: 16px;
+          //   border: 1px solid rgba(147, 197, 253, 0.3);
+          //   background: linear-gradient(135deg, 
+          //     rgba(147, 197, 253, 0.3) 0%, 
+          //     transparent 30%, 
+          //     transparent 70%,
+          //     rgba(147, 197, 253, 0.3) 100%);
+          //   pointer-events: none;
+          //   z-index: 10000;
+          //   box-shadow: inset 0 0 50px rgba(147, 197, 253, 0.4),
+          //                 0 0 80px rgba(147, 197, 253, 0.5);
+          // `;
+          // this.querySelector('.card-front').appendChild(glassOverlay);
           
           // 비디오 즉시 재생 (카드 클릭 시에는 소리 재생)
           balanceVideo.muted = false; // 카드 클릭 시 소리 재생
@@ -9527,9 +9527,9 @@ document.addEventListener('DOMContentLoaded', function() {
             balanceVideo.style.boxShadow = '';
             balanceVideo.classList.remove('playing');
             
-            // 글래스 오버레이 제거
-            const overlay = cards['balance'].querySelector('.video-glass-overlay');
-            if (overlay) overlay.remove();
+            // 글래스 오버레이 제거 (모바일에서는 없으므로 주석 처리)
+            // const overlay = cards['balance'].querySelector('.video-glass-overlay');
+            // if (overlay) overlay.remove();
             
             setTimeout(() => {
               balanceVideo.style.display = 'none';
@@ -9556,9 +9556,9 @@ document.addEventListener('DOMContentLoaded', function() {
           balanceVideo.style.boxShadow = '';
           balanceVideo.classList.remove('playing');
           
-          // 글래스 오버레이 제거
-          const overlay = cards['balance'].querySelector('.video-glass-overlay');
-          if (overlay) overlay.remove();
+          // 글래스 오버레이 제거 (모바일에서는 없으므로 주석 처리)
+          // const overlay = cards['balance'].querySelector('.video-glass-overlay');
+          // if (overlay) overlay.remove();
           
           setTimeout(() => {
             balanceVideo.style.display = 'none';
@@ -9588,9 +9588,9 @@ document.addEventListener('DOMContentLoaded', function() {
           boostVideo.style.height = '100%';
           boostVideo.style.objectFit = 'cover';
           boostVideo.style.borderRadius = '20px';
-          boostVideo.style.setProperty('border', 'none', 'important');
+          boostVideo.style.border = 'none';
           boostVideo.style.display = 'block';
-          boostVideo.style.setProperty('box-shadow', 'none', 'important');
+          boostVideo.style.boxShadow = 'none';
           boostVideo.style.zIndex = '999';
           boostVideo.style.transition = 'opacity 0.3s ease';
           boostVideo.style.opacity = '1';
@@ -9601,12 +9601,8 @@ document.addEventListener('DOMContentLoaded', function() {
           const cardElement = this;
           const cardFront = this.querySelector('.card-front');
           cardElement.style.overflow = 'hidden';
-          cardElement.style.setProperty('border', 'none', 'important'); // 카드 테두리 제거
-          cardElement.style.setProperty('box-shadow', 'none', 'important'); // 카드 그림자 제거
           if (cardFront) {
             cardFront.style.overflow = 'hidden';
-            cardFront.style.setProperty('border', 'none', 'important'); // 카드 프론트 테두리 제거
-            cardFront.style.setProperty('box-shadow', 'none', 'important'); // 카드 프론트 그림자 제거
           }
           
           // 모바일에서는 글래스 오버레이 제거 (테두리 없애기)
@@ -9699,12 +9695,10 @@ document.addEventListener('DOMContentLoaded', function() {
             
             setTimeout(() => {
               boostVideo.style.display = 'none';
-              // 카드와 카드 프론트 overflow 및 border 복원
+              // 카드와 카드 프론트 overflow 복원
               cardElement.style.overflow = '';
-              cardElement.style.border = ''; // border 복원
               if (cardFront) {
                 cardFront.style.overflow = '';
-                cardFront.style.border = ''; // border 복원
               }
               
               // 모든 요소 다시 표시
