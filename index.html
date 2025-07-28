@@ -9588,9 +9588,9 @@ document.addEventListener('DOMContentLoaded', function() {
           boostVideo.style.height = '100%';
           boostVideo.style.objectFit = 'cover';
           boostVideo.style.borderRadius = '20px';
-          boostVideo.style.border = 'none';
+          boostVideo.style.setProperty('border', 'none', 'important');
           boostVideo.style.display = 'block';
-          boostVideo.style.boxShadow = 'none';
+          boostVideo.style.setProperty('box-shadow', 'none', 'important');
           boostVideo.style.zIndex = '999';
           boostVideo.style.transition = 'opacity 0.3s ease';
           boostVideo.style.opacity = '1';
@@ -9601,8 +9601,12 @@ document.addEventListener('DOMContentLoaded', function() {
           const cardElement = this;
           const cardFront = this.querySelector('.card-front');
           cardElement.style.overflow = 'hidden';
+          cardElement.style.setProperty('border', 'none', 'important'); // 카드 테두리 제거
+          cardElement.style.setProperty('box-shadow', 'none', 'important'); // 카드 그림자 제거
           if (cardFront) {
             cardFront.style.overflow = 'hidden';
+            cardFront.style.setProperty('border', 'none', 'important'); // 카드 프론트 테두리 제거
+            cardFront.style.setProperty('box-shadow', 'none', 'important'); // 카드 프론트 그림자 제거
           }
           
           // 모바일에서는 글래스 오버레이 제거 (테두리 없애기)
@@ -9695,10 +9699,12 @@ document.addEventListener('DOMContentLoaded', function() {
             
             setTimeout(() => {
               boostVideo.style.display = 'none';
-              // 카드와 카드 프론트 overflow 복원
+              // 카드와 카드 프론트 overflow 및 border 복원
               cardElement.style.overflow = '';
+              cardElement.style.border = ''; // border 복원
               if (cardFront) {
                 cardFront.style.overflow = '';
+                cardFront.style.border = ''; // border 복원
               }
               
               // 모든 요소 다시 표시
