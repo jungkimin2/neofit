@@ -13307,7 +13307,7 @@ document.addEventListener('DOMContentLoaded', function() {
     width: 100% !important;
     height: 48px !important;
     background: #000 !important;
-    border-bottom: 2px solid #7BE495 !important;
+    border-bottom: none !important; /* 기본 border 제거 */
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5) !important;
     z-index: 2147483647 !important; /* 최대 z-index */
     transform: translateZ(0) !important; /* GPU 가속 */
@@ -13320,6 +13320,18 @@ document.addEventListener('DOMContentLoaded', function() {
     opacity: 1 !important;
   }
 
+  /* 그린바를 위로 올리기 위한 가상 요소 */
+  #mobile-top-nav-fixed::after {
+    content: '' !important;
+    position: absolute !important;
+    bottom: 16px !important; /* 하단에서 16px(1칸) 위로 */
+    left: 0 !important;
+    right: 0 !important;
+    height: 2px !important;
+    background: #7BE495 !important;
+    z-index: 1 !important;
+  }
+  
   /* 네비게이션 바 내부 */
   #mobile-top-nav-fixed .nav-bar {
     display: flex !important;
@@ -13356,7 +13368,7 @@ document.addEventListener('DOMContentLoaded', function() {
   /* 드롭다운 메뉴 */
   #mobile-top-nav-fixed .nav-menu {
     position: fixed !important;
-    top: 48px !important;
+    top: 34px !important; /* 48px - 14px (그린바가 올라간 만큼) */
     left: 0 !important;
     right: 0 !important;
     width: 100% !important;
