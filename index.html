@@ -13320,17 +13320,6 @@ document.addEventListener('DOMContentLoaded', function() {
     opacity: 1 !important;
   }
 
-  /* 그린바를 위로 올리기 위한 가상 요소 */
-  #mobile-top-nav-fixed::after {
-    content: '' !important;
-    position: absolute !important;
-    bottom: 8px !important; /* 하단에서 8px(0.5칸) 위로 */
-    left: 0 !important;
-    right: 0 !important;
-    height: 2px !important;
-    background: #7BE495 !important;
-    z-index: 1 !important;
-  }
   
   /* 네비게이션 바 내부 */
   #mobile-top-nav-fixed .nav-bar {
@@ -13368,12 +13357,12 @@ document.addEventListener('DOMContentLoaded', function() {
   /* 드롭다운 메뉴 */
   #mobile-top-nav-fixed .nav-menu {
     position: fixed !important;
-    top: 42px !important; /* 48px - 6px (그린바가 올라간 만큼) */
+    top: 40px !important; /* 48px - 8px (0.5칸 위로) */
     left: 0 !important;
     right: 0 !important;
     width: 100% !important;
     background: #000 !important;
-    border-bottom: none !important; /* 아래쪽 그린바 제거 */
+    border-bottom: 2px solid #7BE495 !important; /* 그린바 복원 */
     box-shadow: 0 6px 20px rgba(0,0,0,0.9) !important;
     z-index: 999999999 !important;
     transform: none !important;
