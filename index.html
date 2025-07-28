@@ -14781,6 +14781,40 @@ document.addEventListener('DOMContentLoaded', function() {
     // 모바일 하이브 버튼 이벤트 설정
     function setupMobileHiveButtonEvents() {
       if (window.innerWidth <= 768) {
+        // 모바일 NEO HIVE 비디오 스크롤 자동재생 설정
+        setupHiveVideoScrollPlay();
+        
+        // 모바일 비디오 클릭 이벤트
+        const centerVideo = document.getElementById('centerVideo');
+        if (centerVideo) {
+          centerVideo.addEventListener('click', function(e) {
+            e.stopPropagation();
+            // 비디오 재생/일시정지 토글
+            if (this.paused) {
+              this.play().then(() => {
+                isHiveVideoPlaying = true;
+                console.log('Mobile NEO HIVE video played by click');
+              }).catch(err => {
+                console.log('Play prevented:', err);
+              });
+            } else {
+              this.pause();
+              isHiveVideoPlaying = false;
+              console.log('Mobile NEO HIVE video paused by click');
+            }
+          });
+        }
+        
+        // 모바일 스피커 버튼 이벤트 전파 방지
+        const speakerButton = document.querySelector('.video-phone .speaker-button');
+        if (speakerButton) {
+          speakerButton.addEventListener('click', function(e) {
+            e.stopPropagation();
+            e.preventDefault();
+            console.log('Mobile speaker button clicked - preventing propagation');
+          });
+        }
+        
         // 팀결성 버튼 클릭 이벤트
         const teamBtn = document.querySelector('.mobile-hive-btn.team-btn');
         if (teamBtn) {
@@ -14827,11 +14861,16 @@ document.addEventListener('DOMContentLoaded', function() {
             // 중앙에 있을 때만 비디오 재생
             if (slideIndex === -1 && video) {
               if (!isHiveVideoPlaying) {
-                video.play();
-                isHiveVideoPlaying = true;
+                video.play().then(() => {
+                  isHiveVideoPlaying = true;
+                  console.log('Mobile NEO HIVE video played by container click');
+                }).catch(err => {
+                  console.log('Play prevented:', err);
+                });
               } else {
                 video.pause();
                 isHiveVideoPlaying = false;
+                console.log('Mobile NEO HIVE video paused by container click');
               }
             }
           });
