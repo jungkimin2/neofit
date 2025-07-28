@@ -9643,7 +9643,23 @@ document.addEventListener('DOMContentLoaded', function() {
             boostContent.style.opacity = '0';
             setTimeout(() => {
               boostContent.style.visibility = 'hidden';
+              boostContent.style.display = 'none'; // 완전히 숨기기
             }, 300);
+          }
+          
+          // 모바일에서 h3, p 태그 모두 숨기기
+          const h3Element = this.querySelector('h3');
+          const pElement = this.querySelector('p');
+          const imgElement = this.querySelector('img');
+          
+          if (h3Element) {
+            h3Element.style.display = 'none';
+          }
+          if (pElement) {
+            pElement.style.display = 'none';
+          }
+          if (imgElement) {
+            imgElement.style.display = 'none';
           }
           if (clickIndicator) {
             clickIndicator.style.transition = 'opacity 0.3s ease';
@@ -9684,8 +9700,25 @@ document.addEventListener('DOMContentLoaded', function() {
               if (cardFront) {
                 cardFront.style.overflow = '';
               }
+              
+              // 모든 요소 다시 표시
+              const h3Element = cards['boost'].querySelector('h3');
+              const pElement = cards['boost'].querySelector('p');
+              const imgElement = cards['boost'].querySelector('img');
+              
+              if (h3Element) {
+                h3Element.style.display = '';
+              }
+              if (pElement) {
+                pElement.style.display = '';
+              }
+              if (imgElement) {
+                imgElement.style.display = '';
+              }
+              
               // 콘텐츠 부드럽게 나타나기
               if (boostContent) {
+                boostContent.style.display = ''; // display 복원
                 boostContent.style.transition = 'opacity 0.3s ease';
                 boostContent.style.opacity = '1';
                 boostContent.style.visibility = 'visible';
