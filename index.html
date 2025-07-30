@@ -1,6 +1,7 @@
 
 
 
+
 <meta name="google-site-verification" content="OeM-YMo4NpQshyIm3m5H59IikSDp0BMe4sXKQmCu7NM" />
 <!DOCTYPE html>
 <html lang="ko">
@@ -1071,6 +1072,12 @@ div > p.smart-guide-text {
     opacity: 1 !important;
     visibility: visible !important;
     display: block !important;
+  }
+  
+  /* 비디오 재생 중 NEO BOOST 타이틀만 숨기기 */
+  #boost-card.video-playing .boost-title {
+    opacity: 0 !important;
+    transition: opacity 0.3s ease;
   }
   
   .training-card p {
@@ -3093,7 +3100,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <video class="boost-hover-video" src="./videos/neoboots.mp4" loop playsinline muted preload="auto" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.3s ease; z-index: 1; pointer-events: none;"></video>
             
             <div style="position: relative; z-index: 2; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;">
-              <h3 style="color: #F87171; font-size: 2rem; margin-bottom: 20px; text-shadow: 0 0 20px rgba(248,113,113,0.8); display: block;">NEO BOOST</h3>
+              <h3 class="boost-title" style="color: #F87171; font-size: 2rem; margin-bottom: 20px; text-shadow: 0 0 20px rgba(248,113,113,0.8); display: block;">NEO BOOST</h3>
               <img src="./images/neoboots.png" alt="네오 부스트" style="width: 80%; height: auto; margin-bottom: 20px; filter: drop-shadow(0 0 20px rgba(248,113,113,0.5)); display: block; max-width: 280px;">
               <p style="color: #fff; font-size: 1.1rem; text-align: center; display: block;">폭발적인 퍼포먼스 향상</p>
               <p style="color: #aaa; font-size: 0.95rem; text-align: center; margin-top: 10px; display: block;">상급자를 위한 고강도 프로그램</p>
@@ -9647,19 +9654,12 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 300);
           }
           
-          // 모바일에서 h3, p 태그 모두 숨기기
-          const h3Element = this.querySelector('h3');
-          const pElement = this.querySelector('p');
-          const imgElement = this.querySelector('img');
+          // 모바일에서 NEO BOOST 타이틀만 숨기기
+          const boostTitle = this.querySelector('.boost-title');
           
-          if (h3Element) {
-            h3Element.style.display = 'none';
-          }
-          if (pElement) {
-            pElement.style.display = 'none';
-          }
-          if (imgElement) {
-            imgElement.style.display = 'none';
+          if (boostTitle) {
+            boostTitle.style.transition = 'opacity 0.3s ease';
+            boostTitle.style.opacity = '0';
           }
           if (clickIndicator) {
             clickIndicator.style.transition = 'opacity 0.3s ease';
@@ -9701,19 +9701,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 cardFront.style.overflow = '';
               }
               
-              // 모든 요소 다시 표시
-              const h3Element = cards['boost'].querySelector('h3');
-              const pElement = cards['boost'].querySelector('p');
-              const imgElement = cards['boost'].querySelector('img');
+              // NEO BOOST 타이틀 다시 표시
+              const boostTitle = cards['boost'].querySelector('.boost-title');
               
-              if (h3Element) {
-                h3Element.style.display = '';
-              }
-              if (pElement) {
-                pElement.style.display = '';
-              }
-              if (imgElement) {
-                imgElement.style.display = '';
+              if (boostTitle) {
+                boostTitle.style.transition = 'opacity 0.3s ease';
+                boostTitle.style.opacity = '';
               }
               
               // 콘텐츠 부드럽게 나타나기
@@ -9768,6 +9761,13 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             if (cardFront) {
               cardFront.style.overflow = '';
+            }
+            
+            // NEO BOOST 타이틀 다시 표시
+            const boostTitle = cards['boost'].querySelector('.boost-title');
+            if (boostTitle) {
+              boostTitle.style.transition = 'opacity 0.3s ease';
+              boostTitle.style.opacity = '';
             }
             
             // 콘텐츠 부드럽게 나타나기
