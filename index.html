@@ -8965,29 +8965,29 @@ document.addEventListener('DOMContentLoaded', function() {
           boostVideo.style.borderRadius = '20px';
           boostVideo.style.transform = 'scale(0.94)';
           
-          // 글래스모피즘 테두리 오버레이 추가
-          const glassOverlay = document.createElement('div');
-          glassOverlay.className = 'video-glass-overlay';
-          glassOverlay.style.cssText = `
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            border-radius: 20px;
-            border: 1px solid rgba(248, 113, 113, 0.5);
-            display: block;
-            background: linear-gradient(135deg, 
-              rgba(248, 113, 113, 0.15) 0%, 
-              transparent 40%, 
-              transparent 60%,
-              rgba(248, 113, 113, 0.15) 100%);
-            pointer-events: none;
-            z-index: 10;
-            box-shadow: inset 0 0 30px rgba(248, 113, 113, 0.2),
-                        0 0 60px rgba(248, 113, 113, 0.3);
-          `;
-          this.querySelector('.card-front').appendChild(glassOverlay);
+          // PC에서도 NEO BOOST 테두리 제거
+          // const glassOverlay = document.createElement('div');
+          // glassOverlay.className = 'video-glass-overlay';
+          // glassOverlay.style.cssText = `
+          //   position: absolute;
+          //   top: 0;
+          //   left: 0;
+          //   right: 0;
+          //   bottom: 0;
+          //   border-radius: 20px;
+          //   border: 1px solid rgba(248, 113, 113, 0.5);
+          //   display: block;
+          //   background: linear-gradient(135deg, 
+          //     rgba(248, 113, 113, 0.15) 0%, 
+          //     transparent 40%, 
+          //     transparent 60%,
+          //     rgba(248, 113, 113, 0.15) 100%);
+          //   pointer-events: none;
+          //   z-index: 10;
+          //   box-shadow: inset 0 0 30px rgba(248, 113, 113, 0.2),
+          //                 0 0 60px rgba(248, 113, 113, 0.3);
+          // `;
+          // this.querySelector('.card-front').appendChild(glassOverlay);
           
           boostVideo.muted = false; // PC에서는 소리 재생 허용
           boostVideo.volume = 0.3;
@@ -9009,13 +9009,13 @@ document.addEventListener('DOMContentLoaded', function() {
             boostVideo.style.transition = 'opacity 0.3s ease';
             boostVideo.style.opacity = '0';
             
-            // 글래스 오버레이 부드럽게 제거
-            const overlay = boostCard.querySelector('.video-glass-overlay');
-            if (overlay) {
-              overlay.style.transition = 'opacity 0.3s ease';
-              overlay.style.opacity = '0';
-              setTimeout(() => overlay.remove(), 300);
-            }
+            // PC에서도 NEO BOOST 오버레이 삭제됨
+            // const overlay = boostCard.querySelector('.video-glass-overlay');
+            // if (overlay) {
+            //   overlay.style.transition = 'opacity 0.3s ease';
+            //   overlay.style.opacity = '0';
+            //   setTimeout(() => overlay.remove(), 300);
+            // }
             
             // 300ms 후 스타일 초기화 및 콘텐츠 복원
             setTimeout(() => {
@@ -9039,13 +9039,13 @@ document.addEventListener('DOMContentLoaded', function() {
           boostVideo.style.transition = 'opacity 0.3s ease';
           boostVideo.style.opacity = '0';
           
-          // 글래스 오버레이 부드럽게 제거
-          const overlay = boostCard.querySelector('.video-glass-overlay');
-          if (overlay) {
-            overlay.style.transition = 'opacity 0.3s ease';
-            overlay.style.opacity = '0';
-            setTimeout(() => overlay.remove(), 300);
-          }
+          // PC에서도 NEO BOOST 오버레이 삭제됨
+          // const overlay = boostCard.querySelector('.video-glass-overlay');
+          // if (overlay) {
+          //   overlay.style.transition = 'opacity 0.3s ease';
+          //   overlay.style.opacity = '0';
+          //   setTimeout(() => overlay.remove(), 300);
+          // }
           
           // 300ms 후 스타일 초기화 및 콘텐츠 복원
           setTimeout(() => {
@@ -9135,13 +9135,13 @@ document.addEventListener('DOMContentLoaded', function() {
       boostVideo.style.opacity = '0';
       boostVideo.classList.remove('playing');
       
-      // 글래스 오버레이 부드럽게 제거
-      const overlay = boostCard.querySelector('.video-glass-overlay');
-      if (overlay) {
-        overlay.style.transition = 'opacity 0.3s ease';
-        overlay.style.opacity = '0';
-        setTimeout(() => overlay.remove(), 300);
-      }
+      // NEO BOOST 오버레이 삭제됨
+      // const overlay = boostCard.querySelector('.video-glass-overlay');
+      // if (overlay) {
+      //   overlay.style.transition = 'opacity 0.3s ease';
+      //   overlay.style.opacity = '0';
+      //   setTimeout(() => overlay.remove(), 300);
+      // }
       
       // 300ms 후 비디오 정지 및 스타일 초기화
       setTimeout(() => {
@@ -10389,12 +10389,12 @@ document.addEventListener('DOMContentLoaded', function() {
     transform: translateX(-50%) translateY(-50%) translateZ(0) scale(0.98) !important;
   }
   
-  /* 모바일에서 비디오 글래스 오버레이 얇게 */
-  .video-glass-overlay {
+  /* 모바일에서 비디오 글래스 오버레이 삭제됨 */
+  /* .video-glass-overlay {
     border-width: 0.5px !important;
     box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.1),
                 0 0 30px currentColor !important;
-  }
+  } */
   
   .card-indicators .indicator:active {
     transform: scale(0.9);
