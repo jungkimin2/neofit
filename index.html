@@ -5612,7 +5612,7 @@ if (window.innerWidth <= 768) {
               boostVideo.style.transform = 'none';
               boostVideo.style.opacity = '1';
               boostVideo.style.objectFit = 'cover';
-              boostVideo.style.zIndex = '1';
+              boostVideo.style.zIndex = '10';
               
               // 글래시한 얇은 테두리 오버레이 추가
               const glassOverlay = document.createElement('div');
@@ -5633,43 +5633,38 @@ if (window.innerWidth <= 768) {
               `;
               this.querySelector('.card-front').appendChild(glassOverlay);
               
-              // 컨텐츠 숨기기
+              // 카드 내부의 모든 요소를 숨기기 위해 card-front의 z-index 구조 변경
+              const cardFront = this.querySelector('.card-front');
+              
+              // 컨텐츠 컨테이너를 강제로 숨기기
               if (boostContent) {
-                boostContent.style.transition = 'opacity 0.3s ease, visibility 0.3s ease';
-                boostContent.style.opacity = '0';
-                boostContent.style.visibility = 'hidden';
-                boostContent.style.display = 'none';
+                boostContent.style.cssText = 'opacity: 0 !important; visibility: hidden !important; display: none !important; z-index: -1 !important;';
               }
               
-              // 제목, 이미지, 텍스트 모두 개별적으로 숨기기
+              // 제목, 이미지, 텍스트 모두 개별적으로 강제 숨기기
               const title = boostCard.querySelector('.boost-title');
               const img = boostCard.querySelector('img[alt="네오 부스트"]');
               const texts = boostCard.querySelectorAll('p');
               
               if (title) {
-                title.style.opacity = '0';
-                title.style.visibility = 'hidden';
-                title.style.display = 'none';
+                title.style.cssText = 'opacity: 0 !important; visibility: hidden !important; display: none !important;';
               }
               
               if (img) {
-                img.style.opacity = '0';
-                img.style.visibility = 'hidden';
-                img.style.display = 'none';
+                img.style.cssText = 'opacity: 0 !important; visibility: hidden !important; display: none !important;';
               }
               
               texts.forEach(text => {
-                text.style.opacity = '0';
-                text.style.visibility = 'hidden';
-                text.style.display = 'none';
+                text.style.cssText = 'opacity: 0 !important; visibility: hidden !important; display: none !important;';
               });
               
               // CLICK 버튼 숨기기
               if (boostClickIndicator) {
-                boostClickIndicator.style.transition = 'opacity 0.3s ease';
-                boostClickIndicator.style.opacity = '0';
-                boostClickIndicator.style.display = 'none';
+                boostClickIndicator.style.cssText = 'opacity: 0 !important; visibility: hidden !important; display: none !important;';
               }
+              
+              // 카드 배경을 검은색으로 설정하여 UI 잔상 제거
+              cardFront.style.background = '#000';
               
               // 음소거 및 재생
               boostVideo.muted = true;
@@ -5709,32 +5704,42 @@ if (window.innerWidth <= 768) {
           const img = boostCard.querySelector('img[alt="네오 부스트"]');
           const texts = boostCard.querySelectorAll('p');
           
+          // 카드 배경 원래대로 복원
+          const cardFront = boostCard.querySelector('.card-front');
+          cardFront.style.background = '';
+          
           // display를 먼저 복원하고 opacity는 0으로 설정
           if (boostContent) {
+            boostContent.style.cssText = '';
             boostContent.style.display = '';
             boostContent.style.visibility = 'visible';
             boostContent.style.opacity = '0';
+            boostContent.style.zIndex = '';
           }
           
           if (title) {
+            title.style.cssText = '';
             title.style.display = '';
             title.style.visibility = '';
             title.style.opacity = '0';
           }
           
           if (img) {
+            img.style.cssText = '';
             img.style.display = '';
             img.style.visibility = '';
             img.style.opacity = '0';
           }
           
           texts.forEach(text => {
+            text.style.cssText = '';
             text.style.display = '';
             text.style.visibility = '';
             text.style.opacity = '0';
           });
           
           if (boostClickIndicator) {
+            boostClickIndicator.style.cssText = '';
             boostClickIndicator.style.display = '';
             boostClickIndicator.style.opacity = '0';
           }
