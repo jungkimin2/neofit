@@ -1077,7 +1077,13 @@ div > p.smart-guide-text {
   /* 비디오 재생 중 NEO BOOST 타이틀만 숨기기 */
   #boost-card.video-playing .boost-title {
     opacity: 0 !important;
+    visibility: hidden !important;
     transition: opacity 0.3s ease;
+  }
+  
+  /* 비디오 재생 중 비디오 z-index 높이기 */
+  #boost-card.video-playing .boost-hover-video {
+    z-index: 1000 !important;
   }
   
   .training-card p {
@@ -9660,6 +9666,11 @@ document.addEventListener('DOMContentLoaded', function() {
           if (boostTitle) {
             boostTitle.style.transition = 'opacity 0.3s ease';
             boostTitle.style.opacity = '0';
+            boostTitle.style.visibility = 'hidden';
+            boostTitle.style.pointerEvents = 'none';
+            // 강제로 텍스트 내용을 임시 저장하고 비우기
+            boostTitle.setAttribute('data-original-text', boostTitle.textContent);
+            boostTitle.textContent = '';
           }
           if (clickIndicator) {
             clickIndicator.style.transition = 'opacity 0.3s ease';
@@ -9705,8 +9716,15 @@ document.addEventListener('DOMContentLoaded', function() {
               const boostTitle = cards['boost'].querySelector('.boost-title');
               
               if (boostTitle) {
+                // 원래 텍스트 복원
+                const originalText = boostTitle.getAttribute('data-original-text');
+                if (originalText) {
+                  boostTitle.textContent = originalText;
+                }
                 boostTitle.style.transition = 'opacity 0.3s ease';
                 boostTitle.style.opacity = '';
+                boostTitle.style.visibility = '';
+                boostTitle.style.pointerEvents = '';
               }
               
               // 콘텐츠 부드럽게 나타나기
@@ -9766,8 +9784,15 @@ document.addEventListener('DOMContentLoaded', function() {
             // NEO BOOST 타이틀 다시 표시
             const boostTitle = cards['boost'].querySelector('.boost-title');
             if (boostTitle) {
+              // 원래 텍스트 복원
+              const originalText = boostTitle.getAttribute('data-original-text');
+              if (originalText) {
+                boostTitle.textContent = originalText;
+              }
               boostTitle.style.transition = 'opacity 0.3s ease';
               boostTitle.style.opacity = '';
+              boostTitle.style.visibility = '';
+              boostTitle.style.pointerEvents = '';
             }
             
             // 콘텐츠 부드럽게 나타나기
