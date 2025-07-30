@@ -9605,10 +9605,18 @@ document.addEventListener('DOMContentLoaded', function() {
           boostVideo.style.display = 'block';
           boostVideo.style.boxShadow = 'none';
           boostVideo.style.zIndex = '999';
-          boostVideo.style.transition = 'opacity 0.3s ease';
-          boostVideo.style.opacity = '1';
           boostVideo.style.backgroundColor = '#000';
+          boostVideo.style.opacity = '0'; // 처음에는 투명하게
           boostVideo.classList.add('playing');
+          
+          // 비디오 부드럽게 페이드인
+          setTimeout(() => {
+            boostVideo.style.transition = 'opacity 0.5s ease-in';
+            boostVideo.style.opacity = '1';
+          }, 50);
+          
+          // 카드에 video-playing 클래스 추가
+          this.classList.add('video-playing');
           
           // 카드와 카드 프론트의 overflow를 hidden으로 설정하여 하단 텍스트 숨기기
           const cardElement = this;
@@ -9742,24 +9750,69 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 300);
           }, { once: true });
         } else if (boostVideo && boostVideo.classList.contains('playing')) {
-          // 재생 중인 비디오 정지
-          boostVideo.pause();
-          boostVideo.currentTime = 0;
+          // 재생 중인 비디오 정지 - 부드러운 전환
+          e.stopPropagation();
           
-          // 부드러운 전환을 위해 transition 설정
-          boostVideo.style.transition = 'opacity 0.3s ease';
-          boostVideo.style.opacity = '0';
+          // video-playing 클래스 먼저 제거하여 UI 요소가 먼저 나타나기 시작
+          this.classList.remove('video-playing');
           
-          // 글래스 오버레이 즉시 제거
-          const overlay = cards['boost'].querySelector('.video-glass-overlay');
-          if (overlay) {
-            overlay.style.transition = 'opacity 0.3s ease';
-            overlay.style.opacity = '0';
-            setTimeout(() => overlay.remove(), 300);
+          // NEO BOOST 타이틀 먼저 복원 시작
+          const boostTitle = this.querySelector('.boost-title');
+          if (boostTitle) {
+            const originalText = boostTitle.getAttribute('data-original-text');
+            if (originalText) {
+              boostTitle.textContent = originalText;
+            }
+            // 약간의 지연 후 부드럽게 나타나기
+            setTimeout(() => {
+              boostTitle.style.transition = 'opacity 0.5s ease';
+              boostTitle.style.opacity = '1';
+              boostTitle.style.visibility = 'visible';
+              boostTitle.style.pointerEvents = '';
+            }, 100);
           }
           
-          // opacity 전환이 끝난 후 나머지 스타일 초기화
+          // 비디오 부드럽게 페이드아웃
+          boostVideo.style.transition = 'opacity 0.5s ease-out';
+          boostVideo.style.opacity = '0';
+          
+          // 콘텐츠 요소들 부드럽게 나타나기
+          if (boostContent) {
+            setTimeout(() => {
+              boostContent.style.display = 'flex';
+              boostContent.style.transition = 'opacity 0.5s ease';
+              boostContent.style.opacity = '0';
+              setTimeout(() => {
+                boostContent.style.opacity = '1';
+                boostContent.style.visibility = 'visible';
+              }, 50);
+            }, 200);
+          }
+          
+          // CLICK 인디케이터 부드럽게 나타나기
+          if (clickIndicator) {
+            setTimeout(() => {
+              clickIndicator.style.display = 'block';
+              clickIndicator.style.transition = 'opacity 0.5s ease';
+              clickIndicator.style.opacity = '0';
+              setTimeout(() => {
+                clickIndicator.style.opacity = '1';
+              }, 50);
+            }, 300);
+          }
+          
+          // 글래스 오버레이 부드럽게 제거
+          const overlay = cards['boost'].querySelector('.video-glass-overlay');
+          if (overlay) {
+            overlay.style.transition = 'opacity 0.5s ease';
+            overlay.style.opacity = '0';
+            setTimeout(() => overlay.remove(), 500);
+          }
+          
+          // 비디오 완전히 정리
           setTimeout(() => {
+            boostVideo.pause();
+            boostVideo.currentTime = 0;
             boostVideo.style.position = '';
             boostVideo.style.top = '';
             boostVideo.style.left = '';
@@ -9770,6 +9823,7 @@ document.addEventListener('DOMContentLoaded', function() {
             boostVideo.style.boxShadow = '';
             boostVideo.classList.remove('playing');
             boostVideo.style.display = 'none';
+            boostVideo.style.transition = '';
             
             // 카드와 카드 프론트 overflow 복원
             const cardElement = cards['boost'];
@@ -9780,33 +9834,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (cardFront) {
               cardFront.style.overflow = '';
             }
-            
-            // NEO BOOST 타이틀 다시 표시
-            const boostTitle = cards['boost'].querySelector('.boost-title');
-            if (boostTitle) {
-              // 원래 텍스트 복원
-              const originalText = boostTitle.getAttribute('data-original-text');
-              if (originalText) {
-                boostTitle.textContent = originalText;
-              }
-              boostTitle.style.transition = 'opacity 0.3s ease';
-              boostTitle.style.opacity = '';
-              boostTitle.style.visibility = '';
-              boostTitle.style.pointerEvents = '';
-            }
-            
-            // 콘텐츠 부드럽게 나타나기
-            if (boostContent) {
-              boostContent.style.transition = 'opacity 0.3s ease';
-              boostContent.style.opacity = '1';
-              boostContent.style.visibility = 'visible';
-            }
-            if (clickIndicator) {
-              clickIndicator.style.transition = 'opacity 0.3s ease';
-              clickIndicator.style.opacity = '1';
-              clickIndicator.style.display = 'block';
-            }
-          }, 300);
+          }, 600);  // 전체 애니메이션 완료 후 정리
         }
       }
     });
