@@ -9610,24 +9610,24 @@ document.addEventListener('DOMContentLoaded', function() {
             cardFront.style.overflow = 'hidden';
           }
           
-          // 모바일에서 얇은 글래스 오버레이 추가
-          const glassOverlay = document.createElement('div');
-          glassOverlay.className = 'video-glass-overlay';
-          glassOverlay.style.cssText = `
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            border-radius: 20px;
-            border: 2px solid rgba(248, 113, 113, 0.8);
-            background: transparent;
-            pointer-events: none;
-            z-index: 10000;
-            box-shadow: inset 0 0 30px rgba(248, 113, 113, 0.3),
-                          0 0 60px rgba(248, 113, 113, 0.4);
-          `;
-          this.querySelector('.card-front').appendChild(glassOverlay);
+          // NEO BOOST는 글래스 오버레이 제거
+          // const glassOverlay = document.createElement('div');
+          // glassOverlay.className = 'video-glass-overlay';
+          // glassOverlay.style.cssText = `
+          //   position: absolute;
+          //   top: 0;
+          //   left: 0;
+          //   right: 0;
+          //   bottom: 0;
+          //   border-radius: 20px;
+          //   border: 2px solid rgba(248, 113, 113, 0.8);
+          //   background: transparent;
+          //   pointer-events: none;
+          //   z-index: 10000;
+          //   box-shadow: inset 0 0 30px rgba(248, 113, 113, 0.3),
+          //                 0 0 60px rgba(248, 113, 113, 0.4);
+          // `;
+          // this.querySelector('.card-front').appendChild(glassOverlay);
           
           // 비디오 즉시 재생 (모바일에서도 소리 재생)
           boostVideo.muted = false; // 모바일에서도 소리 재생
@@ -9676,12 +9676,12 @@ document.addEventListener('DOMContentLoaded', function() {
           
           // 비디오 종료 시 원상복구
           boostVideo.addEventListener('ended', function() {
-            // 글래스 오버레이 먼저 페이드아웃
-            const overlay = cards['boost'].querySelector('.video-glass-overlay');
-            if (overlay) {
-              overlay.style.transition = 'opacity 0.3s ease';
-              overlay.style.opacity = '0';
-            }
+            // NEO BOOST는 오버레이 없음
+            // const overlay = cards['boost'].querySelector('.video-glass-overlay');
+            // if (overlay) {
+            //   overlay.style.transition = 'opacity 0.3s ease';
+            //   overlay.style.opacity = '0';
+            // }
             
             // 비디오 페이드아웃
             boostVideo.style.transition = 'opacity 0.3s ease';
@@ -9694,10 +9694,10 @@ document.addEventListener('DOMContentLoaded', function() {
               boostContent.style.visibility = 'visible';
             }
             
-            // 150ms 후 오버레이 제거
-            setTimeout(() => {
-              if (overlay) overlay.remove();
-            }, 150);
+            // NEO BOOST는 오버레이 없음
+            // setTimeout(() => {
+            //   if (overlay) overlay.remove();
+            // }, 150);
             
             // 300ms 후 스타일 초기화 및 콘텐츠 페이드인
             setTimeout(() => {
@@ -9755,12 +9755,12 @@ document.addEventListener('DOMContentLoaded', function() {
           // 재생 중인 비디오 정지
           e.stopPropagation();
           
-          // 글래스 오버레이 먼저 페이드아웃
-          const overlay = this.querySelector('.video-glass-overlay');
-          if (overlay) {
-            overlay.style.transition = 'opacity 0.3s ease';
-            overlay.style.opacity = '0';
-          }
+          // NEO BOOST는 오버레이 없음
+          // const overlay = this.querySelector('.video-glass-overlay');
+          // if (overlay) {
+          //   overlay.style.transition = 'opacity 0.3s ease';
+          //   overlay.style.opacity = '0';
+          // }
           
           // 비디오 정지 및 페이드아웃
           boostVideo.pause();
@@ -9775,10 +9775,10 @@ document.addEventListener('DOMContentLoaded', function() {
             boostContent.style.visibility = 'visible';
           }
           
-          // 150ms 후 오버레이 제거
-          setTimeout(() => {
-            if (overlay) overlay.remove();
-          }, 150);
+          // NEO BOOST는 오버레이 없음
+          // setTimeout(() => {
+          //   if (overlay) overlay.remove();
+          // }, 150);
           
           // 300ms 후 스타일 초기화 및 콘텐츠 페이드인
           setTimeout(() => {
