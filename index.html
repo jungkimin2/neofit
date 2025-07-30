@@ -5688,16 +5688,88 @@ if (window.innerWidth <= 768) {
         
         // 카드 복원 함수
         function restoreBoostCard() {
-          // 페이드 아웃 효과
+          // 영상 정지 및 초기화
+          boostVideo.pause();
+          boostVideo.currentTime = 0;
+          
+          // 글래시 오버레이 제거
+          const overlay = boostCard.querySelector('.video-glass-overlay-mobile');
+          if (overlay) {
+            overlay.style.transition = 'opacity 0.3s ease';
+            overlay.style.opacity = '0';
+            setTimeout(() => overlay.remove(), 300);
+          }
+          
+          // 비디오 페이드 아웃과 동시에 컨텐츠 페이드 인
           boostVideo.style.transition = 'opacity 0.3s ease';
           boostVideo.style.opacity = '0';
           
+          // 컨텐츠 요소들 먼저 준비
+          const title = boostCard.querySelector('.boost-title');
+          const img = boostCard.querySelector('img[alt="네오 부스트"]');
+          const texts = boostCard.querySelectorAll('p');
+          
+          // display를 먼저 복원하고 opacity는 0으로 설정
+          if (boostContent) {
+            boostContent.style.display = '';
+            boostContent.style.visibility = 'visible';
+            boostContent.style.opacity = '0';
+          }
+          
+          if (title) {
+            title.style.display = '';
+            title.style.visibility = '';
+            title.style.opacity = '0';
+          }
+          
+          if (img) {
+            img.style.display = '';
+            img.style.visibility = '';
+            img.style.opacity = '0';
+          }
+          
+          texts.forEach(text => {
+            text.style.display = '';
+            text.style.visibility = '';
+            text.style.opacity = '0';
+          });
+          
+          if (boostClickIndicator) {
+            boostClickIndicator.style.display = '';
+            boostClickIndicator.style.opacity = '0';
+          }
+          
+          // 약간의 지연 후 페이드 인 시작
           setTimeout(() => {
-            // 영상 정지 및 초기화
-            boostVideo.pause();
-            boostVideo.currentTime = 0;
+            // 컨텐츠 페이드 인
+            if (boostContent) {
+              boostContent.style.transition = 'opacity 0.3s ease';
+              boostContent.style.opacity = '1';
+            }
             
-            // 비디오 스타일 초기화
+            if (title) {
+              title.style.transition = 'opacity 0.3s ease';
+              title.style.opacity = '1';
+            }
+            
+            if (img) {
+              img.style.transition = 'opacity 0.3s ease';
+              img.style.opacity = '1';
+            }
+            
+            texts.forEach(text => {
+              text.style.transition = 'opacity 0.3s ease';
+              text.style.opacity = '1';
+            });
+            
+            if (boostClickIndicator) {
+              boostClickIndicator.style.transition = 'opacity 0.3s ease';
+              boostClickIndicator.style.opacity = '1';
+            }
+          }, 50);
+          
+          // 비디오 스타일 초기화는 페이드 아웃 완료 후
+          setTimeout(() => {
             boostVideo.style.position = '';
             boostVideo.style.top = '';
             boostVideo.style.left = '';
@@ -5708,54 +5780,12 @@ if (window.innerWidth <= 768) {
             boostVideo.style.opacity = '';
             boostVideo.style.transition = '';
             
-            // 글래시 오버레이 제거
-            const overlay = boostCard.querySelector('.video-glass-overlay-mobile');
-            if (overlay) overlay.remove();
-            
             // playing 클래스 제거
             boostCard.classList.remove('playing');
             
-            // 컨텐츠 다시 표시
-            if (boostContent) {
-              boostContent.style.transition = 'opacity 0.3s ease, visibility 0.3s ease';
-              boostContent.style.opacity = '1';
-              boostContent.style.visibility = 'visible';
-              boostContent.style.display = '';
-            }
-            
-            // 제목, 이미지, 텍스트 모두 다시 표시
-            const title = boostCard.querySelector('.boost-title');
-            const img = boostCard.querySelector('img[alt="네오 부스트"]');
-            const texts = boostCard.querySelectorAll('p');
-            
-            if (title) {
-              title.style.opacity = '';
-              title.style.visibility = '';
-              title.style.display = '';
-            }
-            
-            if (img) {
-              img.style.opacity = '';
-              img.style.visibility = '';
-              img.style.display = '';
-            }
-            
-            texts.forEach(text => {
-              text.style.opacity = '';
-              text.style.visibility = '';
-              text.style.display = '';
-            });
-            
-            // CLICK 버튼 다시 표시
-            if (boostClickIndicator) {
-              boostClickIndicator.style.transition = 'opacity 0.3s ease';
-              boostClickIndicator.style.opacity = '1';
-              boostClickIndicator.style.display = '';
-            }
-            
             // 재생 상태 초기화
             isBoostVideoPlaying = false;
-          }, 300);
+          }, 350);
         }
       }
     })();
