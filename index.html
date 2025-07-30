@@ -1073,17 +1073,6 @@ div > p.smart-guide-text {
     display: block !important;
   }
   
-  /* 비디오 재생 중 NEO BOOST 텍스트 완전히 숨기기 */
-  #boost-card.video-playing h3,
-  #boost-card.video-playing p,
-  #boost-card.video-playing img,
-  #boost-card.video-playing .card-front > div[style*="z-index: 2"] {
-    display: none !important;
-    visibility: hidden !important;
-    opacity: 0 !important;
-    z-index: -1 !important;
-  }
-  
   .training-card p {
     font-size: 0.8rem !important;
     line-height: 1.3 !important;
@@ -9608,9 +9597,6 @@ document.addEventListener('DOMContentLoaded', function() {
           boostVideo.style.backgroundColor = '#000';
           boostVideo.classList.add('playing');
           
-          // 카드에 video-playing 클래스 추가
-          this.classList.add('video-playing');
-          
           // 카드와 카드 프론트의 overflow를 hidden으로 설정하여 하단 텍스트 숨기기
           const cardElement = this;
           const cardFront = this.querySelector('.card-front');
@@ -9668,18 +9654,12 @@ document.addEventListener('DOMContentLoaded', function() {
           
           if (h3Element) {
             h3Element.style.display = 'none';
-            h3Element.style.visibility = 'hidden';
-            h3Element.style.zIndex = '-1';
           }
           if (pElement) {
             pElement.style.display = 'none';
-            pElement.style.visibility = 'hidden';
-            pElement.style.zIndex = '-1';
           }
           if (imgElement) {
             imgElement.style.display = 'none';
-            imgElement.style.visibility = 'hidden';
-            imgElement.style.zIndex = '-1';
           }
           if (clickIndicator) {
             clickIndicator.style.transition = 'opacity 0.3s ease';
@@ -9721,9 +9701,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 cardFront.style.overflow = '';
               }
               
-              // video-playing 클래스 제거
-              cards['boost'].classList.remove('video-playing');
-              
               // 모든 요소 다시 표시
               const h3Element = cards['boost'].querySelector('h3');
               const pElement = cards['boost'].querySelector('p');
@@ -9731,18 +9708,12 @@ document.addEventListener('DOMContentLoaded', function() {
               
               if (h3Element) {
                 h3Element.style.display = '';
-                h3Element.style.visibility = '';
-                h3Element.style.zIndex = '';
               }
               if (pElement) {
                 pElement.style.display = '';
-                pElement.style.visibility = '';
-                pElement.style.zIndex = '';
               }
               if (imgElement) {
                 imgElement.style.display = '';
-                imgElement.style.visibility = '';
-                imgElement.style.zIndex = '';
               }
               
               // 콘텐츠 부드럽게 나타나기
@@ -9788,9 +9759,6 @@ document.addEventListener('DOMContentLoaded', function() {
             boostVideo.style.boxShadow = '';
             boostVideo.classList.remove('playing');
             boostVideo.style.display = 'none';
-            
-            // video-playing 클래스 제거
-            cards['boost'].classList.remove('video-playing');
             
             // 카드와 카드 프론트 overflow 복원
             const cardElement = cards['boost'];
