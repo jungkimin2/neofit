@@ -2,7 +2,6 @@
 
 
 
-
 <meta name="google-site-verification" content="OeM-YMo4NpQshyIm3m5H59IikSDp0BMe4sXKQmCu7NM" />
 <!DOCTYPE html>
 <html lang="ko">
@@ -1029,7 +1028,6 @@ div > p.smart-guide-text {
     height: 140px !important;
     margin: -5px 0 -5px 0 !important;  /* 음수 마진으로 공간 줄이기 */
     object-fit: contain !important;
-    transform: translateY(-16px) !important;  /* 1칸(16px) 위로 이동 */
   }
   
   /* 모바일에서 비디오 초기 설정 */
@@ -8785,7 +8783,7 @@ document.addEventListener('DOMContentLoaded', function() {
           syncVideo.style.opacity = '1';
           
           // 비디오에 둥근 모서리와 글래스 효과 추가
-          syncVideo.style.borderRadius = '0px';
+          syncVideo.style.borderRadius = '20px';
           syncVideo.style.transform = 'scale(0.94)';
           
           // 글래스모피즘 테두리 오버레이 추가
@@ -8797,7 +8795,7 @@ document.addEventListener('DOMContentLoaded', function() {
             left: 0;
             right: 0;
             bottom: 0;
-            border-radius: 16px;
+            border-radius: 20px;
             border: 1px solid rgba(123, 228, 149, 0.5);
             background: linear-gradient(135deg, 
               rgba(123, 228, 149, 0.15) 0%, 
@@ -8874,7 +8872,7 @@ document.addEventListener('DOMContentLoaded', function() {
           balanceVideo.style.opacity = '1';
           
           // 비디오에 둥근 모서리와 글래스 효과 추가
-          balanceVideo.style.borderRadius = '0px';
+          balanceVideo.style.borderRadius = '20px';
           balanceVideo.style.transform = 'scale(0.94)';
           
           // 글래스모피즘 테두리 오버레이 추가
@@ -8886,7 +8884,7 @@ document.addEventListener('DOMContentLoaded', function() {
             left: 0;
             right: 0;
             bottom: 0;
-            border-radius: 16px;
+            border-radius: 20px;
             border: 1px solid rgba(147, 197, 253, 0.5);
             background: linear-gradient(135deg, 
               rgba(147, 197, 253, 0.15) 0%, 
@@ -8964,32 +8962,32 @@ document.addEventListener('DOMContentLoaded', function() {
           
           // 비디오 보이기 및 재생
           boostVideo.style.opacity = '1';
-          boostVideo.style.borderRadius = '0px';
+          boostVideo.style.borderRadius = '20px';
           boostVideo.style.transform = 'scale(0.94)';
           
-          // PC에서도 네오 부스트는 글래스 오버레이 제거
-          // const glassOverlay = document.createElement('div');
-          // glassOverlay.className = 'video-glass-overlay';
-          // glassOverlay.style.cssText = `
-          //   position: absolute;
-          //   top: 0;
-          //   left: 0;
-          //   right: 0;
-          //   bottom: 0;
-          //   border-radius: 16px;
-          //   border: 1px solid rgba(248, 113, 113, 0.5);
-          //   display: block;
-          //   background: linear-gradient(135deg, 
-          //     rgba(248, 113, 113, 0.15) 0%, 
-          //     transparent 40%, 
-          //     transparent 60%,
-          //     rgba(248, 113, 113, 0.15) 100%);
-          //   pointer-events: none;
-          //   z-index: 10;
-          //   box-shadow: inset 0 0 30px rgba(248, 113, 113, 0.2),
-          //                 0 0 60px rgba(248, 113, 113, 0.3);
-          // `;
-          // this.querySelector('.card-front').appendChild(glassOverlay);
+          // 글래스모피즘 테두리 오버레이 추가
+          const glassOverlay = document.createElement('div');
+          glassOverlay.className = 'video-glass-overlay';
+          glassOverlay.style.cssText = `
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 20px;
+            border: 1px solid rgba(248, 113, 113, 0.5);
+            display: block;
+            background: linear-gradient(135deg, 
+              rgba(248, 113, 113, 0.15) 0%, 
+              transparent 40%, 
+              transparent 60%,
+              rgba(248, 113, 113, 0.15) 100%);
+            pointer-events: none;
+            z-index: 10;
+            box-shadow: inset 0 0 30px rgba(248, 113, 113, 0.2),
+                        0 0 60px rgba(248, 113, 113, 0.3);
+          `;
+          this.querySelector('.card-front').appendChild(glassOverlay);
           
           boostVideo.muted = false; // PC에서는 소리 재생 허용
           boostVideo.volume = 0.3;
@@ -9378,9 +9376,15 @@ document.addEventListener('DOMContentLoaded', function() {
             bottom: 0;
             border-radius: 16px;
             border: 0.5px solid rgba(123, 228, 149, 0.3);
-            background: transparent;
+            background: linear-gradient(135deg, 
+              rgba(123, 228, 149, 0.3) 0%, 
+              transparent 30%, 
+              transparent 70%,
+              rgba(123, 228, 149, 0.3) 100%);
             pointer-events: none;
             z-index: 10000;
+            box-shadow: inset 0 0 50px rgba(123, 228, 149, 0.4),
+                          0 0 80px rgba(123, 228, 149, 0.5);
           `;
           this.querySelector('.card-front').appendChild(glassOverlay);
           
@@ -9494,9 +9498,15 @@ document.addEventListener('DOMContentLoaded', function() {
             bottom: 0;
             border-radius: 16px;
             border: 0.5px solid rgba(147, 197, 253, 0.3);
-            background: transparent;
+            background: linear-gradient(135deg, 
+              rgba(147, 197, 253, 0.3) 0%, 
+              transparent 30%, 
+              transparent 70%,
+              rgba(147, 197, 253, 0.3) 100%);
             pointer-events: none;
             z-index: 10000;
+            box-shadow: inset 0 0 50px rgba(147, 197, 253, 0.4),
+                          0 0 80px rgba(147, 197, 253, 0.5);
           `;
           this.querySelector('.card-front').appendChild(glassOverlay);
           
@@ -9590,7 +9600,7 @@ document.addEventListener('DOMContentLoaded', function() {
           boostVideo.style.width = '100%';
           boostVideo.style.height = '100%';
           boostVideo.style.objectFit = 'cover';
-          boostVideo.style.borderRadius = '0px';
+          boostVideo.style.borderRadius = '20px';
           boostVideo.style.border = 'none';
           boostVideo.style.display = 'block';
           boostVideo.style.boxShadow = 'none';
@@ -9608,22 +9618,28 @@ document.addEventListener('DOMContentLoaded', function() {
             cardFront.style.overflow = 'hidden';
           }
           
-          // 모바일에서 네오 부스트는 글래스 오버레이 제거
-          // const glassOverlay = document.createElement('div');
-          // glassOverlay.className = 'video-glass-overlay';
-          // glassOverlay.style.cssText = `
-          //   position: absolute;
-          //   top: 0;
-          //   left: 0;
-          //   right: 0;
-          //   bottom: 0;
-          //   border-radius: 16px;
-          //   border: 0.5px solid rgba(248, 113, 113, 0.4);
-          //   background: transparent;
-          //   pointer-events: none;
-          //   z-index: 10000;
-          // `;
-          // this.querySelector('.card-front').appendChild(glassOverlay);
+          // 모바일에서 얇은 글래스 오버레이 추가
+          const glassOverlay = document.createElement('div');
+          glassOverlay.className = 'video-glass-overlay';
+          glassOverlay.style.cssText = `
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 20px;
+            border: 0.5px solid rgba(248, 113, 113, 0.4);
+            background: linear-gradient(135deg, 
+              rgba(248, 113, 113, 0.15) 0%, 
+              transparent 40%, 
+              transparent 60%,
+              rgba(248, 113, 113, 0.15) 100%);
+            pointer-events: none;
+            z-index: 10000;
+            box-shadow: inset 0 0 20px rgba(248, 113, 113, 0.2),
+                          0 0 40px rgba(248, 113, 113, 0.3);
+          `;
+          this.querySelector('.card-front').appendChild(glassOverlay);
           
           // 비디오 즉시 재생 (모바일에서도 소리 재생)
           boostVideo.muted = false; // 모바일에서도 소리 재생
@@ -9743,20 +9759,6 @@ document.addEventListener('DOMContentLoaded', function() {
           boostVideo.style.transition = 'opacity 0.3s ease';
           boostVideo.style.opacity = '0';
           
-          // 글래스 오버레이 먼저 페이드아웃 (네오 부스트는 오버레이 없음)
-          const overlay = this.querySelector('.video-glass-overlay');
-          if (overlay) {
-            overlay.style.transition = 'opacity 0.3s ease';
-            overlay.style.opacity = '0';
-          }
-          
-          // 콘텐츠 먼저 페이드인
-          const boostContent = this.querySelector('.card-front > div[style*="z-index: 2"]');
-          if (boostContent) {
-            boostContent.style.transition = 'opacity 0.3s ease';
-            boostContent.style.opacity = '1';
-          }
-          
           // 300ms 후 비디오 숨기고 스타일 초기화
           setTimeout(() => {
             boostVideo.style.display = 'none';
@@ -9772,9 +9774,6 @@ document.addEventListener('DOMContentLoaded', function() {
             boostVideo.style.zIndex = '';
             boostVideo.style.transition = '';
             boostVideo.classList.remove('playing');
-            
-            // 글래스 오버레이 제거
-            if (overlay) overlay.remove();
             
             // video-playing 클래스 제거
             this.classList.remove('video-playing');
@@ -9809,13 +9808,10 @@ document.addEventListener('DOMContentLoaded', function() {
               boostContent.style.visibility = 'visible';
             }
             
-            // CLICK 인디케이터 페이드인
+            // CLICK 인디케이터 표시
             if (clickIndicator) {
               clickIndicator.style.display = 'block';
-              clickIndicator.style.transition = 'opacity 0.3s ease';
-              setTimeout(() => {
-                clickIndicator.style.opacity = '1';
-              }, 50);
+              clickIndicator.style.opacity = '1';
             }
           }, 300);
         }
@@ -10436,7 +10432,8 @@ document.addEventListener('DOMContentLoaded', function() {
   /* 모바일에서 비디오 글래스 오버레이 얇게 */
   .video-glass-overlay {
     border-width: 0.5px !important;
-    box-shadow: none !important;
+    box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.1),
+                0 0 30px currentColor !important;
   }
   
   .card-indicators .indicator:active {
