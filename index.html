@@ -9587,10 +9587,10 @@ document.addEventListener('DOMContentLoaded', function() {
         if (boostVideo && !boostVideo.classList.contains('playing')) {
           // 비디오가 카드 전체를 덮도록 스타일 설정
           boostVideo.style.position = 'absolute';
-          boostVideo.style.top = '0';
-          boostVideo.style.left = '0';
-          boostVideo.style.width = '100%';
-          boostVideo.style.height = '100%';
+          boostVideo.style.top = '-2px';
+          boostVideo.style.left = '-2px';
+          boostVideo.style.width = 'calc(100% + 4px)';
+          boostVideo.style.height = 'calc(100% + 4px)';
           boostVideo.style.objectFit = 'cover';
           boostVideo.style.borderRadius = '20px';
           boostVideo.style.border = 'none';
