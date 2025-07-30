@@ -9607,22 +9607,22 @@ document.addEventListener('DOMContentLoaded', function() {
             cardFront.style.overflow = 'hidden';
           }
           
-          // 모바일에서 얇은 글래스 오버레이 추가
-          const glassOverlay = document.createElement('div');
-          glassOverlay.className = 'video-glass-overlay';
-          glassOverlay.style.cssText = `
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            border-radius: 16px;
-            border: 0.5px solid rgba(248, 113, 113, 0.4);
-            background: transparent;
-            pointer-events: none;
-            z-index: 10000;
-          `;
-          this.querySelector('.card-front').appendChild(glassOverlay);
+          // 모바일에서 네오 부스트는 글래스 오버레이 제거
+          // const glassOverlay = document.createElement('div');
+          // glassOverlay.className = 'video-glass-overlay';
+          // glassOverlay.style.cssText = `
+          //   position: absolute;
+          //   top: 0;
+          //   left: 0;
+          //   right: 0;
+          //   bottom: 0;
+          //   border-radius: 16px;
+          //   border: 0.5px solid rgba(248, 113, 113, 0.4);
+          //   background: transparent;
+          //   pointer-events: none;
+          //   z-index: 10000;
+          // `;
+          // this.querySelector('.card-front').appendChild(glassOverlay);
           
           // 비디오 즉시 재생 (모바일에서도 소리 재생)
           boostVideo.muted = false; // 모바일에서도 소리 재생
@@ -9742,7 +9742,7 @@ document.addEventListener('DOMContentLoaded', function() {
           boostVideo.style.transition = 'opacity 0.3s ease';
           boostVideo.style.opacity = '0';
           
-          // 글래스 오버레이 먼저 페이드아웃
+          // 글래스 오버레이 먼저 페이드아웃 (네오 부스트는 오버레이 없음)
           const overlay = this.querySelector('.video-glass-overlay');
           if (overlay) {
             overlay.style.transition = 'opacity 0.3s ease';
