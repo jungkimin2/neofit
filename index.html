@@ -9742,6 +9742,20 @@ document.addEventListener('DOMContentLoaded', function() {
           boostVideo.style.transition = 'opacity 0.3s ease';
           boostVideo.style.opacity = '0';
           
+          // 글래스 오버레이 먼저 페이드아웃
+          const overlay = this.querySelector('.video-glass-overlay');
+          if (overlay) {
+            overlay.style.transition = 'opacity 0.3s ease';
+            overlay.style.opacity = '0';
+          }
+          
+          // 콘텐츠 먼저 페이드인
+          const boostContent = this.querySelector('.card-front > div[style*="z-index: 2"]');
+          if (boostContent) {
+            boostContent.style.transition = 'opacity 0.3s ease';
+            boostContent.style.opacity = '1';
+          }
+          
           // 300ms 후 비디오 숨기고 스타일 초기화
           setTimeout(() => {
             boostVideo.style.display = 'none';
@@ -9757,6 +9771,9 @@ document.addEventListener('DOMContentLoaded', function() {
             boostVideo.style.zIndex = '';
             boostVideo.style.transition = '';
             boostVideo.classList.remove('playing');
+            
+            // 글래스 오버레이 제거
+            if (overlay) overlay.remove();
             
             // video-playing 클래스 제거
             this.classList.remove('video-playing');
@@ -9791,10 +9808,13 @@ document.addEventListener('DOMContentLoaded', function() {
               boostContent.style.visibility = 'visible';
             }
             
-            // CLICK 인디케이터 표시
+            // CLICK 인디케이터 페이드인
             if (clickIndicator) {
               clickIndicator.style.display = 'block';
-              clickIndicator.style.opacity = '1';
+              clickIndicator.style.transition = 'opacity 0.3s ease';
+              setTimeout(() => {
+                clickIndicator.style.opacity = '1';
+              }, 50);
             }
           }, 300);
         }
