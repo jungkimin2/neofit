@@ -2,6 +2,7 @@
 
 
 
+
 <meta name="google-site-verification" content="OeM-YMo4NpQshyIm3m5H59IikSDp0BMe4sXKQmCu7NM" />
 <!DOCTYPE html>
 <html lang="ko">
@@ -9376,15 +9377,9 @@ document.addEventListener('DOMContentLoaded', function() {
             bottom: 0;
             border-radius: 16px;
             border: 0.5px solid rgba(123, 228, 149, 0.3);
-            background: linear-gradient(135deg, 
-              rgba(123, 228, 149, 0.3) 0%, 
-              transparent 30%, 
-              transparent 70%,
-              rgba(123, 228, 149, 0.3) 100%);
+            background: transparent;
             pointer-events: none;
             z-index: 10000;
-            box-shadow: inset 0 0 50px rgba(123, 228, 149, 0.4),
-                          0 0 80px rgba(123, 228, 149, 0.5);
           `;
           this.querySelector('.card-front').appendChild(glassOverlay);
           
@@ -9498,15 +9493,9 @@ document.addEventListener('DOMContentLoaded', function() {
             bottom: 0;
             border-radius: 16px;
             border: 0.5px solid rgba(147, 197, 253, 0.3);
-            background: linear-gradient(135deg, 
-              rgba(147, 197, 253, 0.3) 0%, 
-              transparent 30%, 
-              transparent 70%,
-              rgba(147, 197, 253, 0.3) 100%);
+            background: transparent;
             pointer-events: none;
             z-index: 10000;
-            box-shadow: inset 0 0 50px rgba(147, 197, 253, 0.4),
-                          0 0 80px rgba(147, 197, 253, 0.5);
           `;
           this.querySelector('.card-front').appendChild(glassOverlay);
           
@@ -9629,15 +9618,9 @@ document.addEventListener('DOMContentLoaded', function() {
             bottom: 0;
             border-radius: 20px;
             border: 0.5px solid rgba(248, 113, 113, 0.4);
-            background: linear-gradient(135deg, 
-              rgba(248, 113, 113, 0.15) 0%, 
-              transparent 40%, 
-              transparent 60%,
-              rgba(248, 113, 113, 0.15) 100%);
+            background: transparent;
             pointer-events: none;
             z-index: 10000;
-            box-shadow: inset 0 0 20px rgba(248, 113, 113, 0.2),
-                          0 0 40px rgba(248, 113, 113, 0.3);
           `;
           this.querySelector('.card-front').appendChild(glassOverlay);
           
@@ -10432,8 +10415,7 @@ document.addEventListener('DOMContentLoaded', function() {
   /* 모바일에서 비디오 글래스 오버레이 얇게 */
   .video-glass-overlay {
     border-width: 0.5px !important;
-    box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.1),
-                0 0 30px currentColor !important;
+    box-shadow: none !important;
   }
   
   .card-indicators .indicator:active {
