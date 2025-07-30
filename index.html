@@ -1086,6 +1086,16 @@ div > p.smart-guide-text {
     z-index: 1000 !important;
   }
   
+  /* 전환 중 애니메이션 */
+  #boost-card.transitioning .boost-hover-video {
+    transition: opacity 0.6s ease-out !important;
+  }
+  
+  #boost-card.transitioning .card-front > div[style*="z-index: 2"],
+  #boost-card.transitioning .click-indicator {
+    transition: opacity 0.5s ease-in !important;
+  }
+  
   .training-card p {
     font-size: 0.8rem !important;
     line-height: 1.3 !important;
@@ -9742,59 +9752,79 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 300);
           }, { once: true });
         } else if (boostVideo && boostVideo.classList.contains('playing')) {
-          // 재생 중인 비디오 정지 - 부드러운 전환
+          // 재생 중인 비디오 정지
           e.stopPropagation();
           
-          // 비디오 페이드아웃 애니메이션 시작
-          boostVideo.style.cssText = boostVideo.style.cssText + '; transition: opacity 0.6s ease-out !important; opacity: 0 !important;';
+          // 비디오 정지
+          boostVideo.pause();
           
-          // 비디오가 반쯤 사라진 후 UI 준비
+          // 애니메이션을 위한 클래스 추가
+          this.classList.add('transitioning');
+          
+          // 비디오 페이드아웃
+          boostVideo.style.transition = 'opacity 0.6s ease-out';
+          boostVideo.style.opacity = '0';
+          
+          // 페이드아웃 후 처리
           setTimeout(() => {
-            // 비디오 완전히 숨기기
+            // 비디오 초기화
+            boostVideo.currentTime = 0;
             boostVideo.style.display = 'none';
             boostVideo.classList.remove('playing');
             
             // video-playing 클래스 제거
             this.classList.remove('video-playing');
+            this.classList.remove('transitioning');
             
-            // NEO BOOST 타이틀 텍스트 복원
+            // NEO BOOST 타이틀 복원
             const boostTitle = this.querySelector('.boost-title');
             if (boostTitle) {
               const originalText = boostTitle.getAttribute('data-original-text');
               if (originalText) {
                 boostTitle.textContent = originalText;
               }
-              boostTitle.style.cssText = boostTitle.style.cssText.replace(/opacity:\s*0\s*!?important?;?/gi, '');
-              boostTitle.style.cssText = boostTitle.style.cssText.replace(/visibility:\s*hidden\s*!?important?;?/gi, '');
+              boostTitle.style.opacity = '1';
               boostTitle.style.visibility = 'visible';
               boostTitle.style.pointerEvents = '';
             }
             
-            // 콘텐츠 준비
+            // 콘텐츠 복원
             if (boostContent) {
-              boostContent.style.cssText = boostContent.style.cssText + '; opacity: 0 !important; visibility: visible !important; display: flex !important;';
-            }
-            if (clickIndicator) {
-              clickIndicator.style.cssText = clickIndicator.style.cssText + '; opacity: 0 !important; display: block !important;';
+              boostContent.style.transition = 'opacity 0.5s ease-in';
+              boostContent.style.opacity = '1';
+              boostContent.style.visibility = 'visible';
             }
             
-            // UI 요소들 페이드인
-            requestAnimationFrame(() => {
-              if (boostContent) {
-                boostContent.style.cssText = boostContent.style.cssText + '; transition: opacity 0.5s ease-in !important;';
-                setTimeout(() => {
-                  boostContent.style.cssText = boostContent.style.cssText + '; opacity: 1 !important;';
-                }, 50);
-              }
+            // CLICK 인디케이터 복원
+            if (clickIndicator) {
+              clickIndicator.style.transition = 'opacity 0.5s ease-in';
+              clickIndicator.style.opacity = '1';
+              clickIndicator.style.display = 'block';
+            }
+            
+            // 모든 스타일 정리
+            setTimeout(() => {
+              boostVideo.style.position = '';
+              boostVideo.style.top = '';
+              boostVideo.style.left = '';
+              boostVideo.style.width = '';
+              boostVideo.style.height = '';
+              boostVideo.style.borderRadius = '';
+              boostVideo.style.border = '';
+              boostVideo.style.boxShadow = '';
+              boostVideo.style.backgroundColor = '';
+              boostVideo.style.zIndex = '';
+              boostVideo.style.transition = '';
+              boostVideo.style.opacity = '';
               
-              if (clickIndicator) {
-                clickIndicator.style.cssText = clickIndicator.style.cssText + '; transition: opacity 0.5s ease-in 0.2s !important;';
-                setTimeout(() => {
-                  clickIndicator.style.cssText = clickIndicator.style.cssText + '; opacity: 1 !important;';
-                }, 250);
+              if (boostContent) {
+                boostContent.style.transition = '';
               }
-            });
-          }, 600);  // 비디오 페이드아웃 완료 대기
+              if (clickIndicator) {
+                clickIndicator.style.transition = '';
+              }
+            }, 500);
+          }, 600);
           
           // 글래스 오버레이 제거
           const overlay = cards['boost'].querySelector('.video-glass-overlay');
