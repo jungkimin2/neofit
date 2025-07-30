@@ -5638,12 +5638,37 @@ if (window.innerWidth <= 768) {
                 boostContent.style.transition = 'opacity 0.3s ease, visibility 0.3s ease';
                 boostContent.style.opacity = '0';
                 boostContent.style.visibility = 'hidden';
+                boostContent.style.display = 'none';
               }
+              
+              // 제목, 이미지, 텍스트 모두 개별적으로 숨기기
+              const title = boostCard.querySelector('.boost-title');
+              const img = boostCard.querySelector('img[alt="네오 부스트"]');
+              const texts = boostCard.querySelectorAll('p');
+              
+              if (title) {
+                title.style.opacity = '0';
+                title.style.visibility = 'hidden';
+                title.style.display = 'none';
+              }
+              
+              if (img) {
+                img.style.opacity = '0';
+                img.style.visibility = 'hidden';
+                img.style.display = 'none';
+              }
+              
+              texts.forEach(text => {
+                text.style.opacity = '0';
+                text.style.visibility = 'hidden';
+                text.style.display = 'none';
+              });
               
               // CLICK 버튼 숨기기
               if (boostClickIndicator) {
                 boostClickIndicator.style.transition = 'opacity 0.3s ease';
                 boostClickIndicator.style.opacity = '0';
+                boostClickIndicator.style.display = 'none';
               }
               
               // 음소거 및 재생
@@ -5695,12 +5720,37 @@ if (window.innerWidth <= 768) {
               boostContent.style.transition = 'opacity 0.3s ease, visibility 0.3s ease';
               boostContent.style.opacity = '1';
               boostContent.style.visibility = 'visible';
+              boostContent.style.display = '';
             }
+            
+            // 제목, 이미지, 텍스트 모두 다시 표시
+            const title = boostCard.querySelector('.boost-title');
+            const img = boostCard.querySelector('img[alt="네오 부스트"]');
+            const texts = boostCard.querySelectorAll('p');
+            
+            if (title) {
+              title.style.opacity = '';
+              title.style.visibility = '';
+              title.style.display = '';
+            }
+            
+            if (img) {
+              img.style.opacity = '';
+              img.style.visibility = '';
+              img.style.display = '';
+            }
+            
+            texts.forEach(text => {
+              text.style.opacity = '';
+              text.style.visibility = '';
+              text.style.display = '';
+            });
             
             // CLICK 버튼 다시 표시
             if (boostClickIndicator) {
               boostClickIndicator.style.transition = 'opacity 0.3s ease';
               boostClickIndicator.style.opacity = '1';
+              boostClickIndicator.style.display = '';
             }
             
             // 재생 상태 초기화
