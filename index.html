@@ -9587,10 +9587,10 @@ document.addEventListener('DOMContentLoaded', function() {
         if (boostVideo && !boostVideo.classList.contains('playing')) {
           // 비디오가 카드 전체를 덮도록 스타일 설정
           boostVideo.style.position = 'absolute';
-          boostVideo.style.top = '-2px';
-          boostVideo.style.left = '-2px';
-          boostVideo.style.width = 'calc(100% + 4px)';
-          boostVideo.style.height = 'calc(100% + 4px)';
+          boostVideo.style.top = '0';
+          boostVideo.style.left = '0';
+          boostVideo.style.width = '100%';
+          boostVideo.style.height = '100%';
           boostVideo.style.objectFit = 'cover';
           boostVideo.style.borderRadius = '20px';
           boostVideo.style.border = 'none';
@@ -9608,6 +9608,8 @@ document.addEventListener('DOMContentLoaded', function() {
           cardElement.style.overflow = 'hidden';
           if (cardFront) {
             cardFront.style.overflow = 'hidden';
+            // 영상 재생 시 카드 테두리 임시로 제거
+            cardFront.style.border = 'none';
           }
           
           // NEO BOOST는 글래스 오버레이 제거
@@ -9681,10 +9683,11 @@ document.addEventListener('DOMContentLoaded', function() {
             boostVideo.style.transform = '';
             boostVideo.currentTime = 0;
             
-            // 카드 overflow 복원
+            // 카드 overflow 및 테두리 복원
             cardElement.style.overflow = '';
             if (cardFront) {
               cardFront.style.overflow = '';
+              cardFront.style.border = '2px solid #F87171';
             }
             
             // NEO BOOST 타이틀 다시 표시
@@ -9741,12 +9744,13 @@ document.addEventListener('DOMContentLoaded', function() {
           boostVideo.style.zIndex = '';
           boostVideo.classList.remove('playing');
           
-          // 카드 overflow 복원
+          // 카드 overflow 및 테두리 복원
           const cardElement = this;
           const cardFront = this.querySelector('.card-front');
           cardElement.style.overflow = '';
           if (cardFront) {
             cardFront.style.overflow = '';
+            cardFront.style.border = '2px solid #F87171';
           }
           
           setTimeout(() => {
@@ -10395,6 +10399,27 @@ document.addEventListener('DOMContentLoaded', function() {
     box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.1),
                 0 0 30px currentColor !important;
   } */
+  
+  /* 모바일에서 비디오 재생 시 카드 테두리 숨기기 */
+  @media (max-width: 768px) {
+    .training-card .boost-hover-video.playing {
+      position: absolute !important;
+      top: -2px !important;
+      left: -2px !important;
+      width: calc(100% + 4px) !important;
+      height: calc(100% + 4px) !important;
+      z-index: 999 !important;
+    }
+    
+    #boost-card .card-front {
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .training-card.active .card-front {
+      overflow: hidden !important;
+    }
+  }
   
   .card-indicators .indicator:active {
     transform: scale(0.9);
