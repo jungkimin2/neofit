@@ -9365,24 +9365,24 @@ document.addEventListener('DOMContentLoaded', function() {
           syncVideo.style.backgroundColor = '#000';
           syncVideo.classList.add('playing');
           
-          // 모바일에서 얇은 글래스 오버레이 추가
-          const glassOverlay = document.createElement('div');
-          glassOverlay.className = 'video-glass-overlay';
-          glassOverlay.style.cssText = `
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            border-radius: 20px;
-            border: 2px solid rgba(123, 228, 149, 0.8);
-            background: transparent;
-            pointer-events: none;
-            z-index: 10000;
-            box-shadow: inset 0 0 30px rgba(123, 228, 149, 0.3),
-                          0 0 60px rgba(123, 228, 149, 0.4);
-          `;
-          this.querySelector('.card-front').appendChild(glassOverlay);
+          // NEO SYNC 테두리 삭제
+          // const glassOverlay = document.createElement('div');
+          // glassOverlay.className = 'video-glass-overlay';
+          // glassOverlay.style.cssText = `
+          //   position: absolute;
+          //   top: 0;
+          //   left: 0;
+          //   right: 0;
+          //   bottom: 0;
+          //   border-radius: 20px;
+          //   border: 2px solid rgba(123, 228, 149, 0.8);
+          //   background: transparent;
+          //   pointer-events: none;
+          //   z-index: 10000;
+          //   box-shadow: inset 0 0 30px rgba(123, 228, 149, 0.3),
+          //                 0 0 60px rgba(123, 228, 149, 0.4);
+          // `;
+          // this.querySelector('.card-front').appendChild(glassOverlay);
           
           // 비디오 즉시 재생 (카드 클릭 시에는 소리 재생)
           syncVideo.muted = false; // 카드 클릭 시 소리 재생
@@ -9414,9 +9414,9 @@ document.addEventListener('DOMContentLoaded', function() {
             syncVideo.style.boxShadow = '';
             syncVideo.classList.remove('playing');
             
-            // 글래스 오버레이 제거
-            const overlay = cards['sync'].querySelector('.video-glass-overlay');
-            if (overlay) overlay.remove();
+            // NEO SYNC 오버레이 삭제됨
+            // const overlay = cards['sync'].querySelector('.video-glass-overlay');
+            // if (overlay) overlay.remove();
             
             setTimeout(() => {
               syncVideo.style.display = 'none';
@@ -9483,24 +9483,24 @@ document.addEventListener('DOMContentLoaded', function() {
           balanceVideo.style.backgroundColor = '#000';
           balanceVideo.classList.add('playing');
           
-          // 모바일에서 얇은 글래스 오버레이 추가
-          const glassOverlay = document.createElement('div');
-          glassOverlay.className = 'video-glass-overlay';
-          glassOverlay.style.cssText = `
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            border-radius: 20px;
-            border: 2px solid rgba(147, 197, 253, 0.8);
-            background: transparent;
-            pointer-events: none;
-            z-index: 10000;
-            box-shadow: inset 0 0 30px rgba(147, 197, 253, 0.3),
-                          0 0 60px rgba(147, 197, 253, 0.4);
-          `;
-          this.querySelector('.card-front').appendChild(glassOverlay);
+          // NEO BALANCE 테두리 삭제
+          // const glassOverlay = document.createElement('div');
+          // glassOverlay.className = 'video-glass-overlay';
+          // glassOverlay.style.cssText = `
+          //   position: absolute;
+          //   top: 0;
+          //   left: 0;
+          //   right: 0;
+          //   bottom: 0;
+          //   border-radius: 20px;
+          //   border: 2px solid rgba(147, 197, 253, 0.8);
+          //   background: transparent;
+          //   pointer-events: none;
+          //   z-index: 10000;
+          //   box-shadow: inset 0 0 30px rgba(147, 197, 253, 0.3),
+          //                 0 0 60px rgba(147, 197, 253, 0.4);
+          // `;
+          // this.querySelector('.card-front').appendChild(glassOverlay);
           
           // 비디오 즉시 재생 (카드 클릭 시에는 소리 재생)
           balanceVideo.muted = false; // 카드 클릭 시 소리 재생
@@ -9532,9 +9532,9 @@ document.addEventListener('DOMContentLoaded', function() {
             balanceVideo.style.boxShadow = '';
             balanceVideo.classList.remove('playing');
             
-            // 글래스 오버레이 제거
-            const overlay = cards['balance'].querySelector('.video-glass-overlay');
-            if (overlay) overlay.remove();
+            // NEO BALANCE 오버레이 삭제됨
+            // const overlay = cards['balance'].querySelector('.video-glass-overlay');
+            // if (overlay) overlay.remove();
             
             setTimeout(() => {
               balanceVideo.style.display = 'none';
