@@ -5729,7 +5729,52 @@ if (window.innerWidth <= 768) {
         newBoostCard.addEventListener('click', function(e) {
           console.log('NEO BOOST 카드 클릭됨', this.classList.contains('active'));
           
-          if (!this.classList.contains('active')) return;
+          // 카드가 중앙에 없으면 먼저 중앙으로 이동
+          if (!this.classList.contains('active')) {
+            console.log('NEO BOOST 카드를 중앙으로 이동');
+            
+            // switchCard 함수가 있는지 확인하고 호출
+            if (typeof switchCard === 'function') {
+              switchCard('boost');
+            } else {
+              // switchCard가 없으면 직접 중앙으로 이동
+              // 다른 카드들 위치 조정
+              const syncCard = document.getElementById('sync-card');
+              const balanceCard = document.getElementById('balance-card');
+              
+              if (syncCard && balanceCard) {
+                // boost를 중앙으로
+                this.style.transform = 'translateX(-50%) translateY(-50%) scale(1)';
+                this.style.opacity = '1';
+                this.style.zIndex = '10';
+                this.classList.add('active');
+                
+                // sync를 왼쪽으로
+                syncCard.style.transform = 'translateX(-50%) translateY(-50%) translateX(-280px) scale(0.8)';
+                syncCard.style.opacity = '0.7';
+                syncCard.style.zIndex = '1';
+                syncCard.classList.remove('active');
+                
+                // balance를 오른쪽으로
+                balanceCard.style.transform = 'translateX(-50%) translateY(-50%) translateX(280px) scale(0.8)';
+                balanceCard.style.opacity = '0.7';
+                balanceCard.style.zIndex = '1';
+                balanceCard.classList.remove('active');
+                
+                // 인디케이터 업데이트
+                const indicators = document.querySelectorAll('.card-indicators .indicator');
+                indicators.forEach(ind => {
+                  ind.classList.remove('active');
+                  ind.style.background = 'transparent';
+                  if (ind.getAttribute('data-target') === 'boost') {
+                    ind.classList.add('active');
+                    ind.style.background = '#F87171';
+                  }
+                });
+              }
+            }
+            return;
+          }
           
           e.preventDefault();
           e.stopPropagation();
