@@ -10517,6 +10517,15 @@ document.addEventListener('DOMContentLoaded', function() {
     font-size: 2.5rem !important;
   }
   
+  /* 모바일에서 카드 로고 크기 증가 */
+  #sync-card img[src*="neosync.png"],
+  #balance-card img[src*="neoblance.png"],
+  #boost-card img[src*="neoboots.png"] {
+    width: 180px !important;
+    height: 180px !important;
+    max-width: 90% !important;
+  }
+  
   .training-card:not(.active) {
     transform: translateX(-50%) translateY(-50%) translateX(var(--mobile-x, 0)) translateZ(-50px) rotateY(var(--mobile-rotate, 0deg)) scale(0.7) !important;
   }
