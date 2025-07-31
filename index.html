@@ -5759,6 +5759,8 @@ if (window.innerWidth <= 768) {
               // 원본 콘텐츠 복원
               cardFront.innerHTML = originalHTML;
               cardFront.style.padding = '30px';
+              // 카드의 원래 테두리 복원
+              cardFront.style.border = '2px solid #F87171';
               
               // 복원된 콘텐츠 페이드인
               const restoredContent = cardFront.querySelector('div[style*="z-index: 2"]');
@@ -5821,6 +5823,8 @@ if (window.innerWidth <= 768) {
               // 카드 내용 제거
               cardFront.innerHTML = '';
               cardFront.style.padding = '0';
+              // 카드의 기본 테두리 제거
+              cardFront.style.border = 'none';
               
               // 비디오 컨테이너 생성
               const videoWrapper = document.createElement('div');
@@ -5840,7 +5844,8 @@ if (window.innerWidth <= 768) {
               videoElement.src = './videos/neoboots.mp4';
               videoElement.autoplay = true;
               videoElement.loop = true;
-              videoElement.muted = true;
+              videoElement.muted = false; // 소리 켜기
+              videoElement.volume = 0.5; // 볼륨 50%
               videoElement.playsInline = true;
               videoElement.setAttribute('webkit-playsinline', 'true');
               videoElement.style.cssText = `
@@ -5849,24 +5854,23 @@ if (window.innerWidth <= 768) {
                 object-fit: cover;
               `;
               
-              // 글래시 효과 테두리 (외부에만)
-              const borderGlassy = document.createElement('div');
-              borderGlassy.style.cssText = `
+              // 얇은 빨간색 테두리 (바깥쪽에만)
+              const redBorder = document.createElement('div');
+              redBorder.style.cssText = `
                 position: absolute;
                 top: 0;
                 left: 0;
                 right: 0;
                 bottom: 0;
-                border: 1px solid rgba(248, 113, 113, 0.3);
+                border: 1px solid #F87171;
                 border-radius: 20px;
                 pointer-events: none;
                 z-index: 3;
-                box-shadow: inset 0 0 20px rgba(248, 113, 113, 0.2);
               `;
               
               // 요소 조립
               videoWrapper.appendChild(videoElement);
-              videoWrapper.appendChild(borderGlassy);
+              videoWrapper.appendChild(redBorder);
               cardFront.appendChild(videoWrapper);
               
               // 페이드인
@@ -5877,7 +5881,12 @@ if (window.innerWidth <= 768) {
               // 비디오 재생
               videoElement.play().catch(error => {
                 console.error('비디오 재생 실패:', error);
-                restoreOriginal();
+                // 자동재생 실패 시 음소거 후 재시도
+                videoElement.muted = true;
+                videoElement.play().catch(err => {
+                  console.error('음소거 후에도 재생 실패:', err);
+                  restoreOriginal();
+                });
               });
               
               // 비디오 종료 시 복원
