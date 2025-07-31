@@ -3086,7 +3086,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <!-- 비디오 요소 추가 -->
             <video class="balance-hover-video" src="./videos/neobalance.mp4" loop playsinline muted preload="auto" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.3s ease; z-index: 1; pointer-events: none;"></video>
             
-            <div style="position: relative; z-index: 2; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; padding-top: 32px;">
+            <div style="position: relative; z-index: 2; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center;">
               <h3 style="color: #93C5FD; font-size: 2rem; margin-bottom: 20px; text-shadow: 0 0 20px rgba(147,197,253,0.8);">NEO BALANCE</h3>
               <img src="./images/neoblance.png" alt="네오 밸런스" style="width: 80%; height: auto; margin-bottom: 20px; filter: drop-shadow(0 0 20px rgba(147,197,253,0.5));">
               <p style="color: #fff; font-size: 1.1rem; text-align: center;">균형과 안정성 강화</p>
@@ -5878,15 +5878,30 @@ if (window.innerWidth <= 768) {
                 height: 100%;
                 background: #000;
                 border-radius: 20px;
-                border: 2px solid #F87171;
                 overflow: hidden;
                 z-index: 999999;
+                box-shadow: none !important;
+              `;
+              
+              // 얇은 빨간색 테두리만 (글래시 효과 없이)
+              const redBorder = document.createElement('div');
+              redBorder.style.cssText = `
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                border: 1px solid #F87171;
+                border-radius: 20px;
+                pointer-events: none;
+                z-index: 1000000;
                 box-shadow: none !important;
               `;
               
               // 요소 조립
               videoWrapper.appendChild(videoElement);
               videoContainer.appendChild(videoWrapper);
+              videoContainer.appendChild(redBorder);
               cardFront.appendChild(videoContainer);
               
               // 페이드인
@@ -10510,34 +10525,6 @@ document.addEventListener('DOMContentLoaded', function() {
     width: 260px !important;
     height: 340px !important;
     transition: all 0.25s ease-out !important;
-  }
-  
-  /* 모바일에서 NEO SYNC 제목 크기 조정 */
-  #sync-card h3 {
-    font-size: 2.2rem !important;
-  }
-  
-  /* 모바일에서 카드 로고 크기 증가 */
-  #sync-card img[src*="neosync.png"],
-  #balance-card img[src*="neoblance.png"],
-  #boost-card img[src*="neoboots.png"] {
-    width: 180px !important;
-    height: 180px !important;
-    max-width: 90% !important;
-  }
-  
-  /* 모바일에서 카드 제목 위치 조정 - 한 칸 아래로 (16px) */
-  #sync-card h3,
-  #balance-card h3,
-  #boost-card h3 {
-    margin-top: 16px !important;
-  }
-  
-  /* 모바일에서 로고 아래 설명 문구 위치 조정 - 한 칸 위로 (-16px) */
-  #sync-card p:first-of-type,
-  #balance-card p:first-of-type,
-  #boost-card p:first-of-type {
-    margin-top: -16px !important;
   }
   
   .training-card:not(.active) {
