@@ -5644,18 +5644,9 @@ if (window.innerWidth <= 768) {
               `;
               document.body.appendChild(glassOverlay);
               
-              // 카드 내부의 모든 요소를 숨기기 위해 새로운 방법 사용
-              const cardFront = this.querySelector('.card-front');
-              
-              // 모든 자식 요소를 한 번에 숨기기
-              const allChildren = cardFront.querySelectorAll('*:not(.boost-hover-video):not(.video-glass-overlay-mobile)');
-              allChildren.forEach(child => {
-                child.style.cssText = child.style.cssText + '; display: none !important; opacity: 0 !important; visibility: hidden !important;';
-              });
-              
-              // 카드 배경을 검은색으로 설정
-              cardFront.style.background = '#000';
-              cardFront.style.padding = '0';
+              // 영상 재생 시 카드 자체를 숨기기
+              this.style.opacity = '0';
+              this.style.visibility = 'hidden';
               
               // 음소거 및 재생
               boostVideo.muted = true;
@@ -5695,31 +5686,18 @@ if (window.innerWidth <= 768) {
           const img = boostCard.querySelector('img[alt="네오 부스트"]');
           const texts = boostCard.querySelectorAll('p');
           
-          // 카드 배경 원래대로 복원
-          const cardFront = boostCard.querySelector('.card-front');
-          cardFront.style.background = '';
-          cardFront.style.padding = '';
+          // 카드를 다시 표시 (먼저 투명하게)
+          boostCard.style.opacity = '0';
+          boostCard.style.visibility = 'visible';
           
-          // 모든 자식 요소의 스타일 복원
-          const allChildren = cardFront.querySelectorAll('*:not(.boost-hover-video)');
-          allChildren.forEach(child => {
-            // style 속성에서 display, opacity, visibility 관련 내용 제거
-            if (child.style.cssText) {
-              child.style.cssText = child.style.cssText
-                .replace(/display\s*:\s*none\s*!important\s*;?/gi, '')
-                .replace(/opacity\s*:\s*0\s*!important\s*;?/gi, '')
-                .replace(/visibility\s*:\s*hidden\s*!important\s*;?/gi, '');
-            }
-          });
-          
-          // 각 요소를 페이드 인을 위해 opacity 0으로 설정
-          if (boostContent) {
-            boostContent.style.opacity = '0';
-          }
-          
+          // 컨텐츠 요소들 준비
           const title = boostCard.querySelector('.boost-title');
           const img = boostCard.querySelector('img[alt="네오 부스트"]');
           const texts = boostCard.querySelectorAll('p');
+          
+          if (boostContent) {
+            boostContent.style.opacity = '0';
+          }
           
           if (title) title.style.opacity = '0';
           if (img) img.style.opacity = '0';
@@ -5731,6 +5709,10 @@ if (window.innerWidth <= 768) {
           
           // 약간의 지연 후 페이드 인 시작
           setTimeout(() => {
+            // 카드 전체 페이드 인
+            boostCard.style.transition = 'opacity 0.3s ease';
+            boostCard.style.opacity = '1';
+            
             // 컨텐츠 페이드 인
             if (boostContent) {
               boostContent.style.transition = 'opacity 0.3s ease';
