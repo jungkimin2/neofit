@@ -7816,146 +7816,212 @@ if (window.innerWidth <= 768) {
     const isMobile = window.innerWidth <= 768;
     modal.innerHTML = `
       <!-- 모바일 리디자인 헤더 -->
-      <div class="modal-header-redesigned" style="background: #000; padding: 0; position: relative; border-radius: 20px 20px 0 0; overflow: hidden;">
+      <div class="modal-header-redesigned" style="background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%); padding: 0; position: relative; border-radius: 20px 20px 0 0; overflow: hidden;">
+        <!-- 배경 그라데이션 효과 -->
+        <div style="position: absolute; top: -50%; right: -30%; width: 200px; height: 200px; background: radial-gradient(circle, rgba(123, 228, 149, 0.1) 0%, transparent 70%); pointer-events: none;"></div>
+        
         <!-- 미니멀한 상단 바 -->
-        <div style="display: flex; justify-content: space-between; align-items: center; padding: ${isMobile ? '20px 20px' : '16px 20px'}; background: #000;">
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: ${isMobile ? '24px 24px' : '20px 24px'}; position: relative; z-index: 1;">
           <div style="flex: 1;">
-            <h2 style="color: #fff; font-size: ${isMobile ? '1.2rem' : '1.3rem'}; margin: 0; font-weight: 600; letter-spacing: -0.02em;">무료 체험 예약</h2>
-            <p style="color: #7BE495; font-size: 0.8rem; margin: 4px 0 0 0; font-weight: 500;">원하시는 프로그램을 선택해주세요</p>
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+              <div style="width: 4px; height: 20px; background: #7BE495; border-radius: 2px;"></div>
+              <h2 style="color: #fff; font-size: ${isMobile ? '1.3rem' : '1.4rem'}; margin: 0; font-weight: 700; letter-spacing: -0.03em;">무료 체험 예약</h2>
+            </div>
+            <p style="color: rgba(255, 255, 255, 0.6); font-size: 0.85rem; margin: 0 0 0 12px; font-weight: 400;">원하시는 프로그램을 선택해주세요</p>
           </div>
           <!-- 모던한 닫기 버튼 -->
-          <button onclick="closeForm()" style="background: transparent; border: none; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s ease; border-radius: 8px;">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M18 6L6 18M6 6l12 12" stroke="#666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <button onclick="closeForm()" style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease; border-radius: 10px; backdrop-filter: blur(10px);" onmouseover="this.style.background='rgba(255, 255, 255, 0.1)'; this.style.transform='scale(1.05)';" onmouseout="this.style.background='rgba(255, 255, 255, 0.05)'; this.style.transform='scale(1)';">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M18 6L6 18M6 6l12 12" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
             </svg>
           </button>
         </div>
       </div>
       
       <!-- 선택 옵션 영역 - 모바일 최적화 -->
-      <div class="modal-body" style="padding: ${isMobile ? '20px' : '24px'}; background: #000; display: flex; flex-direction: column; gap: ${isMobile ? '12px' : '16px'};">
+      <div class="modal-body" style="padding: ${isMobile ? '20px' : '24px'}; background: linear-gradient(180deg, #000 0%, #0a0a0a 100%); display: flex; flex-direction: column; gap: ${isMobile ? '12px' : '16px'}; position: relative;">
+        <!-- 배경 패턴 -->
+        <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: radial-gradient(circle at 20% 50%, rgba(123, 228, 149, 0.03) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(182, 139, 255, 0.03) 0%, transparent 50%), radial-gradient(circle at 40% 20%, rgba(74, 158, 253, 0.03) 0%, transparent 50%); pointer-events: none;"></div>
         
         <!-- 네오핏 무료체험 버튼 -->
         <button onclick="alert('네오핏 무료체험 링크가 곧 추가됩니다.')" style="
           width: 100%;
-          padding: ${isMobile ? '18px' : '20px'};
-          background: linear-gradient(135deg, #000 0%, #111 100%);
-          border: 2px solid #7BE495;
-          border-radius: 12px;
+          padding: ${isMobile ? '20px' : '24px'};
+          background: rgba(0, 0, 0, 0.4);
+          backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
+          border: 1px solid rgba(123, 228, 149, 0.3);
+          border-radius: 16px;
           cursor: pointer;
-          transition: all 0.3s ease;
+          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
           display: flex;
           align-items: center;
           justify-content: space-between;
           position: relative;
           overflow: hidden;
-          box-shadow: none;
-        " onmouseover="this.style.boxShadow='0 0 30px rgba(123, 228, 149, 0.8), 0 0 60px rgba(123, 228, 149, 0.5), 0 0 90px rgba(123, 228, 149, 0.3), inset 0 0 30px rgba(123, 228, 149, 0.2)'; this.style.borderColor='#7BE495'; this.style.borderWidth='2px';" onmouseout="this.style.boxShadow='none'; this.style.borderColor='#7BE495';">
-          <div style="display: flex; align-items: center; gap: 12px;">
-            <div style="width: 40px; height: 40px; background: rgba(123, 228, 149, 0.2); border: 1px solid #7BE495; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-              <span style="font-size: 1.5rem;">💪</span>
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+          transform: translateZ(0);
+        " onmouseover="this.style.transform='translateY(-2px) scale(1.01)'; this.style.boxShadow='0 0 30px rgba(123, 228, 149, 0.8), 0 0 60px rgba(123, 228, 149, 0.5), 0 0 90px rgba(123, 228, 149, 0.3), inset 0 0 30px rgba(123, 228, 149, 0.15), 0 8px 30px rgba(0, 0, 0, 0.4)'; this.style.borderColor='rgba(123, 228, 149, 0.8)'; this.style.background='rgba(123, 228, 149, 0.05)';" onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='0 4px 20px rgba(0, 0, 0, 0.3)'; this.style.borderColor='rgba(123, 228, 149, 0.3)'; this.style.background='rgba(0, 0, 0, 0.4)';">
+          <!-- 배경 장식 요소 -->
+          <div style="position: absolute; top: -50%; right: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(123, 228, 149, 0.1) 0%, transparent 40%); transform: rotate(45deg); opacity: 0; transition: opacity 0.4s ease; pointer-events: none;" class="hover-gradient"></div>
+          
+          <div style="display: flex; align-items: center; gap: 16px; position: relative; z-index: 1;">
+            <div style="width: 48px; height: 48px; background: linear-gradient(135deg, rgba(123, 228, 149, 0.2) 0%, rgba(123, 228, 149, 0.1) 100%); border: 1px solid rgba(123, 228, 149, 0.5); border-radius: 14px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;">
+              <div style="position: absolute; inset: 0; background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%); transform: translateX(-100%); animation: shimmer 3s infinite;"></div>
+              <img src="images/neo96.png" alt="NEOFIT" style="width: 40px; height: auto; position: relative; z-index: 1; filter: brightness(1.1);">
             </div>
             <div style="text-align: left;">
-              <h3 style="margin: 0; font-size: ${isMobile ? '1rem' : '1.1rem'}; font-weight: 600; color: #fff;">네오핏 무료체험</h3>
-              <p style="margin: 4px 0 0 0; font-size: ${isMobile ? '0.75rem' : '0.8rem'}; color: #999;">팀 기반 그룹 트레이닝 체험</p>
+              <h3 style="margin: 0; font-size: ${isMobile ? '1.05rem' : '1.15rem'}; font-weight: 700; color: #fff; letter-spacing: -0.02em;">네오핏 무료체험</h3>
+              <p style="margin: 4px 0 0 0; font-size: ${isMobile ? '0.8rem' : '0.85rem'}; color: rgba(255, 255, 255, 0.5); font-weight: 400;">팀 기반 그룹 트레이닝 체험</p>
             </div>
           </div>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" style="flex-shrink: 0;">
-            <path d="M9 18L15 12L9 6" stroke="#7BE495" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
+          <div style="position: relative; z-index: 1;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" style="transition: transform 0.3s ease;">
+              <circle cx="12" cy="12" r="11" stroke="rgba(123, 228, 149, 0.2)" stroke-width="1"/>
+              <path d="M10 16L14 12L10 8" stroke="#7BE495" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
         </button>
 
         <!-- 필라테스 무료체험 버튼 -->
         <button onclick="alert('필라테스 무료체험 링크가 곧 추가됩니다.')" style="
           width: 100%;
-          padding: ${isMobile ? '18px' : '20px'};
-          background: linear-gradient(135deg, #000 0%, #111 100%);
-          border: 2px solid #B68BFF;
-          border-radius: 12px;
+          padding: ${isMobile ? '20px' : '24px'};
+          background: rgba(0, 0, 0, 0.4);
+          backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
+          border: 1px solid rgba(182, 139, 255, 0.3);
+          border-radius: 16px;
           cursor: pointer;
-          transition: all 0.3s ease;
+          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
           display: flex;
           align-items: center;
           justify-content: space-between;
           position: relative;
           overflow: hidden;
-          box-shadow: none;
-        " onmouseover="this.style.boxShadow='0 0 30px rgba(182, 139, 255, 0.8), 0 0 60px rgba(182, 139, 255, 0.5), 0 0 90px rgba(182, 139, 255, 0.3), inset 0 0 30px rgba(182, 139, 255, 0.2)'; this.style.borderColor='#B68BFF'; this.style.borderWidth='2px';" onmouseout="this.style.boxShadow='none'; this.style.borderColor='#B68BFF';">
-          <div style="display: flex; align-items: center; gap: 12px;">
-            <div style="width: 40px; height: 40px; background: rgba(182, 139, 255, 0.2); border: 1px solid #B68BFF; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-              <span style="font-size: 1.5rem;">🧘‍♀️</span>
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+          transform: translateZ(0);
+        " onmouseover="this.style.transform='translateY(-2px) scale(1.01)'; this.style.boxShadow='0 0 30px rgba(182, 139, 255, 0.8), 0 0 60px rgba(182, 139, 255, 0.5), 0 0 90px rgba(182, 139, 255, 0.3), inset 0 0 30px rgba(182, 139, 255, 0.15), 0 8px 30px rgba(0, 0, 0, 0.4)'; this.style.borderColor='rgba(182, 139, 255, 0.8)'; this.style.background='rgba(182, 139, 255, 0.05)';" onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='0 4px 20px rgba(0, 0, 0, 0.3)'; this.style.borderColor='rgba(182, 139, 255, 0.3)'; this.style.background='rgba(0, 0, 0, 0.4)';">
+          <!-- 배경 장식 요소 -->
+          <div style="position: absolute; top: -50%; right: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(182, 139, 255, 0.1) 0%, transparent 40%); transform: rotate(45deg); opacity: 0; transition: opacity 0.4s ease; pointer-events: none;" class="hover-gradient"></div>
+          
+          <div style="display: flex; align-items: center; gap: 16px; position: relative; z-index: 1;">
+            <div style="width: 48px; height: 48px; background: linear-gradient(135deg, rgba(182, 139, 255, 0.2) 0%, rgba(182, 139, 255, 0.1) 100%); border: 1px solid rgba(182, 139, 255, 0.5); border-radius: 14px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;">
+              <div style="position: absolute; inset: 0; background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%); transform: translateX(-100%); animation: shimmer 3s infinite;"></div>
+              <img src="images/neott.png" alt="필라테스" style="width: 28px; height: auto; position: relative; z-index: 1; filter: brightness(1.1);">
             </div>
             <div style="text-align: left;">
-              <h3 style="margin: 0; font-size: ${isMobile ? '1rem' : '1.1rem'}; font-weight: 600; color: #fff;">필라테스 무료체험</h3>
-              <p style="margin: 4px 0 0 0; font-size: ${isMobile ? '0.75rem' : '0.8rem'}; color: #999;">개인 맞춤형 필라테스 체험</p>
+              <h3 style="margin: 0; font-size: ${isMobile ? '1.05rem' : '1.15rem'}; font-weight: 700; color: #fff; letter-spacing: -0.02em;">필라테스 무료체험</h3>
+              <p style="margin: 4px 0 0 0; font-size: ${isMobile ? '0.8rem' : '0.85rem'}; color: rgba(255, 255, 255, 0.5); font-weight: 400;">개인 맞춤형 필라테스 체험</p>
             </div>
           </div>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" style="flex-shrink: 0;">
-            <path d="M9 18L15 12L9 6" stroke="#B68BFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
+          <div style="position: relative; z-index: 1;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" style="transition: transform 0.3s ease;">
+              <circle cx="12" cy="12" r="11" stroke="rgba(182, 139, 255, 0.2)" stroke-width="1"/>
+              <path d="M10 16L14 12L10 8" stroke="#B68BFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
         </button>
 
         <!-- 무료방문 상담 버튼 -->
         <button onclick="alert('무료방문 상담 링크가 곧 추가됩니다.')" style="
           width: 100%;
-          padding: ${isMobile ? '18px' : '20px'};
-          background: linear-gradient(135deg, #000 0%, #111 100%);
-          border: 2px solid #4A9EFD;
-          border-radius: 12px;
+          padding: ${isMobile ? '20px' : '24px'};
+          background: rgba(0, 0, 0, 0.4);
+          backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
+          border: 1px solid rgba(74, 158, 253, 0.3);
+          border-radius: 16px;
           cursor: pointer;
-          transition: all 0.3s ease;
+          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
           display: flex;
           align-items: center;
           justify-content: space-between;
           position: relative;
           overflow: hidden;
-          box-shadow: none;
-        " onmouseover="this.style.boxShadow='0 0 30px rgba(74, 158, 253, 0.8), 0 0 60px rgba(74, 158, 253, 0.5), 0 0 90px rgba(74, 158, 253, 0.3), inset 0 0 30px rgba(74, 158, 253, 0.2)'; this.style.borderColor='#4A9EFD'; this.style.borderWidth='2px';" onmouseout="this.style.boxShadow='none'; this.style.borderColor='#4A9EFD';">
-          <div style="display: flex; align-items: center; gap: 12px;">
-            <div style="width: 40px; height: 40px; background: rgba(74, 158, 253, 0.2); border: 1px solid #4A9EFD; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-              <span style="font-size: 1.5rem;">🏋️</span>
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+          transform: translateZ(0);
+        " onmouseover="this.style.transform='translateY(-2px) scale(1.01)'; this.style.boxShadow='0 0 30px rgba(74, 158, 253, 0.8), 0 0 60px rgba(74, 158, 253, 0.5), 0 0 90px rgba(74, 158, 253, 0.3), inset 0 0 30px rgba(74, 158, 253, 0.15), 0 8px 30px rgba(0, 0, 0, 0.4)'; this.style.borderColor='rgba(74, 158, 253, 0.8)'; this.style.background='rgba(74, 158, 253, 0.05)';" onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='0 4px 20px rgba(0, 0, 0, 0.3)'; this.style.borderColor='rgba(74, 158, 253, 0.3)'; this.style.background='rgba(0, 0, 0, 0.4)';">
+          <!-- 배경 장식 요소 -->
+          <div style="position: absolute; top: -50%; right: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(74, 158, 253, 0.1) 0%, transparent 40%); transform: rotate(45deg); opacity: 0; transition: opacity 0.4s ease; pointer-events: none;" class="hover-gradient"></div>
+          
+          <div style="display: flex; align-items: center; gap: 16px; position: relative; z-index: 1;">
+            <div style="width: 48px; height: 48px; background: linear-gradient(135deg, rgba(74, 158, 253, 0.2) 0%, rgba(74, 158, 253, 0.1) 100%); border: 1px solid rgba(74, 158, 253, 0.5); border-radius: 14px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;">
+              <div style="position: absolute; inset: 0; background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%); transform: translateX(-100%); animation: shimmer 3s infinite;"></div>
+              <img src="images/neo44.png" alt="상담" style="width: 28px; height: auto; position: relative; z-index: 1; filter: brightness(1.1);">
             </div>
             <div style="text-align: left;">
-              <h3 style="margin: 0; font-size: ${isMobile ? '1rem' : '1.1rem'}; font-weight: 600; color: #fff;">무료방문 상담</h3>
-              <p style="margin: 4px 0 0 0; font-size: ${isMobile ? '0.75rem' : '0.8rem'}; color: #999;">시설 견학 및 맞춤 상담 예약</p>
+              <h3 style="margin: 0; font-size: ${isMobile ? '1.05rem' : '1.15rem'}; font-weight: 700; color: #fff; letter-spacing: -0.02em;">무료방문 상담</h3>
+              <p style="margin: 4px 0 0 0; font-size: ${isMobile ? '0.8rem' : '0.85rem'}; color: rgba(255, 255, 255, 0.5); font-weight: 400;">시설 견학 및 맞춤 상담 예약</p>
             </div>
           </div>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" style="flex-shrink: 0;">
-            <path d="M9 18L15 12L9 6" stroke="#4A9EFD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
+          <div style="position: relative; z-index: 1;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" style="transition: transform 0.3s ease;">
+              <circle cx="12" cy="12" r="11" stroke="rgba(74, 158, 253, 0.2)" stroke-width="1"/>
+              <path d="M10 16L14 12L10 8" stroke="#4A9EFD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
         </button>
 
         <!-- 전화상담 문의 버튼 -->
         <button onclick="alert('전화상담 문의 링크가 곧 추가됩니다.')" style="
           width: 100%;
-          padding: ${isMobile ? '18px' : '20px'};
-          background: linear-gradient(135deg, #000 0%, #111 100%);
-          border: 2px solid #FFB800;
-          border-radius: 12px;
+          padding: ${isMobile ? '20px' : '24px'};
+          background: rgba(0, 0, 0, 0.4);
+          backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
+          border: 1px solid rgba(255, 184, 0, 0.3);
+          border-radius: 16px;
           cursor: pointer;
-          transition: all 0.3s ease;
+          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
           display: flex;
           align-items: center;
           justify-content: space-between;
           position: relative;
           overflow: hidden;
-          box-shadow: none;
-        " onmouseover="this.style.boxShadow='0 0 30px rgba(255, 184, 0, 0.8), 0 0 60px rgba(255, 184, 0, 0.5), 0 0 90px rgba(255, 184, 0, 0.3), inset 0 0 30px rgba(255, 184, 0, 0.2)'; this.style.borderColor='#FFB800'; this.style.borderWidth='2px';" onmouseout="this.style.boxShadow='none'; this.style.borderColor='#FFB800';">
-          <div style="display: flex; align-items: center; gap: 12px;">
-            <div style="width: 40px; height: 40px; background: rgba(255, 184, 0, 0.2); border: 1px solid #FFB800; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-              <span style="font-size: 1.5rem;">📞</span>
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+          transform: translateZ(0);
+        " onmouseover="this.style.transform='translateY(-2px) scale(1.01)'; this.style.boxShadow='0 0 30px rgba(255, 184, 0, 0.8), 0 0 60px rgba(255, 184, 0, 0.5), 0 0 90px rgba(255, 184, 0, 0.3), inset 0 0 30px rgba(255, 184, 0, 0.15), 0 8px 30px rgba(0, 0, 0, 0.4)'; this.style.borderColor='rgba(255, 184, 0, 0.8)'; this.style.background='rgba(255, 184, 0, 0.05)';" onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='0 4px 20px rgba(0, 0, 0, 0.3)'; this.style.borderColor='rgba(255, 184, 0, 0.3)'; this.style.background='rgba(0, 0, 0, 0.4)';">
+          <!-- 배경 장식 요소 -->
+          <div style="position: absolute; top: -50%; right: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(255, 184, 0, 0.1) 0%, transparent 40%); transform: rotate(45deg); opacity: 0; transition: opacity 0.4s ease; pointer-events: none;" class="hover-gradient"></div>
+          
+          <div style="display: flex; align-items: center; gap: 16px; position: relative; z-index: 1;">
+            <div style="width: 48px; height: 48px; background: linear-gradient(135deg, rgba(255, 184, 0, 0.2) 0%, rgba(255, 184, 0, 0.1) 100%); border: 1px solid rgba(255, 184, 0, 0.5); border-radius: 14px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;">
+              <div style="position: absolute; inset: 0; background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%); transform: translateX(-100%); animation: shimmer 3s infinite;"></div>
+              <img src="images/neocxcx.png" alt="전화상담" style="width: 28px; height: auto; position: relative; z-index: 1; filter: brightness(1.1);">
             </div>
             <div style="text-align: left;">
-              <h3 style="margin: 0; font-size: ${isMobile ? '1rem' : '1.1rem'}; font-weight: 600; color: #fff;">전화상담 문의</h3>
-              <p style="margin: 4px 0 0 0; font-size: ${isMobile ? '0.75rem' : '0.8rem'}; color: #999;">빠른 상담 예약 및 문의</p>
+              <h3 style="margin: 0; font-size: ${isMobile ? '1.05rem' : '1.15rem'}; font-weight: 700; color: #fff; letter-spacing: -0.02em;">전화상담 문의</h3>
+              <p style="margin: 4px 0 0 0; font-size: ${isMobile ? '0.8rem' : '0.85rem'}; color: rgba(255, 255, 255, 0.5); font-weight: 400;">빠른 상담 예약 및 문의</p>
             </div>
           </div>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" style="flex-shrink: 0;">
-            <path d="M9 18L15 12L9 6" stroke="#FFB800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
+          <div style="position: relative; z-index: 1;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" style="transition: transform 0.3s ease;">
+              <circle cx="12" cy="12" r="11" stroke="rgba(255, 184, 0, 0.2)" stroke-width="1"/>
+              <path d="M10 16L14 12L10 8" stroke="#FFB800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
         </button>
       </div>
     `;
+    
+    // shimmer 애니메이션 추가
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes shimmer {
+        0% { transform: translateX(-100%); }
+        100% { transform: translateX(100%); }
+      }
+      
+      .hover-gradient {
+        transition: opacity 0.4s ease !important;
+      }
+      
+      button:hover .hover-gradient {
+        opacity: 1 !important;
+      }
+    `;
+    document.head.appendChild(style);
     
     // body에 추가
     document.body.appendChild(modal);
