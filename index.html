@@ -7718,15 +7718,20 @@ if (window.innerWidth <= 768) {
     }
   });
   
-  function openForm(event) {
-    console.log('=== openForm called ===');
-    console.log('Screen width:', window.innerWidth);
-    console.log('Is mobile:', window.innerWidth <= 768);
-    
-    // 스크롤 방지
-    if (event) {
-      event.preventDefault();
-      event.stopPropagation();
+  // 전역 함수로 등록
+  window.openForm = function openForm(event) {
+    try {
+      console.log('=== openForm called ===');
+      console.log('Screen width:', window.innerWidth);
+      console.log('Is mobile:', window.innerWidth <= 768);
+      
+      // 스크롤 방지
+      if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+    } catch (error) {
+      console.error('Error in openForm:', error);
     }
     
     // 기존 모달과 오버레이가 있으면 제거
@@ -7779,10 +7784,10 @@ if (window.innerWidth <= 768) {
         padding: 0;
         width: 92%;
         max-width: 400px;
-        height: 92vh;
-        max-height: 720px;
-        min-height: 620px;
-        overflow: hidden;
+        height: ${isMobile ? 'fit-content' : 'auto'};
+        max-height: ${isMobile ? 'calc(100vh - 40px)' : '85vh'};
+        min-height: auto;
+        overflow: ${isMobile ? 'visible' : 'hidden'};
         border-radius: 20px;
         color: #fff;
         box-sizing: border-box;
@@ -7816,7 +7821,7 @@ if (window.innerWidth <= 768) {
     const isMobile = window.innerWidth <= 768;
     modal.innerHTML = `
       <!-- 모바일 리디자인 헤더 -->
-      <div class="modal-header-redesigned" style="background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%); padding: 0; position: relative; border-radius: 20px 20px 0 0; overflow: hidden;">
+      <div class="modal-header-redesigned" style="background: #000; padding: 0; position: relative; border-radius: 20px 20px 0 0; overflow: hidden;">
         <!-- 배경 그라데이션 효과 -->
         <div style="position: absolute; top: -50%; right: -30%; width: 200px; height: 200px; background: radial-gradient(circle, rgba(123, 228, 149, 0.1) 0%, transparent 70%); pointer-events: none;"></div>
         
@@ -7839,7 +7844,7 @@ if (window.innerWidth <= 768) {
       </div>
       
       <!-- 선택 옵션 영역 - 모바일 최적화 -->
-      <div class="modal-body" style="padding: ${isMobile ? '52px 20px 20px' : '24px'}; background: linear-gradient(180deg, #000 0%, #0a0a0a 100%); display: flex; flex-direction: column; gap: ${isMobile ? '12px' : '16px'}; position: relative;">
+      <div class="modal-body" style="padding: ${isMobile ? '100px 20px 5px !important' : '24px'}; background: #000; display: flex; flex-direction: column; gap: ${isMobile ? '12px' : '16px'}; position: relative; ${isMobile ? 'min-height: auto !important; height: fit-content !important;' : ''}">
         <!-- 배경 패턴 -->
         <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: radial-gradient(circle at 20% 50%, rgba(123, 228, 149, 0.03) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(182, 139, 255, 0.03) 0%, transparent 50%), radial-gradient(circle at 40% 20%, rgba(74, 158, 253, 0.03) 0%, transparent 50%); pointer-events: none;"></div>
         
@@ -8039,8 +8044,14 @@ if (window.innerWidth <= 768) {
     `;
     document.head.appendChild(style);
     
-    // body에 추가
-    document.body.appendChild(modal);
+    try {
+      // body에 추가
+      document.body.appendChild(modal);
+    } catch (error) {
+      console.error('Error appending modal:', error);
+      alert('팝업을 열 수 없습니다. 페이지를 새로고침 해주세요.');
+      return;
+    }
     
     // 모바일에서 가장 간단하고 확실한 방법으로 오버레이 생성
     if (window.innerWidth <= 768) {
@@ -8189,7 +8200,8 @@ if (window.innerWidth <= 768) {
     
     return false;
   }
-  function closeForm() {
+  // 전역 함수로 등록
+  window.closeForm = function closeForm() {
     const modal = document.getElementById('formModal');
     const overlay = document.getElementById('modalOverlay');
     
