@@ -10564,10 +10564,14 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   /* 모바일에서 카드 제목 위치 조정 - 한 칸 아래로 (16px) */
-  #sync-card h3,
   #balance-card h3,
   #boost-card h3 {
     margin-top: 16px !important;
+  }
+  
+  /* 모바일에서 NEO SYNC 제목만 위치 조정 - 기본 위치로 (0px) */
+  #sync-card h3 {
+    margin-top: 0px !important;
   }
   
   /* 모바일에서 로고 아래 설명 문구 위치 조정 - 두 칸 위로 (-32px) */
