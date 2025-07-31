@@ -5582,100 +5582,123 @@ if (window.innerWidth <= 768) {
         updateCarousel();
       }
       
-      // 모바일에서 NEO BOOST 카드 영상 재생 처리
+      // 모바일에서 NEO BOOST 카드 영상 재생 처리 - 완전 새로운 코드
       if (window.innerWidth <= 768) {
-        const boostCard = document.getElementById('boost-card');
-        const boostVideo = boostCard.querySelector('.boost-hover-video');
-        const cardFront = boostCard.querySelector('.card-front');
-        let isBoostVideoPlaying = false;
-        let originalCardHTML = null;
-        
-        boostCard.addEventListener('click', function(e) {
-          if (this.classList.contains('active')) {
-            e.preventDefault();
-            e.stopPropagation();
+        // NEO BOOST 카드 클릭 이벤트 설정
+        setTimeout(() => {
+          const boostCard = document.getElementById('boost-card');
+          if (!boostCard) return;
+          
+          let videoPlaying = false;
+          let savedContent = null;
+          
+          // 클릭 이벤트 추가
+          boostCard.addEventListener('click', function() {
+            // active 상태일 때만 동작
+            if (!this.classList.contains('active')) return;
             
-            if (!isBoostVideoPlaying) {
-              // 영상 재생 시작
-              isBoostVideoPlaying = true;
+            const cardFront = this.querySelector('.card-front');
+            if (!cardFront) return;
+            
+            if (!videoPlaying) {
+              // 비디오 재생 모드로 전환
+              videoPlaying = true;
               
-              // 원본 카드 내용 저장
-              originalCardHTML = cardFront.innerHTML;
+              // 현재 내용 저장
+              savedContent = cardFront.innerHTML;
               
-              // 카드 내용을 완전히 비우고 비디오만 추가
+              // 카드 내용 완전 제거
               cardFront.innerHTML = '';
-              cardFront.style.padding = '0';
               
-              // 새 비디오 요소 생성
-              const newVideo = document.createElement('video');
-              newVideo.src = './videos/neoboots.mp4';
-              newVideo.loop = true;
-              newVideo.playsinline = true;
-              newVideo.muted = true;
-              newVideo.style.cssText = `
+              // 비디오 컨테이너 생성
+              const videoContainer = document.createElement('div');
+              videoContainer.style.cssText = `
                 position: absolute;
                 top: 0;
                 left: 0;
+                width: 100%;
+                height: 100%;
+                background: #000;
+                border-radius: 20px;
+                overflow: hidden;
+              `;
+              
+              // 비디오 생성
+              const video = document.createElement('video');
+              video.src = './videos/neoboots.mp4';
+              video.autoplay = true;
+              video.loop = true;
+              video.muted = true;
+              video.playsInline = true;
+              video.style.cssText = `
                 width: 100%;
                 height: 100%;
                 object-fit: cover;
-                border-radius: 20px;
-                background: #000;
               `;
               
-              // 글래시 오버레이 생성
-              const glassOverlay = document.createElement('div');
-              glassOverlay.style.cssText = `
+              // 빨간색 테두리 오버레이
+              const redBorder = document.createElement('div');
+              redBorder.style.cssText = `
                 position: absolute;
                 top: 0;
                 left: 0;
                 width: 100%;
                 height: 100%;
+                border: 2px solid #F87171;
                 border-radius: 20px;
-                border: 1px solid rgba(248, 113, 113, 0.3);
-                background: transparent;
                 pointer-events: none;
-                z-index: 10;
-                box-shadow: inset 0 0 20px rgba(248, 113, 113, 0.2),
-                            0 0 40px rgba(248, 113, 113, 0.3);
+                z-index: 1;
               `;
               
-              // 카드에 추가
-              cardFront.appendChild(newVideo);
-              cardFront.appendChild(glassOverlay);
+              // 글래시 테두리 오버레이
+              const glassyBorder = document.createElement('div');
+              glassyBorder.style.cssText = `
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                border: 1px solid rgba(248, 113, 113, 0.3);
+                border-radius: 20px;
+                pointer-events: none;
+                z-index: 2;
+                box-shadow: 
+                  inset 0 0 20px rgba(248, 113, 113, 0.1),
+                  0 0 30px rgba(248, 113, 113, 0.2);
+              `;
+              
+              // 요소들 추가
+              videoContainer.appendChild(video);
+              videoContainer.appendChild(redBorder);
+              videoContainer.appendChild(glassyBorder);
+              cardFront.appendChild(videoContainer);
               
               // 비디오 재생
-              newVideo.play().catch(e => console.log('Video play failed:', e));
+              video.play().catch(err => console.error('Video play error:', err));
               
-              // 비디오 종료 시 복원
-              newVideo.addEventListener('ended', restoreBoostCard);
-              
-              // 클릭 시 복원을 위한 이벤트 추가
-              newVideo.addEventListener('click', function(e) {
+              // 비디오 클릭 시 원본으로 복원
+              videoContainer.addEventListener('click', function(e) {
                 e.stopPropagation();
-                restoreBoostCard();
+                restoreCard();
+              });
+              
+              // 비디오 종료 시 원본으로 복원
+              video.addEventListener('ended', function() {
+                restoreCard();
               });
               
             }
-          }
-        });
-        
-        // 카드 복원 함수
-        function restoreBoostCard() {
-          if (originalCardHTML) {
-            // 패딩 복원
-            cardFront.style.padding = '30px';
             
-            // 원본 내용 복원
-            cardFront.innerHTML = originalCardHTML;
-            
-            // 재생 상태 초기화
-            isBoostVideoPlaying = false;
-            
-            // 원본 HTML 초기화
-            originalCardHTML = null;
-          }
-        }
+            // 카드 복원 함수
+            function restoreCard() {
+              if (savedContent && cardFront) {
+                cardFront.innerHTML = savedContent;
+                videoPlaying = false;
+                savedContent = null;
+              }
+            }
+          });
+        }, 1000); // 페이지 로드 후 1초 대기
       }
     })();
   </script>
