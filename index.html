@@ -5878,30 +5878,15 @@ if (window.innerWidth <= 768) {
                 height: 100%;
                 background: #000;
                 border-radius: 20px;
+                border: 2px solid #F87171;
                 overflow: hidden;
                 z-index: 999999;
-                box-shadow: none !important;
-              `;
-              
-              // 얇은 빨간색 테두리만 (글래시 효과 없이)
-              const redBorder = document.createElement('div');
-              redBorder.style.cssText = `
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                border: 1px solid #F87171;
-                border-radius: 20px;
-                pointer-events: none;
-                z-index: 1000000;
                 box-shadow: none !important;
               `;
               
               // 요소 조립
               videoWrapper.appendChild(videoElement);
               videoContainer.appendChild(videoWrapper);
-              videoContainer.appendChild(redBorder);
               cardFront.appendChild(videoContainer);
               
               // 페이드인
