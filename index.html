@@ -7699,6 +7699,22 @@ if (window.innerWidth <= 768) {
     // 모바일에서도 페이지 최상단에 유지
     if (window.innerWidth <= 768) {
       window.scrollTo(0, 0);
+      
+      // NEO BOOST 텍스트 크기 최종 강제 적용
+      const boostText1 = document.querySelector('.boost-text-1');
+      const boostText2 = document.querySelector('.boost-text-2');
+      
+      if (boostText1) {
+        boostText1.style.removeProperty('font-size');
+        boostText1.style.setProperty('font-size', '0.9rem', 'important');
+      }
+      
+      if (boostText2) {
+        boostText2.style.removeProperty('font-size');
+        boostText2.style.setProperty('font-size', '0.8rem', 'important');
+      }
+      
+      console.log('NEO BOOST 텍스트 크기 최종 적용 완료');
     }
   });
   
@@ -10610,6 +10626,17 @@ document.addEventListener('DOMContentLoaded', function() {
   
   #boost-card .boost-text-2 {
     font-size: 0.85rem !important;
+  }
+}
+
+/* 모바일에서 NEO BOOST 텍스트 크기 강제 변경 - 가장 높은 우선순위 */
+@media screen and (max-width: 768px) {
+  .boost-text-1 {
+    font-size: 0.9rem !important;
+  }
+  
+  .boost-text-2 {
+    font-size: 0.8rem !important;
   }
 }
 
