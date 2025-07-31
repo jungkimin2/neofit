@@ -5718,6 +5718,15 @@ if (window.innerWidth <= 768) {
           return;
         }
         
+        // 모바일에서 NEO BOOST 카드의 설명 문구 폰트 크기 줄이기
+        const boostTexts = boostCard.querySelectorAll('div[style*="z-index: 2"] > p');
+        if (boostTexts.length >= 2) {
+          // 첫 번째 문구: "폭발적인 퍼포먼스 향상"
+          boostTexts[0].style.fontSize = '0.95rem';
+          // 두 번째 문구: "상급자를 위한 고강도 프로그램"
+          boostTexts[1].style.fontSize = '0.85rem';
+        }
+        
         let isVideoPlaying = false;
         let originalHTML = null;
         let videoElement = null;
@@ -10582,14 +10591,12 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   /* 모바일에서 NEO BOOST 설명 문구 크기 줄이기 */
-  @media (max-width: 768px) {
-    #boost-card p[style*="font-size: 1.1rem"] {
-      font-size: 0.95rem !important;
-    }
-    
-    #boost-card p[style*="font-size: 0.95rem"] {
-      font-size: 0.85rem !important;
-    }
+  #boost-card div[style*="z-index: 2"] > p:nth-of-type(1) {
+    font-size: 0.95rem !important;
+  }
+  
+  #boost-card div[style*="z-index: 2"] > p:nth-of-type(2) {
+    font-size: 0.85rem !important;
   }
 }
 
