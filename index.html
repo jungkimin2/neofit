@@ -5589,6 +5589,7 @@ if (window.innerWidth <= 768) {
         const boostContent = boostCard.querySelector('.card-front > div[style*="z-index: 2"]');
         const boostClickIndicator = boostCard.querySelector('.click-indicator');
         let isBoostVideoPlaying = false;
+        let originalContentHTML = null; // 원본 콘텐츠 저장용
         
         boostCard.addEventListener('click', function(e) {
           if (this.classList.contains('active')) {
@@ -5602,62 +5603,53 @@ if (window.innerWidth <= 768) {
               // 카드를 playing 상태로 설정
               this.classList.add('playing');
               
-              // 비디오를 카드 밖으로 이동시켜 최상위에 배치
-              const cardPosition = this.getBoundingClientRect();
-              const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-              const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+              // 원본 콘텐츠 HTML 저장
+              if (boostContent) {
+                originalContentHTML = boostContent.innerHTML;
+                // 콘텐츠 완전히 제거
+                boostContent.innerHTML = '';
+                boostContent.style.display = 'none';
+              }
               
-              boostVideo.style.position = 'fixed';
-              boostVideo.style.top = cardPosition.top + 'px';
-              boostVideo.style.left = cardPosition.left + 'px';
-              boostVideo.style.width = cardPosition.width + 'px';
-              boostVideo.style.height = cardPosition.height + 'px';
+              // CLICK 인디케이터도 숨기기
+              if (boostClickIndicator) {
+                boostClickIndicator.style.display = 'none';
+              }
+              
+              // 비디오를 카드 내에서 전체 화면으로 표시
+              boostVideo.style.position = 'absolute';
+              boostVideo.style.top = '0';
+              boostVideo.style.left = '0';
+              boostVideo.style.width = '100%';
+              boostVideo.style.height = '100%';
               boostVideo.style.objectFit = 'cover';
               boostVideo.style.borderRadius = '20px';
-              boostVideo.style.border = '2px solid #F87171';
+              boostVideo.style.border = 'none';
               boostVideo.style.boxShadow = 'none';
-              boostVideo.style.zIndex = '999999';
+              boostVideo.style.zIndex = '9999';
               boostVideo.style.opacity = '1';
               boostVideo.style.display = 'block';
               boostVideo.style.backgroundColor = '#000';
               boostVideo.classList.add('playing');
               
-              // 비디오를 body에 직접 추가
-              document.body.appendChild(boostVideo);
-              
               // 글래시한 얇은 테두리 오버레이 추가
               const glassOverlay = document.createElement('div');
               glassOverlay.className = 'video-glass-overlay-mobile';
               glassOverlay.style.cssText = `
-                position: fixed;
-                top: ${cardPosition.top}px;
-                left: ${cardPosition.left}px;
-                width: ${cardPosition.width}px;
-                height: ${cardPosition.height}px;
-                border-radius: 20px;
-                border: 1px solid rgba(248, 113, 113, 0.3);
-                background: transparent;
-                pointer-events: none;
-                z-index: 1000000;
-                box-shadow: inset 0 0 20px rgba(248, 113, 113, 0.2),
-                            0 0 40px rgba(248, 113, 113, 0.3);
-              `;
-              document.body.appendChild(glassOverlay);
-              
-              // 카드 내의 모든 콘텐츠를 검은색 div로 덮기
-              const blackOverlay = document.createElement('div');
-              blackOverlay.className = 'black-overlay-boost';
-              blackOverlay.style.cssText = `
                 position: absolute;
                 top: 0;
                 left: 0;
                 width: 100%;
                 height: 100%;
-                background: #000;
-                z-index: 100;
                 border-radius: 20px;
+                border: 1px solid rgba(248, 113, 113, 0.3);
+                background: transparent;
+                pointer-events: none;
+                z-index: 10000;
+                box-shadow: inset 0 0 20px rgba(248, 113, 113, 0.2),
+                            0 0 40px rgba(248, 113, 113, 0.3);
               `;
-              this.querySelector('.card-front').appendChild(blackOverlay);
+              this.querySelector('.card-front').appendChild(glassOverlay);
               
               // 음소거 및 재생
               boostVideo.muted = true;
@@ -5688,87 +5680,37 @@ if (window.innerWidth <= 768) {
             setTimeout(() => overlay.remove(), 300);
           }
           
-          // 비디오 페이드 아웃과 동시에 컨텐츠 페이드 인
+          // 비디오 페이드 아웃
           boostVideo.style.transition = 'opacity 0.3s ease';
           boostVideo.style.opacity = '0';
           
-          // 컨텐츠 요소들 먼저 준비
-          const title = boostCard.querySelector('.boost-title');
-          const img = boostCard.querySelector('img[alt="네오 부스트"]');
-          const texts = boostCard.querySelectorAll('p');
-          
-          // 검은색 오버레이 제거
-          const blackOverlay = boostCard.querySelector('.black-overlay-boost');
-          if (blackOverlay) {
-            blackOverlay.remove();
-          }
-          
-          // 컨텐츠 요소들 준비
-          const title = boostCard.querySelector('.boost-title');
-          const img = boostCard.querySelector('img[alt="네오 부스트"]');
-          const texts = boostCard.querySelectorAll('p');
-          
-          if (boostContent) {
+          // 원본 콘텐츠 복원
+          if (boostContent && originalContentHTML) {
+            boostContent.innerHTML = originalContentHTML;
+            boostContent.style.display = 'flex';
             boostContent.style.opacity = '0';
-          }
-          
-          if (title) title.style.opacity = '0';
-          if (img) img.style.opacity = '0';
-          texts.forEach(text => text.style.opacity = '0');
-          
-          if (boostClickIndicator) {
-            boostClickIndicator.style.opacity = '0';
-          }
-          
-          // 약간의 지연 후 페이드 인 시작
-          setTimeout(() => {
-            // 컨텐츠 페이드 인
-            if (boostContent) {
-              boostContent.style.transition = 'opacity 0.3s ease';
+            boostContent.style.transition = 'opacity 0.3s ease';
+            
+            // 약간의 지연 후 페이드 인
+            setTimeout(() => {
               boostContent.style.opacity = '1';
-            }
+            }, 100);
+          }
+          
+          // CLICK 인디케이터 복원
+          if (boostClickIndicator) {
+            boostClickIndicator.style.display = 'block';
+            boostClickIndicator.style.opacity = '0';
+            boostClickIndicator.style.transition = 'opacity 0.3s ease';
             
-            if (title) {
-              title.style.transition = 'opacity 0.3s ease';
-              title.style.opacity = '1';
-            }
-            
-            if (img) {
-              img.style.transition = 'opacity 0.3s ease';
-              img.style.opacity = '1';
-            }
-            
-            texts.forEach(text => {
-              text.style.transition = 'opacity 0.3s ease';
-              text.style.opacity = '1';
-            });
-            
-            if (boostClickIndicator) {
-              boostClickIndicator.style.transition = 'opacity 0.3s ease';
+            setTimeout(() => {
               boostClickIndicator.style.opacity = '1';
-            }
-          }, 50);
+            }, 100);
           
           // 비디오 스타일 초기화는 페이드 아웃 완료 후
           setTimeout(() => {
-            boostVideo.style.position = '';
-            boostVideo.style.top = '';
-            boostVideo.style.left = '';
-            boostVideo.style.width = '';
-            boostVideo.style.height = '';
-            boostVideo.style.borderRadius = '';
-            boostVideo.style.transform = '';
-            boostVideo.style.opacity = '';
-            boostVideo.style.transition = '';
-            boostVideo.style.border = '';
-            boostVideo.style.boxShadow = '';
-            boostVideo.style.zIndex = '';
-            boostVideo.style.display = '';
-            boostVideo.style.backgroundColor = '';
+            boostVideo.style.display = 'none';
             boostVideo.classList.remove('playing');
-            
-            // 비디오를 원래 위치로 되돌리기
-            boostCard.querySelector('.card-front').appendChild(boostVideo);
             
             // playing 클래스 제거
             boostCard.classList.remove('playing');
