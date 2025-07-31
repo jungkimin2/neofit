@@ -5722,9 +5722,16 @@ if (window.innerWidth <= 768) {
         const boostTexts = boostCard.querySelectorAll('div[style*="z-index: 2"] > p');
         if (boostTexts.length >= 2) {
           // 첫 번째 문구: "폭발적인 퍼포먼스 향상"
-          boostTexts[0].style.fontSize = '0.95rem';
+          boostTexts[0].style.setProperty('font-size', '0.95rem', 'important');
+          boostTexts[0].classList.add('mobile-boost-text-small');
+          
           // 두 번째 문구: "상급자를 위한 고강도 프로그램"
-          boostTexts[1].style.fontSize = '0.85rem';
+          boostTexts[1].style.setProperty('font-size', '0.85rem', 'important');
+          boostTexts[1].classList.add('mobile-boost-text-smaller');
+          
+          console.log('NEO BOOST 문구 크기 변경 완료');
+          console.log('첫 번째 문구:', boostTexts[0].textContent, '- font-size:', getComputedStyle(boostTexts[0]).fontSize);
+          console.log('두 번째 문구:', boostTexts[1].textContent, '- font-size:', getComputedStyle(boostTexts[1]).fontSize);
         }
         
         let isVideoPlaying = false;
@@ -10595,12 +10602,21 @@ document.addEventListener('DOMContentLoaded', function() {
     margin-top: -56px !important;
   }
   
-  /* 모바일에서 NEO BOOST 설명 문구 크기 줄이기 */
-  #boost-card div[style*="z-index: 2"] > p:nth-of-type(1) {
+  /* 모바일에서 NEO BOOST 설명 문구 크기 줄이기 - 더 구체적인 선택자 사용 */
+  #boost-card .card-front div[style*="z-index: 2"] p[style*="font-size: 1.1rem"] {
     font-size: 0.95rem !important;
   }
   
-  #boost-card div[style*="z-index: 2"] > p:nth-of-type(2) {
+  #boost-card .card-front div[style*="z-index: 2"] p[style*="font-size: 0.95rem"] {
+    font-size: 0.85rem !important;
+  }
+  
+  /* 모바일 전용 클래스 */
+  .mobile-boost-text-small {
+    font-size: 0.95rem !important;
+  }
+  
+  .mobile-boost-text-smaller {
     font-size: 0.85rem !important;
   }
 }
