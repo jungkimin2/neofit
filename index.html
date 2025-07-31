@@ -10547,6 +10547,30 @@ document.addEventListener('DOMContentLoaded', function() {
   #boost-card h3 {
     font-size: 2rem !important;
   }
+  
+  /* 모바일에서 카드 로고 크기 더 크게 증가 */
+  #sync-card img[src*="neosync.png"],
+  #balance-card img[src*="neoblance.png"],
+  #boost-card img[src*="neoboots.png"] {
+    width: 220px !important;
+    height: 220px !important;
+    max-width: 85% !important;
+    margin-bottom: 10px !important;
+  }
+  
+  /* 모바일에서 카드 제목 위치 조정 - 한 칸 아래로 (16px) */
+  #sync-card h3,
+  #balance-card h3,
+  #boost-card h3 {
+    margin-top: 16px !important;
+  }
+  
+  /* 모바일에서 로고 아래 설명 문구 위치 조정 - 한 칸 위로 (-16px) */
+  #sync-card div[style*="z-index: 2"] > p:first-of-type,
+  #balance-card div[style*="z-index: 2"] > p:first-of-type,
+  #boost-card div[style*="z-index: 2"] > p:first-of-type {
+    margin-top: -16px !important;
+  }
 }
 
 /* 부드러운 전환 효과 */
