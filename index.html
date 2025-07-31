@@ -10541,11 +10541,15 @@ document.addEventListener('DOMContentLoaded', function() {
     height: 18px !important;
   }
   
-  /* 모바일에서 모든 카드 제목 크기 통일 (NEO BOOST와 동일하게 2rem) */
+  /* 모바일에서 카드 제목 크기 설정 */
   #sync-card h3,
-  #balance-card h3,
   #boost-card h3 {
     font-size: 2rem !important;
+  }
+  
+  /* 모바일에서 NEO BALANCE 제목만 작게 */
+  #balance-card h3 {
+    font-size: 1.7rem !important;
   }
   
   /* 모바일에서 카드 로고 크기 더 크게 증가 */
