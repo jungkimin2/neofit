@@ -7964,7 +7964,7 @@ if (window.innerWidth <= 768) {
         </button>
 
         <!-- 전화상담 문의 버튼 -->
-        <button onclick="${isMobile ? 'window.location.href=\'tel:050-7138-00544\'' : 'alert(\'전화번호: 050-7138-00544\\n\\n모바일에서 클릭하시면 바로 전화연결이 가능합니다.\')'}" style="
+        <button onclick="${isMobile ? 'window.location.href=\'tel:050-7138-00544\'' : ''}" style="
           width: 100%;
           padding: ${isMobile ? '20px' : '24px'};
           background: rgba(0, 0, 0, 0.4);
@@ -7990,9 +7990,12 @@ if (window.innerWidth <= 768) {
               <div style="position: absolute; inset: 0; background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%); transform: translateX(-100%); animation: shimmer 3s infinite;"></div>
               <img src="images/neocxcx.png" alt="전화상담" style="width: 28px; height: auto; position: relative; z-index: 1; filter: brightness(1.1);">
             </div>
-            <div style="text-align: left;">
-              <h3 style="margin: 0; font-size: ${isMobile ? '1.05rem' : '1.15rem'}; font-weight: 700; color: #fff; letter-spacing: -0.02em;">전화상담 문의</h3>
-              <p style="margin: 4px 0 0 0; font-size: ${isMobile ? '0.8rem' : '0.85rem'}; color: rgba(255, 255, 255, 0.5); font-weight: 400;">빠른 상담 예약 및 문의</p>
+            <div style="text-align: left; position: relative;">
+              <h3 style="margin: 0; font-size: ${isMobile ? '1.05rem' : '1.15rem'}; font-weight: 700; color: #fff; letter-spacing: -0.02em; transition: opacity 0.3s ease;">
+                <span class="phone-text">전화상담 문의</span>
+                <span class="phone-number" style="display: none; color: #FFB800; font-size: ${isMobile ? '1.3rem' : '1.5rem'}; font-weight: 800; letter-spacing: 0.5px;">050-7138-00544</span>
+              </h3>
+              <p class="phone-subtitle" style="margin: 4px 0 0 0; font-size: ${isMobile ? '0.8rem' : '0.85rem'}; color: rgba(255, 255, 255, 0.5); font-weight: 400; transition: opacity 0.3s ease;">빠른 상담 예약 및 문의</p>
             </div>
           </div>
           <div style="position: relative; z-index: 1;">
@@ -8019,6 +8022,19 @@ if (window.innerWidth <= 768) {
       
       button:hover .hover-gradient {
         opacity: 1 !important;
+      }
+      
+      /* 전화상담 버튼 hover 효과 */
+      button:hover .phone-text {
+        display: none !important;
+      }
+      
+      button:hover .phone-number {
+        display: inline !important;
+      }
+      
+      button:hover .phone-subtitle {
+        opacity: 0 !important;
       }
     `;
     document.head.appendChild(style);
@@ -16242,4 +16258,5 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 </script>
+
 </html> 
