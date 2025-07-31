@@ -10526,6 +10526,20 @@ document.addEventListener('DOMContentLoaded', function() {
     max-width: 90% !important;
   }
   
+  /* 모바일에서 카드 제목 위치 조정 - 한 칸 아래로 (16px) */
+  #sync-card h3,
+  #balance-card h3,
+  #boost-card h3 {
+    margin-top: 16px !important;
+  }
+  
+  /* 모바일에서 로고 아래 설명 문구 위치 조정 - 한 칸 위로 (-16px) */
+  #sync-card p:first-of-type,
+  #balance-card p:first-of-type,
+  #boost-card p:first-of-type {
+    margin-top: -16px !important;
+  }
+  
   .training-card:not(.active) {
     transform: translateX(-50%) translateY(-50%) translateX(var(--mobile-x, 0)) translateZ(-50px) rotateY(var(--mobile-rotate, 0deg)) scale(0.7) !important;
   }
