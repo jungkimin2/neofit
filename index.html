@@ -5602,40 +5602,47 @@ if (window.innerWidth <= 768) {
               // 카드를 playing 상태로 설정
               this.classList.add('playing');
               
-              // 비디오를 최상위로 올려서 완전히 덮도록 설정
-              boostVideo.style.position = 'absolute';
-              boostVideo.style.top = '10px';
-              boostVideo.style.left = '10px';
-              boostVideo.style.width = 'calc(100% - 20px)';
-              boostVideo.style.height = 'calc(100% - 20px)';
+              // 비디오를 카드 밖으로 이동시켜 최상위에 배치
+              const cardPosition = this.getBoundingClientRect();
+              const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+              const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+              
+              boostVideo.style.position = 'fixed';
+              boostVideo.style.top = cardPosition.top + 'px';
+              boostVideo.style.left = cardPosition.left + 'px';
+              boostVideo.style.width = cardPosition.width + 'px';
+              boostVideo.style.height = cardPosition.height + 'px';
               boostVideo.style.objectFit = 'cover';
-              boostVideo.style.borderRadius = '16px';
-              boostVideo.style.border = 'none';
+              boostVideo.style.borderRadius = '20px';
+              boostVideo.style.border = '2px solid #F87171';
               boostVideo.style.boxShadow = 'none';
-              boostVideo.style.zIndex = '999';
+              boostVideo.style.zIndex = '999999';
               boostVideo.style.opacity = '1';
               boostVideo.style.display = 'block';
               boostVideo.style.backgroundColor = '#000';
               boostVideo.classList.add('playing');
               
+              // 비디오를 body에 직접 추가
+              document.body.appendChild(boostVideo);
+              
               // 글래시한 얇은 테두리 오버레이 추가
               const glassOverlay = document.createElement('div');
               glassOverlay.className = 'video-glass-overlay-mobile';
               glassOverlay.style.cssText = `
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
+                position: fixed;
+                top: ${cardPosition.top}px;
+                left: ${cardPosition.left}px;
+                width: ${cardPosition.width}px;
+                height: ${cardPosition.height}px;
                 border-radius: 20px;
                 border: 1px solid rgba(248, 113, 113, 0.3);
                 background: transparent;
                 pointer-events: none;
-                z-index: 1000;
+                z-index: 1000000;
                 box-shadow: inset 0 0 20px rgba(248, 113, 113, 0.2),
                             0 0 40px rgba(248, 113, 113, 0.3);
               `;
-              this.querySelector('.card-front').appendChild(glassOverlay);
+              document.body.appendChild(glassOverlay);
               
               // 카드 내부의 모든 요소를 숨기기 위해 새로운 방법 사용
               const cardFront = this.querySelector('.card-front');
@@ -5672,7 +5679,7 @@ if (window.innerWidth <= 768) {
           boostVideo.currentTime = 0;
           
           // 글래시 오버레이 제거
-          const overlay = boostCard.querySelector('.video-glass-overlay-mobile');
+          const overlay = document.querySelector('.video-glass-overlay-mobile');
           if (overlay) {
             overlay.style.transition = 'opacity 0.3s ease';
             overlay.style.opacity = '0';
@@ -5768,6 +5775,9 @@ if (window.innerWidth <= 768) {
             boostVideo.style.display = '';
             boostVideo.style.backgroundColor = '';
             boostVideo.classList.remove('playing');
+            
+            // 비디오를 원래 위치로 되돌리기
+            boostCard.querySelector('.card-front').appendChild(boostVideo);
             
             // playing 클래스 제거
             boostCard.classList.remove('playing');
