@@ -10580,6 +10580,17 @@ document.addEventListener('DOMContentLoaded', function() {
   #boost-card div[style*="z-index: 2"] > p:first-of-type {
     margin-top: -56px !important;
   }
+  
+  /* 모바일에서 NEO BOOST 설명 문구 크기 줄이기 */
+  @media (max-width: 768px) {
+    #boost-card p[style*="font-size: 1.1rem"] {
+      font-size: 0.95rem !important;
+    }
+    
+    #boost-card p[style*="font-size: 0.95rem"] {
+      font-size: 0.85rem !important;
+    }
+  }
 }
 
 /* 부드러운 전환 효과 */
