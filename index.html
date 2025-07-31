@@ -5829,6 +5829,19 @@ if (window.innerWidth <= 768) {
                 }, 50);
               }
               
+              // 복원 후 폰트 크기 재적용
+              setTimeout(() => {
+                const restoredFirstText = Array.from(cardFront.querySelectorAll('p')).find(p => p.textContent.includes('폭발적인 퍼포먼스 향상'));
+                const restoredSecondText = Array.from(cardFront.querySelectorAll('p')).find(p => p.textContent.includes('상급자를 위한 고강도 프로그램'));
+                
+                if (restoredFirstText) {
+                  restoredFirstText.style.setProperty('font-size', '0.95rem', 'important');
+                }
+                if (restoredSecondText) {
+                  restoredSecondText.style.setProperty('font-size', '0.85rem', 'important');
+                }
+              }, 100);
+              
               isVideoPlaying = false;
               originalHTML = null;
               videoElement = null;
@@ -5866,7 +5879,23 @@ if (window.innerWidth <= 768) {
             
             // 영상 재생 처리
             isVideoPlaying = true;
-            originalHTML = cardFront.innerHTML;
+            
+            // 원본 HTML 저장 전에 폰트 크기 변경
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = cardFront.innerHTML;
+            
+            // 저장할 HTML에서 폰트 크기 미리 변경
+            const tempFirstText = Array.from(tempDiv.querySelectorAll('p')).find(p => p.textContent.includes('폭발적인 퍼포먼스 향상'));
+            const tempSecondText = Array.from(tempDiv.querySelectorAll('p')).find(p => p.textContent.includes('상급자를 위한 고강도 프로그램'));
+            
+            if (tempFirstText) {
+              tempFirstText.style.fontSize = '0.95rem';
+            }
+            if (tempSecondText) {  
+              tempSecondText.style.fontSize = '0.85rem';
+            }
+            
+            originalHTML = tempDiv.innerHTML;
             
             // 현재 콘텐츠 페이드아웃
             const currentContent = cardFront.querySelector('div[style*="z-index: 2"]');
