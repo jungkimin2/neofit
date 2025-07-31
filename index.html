@@ -3103,7 +3103,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="card-inner" style="width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.3s; background: transparent; border: none;">
           <div class="card-front" style="position: absolute; width: 100%; height: 100%; backface-visibility: hidden; background: linear-gradient(135deg, #0F0A0A 0%, rgba(248,113,113,0.015) 100%); border: 2px solid #F87171; border-radius: 20px; padding: 30px; display: flex; flex-direction: column; align-items: center; overflow: hidden;">
             <!-- 비디오 요소 추가 -->
-            <video class="boost-hover-video" src="./videos/neoboots.mp4" loop playsinline muted preload="auto" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.3s ease; z-index: 1; pointer-events: none;"></video>
+            <video class="boost-hover-video" src="./videos/neoboots.mp4" loop playsinline muted preload="auto" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.3s ease; z-index: 0; pointer-events: none;"></video>
             
             <div style="position: relative; z-index: 2; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;">
               <h3 class="boost-title" style="color: #F87171; font-size: 2rem; margin-bottom: 20px; text-shadow: 0 0 20px rgba(248,113,113,0.8); display: block;">NEO BOOST</h3>
@@ -5637,38 +5637,18 @@ if (window.innerWidth <= 768) {
               `;
               this.querySelector('.card-front').appendChild(glassOverlay);
               
-              // 카드 내부의 모든 요소를 숨기기 위해 card-front의 z-index 구조 변경
+              // 카드 내부의 모든 요소를 숨기기 위해 새로운 방법 사용
               const cardFront = this.querySelector('.card-front');
               
-              // 컨텐츠 컨테이너를 강제로 숨기기
-              if (boostContent) {
-                boostContent.style.cssText = 'opacity: 0 !important; visibility: hidden !important; display: none !important; z-index: -1 !important;';
-              }
-              
-              // 제목, 이미지, 텍스트 모두 개별적으로 강제 숨기기
-              const title = boostCard.querySelector('.boost-title');
-              const img = boostCard.querySelector('img[alt="네오 부스트"]');
-              const texts = boostCard.querySelectorAll('p');
-              
-              if (title) {
-                title.style.cssText = 'opacity: 0 !important; visibility: hidden !important; display: none !important;';
-              }
-              
-              if (img) {
-                img.style.cssText = 'opacity: 0 !important; visibility: hidden !important; display: none !important;';
-              }
-              
-              texts.forEach(text => {
-                text.style.cssText = 'opacity: 0 !important; visibility: hidden !important; display: none !important;';
+              // 모든 자식 요소를 한 번에 숨기기
+              const allChildren = cardFront.querySelectorAll('*:not(.boost-hover-video):not(.video-glass-overlay-mobile)');
+              allChildren.forEach(child => {
+                child.style.cssText = child.style.cssText + '; display: none !important; opacity: 0 !important; visibility: hidden !important;';
               });
               
-              // CLICK 버튼 숨기기
-              if (boostClickIndicator) {
-                boostClickIndicator.style.cssText = 'opacity: 0 !important; visibility: hidden !important; display: none !important;';
-              }
-              
-              // 카드 배경을 검은색으로 설정하여 UI 잔상 제거
+              // 카드 배경을 검은색으로 설정
               cardFront.style.background = '#000';
+              cardFront.style.padding = '0';
               
               // 음소거 및 재생
               boostVideo.muted = true;
@@ -5711,40 +5691,34 @@ if (window.innerWidth <= 768) {
           // 카드 배경 원래대로 복원
           const cardFront = boostCard.querySelector('.card-front');
           cardFront.style.background = '';
+          cardFront.style.padding = '';
           
-          // display를 먼저 복원하고 opacity는 0으로 설정
-          if (boostContent) {
-            boostContent.style.cssText = '';
-            boostContent.style.display = '';
-            boostContent.style.visibility = 'visible';
-            boostContent.style.opacity = '0';
-            boostContent.style.zIndex = '';
-          }
-          
-          if (title) {
-            title.style.cssText = '';
-            title.style.display = '';
-            title.style.visibility = '';
-            title.style.opacity = '0';
-          }
-          
-          if (img) {
-            img.style.cssText = '';
-            img.style.display = '';
-            img.style.visibility = '';
-            img.style.opacity = '0';
-          }
-          
-          texts.forEach(text => {
-            text.style.cssText = '';
-            text.style.display = '';
-            text.style.visibility = '';
-            text.style.opacity = '0';
+          // 모든 자식 요소의 스타일 복원
+          const allChildren = cardFront.querySelectorAll('*:not(.boost-hover-video)');
+          allChildren.forEach(child => {
+            // style 속성에서 display, opacity, visibility 관련 내용 제거
+            if (child.style.cssText) {
+              child.style.cssText = child.style.cssText
+                .replace(/display\s*:\s*none\s*!important\s*;?/gi, '')
+                .replace(/opacity\s*:\s*0\s*!important\s*;?/gi, '')
+                .replace(/visibility\s*:\s*hidden\s*!important\s*;?/gi, '');
+            }
           });
           
+          // 각 요소를 페이드 인을 위해 opacity 0으로 설정
+          if (boostContent) {
+            boostContent.style.opacity = '0';
+          }
+          
+          const title = boostCard.querySelector('.boost-title');
+          const img = boostCard.querySelector('img[alt="네오 부스트"]');
+          const texts = boostCard.querySelectorAll('p');
+          
+          if (title) title.style.opacity = '0';
+          if (img) img.style.opacity = '0';
+          texts.forEach(text => text.style.opacity = '0');
+          
           if (boostClickIndicator) {
-            boostClickIndicator.style.cssText = '';
-            boostClickIndicator.style.display = '';
             boostClickIndicator.style.opacity = '0';
           }
           
