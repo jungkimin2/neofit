@@ -3108,8 +3108,8 @@ document.addEventListener('DOMContentLoaded', function() {
             <div style="position: relative; z-index: 2; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;">
               <h3 class="boost-title" style="color: #F87171; font-size: 2rem; margin-bottom: 20px; text-shadow: 0 0 20px rgba(248,113,113,0.8); display: block;">NEO BOOST</h3>
               <img src="./images/neoboots.png" alt="네오 부스트" style="width: 80%; height: auto; margin-bottom: 20px; filter: drop-shadow(0 0 20px rgba(248,113,113,0.5)); display: block; max-width: 280px;">
-              <p style="color: #fff; font-size: 1.1rem; text-align: center; display: block;">폭발적인 퍼포먼스 향상</p>
-              <p style="color: #aaa; font-size: 0.95rem; text-align: center; margin-top: 10px; display: block;">상급자를 위한 고강도 프로그램</p>
+              <p class="boost-text-1" style="color: #fff; font-size: 1.1rem; text-align: center; display: block;">폭발적인 퍼포먼스 향상</p>
+              <p class="boost-text-2" style="color: #aaa; font-size: 0.95rem; text-align: center; margin-top: 10px; display: block;">상급자를 위한 고강도 프로그램</p>
             </div>
             <!-- CLICK 표시 추가 -->
             <span class="click-indicator" style="position: absolute; bottom: -1px; left: 50%; transform: translateX(-50%); font-size: 0.7rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; animation: pulse 2s ease-in-out infinite; z-index: 3;">CLICK</span>
@@ -5718,60 +5718,17 @@ if (window.innerWidth <= 768) {
           return;
         }
         
-        // 모바일에서 NEO BOOST 카드의 설명 문구 폰트 크기 줄이기 - 더 확실한 방법
-        // 텍스트 내용으로 직접 찾기
-        const allParagraphs = boostCard.querySelectorAll('p');
-        let firstText = null;
-        let secondText = null;
+        // 모바일에서 NEO BOOST 카드의 설명 문구 폰트 크기는 CSS로 처리됨
+        console.log('NEO BOOST 모바일 폰트 크기 조정 - CSS 클래스로 처리');
         
-        allParagraphs.forEach(p => {
-          if (p.textContent.includes('폭발적인 퍼포먼스 향상')) {
-            firstText = p;
-          } else if (p.textContent.includes('상급자를 위한 고강도 프로그램')) {
-            secondText = p;
-          }
-        });
+        // 혹시 클래스가 없는 경우를 대비해 확인
+        const boostText1 = boostCard.querySelector('.boost-text-1');
+        const boostText2 = boostCard.querySelector('.boost-text-2');
         
-        if (firstText && secondText) {
-          // 폰트 크기 변경 함수
-          const applyFontSize = () => {
-            firstText.style.setProperty('font-size', '0.95rem', 'important');
-            secondText.style.setProperty('font-size', '0.85rem', 'important');
-          };
-          
-          // 즉시 적용
-          applyFontSize();
-          
-          // MutationObserver로 스타일 변경 감지
-          const styleObserver = new MutationObserver((mutations) => {
-            mutations.forEach((mutation) => {
-              if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
-                // 스타일이 변경되면 다시 적용
-                applyFontSize();
-              }
-            });
-          });
-          
-          // 두 텍스트 요소 모두 관찰
-          styleObserver.observe(firstText, { attributes: true, attributeFilter: ['style'] });
-          styleObserver.observe(secondText, { attributes: true, attributeFilter: ['style'] });
-          
-          console.log('NEO BOOST 문구 크기 변경 완료');
-          console.log('첫 번째 문구 찾음:', firstText.textContent);
-          console.log('두 번째 문구 찾음:', secondText.textContent);
-          console.log('변경 후 font-size:', getComputedStyle(firstText).fontSize, getComputedStyle(secondText).fontSize);
-          
-          // 100ms마다 재적용 (5초 동안)
-          let count = 0;
-          const interval = setInterval(() => {
-            applyFontSize();
-            count++;
-            if (count > 50) clearInterval(interval);
-          }, 100);
-        } else {
-          console.error('NEO BOOST 문구를 찾을 수 없습니다');
-          console.log('찾은 p 태그들:', allParagraphs.length);
-          allParagraphs.forEach((p, i) => console.log(`p[${i}]:`, p.textContent));
+        if (boostText1 && boostText2) {
+          console.log('NEO BOOST 텍스트 요소 확인됨');
+          console.log('텍스트 1:', boostText1.textContent, '- computed font-size:', getComputedStyle(boostText1).fontSize);
+          console.log('텍스트 2:', boostText2.textContent, '- computed font-size:', getComputedStyle(boostText2).fontSize);
         }
         
         let isVideoPlaying = false;
@@ -5829,18 +5786,7 @@ if (window.innerWidth <= 768) {
                 }, 50);
               }
               
-              // 복원 후 폰트 크기 재적용
-              setTimeout(() => {
-                const restoredFirstText = Array.from(cardFront.querySelectorAll('p')).find(p => p.textContent.includes('폭발적인 퍼포먼스 향상'));
-                const restoredSecondText = Array.from(cardFront.querySelectorAll('p')).find(p => p.textContent.includes('상급자를 위한 고강도 프로그램'));
-                
-                if (restoredFirstText) {
-                  restoredFirstText.style.setProperty('font-size', '0.95rem', 'important');
-                }
-                if (restoredSecondText) {
-                  restoredSecondText.style.setProperty('font-size', '0.85rem', 'important');
-                }
-              }, 100);
+              // 복원 후 CSS 클래스가 자동으로 폰트 크기 적용
               
               isVideoPlaying = false;
               originalHTML = null;
@@ -5880,22 +5826,8 @@ if (window.innerWidth <= 768) {
             // 영상 재생 처리
             isVideoPlaying = true;
             
-            // 원본 HTML 저장 전에 폰트 크기 변경
-            const tempDiv = document.createElement('div');
-            tempDiv.innerHTML = cardFront.innerHTML;
-            
-            // 저장할 HTML에서 폰트 크기 미리 변경
-            const tempFirstText = Array.from(tempDiv.querySelectorAll('p')).find(p => p.textContent.includes('폭발적인 퍼포먼스 향상'));
-            const tempSecondText = Array.from(tempDiv.querySelectorAll('p')).find(p => p.textContent.includes('상급자를 위한 고강도 프로그램'));
-            
-            if (tempFirstText) {
-              tempFirstText.style.fontSize = '0.95rem';
-            }
-            if (tempSecondText) {  
-              tempSecondText.style.fontSize = '0.85rem';
-            }
-            
-            originalHTML = tempDiv.innerHTML;
+            // 원본 HTML 저장 - 클래스가 있으므로 CSS가 자동 적용됨
+            originalHTML = cardFront.innerHTML;
             
             // 현재 콘텐츠 페이드아웃
             const currentContent = cardFront.querySelector('div[style*="z-index: 2"]');
@@ -10671,21 +10603,12 @@ document.addEventListener('DOMContentLoaded', function() {
     margin-top: -56px !important;
   }
   
-  /* 모바일에서 NEO BOOST 설명 문구 크기 줄이기 - 더 구체적인 선택자 사용 */
-  #boost-card .card-front div[style*="z-index: 2"] p[style*="font-size: 1.1rem"] {
+  /* 모바일에서 NEO BOOST 설명 문구 크기 줄이기 - 클래스 선택자 사용 */
+  #boost-card .boost-text-1 {
     font-size: 0.95rem !important;
   }
   
-  #boost-card .card-front div[style*="z-index: 2"] p[style*="font-size: 0.95rem"] {
-    font-size: 0.85rem !important;
-  }
-  
-  /* 모바일 전용 클래스 */
-  .mobile-boost-text-small {
-    font-size: 0.95rem !important;
-  }
-  
-  .mobile-boost-text-smaller {
+  #boost-card .boost-text-2 {
     font-size: 0.85rem !important;
   }
 }
