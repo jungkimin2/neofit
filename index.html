@@ -10572,6 +10572,11 @@ document.addEventListener('DOMContentLoaded', function() {
     margin-top: -32px !important; /* 로고를 두 칸 위로 */
   }
   
+  /* 모바일에서 NEO SYNC 로고만 0.3칸(4.8px) 추가로 위로 이동 */
+  #sync-card img[src*="neosync.png"] {
+    margin-top: -36.8px !important; /* -32px - 4.8px = -36.8px */
+  }
+  
   /* 모바일에서 카드 제목 위치 조정 - 한 칸 아래로 (16px) */
   #balance-card h3,
   #boost-card h3 {
