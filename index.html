@@ -7964,7 +7964,7 @@ if (window.innerWidth <= 768) {
         </button>
 
         <!-- 전화상담 문의 버튼 -->
-        <button onclick="window.location.href='tel:050-7138-00544'" style="
+        <button onclick="${isMobile ? 'window.location.href=\'tel:050-7138-00544\'' : 'alert(\'전화번호: 050-7138-00544\\n\\n모바일에서 클릭하시면 바로 전화연결이 가능합니다.\')'}" style="
           width: 100%;
           padding: ${isMobile ? '20px' : '24px'};
           background: rgba(0, 0, 0, 0.4);
