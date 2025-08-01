@@ -8005,6 +8005,46 @@ if (window.innerWidth <= 768) {
             </svg>
           </div>
         </button>
+
+        <!-- 위치 안내 버튼 -->
+        <button onclick="window.open('https://naver.me/FPUZBuM5', '_blank')" style="
+          width: 100%;
+          padding: ${isMobile ? '20px' : '24px'};
+          background: rgba(0, 0, 0, 0.4);
+          backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
+          border: 1px solid rgba(123, 228, 149, 0.3);
+          border-radius: 16px;
+          cursor: pointer;
+          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          position: relative;
+          overflow: hidden;
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+          transform: translateZ(0);
+        " onmouseover="this.style.transform='translateY(-2px) scale(1.01)'; this.style.boxShadow='0 0 30px rgba(123, 228, 149, 0.8), 0 0 60px rgba(123, 228, 149, 0.5), 0 0 90px rgba(123, 228, 149, 0.3), inset 0 0 30px rgba(123, 228, 149, 0.15), 0 8px 30px rgba(0, 0, 0, 0.4)'; this.style.borderColor='rgba(123, 228, 149, 0.8)'; this.style.background='rgba(123, 228, 149, 0.05)';" onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='0 4px 20px rgba(0, 0, 0, 0.3)'; this.style.borderColor='rgba(123, 228, 149, 0.3)'; this.style.background='rgba(0, 0, 0, 0.4)';">
+          <!-- 배경 장식 요소 -->
+          <div style="position: absolute; top: -50%; right: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(123, 228, 149, 0.1) 0%, transparent 40%); transform: rotate(45deg); opacity: 0; transition: opacity 0.4s ease; pointer-events: none;" class="hover-gradient"></div>
+          
+          <div style="display: flex; align-items: center; gap: 16px; position: relative; z-index: 1;">
+            <div style="width: 48px; height: 48px; background: linear-gradient(135deg, rgba(123, 228, 149, 0.2) 0%, rgba(123, 228, 149, 0.1) 100%); border: 1px solid rgba(123, 228, 149, 0.5); border-radius: 14px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;">
+              <div style="position: absolute; inset: 0; background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%); transform: translateX(-100%); animation: shimmer 3s infinite;"></div>
+              <img src="images/neo401.png" alt="위치" style="width: ${isMobile ? '32px' : '26px'}; height: auto; position: relative; z-index: 1; filter: brightness(1.1);">
+            </div>
+            <div style="text-align: left;">
+              <h3 style="margin: 0; font-size: ${isMobile ? '1.05rem' : '1.15rem'}; font-weight: 700; color: #fff; letter-spacing: -0.02em;">위치 안내</h3>
+              <p style="margin: 4px 0 0 0; font-size: ${isMobile ? '0.8rem' : '0.85rem'}; color: rgba(255, 255, 255, 0.5); font-weight: 400;">네오핏 오시는 길 안내</p>
+            </div>
+          </div>
+          <div style="position: relative; z-index: 1;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" style="transition: transform 0.3s ease;">
+              <circle cx="12" cy="12" r="11" stroke="rgba(123, 228, 149, 0.2)" stroke-width="1"/>
+              <path d="M10 16L14 12L10 8" stroke="#7BE495" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </button>
       </div>
     `;
     
