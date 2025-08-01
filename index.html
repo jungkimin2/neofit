@@ -1318,6 +1318,30 @@ section {
     background: #7BE495 !important;
     border-radius: 16px !important;
   }
+  
+  /* 모바일에서 flow-step 박스 내 텍스트 정렬 개선 */
+  .flow-step {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    padding: 10px !important;
+  }
+  
+  .flow-step .font-semibold {
+    text-align: center !important;
+    margin-bottom: 8px !important;
+  }
+  
+  .flow-step .text-sm {
+    text-align: center !important;
+    line-height: 1.4 !important;
+    width: 100% !important;
+  }
+  
+  .flow-icon {
+    margin: 0 auto 12px auto !important;
+  }
 }
   /* Mobile only: smaller font for trial and feedback messages */
   /* (Moved .mobile-trial-msg, .mobile-feedback-msg block to below) */
@@ -3300,8 +3324,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     <img src="./images/noes56.png" alt="통계 아이콘" style="width: 28px; height: 28px;">
                   </div>
                   <div style="color: #ccc; font-size: 0.95rem; line-height: 1.5; text-align: left;">
-                    출석 변화를 관리자 페이지에서 한눈에 파악하여<br>
-                    운영 전략에 즉시 반영 가능합니다.
+                    출석만 해도 리워드!<br>
+                    네오 하이브 앱이 자동으로 기록하고 보상까지 챙겨드립니다.
                   </div>
                 </div>
               </div>
@@ -12282,9 +12306,9 @@ if (video) {
     .flow-step {
       width: 100% !important;
       max-width: 160px !important;
-      min-height: 140px !important;
+      min-height: 155px !important;
       height: auto !important;
-      padding: 8px 6px 6px 6px !important;
+      padding: 8px 6px 10px 6px !important;
       font-size: 0.8rem !important;
       margin: 0 !important;
       box-sizing: border-box !important;
@@ -12335,14 +12359,14 @@ if (video) {
     }
     
     .flow-step .text-sm {
-      font-size: 0.68rem !important;
-      line-height: 1.0 !important;
+      font-size: 0.65rem !important;
+      line-height: 1.3 !important;
       text-align: center !important;
       margin: 0 !important;
-      flex-grow: 1 !important;
-      display: flex !important;
-      align-items: flex-start !important;
-      padding-top: 4px !important;
+      padding: 0 3px !important;
+      word-break: keep-all !important;
+      white-space: normal !important;
+      display: block !important;
     }
     
     .flow-step .flow-arrow-inside {
