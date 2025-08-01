@@ -6379,93 +6379,188 @@ if (window.innerWidth <= 768) {
   </script>
 </section>
 
-<section id="benefits" class="section animate-on-scroll" style="background: #000; padding-bottom: 20px; padding-top: 20px; margin-top: -16px;">
-  <div class="container benefits-container-mobile" style="max-width: 900px; margin: 0 auto; text-align: center;">
-    <h2 style="font-size: 2.2rem; font-weight: bold; margin-bottom: 16px; letter-spacing: -1px; line-height: 1.2;">
+<section id="benefits" class="section animate-on-scroll" style="background: #000; padding-bottom: 40px; padding-top: 40px;">
+  <div class="container" style="max-width: 1200px; margin: 0 auto; text-align: center;">
+    <h2 style="font-size: 2.2rem; font-weight: bold; margin-bottom: 40px; letter-spacing: -1px; line-height: 1.2;">
       <span style="color: #FFFFFF;">시설 정보 및 위치 안내</span>
     </h2>
-    <div class="intro-text-desktop" style="font-size: 1.1rem; color: #ccc; margin-bottom: 40px; line-height: 1.7; font-weight: 400;">
-      <span class="neon-green">네오 하이브</span>는 지역 기반 팀 매칭을 통해 헬스장에 유입률과 재등록률을 높이는 팀 문화를 만들고,<br>
-      <span class="neon-green">네오 스마트</span>는 운동 기구에 NFC 솔루션을 더해 트레이너 개입 없이도 학습 가능한 스마트 시스템을 구현합니다.
-    </div>
-    <div class="intro-text-mobile" style="display: none;">
-      <!-- 모바일에서는 설명 문구 삭제 -->
-    </div>
     
-    <!-- 시설 정보 슬라이드 갤러리 -->
-    <div class="facility-gallery-container" style="margin: 40px 0; position: relative;">
-      <div class="facility-slider" style="overflow: hidden; border-radius: 16px; background: #000;">
-        <div class="facility-track" style="display: flex; transition: transform 0.3s ease;">
-          <div class="facility-slide" style="flex: 0 0 100%; cursor: pointer;" onclick="showFacilityPopup(0)">
-            <img src="./images/IMG7216.jpeg" alt="시설 이미지 1" style="width: 100%; height: 400px; object-fit: cover;">
+    <!-- 새로운 시설 정보 갤러리 - 메인사진 + 썸네일 구조 -->
+    <div class="facility-gallery-new" style="margin: 40px auto; max-width: 1000px;">
+      <!-- 메인 이미지 영역 -->
+      <div class="facility-main-image" style="position: relative; border-radius: 16px; overflow: hidden; background: #000; cursor: pointer;" onclick="showFacilityPopup(currentFacilityIndex)">
+        <img id="facilityMainImage" src="./images/IMG7216.jpeg" alt="시설 메인 이미지" style="width: 100%; height: 450px; object-fit: cover; display: block;">
+      </div>
+      
+      <!-- 썸네일 슬라이드 영역 -->
+      <div class="facility-thumbnails" style="margin-top: 20px; position: relative;">
+        <!-- 왼쪽 화살표 -->
+        <button class="thumbnail-nav thumbnail-prev" onclick="scrollThumbnails('left')" style="position: absolute; left: -60px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.8); border: 2px solid #7BE495; color: #7BE495; width: 45px; height: 45px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 20; transition: all 0.3s; box-shadow: 0 2px 10px rgba(0,0,0,0.5);">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15 18L9 12L15 6" stroke="#7BE495" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        
+        <!-- 오른쪽 화살표 -->
+        <button class="thumbnail-nav thumbnail-next" onclick="scrollThumbnails('right')" style="position: absolute; right: -60px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.8); border: 2px solid #7BE495; color: #7BE495; width: 45px; height: 45px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 20; transition: all 0.3s; box-shadow: 0 2px 10px rgba(0,0,0,0.5);">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9 18L15 12L9 6" stroke="#7BE495" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        
+        <div style="overflow: hidden; border-radius: 12px;">
+          <div class="facility-thumbnail-track" style="display: flex; gap: 16px; transition: transform 0.3s ease;">
+          <div class="facility-thumbnail active" data-index="0" onclick="selectFacilityImage(0)" style="flex: 0 0 calc(20% - 13px); cursor: pointer; border-radius: 12px; overflow: hidden; border: 2px solid #7BE495; transition: all 0.3s;">
+            <img src="./images/IMG7216.jpeg" alt="시설 이미지 1" style="width: 100%; height: 120px; object-fit: cover; display: block;">
           </div>
-          <div class="facility-slide" style="flex: 0 0 100%; cursor: pointer;" onclick="showFacilityPopup(1)">
-            <img src="./images/IMG7217.jpeg" alt="시설 이미지 2" style="width: 100%; height: 400px; object-fit: cover;">
+          <div class="facility-thumbnail" data-index="1" onclick="selectFacilityImage(1)" style="flex: 0 0 calc(20% - 13px); cursor: pointer; border-radius: 12px; overflow: hidden; border: 2px solid transparent; transition: all 0.3s;">
+            <img src="./images/IMG7217.jpeg" alt="시설 이미지 2" style="width: 100%; height: 120px; object-fit: cover; display: block;">
           </div>
-          <div class="facility-slide" style="flex: 0 0 100%; cursor: pointer;" onclick="showFacilityPopup(2)">
-            <img src="./images/IMG7218.jpeg" alt="시설 이미지 3" style="width: 100%; height: 400px; object-fit: cover;">
+          <div class="facility-thumbnail" data-index="2" onclick="selectFacilityImage(2)" style="flex: 0 0 calc(20% - 13px); cursor: pointer; border-radius: 12px; overflow: hidden; border: 2px solid transparent; transition: all 0.3s;">
+            <img src="./images/IMG7218.jpeg" alt="시설 이미지 3" style="width: 100%; height: 120px; object-fit: cover; display: block;">
           </div>
-          <div class="facility-slide" style="flex: 0 0 100%; cursor: pointer;" onclick="showFacilityPopup(3)">
-            <img src="./images/IMG7222.JPG" alt="시설 이미지 4" style="width: 100%; height: 400px; object-fit: cover;">
+          <div class="facility-thumbnail" data-index="3" onclick="selectFacilityImage(3)" style="flex: 0 0 calc(20% - 13px); cursor: pointer; border-radius: 12px; overflow: hidden; border: 2px solid transparent; transition: all 0.3s;">
+            <img src="./images/IMG7222.JPG" alt="시설 이미지 4" style="width: 100%; height: 120px; object-fit: cover; display: block;">
+          </div>
+          <div class="facility-thumbnail" data-index="4" onclick="selectFacilityImage(4)" style="flex: 0 0 calc(20% - 13px); cursor: pointer; border-radius: 12px; overflow: hidden; border: 2px solid transparent; transition: all 0.3s;">
+            <img src="./images/neoodod.JPG" alt="시설 이미지 5" style="width: 100%; height: 120px; object-fit: cover; display: block;">
+          </div>
           </div>
         </div>
       </div>
+    </div>
+    
+    <!-- 위치 안내 섹션 -->
+    <div class="location-info" style="margin-top: 60px; text-align: center;">
+      <h3 style="font-size: 1.8rem; color: #7BE495; margin-bottom: 30px; font-weight: bold;">오시는 길</h3>
       
-      <!-- 네비게이션 버튼 -->
-      <button class="facility-nav facility-prev" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.6); border: 1px solid #7BE495; color: #7BE495; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 10;">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M15 18L9 12L15 6" stroke="#7BE495" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </button>
-      
-      <button class="facility-nav facility-next" style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.6); border: 1px solid #7BE495; color: #7BE495; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 10;">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M9 18L15 12L9 6" stroke="#7BE495" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </button>
-      
-      <!-- 인디케이터 -->
-      <div class="facility-indicators" style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; z-index: 10;">
-        <span class="facility-dot active" data-index="0" style="width: 8px; height: 8px; border-radius: 50%; background: #7BE495; cursor: pointer; transition: all 0.3s;"></span>
-        <span class="facility-dot" data-index="1" style="width: 8px; height: 8px; border-radius: 50%; background: rgba(123,228,149,0.3); cursor: pointer; transition: all 0.3s;"></span>
-        <span class="facility-dot" data-index="2" style="width: 8px; height: 8px; border-radius: 50%; background: rgba(123,228,149,0.3); cursor: pointer; transition: all 0.3s;"></span>
-        <span class="facility-dot" data-index="3" style="width: 8px; height: 8px; border-radius: 50%; background: rgba(123,228,149,0.3); cursor: pointer; transition: all 0.3s;"></span>
+      <div style="background: linear-gradient(135deg, rgba(123,228,149,0.05), rgba(62,200,168,0.03)); border: 1px solid rgba(123,228,149,0.3); border-radius: 16px; padding: 40px; max-width: 800px; margin: 0 auto;">
+        <p style="font-size: 1.1rem; color: #fff; margin-bottom: 20px; line-height: 1.8;">
+          <strong style="color: #7BE495;">주소:</strong> 경기도 김포시 김포한강2로 361, 701동 204호
+        </p>
+        
+        <div style="margin-top: 30px;">
+          <button onclick="window.open('https://naver.me/FPUZBuM5', '_blank')" style="
+            background: linear-gradient(135deg, rgba(123,228,149,0.1), rgba(62,200,168,0.05));
+            border: 2px solid #7BE495;
+            color: #7BE495;
+            padding: 16px 40px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+          " onmouseover="this.style.background='rgba(123,228,149,0.2)'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 20px rgba(123,228,149,0.3)'" onmouseout="this.style.background='linear-gradient(135deg, rgba(123,228,149,0.1), rgba(62,200,168,0.05))'; this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+            <img src="./images/neo401.png" alt="위치 아이콘" style="width: 24px; height: 24px;">
+            네이버 지도로 길찾기
+          </button>
+        </div>
       </div>
     </div>
     
     
     <style>
+    /* 새로운 갤러리 스타일 */
+    .facility-thumbnail:hover {
+      border-color: #7BE495 !important;
+      transform: scale(1.05);
+    }
+    
+    .facility-thumbnail.active {
+      border-color: #7BE495 !important;
+    }
+    
+    .facility-thumbnail img {
+      transition: transform 0.3s;
+    }
+    
+    .facility-thumbnail:hover img {
+      transform: scale(1.1);
+    }
+    
+    /* 썸네일 네비게이션 버튼 스타일 */
+    .thumbnail-nav:hover {
+      background: rgba(123,228,149,0.1) !important;
+      border-color: #9DF3C4 !important;
+      transform: translateY(-50%) scale(1.1);
+    }
+    
+    .thumbnail-nav:active {
+      transform: translateY(-50%) scale(0.95);
+    }
+    
     /* 모바일 반응형 스타일 */
     @media (max-width: 768px) {
-      .facility-gallery-container {
+      .facility-gallery-new {
         margin: 20px auto !important;
-        max-width: 85% !important;
-        padding: 0 !important;
+        max-width: 90% !important;
       }
       
-      .facility-slider {
-        border-radius: 12px !important;
+      #facilityMainImage {
+        height: 280px !important;
       }
       
-      .facility-slide img {
-        height: 250px !important;
+      .facility-thumbnails {
+        margin-top: 12px !important;
       }
       
-      .facility-nav {
+      .facility-thumbnail {
+        flex: 0 0 calc(50% - 8px) !important;
+      }
+      
+      .facility-thumbnail img {
+        height: 80px !important;
+      }
+      
+      /* 썸네일 네비게이션 모바일 스타일 */
+      .thumbnail-nav {
         width: 35px !important;
         height: 35px !important;
       }
       
-      .facility-nav.facility-prev {
-        left: 10px !important;
+      .thumbnail-nav svg {
+        width: 18px !important;
+        height: 18px !important;
       }
       
-      .facility-nav.facility-next {
-        right: 10px !important;
+      .thumbnail-prev {
+        left: -45px !important;
       }
       
-      .facility-indicators {
-        bottom: 10px !important;
+      .thumbnail-next {
+        right: -45px !important;
+      }
+      
+      /* 위치 안내 모바일 스타일 */
+      .location-info {
+        margin-top: 40px !important;
+      }
+      
+      .location-info h3 {
+        font-size: 1.4rem !important;
+        margin-bottom: 20px !important;
+      }
+      
+      .location-info > div {
+        padding: 24px 20px !important;
+        margin: 0 10px !important;
+      }
+      
+      .location-info p {
+        font-size: 0.95rem !important;
+      }
+      
+      .location-info button {
+        padding: 12px 24px !important;
+        font-size: 0.95rem !important;
+      }
+      
+      .location-info button img {
+        width: 20px !important;
+        height: 20px !important;
       }
       
       /* 모바일 팝업 스타일 - display 설정 제거 */
@@ -6670,122 +6765,141 @@ if (window.innerWidth <= 768) {
     </style>
     
     <script>
-    // DOM이 로드된 후 실행
-    document.addEventListener('DOMContentLoaded', function() {
-    // 슬라이더 기능
-    let currentSlide = 0;
-    const slides = document.querySelectorAll('.facility-slide');
-    const totalSlides = slides.length;
+    // 새로운 갤러리 기능
+    let currentFacilityIndex = 0;
+    const facilityImages = [
+      './images/IMG7216.jpeg',
+      './images/IMG7217.jpeg', 
+      './images/IMG7218.jpeg',
+      './images/IMG7222.JPG',
+      './images/neoodod.JPG'
+    ];
     
-    function updateSlider() {
-      const track = document.querySelector('.facility-track');
-      track.style.transform = `translateX(-${currentSlide * 100}%)`;
+    // 썸네일 클릭시 메인 이미지 변경
+    function selectFacilityImage(index) {
+      currentFacilityIndex = index;
       
-      // 인디케이터 업데이트
-      document.querySelectorAll('.facility-dot').forEach((dot, index) => {
-        if (index === currentSlide) {
-          dot.classList.add('active');
-          dot.style.background = '#7BE495';
+      // 메인 이미지 변경
+      const mainImage = document.getElementById('facilityMainImage');
+      mainImage.src = facilityImages[index];
+      
+      // 썸네일 활성화 상태 업데이트
+      document.querySelectorAll('.facility-thumbnail').forEach((thumb, i) => {
+        if (i === index) {
+          thumb.classList.add('active');
+          thumb.style.borderColor = '#7BE495';
         } else {
-          dot.classList.remove('active');
-          dot.style.background = 'rgba(123,228,149,0.3)';
+          thumb.classList.remove('active');
+          thumb.style.borderColor = 'transparent';
         }
       });
     }
     
-    // 이전/다음 버튼
-    document.querySelector('.facility-prev').addEventListener('click', () => {
-      currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-      updateSlider();
-    });
+    // 썸네일 스크롤 함수
+    let thumbnailScrollPosition = 0;
+    function scrollThumbnails(direction) {
+      // 현재 인덱스를 기준으로 이전/다음 이미지로 이동
+      if (direction === 'left') {
+        // 이전 이미지로
+        currentFacilityIndex = (currentFacilityIndex - 1 + facilityImages.length) % facilityImages.length;
+      } else {
+        // 다음 이미지로
+        currentFacilityIndex = (currentFacilityIndex + 1) % facilityImages.length;
+      }
+      
+      // 메인 이미지와 썸네일 선택 상태 업데이트
+      selectFacilityImage(currentFacilityIndex);
+      
+      // 현재 선택된 썸네일이 보이도록 스크롤 위치 조정
+      const track = document.querySelector('.facility-thumbnail-track');
+      const thumbnails = document.querySelectorAll('.facility-thumbnail');
+      const containerWidth = track.parentElement.offsetWidth;
+      const thumbnailWidth = thumbnails[0].offsetWidth + 16; // width + gap
+      
+      // 현재 썸네일이 중앙에 오도록 스크롤
+      const targetScroll = (currentFacilityIndex * thumbnailWidth) - (containerWidth / 2) + (thumbnailWidth / 2);
+      const maxScroll = track.scrollWidth - containerWidth;
+      
+      thumbnailScrollPosition = Math.max(0, Math.min(maxScroll, targetScroll));
+      track.style.transform = `translateX(-${thumbnailScrollPosition}px)`;
+      
+      // 버튼 표시/숨김 업데이트
+      updateNavigationButtons();
+    }
     
-    document.querySelector('.facility-next').addEventListener('click', () => {
-      currentSlide = (currentSlide + 1) % totalSlides;
-      updateSlider();
-    });
+    // 네비게이션 버튼 표시/숨김 업데이트
+    function updateNavigationButtons() {
+      const track = document.querySelector('.facility-thumbnail-track');
+      const trackWidth = track.scrollWidth;
+      const containerWidth = track.parentElement.offsetWidth;
+      const prevButton = document.querySelector('.thumbnail-prev');
+      const nextButton = document.querySelector('.thumbnail-next');
+      
+      // 버튼이 없으면 리턴
+      if (!prevButton || !nextButton) return;
+      
+      // 항상 버튼 표시
+      prevButton.style.display = 'flex';
+      nextButton.style.display = 'flex';
+      
+      // 모든 버튼은 항상 활성화 (순환 구조이므로)
+      prevButton.style.opacity = '1';
+      prevButton.style.pointerEvents = 'auto';
+      nextButton.style.opacity = '1';
+      nextButton.style.pointerEvents = 'auto';
+    }
     
-    // 인디케이터 클릭
-    document.querySelectorAll('.facility-dot').forEach(dot => {
-      dot.addEventListener('click', (e) => {
-        currentSlide = parseInt(e.target.dataset.index);
-        updateSlider();
+    // DOM이 로드된 후 실행
+    document.addEventListener('DOMContentLoaded', function() {
+      // 네비게이션 버튼 초기화
+      updateNavigationButtons();
+      
+      // 윈도우 리사이즈 시 버튼 업데이트
+      window.addEventListener('resize', updateNavigationButtons);
+      
+      // 썸네일 호버 효과 강화
+      const thumbnails = document.querySelectorAll('.facility-thumbnail');
+      thumbnails.forEach(thumb => {
+        thumb.addEventListener('mouseenter', function() {
+          if (!this.classList.contains('active')) {
+            this.style.borderColor = 'rgba(123,228,149,0.5)';
+          }
+        });
+        
+        thumb.addEventListener('mouseleave', function() {
+          if (!this.classList.contains('active')) {
+            this.style.borderColor = 'transparent';
+          }
+        });
       });
-    });
-    
-    // 기존 팝업 코드 제거 - 새로운 팝업과 충돌 방지
-    
-    // 기존 팝업 관련 코드 모두 제거
-    
-    // 터치 스와이프 지원 (모바일)
-    let touchStartX = 0;
-    let touchEndX = 0;
-    
-    const sliderElement = document.querySelector('.facility-slider');
-    
-    sliderElement.addEventListener('touchstart', (e) => {
-      touchStartX = e.touches[0].clientX;
-    });
-    
-    sliderElement.addEventListener('touchend', (e) => {
-      touchEndX = e.changedTouches[0].clientX;
-      handleSwipe();
-    });
-    
-    function handleSwipe() {
-      if (touchEndX < touchStartX - 50) {
-        // 왼쪽으로 스와이프 (다음)
-        currentSlide = (currentSlide + 1) % totalSlides;
-        updateSlider();
-      }
-      if (touchEndX > touchStartX + 50) {
-        // 오른쪽으로 스와이프 (이전)
-        currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-        updateSlider();
-      }
-    }
-    
-    // 이미 위에서 X버튼 이벤트를 추가했으므로 삭제
-    
-    // 팝업에서도 터치 스와이프 지원
-    let modalTouchStartX = 0;
-    let modalTouchEndX = 0;
-    let modalTouchStartY = 0;
-    let modalTouchEndY = 0;
-    
-    const modalElement = document.querySelector('.facility-modal-slider');
-    
-    modalElement.addEventListener('touchstart', (e) => {
-      modalTouchStartX = e.touches[0].clientX;
-      modalTouchStartY = e.touches[0].clientY;
-    });
-    
-    modalElement.addEventListener('touchend', (e) => {
-      modalTouchEndX = e.changedTouches[0].clientX;
-      modalTouchEndY = e.changedTouches[0].clientY;
       
-      // 아래로 스와이프하면 모달 닫기
-      const swipeDistanceY = modalTouchEndY - modalTouchStartY;
-      if (swipeDistanceY > 100) {
-        console.log('Swipe down detected - closing modal');
-        closeModal();
-        return;
-      }
+      // 모바일 터치 스와이프 지원
+      let touchStartX = 0;
+      let touchEndX = 0;
       
-      handleModalSwipe();
-    });
-    
-    function handleModalSwipe() {
-      if (modalTouchEndX < modalTouchStartX - 50) {
-        // 왼쪽으로 스와이프 (다음)
-        modalCurrentSlide = (modalCurrentSlide + 1) % totalSlides;
-        updateModalSlider();
+      const mainImageElement = document.querySelector('.facility-main-image');
+      
+      mainImageElement.addEventListener('touchstart', (e) => {
+        touchStartX = e.touches[0].clientX;
+      });
+      
+      mainImageElement.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].clientX;
+        handleMainImageSwipe();
+      });
+      
+      function handleMainImageSwipe() {
+        if (touchEndX < touchStartX - 50) {
+          // 왼쪽으로 스와이프 (다음)
+          currentFacilityIndex = (currentFacilityIndex + 1) % facilityImages.length;
+          selectFacilityImage(currentFacilityIndex);
+        }
+        if (touchEndX > touchStartX + 50) {
+          // 오른쪽으로 스와이프 (이전)
+          currentFacilityIndex = (currentFacilityIndex - 1 + facilityImages.length) % facilityImages.length;
+          selectFacilityImage(currentFacilityIndex);
+        }
       }
-      if (modalTouchEndX > modalTouchStartX + 50) {
-        // 오른쪽으로 스와이프 (이전)
-        modalCurrentSlide = (modalCurrentSlide - 1 + totalSlides) % totalSlides;
-        updateModalSlider();
-      }
-    }
     }); // DOMContentLoaded 끝
     </script>
     <style>
@@ -11253,28 +11367,20 @@ const facilityImages = [
   './images/IMG7216.jpeg',
   './images/IMG7217.jpeg', 
   './images/IMG7218.jpeg',
-  './images/IMG7222.JPG'
+  './images/IMG7222.JPG',
+  './images/neoodod.JPG'
 ];
 
 let currentFacilityIndex = 0;
 
 // 팝업 열기
 function showFacilityPopup(index) {
-  console.log('팝업 열기 시도:', index);
-  
-  // 현재 슬라이드 인덱스 계산
-  const track = document.querySelector('.facility-track');
-  const transform = window.getComputedStyle(track).transform;
-  let currentSlide = 0;
-  
-  if (transform && transform !== 'none') {
-    const values = transform.match(/matrix.*\((.+)\)/)[1].split(', ');
-    const translateX = parseFloat(values[4]);
-    const slideWidth = document.querySelector('.facility-slide').offsetWidth;
-    currentSlide = Math.round(Math.abs(translateX) / slideWidth);
+  // index가 전달되지 않으면 현재 인덱스 사용
+  if (typeof index === 'undefined') {
+    index = currentFacilityIndex;
   }
   
-  currentFacilityIndex = currentSlide;
+  currentFacilityIndex = index;
   
   const popup = document.getElementById('facilityPopup');
   const popupImage = document.getElementById('popupImage');
