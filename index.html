@@ -6390,6 +6390,17 @@ if (window.innerWidth <= 768) {
       <!-- 메인 이미지 영역 -->
       <div class="facility-main-image" style="position: relative; border-radius: 16px; overflow: hidden; background: #000; cursor: pointer;" onclick="showFacilityPopup(currentFacilityIndex)">
         <img id="facilityMainImage" src="./images/IMG7216.jpeg" alt="시설 메인 이미지" style="width: 100%; height: 450px; object-fit: cover; display: block;">
+        <!-- 모바일용 화살표 (메인 이미지 위에 위치) -->
+        <button class="mobile-gallery-prev" onclick="event.stopPropagation(); scrollThumbnails('left')" style="display: none; position: absolute; left: 10px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.7); border: 2px solid #7BE495; color: #7BE495; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; align-items: center; justify-content: center; z-index: 10;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15 18L9 12L15 6" stroke="#7BE495" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <button class="mobile-gallery-next" onclick="event.stopPropagation(); scrollThumbnails('right')" style="display: none; position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.7); border: 2px solid #7BE495; color: #7BE495; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; align-items: center; justify-content: center; z-index: 10;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9 18L15 12L9 6" stroke="#7BE495" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
       </div>
       
       <!-- 썸네일 슬라이드 영역 -->
@@ -6498,6 +6509,14 @@ if (window.innerWidth <= 768) {
       transform: translateY(-50%) scale(0.95);
     }
     
+    /* PC에서 모바일 화살표 숨기기 */
+    @media (min-width: 769px) {
+      .mobile-gallery-prev,
+      .mobile-gallery-next {
+        display: none !important;
+      }
+    }
+    
     /* 모바일 반응형 스타일 */
     @media (max-width: 768px) {
       .facility-gallery-new {
@@ -6514,7 +6533,12 @@ if (window.innerWidth <= 768) {
       }
       
       .facility-thumbnail {
-        flex: 0 0 calc(50% - 8px) !important;
+        flex: 0 0 calc(25% - 9px) !important;
+      }
+      
+      /* 모바일에서 썸네일 트랙 gap 조정 */
+      .facility-thumbnail-track {
+        gap: 12px !important;
       }
       
       .facility-thumbnail img {
@@ -6532,12 +6556,16 @@ if (window.innerWidth <= 768) {
         height: 18px !important;
       }
       
-      .thumbnail-prev {
-        left: -45px !important;
+      /* 모바일에서 기존 썸네일 화살표 숨기기 */
+      .thumbnail-prev,
+      .thumbnail-next {
+        display: none !important;
       }
       
-      .thumbnail-next {
-        right: -45px !important;
+      /* 모바일용 메인 이미지 위 화살표 표시 */
+      .mobile-gallery-prev,
+      .mobile-gallery-next {
+        display: flex !important;
       }
       
       /* 위치 안내 모바일 스타일 */
@@ -6638,11 +6666,11 @@ if (window.innerWidth <= 768) {
       }
       
       .facility-modal-prev {
-        left: 10px !important;
+        left: 15px !important;
       }
       
       .facility-modal-next {
-        right: 10px !important;
+        right: 15px !important;
       }
       
       /* 닫기 버튼 모바일 스타일 강화 */
