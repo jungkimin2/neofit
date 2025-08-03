@@ -3247,8 +3247,8 @@ document.addEventListener('DOMContentLoaded', function() {
         </a>
         <!-- 센터예약 버튼 - 우측 슬라이드 아래 -->
         <a href="#" class="mobile-hive-btn booking-btn" onclick="event.preventDefault();" style="margin-right: -16px;">
-          <img src="./images/neo41.png" alt="센터 예약">
-          <span>센터 예약</span>
+          <img src="./images/neo41.png" alt="팀 보상">
+          <span>팀 보상</span>
         </a>
       </div>
     </div>
@@ -15879,39 +15879,21 @@ document.addEventListener('DOMContentLoaded', function() {
           });
         }
         
-        // 팀결성 버튼 클릭 이벤트
+        // 팀결성 버튼 클릭 이벤트 - 슬라이드 이동 기능 제거
         const teamBtn = document.querySelector('.mobile-hive-btn.team-btn');
         if (teamBtn) {
           teamBtn.addEventListener('click', function(e) {
             e.preventDefault();
-            // 좌측 이미지로 이동
-            if (typeof showSlide === 'function' && typeof slideIndex !== 'undefined' && typeof hiveImages !== 'undefined') {
-              let currentIndex = slideIndex;
-              if (currentIndex <= 0) {
-                slideIndex = hiveImages.length - 1;
-              } else {
-                slideIndex = currentIndex - 1;
-              }
-              showSlide(slideIndex);
-            }
+            // 슬라이드 이동 기능 없이 클릭만 방지
           });
         }
         
-        // 센터예약 버튼 클릭 이벤트
+        // 팀보상 버튼 클릭 이벤트 - 슬라이드 이동 기능 제거
         const bookingBtn = document.querySelector('.mobile-hive-btn.booking-btn');
         if (bookingBtn) {
           bookingBtn.addEventListener('click', function(e) {
             e.preventDefault();
-            // 우측 이미지로 이동
-            if (typeof showSlide === 'function' && typeof slideIndex !== 'undefined' && typeof hiveImages !== 'undefined') {
-              let currentIndex = slideIndex;
-              if (currentIndex >= hiveImages.length - 1) {
-                slideIndex = -1;
-              } else {
-                slideIndex = currentIndex + 1;
-              }
-              showSlide(slideIndex);
-            }
+            // 슬라이드 이동 기능 없이 클릭만 방지
           });
         }
         
