@@ -1691,6 +1691,20 @@ section {
       right: 20px !important;  /* 52px에서 20px로 변경 (우측으로 32px 이동) */
     }
     
+    /* 모바일에서 설치만해도 일일권 제공 배지 작게 - 절대 위치 배지에 적용 */
+    div[style*="position: absolute"][style*="top: 16px"][style*="right: 16px"] {
+      padding: 2px 8px !important;
+    }
+    
+    div[style*="position: absolute"][style*="top: 16px"][style*="right: 16px"] img {
+      width: 10px !important;
+      height: 10px !important;
+    }
+    
+    div[style*="position: absolute"][style*="top: 16px"][style*="right: 16px"] span {
+      font-size: 0.6rem !important;
+    }
+    
     
     #popupImage {
       position: relative !important;
@@ -3283,7 +3297,7 @@ document.addEventListener('DOMContentLoaded', function() {
           <div class="step-number">6</div>
           <div class="flow-icon"><img src="./images/chek.png" alt="출석 인증" style="width: 28px; height: 28px;"></div>
           <div class="font-semibold mt-2" style="font-weight: 700; text-align: left;">팀 동기부여</div>
-          <div class="text-sm text-gray-400 mt-1" style="font-size: 0.75rem; color: #bbb; text-align: left;">함께하니 성장하는 나,<br><span style="color: #7BE495; text-shadow: 0 0 8px rgba(123, 228, 149, 0.8), 0 0 16px rgba(123, 228, 149, 0.6);">강해지는 우리</span></div>
+          <div class="text-sm text-gray-400 mt-1" style="font-size: 0.75rem; color: #bbb; text-align: left;">함께 성장하고,<br><span style="color: #7BE495; text-shadow: 0 0 8px rgba(123, 228, 149, 0.8), 0 0 16px rgba(123, 228, 149, 0.6);">강해지는 우리</span></div>
         </div>
       </div>
       <!-- FLEX 3-BOX BLOCK MOVED HERE -->
@@ -3369,7 +3383,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         <!-- 모바일 전용: 출석 보상 안내 박스 -->
         <div class="mobile-only" style="margin-top: 20px; border-radius: 18px; overflow: hidden; box-shadow: 0 0 30px rgba(123, 228, 149, 0.1); transform: translateY(16px);">
-          <div style="background: linear-gradient(135deg, #0C1F13 0%, #04120A 100%); padding: 24px;">
+          <div style="background: linear-gradient(135deg, #0C1F13 0%, #04120A 100%); padding: 24px; padding-top: 40px;">
             <!-- 첫 번째 아이템 -->
             <div style="display: flex; align-items: flex-start; margin-bottom: 20px;">
               <div style="width: 48px; height: 48px; min-width: 48px; border-radius: 50%; background: #7BE495; display: flex; align-items: center; justify-content: center; margin-right: 16px;">
