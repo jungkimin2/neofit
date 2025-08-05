@@ -6961,8 +6961,7 @@ if (window.innerWidth <= 768) {
         }
       });
       
-      // 썸네일 스크롤 위치 업데이트
-      updateThumbnailScroll();
+      // 썸네일 스크롤 위치 업데이트 - 네이티브 스크롤 사용 시 필요없음
     }
     
     // 썸네일 스크롤 함수 - 단순화
@@ -6988,8 +6987,7 @@ if (window.innerWidth <= 768) {
       // 메인 이미지와 썸네일 선택 상태 업데이트
       selectFacilityImage(currentFacilityIndex);
       
-      // 간단한 썸네일 위치 조정
-      updateThumbnailScroll();
+      // 간단한 썸네일 위치 조정 - 네이티브 스크롤 사용 시 필요없음
       
       // 버튼 표시/숨김 업데이트
       updateNavigationButtons();
@@ -7069,85 +7067,55 @@ if (window.innerWidth <= 768) {
         });
       });
       
-      // 모바일 스와이프 지원 - 완전히 새로운 구현
+      // 모바일 자연스러운 스크롤 지원
       (function() {
-        // 터치 시작 위치
-        let startX = 0;
-        let startY = 0;
-        let moveX = 0;
-        let isDragging = false;
-        
-        // 썸네일 트랙 요소
+        // 썸네일 컨테이너를 스크롤 가능하게 만들기
+        const container = document.querySelector('.facility-thumbnails > div');
         const track = document.querySelector('.facility-thumbnail-track');
-        const container = document.querySelector('.facility-thumbnails');
         
-        // 현재 트랙 위치
-        let currentTranslateX = 0;
+        // CSS 스타일 변경 - 자연스러운 스크롤을 위해
+        container.style.overflowX = 'auto';
+        container.style.webkitOverflowScrolling = 'touch'; // iOS 관성 스크롤
+        container.style.scrollBehavior = 'smooth';
+        container.style.msOverflowStyle = 'none'; // IE 스크롤바 숨김
+        container.style.scrollbarWidth = 'none'; // Firefox 스크롤바 숨김
         
-        // 터치 시작
-        track.addEventListener('touchstart', function(e) {
-          startX = e.touches[0].clientX;
-          startY = e.touches[0].clientY;
-          isDragging = true;
-          
-          // 현재 transform 값 가져오기
-          const transform = window.getComputedStyle(track).transform;
-          if (transform !== 'none') {
-            const matrix = transform.match(/matrix.*\((.+)\)/);
-            if (matrix) {
-              currentTranslateX = parseFloat(matrix[1].split(', ')[4]);
-            }
-          } else {
-            currentTranslateX = 0;
+        // Chrome 스크롤바 숨김
+        const style = document.createElement('style');
+        style.textContent = `
+          .facility-thumbnails > div::-webkit-scrollbar {
+            display: none;
           }
-          
-          // 트랜지션 제거
-          track.style.transition = 'none';
+        `;
+        document.head.appendChild(style);
+        
+        // 트랙의 transform 제거하고 일반 레이아웃으로 변경
+        track.style.transform = 'none';
+        track.style.display = 'flex';
+        track.style.gap = '16px';
+        track.style.padding = '0 20px';
+        
+        // 썸네일 클릭 시 자동 스크롤
+        document.querySelectorAll('.facility-thumbnail').forEach((thumb, index) => {
+          thumb.addEventListener('click', function() {
+            // 이미지 선택
+            selectFacilityImage(index);
+            
+            // 선택된 썸네일이 중앙에 오도록 스크롤
+            setTimeout(() => {
+              const thumbWidth = thumb.offsetWidth;
+              const containerWidth = container.offsetWidth;
+              const scrollPosition = thumb.offsetLeft - (containerWidth / 2) + (thumbWidth / 2);
+              
+              container.scrollTo({
+                left: scrollPosition,
+                behavior: 'smooth'
+              });
+            }, 100);
+          });
         });
         
-        // 터치 이동
-        track.addEventListener('touchmove', function(e) {
-          if (!isDragging) return;
-          
-          moveX = e.touches[0].clientX;
-          const diffX = moveX - startX;
-          
-          // 드래그 중 실시간 이동
-          track.style.transform = `translateX(${currentTranslateX + diffX}px)`;
-        });
-        
-        // 터치 종료
-        track.addEventListener('touchend', function(e) {
-          if (!isDragging) return;
-          isDragging = false;
-          
-          const endX = e.changedTouches[0].clientX;
-          const diffX = endX - startX;
-          
-          // 트랜지션 복원
-          track.style.transition = 'transform 0.3s ease-out';
-          
-          // 스와이프 감지
-          if (Math.abs(diffX) > 50) {
-            if (diffX > 0 && currentFacilityIndex > 0) {
-              // 오른쪽 스와이프 - 이전 이미지
-              currentFacilityIndex--;
-              selectFacilityImage(currentFacilityIndex);
-            } else if (diffX < 0 && currentFacilityIndex < facilityImages.length - 1) {
-              // 왼쪽 스와이프 - 다음 이미지
-              currentFacilityIndex++;
-              selectFacilityImage(currentFacilityIndex);
-            } else {
-              // 끝에 도달 - 원위치
-              updateThumbnailScroll();
-            }
-          } else {
-            // 짧은 이동 - 원위치
-            updateThumbnailScroll();
-          }
-        });
-        
-        // 메인 이미지 스와이프
+        // 메인 이미지 스와이프는 유지
         const mainImage = document.querySelector('.facility-main-image');
         let mainStartX = 0;
         
@@ -7164,10 +7132,36 @@ if (window.innerWidth <= 768) {
               // 오른쪽 스와이프 - 이전
               currentFacilityIndex--;
               selectFacilityImage(currentFacilityIndex);
+              
+              // 썸네일도 스크롤
+              const selectedThumb = document.querySelector(`.facility-thumbnail[data-index="${currentFacilityIndex}"]`);
+              if (selectedThumb) {
+                const thumbWidth = selectedThumb.offsetWidth;
+                const containerWidth = container.offsetWidth;
+                const scrollPosition = selectedThumb.offsetLeft - (containerWidth / 2) + (thumbWidth / 2);
+                
+                container.scrollTo({
+                  left: scrollPosition,
+                  behavior: 'smooth'
+                });
+              }
             } else if (mainDiffX < 0 && currentFacilityIndex < facilityImages.length - 1) {
               // 왼쪽 스와이프 - 다음
               currentFacilityIndex++;
               selectFacilityImage(currentFacilityIndex);
+              
+              // 썸네일도 스크롤
+              const selectedThumb = document.querySelector(`.facility-thumbnail[data-index="${currentFacilityIndex}"]`);
+              if (selectedThumb) {
+                const thumbWidth = selectedThumb.offsetWidth;
+                const containerWidth = container.offsetWidth;
+                const scrollPosition = selectedThumb.offsetLeft - (containerWidth / 2) + (thumbWidth / 2);
+                
+                container.scrollTo({
+                  left: scrollPosition,
+                  behavior: 'smooth'
+                });
+              }
             }
           }
         });
