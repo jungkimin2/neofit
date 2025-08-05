@@ -6965,13 +6965,21 @@ if (window.innerWidth <= 768) {
     // 썸네일 스크롤 함수
     let thumbnailScrollPosition = 0;
     function scrollThumbnails(direction) {
-      // 현재 인덱스를 기준으로 이전/다음 이미지로 이동
+      // 현재 인덱스를 기준으로 이전/다음 이미지로 이동 (순환 없이)
       if (direction === 'left') {
-        // 이전 이미지로
-        currentFacilityIndex = (currentFacilityIndex - 1 + facilityImages.length) % facilityImages.length;
+        // 이전 이미지로 (처음에서 멈춤)
+        if (currentFacilityIndex > 0) {
+          currentFacilityIndex = currentFacilityIndex - 1;
+        } else {
+          return; // 처음이면 아무것도 하지 않음
+        }
       } else {
-        // 다음 이미지로
-        currentFacilityIndex = (currentFacilityIndex + 1) % facilityImages.length;
+        // 다음 이미지로 (끝에서 멈춤)
+        if (currentFacilityIndex < facilityImages.length - 1) {
+          currentFacilityIndex = currentFacilityIndex + 1;
+        } else {
+          return; // 마지막이면 아무것도 하지 않음
+        }
       }
       
       // 메인 이미지와 썸네일 선택 상태 업데이트
@@ -7058,13 +7066,17 @@ if (window.innerWidth <= 768) {
       function handleMainImageSwipe() {
         if (touchEndX < touchStartX - 50) {
           // 왼쪽으로 스와이프 (다음)
-          currentFacilityIndex = (currentFacilityIndex + 1) % facilityImages.length;
-          selectFacilityImage(currentFacilityIndex);
+          if (currentFacilityIndex < facilityImages.length - 1) {
+            currentFacilityIndex = currentFacilityIndex + 1;
+            selectFacilityImage(currentFacilityIndex);
+          }
         }
         if (touchEndX > touchStartX + 50) {
           // 오른쪽으로 스와이프 (이전)
-          currentFacilityIndex = (currentFacilityIndex - 1 + facilityImages.length) % facilityImages.length;
-          selectFacilityImage(currentFacilityIndex);
+          if (currentFacilityIndex > 0) {
+            currentFacilityIndex = currentFacilityIndex - 1;
+            selectFacilityImage(currentFacilityIndex);
+          }
         }
       }
       
@@ -7100,7 +7112,23 @@ if (window.innerWidth <= 768) {
         const diffX = currentX - thumbnailTouchStartX;
         
         // 실시간 이동
-        const newTransform = thumbnailStartTransform + diffX;
+        let newTransform = thumbnailStartTransform + diffX;
+        
+        // 끝지점 제한 추가
+        const track = document.querySelector('.facility-thumbnail-track');
+        const containerWidth = track.parentElement.offsetWidth;
+        const maxScroll = track.scrollWidth - containerWidth;
+        
+        // 끝지점에서 저항 효과 (바운스)
+        if (newTransform > 0) {
+          // 시작점을 넘어갈 때
+          newTransform = newTransform * 0.3; // 저항 효과
+        } else if (Math.abs(newTransform) > maxScroll) {
+          // 끝점을 넘어갈 때
+          const overscroll = Math.abs(newTransform) - maxScroll;
+          newTransform = -(maxScroll + overscroll * 0.3);
+        }
+        
         thumbnailTrack.style.transform = `translateX(${newTransform}px)`;
       });
       
@@ -7122,13 +7150,27 @@ if (window.innerWidth <= 768) {
         if (Math.abs(swipeDistance) > 50) {
           if (swipeDistance < 0) {
             // 왼쪽으로 스와이프 (다음)
-            scrollThumbnails('right');
+            if (currentFacilityIndex < facilityImages.length - 1) {
+              scrollThumbnails('right');
+            } else {
+              // 끝에서는 원위치로 되돌리기
+              updateThumbnailPosition();
+            }
           } else {
             // 오른쪽으로 스와이프 (이전)
-            scrollThumbnails('left');
+            if (currentFacilityIndex > 0) {
+              scrollThumbnails('left');
+            } else {
+              // 처음에서는 원위치로 되돌리기
+              updateThumbnailPosition();
+            }
           }
         } else {
           // 스와이프 거리가 작으면 원위치로 되돌리기
+          updateThumbnailPosition();
+        }
+        
+        function updateThumbnailPosition() {
           const track = document.querySelector('.facility-thumbnail-track');
           const thumbnails = document.querySelectorAll('.facility-thumbnail');
           const containerWidth = track.parentElement.offsetWidth;
