@@ -23,8 +23,8 @@
   
   /* 페이지 로딩 시 즉시 적용되는 모바일 전용 transform */
   .mobile-ui-position-adjustment {
-    transform: translateY(-280px) !important;
-    -webkit-transform: translateY(-280px) !important;
+    transform: translateY(-360px) !important;
+    -webkit-transform: translateY(-360px) !important;
     position: relative !important;
     z-index: 9999 !important;
   }
@@ -15580,7 +15580,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // 즉시 실행 함수로 스타일 강제 적용
     function forceApplyMobileStyles() {
                       const elements = [
-          { selector: '.mobile-ui-position-adjustment', transform: 'translateY(-168px)' },
+          { selector: '.mobile-ui-position-adjustment', transform: 'translateY(-250px)' },
           { selector: '#mobile-moved-merged-box', transform: 'translateY(-48px)' },
           { selector: '.core-value-fresh-mobile', transform: 'translateY(-132px)' },
           { selector: '.mobile-system-box-wrapper', transform: 'translateY(-164px)' },
