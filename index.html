@@ -6506,6 +6506,10 @@ if (window.innerWidth <= 768) {
         </button>
         
         <div style="overflow: hidden; border-radius: 12px;">
+          <!-- 모바일 스와이프 힌트 -->
+          <div class="mobile-swipe-hint" style="display: none; position: absolute; bottom: -25px; left: 50%; transform: translateX(-50%); color: #7BE495; font-size: 0.8rem; opacity: 0.7; white-space: nowrap;">
+            좌우로 스와이프하여 더 많은 사진 보기 →
+          </div>
           <div class="facility-thumbnail-track" style="display: flex; gap: 16px; transition: transform 0.3s ease;">
           <div class="facility-thumbnail active" data-index="0" onclick="selectFacilityImage(0)" style="flex: 0 0 calc(20% - 13px); cursor: pointer; border-radius: 12px; overflow: hidden; border: 2px solid #7BE495; transition: all 0.3s;">
             <img src="./images/IMG7216.jpeg" alt="시설 이미지 1" style="width: 100%; height: 120px; object-fit: cover; display: block;">
@@ -6567,6 +6571,15 @@ if (window.innerWidth <= 768) {
     
     <style>
     /* 새로운 갤러리 스타일 */
+    /* 메인 이미지 페이드 전환 효과 */
+    #facilityMainImage {
+      transition: opacity 0.2s ease-in-out;
+    }
+    
+    .facility-thumbnail {
+      transition: all 0.3s ease;
+    }
+    
     .facility-thumbnail:hover {
       border-color: #7BE495 !important;
       transform: scale(1.05);
@@ -6574,6 +6587,8 @@ if (window.innerWidth <= 768) {
     
     .facility-thumbnail.active {
       border-color: #7BE495 !important;
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(123, 228, 149, 0.3);
     }
     
     .facility-thumbnail img {
@@ -6616,15 +6631,34 @@ if (window.innerWidth <= 768) {
       
       .facility-thumbnails {
         margin-top: 12px !important;
+        margin-bottom: 30px !important; /* 스와이프 힌트를 위한 여백 */
       }
       
       .facility-thumbnail {
-        flex: 0 0 calc(25% - 9px) !important;
+        flex: 0 0 calc(33.333% - 8px) !important; /* 모바일에서 3개씩 보이도록 변경 */
       }
       
       /* 모바일에서 썸네일 트랙 gap 조정 */
       .facility-thumbnail-track {
         gap: 12px !important;
+        padding: 0 20px; /* 좌우 여백 추가로 스와이프 공간 확보 */
+        -webkit-overflow-scrolling: touch; /* iOS에서 부드러운 스크롤 */
+      }
+      
+      /* 터치 중일 때 시각적 피드백 */
+      .facility-thumbnail-track.touching {
+        cursor: grabbing;
+      }
+      
+      /* 모바일에서 스와이프 힌트 표시 */
+      .mobile-swipe-hint {
+        display: block !important;
+        animation: swipeHint 2s ease-in-out infinite;
+      }
+      
+      @keyframes swipeHint {
+        0%, 100% { opacity: 0.3; transform: translateX(-50%) translateX(0); }
+        50% { opacity: 0.8; transform: translateX(-50%) translateX(10px); }
       }
       
       .facility-thumbnail img {
@@ -6901,18 +6935,29 @@ if (window.innerWidth <= 768) {
     function selectFacilityImage(index) {
       currentFacilityIndex = index;
       
-      // 메인 이미지 변경
+      // 메인 이미지 변경 - 페이드 효과 추가
       const mainImage = document.getElementById('facilityMainImage');
-      mainImage.src = facilityImages[index];
+      const mainImageContainer = mainImage.parentElement;
+      
+      // 페이드 아웃
+      mainImage.style.opacity = '0';
+      
+      setTimeout(() => {
+        mainImage.src = facilityImages[index];
+        // 페이드 인
+        mainImage.style.opacity = '1';
+      }, 200);
       
       // 썸네일 활성화 상태 업데이트
       document.querySelectorAll('.facility-thumbnail').forEach((thumb, i) => {
         if (i === index) {
           thumb.classList.add('active');
           thumb.style.borderColor = '#7BE495';
+          thumb.style.transform = 'scale(1.05)';
         } else {
           thumb.classList.remove('active');
           thumb.style.borderColor = 'transparent';
+          thumb.style.transform = 'scale(1)';
         }
       });
     }
@@ -7022,6 +7067,88 @@ if (window.innerWidth <= 768) {
           selectFacilityImage(currentFacilityIndex);
         }
       }
+      
+      // 썸네일 갤러리 모바일 스와이프 지원
+      const thumbnailTrack = document.querySelector('.facility-thumbnail-track');
+      let thumbnailTouchStartX = 0;
+      let thumbnailTouchEndX = 0;
+      let isThumbnailSwiping = false;
+      let thumbnailStartTransform = 0;
+      
+      // 썸네일 갤러리 터치 시작
+      thumbnailTrack.addEventListener('touchstart', (e) => {
+        thumbnailTouchStartX = e.touches[0].clientX;
+        isThumbnailSwiping = true;
+        
+        // 현재 transform 값 가져오기
+        const currentTransform = thumbnailTrack.style.transform || 'translateX(0px)';
+        const match = currentTransform.match(/translateX\((-?\d+(?:\.\d+)?)px\)/);
+        thumbnailStartTransform = match ? parseFloat(match[1]) : 0;
+        
+        // 트랜지션 임시 제거 (부드러운 드래그를 위해)
+        thumbnailTrack.style.transition = 'none';
+        
+        // 터치 중 시각적 피드백
+        thumbnailTrack.classList.add('touching');
+      });
+      
+      // 썸네일 갤러리 터치 이동
+      thumbnailTrack.addEventListener('touchmove', (e) => {
+        if (!isThumbnailSwiping) return;
+        
+        const currentX = e.touches[0].clientX;
+        const diffX = currentX - thumbnailTouchStartX;
+        
+        // 실시간 이동
+        const newTransform = thumbnailStartTransform + diffX;
+        thumbnailTrack.style.transform = `translateX(${newTransform}px)`;
+      });
+      
+      // 썸네일 갤러리 터치 종료
+      thumbnailTrack.addEventListener('touchend', (e) => {
+        if (!isThumbnailSwiping) return;
+        isThumbnailSwiping = false;
+        
+        thumbnailTouchEndX = e.changedTouches[0].clientX;
+        const swipeDistance = thumbnailTouchEndX - thumbnailTouchStartX;
+        
+        // 트랜지션 복원
+        thumbnailTrack.style.transition = 'transform 0.3s ease';
+        
+        // 터치 종료 시 시각적 피드백 제거
+        thumbnailTrack.classList.remove('touching');
+        
+        // 스와이프 거리가 충분히 크면 이미지 변경
+        if (Math.abs(swipeDistance) > 50) {
+          if (swipeDistance < 0) {
+            // 왼쪽으로 스와이프 (다음)
+            scrollThumbnails('right');
+          } else {
+            // 오른쪽으로 스와이프 (이전)
+            scrollThumbnails('left');
+          }
+        } else {
+          // 스와이프 거리가 작으면 원위치로 되돌리기
+          const track = document.querySelector('.facility-thumbnail-track');
+          const thumbnails = document.querySelectorAll('.facility-thumbnail');
+          const containerWidth = track.parentElement.offsetWidth;
+          const thumbnailWidth = thumbnails[0].offsetWidth + 16;
+          const targetScroll = (currentFacilityIndex * thumbnailWidth) - (containerWidth / 2) + (thumbnailWidth / 2);
+          const maxScroll = track.scrollWidth - containerWidth;
+          
+          thumbnailScrollPosition = Math.max(0, Math.min(maxScroll, targetScroll));
+          track.style.transform = `translateX(-${thumbnailScrollPosition}px)`;
+        }
+      });
+      
+      // 썸네일 클릭 시 드래그와 구분
+      thumbnailTrack.addEventListener('click', (e) => {
+        // 드래그 중이었으면 클릭 이벤트 무시
+        if (Math.abs(thumbnailTouchEndX - thumbnailTouchStartX) > 5) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      });
     }); // DOMContentLoaded 끝
     </script>
     <style>
