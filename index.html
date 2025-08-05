@@ -16533,5 +16533,29 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
+<!-- 모바일 NEOS 카드 리스트 최종 위치 조정 - 최고 우선순위 -->
+<style>
+@media (max-width: 768px) {
+  /* 모든 NEOS 카드 리스트를 정확히 위로 2칸(32px) 이동 - 최종 오버라이드 */
+  .neos-card-list,
+  body .neos-card-list,
+  html body .neos-card-list,
+  body div.neos-card-list,
+  body section#smart div.neos-card-list,
+  div.neos-card-list[style*="margin-top"],
+  section#smart div.neos-card-list[style*="grid-template-columns: repeat(4, 1fr)"] {
+    transform: translateY(-80px) translateX(0) !important; /* 기존 -48px에서 -80px로 (추가 32px 위로) */
+    margin-top: 56px !important;
+    position: relative !important;
+    z-index: 300 !important;
+  }
+  
+  /* transform translateX 제거하여 수평 이동 방지 */
+  .neos-card-list {
+    transform: translateY(-80px) !important;
+  }
+}
+</style>
+
 </html> 
 
