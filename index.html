@@ -23,8 +23,8 @@
   
   /* 페이지 로딩 시 즉시 적용되는 모바일 전용 transform */
   .mobile-ui-position-adjustment {
-    transform: translateY(-450px) !important;
-    -webkit-transform: translateY(-450px) !important;
+    transform: translateY(-280px) !important;
+    -webkit-transform: translateY(-280px) !important;
     position: relative !important;
     z-index: 9999 !important;
   }
@@ -61,17 +61,9 @@
   }
   
   #smart {
-    transform: translateY(-352px) !important;
-    -webkit-transform: translateY(-352px) !important;
+    transform: translateY(-320px) !important;
+    -webkit-transform: translateY(-320px) !important;
     position: relative !important;
-  }
-  
-  /* smart-section-mobile 직접 이동 */
-  .slide-container.smart-section-mobile {
-    transform: translateY(-32px) !important;
-    -webkit-transform: translateY(-32px) !important;
-    position: relative !important;
-    margin-top: -32px !important;
   }
   
   /* 네오 스마트 섹션 내부 요소 정렬 수정 */
@@ -3394,7 +3386,7 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
         
         <!-- 모바일 전용: 출석 보상 안내 박스 -->
-        <div class="mobile-only" style="margin-top: 20px; border-radius: 18px; overflow: hidden; box-shadow: 0 0 30px rgba(123, 228, 149, 0.1); transform: translateY(-60px);">
+        <div class="mobile-only" style="margin-top: 20px; border-radius: 18px; overflow: hidden; box-shadow: 0 0 30px rgba(123, 228, 149, 0.1); transform: translateY(16px);">
           <div style="background: linear-gradient(135deg, #0C1F13 0%, #04120A 100%); padding: 24px; padding-top: 56px;">
             <!-- 첫 번째 아이템 -->
             <div style="display: flex; align-items: flex-start; margin-bottom: 20px;">
@@ -3464,7 +3456,7 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
           </div>
           <!-- 모바일 전용: 무인 출입 시스템/이벤트 시스템 안내 (핵심가치 아래, 한 박스 통합) -->
-          <div class="mobile-ui-position-adjustment mobile-transform-target" style="transform: translateY(-500px) !important; -webkit-transform: translateY(-500px) !important; position: relative !important;">
+          <div class="mobile-ui-position-adjustment mobile-transform-target" style="transform: translateY(-420px) !important; -webkit-transform: translateY(-420px) !important; position: relative !important;">
             <div class="mobile-system-box mobile-system-box--merged">
               <div class="mobile-system-content">
                 <div class="mobile-system-title">무인 출입 시스템 운영 방식</div>
@@ -4770,21 +4762,18 @@ if (window.innerWidth <= 768) {
     padding-left: 20px !important;
     padding-right: 20px !important;
   }
-  /* NFC 섹션 전체를 위로 추가 이동 */
+  /* NFC 섹션 전체를 위로 3칸 이동 */
   .smart-section-mobile {
-    margin-top: -80px !important;
+    margin-top: -48px !important;
     position: relative !important;
   }
   /* 더 구체적인 선택자로 우선순위 높이기 */
   div.slide-container.smart-section-mobile {
-    margin-top: -80px !important;
-    transform: translateY(-32px) !important;
-    -webkit-transform: translateY(-32px) !important;
+    margin-top: -48px !important;
   }
   /* 추가로 transform 사용 */
-  body .smart-section-mobile {
-    transform: translateY(-32px) !important;
-    -webkit-transform: translateY(-32px) !important;
+  .smart-section-mobile {
+    transform: translateY(-48px) !important;
   }
   /* 태그 한 번 제목과 설명 문구만 아래로 1.5칸 이동 - 더 구체적인 선택자 사용 */
   body .smart-section-mobile h1.smart-title-mobile,
@@ -4797,7 +4786,7 @@ if (window.innerWidth <= 768) {
   body div.smart-section-mobile div p.smart-desc-mobile {
     margin-top: calc(-16px + 24px) !important; /* 기존 -16px에서 24px(1.5칸) 아래로 = 8px */
   }
-  /* 네오 스마트 트레이너 섹션 위로 2칸 추가 이동 */
+  /* 네오 스마트 트레이너 섹션 위로 3칸 이동 */
   .smart-trainer-section-mobile {
     margin-top: -80px !important;
     position: relative !important;
@@ -4805,7 +4794,7 @@ if (window.innerWidth <= 768) {
   /* 더 구체적인 선택자로 우선순위 높이기 */
   section#smart.smart-trainer-section-mobile {
     margin-top: -80px !important;
-    transform: translateY(-48px) !important;
+    transform: translateY(-16px) !important;
   }
 }
 </style>
@@ -4837,7 +4826,7 @@ if (window.innerWidth <= 768) {
     <!-- 네오 스마트 주요 기능 (features) 블록 삭제됨, 대신 UX 흐름 블록으로 교체 -->
     <!-- 핵심 UX 흐름: 네오 하이브 counterpart와 동일한 구조로 삽입 -->
     <!-- <div id="smart"></div> -->
-    <div class="slide-container p-10 smart-section-mobile" style="margin-top: 0; max-width: 1100px; margin-left: auto; margin-right: auto;">
+    <div class="slide-container p-10 smart-section-mobile" style="margin-top: 2.5rem; max-width: 1100px; margin-left: auto; margin-right: auto;">
       <div class="flex items-center mb-8">
         <h1 class="text-4xl font-bold smart-title-mobile" style="text-align: left; margin-top: calc(6rem - 16px); margin-bottom: 12px;">
           <span style="color: #FFFFFF;">태그 한 번,</span>
@@ -15580,11 +15569,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // 즉시 실행 함수로 스타일 강제 적용
     function forceApplyMobileStyles() {
                       const elements = [
-          { selector: '.mobile-ui-position-adjustment', transform: 'translateY(-340px)' },
+          { selector: '.mobile-ui-position-adjustment', transform: 'translateY(-168px)' },
           { selector: '#mobile-moved-merged-box', transform: 'translateY(-48px)' },
           { selector: '.core-value-fresh-mobile', transform: 'translateY(-132px)' },
           { selector: '.mobile-system-box-wrapper', transform: 'translateY(-164px)' },
-          { selector: '#smart', transform: 'translateY(-272px)' },
+          { selector: '#smart', transform: 'translateY(-240px)' },
           { selector: '#hive', transform: 'translateY(-196px)' }
           // { selector: '#neo-pilates', transform: 'translateY(144px)' } // 제거 - 스크롤 버그 수정
       ];
@@ -16545,3 +16534,4 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 </html> 
+
