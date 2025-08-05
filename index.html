@@ -7116,28 +7116,6 @@ if (window.innerWidth <= 768) {
         thumbnailTrack.style.transform = `translateX(${newTransform}px)`;
       });
       
-      // 스와이프 속도 계산을 위한 변수
-      let touchStartTime = 0;
-      let lastTouchX = 0;
-      let velocity = 0;
-      
-      thumbnailTrack.addEventListener('touchstart', (e) => {
-        touchStartTime = Date.now();
-        lastTouchX = e.touches[0].clientX;
-      }, { passive: true });
-      
-      thumbnailTrack.addEventListener('touchmove', (e) => {
-        if (!isThumbnailSwiping) return;
-        const currentTime = Date.now();
-        const currentX = e.touches[0].clientX;
-        const timeDiff = currentTime - touchStartTime;
-        if (timeDiff > 0) {
-          velocity = (currentX - lastTouchX) / timeDiff * 1000; // pixels per second
-        }
-        lastTouchX = currentX;
-        touchStartTime = currentTime;
-      }, { passive: true });
-      
       // 썸네일 갤러리 터치 종료
       thumbnailTrack.addEventListener('touchend', (e) => {
         if (!isThumbnailSwiping) return;
@@ -7152,46 +7130,43 @@ if (window.innerWidth <= 768) {
         // 터치 종료 시 시각적 피드백 제거
         thumbnailTrack.classList.remove('touching');
         
-        // 빠른 스와이프(플릭)이거나 충분한 거리를 이동했을 때
-        const isQuickSwipe = Math.abs(velocity) > 300; // 300px/s 이상이면 빠른 스와이프
-        const isLongSwipe = Math.abs(swipeDistance) > 50;
-        
-        if (isQuickSwipe || isLongSwipe) {
-          // 스와이프 방향에 따라 이미지 변경
-          const shouldGoNext = (velocity < -100) || (swipeDistance < -50 && velocity >= -100);
-          const shouldGoPrev = (velocity > 100) || (swipeDistance > 50 && velocity <= 100);
-          
-          if (shouldGoNext && currentFacilityIndex < facilityImages.length - 1) {
-            // 다음 이미지로
-            scrollThumbnails('right');
-          } else if (shouldGoPrev && currentFacilityIndex > 0) {
-            // 이전 이미지로
-            scrollThumbnails('left');
+        // 스와이프 거리가 충분히 크면 이미지 변경
+        if (Math.abs(swipeDistance) > 50) {
+          if (swipeDistance < 0) {
+            // 왼쪽으로 스와이프 (다음)
+            if (currentFacilityIndex < facilityImages.length - 1) {
+              scrollThumbnails('right');
+            } else {
+              // 마지막에서는 원위치로
+              updateThumbnailPosition();
+            }
           } else {
-            // 끝에 도달했거나 이동 거리가 작으면 원위치
-            updateThumbnailPosition();
+            // 오른쪽으로 스와이프 (이전)
+            if (currentFacilityIndex > 0) {
+              scrollThumbnails('left');
+            } else {
+              // 처음에서는 원위치로
+              updateThumbnailPosition();
+            }
           }
         } else {
           // 스와이프 거리가 작으면 원위치로 되돌리기
           updateThumbnailPosition();
         }
-        
-        // 속도 초기화
-        velocity = 0;
       });
+      
+      // 썸네일 위치 업데이트 함수
+      function updateThumbnailPosition() {
+        const track = document.querySelector('.facility-thumbnail-track');
+        const thumbnails = document.querySelectorAll('.facility-thumbnail');
+        const containerWidth = track.parentElement.offsetWidth;
+        const thumbnailWidth = thumbnails[0].offsetWidth + 16;
+        const targetScroll = (currentFacilityIndex * thumbnailWidth) - (containerWidth / 2) + (thumbnailWidth / 2);
+        const maxScroll = track.scrollWidth - containerWidth;
         
-        function updateThumbnailPosition() {
-          const track = document.querySelector('.facility-thumbnail-track');
-          const thumbnails = document.querySelectorAll('.facility-thumbnail');
-          const containerWidth = track.parentElement.offsetWidth;
-          const thumbnailWidth = thumbnails[0].offsetWidth + 16;
-          const targetScroll = (currentFacilityIndex * thumbnailWidth) - (containerWidth / 2) + (thumbnailWidth / 2);
-          const maxScroll = track.scrollWidth - containerWidth;
-          
-          thumbnailScrollPosition = Math.max(0, Math.min(maxScroll, targetScroll));
-          track.style.transform = `translateX(-${thumbnailScrollPosition}px)`;
-        }
-      });
+        thumbnailScrollPosition = Math.max(0, Math.min(maxScroll, targetScroll));
+        track.style.transform = `translateX(-${thumbnailScrollPosition}px)`;
+      }
       
       // 썸네일 클릭 시 드래그와 구분
       thumbnailTrack.addEventListener('click', (e) => {
