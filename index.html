@@ -6490,7 +6490,7 @@ if (window.innerWidth <= 768) {
       </div>
       
       <!-- 썸네일 슬라이드 영역 -->
-      <div class="facility-thumbnails" style="margin-top: 20px; position: relative; transform: translateX(-32px);">
+      <div class="facility-thumbnails" style="margin-top: 20px; position: relative;">
         <!-- 왼쪽 화살표 -->
         <button class="thumbnail-nav thumbnail-prev" onclick="scrollThumbnails('left')" style="position: absolute; left: -60px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.8); border: 2px solid #7BE495; color: #7BE495; width: 45px; height: 45px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 20; transition: all 0.3s; box-shadow: 0 2px 10px rgba(0,0,0,0.5);">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -6633,7 +6633,7 @@ if (window.innerWidth <= 768) {
       
       /* 썸네일만 좌측으로 이동 */
       .facility-thumbnails {
-        transform: translateX(-32px) !important; /* 모바일에서 2칸(32px) 이동 */
+        transform: translateX(-24px) !important; /* 모바일에서 1.5칸(24px) 이동 */
       }
       
       #facilityMainImage {
