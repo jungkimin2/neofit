@@ -4324,12 +4324,12 @@ function toggleMobilePreviewMute() {
     font-size: 1.1rem !important;
   }
   
-  /* NEOS 카드 리스트(기구 사용법, 체형 교정 영상 등) 위치 조정 - 위로 4칸 올림 (32px 추가) */
+  /* NEOS 카드 리스트(기구 사용법, 체형 교정 영상 등) 위치 조정 - 한 칸 더 내림 */
   body .neos-card-list,
   html body .neos-card-list,
   body div.neos-card-list[style*="margin-top"],
   body section#smart div.neos-card-list {
-    transform: translateY(-48px) translateX(0) !important; /* -16px에서 -48px로 변경 (32px 더 위로) */
+    transform: translateY(16px) translateX(0) !important;
     position: relative !important;
     z-index: 200 !important;
     margin-top: 56px !important;
@@ -13536,12 +13536,12 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 <style>
 @media (max-width: 768px) {
-  /* NEOS 카드만 정확히 타겟팅하여 위로 2칸 올림 - 다른 UI 영향 없음 */
+  /* NEOS 카드만 정확히 타겟팅하여 2칸 아래로 이동 - 다른 UI 영향 없음 */
   section#smart div.neos-card-list[style*="grid-template-columns: repeat(4, 1fr)"] {
     grid-template-columns: repeat(2, 1fr) !important;
     gap: 8px !important;
     padding: 12px !important;
-    margin-top: 56px !important; /* 120px에서 56px로 변경 (64px 위로 = 4칸) */
+    margin-top: 120px !important; /* 56px에서 120px로 변경 (64px 더 아래로 = 2칸) */
     max-width: 90% !important;
     margin-left: -25px !important; /* transform 대신 margin 사용 - 뒤집기 애니메이션 보존 */
     position: relative !important;
@@ -15111,9 +15111,9 @@ document.addEventListener('DOMContentLoaded', function() {
 <!-- 모바일 환경에서 뒤집기 효과 안의 NEOS 이미지만 2칸 아래로 이동 -->
 <style>
 @media (max-width: 768px) {
-  /* NEOS 카드 리스트 위치 조정 - 3칸 더 위로 올림 (32px 추가) */
+  /* NEOS 카드 리스트 위치 조정 - 한 칸 더 내림 */
   div.neos-card-list[style*="margin-top"] {
-    transform: translateY(-48px) translateX(32px) !important; /* -16px에서 -48px로 변경 (32px 더 위로) */
+    transform: translateY(-16px) translateX(32px) !important;
     position: relative !important;
     z-index: 15 !important;
   }
@@ -15602,10 +15602,10 @@ document.addEventListener('DOMContentLoaded', function() {
         backTextOverlay.style.setProperty('opacity', '0', 'important');
       }
       
-      // NEOS 카드 리스트 위치 조정 - 3칸 더 위로 올림 (32px 추가)
+      // NEOS 카드 리스트 위치 조정 - 한 칸 더 내림
       const neosCardList = document.querySelector('div.neos-card-list[style*="margin-top"]');
       if (neosCardList) {
-        neosCardList.style.setProperty('transform', 'translateY(-48px) translateX(32px)', 'important'); // -16px에서 -48px로 변경 (32px 더 위로)
+        neosCardList.style.setProperty('transform', 'translateY(-16px) translateX(32px)', 'important');
         neosCardList.style.setProperty('position', 'relative', 'important');
         neosCardList.style.setProperty('z-index', '15', 'important');
         neosCardList.style.setProperty('grid-template-columns', 'repeat(2, 1fr)', 'important');
@@ -16532,30 +16532,6 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 </script>
-
-<!-- 모바일 NEOS 카드 리스트 최종 위치 조정 - 최고 우선순위 -->
-<style>
-@media (max-width: 768px) {
-  /* 모든 NEOS 카드 리스트를 정확히 위로 2칸(32px) 이동 - 최종 오버라이드 */
-  .neos-card-list,
-  body .neos-card-list,
-  html body .neos-card-list,
-  body div.neos-card-list,
-  body section#smart div.neos-card-list,
-  div.neos-card-list[style*="margin-top"],
-  section#smart div.neos-card-list[style*="grid-template-columns: repeat(4, 1fr)"] {
-    transform: translateY(-80px) translateX(0) !important; /* 기존 -48px에서 -80px로 (추가 32px 위로) */
-    margin-top: 56px !important;
-    position: relative !important;
-    z-index: 300 !important;
-  }
-  
-  /* transform translateX 제거하여 수평 이동 방지 */
-  .neos-card-list {
-    transform: translateY(-80px) !important;
-  }
-}
-</style>
 
 </html> 
 
