@@ -6510,7 +6510,7 @@ if (window.innerWidth <= 768) {
           <div class="mobile-swipe-hint" style="display: none; position: absolute; bottom: -25px; left: 50%; transform: translateX(-50%); color: #7BE495; font-size: 0.8rem; opacity: 0.7; white-space: nowrap;">
             좌우로 스와이프하여 더 많은 사진 보기 →
           </div>
-          <div class="facility-thumbnail-track" style="display: flex; gap: 16px; transition: transform 0.3s ease;">
+          <div class="facility-thumbnail-track" style="display: flex; gap: 16px; transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);">
           <div class="facility-thumbnail active" data-index="0" onclick="selectFacilityImage(0)" style="flex: 0 0 calc(20% - 13px); cursor: pointer; border-radius: 12px; overflow: hidden; border: 2px solid #7BE495; transition: all 0.3s;">
             <img src="./images/IMG7216.jpeg" alt="시설 이미지 1" style="width: 100%; height: 120px; object-fit: cover; display: block;">
           </div>
@@ -7111,26 +7111,32 @@ if (window.innerWidth <= 768) {
         const currentX = e.touches[0].clientX;
         const diffX = currentX - thumbnailTouchStartX;
         
-        // 실시간 이동
-        let newTransform = thumbnailStartTransform + diffX;
-        
-        // 끝지점 제한 추가
-        const track = document.querySelector('.facility-thumbnail-track');
-        const containerWidth = track.parentElement.offsetWidth;
-        const maxScroll = track.scrollWidth - containerWidth;
-        
-        // 끝지점에서 저항 효과 (바운스)
-        if (newTransform > 0) {
-          // 시작점을 넘어갈 때
-          newTransform = newTransform * 0.3; // 저항 효과
-        } else if (Math.abs(newTransform) > maxScroll) {
-          // 끝점을 넘어갈 때
-          const overscroll = Math.abs(newTransform) - maxScroll;
-          newTransform = -(maxScroll + overscroll * 0.3);
-        }
-        
+        // 실시간 이동 - 자연스러운 드래그를 위해 저항 없이 이동
+        const newTransform = thumbnailStartTransform + diffX;
         thumbnailTrack.style.transform = `translateX(${newTransform}px)`;
       });
+      
+      // 스와이프 속도 계산을 위한 변수
+      let touchStartTime = 0;
+      let lastTouchX = 0;
+      let velocity = 0;
+      
+      thumbnailTrack.addEventListener('touchstart', (e) => {
+        touchStartTime = Date.now();
+        lastTouchX = e.touches[0].clientX;
+      }, { passive: true });
+      
+      thumbnailTrack.addEventListener('touchmove', (e) => {
+        if (!isThumbnailSwiping) return;
+        const currentTime = Date.now();
+        const currentX = e.touches[0].clientX;
+        const timeDiff = currentTime - touchStartTime;
+        if (timeDiff > 0) {
+          velocity = (currentX - lastTouchX) / timeDiff * 1000; // pixels per second
+        }
+        lastTouchX = currentX;
+        touchStartTime = currentTime;
+      }, { passive: true });
       
       // 썸네일 갤러리 터치 종료
       thumbnailTrack.addEventListener('touchend', (e) => {
@@ -7141,34 +7147,38 @@ if (window.innerWidth <= 768) {
         const swipeDistance = thumbnailTouchEndX - thumbnailTouchStartX;
         
         // 트랜지션 복원
-        thumbnailTrack.style.transition = 'transform 0.3s ease';
+        thumbnailTrack.style.transition = 'transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
         
         // 터치 종료 시 시각적 피드백 제거
         thumbnailTrack.classList.remove('touching');
         
-        // 스와이프 거리가 충분히 크면 이미지 변경
-        if (Math.abs(swipeDistance) > 50) {
-          if (swipeDistance < 0) {
-            // 왼쪽으로 스와이프 (다음)
-            if (currentFacilityIndex < facilityImages.length - 1) {
-              scrollThumbnails('right');
-            } else {
-              // 끝에서는 원위치로 되돌리기
-              updateThumbnailPosition();
-            }
+        // 빠른 스와이프(플릭)이거나 충분한 거리를 이동했을 때
+        const isQuickSwipe = Math.abs(velocity) > 300; // 300px/s 이상이면 빠른 스와이프
+        const isLongSwipe = Math.abs(swipeDistance) > 50;
+        
+        if (isQuickSwipe || isLongSwipe) {
+          // 스와이프 방향에 따라 이미지 변경
+          const shouldGoNext = (velocity < -100) || (swipeDistance < -50 && velocity >= -100);
+          const shouldGoPrev = (velocity > 100) || (swipeDistance > 50 && velocity <= 100);
+          
+          if (shouldGoNext && currentFacilityIndex < facilityImages.length - 1) {
+            // 다음 이미지로
+            scrollThumbnails('right');
+          } else if (shouldGoPrev && currentFacilityIndex > 0) {
+            // 이전 이미지로
+            scrollThumbnails('left');
           } else {
-            // 오른쪽으로 스와이프 (이전)
-            if (currentFacilityIndex > 0) {
-              scrollThumbnails('left');
-            } else {
-              // 처음에서는 원위치로 되돌리기
-              updateThumbnailPosition();
-            }
+            // 끝에 도달했거나 이동 거리가 작으면 원위치
+            updateThumbnailPosition();
           }
         } else {
           // 스와이프 거리가 작으면 원위치로 되돌리기
           updateThumbnailPosition();
         }
+        
+        // 속도 초기화
+        velocity = 0;
+      });
         
         function updateThumbnailPosition() {
           const track = document.querySelector('.facility-thumbnail-track');
