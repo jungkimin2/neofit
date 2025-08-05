@@ -6580,8 +6580,8 @@ if (window.innerWidth <= 768) {
       transition: all 0.2s ease;
     }
     
-    .facility-thumbnail:hover {
-      border-color: #7BE495 !important;
+    .facility-thumbnail:hover:not(.active) {
+      border-color: rgba(123, 228, 149, 0.5) !important;
       transform: scale(1.05);
     }
     
@@ -6589,6 +6589,12 @@ if (window.innerWidth <= 768) {
       border-color: #7BE495 !important;
       transform: scale(1.05);
       box-shadow: 0 4px 12px rgba(123, 228, 149, 0.3);
+    }
+    
+    /* 터치나 클릭 시에도 active 클래스가 있는 요소만 초록색 테두리 유지 */
+    .facility-thumbnail:active:not(.active),
+    .facility-thumbnail:focus:not(.active) {
+      border-color: transparent !important;
     }
     
     .facility-thumbnail img {
@@ -6623,7 +6629,7 @@ if (window.innerWidth <= 768) {
       .facility-gallery-new {
         margin: 20px auto !important;
         max-width: 90% !important;
-        transform: translateX(-16px) !important; /* 모바일에서는 1칸(16px)만 이동 */
+        transform: translateX(-48px) !important; /* 모바일에서 3칸(48px) 이동 */
       }
       
       #facilityMainImage {
@@ -7105,7 +7111,13 @@ if (window.innerWidth <= 768) {
         
         // 썸네일 클릭 시 자동 스크롤
         document.querySelectorAll('.facility-thumbnail').forEach((thumb, index) => {
-          thumb.addEventListener('click', function() {
+          thumb.addEventListener('click', function(e) {
+            // 다른 모든 썸네일의 테두리를 먼저 제거
+            document.querySelectorAll('.facility-thumbnail').forEach(t => {
+              t.classList.remove('active');
+              t.style.borderColor = 'transparent';
+            });
+            
             // 이미지 선택
             selectFacilityImage(index);
             
