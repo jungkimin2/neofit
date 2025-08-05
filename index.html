@@ -6472,7 +6472,7 @@ if (window.innerWidth <= 768) {
     </h2>
     
     <!-- 새로운 시설 정보 갤러리 - 메인사진 + 썸네일 구조 -->
-    <div class="facility-gallery-new" style="margin: 40px auto; max-width: 1000px;">
+    <div class="facility-gallery-new" style="margin: 40px auto; max-width: 1000px; transform: translateX(-32px);">
       <!-- 메인 이미지 영역 -->
       <div class="facility-main-image" style="position: relative; border-radius: 16px; overflow: hidden; background: #000; cursor: pointer;" onclick="showFacilityPopup(currentFacilityIndex)">
         <img id="facilityMainImage" src="./images/IMG7216.jpeg" alt="시설 메인 이미지" style="width: 100%; height: 450px; object-fit: cover; display: block;">
@@ -6505,7 +6505,7 @@ if (window.innerWidth <= 768) {
           </svg>
         </button>
         
-        <div style="overflow: hidden; border-radius: 12px;">
+        <div style="overflow: hidden; border-radius: 12px; padding: 4px 0;">
           <!-- 모바일 스와이프 힌트 -->
           <div class="mobile-swipe-hint" style="display: none; position: absolute; bottom: -25px; left: 50%; transform: translateX(-50%); color: #7BE495; font-size: 0.8rem; opacity: 0.7; white-space: nowrap;">
             좌우로 스와이프하여 더 많은 사진 보기 →
@@ -6623,6 +6623,7 @@ if (window.innerWidth <= 768) {
       .facility-gallery-new {
         margin: 20px auto !important;
         max-width: 90% !important;
+        transform: translateX(-16px) !important; /* 모바일에서는 1칸(16px)만 이동 */
       }
       
       #facilityMainImage {
