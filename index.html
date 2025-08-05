@@ -6573,11 +6573,11 @@ if (window.innerWidth <= 768) {
     /* 새로운 갤러리 스타일 */
     /* 메인 이미지 페이드 전환 효과 */
     #facilityMainImage {
-      transition: opacity 0.2s ease-in-out;
+      transition: opacity 0.15s ease-in-out;
     }
     
     .facility-thumbnail {
-      transition: all 0.3s ease;
+      transition: all 0.2s ease;
     }
     
     .facility-thumbnail:hover {
@@ -6946,7 +6946,7 @@ if (window.innerWidth <= 768) {
         mainImage.src = facilityImages[index];
         // 페이드 인
         mainImage.style.opacity = '1';
-      }, 200);
+      }, 150);
       
       // 썸네일 활성화 상태 업데이트
       document.querySelectorAll('.facility-thumbnail').forEach((thumb, i) => {
@@ -6960,23 +6960,26 @@ if (window.innerWidth <= 768) {
           thumb.style.transform = 'scale(1)';
         }
       });
+      
+      // 썸네일 스크롤 위치 업데이트
+      updateThumbnailScroll();
     }
     
-    // 썸네일 스크롤 함수
+    // 썸네일 스크롤 함수 - 단순화
     let thumbnailScrollPosition = 0;
     function scrollThumbnails(direction) {
       // 현재 인덱스를 기준으로 이전/다음 이미지로 이동 (순환 없이)
       if (direction === 'left') {
         // 이전 이미지로 (처음에서 멈춤)
         if (currentFacilityIndex > 0) {
-          currentFacilityIndex = currentFacilityIndex - 1;
+          currentFacilityIndex--;
         } else {
           return; // 처음이면 아무것도 하지 않음
         }
       } else {
         // 다음 이미지로 (끝에서 멈춤)
         if (currentFacilityIndex < facilityImages.length - 1) {
-          currentFacilityIndex = currentFacilityIndex + 1;
+          currentFacilityIndex++;
         } else {
           return; // 마지막이면 아무것도 하지 않음
         }
@@ -6985,21 +6988,39 @@ if (window.innerWidth <= 768) {
       // 메인 이미지와 썸네일 선택 상태 업데이트
       selectFacilityImage(currentFacilityIndex);
       
-      // 현재 선택된 썸네일이 보이도록 스크롤 위치 조정
-      const track = document.querySelector('.facility-thumbnail-track');
-      const thumbnails = document.querySelectorAll('.facility-thumbnail');
-      const containerWidth = track.parentElement.offsetWidth;
-      const thumbnailWidth = thumbnails[0].offsetWidth + 16; // width + gap
-      
-      // 현재 썸네일이 중앙에 오도록 스크롤
-      const targetScroll = (currentFacilityIndex * thumbnailWidth) - (containerWidth / 2) + (thumbnailWidth / 2);
-      const maxScroll = track.scrollWidth - containerWidth;
-      
-      thumbnailScrollPosition = Math.max(0, Math.min(maxScroll, targetScroll));
-      track.style.transform = `translateX(-${thumbnailScrollPosition}px)`;
+      // 간단한 썸네일 위치 조정
+      updateThumbnailScroll();
       
       // 버튼 표시/숨김 업데이트
       updateNavigationButtons();
+    }
+    
+    // 썸네일 스크롤 위치 업데이트 - 단순화
+    function updateThumbnailScroll() {
+      const track = document.querySelector('.facility-thumbnail-track');
+      const thumbnails = document.querySelectorAll('.facility-thumbnail');
+      
+      if (!thumbnails.length) return;
+      
+      // 모바일에서는 3개씩 보이므로 현재 이미지가 중앙에 오도록
+      const thumbnailWidth = thumbnails[0].offsetWidth + 12; // width + gap
+      
+      // 간단한 계산: 현재 인덱스 기준으로 위치 설정
+      if (window.innerWidth <= 768) {
+        // 모바일: 현재 썸네일이 중앙에 오도록
+        thumbnailScrollPosition = (currentFacilityIndex - 1) * thumbnailWidth;
+        if (currentFacilityIndex === 0) thumbnailScrollPosition = 0;
+        if (currentFacilityIndex === facilityImages.length - 1) {
+          thumbnailScrollPosition = (facilityImages.length - 3) * thumbnailWidth;
+        }
+      } else {
+        // PC: 5개씩 보이므로 적절히 조정
+        thumbnailScrollPosition = Math.max(0, (currentFacilityIndex - 2) * thumbnailWidth);
+      }
+      
+      // 부드러운 트랜지션과 함께 이동
+      track.style.transition = 'transform 0.25s ease-out';
+      track.style.transform = `translateX(-${Math.max(0, thumbnailScrollPosition)}px)`;
     }
     
     // 네비게이션 버튼 표시/숨김 업데이트
@@ -7080,102 +7101,44 @@ if (window.innerWidth <= 768) {
         }
       }
       
-      // 썸네일 갤러리 모바일 스와이프 지원
-      const thumbnailTrack = document.querySelector('.facility-thumbnail-track');
-      let thumbnailTouchStartX = 0;
-      let thumbnailTouchEndX = 0;
-      let isThumbnailSwiping = false;
-      let thumbnailStartTransform = 0;
+      // 썸네일 갤러리 모바일 스와이프 지원 - 단순화된 버전
+      const thumbnailContainer = document.querySelector('.facility-thumbnails');
+      let touchStartX = 0;
+      let touchMoveX = 0;
       
-      // 썸네일 갤러리 터치 시작
-      thumbnailTrack.addEventListener('touchstart', (e) => {
-        thumbnailTouchStartX = e.touches[0].clientX;
-        isThumbnailSwiping = true;
-        
-        // 현재 transform 값 가져오기
-        const currentTransform = thumbnailTrack.style.transform || 'translateX(0px)';
-        const match = currentTransform.match(/translateX\((-?\d+(?:\.\d+)?)px\)/);
-        thumbnailStartTransform = match ? parseFloat(match[1]) : 0;
-        
-        // 트랜지션 임시 제거 (부드러운 드래그를 위해)
-        thumbnailTrack.style.transition = 'none';
-        
-        // 터치 중 시각적 피드백
-        thumbnailTrack.classList.add('touching');
-      });
+      // 메인 이미지에 터치 이벤트 추가 (썸네일과 동일하게 작동)
+      const mainImage = document.querySelector('.facility-main-image');
       
-      // 썸네일 갤러리 터치 이동
-      thumbnailTrack.addEventListener('touchmove', (e) => {
-        if (!isThumbnailSwiping) return;
+      // 간단한 스와이프 함수
+      function handleSwipe(startX, endX) {
+        const swipeDistance = endX - startX;
         
-        const currentX = e.touches[0].clientX;
-        const diffX = currentX - thumbnailTouchStartX;
-        
-        // 실시간 이동 - 자연스러운 드래그를 위해 저항 없이 이동
-        const newTransform = thumbnailStartTransform + diffX;
-        thumbnailTrack.style.transform = `translateX(${newTransform}px)`;
-      });
-      
-      // 썸네일 갤러리 터치 종료
-      thumbnailTrack.addEventListener('touchend', (e) => {
-        if (!isThumbnailSwiping) return;
-        isThumbnailSwiping = false;
-        
-        thumbnailTouchEndX = e.changedTouches[0].clientX;
-        const swipeDistance = thumbnailTouchEndX - thumbnailTouchStartX;
-        
-        // 트랜지션 복원
-        thumbnailTrack.style.transition = 'transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-        
-        // 터치 종료 시 시각적 피드백 제거
-        thumbnailTrack.classList.remove('touching');
-        
-        // 스와이프 거리가 충분히 크면 이미지 변경
-        if (Math.abs(swipeDistance) > 50) {
-          if (swipeDistance < 0) {
-            // 왼쪽으로 스와이프 (다음)
-            if (currentFacilityIndex < facilityImages.length - 1) {
-              scrollThumbnails('right');
-            } else {
-              // 마지막에서는 원위치로
-              updateThumbnailPosition();
+        if (Math.abs(swipeDistance) > 30) { // 30px 이상 움직이면 스와이프로 인식
+          if (swipeDistance > 0) {
+            // 오른쪽으로 스와이프 (이전 이미지)
+            if (currentFacilityIndex > 0) {
+              currentFacilityIndex--;
+              selectFacilityImage(currentFacilityIndex);
             }
           } else {
-            // 오른쪽으로 스와이프 (이전)
-            if (currentFacilityIndex > 0) {
-              scrollThumbnails('left');
-            } else {
-              // 처음에서는 원위치로
-              updateThumbnailPosition();
+            // 왼쪽으로 스와이프 (다음 이미지)
+            if (currentFacilityIndex < facilityImages.length - 1) {
+              currentFacilityIndex++;
+              selectFacilityImage(currentFacilityIndex);
             }
           }
-        } else {
-          // 스와이프 거리가 작으면 원위치로 되돌리기
-          updateThumbnailPosition();
         }
-      });
-      
-      // 썸네일 위치 업데이트 함수
-      function updateThumbnailPosition() {
-        const track = document.querySelector('.facility-thumbnail-track');
-        const thumbnails = document.querySelectorAll('.facility-thumbnail');
-        const containerWidth = track.parentElement.offsetWidth;
-        const thumbnailWidth = thumbnails[0].offsetWidth + 16;
-        const targetScroll = (currentFacilityIndex * thumbnailWidth) - (containerWidth / 2) + (thumbnailWidth / 2);
-        const maxScroll = track.scrollWidth - containerWidth;
-        
-        thumbnailScrollPosition = Math.max(0, Math.min(maxScroll, targetScroll));
-        track.style.transform = `translateX(-${thumbnailScrollPosition}px)`;
       }
       
-      // 썸네일 클릭 시 드래그와 구분
-      thumbnailTrack.addEventListener('click', (e) => {
-        // 드래그 중이었으면 클릭 이벤트 무시
-        if (Math.abs(thumbnailTouchEndX - thumbnailTouchStartX) > 5) {
-          e.preventDefault();
-          e.stopPropagation();
-        }
-      });
+      // 썸네일 영역 터치 이벤트
+      thumbnailContainer.addEventListener('touchstart', (e) => {
+        touchStartX = e.touches[0].clientX;
+      }, { passive: true });
+      
+      thumbnailContainer.addEventListener('touchend', (e) => {
+        touchMoveX = e.changedTouches[0].clientX;
+        handleSwipe(touchStartX, touchMoveX);
+      }, { passive: true });
     }); // DOMContentLoaded 끝
     </script>
     <style>
