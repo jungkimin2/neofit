@@ -6628,12 +6628,13 @@ if (window.innerWidth <= 768) {
     @media (max-width: 768px) {
       .facility-gallery-new {
         margin: 20px auto !important;
-        max-width: 90% !important;
+        max-width: 100% !important;
+        padding: 0 10px !important; /* 좌우 패딩 추가 */
       }
       
       /* 썸네일만 좌측으로 이동 */
       .facility-thumbnails {
-        transform: translateX(-16px) !important; /* 모바일에서 1칸(16px) 이동 */
+        transform: translateX(-8px) !important; /* 모바일에서 0.5칸(8px)만 이동 */
       }
       
       #facilityMainImage {
@@ -6652,8 +6653,16 @@ if (window.innerWidth <= 768) {
       /* 모바일에서 썸네일 트랙 gap 조정 */
       .facility-thumbnail-track {
         gap: 12px !important;
-        padding: 0 20px; /* 좌우 여백 추가로 스와이프 공간 확보 */
+        padding: 0 5px; /* 좌우 여백 줄여서 더 많은 공간 확보 */
         -webkit-overflow-scrolling: touch; /* iOS에서 부드러운 스크롤 */
+      }
+      
+      /* 썸네일 컨테이너 overflow 영역 확장 */
+      .facility-thumbnails > div {
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+        width: calc(100% + 20px) !important; /* 보이는 영역 확장 */
+        margin-right: -20px !important; /* 우측 여백 제거 */
       }
       
       /* 터치 중일 때 시각적 피드백 */
