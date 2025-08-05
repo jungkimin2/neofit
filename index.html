@@ -7069,76 +7069,109 @@ if (window.innerWidth <= 768) {
         });
       });
       
-      // 모바일 터치 스와이프 지원
-      let touchStartX = 0;
-      let touchEndX = 0;
-      
-      const mainImageElement = document.querySelector('.facility-main-image');
-      
-      mainImageElement.addEventListener('touchstart', (e) => {
-        touchStartX = e.touches[0].clientX;
-      });
-      
-      mainImageElement.addEventListener('touchend', (e) => {
-        touchEndX = e.changedTouches[0].clientX;
-        handleMainImageSwipe();
-      });
-      
-      function handleMainImageSwipe() {
-        if (touchEndX < touchStartX - 50) {
-          // 왼쪽으로 스와이프 (다음)
-          if (currentFacilityIndex < facilityImages.length - 1) {
-            currentFacilityIndex = currentFacilityIndex + 1;
-            selectFacilityImage(currentFacilityIndex);
-          }
-        }
-        if (touchEndX > touchStartX + 50) {
-          // 오른쪽으로 스와이프 (이전)
-          if (currentFacilityIndex > 0) {
-            currentFacilityIndex = currentFacilityIndex - 1;
-            selectFacilityImage(currentFacilityIndex);
-          }
-        }
-      }
-      
-      // 썸네일 갤러리 모바일 스와이프 지원 - 단순화된 버전
-      const thumbnailContainer = document.querySelector('.facility-thumbnails');
-      let touchStartX = 0;
-      let touchMoveX = 0;
-      
-      // 메인 이미지에 터치 이벤트 추가 (썸네일과 동일하게 작동)
-      const mainImage = document.querySelector('.facility-main-image');
-      
-      // 간단한 스와이프 함수
-      function handleSwipe(startX, endX) {
-        const swipeDistance = endX - startX;
+      // 모바일 스와이프 지원 - 완전히 새로운 구현
+      (function() {
+        // 터치 시작 위치
+        let startX = 0;
+        let startY = 0;
+        let moveX = 0;
+        let isDragging = false;
         
-        if (Math.abs(swipeDistance) > 30) { // 30px 이상 움직이면 스와이프로 인식
-          if (swipeDistance > 0) {
-            // 오른쪽으로 스와이프 (이전 이미지)
-            if (currentFacilityIndex > 0) {
-              currentFacilityIndex--;
-              selectFacilityImage(currentFacilityIndex);
+        // 썸네일 트랙 요소
+        const track = document.querySelector('.facility-thumbnail-track');
+        const container = document.querySelector('.facility-thumbnails');
+        
+        // 현재 트랙 위치
+        let currentTranslateX = 0;
+        
+        // 터치 시작
+        track.addEventListener('touchstart', function(e) {
+          startX = e.touches[0].clientX;
+          startY = e.touches[0].clientY;
+          isDragging = true;
+          
+          // 현재 transform 값 가져오기
+          const transform = window.getComputedStyle(track).transform;
+          if (transform !== 'none') {
+            const matrix = transform.match(/matrix.*\((.+)\)/);
+            if (matrix) {
+              currentTranslateX = parseFloat(matrix[1].split(', ')[4]);
             }
           } else {
-            // 왼쪽으로 스와이프 (다음 이미지)
-            if (currentFacilityIndex < facilityImages.length - 1) {
+            currentTranslateX = 0;
+          }
+          
+          // 트랜지션 제거
+          track.style.transition = 'none';
+        });
+        
+        // 터치 이동
+        track.addEventListener('touchmove', function(e) {
+          if (!isDragging) return;
+          
+          moveX = e.touches[0].clientX;
+          const diffX = moveX - startX;
+          
+          // 드래그 중 실시간 이동
+          track.style.transform = `translateX(${currentTranslateX + diffX}px)`;
+        });
+        
+        // 터치 종료
+        track.addEventListener('touchend', function(e) {
+          if (!isDragging) return;
+          isDragging = false;
+          
+          const endX = e.changedTouches[0].clientX;
+          const diffX = endX - startX;
+          
+          // 트랜지션 복원
+          track.style.transition = 'transform 0.3s ease-out';
+          
+          // 스와이프 감지
+          if (Math.abs(diffX) > 50) {
+            if (diffX > 0 && currentFacilityIndex > 0) {
+              // 오른쪽 스와이프 - 이전 이미지
+              currentFacilityIndex--;
+              selectFacilityImage(currentFacilityIndex);
+            } else if (diffX < 0 && currentFacilityIndex < facilityImages.length - 1) {
+              // 왼쪽 스와이프 - 다음 이미지
+              currentFacilityIndex++;
+              selectFacilityImage(currentFacilityIndex);
+            } else {
+              // 끝에 도달 - 원위치
+              updateThumbnailScroll();
+            }
+          } else {
+            // 짧은 이동 - 원위치
+            updateThumbnailScroll();
+          }
+        });
+        
+        // 메인 이미지 스와이프
+        const mainImage = document.querySelector('.facility-main-image');
+        let mainStartX = 0;
+        
+        mainImage.addEventListener('touchstart', function(e) {
+          mainStartX = e.touches[0].clientX;
+        });
+        
+        mainImage.addEventListener('touchend', function(e) {
+          const mainEndX = e.changedTouches[0].clientX;
+          const mainDiffX = mainEndX - mainStartX;
+          
+          if (Math.abs(mainDiffX) > 50) {
+            if (mainDiffX > 0 && currentFacilityIndex > 0) {
+              // 오른쪽 스와이프 - 이전
+              currentFacilityIndex--;
+              selectFacilityImage(currentFacilityIndex);
+            } else if (mainDiffX < 0 && currentFacilityIndex < facilityImages.length - 1) {
+              // 왼쪽 스와이프 - 다음
               currentFacilityIndex++;
               selectFacilityImage(currentFacilityIndex);
             }
           }
-        }
-      }
-      
-      // 썸네일 영역 터치 이벤트
-      thumbnailContainer.addEventListener('touchstart', (e) => {
-        touchStartX = e.touches[0].clientX;
-      }, { passive: true });
-      
-      thumbnailContainer.addEventListener('touchend', (e) => {
-        touchMoveX = e.changedTouches[0].clientX;
-        handleSwipe(touchStartX, touchMoveX);
-      }, { passive: true });
+        });
+      })();
     }); // DOMContentLoaded 끝
     </script>
     <style>
