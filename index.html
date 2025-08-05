@@ -615,13 +615,6 @@ br.mobile-only {
     display: inline !important;
   }
   
-  /* 리워드 박스 최상위 표시 */
-  .mobile-reward-box {
-    z-index: 2147483647 !important;
-    position: fixed !important;
-    overflow: visible !important;
-  }
-  
   br.mobile-only {
     display: block !important;
   }
@@ -3401,7 +3394,7 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
         
         <!-- 모바일 전용: 출석 보상 안내 박스 -->
-        <div class="mobile-only mobile-reward-box" style="margin-top: 20px; border-radius: 18px; overflow: visible !important; box-shadow: 0 0 30px rgba(123, 228, 149, 0.1); transform: translateY(-60px); position: fixed !important; z-index: 2147483647 !important; width: calc(100% - 40px); left: 20px; bottom: 120px;">
+        <div class="mobile-only" style="margin-top: 20px; border-radius: 18px; overflow: hidden; box-shadow: 0 0 30px rgba(123, 228, 149, 0.1); transform: translateY(-60px);">
           <div style="background: linear-gradient(135deg, #0C1F13 0%, #04120A 100%); padding: 24px; padding-top: 56px;">
             <!-- 첫 번째 아이템 -->
             <div style="display: flex; align-items: flex-start; margin-bottom: 20px;">
