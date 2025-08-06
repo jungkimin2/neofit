@@ -6285,6 +6285,12 @@ if (window.innerWidth <= 768) {
       .mobile-text {
         display: inline !important;
       }
+      .desktop-address {
+        display: none !important;
+      }
+      .mobile-address {
+        display: inline !important;
+      }
     }
     
     @media (min-width: 769px) {
@@ -6292,6 +6298,12 @@ if (window.innerWidth <= 768) {
         display: inline !important;
       }
       .mobile-text {
+        display: none !important;
+      }
+      .desktop-address {
+        display: inline !important;
+      }
+      .mobile-address {
         display: none !important;
       }
     }
@@ -6563,7 +6575,9 @@ if (window.innerWidth <= 768) {
       
       <div style="background: linear-gradient(135deg, rgba(123,228,149,0.05), rgba(62,200,168,0.03)); border: 1px solid rgba(123,228,149,0.3); border-radius: 16px; padding: 40px; max-width: 800px; margin: 0 auto;">
         <p style="font-size: 1.1rem; color: #fff; margin-bottom: 20px; line-height: 1.8;">
-          <strong style="color: #7BE495;">주소:</strong> 경기도 김포시 김포한강8로162번길 16 제이앤제이프라자 3층
+          <strong style="color: #7BE495;">주소:</strong> 
+          <span class="desktop-address">경기도 김포시 김포한강8로162번길 16 제이앤제이프라자 3층</span>
+          <span class="mobile-address">경기도 김포시 김포한강8로162번길 16<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;제이앤제이프라자 3층</span>
         </p>
         
         <div style="margin-top: 30px;">
