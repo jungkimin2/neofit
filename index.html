@@ -12123,6 +12123,56 @@ setTimeout(forceNeoPilatesPosition, 1000);
 
 </body>
 <script>
+// 운동 가이드 버튼 강제 최상위 설정 함수
+function forceGuideButtonTop() {
+  const guideButton = document.querySelector('.exercise-guide-button');
+  if (guideButton) {
+    // 모든 스타일을 강제로 다시 설정
+    guideButton.style.cssText = '';
+    guideButton.style.setProperty('position', 'fixed', 'important');
+    guideButton.style.setProperty('z-index', '2147483649', 'important');
+    guideButton.style.setProperty('bottom', '75px', 'important');
+    guideButton.style.setProperty('right', '20px', 'important');
+    guideButton.style.setProperty('display', 'flex', 'important');
+    guideButton.style.setProperty('align-items', 'center', 'important');
+    guideButton.style.setProperty('justify-content', 'center', 'important');
+    guideButton.style.setProperty('width', '45px', 'important');
+    guideButton.style.setProperty('height', '45px', 'important');
+    guideButton.style.setProperty('padding', '10px', 'important');
+    guideButton.style.setProperty('border-radius', '50%', 'important');
+    guideButton.style.setProperty('background', 'linear-gradient(135deg, #0A0F0D 0%, #1a2f1a 100%)', 'important');
+    guideButton.style.setProperty('border', '2px solid #7BE495', 'important');
+    guideButton.style.setProperty('cursor', 'pointer', 'important');
+    guideButton.style.setProperty('box-shadow', '0 0 15px rgba(123, 228, 149, 0.5), 0 3px 10px rgba(0, 0, 0, 0.3)', 'important');
+    
+    // 아이콘 이미지도 보이도록 설정
+    const guideIcon = guideButton.querySelector('.guide-icon');
+    if (guideIcon) {
+      guideIcon.style.setProperty('display', 'flex', 'important');
+      guideIcon.style.setProperty('width', '30px', 'important');
+      guideIcon.style.setProperty('height', '30px', 'important');
+    }
+    
+    // 텍스트는 숨기기
+    const guideText = guideButton.querySelector('.guide-text');
+    if (guideText && window.innerWidth <= 768) {
+      guideText.style.setProperty('display', 'none', 'important');
+    }
+  }
+}
+
+// 여러 시점에 실행하여 확실하게 적용
+forceGuideButtonTop();
+document.addEventListener('DOMContentLoaded', forceGuideButtonTop);
+window.addEventListener('load', forceGuideButtonTop);
+setTimeout(forceGuideButtonTop, 100);
+setTimeout(forceGuideButtonTop, 500);
+setTimeout(forceGuideButtonTop, 1000);
+setTimeout(forceGuideButtonTop, 2000);
+
+// 스크롤 시에도 유지
+window.addEventListener('scroll', forceGuideButtonTop);
+
 // 즉시 실행 - DOM 파싱 전에도 실행 (네오 스마트 + 네오 하이브 영상 모두 처리)
 (function() {
   function forceVideosCenter() {
@@ -12248,6 +12298,22 @@ window.addEventListener('load', () => {
       talkButton.style.setProperty('bottom', '20px', 'important');
       talkButton.style.setProperty('right', '20px', 'important');
       talkButton.style.setProperty('display', 'flex', 'important');
+    }
+    
+    // 운동 가이드 버튼도 최상위로 강제 설정
+    const guideButton = document.querySelector('.exercise-guide-button');
+    if (guideButton) {
+      guideButton.style.setProperty('z-index', '2147483649', 'important');
+      guideButton.style.setProperty('position', 'fixed', 'important');
+      guideButton.style.setProperty('bottom', '75px', 'important');
+      guideButton.style.setProperty('right', '20px', 'important');
+      guideButton.style.setProperty('display', 'flex', 'important');
+      guideButton.style.setProperty('width', '45px', 'important');
+      guideButton.style.setProperty('height', '45px', 'important');
+      guideButton.style.setProperty('padding', '10px', 'important');
+      guideButton.style.setProperty('border-radius', '50%', 'important');
+      guideButton.style.setProperty('justify-content', 'center', 'important');
+      guideButton.style.setProperty('align-items', 'center', 'important');
     }
   } else {
     // PC에서는 기존 슬라이드 애니메이션
