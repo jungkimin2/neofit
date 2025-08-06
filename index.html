@@ -11887,7 +11887,7 @@ setTimeout(forceNeoPilatesPosition, 1000);
   position: fixed;
   bottom: 110px;  /* 톡톡 버튼 위에 위치 */
   right: 30px;
-  z-index: 2147483646;  /* 톡톡 버튼보다 약간 낮은 z-index */
+  z-index: 2147483648;  /* 최상위 z-index로 변경 */
   display: flex;
   align-items: center;
   gap: 8px;
@@ -12058,7 +12058,7 @@ setTimeout(forceNeoPilatesPosition, 1000);
     width: 45px !important;
     height: 45px !important;
     justify-content: center !important;
-    z-index: 2147483646 !important;
+    z-index: 2147483648 !important;  /* 톡톡 버튼보다 높은 z-index */
     position: fixed !important;
     display: flex !important;
   }
