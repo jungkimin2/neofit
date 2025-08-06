@@ -11860,6 +11860,15 @@ setTimeout(forceNeoPilatesPosition, 500);
 setTimeout(forceNeoPilatesPosition, 1000);
 </script>
 
+<!-- 운동 가이드 버튼 -->
+<div class="exercise-guide-button" onclick="window.open('https://neofit-s.oopy.io/NEOFIT-S', '_blank')">
+  <div class="guide-icon">
+    <img src="images/neos2.png" alt="NEO-S" style="width: 100%; height: 100%; object-fit: contain;">
+  </div>
+  <div class="guide-text">운동 가이드</div>
+  <div class="guide-pulse"></div>
+</div>
+
 <!-- 커스텀 톡톡 문의 버튼 -->
 <div class="custom-talk-button" onclick="window.open('https://talk.naver.com/ct/w4eeth?frm=mnmb&frm=nmb_detail#nafullscreen', 'naverTalkChat', 'width=500,height=800,toolbar=no,menubar=no,scrollbars=yes,resizable=yes')">
   <div class="talk-icon">
@@ -11873,6 +11882,84 @@ setTimeout(forceNeoPilatesPosition, 1000);
 </div>
 
 <style>
+/* 운동 가이드 버튼 스타일 */
+.exercise-guide-button {
+  position: fixed;
+  bottom: 110px;  /* 톡톡 버튼 위에 위치 */
+  right: 30px;
+  z-index: 2147483646;  /* 톡톡 버튼보다 약간 낮은 z-index */
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  background: linear-gradient(135deg, #0A0F0D 0%, #1a2f1a 100%);
+  border: 2px solid #7BE495;
+  border-radius: 40px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 15px rgba(123, 228, 149, 0.5), 
+              0 3px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* 운동 가이드 아이콘 스타일 */
+.guide-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border-radius: 8px;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.guide-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* 운동 가이드 텍스트 스타일 */
+.guide-text {
+  color: #7BE495;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+}
+
+/* 운동 가이드 펄스 애니메이션 */
+.guide-pulse {
+  position: absolute;
+  top: 50%;
+  left: 20px;
+  transform: translate(-50%, -50%);
+  width: 32px;
+  height: 32px;
+  background: #7BE495;
+  border-radius: 50%;
+  opacity: 0;
+  animation: pulse 2s infinite;
+  pointer-events: none;
+}
+
+/* 운동 가이드 호버 효과 */
+.exercise-guide-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 30px rgba(123, 228, 149, 0.7), 
+              0 6px 20px rgba(0, 0, 0, 0.4);
+  background: linear-gradient(135deg, #0F1A0F 0%, #2a4f2a 100%);
+}
+
+.exercise-guide-button:hover .guide-text {
+  color: #fff;
+}
+
+.exercise-guide-button:hover .guide-icon {
+  transform: scale(1.1);
+}
+
 /* 커스텀 톡톡 문의 버튼 스타일 */
 .custom-talk-button {
   position: fixed;
@@ -11962,6 +12049,42 @@ setTimeout(forceNeoPilatesPosition, 1000);
 
 /* 모바일 반응형 - 원형 아이콘만 표시 */
 @media (max-width: 768px) {
+  /* 운동 가이드 버튼 모바일 스타일 */
+  .exercise-guide-button {
+    bottom: 75px !important;  /* 톡톡 버튼 위에 위치 */
+    right: 20px !important;
+    padding: 10px !important;
+    border-radius: 50% !important;
+    width: 45px !important;
+    height: 45px !important;
+    justify-content: center !important;
+    z-index: 2147483646 !important;
+    position: fixed !important;
+    display: flex !important;
+  }
+  
+  .guide-text {
+    display: none;
+  }
+  
+  .guide-icon {
+    width: 30px;
+    height: 30px;
+    background: transparent;
+  }
+  
+  .guide-icon img {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .guide-pulse {
+    left: 50%;
+    width: 25px;
+    height: 25px;
+  }
+  
+  /* 톡톡 문의 버튼 모바일 스타일 */
   .custom-talk-button {
     bottom: 20px !important;
     right: 20px !important;
