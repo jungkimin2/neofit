@@ -4325,12 +4325,12 @@ function toggleMobilePreviewMute() {
     font-size: 1.1rem !important;
   }
   
-  /* NEOS 카드 리스트(기구 사용법, 체형 교정 영상 등) 위치 조정 - 위로 1칸 올림 (16px - 32px = -16px) */
+  /* NEOS 카드 리스트(기구 사용법, 체형 교정 영상 등) 위치 조정 - 위로 3칸 올림 */
   body .neos-card-list,
   html body .neos-card-list,
   body div.neos-card-list[style*="margin-top"],
   body section#smart div.neos-card-list {
-    transform: translateY(-16px) translateX(0) !important;
+    transform: translateY(-48px) translateX(0) !important;
     position: relative !important;
     z-index: 200 !important;
     margin-top: 56px !important;
@@ -15521,9 +15521,9 @@ document.addEventListener('DOMContentLoaded', function() {
 <!-- 모바일 환경에서 뒤집기 효과 안의 NEOS 이미지만 2칸 아래로 이동 -->
 <style>
 @media (max-width: 768px) {
-  /* NEOS 카드 리스트 위치 조정 - 한 칸 더 내림 */
+  /* NEOS 카드 리스트 위치 조정 - 2칸 위로 올림 */
   div.neos-card-list[style*="margin-top"] {
-    transform: translateY(-16px) translateX(32px) !important;
+    transform: translateY(-48px) translateX(32px) !important;
     position: relative !important;
     z-index: 15 !important;
   }
@@ -16012,10 +16012,10 @@ document.addEventListener('DOMContentLoaded', function() {
         backTextOverlay.style.setProperty('opacity', '0', 'important');
       }
       
-      // NEOS 카드 리스트 위치 조정 - 한 칸 더 내림
+      // NEOS 카드 리스트 위치 조정 - 2칸 위로 올림
       const neosCardList = document.querySelector('div.neos-card-list[style*="margin-top"]');
       if (neosCardList) {
-        neosCardList.style.setProperty('transform', 'translateY(-16px) translateX(32px)', 'important');
+        neosCardList.style.setProperty('transform', 'translateY(-48px) translateX(32px)', 'important');
         neosCardList.style.setProperty('position', 'relative', 'important');
         neosCardList.style.setProperty('z-index', '15', 'important');
         neosCardList.style.setProperty('grid-template-columns', 'repeat(2, 1fr)', 'important');
@@ -16455,9 +16455,9 @@ document.addEventListener('DOMContentLoaded', function() {
   section#neo-pilates[style],
   body #neo-pilates,
   html body #neo-pilates {
-    margin-top: 0px !important;
-    transform: translateY(112px) !important;
-    -webkit-transform: translateY(112px) !important;
+    margin-top: -32px !important;
+    transform: translateY(80px) !important;
+    -webkit-transform: translateY(80px) !important;
     position: relative !important;
     z-index: 50 !important;
     padding-top: 20px !important;
