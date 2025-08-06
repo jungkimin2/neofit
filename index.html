@@ -12102,7 +12102,7 @@ setTimeout(forceNeoPilatesPosition, 1000);
 
 /* 모바일 반응형 - 원형 아이콘만 표시 */
 @media (max-width: 768px) {
-  /* 운동 가이드 버튼 모바일 스타일 */
+  /* 운동 가이드 버튼 모바일 스타일 - 임시 숨김 */
   .exercise-guide-button {
     bottom: 75px !important;  /* 톡톡 버튼 위에 위치 */
     right: 20px !important;
@@ -12113,7 +12113,7 @@ setTimeout(forceNeoPilatesPosition, 1000);
     justify-content: center !important;
     z-index: 2147483648 !important;  /* 톡톡 버튼보다 높은 z-index */
     position: fixed !important;
-    display: flex !important;
+    display: none !important;  /* 임시 숨김 */
   }
   
   .guide-text {
@@ -12137,7 +12137,7 @@ setTimeout(forceNeoPilatesPosition, 1000);
     height: 25px;
   }
   
-  /* 톡톡 문의 버튼 모바일 스타일 */
+  /* 톡톡 문의 버튼 모바일 스타일 - 임시 숨김 */
   .custom-talk-button {
     bottom: 20px !important;
     right: 20px !important;
@@ -12148,7 +12148,7 @@ setTimeout(forceNeoPilatesPosition, 1000);
     justify-content: center !important;
     z-index: 2147483647 !important; /* 최상위 z-index 강제 적용 */
     position: fixed !important;
-    display: flex !important;
+    display: none !important;  /* 임시 숨김 */
   }
   
   .talk-text {
