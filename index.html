@@ -6674,9 +6674,9 @@ if (window.innerWidth <= 768) {
     
     <style>
     /* 새로운 갤러리 스타일 */
-    /* 메인 이미지 페이드 전환 효과 */
+    /* 메인 이미지 즉시 전환 (트랜지션 제거로 속도 개선) */
     #facilityMainImage {
-      transition: opacity 0.15s ease-in-out;
+      transition: none;
     }
     
     .facility-thumbnail {
@@ -7065,28 +7065,24 @@ if (window.innerWidth <= 768) {
     function selectFacilityImage(index) {
       currentFacilityIndex = index;
       
-      // 메인 이미지 변경 - 페이드 효과 추가
+      // 메인 이미지 변경 - 즉시 변경으로 속도 개선
       const mainImage = document.getElementById('facilityMainImage');
       const mainImageContainer = mainImage.parentElement;
       
-      // 페이드 아웃
-      mainImage.style.opacity = '0';
+      // 즉시 이미지 변경 (페이드 효과 제거로 반응 속도 개선)
+      mainImage.src = facilityImages[index];
       
-      setTimeout(() => {
-        mainImage.src = facilityImages[index];
-        
-        // IMG3864.jpg (index 8), IMG3866.jpg (index 9), IMG_3827.JPG (index 10), IMG3826.JPG (index 11), IMG3829.JPG (index 12)는 contain으로 표시
-        if (index === 8 || index === 9 || index === 10 || index === 11 || index === 12) {
-          mainImage.style.objectFit = 'contain';
-          mainImage.style.backgroundColor = '#000'; // 배경색 설정
-        } else {
-          mainImage.style.objectFit = 'cover';
-          mainImage.style.backgroundColor = 'transparent';
-        }
-        
-        // 페이드 인
-        mainImage.style.opacity = '1';
-      }, 150);
+      // IMG3864.jpg (index 8), IMG3866.jpg (index 9), IMG_3827.JPG (index 10), IMG3826.JPG (index 11), IMG3829.JPG (index 12)는 contain으로 표시
+      if (index === 8 || index === 9 || index === 10 || index === 11 || index === 12) {
+        mainImage.style.objectFit = 'contain';
+        mainImage.style.backgroundColor = '#000'; // 배경색 설정
+      } else {
+        mainImage.style.objectFit = 'cover';
+        mainImage.style.backgroundColor = 'transparent';
+      }
+      
+      // opacity는 항상 1로 유지 (페이드 효과 제거)
+      mainImage.style.opacity = '1';
       
       // 썸네일 활성화 상태 업데이트
       document.querySelectorAll('.facility-thumbnail').forEach((thumb, i) => {
