@@ -12,6 +12,12 @@
 
 <!-- 모바일 전용 즉시 적용 스타일 - 페이지 로딩 시 깜빡임 방지 -->
 <style>
+/* 스피커 버튼 클릭 가능 */
+.video-phone .speaker-button {
+  pointer-events: auto !important;
+  z-index: 10 !important;
+}
+
 /* 모바일에서만 적용 - PC 환경 완전 보호 */
 @media screen and (max-width: 768px) and (orientation: portrait),
        screen and (max-width: 768px) and (orientation: landscape) {
@@ -3131,7 +3137,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <!-- 비디오 요소 추가 -->
             <video class="balance-hover-video" src="./videos/neobalance.mp4" loop playsinline muted preload="auto" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.3s ease; z-index: 1; pointer-events: none;"></video>
             
-            <div style="position: relative; z-index: 2; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center;">
+            <div style="position: relative; z-index: 2; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; padding-top: 32px;">
               <h3 style="color: #93C5FD; font-size: 2rem; margin-bottom: 20px; text-shadow: 0 0 20px rgba(147,197,253,0.8);">NEO BALANCE</h3>
               <img src="./images/neoblance.png" alt="네오 밸런스" style="width: 80%; height: auto; margin-bottom: 20px; filter: drop-shadow(0 0 20px rgba(147,197,253,0.5));">
               <p style="color: #fff; font-size: 1.1rem; text-align: center;">균형과 안정성 강화</p>
@@ -5769,11 +5775,7 @@ if (window.innerWidth <= 768) {
               // 비디오 재생
               video.play().catch(err => console.error('Video play error:', err));
               
-              // 비디오 클릭 시 원본으로 복원
-              videoContainer.addEventListener('click', function(e) {
-                e.stopPropagation();
-                restoreCard();
-              });
+              // 비디오 클릭 이벤트 삭제됨 - 비디오는 자동 재생만 유지
               
               // 비디오 종료 시 원본으로 복원
               video.addEventListener('ended', function() {
@@ -9373,23 +9375,20 @@ if (window.innerWidth <= 768) {
       // NEO HIVE 비디오 스크롤 자동재생 설정
       setupHiveVideoScrollPlay();
       
-      // 비디오 요소 자체 클릭 이벤트 추가
+      // 비디오 클릭 시 멈춤 방지
       const centerVideo = document.getElementById('centerVideo');
       if (centerVideo) {
         centerVideo.addEventListener('click', function(e) {
+          e.preventDefault();
           e.stopPropagation();
-          // 비디오 재생/일시정지 토글
-          if (this.paused) {
-            this.play().then(() => {
-              isHiveVideoPlaying = true;
-              console.log('NEO HIVE video played by click');
-            }).catch(err => {
-              console.log('Play prevented:', err);
-            });
-          } else {
-            this.pause();
-            isHiveVideoPlaying = false;
-            console.log('NEO HIVE video paused by click');
+          // 클릭해도 아무 일도 일어나지 않음
+          return false;
+        });
+        
+        // pause 이벤트 발생 시 자동 재생 유지
+        centerVideo.addEventListener('pause', function() {
+          if (isHiveVideoPlaying) {
+            this.play();
           }
         });
       }
@@ -9667,29 +9666,7 @@ if (window.innerWidth <= 768) {
     });
   }
 
-  // 비디오 클릭 시 원래 상태로 복귀
-  if (videoPhone) {
-    videoPhone.addEventListener('click', (e) => {
-      e.stopPropagation();
-      if (isTransitioning) return;
-      
-      slideIndex = -1;
-      showSlide(slideIndex);
-      
-      // 비디오 재생/일시정지 토글
-      const video = document.getElementById('centerVideo');
-      if (slideIndex === -1) {
-        // 중앙에 있을 때만 비디오 재생
-        if (!isHiveVideoPlaying && video) {
-          video.play();
-          isHiveVideoPlaying = true;
-        } else if (isHiveVideoPlaying && video) {
-          video.pause();
-          isHiveVideoPlaying = false;
-        }
-      }
-    });
-  }
+  // 비디오 클릭 이벤트 삭제됨 - 자동 재생만 유지
 
   // Reset all if clicked outside
   document.querySelector('.hive-showcase').addEventListener('click', (e) => {
@@ -11244,6 +11221,11 @@ document.addEventListener('DOMContentLoaded', function() {
   /* 모바일에서 NEO BALANCE 제목만 작게 */
   #balance-card h3 {
     font-size: 1.7rem !important;
+  }
+  
+  /* 모바일에서 NEO BALANCE 카드 내부 컨테이너 padding-top 원복 */
+  #balance-card .card-front > div[style*="z-index: 2"] {
+    padding-top: 0 !important;
   }
   
   /* 모바일에서 카드 로고 크기 더 크게 증가 및 위치 조정 */
@@ -16311,23 +16293,19 @@ document.addEventListener('DOMContentLoaded', function() {
         // 모바일 NEO HIVE 비디오 스크롤 자동재생 설정
         setupHiveVideoScrollPlay();
         
-        // 모바일 비디오 클릭 이벤트
+        // 모바일 비디오 클릭 시 멈춤 방지
         const centerVideo = document.getElementById('centerVideo');
         if (centerVideo) {
           centerVideo.addEventListener('click', function(e) {
+            e.preventDefault();
             e.stopPropagation();
-            // 비디오 재생/일시정지 토글
-            if (this.paused) {
-              this.play().then(() => {
-                isHiveVideoPlaying = true;
-                console.log('Mobile NEO HIVE video played by click');
-              }).catch(err => {
-                console.log('Play prevented:', err);
-              });
-            } else {
-              this.pause();
-              isHiveVideoPlaying = false;
-              console.log('Mobile NEO HIVE video paused by click');
+            return false;
+          });
+          
+          // pause 이벤트 발생 시 자동 재생 유지
+          centerVideo.addEventListener('pause', function() {
+            if (isHiveVideoPlaying) {
+              this.play();
             }
           });
         }
@@ -16360,27 +16338,19 @@ document.addEventListener('DOMContentLoaded', function() {
           });
         }
         
-        // 비디오 클릭 이벤트 추가
-        const videoPhone = document.querySelector('.video-phone');
-        if (videoPhone) {
-          videoPhone.addEventListener('click', function(e) {
+        // 모바일 비디오 클릭 시 멈춤 방지
+        const centerVideo = document.getElementById('centerVideo');
+        if (centerVideo) {
+          centerVideo.addEventListener('click', function(e) {
+            e.preventDefault();
             e.stopPropagation();
-            const video = document.getElementById('centerVideo');
-            
-            // 중앙에 있을 때만 비디오 재생
-            if (slideIndex === -1 && video) {
-              if (!isHiveVideoPlaying) {
-                video.play().then(() => {
-                  isHiveVideoPlaying = true;
-                  console.log('Mobile NEO HIVE video played by container click');
-                }).catch(err => {
-                  console.log('Play prevented:', err);
-                });
-              } else {
-                video.pause();
-                isHiveVideoPlaying = false;
-                console.log('Mobile NEO HIVE video paused by container click');
-              }
+            return false;
+          });
+          
+          // pause 이벤트 발생 시 자동 재생 유지
+          centerVideo.addEventListener('pause', function() {
+            if (isHiveVideoPlaying) {
+              this.play();
             }
           });
         }
