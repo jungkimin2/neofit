@@ -7128,33 +7128,75 @@ if (window.innerWidth <= 768) {
       
       const mainImage = document.getElementById('facilityMainImage');
       const isMobile = window.innerWidth <= 768;
-      const animationDuration = isMobile ? 250 : 300; // 모바일은 더 빠르게
       
-      // 슬라이드 아웃 애니메이션
+      // 이미 애니메이션 중이면 리턴
+      if (mainImage.classList.contains('gallery-slide-out') || mainImage.classList.contains('gallery-slide-in')) {
+        return;
+      }
+      
+      // 새 이미지 미리 로드
+      const newImg = new Image();
+      newImg.src = facilityImages[index];
+      
+      // 슬라이드 아웃 시작
       mainImage.classList.add('gallery-slide-out');
       
-      // 애니메이션 시간에 맞춰 이미지 변경 및 슬라이드 인
-      setTimeout(() => {
-        mainImage.src = facilityImages[index];
-        
-        // contain/cover 설정
-        if (index === 8 || index === 9 || index === 10 || index === 11 || index === 12) {
-          mainImage.style.objectFit = 'contain';
-          mainImage.style.backgroundColor = '#000';
-        } else {
-          mainImage.style.objectFit = 'cover';
-          mainImage.style.backgroundColor = 'transparent';
-        }
-        
-        // 슬라이드 아웃 제거, 슬라이드 인 추가
-        mainImage.classList.remove('gallery-slide-out');
-        mainImage.classList.add('gallery-slide-in');
-        
-        // 애니메이션 완료 후 클래스 정리
+      // 모바일과 PC 타이밍 분리
+      if (isMobile) {
+        // 모바일: 더 짧은 타이밍
         setTimeout(() => {
-          mainImage.classList.remove('gallery-slide-in');
-        }, animationDuration);
-      }, animationDuration);
+          // 이미지가 완전히 사라진 후 변경
+          mainImage.style.opacity = '0';
+          mainImage.src = facilityImages[index];
+          
+          // contain/cover 설정
+          if (index === 8 || index === 9 || index === 10 || index === 11 || index === 12) {
+            mainImage.style.objectFit = 'contain';
+            mainImage.style.backgroundColor = '#000';
+          } else {
+            mainImage.style.objectFit = 'cover';
+            mainImage.style.backgroundColor = 'transparent';
+          }
+          
+          // 이미지 로드 후 슬라이드 인
+          const showImage = () => {
+            mainImage.style.opacity = '';
+            mainImage.classList.remove('gallery-slide-out');
+            mainImage.classList.add('gallery-slide-in');
+            
+            setTimeout(() => {
+              mainImage.classList.remove('gallery-slide-in');
+            }, 250);
+          };
+          
+          if (newImg.complete) {
+            showImage();
+          } else {
+            newImg.onload = showImage;
+          }
+        }, 250);
+      } else {
+        // PC: 기존 타이밍
+        setTimeout(() => {
+          mainImage.src = facilityImages[index];
+          
+          // contain/cover 설정
+          if (index === 8 || index === 9 || index === 10 || index === 11 || index === 12) {
+            mainImage.style.objectFit = 'contain';
+            mainImage.style.backgroundColor = '#000';
+          } else {
+            mainImage.style.objectFit = 'cover';
+            mainImage.style.backgroundColor = 'transparent';
+          }
+          
+          mainImage.classList.remove('gallery-slide-out');
+          mainImage.classList.add('gallery-slide-in');
+          
+          setTimeout(() => {
+            mainImage.classList.remove('gallery-slide-in');
+          }, 300);
+        }, 300);
+      }
       
       // 썸네일 활성화 상태 업데이트
       document.querySelectorAll('.facility-thumbnail').forEach((thumb, i) => {
