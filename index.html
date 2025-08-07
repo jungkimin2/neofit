@@ -6674,9 +6674,9 @@ if (window.innerWidth <= 768) {
     
     <style>
     /* 새로운 갤러리 스타일 */
-    /* 메인 이미지 즉시 전환 (트랜지션 제거로 속도 개선) */
+    /* 메인 이미지 페이드 전환 효과 */
     #facilityMainImage {
-      transition: none;
+      transition: opacity 0.15s ease-in-out;
     }
     
     .facility-thumbnail {
@@ -6773,15 +6773,9 @@ if (window.innerWidth <= 768) {
         cursor: grabbing;
       }
       
-      /* 모바일에서 스와이프 힌트 표시 */
+      /* 모바일에서 스와이프 힌트 숨김 */
       .mobile-swipe-hint {
-        display: block !important;
-        animation: swipeHint 2s ease-in-out infinite;
-      }
-      
-      @keyframes swipeHint {
-        0%, 100% { opacity: 0.3; transform: translateX(-50%) translateX(0); }
-        50% { opacity: 0.8; transform: translateX(-50%) translateX(10px); }
+        display: none !important;
       }
       
       .facility-thumbnail img {
@@ -7065,24 +7059,31 @@ if (window.innerWidth <= 768) {
     function selectFacilityImage(index) {
       currentFacilityIndex = index;
       
-      // 메인 이미지 변경 - 즉시 변경으로 속도 개선
+      // 메인 이미지 변경 - 페이드 효과 추가
       const mainImage = document.getElementById('facilityMainImage');
       const mainImageContainer = mainImage.parentElement;
       
-      // 즉시 이미지 변경 (페이드 효과 제거로 반응 속도 개선)
-      mainImage.src = facilityImages[index];
+      // transition 속성 명시적으로 설정
+      mainImage.style.transition = 'opacity 0.15s ease-in-out';
       
-      // IMG3864.jpg (index 8), IMG3866.jpg (index 9), IMG_3827.JPG (index 10), IMG3826.JPG (index 11), IMG3829.JPG (index 12)는 contain으로 표시
-      if (index === 8 || index === 9 || index === 10 || index === 11 || index === 12) {
-        mainImage.style.objectFit = 'contain';
-        mainImage.style.backgroundColor = '#000'; // 배경색 설정
-      } else {
-        mainImage.style.objectFit = 'cover';
-        mainImage.style.backgroundColor = 'transparent';
-      }
+      // 페이드 아웃
+      mainImage.style.opacity = '0';
       
-      // opacity는 항상 1로 유지 (페이드 효과 제거)
-      mainImage.style.opacity = '1';
+      setTimeout(() => {
+        mainImage.src = facilityImages[index];
+        
+        // IMG3864.jpg (index 8), IMG3866.jpg (index 9), IMG_3827.JPG (index 10), IMG3826.JPG (index 11), IMG3829.JPG (index 12)는 contain으로 표시
+        if (index === 8 || index === 9 || index === 10 || index === 11 || index === 12) {
+          mainImage.style.objectFit = 'contain';
+          mainImage.style.backgroundColor = '#000'; // 배경색 설정
+        } else {
+          mainImage.style.objectFit = 'cover';
+          mainImage.style.backgroundColor = 'transparent';
+        }
+        
+        // 페이드 인
+        mainImage.style.opacity = '1';
+      }, 150);
       
       // 썸네일 활성화 상태 업데이트
       document.querySelectorAll('.facility-thumbnail').forEach((thumb, i) => {
@@ -7293,9 +7294,13 @@ if (window.innerWidth <= 768) {
           const mainDiffX = mainEndX - mainStartX;
           
           if (Math.abs(mainDiffX) > 50) {
-            if (mainDiffX > 0 && currentFacilityIndex > 0) {
-              // 오른쪽 스와이프 - 이전
-              currentFacilityIndex--;
+            if (mainDiffX > 0) {
+              // 오른쪽 스와이프 - 이전 (순환)
+              if (currentFacilityIndex > 0) {
+                currentFacilityIndex--;
+              } else {
+                currentFacilityIndex = facilityImages.length - 1; // 처음에서 마지막으로 순환
+              }
               selectFacilityImage(currentFacilityIndex);
               
               // 썸네일도 스크롤
@@ -7310,9 +7315,13 @@ if (window.innerWidth <= 768) {
                   behavior: 'smooth'
                 });
               }
-            } else if (mainDiffX < 0 && currentFacilityIndex < facilityImages.length - 1) {
-              // 왼쪽 스와이프 - 다음
-              currentFacilityIndex++;
+            } else if (mainDiffX < 0) {
+              // 왼쪽 스와이프 - 다음 (순환)
+              if (currentFacilityIndex < facilityImages.length - 1) {
+                currentFacilityIndex++;
+              } else {
+                currentFacilityIndex = 0; // 마지막에서 처음으로 순환
+              }
               selectFacilityImage(currentFacilityIndex);
               
               // 썸네일도 스크롤
