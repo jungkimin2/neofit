@@ -6557,7 +6557,7 @@ if (window.innerWidth <= 768) {
     <!-- 새로운 시설 정보 갤러리 - 메인사진 + 썸네일 구조 -->
     <div class="facility-gallery-new" style="margin: 40px auto; max-width: 1000px;">
       <!-- 메인 이미지 영역 -->
-      <div class="facility-main-image gallery-image-wrapper" style="position: relative; border-radius: 16px; overflow: hidden; background: #000; cursor: pointer;" onclick="showFacilityPopup(currentFacilityIndex)">
+      <div class="facility-main-image" style="position: relative; border-radius: 16px; overflow: hidden; background: #000; cursor: pointer;" onclick="showFacilityPopup(currentFacilityIndex)">
         <img id="facilityMainImage" src="./images/IMG7216.jpeg" alt="시설 메인 이미지" style="width: 100%; height: 450px; object-fit: cover; display: block;">
         <!-- 모바일용 화살표 (메인 이미지 위에 위치) -->
         <button class="mobile-gallery-prev" onclick="event.stopPropagation(); scrollThumbnails('left')" style="display: none; position: absolute; left: 10px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.7); border: 2px solid #7BE495; color: #7BE495; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; align-items: center; justify-content: center; z-index: 10;">
@@ -6705,34 +6705,29 @@ if (window.innerWidth <= 768) {
       }
     }
     
-    /* 모바일 전용 부드러운 페이드 효과 */
+    /* 모바일에서 페이드 + 줌 효과 */
     @media (max-width: 768px) {
-      .gallery-container {
-        position: relative;
+      .gallery-mobile-fade {
+        animation: mobileFadeZoom 0.5s ease-in-out;
       }
       
-      .gallery-image-wrapper {
-        position: relative;
-        width: 100%;
-        height: 100%;
-      }
-      
-      .gallery-image-wrapper::after {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: #000;
-        opacity: 0;
-        transition: opacity 0.2s ease-out;
-        pointer-events: none;
-        z-index: 1;
-      }
-      
-      .gallery-image-wrapper.transitioning::after {
-        opacity: 1;
+      @keyframes mobileFadeZoom {
+        0% { 
+          opacity: 1;
+          transform: scale(1);
+        }
+        40% { 
+          opacity: 0;
+          transform: scale(1.05);
+        }
+        60% { 
+          opacity: 0;
+          transform: scale(0.95);
+        }
+        100% { 
+          opacity: 1;
+          transform: scale(1);
+        }
       }
     }
     
@@ -7127,18 +7122,18 @@ if (window.innerWidth <= 768) {
       const mainImage = document.getElementById('facilityMainImage');
       const isMobile = window.innerWidth <= 768;
       
+      // 애니메이션 중복 방지
+      if (mainImage.classList.contains('gallery-slide-out') || 
+          mainImage.classList.contains('gallery-slide-in') || 
+          mainImage.classList.contains('gallery-mobile-fade')) {
+        return;
+      }
+      
       if (isMobile) {
-        // 모바일: 검은 화면으로 덮은 후 이미지 변경
-        const wrapper = mainImage.parentElement;
+        // 모바일: 페이드 + 줌 효과
+        mainImage.classList.add('gallery-mobile-fade');
         
-        // 새 이미지 미리 로드
-        const preloadImg = new Image();
-        preloadImg.src = facilityImages[index];
-        
-        // 검은 화면으로 덮기
-        wrapper.classList.add('transitioning');
-        
-        // 200ms 후 이미지 변경 (화면이 완전히 검은색일 때)
+        // 애니메이션 중간(250ms)에 이미지 변경
         setTimeout(() => {
           mainImage.src = facilityImages[index];
           
@@ -7150,29 +7145,15 @@ if (window.innerWidth <= 768) {
             mainImage.style.objectFit = 'cover';
             mainImage.style.backgroundColor = 'transparent';
           }
-          
-          // 이미지 로드 완료 후 검은 화면 제거
-          const showNewImage = () => {
-            setTimeout(() => {
-              wrapper.classList.remove('transitioning');
-            }, 50);
-          };
-          
-          if (preloadImg.complete) {
-            showNewImage();
-          } else {
-            preloadImg.onload = showNewImage;
-          }
         }, 200);
+        
+        // 애니메이션 완료 후 클래스 제거
+        setTimeout(() => {
+          mainImage.classList.remove('gallery-mobile-fade');
+        }, 500);
         
       } else {
         // PC: 슬라이드 효과 유지
-        // 애니메이션 중복 방지
-        if (mainImage.classList.contains('gallery-slide-out') || 
-            mainImage.classList.contains('gallery-slide-in')) {
-          return;
-        }
-        
         mainImage.classList.add('gallery-slide-out');
         
         setTimeout(() => {
