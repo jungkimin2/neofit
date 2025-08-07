@@ -33,16 +33,13 @@
     const style = document.createElement('style');
     style.textContent = `
       /* 모바일 빠른 렌더링 */
-      .is-mobile img:not([loading="eager"]) { 
-        loading: lazy !important; 
+      .is-mobile img { 
+        opacity: 1 !important;
       }
-      .is-mobile video:not(#centerVideo) { 
-        preload: none !important; 
-      }
-      /* 모바일에서 불필요한 애니메이션 제거 */
+      /* 모바일에서 불필요한 애니메이션 단축 */
       .is-mobile * {
-        animation-duration: 0.1s !important;
-        transition-duration: 0.1s !important;
+        animation-duration: 0.2s !important;
+        transition-duration: 0.2s !important;
       }
     `;
     document.head.insertBefore(style, document.head.firstChild);
@@ -397,15 +394,8 @@
     -webkit-backface-visibility: hidden !important;
   }
   
-  /* 모바일 전용 페이지 로딩 시 깜빡임 방지 */
-  body {
-    opacity: 0 !important;
-    transition: opacity 0.1s ease-in !important;
-  }
-  
-  body.mobile-loaded {
-    opacity: 1 !important;
-  }
+  /* 모바일 전용 페이지 로딩 시 깜빡임 방지 - 삭제됨 */
+  /* body opacity 설정 제거 - 페이지가 즉시 보이도록 */
 }
 
 /* 모바일 팝업 배경 효과 */
