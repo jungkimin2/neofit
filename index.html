@@ -8861,20 +8861,43 @@ if (window.innerWidth <= 768) {
             // 모바일에서는 항상 음소거 확인
             if (window.innerWidth <= 768) {
               video.muted = true;
+              video.defaultMuted = true;
+              video.setAttribute('muted', 'true');
             }
-            video.play().then(() => {
-              isHiveVideoPlaying = true;
-              console.log('NEO HIVE video auto-play on scroll (visibility: ' + Math.round(visibilityRatio * 100) + '%)');
-            }).catch(err => {
-              console.log('Auto-play prevented:', err);
-              // 모바일에서 실패 시 다시 시도
-              if (window.innerWidth <= 768) {
-                video.muted = true;
-                setTimeout(() => {
-                  video.play().catch(() => {});
-                }, 100);
-              }
-            });
+            
+            // 재생 시도
+            const attemptPlay = () => {
+              video.play().then(() => {
+                isHiveVideoPlaying = true;
+                console.log('NEO HIVE video auto-play on scroll return (visibility: ' + Math.round(visibilityRatio * 100) + '%)');
+              }).catch(err => {
+                console.log('Auto-play prevented:', err);
+                // 모바일에서 실패 시 여러 번 재시도
+                if (window.innerWidth <= 768) {
+                  video.muted = true;
+                  // 100ms, 300ms, 500ms 후 재시도
+                  setTimeout(() => {
+                    video.play().catch(() => {
+                      setTimeout(() => {
+                        video.play().catch(() => {
+                          setTimeout(() => {
+                            video.play().catch(() => {});
+                          }, 200);
+                        });
+                      }, 200);
+                    });
+                  }, 100);
+                }
+              });
+            };
+            
+            // 모바일에서는 비디오 리로드 후 재생
+            if (window.innerWidth <= 768) {
+              video.load();
+              setTimeout(attemptPlay, 50);
+            } else {
+              attemptPlay();
+            }
           }
         } else if (!entry.isIntersecting || visibilityRatio < 0.4) {
           // 화면에서 완전히 벗어나거나 40% 미만 보이면 즉시 일시정지 (PC와 모바일 모두)
@@ -16525,6 +16548,35 @@ document.addEventListener('DOMContentLoaded', function() {
           ['touchstart', 'touchend', 'touchmove', 'click', 'scroll'].forEach(eventType => {
             document.addEventListener(eventType, userInteractionPlay, { once: true, passive: true });
           });
+          
+          // 모바일 스크롤 시 네오 하이브 섹션 체크
+          let scrollTimer;
+          window.addEventListener('scroll', () => {
+            clearTimeout(scrollTimer);
+            scrollTimer = setTimeout(() => {
+              const hiveSection = document.getElementById('hive');
+              if (hiveSection) {
+                const rect = hiveSection.getBoundingClientRect();
+                const isVisible = rect.top < window.innerHeight * 0.5 && rect.bottom > window.innerHeight * 0.5;
+                
+                if (isVisible && centerVideo.paused) {
+                  console.log('Scrolled back to NEO HIVE - attempting to play');
+                  centerVideo.muted = true;
+                  centerVideo.play().then(() => {
+                    console.log('Video resumed on scroll return');
+                    isHiveVideoPlaying = true;
+                  }).catch(err => {
+                    console.log('Resume failed:', err);
+                    // 재시도
+                    setTimeout(() => {
+                      centerVideo.muted = true;
+                      centerVideo.play().catch(() => {});
+                    }, 100);
+                  });
+                }
+              }
+            }, 100);
+          }, { passive: true });
         }
         
         // 모바일 비디오 클릭 이벤트 삭제됨 - 자동 재생만 유지
