@@ -2344,11 +2344,11 @@ section {
       transform: translateZ(0);
     }
     
-    /* 모바일에서 애니메이션 최적화 */
+    /* 모바일에서 애니메이션 최적화 - will-change 제거 */
     .animate-on-scroll,
     .slide-in-left,
     .slide-in-right {
-      will-change: transform, opacity;
+      /* will-change 제거하여 속도 정상화 */
       transform: translateZ(0);
     }
 
@@ -2583,19 +2583,19 @@ font-size: 1.4rem !important;
 <style>
 @media (max-width: 768px) {
 .hive-image {
-will-change: transform, opacity;
+/* will-change 제거 - 모바일 성능 최적화 */
 transform: translateZ(0);
 transition: transform 0.4s ease-out, opacity 0.4s ease-out;
 }
 
 .hive-image.active {
-will-change: transform, opacity;
+/* will-change 제거 - 모바일 성능 최적화 */
 transform: translateZ(0);
 transition: transform 0.4s ease-out, opacity 0.4s ease-out;
 }
 
 .video-phone {
-will-change: transform, opacity;
+/* will-change 제거 - 모바일 성능 최적화 */
 transform: translateZ(0);
 transition: transform 0.4s ease-out, opacity 0.4s ease-out;
 }
@@ -8416,7 +8416,7 @@ if (window.innerWidth <= 768) {
           
           <div style="display: flex; align-items: center; gap: 16px; position: relative; z-index: 1;">
             <div style="width: 48px; height: 48px; background: linear-gradient(135deg, rgba(123, 228, 149, 0.2) 0%, rgba(123, 228, 149, 0.1) 100%); border: 1px solid rgba(123, 228, 149, 0.5); border-radius: 14px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;">
-              <div style="position: absolute; inset: 0; background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%); transform: translateX(-100%); animation: shimmer 3s infinite;"></div>
+              <div style="position: absolute; inset: 0; background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%); transform: translateX(-100%); animation: shimmer ${isMobile ? '5s' : '3s'} infinite;"></div>
               <img src="images/neo96.png" alt="NEOFIT" style="width: 40px; height: auto; position: relative; z-index: 1; filter: brightness(1.1);">
             </div>
             <div style="text-align: left;">
@@ -8456,7 +8456,7 @@ if (window.innerWidth <= 768) {
           
           <div style="display: flex; align-items: center; gap: 16px; position: relative; z-index: 1;">
             <div style="width: 48px; height: 48px; background: linear-gradient(135deg, rgba(182, 139, 255, 0.2) 0%, rgba(182, 139, 255, 0.1) 100%); border: 1px solid rgba(182, 139, 255, 0.5); border-radius: 14px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;">
-              <div style="position: absolute; inset: 0; background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%); transform: translateX(-100%); animation: shimmer 3s infinite;"></div>
+              <div style="position: absolute; inset: 0; background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%); transform: translateX(-100%); animation: shimmer ${isMobile ? '5s' : '3s'} infinite;"></div>
               <img src="images/neott.png" alt="필라테스" style="width: 28px; height: auto; position: relative; z-index: 1; filter: brightness(1.1);">
             </div>
             <div style="text-align: left;">
@@ -8496,7 +8496,7 @@ if (window.innerWidth <= 768) {
           
           <div style="display: flex; align-items: center; gap: 16px; position: relative; z-index: 1;">
             <div style="width: 48px; height: 48px; background: linear-gradient(135deg, rgba(74, 158, 253, 0.2) 0%, rgba(74, 158, 253, 0.1) 100%); border: 1px solid rgba(74, 158, 253, 0.5); border-radius: 14px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;">
-              <div style="position: absolute; inset: 0; background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%); transform: translateX(-100%); animation: shimmer 3s infinite;"></div>
+              <div style="position: absolute; inset: 0; background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%); transform: translateX(-100%); animation: shimmer ${isMobile ? '5s' : '3s'} infinite;"></div>
               <img src="images/neo44.png" alt="상담" style="width: 28px; height: auto; position: relative; z-index: 1; filter: brightness(1.1);">
             </div>
             <div style="text-align: left;">
@@ -8536,7 +8536,7 @@ if (window.innerWidth <= 768) {
           
           <div style="display: flex; align-items: center; gap: 16px; position: relative; z-index: 1;">
             <div style="width: 48px; height: 48px; background: linear-gradient(135deg, rgba(255, 184, 0, 0.2) 0%, rgba(255, 184, 0, 0.1) 100%); border: 1px solid rgba(255, 184, 0, 0.5); border-radius: 14px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;">
-              <div style="position: absolute; inset: 0; background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%); transform: translateX(-100%); animation: shimmer 3s infinite;"></div>
+              <div style="position: absolute; inset: 0; background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%); transform: translateX(-100%); animation: shimmer ${isMobile ? '5s' : '3s'} infinite;"></div>
               <img src="images/neocxcx.png" alt="전화상담" style="width: 28px; height: auto; position: relative; z-index: 1; filter: brightness(1.1);">
             </div>
             <div style="text-align: left; position: relative;">
@@ -8579,7 +8579,7 @@ if (window.innerWidth <= 768) {
           
           <div style="display: flex; align-items: center; gap: 16px; position: relative; z-index: 1;">
             <div style="width: 48px; height: 48px; background: linear-gradient(135deg, rgba(123, 228, 149, 0.2) 0%, rgba(123, 228, 149, 0.1) 100%); border: 1px solid rgba(123, 228, 149, 0.5); border-radius: 14px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;">
-              <div style="position: absolute; inset: 0; background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%); transform: translateX(-100%); animation: shimmer 3s infinite;"></div>
+              <div style="position: absolute; inset: 0; background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%); transform: translateX(-100%); animation: shimmer ${isMobile ? '5s' : '3s'} infinite;"></div>
               <img src="images/neo401.png" alt="위치" style="width: ${isMobile ? '26px' : '26px'}; height: auto; position: relative; z-index: 1; filter: brightness(1.1);">
             </div>
             <div style="text-align: left;">
@@ -8603,6 +8603,24 @@ if (window.innerWidth <= 768) {
       @keyframes shimmer {
         0% { transform: translateX(-100%); }
         100% { transform: translateX(100%); }
+      }
+      
+      /* 모바일에서 애니메이션 속도 조정 */
+      @media (max-width: 768px) {
+        @keyframes shimmer {
+          0% { transform: translateX(-100%); }
+          100% { transform: translateX(100%); }
+        }
+        
+        /* 모든 애니메이션 속도 조정 */
+        * {
+          animation-duration: inherit !important;
+        }
+        
+        /* shimmer 애니메이션 속도 조정 */
+        [style*="animation: shimmer"] {
+          animation: shimmer 5s infinite !important;
+        }
       }
       
       .hover-gradient {
