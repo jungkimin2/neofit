@@ -8785,18 +8785,13 @@ if (window.innerWidth <= 768) {
       video.setAttribute('autoplay', '');
       video.setAttribute('playsinline', '');
       video.setAttribute('webkit-playsinline', '');
-      
-      // 모바일 초기 재생 시도
-      video.play().catch(err => {
-        console.log('Mobile initial play failed:', err);
-      });
     }
     
-    // Intersection Observer로 스크롤 감지
+    // Intersection Observer로 스크롤 감지 (PC와 모바일 동일하게 적용)
     hiveVideoObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
-          // 화면에 50% 이상 보이면 자동재생
+          // 화면에 50% 이상 보이면 자동재생 (PC와 모바일 모두)
           if (!isHiveVideoPlaying && video.paused) {
             video.play().then(() => {
               isHiveVideoPlaying = true;
@@ -8811,8 +8806,8 @@ if (window.innerWidth <= 768) {
             });
           }
         } else if (entry.intersectionRatio < 0.6) {
-          // 화면에 60% 미만 보이면 즉시 일시정지 (더 빨리 멈춤)
-          if (isHiveVideoPlaying && !video.paused) {
+          // 화면에 60% 미만 보이면 즉시 일시정지 (PC와 모바일 모두 적용)
+          if (!video.paused) {
             video.pause();
             isHiveVideoPlaying = false;
             console.log('NEO HIVE video paused on scroll out');
@@ -8823,7 +8818,7 @@ if (window.innerWidth <= 768) {
       threshold: [0, 0.5, 0.6, 0.7, 0.8, 0.9, 1]
     });
     
-    // 섹션 관찰 시작
+    // 섹션 관찰 시작 (PC와 모바일 모두)
     hiveVideoObserver.observe(hiveSection);
   }
   
@@ -16399,7 +16394,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // 모바일 NEO HIVE 비디오 스크롤 자동재생 설정
         setupHiveVideoScrollPlay();
         
-        // 모바일에서 네오 하이브 비디오 강제 재생
+        // 모바일에서 네오 하이브 비디오 설정 (스크롤 기반 재생으로 변경)
         const centerVideo = document.getElementById('centerVideo');
         if (centerVideo) {
           centerVideo.muted = true; // 모바일에서는 음소거 필수
@@ -16407,23 +16402,8 @@ document.addEventListener('DOMContentLoaded', function() {
           centerVideo.setAttribute('playsinline', '');
           centerVideo.setAttribute('webkit-playsinline', '');
           
-          // 비디오 재생 시도
-          const playVideo = () => {
-            centerVideo.play().catch(err => {
-              console.log('Mobile video play error:', err);
-              // 재시도
-              setTimeout(() => {
-                centerVideo.play();
-              }, 500);
-            });
-          };
-          
-          // 초기 재생
-          playVideo();
-          
-          // 페이지 상호작용 후 재생 (모바일 브라우저 정책 대응)
-          document.addEventListener('touchstart', playVideo, { once: true });
-          document.addEventListener('scroll', playVideo, { once: true });
+          // 스크롤 기반 재생만 사용 (초기 자동 재생 제거)
+          // Intersection Observer가 스크롤 위치에 따라 재생/정지 제어
         }
         
         // 모바일 비디오 클릭 이벤트 삭제됨 - 자동 재생만 유지
