@@ -7122,18 +7122,24 @@ if (window.innerWidth <= 768) {
       const mainImage = document.getElementById('facilityMainImage');
       const isMobile = window.innerWidth <= 768;
       
-      // 애니메이션 중복 방지
-      if (mainImage.classList.contains('gallery-slide-out') || 
-          mainImage.classList.contains('gallery-slide-in') || 
-          mainImage.classList.contains('gallery-mobile-fade')) {
+      // PC에서만 애니메이션 중복 방지
+      if (!isMobile && (mainImage.classList.contains('gallery-slide-out') || 
+          mainImage.classList.contains('gallery-slide-in'))) {
         return;
       }
       
       if (isMobile) {
-        // 모바일: 페이드 + 줌 효과
-        mainImage.classList.add('gallery-mobile-fade');
+        // 모바일: 검은 화면으로 덮은 후 이미지 변경
+        const wrapper = mainImage.parentElement;
         
-        // 애니메이션 중간(250ms)에 이미지 변경
+        // 새 이미지 미리 로드
+        const preloadImg = new Image();
+        preloadImg.src = facilityImages[index];
+        
+        // 검은 화면으로 덮기
+        wrapper.classList.add('transitioning');
+        
+        // 200ms 후 이미지 변경 (화면이 완전히 검은색일 때)
         setTimeout(() => {
           mainImage.src = facilityImages[index];
           
@@ -7145,12 +7151,20 @@ if (window.innerWidth <= 768) {
             mainImage.style.objectFit = 'cover';
             mainImage.style.backgroundColor = 'transparent';
           }
+          
+          // 이미지 로드 완료 후 검은 화면 제거
+          const showNewImage = () => {
+            setTimeout(() => {
+              wrapper.classList.remove('transitioning');
+            }, 50);
+          };
+          
+          if (preloadImg.complete) {
+            showNewImage();
+          } else {
+            preloadImg.onload = showNewImage;
+          }
         }, 200);
-        
-        // 애니메이션 완료 후 클래스 제거
-        setTimeout(() => {
-          mainImage.classList.remove('gallery-mobile-fade');
-        }, 500);
         
       } else {
         // PC: 슬라이드 효과 유지
