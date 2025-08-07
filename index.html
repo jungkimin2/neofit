@@ -6615,6 +6615,15 @@ if (window.innerWidth <= 768) {
           <div class="facility-thumbnail" data-index="6" onclick="selectFacilityImage(6)" style="flex: 0 0 calc(20% - 13px); cursor: pointer; border-radius: 12px; overflow: hidden; border: 2px solid transparent; transition: all 0.3s;">
             <img src="./images/IMG3840.JPG" alt="시설 이미지 7" style="width: 100%; height: 120px; object-fit: cover; display: block;">
           </div>
+          <div class="facility-thumbnail" data-index="7" onclick="selectFacilityImage(7)" style="flex: 0 0 calc(20% - 13px); cursor: pointer; border-radius: 12px; overflow: hidden; border: 2px solid transparent; transition: all 0.3s;">
+            <img src="./images/IMG3805.jpg" alt="시설 이미지 8" style="width: 100%; height: 120px; object-fit: cover; display: block;">
+          </div>
+          <div class="facility-thumbnail" data-index="8" onclick="selectFacilityImage(8)" style="flex: 0 0 calc(20% - 13px); cursor: pointer; border-radius: 12px; overflow: hidden; border: 2px solid transparent; transition: all 0.3s;">
+            <img src="./images/IMG3864.jpg" alt="시설 이미지 9" style="width: 100%; height: 120px; object-fit: cover; display: block;">
+          </div>
+          <div class="facility-thumbnail" data-index="9" onclick="selectFacilityImage(9)" style="flex: 0 0 calc(20% - 13px); cursor: pointer; border-radius: 12px; overflow: hidden; border: 2px solid transparent; transition: all 0.3s;">
+            <img src="./images/IMG3866.jpg" alt="시설 이미지 10" style="width: 100%; height: 120px; object-fit: cover; display: block;">
+          </div>
           </div>
         </div>
       </div>
@@ -7034,7 +7043,10 @@ if (window.innerWidth <= 768) {
       './images/IMG7222.JPG',
       './images/neoodod.JPG',
       './images/IMG3839.JPG',
-      './images/IMG3840.JPG'
+      './images/IMG3840.JPG',
+      './images/IMG3805.jpg',  // 수정된 이미지 1
+      './images/IMG3864.jpg',  // 수정된 이미지 2
+      './images/IMG3866.jpg'   // 수정된 이미지 3
     ];
     
     // 썸네일 클릭시 메인 이미지 변경
@@ -7070,33 +7082,37 @@ if (window.innerWidth <= 768) {
       // 썸네일 스크롤 위치 업데이트 - 네이티브 스크롤 사용 시 필요없음
     }
     
-    // 썸네일 스크롤 함수 - 단순화
+    // 썸네일 스크롤 함수 - 순환 기능 추가
     let thumbnailScrollPosition = 0;
     function scrollThumbnails(direction) {
-      // 현재 인덱스를 기준으로 이전/다음 이미지로 이동 (순환 없이)
+      // 현재 인덱스를 기준으로 이전/다음 이미지로 이동 (순환)
       if (direction === 'left') {
-        // 이전 이미지로 (처음에서 멈춤)
+        // 이전 이미지로 (처음에서 마지막으로 순환)
         if (currentFacilityIndex > 0) {
           currentFacilityIndex--;
         } else {
-          return; // 처음이면 아무것도 하지 않음
+          currentFacilityIndex = facilityImages.length - 1; // 처음에서 마지막으로
         }
       } else {
-        // 다음 이미지로 (끝에서 멈춤)
+        // 다음 이미지로 (마지막에서 처음으로 순환)
         if (currentFacilityIndex < facilityImages.length - 1) {
           currentFacilityIndex++;
         } else {
-          return; // 마지막이면 아무것도 하지 않음
+          currentFacilityIndex = 0; // 마지막에서 처음으로
         }
       }
       
       // 메인 이미지와 썸네일 선택 상태 업데이트
       selectFacilityImage(currentFacilityIndex);
       
-      // 간단한 썸네일 위치 조정 - 네이티브 스크롤 사용 시 필요없음
+      // 썸네일 스크롤 위치 업데이트
+      updateThumbnailScroll();
       
-      // 버튼 표시/숨김 업데이트
-      updateNavigationButtons();
+      // 버튼은 항상 표시 (순환하므로)
+      const prevBtn = document.querySelector('.mobile-gallery-prev');
+      const nextBtn = document.querySelector('.mobile-gallery-next');
+      if (prevBtn) prevBtn.style.display = 'flex';
+      if (nextBtn) nextBtn.style.display = 'flex';
     }
     
     // 썸네일 스크롤 위치 업데이트 - 단순화
@@ -7127,26 +7143,39 @@ if (window.innerWidth <= 768) {
       track.style.transform = `translateX(-${Math.max(0, thumbnailScrollPosition)}px)`;
     }
     
-    // 네비게이션 버튼 표시/숨김 업데이트
+    // 네비게이션 버튼 표시/숨김 업데이트 - 순환 구조이므로 항상 표시
     function updateNavigationButtons() {
-      const track = document.querySelector('.facility-thumbnail-track');
-      const trackWidth = track.scrollWidth;
-      const containerWidth = track.parentElement.offsetWidth;
+      // 모바일 갤러리 버튼
+      const mobilePrevBtn = document.querySelector('.mobile-gallery-prev');
+      const mobileNextBtn = document.querySelector('.mobile-gallery-next');
+      
+      if (mobilePrevBtn) {
+        mobilePrevBtn.style.display = 'flex';
+        mobilePrevBtn.style.opacity = '1';
+        mobilePrevBtn.style.pointerEvents = 'auto';
+      }
+      
+      if (mobileNextBtn) {
+        mobileNextBtn.style.display = 'flex'; 
+        mobileNextBtn.style.opacity = '1';
+        mobileNextBtn.style.pointerEvents = 'auto';
+      }
+      
+      // PC 썸네일 버튼
       const prevButton = document.querySelector('.thumbnail-prev');
       const nextButton = document.querySelector('.thumbnail-next');
       
-      // 버튼이 없으면 리턴
-      if (!prevButton || !nextButton) return;
+      if (prevButton) {
+        prevButton.style.display = 'flex';
+        prevButton.style.opacity = '1';
+        prevButton.style.pointerEvents = 'auto';
+      }
       
-      // 항상 버튼 표시
-      prevButton.style.display = 'flex';
-      nextButton.style.display = 'flex';
-      
-      // 모든 버튼은 항상 활성화 (순환 구조이므로)
-      prevButton.style.opacity = '1';
-      prevButton.style.pointerEvents = 'auto';
-      nextButton.style.opacity = '1';
-      nextButton.style.pointerEvents = 'auto';
+      if (nextButton) {
+        nextButton.style.display = 'flex';
+        nextButton.style.opacity = '1'; 
+        nextButton.style.pointerEvents = 'auto';
+      }
     }
     
     // DOM이 로드된 후 실행
@@ -11850,7 +11879,10 @@ const facilityImages = [
   './images/IMG7222.JPG',
   './images/neoodod.JPG',
   './images/IMG3839.JPG',
-  './images/IMG3840.JPG'
+  './images/IMG3840.JPG',
+  './images/IMG3805.jpg',  // 수정된 이미지 1
+  './images/IMG3864.jpg',  // 수정된 이미지 2
+  './images/IMG3866.jpg'   // 수정된 이미지 3
 ];
 
 let currentFacilityIndex = 0;
