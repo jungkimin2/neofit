@@ -10,11 +10,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Neo Hive - 스마트하게, 함께 하는 피트니스</title>
 
-<!-- Preload 중요 리소스 -->
-<link rel="preload" href="./images/neohive3.png" as="image">
-<link rel="preload" href="./images/hive3.png" as="image">
-<link rel="dns-prefetch" href="https://fonts.googleapis.com">
-
 <!-- 모바일 전용 즉시 적용 스타일 - 페이지 로딩 시 깜빡임 방지 -->
 <style>
 /* 모바일에서만 적용 - PC 환경 완전 보호 */
@@ -3114,7 +3109,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="card-inner" style="width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.3s; background: transparent; border: none;">
           <div class="card-front" style="position: absolute; width: 100%; height: 100%; backface-visibility: hidden; background: linear-gradient(135deg, #0A0F0D 0%, rgba(123,228,149,0.015) 100%); border: 2px solid #7BE495; border-radius: 20px; padding: 30px; display: flex; flex-direction: column; align-items: center; overflow: hidden;">
             <!-- 비디오 요소 추가 -->
-            <video class="sync-hover-video" src="./videos/neosyncvido.mp4" loop playsinline muted preload="none" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.3s ease; z-index: 1; pointer-events: none;"></video>
+            <video class="sync-hover-video" src="./videos/neosyncvido.mp4" loop playsinline muted preload="auto" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.3s ease; z-index: 1; pointer-events: none;"></video>
             
             <!-- 기존 콘텐츠를 relative로 변경하여 비디오 위에 표시 -->
             <div style="position: relative; z-index: 2; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; padding-top: 32px;">
@@ -3134,9 +3129,9 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="card-inner" style="width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.3s; background: transparent; border: none;">
           <div class="card-front" style="position: absolute; width: 100%; height: 100%; backface-visibility: hidden; background: linear-gradient(135deg, #0A0D0F 0%, rgba(147,197,253,0.015) 100%); border: 2px solid #93C5FD; border-radius: 20px; padding: 30px; display: flex; flex-direction: column; align-items: center; overflow: hidden;">
             <!-- 비디오 요소 추가 -->
-            <video class="balance-hover-video" src="./videos/neobalance.mp4" loop playsinline muted preload="none" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.3s ease; z-index: 1; pointer-events: none;"></video>
+            <video class="balance-hover-video" src="./videos/neobalance.mp4" loop playsinline muted preload="auto" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.3s ease; z-index: 1; pointer-events: none;"></video>
             
-            <div style="position: relative; z-index: 2; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; padding-top: 32px;">
+            <div style="position: relative; z-index: 2; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center;">
               <h3 style="color: #93C5FD; font-size: 2rem; margin-bottom: 20px; text-shadow: 0 0 20px rgba(147,197,253,0.8);">NEO BALANCE</h3>
               <img src="./images/neoblance.png" alt="네오 밸런스" style="width: 80%; height: auto; margin-bottom: 20px; filter: drop-shadow(0 0 20px rgba(147,197,253,0.5));">
               <p style="color: #fff; font-size: 1.1rem; text-align: center;">균형과 안정성 강화</p>
@@ -3153,7 +3148,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="card-inner" style="width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.3s; background: transparent; border: none;">
           <div class="card-front" style="position: absolute; width: 100%; height: 100%; backface-visibility: hidden; background: linear-gradient(135deg, #0F0A0A 0%, rgba(248,113,113,0.015) 100%); border: 2px solid #F87171; border-radius: 20px; padding: 30px; display: flex; flex-direction: column; align-items: center; overflow: hidden;">
             <!-- 비디오 요소 추가 -->
-            <video class="boost-hover-video" src="./videos/neoboots.mp4" loop playsinline muted preload="none" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.3s ease; z-index: 0; pointer-events: none;"></video>
+            <video class="boost-hover-video" src="./videos/neoboots.mp4" loop playsinline muted preload="metadata" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.3s ease; z-index: 0; pointer-events: none;"></video>
             
             <div style="position: relative; z-index: 2; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;">
               <h3 class="boost-title" style="color: #F87171; font-size: 2rem; margin-bottom: 20px; text-shadow: 0 0 20px rgba(248,113,113,0.8); display: block;">NEO BOOST</h3>
@@ -3229,7 +3224,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
       <!-- Center phone -->
       <div class="video-phone" style="position:absolute; left:50%; top:50%; transform:translate(-50%, -50%); width: 180px; height: 360px; border-radius: 20px; overflow: hidden; border: 4px solid #7BE495; background: radial-gradient(circle at center, rgba(123, 228, 149, 0.3), #0A0A0A); box-shadow: 0 0 20px rgba(123, 228, 149, 0.6); z-index: 2147483646; opacity: 1; visibility: visible; display: block;" data-original-left="50%" data-original-top="50%" data-original-transform="translate(-50%, -50%)" data-mobile-left="50%" data-mobile-top="50%" data-mobile-transform="translate(-50%, -50%)">
-        <video id="centerVideo" src="./videos/neohivevideos22.mp4" loop muted playsinline preload="metadata" style="width: 100%; height: 100%; object-fit: contain;"></video>
+        <video id="centerVideo" src="./videos/neohivevideos22.mp4" loop muted playsinline preload="none" style="width: 100%; height: 100%; object-fit: contain;"></video>
         <!-- 스피커 버튼 -->
         <button class="speaker-button" onclick="toggleMute(event)" aria-label="음소거 토글">
           <svg id="speakerIcon" viewBox="0 0 24 24">
@@ -11253,6 +11248,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   /* 모바일에서 카드 로고 크기 더 크게 증가 및 위치 조정 */
   #sync-card img[src*="neosync.png"],
+  #balance-card img[src*="neoblance.png"],
   #boost-card img[src*="neoboots.png"] {
     width: 220px !important;
     height: 220px !important;
@@ -11261,28 +11257,15 @@ document.addEventListener('DOMContentLoaded', function() {
     margin-top: -32px !important; /* 로고를 두 칸 위로 */
   }
   
-  /* 모바일에서 NEO BALANCE 카드 로고만 별도 조정 - 2칸 더 위로 */
-  #balance-card img[src*="neoblance.png"] {
-    width: 220px !important;
-    height: 220px !important;
-    max-width: 85% !important;
-    margin-bottom: 10px !important;
-    margin-top: -64px !important; /* 기존 -32px에서 -64px로 (2칸 더 위로) */
-  }
-  
   /* 모바일에서 NEO SYNC 로고만 0.3칸(4.8px) 추가로 위로 이동 */
   #sync-card img[src*="neosync.png"] {
     margin-top: -36.8px !important; /* -32px - 4.8px = -36.8px */
   }
   
   /* 모바일에서 카드 제목 위치 조정 - 한 칸 아래로 (16px) */
+  #balance-card h3,
   #boost-card h3 {
     margin-top: 16px !important;
-  }
-  
-  /* 모바일에서 NEO BALANCE 제목 위치 조정 - 1칸 위로 (-16px) */
-  #balance-card h3 {
-    margin-top: -16px !important;
   }
   
   /* 모바일에서 NEO SYNC 제목만 위치 조정 - 한 칸 위로 (-16px) */
@@ -11292,13 +11275,9 @@ document.addEventListener('DOMContentLoaded', function() {
   
   /* 모바일에서 로고 아래 설명 문구 위치 조정 - 3.5칸 위로 (-56px) */
   #sync-card div[style*="z-index: 2"] > p:first-of-type,
+  #balance-card div[style*="z-index: 2"] > p:first-of-type,
   #boost-card div[style*="z-index: 2"] > p:first-of-type {
     margin-top: -56px !important;
-  }
-  
-  /* 모바일에서 NEO BALANCE 설명 문구만 별도 조정 - 5.5칸 위로 (-88px) */
-  #balance-card div[style*="z-index: 2"] > p:first-of-type {
-    margin-top: -88px !important; /* 기존 -56px에서 -88px로 (2칸 더 위로) */
   }
   
   /* 모바일에서 NEO BOOST 설명 문구 크기 줄이기 - 클래스 선택자 사용 */
@@ -12196,7 +12175,7 @@ setTimeout(forceNeoPilatesPosition, 1000);
 </style>
 
 </body>
-<script defer>
+<script>
 // 운동 가이드 버튼 강제 최상위 설정 함수 (모바일 전용)
 function forceGuideButtonTop() {
   // 모바일에서만 실행
