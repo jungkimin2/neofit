@@ -357,8 +357,15 @@
     -webkit-backface-visibility: hidden !important;
   }
   
-  /* 모바일 전용 페이지 로딩 시 깜빡임 방지 - 삭제됨 */
-  /* body opacity 설정 제거 - 페이지가 즉시 보이도록 */
+  /* 모바일 전용 페이지 로딩 시 깜빡임 방지 */
+  body {
+    opacity: 0 !important;
+    transition: opacity 0.1s ease-in !important;
+  }
+  
+  body.mobile-loaded {
+    opacity: 1 !important;
+  }
 }
 
 /* 모바일 팝업 배경 효과 */
@@ -16286,22 +16293,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // 모바일 NEO HIVE 비디오 스크롤 자동재생 설정
         setupHiveVideoScrollPlay();
         
-        // 모바일 비디오 클릭 시 멈춤 방지
-        const centerVideo = document.getElementById('centerVideo');
-        if (centerVideo) {
-          centerVideo.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            return false;
-          });
-          
-          // pause 이벤트 발생 시 자동 재생 유지
-          centerVideo.addEventListener('pause', function() {
-            if (isHiveVideoPlaying) {
-              this.play();
-            }
-          });
-        }
+        // 모바일 비디오 클릭 이벤트 삭제됨 - 자동 재생만 유지
         
         // 모바일 스피커 버튼 이벤트 전파 방지
         const speakerButton = document.querySelector('.video-phone .speaker-button');
@@ -16331,22 +16323,7 @@ document.addEventListener('DOMContentLoaded', function() {
           });
         }
         
-        // 모바일 비디오 클릭 시 멈춤 방지
-        const centerVideo = document.getElementById('centerVideo');
-        if (centerVideo) {
-          centerVideo.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            return false;
-          });
-          
-          // pause 이벤트 발생 시 자동 재생 유지
-          centerVideo.addEventListener('pause', function() {
-            if (isHiveVideoPlaying) {
-              this.play();
-            }
-          });
-        }
+        // 모바일 비디오 클릭 이벤트 삭제됨 - 자동 재생만 유지
       }
     }
     
@@ -16359,8 +16336,9 @@ document.addEventListener('DOMContentLoaded', function() {
       forceMobileHiveButtons(); // 모바일 하이브 버튼 표시
       setupMobileHiveButtonEvents(); // 모바일 버튼 이벤트 설정
       
-      // 페이지 표시 - mobile-loaded 클래스 제거 (body opacity 제거로 불필요)
+      // 페이지 표시
       setTimeout(() => {
+        document.body.classList.add('mobile-loaded');
         removeGreyBoxes(); // 한 번 더 제거
         restoreGlowEffect(); // 발광효과 재복구
         forceMobileHiveButtons(); // 모바일 하이브 버튼 다시 표시
