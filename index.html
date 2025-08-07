@@ -3261,7 +3261,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
       <!-- Center phone -->
       <div class="video-phone" style="position:absolute; left:50%; top:50%; transform:translate(-50%, -50%); width: 180px; height: 360px; border-radius: 20px; overflow: hidden; border: 4px solid #7BE495; background: radial-gradient(circle at center, rgba(123, 228, 149, 0.3), #0A0A0A); box-shadow: 0 0 20px rgba(123, 228, 149, 0.6); z-index: 2147483646; opacity: 1; visibility: visible; display: block;" data-original-left="50%" data-original-top="50%" data-original-transform="translate(-50%, -50%)" data-mobile-left="50%" data-mobile-top="50%" data-mobile-transform="translate(-50%, -50%)">
-        <video id="centerVideo" src="./videos/neohivevideos22.mp4" loop muted playsinline webkit-playsinline preload="auto" autoplay style="width: 100%; height: 100%; object-fit: contain;"></video>
+        <video id="centerVideo" src="./videos/neohivevideos22.mp4" loop muted playsinline webkit-playsinline x-webkit-airplay="allow" preload="auto" autoplay style="width: 100%; height: 100%; object-fit: contain;"></video>
         <!-- 스피커 버튼 -->
         <button class="speaker-button" onclick="toggleMute(event)" aria-label="음소거 토글">
           <svg id="speakerIcon" viewBox="0 0 24 24">
@@ -8779,41 +8779,74 @@ if (window.innerWidth <= 768) {
     
     if (!video || !hiveSection) return;
     
+    // 모바일 재생 함수
+    const startMobileVideo = () => {
+      video.muted = true;
+      video.load(); // 비디오 리로드
+      
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise.then(() => {
+          console.log('Mobile video playing successfully');
+          isHiveVideoPlaying = true;
+        }).catch(error => {
+          console.log('Mobile autoplay failed:', error);
+          // 사용자 상호작용 필요
+        });
+      }
+    };
+    
     // 모바일에서 비디오 자동 재생을 위한 초기 설정
     if (window.innerWidth <= 768) {
       video.muted = true; // 모바일에서는 음소거 상태로 자동 재생
-      video.setAttribute('autoplay', '');
-      video.setAttribute('playsinline', '');
-      video.setAttribute('webkit-playsinline', '');
+      video.setAttribute('autoplay', 'true');
+      video.setAttribute('playsinline', 'true');
+      video.setAttribute('webkit-playsinline', 'true');
+      video.setAttribute('x-webkit-airplay', 'allow');
+      video.defaultMuted = true;
       
-      // 모바일에서 초기 재생 시도
-      const tryPlayVideo = () => {
-        video.play().then(() => {
-          console.log('Mobile video started playing');
-          isHiveVideoPlaying = true;
-        }).catch(err => {
-          console.log('Mobile video play failed, will retry on user interaction');
-        });
-      };
-      
-      // 즉시 재생 시도
-      tryPlayVideo();
+      // DOM 로드 완료 후 재생 시도
+      if (document.readyState === 'complete') {
+        startMobileVideo();
+      } else {
+        window.addEventListener('load', startMobileVideo);
+      }
       
       // 사용자 상호작용 시 재생 (모바일 브라우저 정책)
+      let hasInteracted = false;
       const startVideoOnInteraction = () => {
-        if (video.paused) {
+        if (!hasInteracted && video.paused) {
+          hasInteracted = true;
           video.muted = true;
           video.play().then(() => {
             console.log('Mobile video started on user interaction');
             isHiveVideoPlaying = true;
+          }).catch(err => {
+            console.log('Play failed even with interaction:', err);
           });
         }
       };
       
-      // 터치나 스크롤 이벤트로 재생 시작
-      document.addEventListener('touchstart', startVideoOnInteraction, { once: true });
-      document.addEventListener('scroll', startVideoOnInteraction, { once: true });
-      document.addEventListener('click', startVideoOnInteraction, { once: true });
+      // 다양한 이벤트로 재생 시작 시도
+      ['touchstart', 'touchend', 'click', 'scroll', 'pointerdown'].forEach(eventType => {
+        document.addEventListener(eventType, startVideoOnInteraction, { once: true, passive: true });
+      });
+      
+      // 비디오 메타데이터 로드 시 재생
+      video.addEventListener('loadedmetadata', () => {
+        if (video.paused) {
+          video.muted = true;
+          video.play().catch(() => {});
+        }
+      });
+      
+      // canplay 이벤트에서도 재생 시도
+      video.addEventListener('canplay', () => {
+        if (video.paused) {
+          video.muted = true;
+          video.play().catch(() => {});
+        }
+      });
     }
     
     // Intersection Observer로 스크롤 감지 (PC와 모바일 동일하게 적용)
@@ -16433,46 +16466,64 @@ document.addEventListener('DOMContentLoaded', function() {
         // 모바일 NEO HIVE 비디오 스크롤 자동재생 설정
         setupHiveVideoScrollPlay();
         
-        // 모바일에서 네오 하이브 비디오 설정
+        // 모바일에서 네오 하이브 비디오 강제 재생 설정
         const centerVideo = document.getElementById('centerVideo');
         if (centerVideo) {
-          centerVideo.muted = true; // 모바일에서는 음소거 필수
-          centerVideo.setAttribute('autoplay', '');
-          centerVideo.setAttribute('playsinline', '');
-          centerVideo.setAttribute('webkit-playsinline', '');
-          centerVideo.load(); // 비디오 리로드
+          // 모바일 필수 속성 설정
+          centerVideo.muted = true;
+          centerVideo.defaultMuted = true;
+          centerVideo.setAttribute('muted', 'true');
+          centerVideo.setAttribute('autoplay', 'true');
+          centerVideo.setAttribute('playsinline', 'true');
+          centerVideo.setAttribute('webkit-playsinline', 'true');
+          centerVideo.setAttribute('x-webkit-airplay', 'allow');
           
-          // 모바일 비디오 재생 헬퍼 함수
-          const playMobileVideo = () => {
-            // 네오 하이브 섹션이 화면에 보일 때만 재생
-            const hiveSection = document.getElementById('hive');
-            if (hiveSection) {
-              const rect = hiveSection.getBoundingClientRect();
-              const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
-              
-              if (isVisible && centerVideo.paused) {
-                centerVideo.muted = true;
-                centerVideo.play().then(() => {
-                  console.log('Mobile NEO HIVE video playing');
-                }).catch(err => {
-                  console.log('Mobile play error:', err);
-                  // 재시도
-                  setTimeout(() => {
-                    centerVideo.muted = true;
-                    centerVideo.play().catch(() => {});
-                  }, 500);
-                });
-              }
+          // 비디오 소스 재설정으로 강제 로드
+          const videoSrc = centerVideo.src;
+          centerVideo.src = '';
+          centerVideo.src = videoSrc;
+          centerVideo.load();
+          
+          // 강제 재생 함수
+          const forcePlayVideo = () => {
+            centerVideo.muted = true;
+            const playAttempt = centerVideo.play();
+            
+            if (playAttempt !== undefined) {
+              playAttempt.then(() => {
+                console.log('Mobile video forced to play');
+                isHiveVideoPlaying = true;
+              }).catch(error => {
+                console.log('Force play failed:', error);
+                // 100ms 후 재시도
+                setTimeout(() => {
+                  centerVideo.muted = true;
+                  centerVideo.play().catch(() => {});
+                }, 100);
+              });
             }
           };
           
-          // 초기 재생 시도
-          setTimeout(playMobileVideo, 100);
+          // 여러 시점에 재생 시도
+          setTimeout(forcePlayVideo, 10);
+          setTimeout(forcePlayVideo, 100);
+          setTimeout(forcePlayVideo, 500);
           
-          // 사용자 상호작용 이벤트에 재생 연결
-          const events = ['touchstart', 'touchend', 'click', 'scroll'];
-          events.forEach(event => {
-            document.addEventListener(event, playMobileVideo, { once: true, passive: true });
+          // 비디오 준비 이벤트들
+          centerVideo.addEventListener('loadeddata', forcePlayVideo);
+          centerVideo.addEventListener('loadedmetadata', forcePlayVideo);
+          centerVideo.addEventListener('canplay', forcePlayVideo);
+          centerVideo.addEventListener('canplaythrough', forcePlayVideo);
+          
+          // 사용자 상호작용 이벤트
+          const userInteractionPlay = () => {
+            if (centerVideo.paused) {
+              forcePlayVideo();
+            }
+          };
+          
+          ['touchstart', 'touchend', 'touchmove', 'click', 'scroll'].forEach(eventType => {
+            document.addEventListener(eventType, userInteractionPlay, { once: true, passive: true });
           });
         }
         
