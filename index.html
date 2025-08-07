@@ -3185,7 +3185,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="card-inner" style="width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.3s; background: transparent; border: none;">
           <div class="card-front" style="position: absolute; width: 100%; height: 100%; backface-visibility: hidden; background: linear-gradient(135deg, #0F0A0A 0%, rgba(248,113,113,0.015) 100%); border: 2px solid #F87171; border-radius: 20px; padding: 30px; display: flex; flex-direction: column; align-items: center; overflow: hidden;">
             <!-- 비디오 요소 추가 -->
-            <video class="boost-hover-video" src="./videos/neoboots.mp4" loop playsinline muted preload="metadata" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.3s ease; z-index: 0; pointer-events: none;"></video>
+            <video class="boost-hover-video" src="./videos/neoboots.mp4" loop playsinline muted preload="auto" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.3s ease; z-index: 0; pointer-events: none;"></video>
             
             <div style="position: relative; z-index: 2; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;">
               <h3 class="boost-title" style="color: #F87171; font-size: 2rem; margin-bottom: 20px; text-shadow: 0 0 20px rgba(248,113,113,0.8); display: block;">NEO BOOST</h3>
@@ -9980,20 +9980,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     preloadVideo(syncVideo);
     preloadVideo(balanceVideo);
-    
-    // 네오 부스트 비디오는 사용자가 카드를 활성화할 때 프리로드
-    const preloadBoostOnActivation = () => {
-      if (boostVideo.readyState < 3) {
-        boostVideo.load();
-      }
-    };
-    
-    // 카드가 활성화될 때 비디오 미리 로드
-    boostCard.addEventListener('transitionend', function() {
-      if (this.classList.contains('active')) {
-        preloadBoostOnActivation();
-      }
-    });
+    preloadVideo(boostVideo); // 부스트 비디오도 페이지 로드 시 미리 로드
   }
   
   // PC 환경에서 비디오 클릭 효과 적용
