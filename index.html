@@ -6705,36 +6705,29 @@ if (window.innerWidth <= 768) {
       }
     }
     
-    /* 모바일에서 슬라이드 효과 조정 */
+    /* 모바일에서 페이드 + 줌 효과 */
     @media (max-width: 768px) {
-      @keyframes slideOut {
+      .gallery-mobile-fade {
+        animation: mobileFadeZoom 0.5s ease-in-out;
+      }
+      
+      @keyframes mobileFadeZoom {
         0% { 
-          transform: translateX(0) scale(1);
           opacity: 1;
+          transform: scale(1);
+        }
+        40% { 
+          opacity: 0;
+          transform: scale(1.05);
+        }
+        60% { 
+          opacity: 0;
+          transform: scale(0.95);
         }
         100% { 
-          transform: translateX(-50px) scale(0.9);
-          opacity: 0;
-        }
-      }
-      
-      @keyframes slideIn {
-        0% { 
-          transform: translateX(50px) scale(0.9);
-          opacity: 0;
-        }
-        100% { 
-          transform: translateX(0) scale(1);
           opacity: 1;
+          transform: scale(1);
         }
-      }
-      
-      .gallery-slide-out {
-        animation: slideOut 0.25s ease-out forwards;
-      }
-      
-      .gallery-slide-in {
-        animation: slideIn 0.25s ease-out forwards;
       }
     }
     
@@ -7122,31 +7115,26 @@ if (window.innerWidth <= 768) {
       });
     });
     
-    // 갤러리 이미지 전환 함수 - 슬라이드 효과 버전
+    // 갤러리 이미지 전환 함수 - 모바일/PC 분리
     function selectFacilityImage(index) {
       currentFacilityIndex = index;
       
       const mainImage = document.getElementById('facilityMainImage');
       const isMobile = window.innerWidth <= 768;
       
-      // 이미 애니메이션 중이면 리턴
-      if (mainImage.classList.contains('gallery-slide-out') || mainImage.classList.contains('gallery-slide-in')) {
+      // 애니메이션 중복 방지
+      if (mainImage.classList.contains('gallery-slide-out') || 
+          mainImage.classList.contains('gallery-slide-in') || 
+          mainImage.classList.contains('gallery-mobile-fade')) {
         return;
       }
       
-      // 새 이미지 미리 로드
-      const newImg = new Image();
-      newImg.src = facilityImages[index];
-      
-      // 슬라이드 아웃 시작
-      mainImage.classList.add('gallery-slide-out');
-      
-      // 모바일과 PC 타이밍 분리
       if (isMobile) {
-        // 모바일: 더 짧은 타이밍
+        // 모바일: 페이드 + 줌 효과
+        mainImage.classList.add('gallery-mobile-fade');
+        
+        // 애니메이션 중간(250ms)에 이미지 변경
         setTimeout(() => {
-          // 이미지가 완전히 사라진 후 변경
-          mainImage.style.opacity = '0';
           mainImage.src = facilityImages[index];
           
           // contain/cover 설정
@@ -7157,26 +7145,17 @@ if (window.innerWidth <= 768) {
             mainImage.style.objectFit = 'cover';
             mainImage.style.backgroundColor = 'transparent';
           }
-          
-          // 이미지 로드 후 슬라이드 인
-          const showImage = () => {
-            mainImage.style.opacity = '';
-            mainImage.classList.remove('gallery-slide-out');
-            mainImage.classList.add('gallery-slide-in');
-            
-            setTimeout(() => {
-              mainImage.classList.remove('gallery-slide-in');
-            }, 250);
-          };
-          
-          if (newImg.complete) {
-            showImage();
-          } else {
-            newImg.onload = showImage;
-          }
-        }, 250);
+        }, 200);
+        
+        // 애니메이션 완료 후 클래스 제거
+        setTimeout(() => {
+          mainImage.classList.remove('gallery-mobile-fade');
+        }, 500);
+        
       } else {
-        // PC: 기존 타이밍
+        // PC: 슬라이드 효과 유지
+        mainImage.classList.add('gallery-slide-out');
+        
         setTimeout(() => {
           mainImage.src = facilityImages[index];
           
