@@ -6674,9 +6674,68 @@ if (window.innerWidth <= 768) {
     
     <style>
     /* 새로운 갤러리 스타일 */
-    /* 메인 이미지 페이드 전환 효과 */
-    #facilityMainImage {
-      transition: opacity 0.15s ease-in-out;
+    /* 메인 이미지 슬라이드 효과 */
+    .gallery-slide-out {
+      animation: slideOut 0.3s ease-in-out forwards;
+    }
+    
+    .gallery-slide-in {
+      animation: slideIn 0.3s ease-in-out forwards;
+    }
+    
+    @keyframes slideOut {
+      0% { 
+        transform: translateX(0) scale(1);
+        opacity: 1;
+      }
+      100% { 
+        transform: translateX(-30px) scale(0.95);
+        opacity: 0;
+      }
+    }
+    
+    @keyframes slideIn {
+      0% { 
+        transform: translateX(30px) scale(0.95);
+        opacity: 0;
+      }
+      100% { 
+        transform: translateX(0) scale(1);
+        opacity: 1;
+      }
+    }
+    
+    /* 모바일에서 슬라이드 효과 조정 */
+    @media (max-width: 768px) {
+      @keyframes slideOut {
+        0% { 
+          transform: translateX(0) scale(1);
+          opacity: 1;
+        }
+        100% { 
+          transform: translateX(-50px) scale(0.9);
+          opacity: 0;
+        }
+      }
+      
+      @keyframes slideIn {
+        0% { 
+          transform: translateX(50px) scale(0.9);
+          opacity: 0;
+        }
+        100% { 
+          transform: translateX(0) scale(1);
+          opacity: 1;
+        }
+      }
+      
+      .gallery-slide-out {
+        animation: slideOut 0.25s ease-out forwards;
+      }
+      
+      .gallery-slide-in {
+        animation: slideIn 0.25s ease-out forwards;
+      }
     }
     
     .facility-thumbnail {
@@ -7055,35 +7114,47 @@ if (window.innerWidth <= 768) {
       './images/IMG3829.JPG'   // 추가된 이미지 6
     ];
     
-    // 썸네일 클릭시 메인 이미지 변경
+    // 모든 이미지 미리 로드
+    window.addEventListener('load', () => {
+      facilityImages.forEach(src => {
+        const img = new Image();
+        img.src = src;
+      });
+    });
+    
+    // 갤러리 이미지 전환 함수 - 슬라이드 효과 버전
     function selectFacilityImage(index) {
       currentFacilityIndex = index;
       
-      // 메인 이미지 변경 - 페이드 효과 추가
       const mainImage = document.getElementById('facilityMainImage');
-      const mainImageContainer = mainImage.parentElement;
+      const isMobile = window.innerWidth <= 768;
+      const animationDuration = isMobile ? 250 : 300; // 모바일은 더 빠르게
       
-      // transition 속성 명시적으로 설정
-      mainImage.style.transition = 'opacity 0.15s ease-in-out';
+      // 슬라이드 아웃 애니메이션
+      mainImage.classList.add('gallery-slide-out');
       
-      // 페이드 아웃
-      mainImage.style.opacity = '0';
-      
+      // 애니메이션 시간에 맞춰 이미지 변경 및 슬라이드 인
       setTimeout(() => {
         mainImage.src = facilityImages[index];
         
-        // IMG3864.jpg (index 8), IMG3866.jpg (index 9), IMG_3827.JPG (index 10), IMG3826.JPG (index 11), IMG3829.JPG (index 12)는 contain으로 표시
+        // contain/cover 설정
         if (index === 8 || index === 9 || index === 10 || index === 11 || index === 12) {
           mainImage.style.objectFit = 'contain';
-          mainImage.style.backgroundColor = '#000'; // 배경색 설정
+          mainImage.style.backgroundColor = '#000';
         } else {
           mainImage.style.objectFit = 'cover';
           mainImage.style.backgroundColor = 'transparent';
         }
         
-        // 페이드 인
-        mainImage.style.opacity = '1';
-      }, 150);
+        // 슬라이드 아웃 제거, 슬라이드 인 추가
+        mainImage.classList.remove('gallery-slide-out');
+        mainImage.classList.add('gallery-slide-in');
+        
+        // 애니메이션 완료 후 클래스 정리
+        setTimeout(() => {
+          mainImage.classList.remove('gallery-slide-in');
+        }, animationDuration);
+      }, animationDuration);
       
       // 썸네일 활성화 상태 업데이트
       document.querySelectorAll('.facility-thumbnail').forEach((thumb, i) => {
