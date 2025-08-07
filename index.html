@@ -12643,15 +12643,15 @@ if (video) {
 .pulse {
     animation: pulse 2s infinite;
 }
-/* 각 카드별 pulse 애니메이션 */
+/* 각 카드별 pulse 애니메이션 - 속도 느리게 조정 */
 #sync-card .click-indicator {
-    animation: pulse-sync 2s ease-in-out infinite !important;
+    animation: pulse-sync 3.5s ease-in-out infinite !important;
 }
 #balance-card .click-indicator {
-    animation: pulse-balance 2s ease-in-out infinite !important;
+    animation: pulse-balance 3.5s ease-in-out infinite !important;
 }
 #boost-card .click-indicator {
-    animation: pulse-boost 2s ease-in-out infinite !important;
+    animation: pulse-boost 3.5s ease-in-out infinite !important;
 }
 @keyframes pulse-sync {
     0% { box-shadow: 0 0 0 0 rgba(123, 228, 149, 0.7); }
@@ -12672,6 +12672,78 @@ if (video) {
     0% { box-shadow: 0 0 0 0 rgba(98, 210, 162, 0.7); }
     70% { box-shadow: 0 0 0 15px rgba(98, 210, 162, 0); }
     100% { box-shadow: 0 0 0 0 rgba(98, 210, 162, 0); }
+}
+
+/* 모바일 인디케이터 발광 효과 - 색상별 구분 */
+@media (max-width: 768px) {
+  /* 네오 싱크 (초록색) 인디케이터 발광 */
+  .card-indicators .indicator[data-target="sync"] {
+    animation: indicator-glow-green 3.5s ease-in-out infinite !important;
+  }
+  
+  /* 네오 밸런스 (파란색) 인디케이터 발광 */
+  .card-indicators .indicator[data-target="balance"] {
+    animation: indicator-glow-blue 3.5s ease-in-out infinite !important;
+  }
+  
+  /* 네오 부스트 (빨간색) 인디케이터 발광 */
+  .card-indicators .indicator[data-target="boost"] {
+    animation: indicator-glow-red 3.5s ease-in-out infinite !important;
+  }
+  
+  /* 활성화된 인디케이터 강조 효과 */
+  .card-indicators .indicator.active {
+    animation-duration: 2s !important;
+  }
+}
+
+/* 색상별 발광 애니메이션 정의 */
+@keyframes indicator-glow-green {
+  0%, 100% {
+    box-shadow: 
+      0 0 5px rgba(123, 228, 149, 0.3),
+      0 0 10px rgba(123, 228, 149, 0.2),
+      inset 0 0 5px rgba(123, 228, 149, 0.1);
+  }
+  50% {
+    box-shadow: 
+      0 0 10px rgba(123, 228, 149, 0.6),
+      0 0 20px rgba(123, 228, 149, 0.4),
+      0 0 30px rgba(123, 228, 149, 0.2),
+      inset 0 0 10px rgba(123, 228, 149, 0.2);
+  }
+}
+
+@keyframes indicator-glow-blue {
+  0%, 100% {
+    box-shadow: 
+      0 0 5px rgba(147, 197, 253, 0.3),
+      0 0 10px rgba(147, 197, 253, 0.2),
+      inset 0 0 5px rgba(147, 197, 253, 0.1);
+  }
+  50% {
+    box-shadow: 
+      0 0 10px rgba(147, 197, 253, 0.6),
+      0 0 20px rgba(147, 197, 253, 0.4),
+      0 0 30px rgba(147, 197, 253, 0.2),
+      inset 0 0 10px rgba(147, 197, 253, 0.2);
+  }
+}
+
+@keyframes indicator-glow-red {
+  0%, 100% {
+    box-shadow: 
+      0 0 5px rgba(248, 113, 113, 0.3),
+      0 0 10px rgba(248, 113, 113, 0.2),
+      inset 0 0 5px rgba(248, 113, 113, 0.1);
+  }
+  50% {
+    box-shadow: 
+      0 0 10px rgba(248, 113, 113, 0.6),
+      0 0 20px rgba(248, 113, 113, 0.4),
+      0 0 30px rgba(248, 113, 113, 0.2),
+      inset 0 0 10px rgba(248, 113, 113, 0.2);
+  }
 }
 </style>
 <style>
