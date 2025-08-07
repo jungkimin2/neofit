@@ -3261,7 +3261,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
       <!-- Center phone -->
       <div class="video-phone" style="position:absolute; left:50%; top:50%; transform:translate(-50%, -50%); width: 180px; height: 360px; border-radius: 20px; overflow: hidden; border: 4px solid #7BE495; background: radial-gradient(circle at center, rgba(123, 228, 149, 0.3), #0A0A0A); box-shadow: 0 0 20px rgba(123, 228, 149, 0.6); z-index: 2147483646; opacity: 1; visibility: visible; display: block;" data-original-left="50%" data-original-top="50%" data-original-transform="translate(-50%, -50%)" data-mobile-left="50%" data-mobile-top="50%" data-mobile-transform="translate(-50%, -50%)">
-        <video id="centerVideo" src="./videos/neohivevideos22.mp4" loop muted playsinline preload="none" style="width: 100%; height: 100%; object-fit: contain;"></video>
+        <video id="centerVideo" src="./videos/neohivevideos22.mp4" loop muted playsinline webkit-playsinline preload="auto" autoplay style="width: 100%; height: 100%; object-fit: contain;"></video>
         <!-- 스피커 버튼 -->
         <button class="speaker-button" onclick="toggleMute(event)" aria-label="음소거 토글">
           <svg id="speakerIcon" viewBox="0 0 24 24">
@@ -8779,6 +8779,19 @@ if (window.innerWidth <= 768) {
     
     if (!video || !hiveSection) return;
     
+    // 모바일에서 비디오 자동 재생을 위한 초기 설정
+    if (window.innerWidth <= 768) {
+      video.muted = true; // 모바일에서는 음소거 상태로 자동 재생
+      video.setAttribute('autoplay', '');
+      video.setAttribute('playsinline', '');
+      video.setAttribute('webkit-playsinline', '');
+      
+      // 모바일 초기 재생 시도
+      video.play().catch(err => {
+        console.log('Mobile initial play failed:', err);
+      });
+    }
+    
     // Intersection Observer로 스크롤 감지
     hiveVideoObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -8790,6 +8803,11 @@ if (window.innerWidth <= 768) {
               console.log('NEO HIVE video auto-play on scroll');
             }).catch(err => {
               console.log('Auto-play prevented:', err);
+              // 모바일에서 실패 시 다시 시도
+              if (window.innerWidth <= 768) {
+                video.muted = true;
+                video.play();
+              }
             });
           }
         } else if (entry.intersectionRatio < 0.6) {
@@ -16380,6 +16398,33 @@ document.addEventListener('DOMContentLoaded', function() {
       if (window.innerWidth <= 768) {
         // 모바일 NEO HIVE 비디오 스크롤 자동재생 설정
         setupHiveVideoScrollPlay();
+        
+        // 모바일에서 네오 하이브 비디오 강제 재생
+        const centerVideo = document.getElementById('centerVideo');
+        if (centerVideo) {
+          centerVideo.muted = true; // 모바일에서는 음소거 필수
+          centerVideo.setAttribute('autoplay', '');
+          centerVideo.setAttribute('playsinline', '');
+          centerVideo.setAttribute('webkit-playsinline', '');
+          
+          // 비디오 재생 시도
+          const playVideo = () => {
+            centerVideo.play().catch(err => {
+              console.log('Mobile video play error:', err);
+              // 재시도
+              setTimeout(() => {
+                centerVideo.play();
+              }, 500);
+            });
+          };
+          
+          // 초기 재생
+          playVideo();
+          
+          // 페이지 상호작용 후 재생 (모바일 브라우저 정책 대응)
+          document.addEventListener('touchstart', playVideo, { once: true });
+          document.addEventListener('scroll', playVideo, { once: true });
+        }
         
         // 모바일 비디오 클릭 이벤트 삭제됨 - 자동 재생만 유지
         
