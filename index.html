@@ -8785,6 +8785,35 @@ if (window.innerWidth <= 768) {
       video.setAttribute('autoplay', '');
       video.setAttribute('playsinline', '');
       video.setAttribute('webkit-playsinline', '');
+      
+      // 모바일에서 초기 재생 시도
+      const tryPlayVideo = () => {
+        video.play().then(() => {
+          console.log('Mobile video started playing');
+          isHiveVideoPlaying = true;
+        }).catch(err => {
+          console.log('Mobile video play failed, will retry on user interaction');
+        });
+      };
+      
+      // 즉시 재생 시도
+      tryPlayVideo();
+      
+      // 사용자 상호작용 시 재생 (모바일 브라우저 정책)
+      const startVideoOnInteraction = () => {
+        if (video.paused) {
+          video.muted = true;
+          video.play().then(() => {
+            console.log('Mobile video started on user interaction');
+            isHiveVideoPlaying = true;
+          });
+        }
+      };
+      
+      // 터치나 스크롤 이벤트로 재생 시작
+      document.addEventListener('touchstart', startVideoOnInteraction, { once: true });
+      document.addEventListener('scroll', startVideoOnInteraction, { once: true });
+      document.addEventListener('click', startVideoOnInteraction, { once: true });
     }
     
     // Intersection Observer로 스크롤 감지 (PC와 모바일 동일하게 적용)
@@ -8792,7 +8821,11 @@ if (window.innerWidth <= 768) {
       entries.forEach(entry => {
         if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
           // 화면에 50% 이상 보이면 자동재생 (PC와 모바일 모두)
-          if (!isHiveVideoPlaying && video.paused) {
+          if (video.paused) {
+            // 모바일에서는 항상 음소거 확인
+            if (window.innerWidth <= 768) {
+              video.muted = true;
+            }
             video.play().then(() => {
               isHiveVideoPlaying = true;
               console.log('NEO HIVE video auto-play on scroll');
@@ -8801,7 +8834,9 @@ if (window.innerWidth <= 768) {
               // 모바일에서 실패 시 다시 시도
               if (window.innerWidth <= 768) {
                 video.muted = true;
-                video.play();
+                setTimeout(() => {
+                  video.play().catch(() => {});
+                }, 100);
               }
             });
           }
@@ -16394,16 +16429,40 @@ document.addEventListener('DOMContentLoaded', function() {
         // 모바일 NEO HIVE 비디오 스크롤 자동재생 설정
         setupHiveVideoScrollPlay();
         
-        // 모바일에서 네오 하이브 비디오 설정 (스크롤 기반 재생으로 변경)
+        // 모바일에서 네오 하이브 비디오 설정
         const centerVideo = document.getElementById('centerVideo');
         if (centerVideo) {
           centerVideo.muted = true; // 모바일에서는 음소거 필수
           centerVideo.setAttribute('autoplay', '');
           centerVideo.setAttribute('playsinline', '');
           centerVideo.setAttribute('webkit-playsinline', '');
+          centerVideo.load(); // 비디오 리로드
           
-          // 스크롤 기반 재생만 사용 (초기 자동 재생 제거)
-          // Intersection Observer가 스크롤 위치에 따라 재생/정지 제어
+          // 모바일 비디오 재생 헬퍼 함수
+          const playMobileVideo = () => {
+            if (centerVideo.paused) {
+              centerVideo.muted = true;
+              centerVideo.play().then(() => {
+                console.log('Mobile NEO HIVE video playing');
+              }).catch(err => {
+                console.log('Mobile play error:', err);
+                // 재시도
+                setTimeout(() => {
+                  centerVideo.muted = true;
+                  centerVideo.play().catch(() => {});
+                }, 500);
+              });
+            }
+          };
+          
+          // 초기 재생 시도
+          setTimeout(playMobileVideo, 100);
+          
+          // 사용자 상호작용 이벤트에 재생 연결
+          const events = ['touchstart', 'touchend', 'click', 'scroll'];
+          events.forEach(event => {
+            document.addEventListener(event, playMobileVideo, { once: true, passive: true });
+          });
         }
         
         // 모바일 비디오 클릭 이벤트 삭제됨 - 자동 재생만 유지
