@@ -7302,19 +7302,7 @@ if (window.innerWidth <= 768) {
                 currentFacilityIndex = facilityImages.length - 1; // 처음에서 마지막으로 순환
               }
               selectFacilityImage(currentFacilityIndex);
-              
-              // 썸네일도 스크롤
-              const selectedThumb = document.querySelector(`.facility-thumbnail[data-index="${currentFacilityIndex}"]`);
-              if (selectedThumb) {
-                const thumbWidth = selectedThumb.offsetWidth;
-                const containerWidth = container.offsetWidth;
-                const scrollPosition = selectedThumb.offsetLeft - (containerWidth / 2) + (thumbWidth / 2);
-                
-                container.scrollTo({
-                  left: scrollPosition,
-                  behavior: 'smooth'
-                });
-              }
+              updateThumbnailScroll(); // 통일된 썸네일 스크롤 함수 사용
             } else if (mainDiffX < 0) {
               // 왼쪽 스와이프 - 다음 (순환)
               if (currentFacilityIndex < facilityImages.length - 1) {
@@ -7323,19 +7311,7 @@ if (window.innerWidth <= 768) {
                 currentFacilityIndex = 0; // 마지막에서 처음으로 순환
               }
               selectFacilityImage(currentFacilityIndex);
-              
-              // 썸네일도 스크롤
-              const selectedThumb = document.querySelector(`.facility-thumbnail[data-index="${currentFacilityIndex}"]`);
-              if (selectedThumb) {
-                const thumbWidth = selectedThumb.offsetWidth;
-                const containerWidth = container.offsetWidth;
-                const scrollPosition = selectedThumb.offsetLeft - (containerWidth / 2) + (thumbWidth / 2);
-                
-                container.scrollTo({
-                  left: scrollPosition,
-                  behavior: 'smooth'
-                });
-              }
+              updateThumbnailScroll(); // 통일된 썸네일 스크롤 함수 사용
             }
           }
         });
