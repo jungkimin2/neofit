@@ -8782,8 +8782,8 @@ if (window.innerWidth <= 768) {
     // Intersection Observer로 스크롤 감지
     hiveVideoObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        if (entry.isIntersecting && entry.intersectionRatio > 0.3) {
-          // 화면에 30% 이상 보이면 자동재생
+        if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
+          // 화면에 50% 이상 보이면 자동재생
           if (!isHiveVideoPlaying && video.paused) {
             video.play().then(() => {
               isHiveVideoPlaying = true;
@@ -8792,8 +8792,8 @@ if (window.innerWidth <= 768) {
               console.log('Auto-play prevented:', err);
             });
           }
-        } else {
-          // 화면에서 벗어나면 일시정지
+        } else if (entry.intersectionRatio < 0.6) {
+          // 화면에 60% 미만 보이면 즉시 일시정지 (더 빨리 멈춤)
           if (isHiveVideoPlaying && !video.paused) {
             video.pause();
             isHiveVideoPlaying = false;
@@ -8802,7 +8802,7 @@ if (window.innerWidth <= 768) {
         }
       });
     }, {
-      threshold: [0, 0.3, 0.5, 0.7, 1]
+      threshold: [0, 0.5, 0.6, 0.7, 0.8, 0.9, 1]
     });
     
     // 섹션 관찰 시작
