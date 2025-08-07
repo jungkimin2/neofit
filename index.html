@@ -10,6 +10,46 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Neo Hive - 스마트하게, 함께 하는 피트니스</title>
 
+<!-- Preload 중요 리소스 -->
+<link rel="preload" href="./images/neohive3.png" as="image">
+<link rel="preload" href="./images/hive3.png" as="image">
+<link rel="dns-prefetch" href="https://fonts.googleapis.com">
+<link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+
+<!-- 모바일 감지 및 최적화 -->
+<script>
+// 모바일 즉시 감지 및 최적화
+(function() {
+  const isMobile = window.innerWidth <= 768;
+  
+  if (isMobile) {
+    // 모바일 전용 클래스 즉시 추가
+    document.documentElement.classList.add('is-mobile');
+    
+    // 불필요한 리소스 로딩 방지
+    window.lazyLoadEnabled = true;
+    
+    // 모바일 전용 스타일 우선 로드
+    const style = document.createElement('style');
+    style.textContent = `
+      /* 모바일 빠른 렌더링 */
+      .is-mobile img:not([loading="eager"]) { 
+        loading: lazy !important; 
+      }
+      .is-mobile video:not(#centerVideo) { 
+        preload: none !important; 
+      }
+      /* 모바일에서 불필요한 애니메이션 제거 */
+      .is-mobile * {
+        animation-duration: 0.1s !important;
+        transition-duration: 0.1s !important;
+      }
+    `;
+    document.head.insertBefore(style, document.head.firstChild);
+  }
+})();
+</script>
+
 <!-- 모바일 전용 즉시 적용 스타일 - 페이지 로딩 시 깜빡임 방지 -->
 <style>
 /* 스피커 버튼 클릭 가능 */
@@ -1314,6 +1354,7 @@ section {
 }
 </style>
 <link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="preload" href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css" as="style">
 <link href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css" rel="stylesheet" media="print" onload="this.media='all'">
 <noscript><link href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css" rel="stylesheet"></noscript>
 
@@ -16327,35 +16368,21 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     }
     
-    // 모바일 페이지 로딩 완료 처리
+    // 모바일 페이지 빠른 로딩 처리
     function showMobilePage() {
-      removeGreyBoxes(); // 회색 박스 먼저 제거
-      forceApplyMobileStyles();
-      adjustMobileIcons();
-      restoreGlowEffect(); // 발광효과 복구
-      forceMobileHiveButtons(); // 모바일 하이브 버튼 표시
-      setupMobileHiveButtonEvents(); // 모바일 버튼 이벤트 설정
-      
-      // 페이지 표시
-      setTimeout(() => {
-        document.body.classList.add('mobile-loaded');
-        removeGreyBoxes(); // 한 번 더 제거
-        restoreGlowEffect(); // 발광효과 재복구
-        forceMobileHiveButtons(); // 모바일 하이브 버튼 다시 표시
-        setupMobileHiveButtonEvents(); // 모바일 버튼 이벤트 재설정
-      }, 50);
+      // requestAnimationFrame으로 최적화
+      requestAnimationFrame(() => {
+        removeGreyBoxes();
+        forceApplyMobileStyles();
+        adjustMobileIcons();
+        restoreGlowEffect();
+        forceMobileHiveButtons();
+        setupMobileHiveButtonEvents();
+      });
     }
     
-    // 즉시 실행 (HTML 파싱과 동시에)
+    // 즉시 실행
     showMobilePage();
-    
-    // DOM 준비 시 재실행 (보험)
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', showMobilePage);
-    }
-    
-    // 페이지 완전 로드 시 재실행 (최종 보험)
-    window.addEventListener('load', showMobilePage);
     
     // MutationObserver로 DOM 변경 감지 시 재적용
     const observer = new MutationObserver(function(mutations) {
