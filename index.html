@@ -6624,6 +6624,15 @@ if (window.innerWidth <= 768) {
           <div class="facility-thumbnail" data-index="9" onclick="selectFacilityImage(9)" style="flex: 0 0 calc(20% - 13px); cursor: pointer; border-radius: 12px; overflow: hidden; border: 2px solid transparent; transition: all 0.3s;">
             <img src="./images/IMG3866.jpg" alt="시설 이미지 10" style="width: 100%; height: 120px; object-fit: cover; display: block;">
           </div>
+          <div class="facility-thumbnail" data-index="10" onclick="selectFacilityImage(10)" style="flex: 0 0 calc(20% - 13px); cursor: pointer; border-radius: 12px; overflow: hidden; border: 2px solid transparent; transition: all 0.3s;">
+            <img src="./images/IMG_3827.JPG" alt="시설 이미지 11" style="width: 100%; height: 120px; object-fit: cover; display: block;">
+          </div>
+          <div class="facility-thumbnail" data-index="11" onclick="selectFacilityImage(11)" style="flex: 0 0 calc(20% - 13px); cursor: pointer; border-radius: 12px; overflow: hidden; border: 2px solid transparent; transition: all 0.3s;">
+            <img src="./images/IMG3826.JPG" alt="시설 이미지 12" style="width: 100%; height: 120px; object-fit: cover; display: block;">
+          </div>
+          <div class="facility-thumbnail" data-index="12" onclick="selectFacilityImage(12)" style="flex: 0 0 calc(20% - 13px); cursor: pointer; border-radius: 12px; overflow: hidden; border: 2px solid transparent; transition: all 0.3s;">
+            <img src="./images/IMG3829.JPG" alt="시설 이미지 13" style="width: 100%; height: 120px; object-fit: cover; display: block;">
+          </div>
           </div>
         </div>
       </div>
@@ -7046,7 +7055,10 @@ if (window.innerWidth <= 768) {
       './images/IMG3840.JPG',
       './images/IMG3805.jpg',  // 수정된 이미지 1
       './images/IMG3864.jpg',  // 수정된 이미지 2
-      './images/IMG3866.jpg'   // 수정된 이미지 3
+      './images/IMG3866.jpg',  // 수정된 이미지 3
+      './images/IMG_3827.JPG', // 추가된 이미지 4
+      './images/IMG3826.JPG',  // 추가된 이미지 5
+      './images/IMG3829.JPG'   // 추가된 이미지 6
     ];
     
     // 썸네일 클릭시 메인 이미지 변경
@@ -7062,6 +7074,16 @@ if (window.innerWidth <= 768) {
       
       setTimeout(() => {
         mainImage.src = facilityImages[index];
+        
+        // IMG3864.jpg (index 8), IMG3866.jpg (index 9), IMG_3827.JPG (index 10), IMG3826.JPG (index 11), IMG3829.JPG (index 12)는 contain으로 표시
+        if (index === 8 || index === 9 || index === 10 || index === 11 || index === 12) {
+          mainImage.style.objectFit = 'contain';
+          mainImage.style.backgroundColor = '#000'; // 배경색 설정
+        } else {
+          mainImage.style.objectFit = 'cover';
+          mainImage.style.backgroundColor = 'transparent';
+        }
+        
         // 페이드 인
         mainImage.style.opacity = '1';
       }, 150);
