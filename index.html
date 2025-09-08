@@ -3119,10 +3119,22 @@ document.addEventListener('DOMContentLoaded', function() {
   function shouldShowPopupImmediate() {
     try {
       const dontShowUntil = localStorage.getItem('dontShowPopupUntil');
-      if (!dontShowUntil) return true;
+      console.log('🔍 localStorage에서 가져온 값:', dontShowUntil);
+      
+      if (!dontShowUntil) {
+        console.log('❌ localStorage에 설정 없음 → 팝업 표시');
+        return true;
+      }
       
       const today = new Date().toDateString();
-      return dontShowUntil !== today;
+      console.log('📅 오늘 날짜:', today);
+      console.log('💾 저장된 날짜:', dontShowUntil);
+      console.log('📊 날짜 비교 결과:', dontShowUntil === today ? '같음' : '다름');
+      
+      const shouldShow = dontShowUntil !== today;
+      console.log(shouldShow ? '✅ 팝업 표시함' : '❌ 팝업 숨김 (오늘 하루 안보기)');
+      
+      return shouldShow;
     } catch(e) {
       console.error('localStorage 접근 실패:', e);
       return true;
