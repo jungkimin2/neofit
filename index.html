@@ -55,6 +55,13 @@
   z-index: 10 !important;
 }
 
+/* 모바일에서 상금 강조 박스와 챌린지 패키지 간격 조정 */
+@media screen and (max-width: 768px) {
+  .prize-announcement-box {
+    margin-bottom: 48px !important;
+  }
+}
+
 /* 모바일에서만 적용 - PC 환경 완전 보호 */
 @media screen and (max-width: 768px) and (orientation: portrait),
        screen and (max-width: 768px) and (orientation: landscape) {
@@ -3462,7 +3469,7 @@ document.addEventListener('DOMContentLoaded', function() {
           ">"네오-하이브 시즌2: 우리팀, 우리의 성장"</h2>
           
           <!-- 상금 강조 -->
-          <div style="
+          <div class="prize-announcement-box" style="
             background: rgba(255, 255, 255, 0.95);
             padding: 8px 16px;
             border-radius: 20px;
