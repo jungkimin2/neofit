@@ -3294,13 +3294,43 @@ document.addEventListener('DOMContentLoaded', function() {
       #entryPopup .button-container label {
         font-size: 10px !important;
       }
-      /* 모바일에서 X 버튼 크기 조정 */
+      /* 모바일에서 X 버튼 크기 조정 및 터치 최적화 */
       #entryPopup #closePopupBtn {
-        width: 30px !important;
-        height: 30px !important;
-        font-size: 18px !important;
-        top: 10px !important;
-        right: 10px !important;
+        width: 44px !important;
+        height: 44px !important;
+        font-size: 20px !important;
+        top: 8px !important;
+        right: 8px !important;
+        background: rgba(255, 0, 0, 0.8) !important;
+        border: 2px solid #fff !important;
+        -webkit-tap-highlight-color: transparent !important;
+        touch-action: manipulation !important;
+        user-select: none !important;
+        -webkit-user-select: none !important;
+      }
+      
+      /* 모바일에서 X 버튼 터치 피드백 */
+      #entryPopup #closePopupBtn:active {
+        background: rgba(255, 0, 0, 1) !important;
+        transform: scale(0.95) !important;
+      }
+      
+      /* 모바일에서 체크박스 터치 영역 개선 */
+      #entryPopup #dontShowToday {
+        width: 20px !important;
+        height: 20px !important;
+        transform: scale(1.2) !important;
+        touch-action: manipulation !important;
+        -webkit-tap-highlight-color: transparent !important;
+      }
+      
+      /* 모바일에서 체크박스 라벨 터치 영역 개선 */
+      #entryPopup label {
+        padding: 8px !important;
+        touch-action: manipulation !important;
+        -webkit-tap-highlight-color: transparent !important;
+        user-select: none !important;
+        -webkit-user-select: none !important;
       }
       /* 모바일에서 스크롤 완전 차단 */
       body.popup-open {
@@ -3394,10 +3424,14 @@ document.addEventListener('DOMContentLoaded', function() {
         line-height: 1;
         font-weight: bold;
         transition: all 0.2s ease;
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
       " 
       onmouseover="this.style.background='rgba(0,0,0,0.9)'; this.style.transform='scale(1.1)'"
       onmouseout="this.style.background='rgba(0,0,0,0.8)'; this.style.transform='scale(1)'"
-      onclick="event.stopPropagation(); event.preventDefault(); closeEntryPopup(); return false;">×</button>
+      onclick="event.stopPropagation(); event.preventDefault(); closeEntryPopup(); return false;"
+      ontouchstart="this.style.background='rgba(0,0,0,0.9)'; this.style.transform='scale(1.1)'"
+      ontouchend="this.style.background='rgba(0,0,0,0.8)'; this.style.transform='scale(1)'; event.stopPropagation(); event.preventDefault(); closeEntryPopup(); return false;">×</button>
       
       <!-- 팝업 콘텐츠 -->
       <div class="popup-content" style="
@@ -3622,13 +3656,20 @@ document.addEventListener('DOMContentLoaded', function() {
               cursor: pointer;
               text-shadow: 0 1px 3px rgba(0,0,0,0.3);
               white-space: nowrap;
-            ">
+              touch-action: manipulation;
+            " onclick="event.stopPropagation();" 
+               ontouchstart="event.stopPropagation();" 
+               ontouchend="event.stopPropagation();">
               <input type="checkbox" id="dontShowToday" style="
                 margin-right: 4px;
                 transform: scale(1.1);
                 accent-color: #7BE495;
                 cursor: pointer;
-              " onchange="handleDontShowToday(this.checked)">
+                touch-action: manipulation;
+              " onchange="handleDontShowToday(this.checked)" 
+                 onclick="event.stopPropagation();"
+                 ontouchstart="event.stopPropagation();"
+                 ontouchend="event.stopPropagation();">
               오늘 하루 않보기
             </label>
             
@@ -18009,14 +18050,33 @@ function initEntryPopup() {
   // 팝업 저장하여 닫기시 스크롤 위치 복원
   popup.dataset.scrollY = scrollY;
   
-  // X 버튼에 추가 이벤트 리스너 등록 (백업)
+  // X 버튼에 추가 이벤트 리스너 등록 (백업) - 모바일 터치 지원
   const closeBtn = document.getElementById('closePopupBtn');
   if (closeBtn) {
+    // 클릭 이벤트
     closeBtn.addEventListener('click', function(e) {
       e.preventDefault();
       e.stopPropagation();
       closeEntryPopup();
-      console.log('팝업 닫기 실행됨');
+      console.log('팝업 닫기 (클릭) 실행됨');
+    });
+    
+    // 터치 이벤트 (모바일 대응)
+    closeBtn.addEventListener('touchend', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      closeEntryPopup();
+      console.log('팝업 닫기 (터치) 실행됨');
+    });
+    
+    // 포커스 및 엔터키 지원
+    closeBtn.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        e.stopPropagation();
+        closeEntryPopup();
+        console.log('팝업 닫기 (키보드) 실행됨');
+      }
     });
   }
   
