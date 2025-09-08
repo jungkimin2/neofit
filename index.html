@@ -3667,7 +3667,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 transition: all 0.2s ease;
                 touch-action: manipulation;
                 -webkit-tap-highlight-color: transparent;
-              " onclick="console.log('X버튼 클릭!'); var checkbox = document.getElementById('dontShowToday'); if(checkbox && checkbox.checked) { var today = new Date().toDateString(); localStorage.setItem('dontShowPopupUntil', today); console.log('오늘 하루 안보기 설정됨:', today); } var popup = document.getElementById('entryPopup'); popup.style.setProperty('display', 'none', 'important'); document.body.classList.remove('popup-active'); console.log('팝업 닫기 실행'); event.stopPropagation(); return false;"
+              " onclick="console.log('🔥 하단 X버튼 클릭!'); var checkbox = document.getElementById('dontShowToday'); console.log('📦 체크박스 Element:', checkbox); console.log('✅ 체크박스 checked 상태:', checkbox ? checkbox.checked : 'element not found'); if(checkbox && checkbox.checked) { var today = new Date().toDateString(); console.log('📅 오늘 날짜 생성:', today); try { localStorage.setItem('dontShowPopupUntil', today); console.log('💾 localStorage.setItem 실행됨'); var stored = localStorage.getItem('dontShowPopupUntil'); console.log('🔍 저장 후 localStorage 확인:', stored); console.log('🎯 저장 성공 여부:', stored === today ? 'SUCCESS' : 'FAILED'); } catch(e) { console.error('❌ localStorage 저장 실패:', e); } } else { console.log('⚠️ 체크박스가 체크되지 않았거나 찾을 수 없음'); } var popup = document.getElementById('entryPopup'); if(popup) { popup.style.setProperty('display', 'none', 'important'); console.log('✨ 팝업 닫기 실행 완료'); } document.body.classList.remove('popup-active'); event.stopPropagation(); return false;"
                  onmouseover="this.style.background='#7BE495'; this.style.color='white';"
                  onmouseout="this.style.background='rgba(255, 255, 255, 0.9)'; this.style.color='#333';">×</button>
             </div>
@@ -18236,15 +18236,23 @@ function forceShowPopup() {
     console.log('showPopupNow 함수 실행');
     
     // 오늘 하루 안보기 설정 체크
-    if (!shouldShowPopup()) {
-      console.log('오늘 하루 안보기 설정으로 팝업 표시 안함');
+    const shouldShow = shouldShowPopup();
+    console.log('🔍 shouldShowPopup 결과:', shouldShow);
+    
+    if (!shouldShow) {
+      console.log('❌ 오늘 하루 안보기 설정으로 팝업 숨김');
       const popup = document.getElementById('entryPopup');
       if (popup) {
-        popup.style.display = 'none';
+        popup.style.setProperty('display', 'none', 'important');
+        popup.style.setProperty('visibility', 'hidden', 'important');
+        popup.style.setProperty('opacity', '0', 'important');
         document.body.classList.remove('popup-active');
         document.body.classList.add('popup-initialized');
+        console.log('✅ 팝업 완전히 숨김 처리됨');
       }
       return;
+    } else {
+      console.log('✅ 팝업 표시 조건 만족 - 팝업 표시함');
     }
     
     const popup = document.getElementById('entryPopup');
