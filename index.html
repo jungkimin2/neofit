@@ -3080,19 +3080,34 @@ document.addEventListener('DOMContentLoaded', function() {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.8);
-  backdrop-filter: blur(5px);
-  z-index: 9999999999;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 999999999999;
   opacity: 1;
   pointer-events: auto;
   overflow-y: auto;
-  padding: 20px;
+  padding: 15px;
   box-sizing: border-box;
 ">
   <style>
     #entryPopup {
-      z-index: 9999999999 !important;
+      z-index: 999999999999 !important;
       position: fixed !important;
+      isolation: isolate !important;
+    }
+    
+    /* 팝업이 열렸을 때 body 스크롤 방지 */
+    body.popup-open {
+      overflow: hidden !important;
+      position: fixed !important;
+      width: 100% !important;
+    }
+    
+    /* 모든 요소들이 팝업 뒤로 가도록 */
+    body.popup-open > *:not(#entryPopup) {
+      z-index: 1 !important;
+      position: relative !important;
     }
     #entryPopup::-webkit-scrollbar {
       width: 8px;
@@ -3111,50 +3126,81 @@ document.addEventListener('DOMContentLoaded', function() {
     /* 모바일에서 팝업이 최상위에 나타나도록 보장 */
     @media (max-width: 768px) {
       #entryPopup {
-        z-index: 9999999999 !important;
+        z-index: 999999999999 !important;
         position: fixed !important;
         top: 0 !important;
         left: 0 !important;
-        padding: 5px !important;
-        min-height: auto !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        background: rgba(0, 0, 0, 0.9) !important;
+        backdrop-filter: blur(10px) !important;
+        -webkit-backdrop-filter: blur(10px) !important;
+        padding: 10px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        overflow-y: auto !important;
       }
       #entryPopup > div:first-of-type {
-        min-height: auto !important;
-        padding: 5px 0 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 100% !important;
+        min-height: 100vh !important;
+        padding: 10px 0 !important;
       }
       .popup-content-card {
-        max-width: 340px !important;
+        max-width: 350px !important;
+        width: 95% !important;
         margin: 0 auto !important;
-        max-height: 80vh !important;
+        max-height: 90vh !important;
+        overflow-y: auto !important;
+        position: relative !important;
       }
       .popup-content {
-        padding: 6px 12px 12px 12px !important;
+        padding: 10px 15px 15px 15px !important;
       }
       #entryPopup img[src*="neohive4545.png"] {
-        width: 160px !important;
-        height: 160px !important;
+        width: 180px !important;
+        height: 180px !important;
       }
       #entryPopup h1 {
-        font-size: 13px !important;
+        font-size: 14px !important;
         margin-bottom: 2px !important;
       }
       #entryPopup h2 {
-        font-size: 11px !important;
+        font-size: 12px !important;
         margin-bottom: 1px !important;
       }
       #entryPopup h3 {
-        font-size: 15px !important;
+        font-size: 16px !important;
         margin-bottom: 2px !important;
       }
       #entryPopup .event-content {
-        padding: 8px !important;
+        padding: 10px !important;
         margin-top: 1px !important;
       }
       #entryPopup .event-content > div {
         margin-bottom: 6px !important;
       }
       #entryPopup .button-container {
-        margin-top: 2px !important;
+        margin-top: 3px !important;
+      }
+      /* 모바일에서 X 버튼 크기 조정 */
+      #entryPopup #closePopupBtn {
+        width: 35px !important;
+        height: 35px !important;
+        font-size: 20px !important;
+        top: 15px !important;
+        right: 15px !important;
+      }
+      /* 하단 네비게이션과 기타 요소들 숨기기 */
+      body:has(#entryPopup[style*="display: block"]) {
+        overflow: hidden !important;
+      }
+      body:has(#entryPopup[style*="display: block"]) > *:not(#entryPopup) {
+        filter: blur(3px) !important;
+        pointer-events: none !important;
       }
       #entryPopup p {
         font-size: 11px !important;
@@ -17746,6 +17792,8 @@ function closeEntryPopup() {
     popup.style.transform = 'translateY(-20px) scale(0.95)';
     setTimeout(() => {
       popup.style.display = 'none';
+      // body 클래스 제거하여 스크롤 복원
+      document.body.classList.remove('popup-open');
     }, 300);
   }
 }
@@ -17796,12 +17844,22 @@ function initEntryPopup() {
   
   console.log('Initializing event popup...');
   
-  // 팝업을 안정적으로 표시 - transition 제거
+  // body에 popup-open 클래스 추가하여 스크롤 방지
+  document.body.classList.add('popup-open');
+  
+  // 팝업을 안정적으로 표시
   popup.style.opacity = '1';
   popup.style.transform = 'translateY(0) scale(1)';
   popup.style.display = 'block';
   popup.style.position = 'fixed';
-  popup.style.zIndex = '2147483648';
+  popup.style.zIndex = '999999999999';
+  popup.style.width = '100vw';
+  popup.style.height = '100vh';
+  popup.style.top = '0';
+  popup.style.left = '0';
+  popup.style.background = 'rgba(0, 0, 0, 0.9)';
+  popup.style.backdropFilter = 'blur(10px)';
+  popup.style.webkitBackdropFilter = 'blur(10px)';
   
   // X 버튼에 추가 이벤트 리스너 등록 (백업)
   const closeBtn = document.getElementById('closePopupBtn');
@@ -17809,7 +17867,7 @@ function initEntryPopup() {
     closeBtn.addEventListener('click', function(e) {
       e.preventDefault();
       e.stopPropagation();
-      popup.style.display = 'none';
+      closeEntryPopup();
       console.log('팝업 닫기 실행됨');
     });
   }
@@ -17818,6 +17876,14 @@ function initEntryPopup() {
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') {
       closeEntryPopup();
+    }
+  });
+  
+  // 팝업 외부 클릭시 닫기 방지 (오버레이 클릭해도 안닫히도록)
+  popup.addEventListener('click', function(e) {
+    if (e.target === popup) {
+      // 팝업 배경을 클릭해도 닫히지 않도록 주석 처리
+      // closeEntryPopup();
     }
   });
 }
