@@ -3114,37 +3114,37 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 </style>
 <script>
-// 즉시 실행 - 팝업 깜빡임 방지
+// 즉시 실행 - 팝업 깜빡임 완전 방지
 (function() {
-  function shouldShowPopupImmediate() {
-    try {
-      const dontShowUntil = localStorage.getItem('dontShowPopupUntil');
-      console.log('🔍 localStorage에서 가져온 값:', dontShowUntil);
-      
-      if (!dontShowUntil) {
-        console.log('❌ localStorage에 설정 없음 → 팝업 표시');
-        return true;
-      }
-      
+  // localStorage 체크해서 팝업을 숨겨야 하는지 즉시 결정
+  let shouldHidePopup = false;
+  
+  try {
+    const dontShowUntil = localStorage.getItem('dontShowPopupUntil');
+    if (dontShowUntil) {
       const today = new Date().toDateString();
-      console.log('📅 오늘 날짜:', today);
-      console.log('💾 저장된 날짜:', dontShowUntil);
-      console.log('📊 날짜 비교 결과:', dontShowUntil === today ? '같음' : '다름');
-      
-      const shouldShow = dontShowUntil !== today;
-      console.log(shouldShow ? '✅ 팝업 표시함' : '❌ 팝업 숨김 (오늘 하루 안보기)');
-      
-      return shouldShow;
-    } catch(e) {
-      console.error('localStorage 접근 실패:', e);
-      return true;
+      shouldHidePopup = (dontShowUntil === today);
+      console.log('🔍 즉시 체크 - 저장된 날짜:', dontShowUntil, ', 오늘:', today, ', 숨김:', shouldHidePopup);
     }
+  } catch(e) {
+    console.error('localStorage 접근 실패:', e);
   }
   
-  // localStorage 체크해서 팝업을 숨겨야 하면 body 클래스 제거
-  if (!shouldShowPopupImmediate()) {
-    document.documentElement.className += ' no-popup';
-    console.log('🚫 즉시 실행: 팝업 숨김 처리');
+  if (shouldHidePopup) {
+    // 팝업을 숨기기 위한 CSS를 즉시 적용
+    const style = document.createElement('style');
+    style.innerHTML = `
+      #entryPopup {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+      }
+      body.popup-active {
+        background: unset !important;
+      }
+    `;
+    document.head.appendChild(style);
+    console.log('🚫 즉시 실행: 팝업 완전 숨김 처리');
   } else {
     console.log('✅ 즉시 실행: 팝업 표시 허용');
   }
