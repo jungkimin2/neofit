@@ -10102,6 +10102,7 @@ if (window.innerWidth <= 768) {
         <a href="#hive" onclick="window.closeMobileMenu();return false;" style="display: block !important; padding: 18px 20px !important; color: #ffffff !important; text-decoration: none !important; border-bottom: 1px solid rgba(123,228,149,0.2) !important; font-size: 18px !important; background-color: #000000 !important; position: relative !important; z-index: 2147483647 !important;">네오 하이브</a>
         <a href="#smart" onclick="window.closeMobileMenu();return false;" style="display: block !important; padding: 18px 20px !important; color: #ffffff !important; text-decoration: none !important; border-bottom: 1px solid rgba(123,228,149,0.2) !important; font-size: 18px !important; background-color: #000000 !important; position: relative !important; z-index: 2147483647 !important;">네오 스마트</a>
         <a href="#pilates" onclick="window.closeMobileMenu();return false;" style="display: block !important; padding: 18px 20px !important; color: #ffffff !important; text-decoration: none !important; border-bottom: 1px solid rgba(123,228,149,0.2) !important; font-size: 18px !important; background-color: #000000 !important; position: relative !important; z-index: 2147483647 !important;">네오 필라테스</a>
+        <a href="javascript:void(0)" onclick="window.showHiveChallengePopup();window.closeMobileMenu();return false;" style="display: block !important; padding: 18px 20px !important; color: #ff6c79 !important; text-decoration: none !important; border-bottom: 1px solid rgba(255,108,121,0.3) !important; font-size: 18px !important; background-color: #000000 !important; position: relative !important; z-index: 2147483647 !important; font-weight: 600 !important; text-shadow: 0 0 5px #ff6c79, 0 0 10px #ff6c79 !important;">하이브 챌린지</a>
         <a href="javascript:void(0)" onclick="openForm();window.closeMobileMenu();return false;" style="display: block !important; padding: 18px 20px !important; color: #7BE495 !important; text-decoration: none !important; font-weight: 600 !important; font-size: 18px !important; background-color: #000000 !important; position: relative !important; z-index: 2147483647 !important; border-bottom: 3px solid #7BE495 !important; box-shadow: 0 3px 8px rgba(123, 228, 149, 0.3) !important;">무료 체험하기</a>
       `;
       
@@ -18564,11 +18565,7 @@ setTimeout(function() {
 
 // 중복 함수 정의 제거됨 - 상단에 window.showHiveChallengePopup으로 이미 정의됨
 
-// 페이지 로드 후 자동 테스트 및 버튼 이벤트 추가
-setTimeout(function() {
-  console.log('🧪 3초 후 자동 팝업 테스트');
-  window.showHiveChallengePopup();
-}, 3000);
+// 자동 팝업 테스트 제거됨 - 모바일에서 드래그 시 나타나는 문제 해결
 </script>
 
 </html> 
