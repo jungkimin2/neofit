@@ -76,15 +76,25 @@
 }
 
 /* 페이지 로딩 시 팝업이 활성화될 때만 다른 요소들 숨김 */
-body.popup-active:not(.popup-initialized) > *:not(#entryPopup):not(style):not(script) {
-  opacity: 0 !important;
-  visibility: hidden !important;
+/* 팝업 활성화시 배경 처리 - 배경이 잘 보이도록 */
+body.popup-active > *:not(#entryPopup) {
+  opacity: 0.8 !important;
+  filter: blur(1px) brightness(0.7) !important;
+  pointer-events: none !important;
+  transition: all 0.3s ease !important;
 }
 
-/* 팝업이 표시될 때만 최상위에 표시 */
+/* 팝업 최상위 표시 */
 body.popup-active #entryPopup {
+  z-index: 999999999999 !important;
+  display: flex !important;
   opacity: 1 !important;
   visibility: visible !important;
+}
+
+/* body 고정 */
+body.popup-active {
+  overflow: hidden !important;
 }
 
 /* 모바일에서만 적용 - PC 환경 완전 보호 */
@@ -465,7 +475,7 @@ body.popup-active #entryPopup {
   right: 20px;
   width: 40px;
   height: 40px;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.4);
   border: 2px solid #7BE495;
   border-radius: 50%;
   display: flex;
@@ -3103,28 +3113,31 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 </style>
-<body>
+<body class="popup-active">
 <!-- 진입 팝업 - 전체 화면 오버레이 -->
 <div id="entryPopup" style="
-  display: none;
+  display: flex;
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.75);
+  background: rgba(0, 0, 0, 0.4);
   z-index: 999999999999;
   opacity: 1;
   pointer-events: auto;
   overflow-y: auto;
   padding: 15px;
   box-sizing: border-box;
+  justify-content: center;
+  align-items: center;
 " onclick="event.target === this && closeEntryPopup()">
   <style>
     #entryPopup {
       z-index: 999999999999 !important;
       position: fixed !important;
       isolation: isolate !important;
+      background: rgba(0, 0, 0, 0.4) !important;
     }
     
     /* 팝업이 열렸을 때 body 스크롤 완전 차단 */
@@ -3214,11 +3227,11 @@ document.addEventListener('DOMContentLoaded', function() {
         position: relative !important;
       }
       .popup-content {
-        padding: 40px 12px 8px 12px !important;
+        padding: 60px 12px 8px 12px !important;
       }
       #entryPopup img[src*="neohive4545.png"] {
-        width: 320px !important;
-        height: 320px !important;
+        width: 360px !important;
+        height: 360px !important;
         margin: 20px auto !important;
         display: block !important;
       }
@@ -3227,7 +3240,7 @@ document.addEventListener('DOMContentLoaded', function() {
         margin: 0 auto !important;
         padding: 0 !important;
         margin-bottom: 24px !important;
-        margin-top: -32px !important;
+        margin-top: -64px !important;
         display: flex !important;
         justify-content: center !important;
         align-items: center !important;
@@ -3394,33 +3407,6 @@ document.addEventListener('DOMContentLoaded', function() {
       border: 3px solid #7BE495;
       backdrop-filter: blur(20px);
     " onclick="event.stopPropagation()">
-      <!-- 닫기 버튼 -->
-      <div id="closePopupBtn" style="
-        position: absolute;
-        top: 15px;
-        right: 15px;
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(240, 240, 240, 0.9));
-        border: 2px solid rgba(123, 228, 149, 0.8);
-        border-radius: 50%;
-        width: 40px;
-        height: 40px;
-        font-size: 20px;
-        cursor: pointer;
-        z-index: 99999999999;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #333;
-        line-height: 1;
-        font-weight: bold;
-        user-select: none;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.2), 0 0 20px rgba(123, 228, 149, 0.3);
-        transition: all 0.3s ease;
-        backdrop-filter: blur(5px);
-      " 
-      onmouseover="this.style.background='linear-gradient(135deg, rgba(123, 228, 149, 0.9), rgba(100, 200, 120, 0.8))'; this.style.color='white'; this.style.transform='scale(1.1)'; this.style.boxShadow='0 6px 20px rgba(0,0,0,0.3), 0 0 25px rgba(123, 228, 149, 0.5)'"
-      onmouseout="this.style.background='linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(240, 240, 240, 0.9))'; this.style.color='#333'; this.style.transform='scale(1)'; this.style.boxShadow='0 4px 15px rgba(0,0,0,0.2), 0 0 20px rgba(123, 228, 149, 0.3)'"
-      onclick="document.getElementById('entryPopup').style.display='none'; document.body.classList.remove('popup-active'); document.body.classList.add('popup-initialized'); document.body.style.overflow=''; document.body.style.position=''; document.body.style.top=''; document.body.style.width='';">×</div>
       
       <!-- 팝업 콘텐츠 -->
       <div class="popup-content" style="
@@ -3636,31 +3622,55 @@ document.addEventListener('DOMContentLoaded', function() {
             justify-content: space-between;
             gap: 12px;
           ">
-            <!-- 오늘 하루 않보기 체크박스 -->
-            <label style="
-              display: flex;
-              align-items: center;
-              color: #fff;
-              font-size: 11px;
-              cursor: pointer;
-              text-shadow: 0 1px 3px rgba(0,0,0,0.3);
-              white-space: nowrap;
-              touch-action: manipulation;
-            " onclick="event.stopPropagation();" 
-               ontouchstart="event.stopPropagation();" 
-               ontouchend="event.stopPropagation();">
-              <input type="checkbox" id="dontShowToday" style="
-                margin-right: 4px;
-                transform: scale(1.1);
-                accent-color: #7BE495;
+            <!-- 오늘 하루 않보기 체크박스와 모바일 X 버튼 -->
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <label style="
+                display: flex;
+                align-items: center;
+                color: #fff;
+                font-size: 11px;
                 cursor: pointer;
+                text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+                white-space: nowrap;
                 touch-action: manipulation;
-              " onchange="handleDontShowToday(this.checked)" 
-                 onclick="event.stopPropagation();"
-                 ontouchstart="event.stopPropagation();"
+              " onclick="event.stopPropagation();" 
+                 ontouchstart="event.stopPropagation();" 
                  ontouchend="event.stopPropagation();">
-              오늘 하루 않보기
-            </label>
+                <input type="checkbox" id="dontShowToday" style="
+                  margin-right: 4px;
+                  transform: scale(1.1);
+                  accent-color: #7BE495;
+                  cursor: pointer;
+                  touch-action: manipulation;
+                " onchange="handleDontShowToday(this.checked)" 
+                   onclick="event.stopPropagation();"
+                   ontouchstart="event.stopPropagation();"
+                   ontouchend="event.stopPropagation();">
+                오늘 하루 않보기
+              </label>
+              
+              <!-- 모바일용 X 버튼 -->
+              <button id="mobileCloseBtn" style="
+                display: block;
+                width: 24px;
+                height: 24px;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.9);
+                border: 1px solid #7BE495;
+                color: #333;
+                font-size: 14px;
+                font-weight: bold;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: all 0.2s ease;
+                touch-action: manipulation;
+                -webkit-tap-highlight-color: transparent;
+              " onclick="console.log('X버튼 클릭!'); var checkbox = document.getElementById('dontShowToday'); if(checkbox && checkbox.checked) { var today = new Date().toDateString(); localStorage.setItem('dontShowPopupUntil', today); console.log('오늘 하루 안보기 설정됨:', today); } var popup = document.getElementById('entryPopup'); popup.style.setProperty('display', 'none', 'important'); document.body.classList.remove('popup-active'); console.log('팝업 닫기 실행'); event.stopPropagation(); return false;"
+                 onmouseover="this.style.background='#7BE495'; this.style.color='white';"
+                 onmouseout="this.style.background='rgba(255, 255, 255, 0.9)'; this.style.color='#333';">×</button>
+            </div>
             
             <!-- 참가하기 버튼 -->
             <a href="https://m.booking.naver.com/booking/10/bizes/987028/items/5583476?area=pll&lang=ko&startDate=2025-09-08&theme=place" 
@@ -9014,7 +9024,7 @@ if (window.innerWidth <= 768) {
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.85);
+      background: rgba(0, 0, 0, 0.4);
       z-index: 9998;
       display: block;
       opacity: 0;
@@ -17952,23 +17962,84 @@ function closeEntryPopup() {
   console.log('closeEntryPopup 함수 호출됨');
   const popup = document.getElementById('entryPopup');
   if (popup) {
-    console.log('팝업 요소 찾음, 닫는 중...');
-    popup.style.display = 'none';
-    // body 스크롤 위치 복원
-    const scrollY = popup.dataset.scrollY || '0';
-    document.body.classList.remove('popup-open');
-    document.body.classList.remove('popup-active'); // 팝업 비활성화
-    document.body.classList.add('popup-initialized'); // 다른 요소들을 표시
+    console.log('팝업 요소 찾음, 강제로 닫는 중...');
+    
+    // 강력한 방법으로 팝업 숨기기
+    popup.style.setProperty('display', 'none', 'important');
+    popup.style.setProperty('opacity', '0', 'important');
+    popup.style.setProperty('visibility', 'hidden', 'important');
+    popup.style.setProperty('pointer-events', 'none', 'important');
+    popup.style.setProperty('z-index', '-1', 'important');
+    
+    // 클래스들도 제거
+    document.body.classList.remove('popup-open', 'popup-active');
+    document.body.classList.add('popup-initialized');
+    
+    // body 스타일 초기화
     document.body.style.position = '';
     document.body.style.top = '';
     document.body.style.width = '';
     document.body.style.overflow = '';
+    
+    // 스크롤 위치 복원
+    const scrollY = popup.dataset.scrollY || '0';
     window.scrollTo(0, parseInt(scrollY, 10));
-    console.log('팝업 닫기 완료');
+    
+    console.log('팝업 강제 닫기 완료');
   } else {
     console.log('팝업 요소를 찾을 수 없음');
   }
 }
+
+// 하단 X버튼 클릭 핸들러 - "오늘 하루 안보기" 체크박스 확인
+function handleBottomCloseButton() {
+  console.log('하단 X버튼 클릭됨');
+  
+  try {
+    const dontShowCheckbox = document.getElementById('dontShowToday');
+    const isChecked = dontShowCheckbox && dontShowCheckbox.checked;
+    
+    console.log('오늘 하루 안보기 체크 상태:', isChecked);
+    
+    if (isChecked) {
+      // "오늘 하루 안보기"가 체크된 경우, 오늘 날짜로 localStorage에 저장
+      const today = new Date().toDateString();
+      localStorage.setItem('dontShowPopupUntil', today);
+      console.log('오늘 하루 안보기 설정됨:', today);
+    }
+    
+    // 팝업 닫기
+    closeEntryPopup();
+  } catch (error) {
+    console.error('하단 X버튼 처리 중 오류:', error);
+    // 오류가 발생해도 팝업은 닫기
+    closeEntryPopup();
+  }
+}
+
+// 하단 X버튼에 추가 이벤트 리스너 등록 (안전장치)
+document.addEventListener('DOMContentLoaded', function() {
+  setTimeout(function() {
+    // 하단 X버튼을 여러 방법으로 찾기
+    const bottomCloseButtons = [
+      document.querySelector('button[onclick*="handleBottomCloseButton"]'),
+      document.querySelector('button:last-of-type'), 
+      ...document.querySelectorAll('button')
+    ].filter(btn => btn && btn.textContent.includes('×'));
+    
+    bottomCloseButtons.forEach(btn => {
+      if (btn && !btn.dataset.listenerAdded) {
+        console.log('하단 X버튼에 이벤트 리스너 추가:', btn);
+        btn.addEventListener('click', function(e) {
+          console.log('하단 X버튼 클릭 이벤트 발생');
+          e.stopPropagation();
+          handleBottomCloseButton();
+        });
+        btn.dataset.listenerAdded = 'true';
+      }
+    });
+  }, 1000);
+});
 
 // "오늘 하루 보지 않기" 체크박스 처리
 function handleDontShowToday(checked) {
@@ -18001,33 +18072,52 @@ function handleDontShowToday(checked) {
 // 오늘 팝업을 보여줄지 체크
 function shouldShowPopup() {
   const dontShowUntil = localStorage.getItem('dontShowPopupUntil');
-  if (!dontShowUntil) return true;
+  console.log('=== shouldShowPopup 체크 시작 ===');
+  console.log('현재 URL:', window.location.href);
+  console.log('저장된 값:', dontShowUntil);
+  
+  if (!dontShowUntil) {
+    console.log('❌ localStorage에 설정 없음 → 팝업 표시');
+    return true;
+  }
   
   const today = new Date().toDateString();
   const savedDate = dontShowUntil;
   
+  console.log('📅 오늘 날짜:', today);
+  console.log('💾 저장된 날짜:', savedDate);
+  console.log('📊 날짜 비교:', savedDate === today ? '같음' : '다름');
+  
   // 저장된 날짜가 오늘과 다르면 팝업 표시
-  return savedDate !== today;
+  const shouldShow = savedDate !== today;
+  console.log(shouldShow ? '✅ 팝업 표시함' : '❌ 팝업 숨김 (오늘 하루 안보기)');
+  console.log('=== shouldShowPopup 체크 완료 ===');
+  
+  return shouldShow;
 }
 
 // 팝업 초기화
 function initEntryPopup() {
+  console.log('initEntryPopup 함수 호출됨');
+  
+  const popup = document.getElementById('entryPopup');
+  console.log('팝업 엘리먼트 찾기:', popup ? '성공' : '실패');
+  
+  if (!popup) {
+    console.error('entryPopup 엘리먼트를 찾을 수 없습니다!');
+    return;
+  }
+  
   // 오늘 하루 보지 않기가 설정되어 있으면 팝업 표시하지 않음
   if (!shouldShowPopup()) {
-    const popup = document.getElementById('entryPopup');
-    if (popup) {
-      popup.style.display = 'none';
-    }
+    console.log('오늘 하루 보지 않기 설정으로 인해 팝업 숨김');
+    popup.style.display = 'none';
     // 팝업을 사용하지 않을 때는 다른 요소들을 즉시 표시
     document.body.classList.add('popup-initialized');
     return;
   }
   
-  const popup = document.getElementById('entryPopup');
-  
-  if (!popup) return;
-  
-  console.log('Initializing event popup...');
+  console.log('팝업 표시 시작...');
   
   // 팝업이 표시될 때 popup-active 클래스 추가
   document.body.classList.add('popup-active');
@@ -18102,11 +18192,93 @@ function initEntryPopup() {
   });
 }
 
-// 페이지 로드 시 팝업 초기화
-document.addEventListener('DOMContentLoaded', function() {
-  // 1.5초 후 팝업 표시 (오늘 하루 보지 않기 설정 확인 후)
-  setTimeout(initEntryPopup, 1500);
-});
+// 팝업 강제 표시 함수
+function forceShowPopup() {
+  console.log('forceShowPopup 함수 시작');
+  
+  const popup = document.getElementById('entryPopup');
+  if (!popup) {
+    console.error('entryPopup 엘리먼트를 찾을 수 없습니다!');
+    return;
+  }
+  
+  console.log('팝업 엘리먼트 발견 - 강제 표시 시작');
+  
+  // 팝업 강제 표시
+  popup.style.display = 'flex';
+  popup.style.visibility = 'visible';
+  popup.style.opacity = '1';
+  popup.style.zIndex = '2147483647';
+  
+  // body에 popup-active 클래스 추가
+  document.body.classList.add('popup-active');
+  document.body.classList.remove('popup-initialized');
+  
+  // 배경 스크롤 방지
+  document.body.style.overflow = 'hidden';
+  document.body.style.position = 'fixed';
+  document.body.style.top = '0';
+  document.body.style.width = '100%';
+  
+  console.log('팝업이 강제로 표시되었습니다!');
+}
+
+// 페이지 로드 시 팝업 초기화 - 즉시 실행
+(function() {
+  console.log('팝업 스크립트 즉시 실행 시작');
+  
+  // localStorage 상태 확인
+  const dontShowUntil = localStorage.getItem('dontShowPopupUntil');
+  console.log('localStorage 상태 확인:', dontShowUntil);
+  
+  // DOM 준비되면 팝업 표시 여부 확인
+  function showPopupNow() {
+    console.log('showPopupNow 함수 실행');
+    
+    // 오늘 하루 안보기 설정 체크
+    if (!shouldShowPopup()) {
+      console.log('오늘 하루 안보기 설정으로 팝업 표시 안함');
+      const popup = document.getElementById('entryPopup');
+      if (popup) {
+        popup.style.display = 'none';
+        document.body.classList.remove('popup-active');
+        document.body.classList.add('popup-initialized');
+      }
+      return;
+    }
+    
+    const popup = document.getElementById('entryPopup');
+    
+    if (popup) {
+      console.log('팝업 엘리먼트 찾음 - 표시');
+      popup.style.display = 'flex';
+      popup.style.visibility = 'visible';
+      popup.style.opacity = '1';
+      document.body.classList.add('popup-active');
+      console.log('팝업 표시 완료!');
+    } else {
+      console.log('팝업 엘리먼트 없음 - 100ms 후 재시도');
+      setTimeout(showPopupNow, 100);
+    }
+  }
+  
+  // DOM이 준비되었는지 확인
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', showPopupNow);
+  } else {
+    showPopupNow();
+  }
+})();
+
+// 추가 안전장치 - 1초 후 강제 실행
+setTimeout(function() {
+  const popup = document.getElementById('entryPopup');
+  if (popup && popup.style.display === 'none') {
+    console.log('안전장치 발동 - 팝업 강제 표시');
+    popup.style.display = 'flex';
+    document.body.classList.add('popup-active');
+  }
+}, 1000);
 </script>
 
 </html> 
