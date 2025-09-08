@@ -146,6 +146,12 @@ window.showHiveChallengePopup = function() {
   }, 10);
 };
 
+// 하이브 챌린지 팝업 함수 - 간단한 전역 함수
+window.openHiveChallenge = function() {
+  console.log('🚀 openHiveChallenge 호출됨!');
+  window.showHiveChallengePopup();
+};
+
 // 모바일 즉시 감지 및 최적화
 (function() {
   const isMobile = window.innerWidth <= 768;
@@ -1024,6 +1030,17 @@ pointer-events: auto !important;
       0 0 25px #ff3742,
       0 0 40px #e55039,
       0 0 50px #c44569;
+  }
+}
+
+/* 모바일에서만 줄바꿈 표시 */
+.mobile-break {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mobile-break {
+    display: inline;
   }
 }
 </style>
@@ -3170,8 +3187,8 @@ document.addEventListener('DOMContentLoaded', function() {
   console.log('🔍 하이브 챌린지 버튼 찾기:', hiveChallengeBtn);
   if (hiveChallengeBtn) {
     hiveChallengeBtn.addEventListener('click', function() {
-      console.log('✅ 하이브 챌린지 버튼 클릭됨!');
-      showHiveChallengePopup();
+      console.log('✅ PC 하이브 챌린지 버튼 클릭됨!');
+      openHiveChallenge();
     });
     console.log('✅ 하이브 챌린지 이벤트 리스너 추가됨');
   } else {
@@ -4099,7 +4116,7 @@ document.addEventListener('DOMContentLoaded', function() {
       네오 하이브 : <span class="neon-green">"하나되는 우리"</span>
     </h2>
     <p style="margin: 10px 0 24px; color: #aaa; text-align: left; line-height: 1.6;">
-      <span class="neon-green">하루 팀방에서 자유롭게 팀원을 만나고, 함께 챌린지에 도전하자!</span><br>
+      <span class="neon-green">하루 팀방에서 자유롭게 팀원을 만나고,<span class="mobile-break"><br></span> 함께 챌린지에 도전하자!</span><br>
       일상의 운동 습관이 곧 성장과 도전으로 이어집니다.
     </p>
 
@@ -10102,7 +10119,7 @@ if (window.innerWidth <= 768) {
         <a href="#hive" onclick="window.closeMobileMenu();return false;" style="display: block !important; padding: 18px 20px !important; color: #ffffff !important; text-decoration: none !important; border-bottom: 1px solid rgba(123,228,149,0.2) !important; font-size: 18px !important; background-color: #000000 !important; position: relative !important; z-index: 2147483647 !important;">네오 하이브</a>
         <a href="#smart" onclick="window.closeMobileMenu();return false;" style="display: block !important; padding: 18px 20px !important; color: #ffffff !important; text-decoration: none !important; border-bottom: 1px solid rgba(123,228,149,0.2) !important; font-size: 18px !important; background-color: #000000 !important; position: relative !important; z-index: 2147483647 !important;">네오 스마트</a>
         <a href="#pilates" onclick="window.closeMobileMenu();return false;" style="display: block !important; padding: 18px 20px !important; color: #ffffff !important; text-decoration: none !important; border-bottom: 1px solid rgba(123,228,149,0.2) !important; font-size: 18px !important; background-color: #000000 !important; position: relative !important; z-index: 2147483647 !important;">네오 필라테스</a>
-        <a href="javascript:void(0)" onclick="window.showHiveChallengePopup();window.closeMobileMenu();return false;" style="display: block !important; padding: 18px 20px !important; color: #ff6c79 !important; text-decoration: none !important; border-bottom: 1px solid rgba(255,108,121,0.3) !important; font-size: 18px !important; background-color: #000000 !important; position: relative !important; z-index: 2147483647 !important; font-weight: 600 !important; text-shadow: 0 0 5px #ff6c79, 0 0 10px #ff6c79 !important;">하이브 챌린지</a>
+        <a href="javascript:void(0)" onclick="openHiveChallenge();window.closeMobileMenu();return false;" style="display: block !important; padding: 18px 20px !important; color: #ff6c79 !important; text-decoration: none !important; border-bottom: 1px solid rgba(255,108,121,0.3) !important; font-size: 18px !important; background-color: #000000 !important; position: relative !important; z-index: 2147483647 !important; font-weight: 600 !important; text-shadow: 0 0 5px #ff6c79, 0 0 10px #ff6c79 !important;">하이브 챌린지</a>
         <a href="javascript:void(0)" onclick="openForm();window.closeMobileMenu();return false;" style="display: block !important; padding: 18px 20px !important; color: #7BE495 !important; text-decoration: none !important; font-weight: 600 !important; font-size: 18px !important; background-color: #000000 !important; position: relative !important; z-index: 2147483647 !important; border-bottom: 3px solid #7BE495 !important; box-shadow: 0 3px 8px rgba(123, 228, 149, 0.3) !important;">무료 체험하기</a>
       `;
       
