@@ -3114,9 +3114,9 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 </style>
 <script>
-// 즉시 실행 - 팝업 깜빡임 완전 방지
+// 가장 먼저 실행 - 팝업 깜빡임 완전 차단
 (function() {
-  // localStorage 체크해서 팝업을 숨겨야 하는지 즉시 결정
+  // localStorage 즉시 체크
   let shouldHidePopup = false;
   
   try {
@@ -3124,29 +3124,47 @@ document.addEventListener('DOMContentLoaded', function() {
     if (dontShowUntil) {
       const today = new Date().toDateString();
       shouldHidePopup = (dontShowUntil === today);
-      console.log('🔍 즉시 체크 - 저장된 날짜:', dontShowUntil, ', 오늘:', today, ', 숨김:', shouldHidePopup);
+      console.log('🔍 초기 체크 - 저장된 날짜:', dontShowUntil, ', 오늘:', today, ', 숨김:', shouldHidePopup);
     }
   } catch(e) {
     console.error('localStorage 접근 실패:', e);
+    shouldHidePopup = false;
   }
   
+  // 전역 변수로 설정하여 다른 스크립트들이 확인할 수 있도록 함
+  window.POPUP_SHOULD_HIDE = shouldHidePopup;
+  
   if (shouldHidePopup) {
-    // 팝업을 숨기기 위한 CSS를 즉시 적용
+    // 최우선으로 CSS 적용
     const style = document.createElement('style');
+    style.id = 'popup-hide-style';
     style.innerHTML = `
       #entryPopup {
         display: none !important;
         visibility: hidden !important;
         opacity: 0 !important;
+        pointer-events: none !important;
+        position: absolute !important;
+        left: -9999px !important;
+        top: -9999px !important;
       }
       body.popup-active {
         background: unset !important;
+        position: static !important;
+        overflow: auto !important;
       }
     `;
     document.head.appendChild(style);
-    console.log('🚫 즉시 실행: 팝업 완전 숨김 처리');
+    
+    // body 클래스도 즉시 제거
+    document.addEventListener('DOMContentLoaded', function() {
+      document.body.classList.remove('popup-active');
+      document.body.classList.add('popup-initialized');
+    });
+    
+    console.log('🚫 강력한 팝업 숨김 처리 완료');
   } else {
-    console.log('✅ 즉시 실행: 팝업 표시 허용');
+    console.log('✅ 팝업 표시 허용');
   }
 })();
 </script>
@@ -18282,7 +18300,19 @@ function forceShowPopup() {
   function showPopupNow() {
     console.log('showPopupNow 함수 실행');
     
-    // 오늘 하루 안보기 설정 체크
+    // 전역 변수로 팝업 숨김 상태 먼저 확인
+    if (window.POPUP_SHOULD_HIDE === true) {
+      console.log('❌ 전역 설정에 의해 팝업 숨김 처리됨');
+      const popup = document.getElementById('entryPopup');
+      if (popup) {
+        document.body.classList.remove('popup-active');
+        document.body.classList.add('popup-initialized');
+        console.log('✅ body 클래스 정리 완료');
+      }
+      return;
+    }
+    
+    // 오늘 하루 안보기 설정 체크 (이중 확인)
     const shouldShow = shouldShowPopup();
     console.log('🔍 shouldShowPopup 결과:', shouldShow);
     
