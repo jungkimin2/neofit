@@ -18278,13 +18278,18 @@ function forceShowPopup() {
   }
 })();
 
-// 추가 안전장치 - 1초 후 강제 실행
+// 안전장치 - shouldShowPopup 체크 후 결정
 setTimeout(function() {
-  const popup = document.getElementById('entryPopup');
-  if (popup && popup.style.display === 'none') {
-    console.log('안전장치 발동 - 팝업 강제 표시');
-    popup.style.display = 'flex';
-    document.body.classList.add('popup-active');
+  console.log('🛡️ 안전장치 실행 - shouldShowPopup 재확인');
+  if (shouldShowPopup()) {
+    const popup = document.getElementById('entryPopup');
+    if (popup && popup.style.display === 'none') {
+      console.log('✅ 안전장치: 팝업 표시 조건 만족 - 팝업 표시');
+      popup.style.display = 'flex';
+      document.body.classList.add('popup-active');
+    }
+  } else {
+    console.log('❌ 안전장치: 오늘 하루 안보기 설정으로 팝업 숨김 유지');
   }
 }, 1000);
 </script>
