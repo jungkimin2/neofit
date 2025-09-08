@@ -44,6 +44,22 @@
     `;
     document.head.insertBefore(style, document.head.firstChild);
   }
+  
+  // 팝업 체크를 위한 DOM 준비 상태 확인
+  function checkPopupStatus() {
+    const popup = document.getElementById('entryPopup');
+    if (popup && popup.style.display === 'none') {
+      // 팝업이 숨겨져 있으면 다른 요소들을 바로 표시
+      document.body.classList.add('popup-initialized');
+    }
+  }
+  
+  // DOM이 준비되면 바로 확인
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', checkPopupStatus);
+  } else {
+    checkPopupStatus();
+  }
 })();
 </script>
 
@@ -60,6 +76,18 @@
   .prize-announcement-box {
     margin-bottom: 48px !important;
   }
+}
+
+/* 페이지 로딩 시 팝업 외 요소들 깜빡임 방지 - 초기 숨김 */
+body:not(.popup-initialized) > *:not(#entryPopup):not(style):not(script) {
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+/* 팝업은 항상 최상위에 표시 */
+#entryPopup {
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
 /* 모바일에서만 적용 - PC 환경 완전 보호 */
@@ -3189,28 +3217,34 @@ document.addEventListener('DOMContentLoaded', function() {
         position: relative !important;
       }
       .popup-content {
-        padding: 24px 12px 8px 12px !important;
+        padding: 40px 12px 8px 12px !important;
       }
       #entryPopup img[src*="neohive4545.png"] {
-        width: 240px !important;
-        height: 240px !important;
-        margin: 16px 0 !important;
+        width: 280px !important;
+        height: 280px !important;
+        margin: 20px auto !important;
+        display: block !important;
       }
       /* 모바일에서 로고 컨테이너 여백 조정 */
       #entryPopup .logo-container {
-        margin: 0 !important;
+        margin: 0 auto !important;
         padding: 0 !important;
-        margin-bottom: 20px !important;
+        margin-bottom: 24px !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
       }
       #entryPopup h1 {
         font-size: 13px !important;
-        margin: 0px 0 12px 0 !important;
+        margin: 0px 0 16px 0 !important;
         line-height: 1.0 !important;
+        transform: translateY(-12px) !important;
       }
       #entryPopup h2 {
         font-size: 11px !important;
-        margin: 0 0 16px 0 !important;
+        margin: 0 0 20px 0 !important;
         line-height: 1.1 !important;
+        transform: translateY(-12px) !important;
       }
       #entryPopup h3 {
         font-size: 14px !important;
@@ -3236,10 +3270,11 @@ document.addEventListener('DOMContentLoaded', function() {
       #entryPopup .button-container {
         margin-top: 1px !important;
       }
-      /* 상금 박스 여백 축소 */
+      /* 상금 박스 위치 조정 */
       #entryPopup div[style*="background: rgba(255, 255, 255, 0.95)"] {
-        margin: 0px 0 !important;
+        margin: 0px 0 24px 0 !important;
         padding: 4px 12px !important;
+        transform: translateY(-16px) !important;
       }
       /* 챌린지 패키지 박스 여백 축소 */
       #entryPopup div[style*="background: rgba(123, 228, 149, 0.15)"] {
@@ -3297,11 +3332,13 @@ document.addEventListener('DOMContentLoaded', function() {
         max-height: 80vh !important;
       }
       .popup-content {
-        padding: 30px 10px 10px 10px !important;
+        padding: 50px 10px 10px 10px !important;
       }
       #entryPopup img[src*="neohive4545.png"] {
-        width: 180px !important;
-        height: 180px !important;
+        width: 220px !important;
+        height: 220px !important;
+        margin: 0 auto !important;
+        display: block !important;
       }
       #entryPopup h1 {
         font-size: 13px !important;
@@ -17891,6 +17928,7 @@ function closeEntryPopup() {
       // body 스크롤 위치 복원
       const scrollY = popup.dataset.scrollY || '0';
       document.body.classList.remove('popup-open');
+      document.body.classList.add('popup-initialized'); // 다른 요소들을 표시
       document.body.style.position = '';
       document.body.style.top = '';
       document.body.style.width = '';
@@ -17937,6 +17975,8 @@ function initEntryPopup() {
     if (popup) {
       popup.style.display = 'none';
     }
+    // 팝업을 사용하지 않을 때는 다른 요소들을 즉시 표시
+    document.body.classList.add('popup-initialized');
     return;
   }
   
