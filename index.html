@@ -79,12 +79,21 @@
 body.popup-active:not(.popup-initialized) > *:not(#entryPopup):not(style):not(script) {
   opacity: 0 !important;
   visibility: hidden !important;
+  pointer-events: none !important;
 }
 
 /* 팝업이 표시될 때만 최상위에 표시 */
 body.popup-active #entryPopup {
   opacity: 1 !important;
   visibility: visible !important;
+  pointer-events: auto !important;
+}
+
+/* 팝업이 초기화된 후에는 모든 요소들이 정상 동작 */
+body.popup-initialized > * {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
 }
 
 /* 모바일에서만 적용 - PC 환경 완전 보호 */
@@ -3291,19 +3300,9 @@ document.addEventListener('DOMContentLoaded', function() {
       #entryPopup .button-container label {
         font-size: 10px !important;
       }
-      /* 모바일에서 X 버튼 크기 조정 및 터치 최적화 */
+      /* 모바일에서 X 버튼 완전 숨김 */
       #entryPopup #closePopupBtn {
-        width: 44px !important;
-        height: 44px !important;
-        font-size: 20px !important;
-        top: 8px !important;
-        right: 8px !important;
-        background: rgba(255, 0, 0, 0.8) !important;
-        border: 2px solid #fff !important;
-        -webkit-tap-highlight-color: transparent !important;
-        touch-action: manipulation !important;
-        user-select: none !important;
-        -webkit-user-select: none !important;
+        display: none !important;
       }
       
       /* 모바일에서 X 버튼 터치 피드백 */
