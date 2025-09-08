@@ -3115,27 +3115,46 @@ document.addEventListener('DOMContentLoaded', function() {
         position: fixed !important;
         top: 0 !important;
         left: 0 !important;
-        padding: 10px !important;
+        padding: 5px !important;
+        min-height: auto !important;
+      }
+      #entryPopup > div:first-of-type {
+        min-height: auto !important;
+        padding: 5px 0 !important;
       }
       .popup-content-card {
         max-width: 340px !important;
         margin: 0 auto !important;
+        max-height: 85vh !important;
       }
       .popup-content {
-        padding: 12px 15px 20px 15px !important;
+        padding: 8px 12px 15px 12px !important;
       }
       #entryPopup img[src*="neohive4545.png"] {
-        width: 180px !important;
-        height: 180px !important;
+        width: 160px !important;
+        height: 160px !important;
       }
       #entryPopup h1 {
-        font-size: 14px !important;
+        font-size: 13px !important;
+        margin-bottom: 2px !important;
       }
       #entryPopup h2 {
-        font-size: 12px !important;
+        font-size: 11px !important;
+        margin-bottom: 1px !important;
       }
       #entryPopup h3 {
-        font-size: 16px !important;
+        font-size: 15px !important;
+        margin-bottom: 2px !important;
+      }
+      #entryPopup .event-content {
+        padding: 8px !important;
+        margin-top: 1px !important;
+      }
+      #entryPopup .event-content > div {
+        margin-bottom: 6px !important;
+      }
+      #entryPopup .button-container {
+        margin-top: 2px !important;
       }
       #entryPopup p {
         font-size: 11px !important;
@@ -3209,7 +3228,7 @@ document.addEventListener('DOMContentLoaded', function() {
       " 
       onmouseover="this.style.background='rgba(0,0,0,0.9)'; this.style.transform='scale(1.1)'"
       onmouseout="this.style.background='rgba(0,0,0,0.8)'; this.style.transform='scale(1)'"
-      onclick="document.getElementById('entryPopup').style.display='none'; return false;">×</button>
+      onclick="event.stopPropagation(); closeEntryPopup(); return false;">×</button>
       
       <!-- 팝업 콘텐츠 -->
       <div class="popup-content" style="
@@ -3370,7 +3389,7 @@ document.addEventListener('DOMContentLoaded', function() {
           ">📅 9/15 ~ 10/31 참가 신청</p>
           
           <!-- 이벤트 내용 -->
-          <div style="
+          <div class="event-content" style="
             background: rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(10px);
             padding: 12px;
@@ -3408,7 +3427,7 @@ document.addEventListener('DOMContentLoaded', function() {
           </div>
           
           <!-- 버튼과 체크박스 컨테이너 -->
-          <div style="
+          <div class="button-container" style="
             margin-top: 4px;
             display: flex;
             align-items: center;
