@@ -3120,6 +3120,18 @@ document.addEventListener('DOMContentLoaded', function() {
       pointer-events: auto !important;
       z-index: 999999999999 !important;
     }
+    
+    /* 데스크톱에서 로고 중앙 정렬 보장 */
+    @media (min-width: 769px) {
+      #entryPopup .logo-container {
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        margin: 0 auto !important;
+        width: 100% !important;
+        text-align: center !important;
+      }
+    }
     #entryPopup::-webkit-scrollbar {
       width: 8px;
     }
@@ -3164,78 +3176,88 @@ document.addEventListener('DOMContentLoaded', function() {
         max-width: 350px !important;
         width: 95% !important;
         margin: 0 auto !important;
-        max-height: 85vh !important;
+        max-height: 95vh !important;
         overflow-y: auto !important;
         position: relative !important;
       }
       .popup-content {
-        padding: 5px 15px 10px 15px !important;
+        padding: 3px 12px 8px 12px !important;
       }
       #entryPopup img[src*="neohive4545.png"] {
-        width: 160px !important;
-        height: 160px !important;
-        margin: 5px 0 !important;
+        width: 140px !important;
+        height: 140px !important;
+        margin: 0px 0 !important;
       }
-      /* 로고 컨테이너 여백 축소 */
+      /* 모바일에서만 로고 컨테이너 여백 축소 */
       #entryPopup .logo-container {
         margin: 0 !important;
         padding: 0 !important;
+        margin-bottom: 0px !important;
       }
       #entryPopup h1 {
-        font-size: 14px !important;
-        margin: 2px 0 1px 0 !important;
-        line-height: 1.1 !important;
+        font-size: 13px !important;
+        margin: 0px 0 0px 0 !important;
+        line-height: 1.0 !important;
       }
       #entryPopup h2 {
-        font-size: 12px !important;
+        font-size: 11px !important;
         margin: 0 0 0px 0 !important;
-        line-height: 1.2 !important;
-      }
-      #entryPopup h3 {
-        font-size: 15px !important;
-        margin: 0 !important;
         line-height: 1.1 !important;
       }
+      #entryPopup h3 {
+        font-size: 14px !important;
+        margin: 0 !important;
+        line-height: 1.0 !important;
+      }
       #entryPopup .event-content {
-        padding: 8px !important;
+        padding: 6px !important;
         margin-top: 0px !important;
       }
       #entryPopup .event-content > div {
-        margin-bottom: 4px !important;
+        margin-bottom: 3px !important;
       }
       #entryPopup .event-content h4 {
-        font-size: 12px !important;
-        margin: 0 0 2px 0 !important;
+        font-size: 11px !important;
+        margin: 0 0 1px 0 !important;
       }
       #entryPopup .event-content p {
-        font-size: 10px !important;
-        line-height: 1.3 !important;
+        font-size: 9px !important;
+        line-height: 1.2 !important;
         margin: 0 !important;
       }
       #entryPopup .button-container {
-        margin-top: 2px !important;
+        margin-top: 1px !important;
       }
       /* 상금 박스 여백 축소 */
       #entryPopup div[style*="background: rgba(255, 255, 255, 0.95)"] {
         margin: 0px 0 !important;
-        padding: 6px 14px !important;
+        padding: 4px 12px !important;
       }
       /* 챌린지 패키지 박스 여백 축소 */
       #entryPopup div[style*="background: rgba(123, 228, 149, 0.15)"] {
         margin: 0px 0 !important;
-        padding: 6px 10px !important;
+        padding: 4px 8px !important;
       }
       /* 기간 정보 여백 축소 */
       #entryPopup p[style*="📅"] {
-        margin: 0px 0 1px 0 !important;
+        margin: 0px 0 0px 0 !important;
+        font-size: 11px !important;
+      }
+      /* 버튼 크기 축소 */
+      #entryPopup .button-container a {
+        padding: 6px 16px !important;
+        font-size: 12px !important;
+      }
+      #entryPopup .button-container label {
+        font-size: 10px !important;
       }
       /* 모바일에서 X 버튼 크기 조정 */
       #entryPopup #closePopupBtn {
-        width: 35px !important;
-        height: 35px !important;
-        font-size: 20px !important;
-        top: 15px !important;
-        right: 15px !important;
+        width: 30px !important;
+        height: 30px !important;
+        font-size: 18px !important;
+        top: 10px !important;
+        right: 10px !important;
       }
       /* 모바일에서 스크롤 완전 차단 */
       body.popup-open {
@@ -3397,7 +3419,7 @@ document.addEventListener('DOMContentLoaded', function() {
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-bottom: 2px;
+            margin-bottom: 1px;
           ">
             <img src="./images/neohive4545.png" alt="Neo Hive" style="
               width: 280px !important;
