@@ -18227,9 +18227,10 @@ function forceShowPopup() {
 (function() {
   console.log('팝업 스크립트 즉시 실행 시작');
   
-  // localStorage 상태 확인
+  // localStorage 상태 확인 (디버깅을 위해 임시로 클리어)
+  localStorage.removeItem('dontShowPopupUntil'); // 임시 디버깅용
   const dontShowUntil = localStorage.getItem('dontShowPopupUntil');
-  console.log('localStorage 상태 확인:', dontShowUntil);
+  console.log('🔧 디버깅: localStorage 클리어됨, 상태 확인:', dontShowUntil);
   
   // DOM 준비되면 팝업 표시 여부 확인
   function showPopupNow() {
@@ -18258,14 +18259,16 @@ function forceShowPopup() {
     const popup = document.getElementById('entryPopup');
     
     if (popup) {
-      console.log('팝업 엘리먼트 찾음 - 표시');
-      popup.style.display = 'flex';
-      popup.style.visibility = 'visible';
-      popup.style.opacity = '1';
+      console.log('팝업 엘리먼트 찾음 - 강력한 표시 시작');
+      popup.style.setProperty('display', 'flex', 'important');
+      popup.style.setProperty('visibility', 'visible', 'important');
+      popup.style.setProperty('opacity', '1', 'important');
+      popup.style.setProperty('z-index', '999999999999', 'important');
+      popup.style.setProperty('pointer-events', 'auto', 'important');
       document.body.classList.add('popup-active');
-      console.log('팝업 표시 완료!');
+      console.log('✅ 팝업 강력 표시 완료!');
     } else {
-      console.log('팝업 엘리먼트 없음 - 100ms 후 재시도');
+      console.log('❌ 팝업 엘리먼트 없음 - 100ms 후 재시도');
       setTimeout(showPopupNow, 100);
     }
   }
