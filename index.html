@@ -18274,10 +18274,9 @@ function forceShowPopup() {
 (function() {
   console.log('팝업 스크립트 즉시 실행 시작');
   
-  // localStorage 상태 확인 (디버깅을 위해 임시로 클리어)
-  localStorage.removeItem('dontShowPopupUntil'); // 임시 디버깅용
+  // localStorage 상태 확인
   const dontShowUntil = localStorage.getItem('dontShowPopupUntil');
-  console.log('🔧 디버깅: localStorage 클리어됨, 상태 확인:', dontShowUntil);
+  console.log('🔧 현재 localStorage 상태:', dontShowUntil);
   
   // DOM 준비되면 팝업 표시 여부 확인
   function showPopupNow() {
