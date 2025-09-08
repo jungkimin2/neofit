@@ -47,14 +47,11 @@
   
   // 팝업 체크를 위한 DOM 준비 상태 확인
   function checkPopupStatus() {
-    const popup = document.getElementById('entryPopup');
-    if (popup && popup.style.display === 'none') {
-      // 팝업이 숨겨져 있으면 다른 요소들을 바로 표시
-      document.body.classList.add('popup-initialized');
-    }
+    // 초기에는 팝업이 표시되어야 하므로 다른 요소들을 숨긴 상태 유지
+    // 팝업이 실제로 닫히거나 사용하지 않을 때만 popup-initialized 클래스 추가
   }
   
-  // DOM이 준비되면 바로 확인
+  // DOM이 준비되면 바로 확인 (실제로는 아무것도 하지 않음)
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', checkPopupStatus);
   } else {
@@ -78,14 +75,14 @@
   }
 }
 
-/* 페이지 로딩 시 팝업 외 요소들 깜빡임 방지 - 초기 숨김 */
-body:not(.popup-initialized) > *:not(#entryPopup):not(style):not(script) {
+/* 페이지 로딩 시 팝업이 활성화될 때만 다른 요소들 숨김 */
+body.popup-active:not(.popup-initialized) > *:not(#entryPopup):not(style):not(script) {
   opacity: 0 !important;
   visibility: hidden !important;
 }
 
-/* 팝업은 항상 최상위에 표시 */
-#entryPopup {
+/* 팝업이 표시될 때만 최상위에 표시 */
+body.popup-active #entryPopup {
   opacity: 1 !important;
   visibility: visible !important;
 }
@@ -17969,6 +17966,7 @@ function closeEntryPopup() {
       // body 스크롤 위치 복원
       const scrollY = popup.dataset.scrollY || '0';
       document.body.classList.remove('popup-open');
+      document.body.classList.remove('popup-active'); // 팝업 비활성화
       document.body.classList.add('popup-initialized'); // 다른 요소들을 표시
       document.body.style.position = '';
       document.body.style.top = '';
@@ -18026,6 +18024,9 @@ function initEntryPopup() {
   if (!popup) return;
   
   console.log('Initializing event popup...');
+  
+  // 팝업이 표시될 때 popup-active 클래스 추가
+  document.body.classList.add('popup-active');
   
   // 모바일 스크롤 완전 차단
   const scrollY = window.scrollY;
