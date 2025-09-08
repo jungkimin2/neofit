@@ -3291,9 +3291,11 @@ document.addEventListener('DOMContentLoaded', function() {
       #entryPopup .button-container label {
         font-size: 10px !important;
       }
-      /* 모바일에서 X 버튼 완전 숨김 */
-      #entryPopup #closePopupBtn {
-        display: none !important;
+      /* 모바일에서만 X 버튼 숨김 */
+      @media screen and (max-width: 768px) {
+        #entryPopup #closePopupBtn {
+          display: none !important;
+        }
       }
       
       /* 모바일에서 X 버튼 터치 피드백 */
@@ -3392,33 +3394,27 @@ document.addEventListener('DOMContentLoaded', function() {
       backdrop-filter: blur(20px);
     " onclick="event.stopPropagation()">
       <!-- 닫기 버튼 -->
-      <button id="closePopupBtn" style="
+      <div id="closePopupBtn" style="
         position: absolute;
         top: 20px;
         right: 20px;
-        background: rgba(0, 0, 0, 0.8);
+        background: rgba(255, 0, 0, 0.9);
         border: none;
         border-radius: 50%;
-        width: 40px;
-        height: 40px;
-        font-size: 22px;
+        width: 50px;
+        height: 50px;
+        font-size: 30px;
         cursor: pointer;
         z-index: 99999999999;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: #fff;
+        color: white;
         line-height: 1;
         font-weight: bold;
-        transition: all 0.2s ease;
-        -webkit-tap-highlight-color: transparent;
-        touch-action: manipulation;
-      " 
-      onmouseover="this.style.background='rgba(0,0,0,0.9)'; this.style.transform='scale(1.1)'"
-      onmouseout="this.style.background='rgba(0,0,0,0.8)'; this.style.transform='scale(1)'"
-      onclick="event.stopPropagation(); event.preventDefault(); closeEntryPopup(); return false;"
-      ontouchstart="this.style.background='rgba(0,0,0,0.9)'; this.style.transform='scale(1.1)'"
-      ontouchend="this.style.background='rgba(0,0,0,0.8)'; this.style.transform='scale(1)'; event.stopPropagation(); event.preventDefault(); closeEntryPopup(); return false;">×</button>
+        user-select: none;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+      " onclick="document.getElementById('entryPopup').style.display='none'; document.body.classList.remove('popup-active'); document.body.classList.add('popup-initialized'); document.body.style.overflow=''; document.body.style.position=''; document.body.style.top=''; document.body.style.width='';">✕</div>
       
       <!-- 팝업 콘텐츠 -->
       <div class="popup-content" style="
@@ -3487,16 +3483,16 @@ document.addEventListener('DOMContentLoaded', function() {
             justify-content: center;
             align-items: center;
             margin-bottom: -31px;
-            transform: translate(16px, -16px);
+            transform: translate(16px, -32px);
           ">
             <img src="./images/neohive4545.png" alt="Neo Hive" style="
-              width: 320px !important;
-              height: 320px !important;
+              width: 480px !important;
+              height: 400px !important;
               object-fit: contain;
               filter: drop-shadow(0 10px 40px rgba(0,0,0,0.9));
               max-width: none !important;
               flex-shrink: 0;
-              min-width: 320px !important;
+              min-width: 480px !important;
             ">
           </div>
           
@@ -17947,40 +17943,52 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // 팝업 닫기 함수
 function closeEntryPopup() {
+  console.log('closeEntryPopup 함수 호출됨');
   const popup = document.getElementById('entryPopup');
   if (popup) {
-    popup.style.opacity = '0';
-    popup.style.transform = 'translateY(-20px) scale(0.95)';
-    setTimeout(() => {
-      popup.style.display = 'none';
-      // body 스크롤 위치 복원
-      const scrollY = popup.dataset.scrollY || '0';
-      document.body.classList.remove('popup-open');
-      document.body.classList.remove('popup-active'); // 팝업 비활성화
-      document.body.classList.add('popup-initialized'); // 다른 요소들을 표시
-      document.body.style.position = '';
-      document.body.style.top = '';
-      document.body.style.width = '';
-      document.body.style.overflow = '';
-      window.scrollTo(0, parseInt(scrollY, 10));
-    }, 300);
+    console.log('팝업 요소 찾음, 닫는 중...');
+    popup.style.display = 'none';
+    // body 스크롤 위치 복원
+    const scrollY = popup.dataset.scrollY || '0';
+    document.body.classList.remove('popup-open');
+    document.body.classList.remove('popup-active'); // 팝업 비활성화
+    document.body.classList.add('popup-initialized'); // 다른 요소들을 표시
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.width = '';
+    document.body.style.overflow = '';
+    window.scrollTo(0, parseInt(scrollY, 10));
+    console.log('팝업 닫기 완료');
+  } else {
+    console.log('팝업 요소를 찾을 수 없음');
   }
 }
 
 // "오늘 하루 보지 않기" 체크박스 처리
 function handleDontShowToday(checked) {
+  console.log('handleDontShowToday 호출됨:', checked);
   if (checked) {
     // 오늘 날짜로 로컬스토리지에 저장
     const today = new Date().toDateString();
     localStorage.setItem('dontShowPopupUntil', today);
+    console.log('오늘 하루 안보기 설정됨:', today);
     
-    // 팝업 닫기
-    setTimeout(() => {
-      closeEntryPopup();
-    }, 500);
+    // 팝업 즉시 닫기
+    const popup = document.getElementById('entryPopup');
+    if (popup) {
+      popup.style.display = 'none';
+      document.body.classList.remove('popup-active');
+      document.body.classList.add('popup-initialized');
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      console.log('팝업 닫기 완료');
+    }
   } else {
     // 체크 해제시 로컬스토리지에서 제거
     localStorage.removeItem('dontShowPopupUntil');
+    console.log('오늘 하루 안보기 해제됨');
   }
 }
 
@@ -18041,35 +18049,36 @@ function initEntryPopup() {
   // 팝업 저장하여 닫기시 스크롤 위치 복원
   popup.dataset.scrollY = scrollY;
   
-  // X 버튼에 추가 이벤트 리스너 등록 (백업) - 모바일 터치 지원
-  const closeBtn = document.getElementById('closePopupBtn');
-  if (closeBtn) {
-    // 클릭 이벤트
-    closeBtn.addEventListener('click', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      closeEntryPopup();
-      console.log('팝업 닫기 (클릭) 실행됨');
-    });
-    
-    // 터치 이벤트 (모바일 대응)
-    closeBtn.addEventListener('touchend', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      closeEntryPopup();
-      console.log('팝업 닫기 (터치) 실행됨');
-    });
-    
-    // 포커스 및 엔터키 지원
-    closeBtn.addEventListener('keydown', function(e) {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
+  // X 버튼 강제 이벤트 리스너 추가
+  setTimeout(() => {
+    const closeBtn = document.getElementById('closePopupBtn');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', function(e) {
         e.stopPropagation();
-        closeEntryPopup();
-        console.log('팝업 닫기 (키보드) 실행됨');
-      }
-    });
-  }
+        console.log('X 버튼 클릭됨 - 강제 닫기');
+        const popup = document.getElementById('entryPopup');
+        if (popup) {
+          popup.style.display = 'none';
+          document.body.classList.remove('popup-active');
+          document.body.classList.add('popup-initialized');
+          document.body.style.overflow = '';
+          document.body.style.position = '';
+          document.body.style.top = '';
+          document.body.style.width = '';
+        }
+      });
+    }
+    
+    // "오늘 하루 안보기" 체크박스에 추가 이벤트 리스너
+    const dontShowCheckbox = document.getElementById('dontShowToday');
+    if (dontShowCheckbox) {
+      dontShowCheckbox.addEventListener('change', function(e) {
+        e.stopPropagation();
+        console.log('오늘 하루 안보기 체크:', this.checked);
+        handleDontShowToday(this.checked);
+      });
+    }
+  }, 100);
   
   // ESC 키로 닫기
   document.addEventListener('keydown', function(e) {
