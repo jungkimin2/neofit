@@ -3881,38 +3881,34 @@ document.addEventListener('DOMContentLoaded', function() {
     transition: transform 0.3s ease !important;
   }
   
-  /* 🎯 로고 표시/숨김 제어 - PC/모바일 전환 */
+  /* 🔥 모바일에서 컨테이너와 로고 모두 조정 */
   @media screen and (max-width: 768px) {
-    .pc-logo {
-      display: none !important;
-    }
-    
-    .mobile-logo {
-      display: block !important;
-    }
-    
+    /* 로고 컨테이너의 transform 유지하면서 로고만 scale */
     .logo-container {
       transform: translate(16px, -32px) !important;
       overflow: visible !important;
     }
-  }
-  
-  /* 작은 모바일에서는 조금 더 작게 */
-  @media screen and (max-width: 480px) {
-    .mobile-logo {
-      width: 750px !important;
-      height: 620px !important;
+    
+    #entryPopupLogo {
+      transform: scale(2) !important;
+      -webkit-transform: scale(2) !important;
+      -moz-transform: scale(2) !important;
+      -ms-transform: scale(2) !important;
     }
   }
   
-  /* PC에서는 PC 로고만 표시 */
-  @media screen and (min-width: 769px) {
-    .pc-logo {
-      display: block !important;
+  /* 🔥 작은 모바일에서는 1.5배 */
+  @media screen and (max-width: 480px) {
+    .logo-container {
+      transform: translate(16px, -32px) !important;
+      overflow: visible !important;
     }
     
-    .mobile-logo {
-      display: none !important;
+    #entryPopupLogo {
+      transform: scale(1.5) !important;
+      -webkit-transform: scale(1.5) !important;
+      -moz-transform: scale(1.5) !important;
+      -ms-transform: scale(1.5) !important;
     }
   }
   
@@ -4173,7 +4169,7 @@ document.addEventListener('DOMContentLoaded', function() {
           "></div>
           
           <!-- 로고 -->
-          <div class="logo-container" id="logoContainerFixed" style="
+          <div class="logo-container" style="
             display: flex;
             justify-content: center;
             align-items: center;
@@ -4181,23 +4177,12 @@ document.addEventListener('DOMContentLoaded', function() {
             transform: translate(16px, -32px);
             overflow: visible;
           ">
-            <!-- PC용 로고 (768px 초과에서만 표시) -->
-            <img src="./images/neohive4545.png" alt="Neo Hive" id="entryPopupLogoPC" class="pc-logo" style="
+            <img src="./images/neohive4545.png" alt="Neo Hive" id="entryPopupLogo" style="
               width: 480px;
               height: 400px;
               object-fit: contain;
               filter: drop-shadow(0 10px 40px rgba(0,0,0,0.9));
               flex-shrink: 0;
-              display: block;
-            ">
-            <!-- 모바일용 큰 로고 (768px 이하에서만 표시) -->
-            <img src="./images/neohive4545.png" alt="Neo Hive" id="entryPopupLogoMobile" class="mobile-logo" style="
-              width: 1000px;
-              height: 830px;
-              object-fit: contain;
-              filter: drop-shadow(0 10px 40px rgba(0,0,0,0.9));
-              flex-shrink: 0;
-              display: none;
             ">
           </div>
           
