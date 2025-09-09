@@ -3868,6 +3868,38 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
   </style>
+
+  <!-- 🔥🔥🔥 모바일 전용 강제 스타일 -->
+  <style>
+  @media screen and (max-width: 768px) {
+    /* 모바일에서 로고 컨테이너 강제 위치 조정 */
+    .popup-content-card .logo-container,
+    #entryPopup .logo-container,
+    [class*="logo-container"] {
+      margin-top: -50px !important;
+      margin-bottom: -50px !important;
+      transform: translateY(-30px) !important;
+      position: relative !important;
+      z-index: 999 !important;
+    }
+    
+    /* 모바일에서 텍스트 간격 제거 */
+    .popup-content-card h1,
+    #entryPopup h1,
+    [style*="성장"] {
+      margin-bottom: -10px !important;
+      padding-bottom: 0px !important;
+    }
+    
+    .popup-content-card h2,
+    #entryPopup h2,
+    [style*="네오-하이브"] {
+      margin-top: -15px !important;
+      padding-top: 0px !important;
+      transform: translateY(-10px) !important;
+    }
+  }
+  </style>
   
   
   <!-- 중앙 정렬 컨테이너 -->
