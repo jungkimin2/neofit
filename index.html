@@ -3788,14 +3788,19 @@ document.addEventListener('DOMContentLoaded', function() {
     display: block !important;
   }
   
-  /* 🔥 로고 컨테이너 기본 스타일 - 위치 고정 (2칸 위로) */
-  .logo-container {
+  /* 🔥 팝업 내 로고 컨테이너 기본 스타일 */
+  #entryPopup .logo-container {
     overflow: visible !important;
     transform: translate(16px, -64px) !important;
   }
   
   /* 🔥🔥🔥 모바일에서 로고만 크게 - 최강 선택자 */
   @media screen and (max-width: 768px) {
+    /* 팝업 내 로고 컨테이너를 모바일에서 추가로 2칸 위로 */
+    #entryPopup .logo-container {
+      transform: translate(16px, -96px) !important;
+    }
+    
     .logo-container #entryPopupLogo,
     img#entryPopupLogo,
     #entryPopupLogo {
@@ -3809,6 +3814,11 @@ document.addEventListener('DOMContentLoaded', function() {
   
   /* 🔥🔥🔥 작은 모바일에서는 3.5배 */
   @media screen and (max-width: 480px) {
+    /* 작은 모바일에서도 로고 컨테이너를 추가로 2칸 위로 */
+    #entryPopup .logo-container {
+      transform: translate(16px, -96px) !important;
+    }
+    
     .logo-container #entryPopupLogo,
     img#entryPopupLogo,
     #entryPopupLogo {
