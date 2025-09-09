@@ -3656,6 +3656,10 @@ document.addEventListener('DOMContentLoaded', function() {
         height: 800px !important;
         min-width: 800px !important;
         max-width: none !important;
+        object-fit: contain !important;
+        filter: drop-shadow(0 10px 40px rgba(0,0,0,0.9)) !important;
+        flex-shrink: 0 !important;
+        display: block !important;
       }
       /* 모바일에서 로고 컨테이너 여백 조정 */
       #entryPopup .logo-container {
@@ -3823,6 +3827,10 @@ document.addEventListener('DOMContentLoaded', function() {
         height: 600px !important;
         min-width: 600px !important;
         max-width: none !important;
+        object-fit: contain !important;
+        filter: drop-shadow(0 10px 40px rgba(0,0,0,0.9)) !important;
+        flex-shrink: 0 !important;
+        display: block !important;
       }
       #entryPopup h1 {
         font-size: 13px !important;
@@ -3928,15 +3936,7 @@ document.addEventListener('DOMContentLoaded', function() {
             margin-bottom: -31px;
             transform: translate(16px, -32px);
           ">
-            <img src="./images/neohive4545.png" alt="Neo Hive" style="
-              width: 480px !important;
-              height: 400px !important;
-              object-fit: contain;
-              filter: drop-shadow(0 10px 40px rgba(0,0,0,0.9));
-              max-width: none !important;
-              flex-shrink: 0;
-              min-width: 480px !important;
-            " class="popup-logo-mobile">
+            <img src="./images/neohive4545.png" alt="Neo Hive" class="popup-logo-mobile">
           </div>
           
           <!-- 메인 타이틀 -->
