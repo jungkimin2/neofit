@@ -3868,122 +3868,65 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   </style>
   
-  <!-- 🔥 모바일 로고 2배 크기 - CSS 클래스 방식 (우선순위 최상) -->
+  <!-- 🔥 로고 크기 제어 - 완전한 해결책 -->
   <style>
-  /* 모바일 로고 2배 크기 CSS 클래스 - 최고 우선순위 */
+  /* 로고 기본 크기 설정 */
+  #entryPopupLogo {
+    width: 480px !important;
+    height: 400px !important;
+    object-fit: contain !important;
+    filter: drop-shadow(0 10px 40px rgba(0,0,0,0.9)) !important;
+    flex-shrink: 0 !important;
+    transition: transform 0.3s ease !important;
+  }
+  
+  /* 모바일에서 로고 2배 크기 */
   @media (max-width: 768px) {
-    #entryPopupLogo.mobile-logo-enlarged {
-      transform: scale(2) !important;
-      transform-origin: center !important;
-      z-index: 999999 !important;
+    #entryPopupLogo {
+      width: 960px !important;  /* 2배 크기 */
+      height: 800px !important; /* 2배 크기 */
+      transform: none !important;
     }
     
-    #entryPopupLogo.mobile-logo-enlarged + * {
-      overflow: visible !important;
-    }
-    
-    .logo-container:has(#entryPopupLogo.mobile-logo-enlarged) {
+    /* 로고 컨테이너 조정 */
+    .logo-container {
       overflow: visible !important;
       width: 100% !important;
       height: auto !important;
     }
   }
   
-  /* PC에서는 기본 크기 */
+  /* PC에서는 기본 크기 유지 */
   @media (min-width: 769px) {
-    #entryPopupLogo.mobile-logo-enlarged {
-      transform: none !important;
+    #entryPopupLogo {
+      width: 480px !important;
+      height: 400px !important;
     }
   }
   </style>
   
   <script>
   document.addEventListener('DOMContentLoaded', function() {
-    let logoEnlargeInterval; // 지속적 모니터링용 인터벌
-    
-    function enlargeMobileLogo() {
-      const logo = document.getElementById('entryPopupLogo');
-      const screenWidth = window.innerWidth;
-      
-      if (logo) {
-        if (screenWidth <= 768) {
-          // 🔥 CSS 클래스 추가로 2배 크기 적용
-          logo.classList.add('mobile-logo-enlarged');
-          console.log('✅ 모바일 로고 CSS 클래스 적용: 2x');
-        } else {
-          // PC에서는 클래스 제거
-          logo.classList.remove('mobile-logo-enlarged');
-          console.log('💻 PC 환경 - 클래스 제거');
-        }
-      }
-    }
-    
-    // 🔥 지속적 모니터링 및 재적용 함수
-    function startLogoMonitoring() {
-      // 기존 인터벌 정리
-      if (logoEnlargeInterval) {
-        clearInterval(logoEnlargeInterval);
-      }
-      
-      // 500ms마다 로고 상태 확인 및 재적용
-      logoEnlargeInterval = setInterval(function() {
-        const logo = document.getElementById('entryPopupLogo');
-        const screenWidth = window.innerWidth;
-        
-        if (logo && screenWidth <= 768) {
-          if (!logo.classList.contains('mobile-logo-enlarged')) {
-            logo.classList.add('mobile-logo-enlarged');
-            console.log('🔄 모바일 로고 클래스 재적용');
-          }
-        }
-      }, 500);
-    }
-    
-    // 즉시 실행
-    enlargeMobileLogo();
-    
-    // 여러 시점에서 재실행
-    setTimeout(enlargeMobileLogo, 50);
-    setTimeout(enlargeMobileLogo, 200);
-    setTimeout(enlargeMobileLogo, 500);
-    setTimeout(enlargeMobileLogo, 1000);
-    
-    // 지속적 모니터링 시작
-    startLogoMonitoring();
-    
-    // 창 크기 변경 시 재실행
-    window.addEventListener('resize', function() {
-      enlargeMobileLogo();
-      startLogoMonitoring(); // 모니터링 재시작
-    });
-    
-    // 팝업이 열릴 때도 재실행
-    const popup = document.getElementById('entryPopup');
-    if (popup) {
-      const observer = new MutationObserver(function(mutations) {
-        mutations.forEach(function(mutation) {
-          if (mutation.type === 'attributes') {
-            setTimeout(enlargeMobileLogo, 10);
-            startLogoMonitoring(); // 모니터링 재시작
-          }
-        });
-      });
-      observer.observe(popup, { attributes: true, attributeFilter: ['style', 'class'] });
-    }
-    
-    // 로고 요소 자체 변화 모니터링
-    const logoObserver = new MutationObserver(function(mutations) {
-      mutations.forEach(function(mutation) {
-        if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
-          setTimeout(enlargeMobileLogo, 5);
-        }
-      });
-    });
+    console.log('📱 로고 크기 제어 스크립트 시작');
+    console.log('💻 화면 너비:', window.innerWidth);
     
     const logo = document.getElementById('entryPopupLogo');
     if (logo) {
-      logoObserver.observe(logo, { attributes: true, attributeFilter: ['style', 'class'] });
+      console.log('✅ 로고 요소 발견:', logo);
+      
+      if (window.innerWidth <= 768) {
+        console.log('📱 모바일 환경 - CSS로 2배 크기 적용됨');
+      } else {
+        console.log('💻 PC 환경 - 기본 크기 유지');
+      }
+    } else {
+      console.log('❌ 로고 요소를 찾을 수 없음');
     }
+    
+    // 창 크기 변경 시 로그만 출력
+    window.addEventListener('resize', function() {
+      console.log('🔄 창 크기 변경:', window.innerWidth);
+    });
   });
   </script>
   
@@ -4078,8 +4021,6 @@ document.addEventListener('DOMContentLoaded', function() {
             transform: translate(16px, -32px);
           ">
             <img src="./images/neohive4545.png" alt="Neo Hive" id="entryPopupLogo" style="
-              width: 480px !important;
-              height: 400px !important;
               object-fit: contain;
               filter: drop-shadow(0 10px 40px rgba(0,0,0,0.9));
               flex-shrink: 0;
