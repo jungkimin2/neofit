@@ -3867,6 +3867,60 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     }
   </style>
+  
+  <!-- 🔧 모바일 로고 2배 크기 스크립트 -->
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    function enlargeMobileLogo() {
+      const logo = document.getElementById('entryPopupLogo');
+      const screenWidth = window.innerWidth;
+      
+      console.log('📱 화면 너비:', screenWidth);
+      
+      if (logo && screenWidth <= 768) {
+        // 모바일에서 로고를 2배 크게 - cssText로 인라인 스타일 완전 재작성
+        const newWidth = screenWidth <= 480 ? '720px' : '960px';  // 2배 크기
+        const newHeight = screenWidth <= 480 ? '600px' : '800px'; // 2배 크기
+        
+        // 기존 인라인 스타일을 완전히 덮어씀
+        logo.style.cssText = `
+          width: ${newWidth} !important;
+          height: ${newHeight} !important;
+          object-fit: contain !important;
+          filter: drop-shadow(0 10px 40px rgba(0,0,0,0.9)) !important;
+          flex-shrink: 0 !important;
+          max-width: none !important;
+          min-width: ${newWidth} !important;
+        `;
+        
+        console.log('✅ 모바일 로고 크기 변경:', newWidth, 'x', newHeight);
+      } else if (logo) {
+        // PC에서는 원래 크기로 복원
+        logo.style.cssText = `
+          width: 480px !important;
+          height: 400px !important;
+          object-fit: contain !important;
+          filter: drop-shadow(0 10px 40px rgba(0,0,0,0.9)) !important;
+          flex-shrink: 0 !important;
+        `;
+        console.log('💻 PC 환경 - 기본 크기 유지');
+      }
+    }
+    
+    // 즉시 실행
+    enlargeMobileLogo();
+    
+    // 100ms 후 재실행 (안전장치)
+    setTimeout(enlargeMobileLogo, 100);
+    
+    // 300ms 후 한번 더 재실행 (추가 안전장치)
+    setTimeout(enlargeMobileLogo, 300);
+    
+    // 창 크기 변경 시 재실행
+    window.addEventListener('resize', enlargeMobileLogo);
+  });
+  </script>
+  
   <!-- 중앙 정렬 컨테이너 -->
   <div style="
     display: flex;
@@ -3958,6 +4012,8 @@ document.addEventListener('DOMContentLoaded', function() {
             transform: translate(16px, -32px);
           ">
             <img src="./images/neohive4545.png" alt="Neo Hive" id="entryPopupLogo" style="
+              width: 480px !important;
+              height: 400px !important;
               object-fit: contain;
               filter: drop-shadow(0 10px 40px rgba(0,0,0,0.9));
               flex-shrink: 0;
