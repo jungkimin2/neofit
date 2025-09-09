@@ -3929,160 +3929,125 @@ document.addEventListener('DOMContentLoaded', function() {
   
   <script>
   document.addEventListener('DOMContentLoaded', function() {
-    console.log('🚀 NUCLEAR OPTION: 로고 절대 보호 시스템 시작');
+    console.log('🔥🔥🔥 GUARDIAN: 로고 보호 시스템 시작');
     console.log('📱 화면 너비:', window.innerWidth);
     
-    let isProtecting = false;
-    let nuclearProtection = null;
+    let isApplying = false; // 재귀 방지 플래그
     
-    // 🔥 핵심 스케일 적용 함수
-    function applyLogoScale() {
-      if (isProtecting) return;
-      isProtecting = true;
+    function applyTransformScale() {
+      if (isApplying) return; // 재귀 방지
+      isApplying = true;
       
       const logo = document.getElementById('entryPopupLogo');
       const logoContainer = logo?.parentElement;
       
       if (!logo) {
-        isProtecting = false;
+        isApplying = false;
         return;
       }
       
       const screenWidth = window.innerWidth;
-      let scaleValue = 1;
+      let scaleValue;
       
       if (screenWidth <= 480) {
         scaleValue = 1.5;
       } else if (screenWidth <= 768) {
         scaleValue = 2;
+      } else {
+        scaleValue = 1;
       }
       
-      if (scaleValue > 1) {
-        // 모든 가능한 transform 속성에 강제 적용
-        const transformValue = `scale(${scaleValue})`;
-        
-        // 직접 스타일 속성 설정
-        logo.style.cssText += `; transform: ${transformValue} !important;`;
-        logo.style.cssText += `; -webkit-transform: ${transformValue} !important;`;
-        logo.style.cssText += `; -moz-transform: ${transformValue} !important;`;
-        logo.style.cssText += `; -ms-transform: ${transformValue} !important;`;
-        logo.style.cssText += `; transform-origin: center center !important;`;
-        
-        // 컨테이너 overflow 설정
-        if (logoContainer) {
-          logoContainer.style.cssText += '; overflow: visible !important;';
-        }
-        
-        console.log(`🚀 NUCLEAR: scale(${scaleValue}) 적용완료`);
+      // 🔥 Transform scale 강제 적용
+      logo.style.setProperty('transform', `scale(${scaleValue})`, 'important');
+      logo.style.setProperty('-webkit-transform', `scale(${scaleValue})`, 'important');
+      logo.style.setProperty('-moz-transform', `scale(${scaleValue})`, 'important');
+      logo.style.setProperty('-ms-transform', `scale(${scaleValue})`, 'important');
+      logo.style.setProperty('transform-origin', 'center center', 'important');
+      
+      // 컨테이너 설정
+      if (logoContainer) {
+        logoContainer.style.setProperty('overflow', 'visible', 'important');
+        logoContainer.style.setProperty('transform', 'translate(16px, -32px)', 'important');
       }
       
-      isProtecting = false;
+      console.log(`🛡️ GUARDIAN: scale(${scaleValue}) 적용됨`);
+      isApplying = false;
     }
     
-    // 🛡️ NUCLEAR PROTECTION: DOM 속성 변경 차단
-    function activateNuclearProtection() {
+    // 🛡️ GUARDIAN: MutationObserver로 로고 보호
+    function startLogoGuardian() {
       const logo = document.getElementById('entryPopupLogo');
       if (!logo) return;
       
-      // Transform을 건드리려는 모든 시도를 차단
-      const originalSetAttribute = logo.setAttribute;
-      logo.setAttribute = function(name, value) {
-        if (name === 'style' && window.innerWidth <= 768) {
-          console.log('🚨 NUCLEAR: setAttribute 차단됨');
-          // transform이 포함되어 있다면 우리 값으로 교체
-          if (value.includes('transform')) {
-            const scaleValue = window.innerWidth <= 480 ? 1.5 : 2;
-            value = value.replace(/transform[^;]*/, `transform: scale(${scaleValue}) !important`);
-            console.log('🔄 NUCLEAR: Transform 값 강제 교체');
-          }
-        }
-        return originalSetAttribute.call(this, name, value);
-      };
-      
-      // Style property 직접 변경 감시
       const observer = new MutationObserver(function(mutations) {
-        if (isProtecting) return;
-        
         mutations.forEach(function(mutation) {
-          if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
-            const currentStyle = logo.getAttribute('style') || '';
-            const screenWidth = window.innerWidth;
+          if (mutation.type === 'attributes' && 
+              (mutation.attributeName === 'style' || mutation.attributeName === 'class')) {
             
-            if (screenWidth <= 768) {
-              const expectedScale = screenWidth <= 480 ? 1.5 : 2;
+            const computedStyle = window.getComputedStyle(logo);
+            const currentTransform = computedStyle.transform;
+            
+            // Transform이 우리가 원하는 값이 아니라면 즉시 복구
+            if (window.innerWidth <= 768 && !isApplying) {
+              const expectedScale = window.innerWidth <= 480 ? 1.5 : 2;
               
-              // Transform이 우리가 원하는 값이 아니라면
-              if (!currentStyle.includes(`scale(${expectedScale})`)) {
-                console.log('🚨 NUCLEAR: 비인가 스타일 변경 감지!');
-                setTimeout(applyLogoScale, 0); // 즉시 복구
+              // 현재 transform에서 scale 값 추출 (대략적으로)
+              const isCorrectScale = currentTransform.includes(`matrix(${expectedScale}, 0, 0, ${expectedScale}`);
+              
+              if (!isCorrectScale) {
+                console.log('🚨 GUARDIAN: 다른 스크립트가 로고 변경 감지! 즉시 복구');
+                console.log('현재:', currentTransform);
+                setTimeout(applyTransformScale, 10); // 10ms 후 복구
               }
             }
           }
         });
       });
       
-      observer.observe(logo, {
-        attributes: true,
-        attributeFilter: ['style'],
-        attributeOldValue: true
+      observer.observe(logo, { 
+        attributes: true, 
+        attributeFilter: ['style', 'class'],
+        attributeOldValue: true 
       });
       
-      console.log('🛡️ NUCLEAR PROTECTION 활성화');
-      return observer;
+      console.log('🛡️ GUARDIAN: 로고 보호 활성화됨');
     }
     
-    // 🚀 시스템 초기화
-    function initializeNuclearSystem() {
-      // 즉시 첫 적용
-      applyLogoScale();
-      
-      // 다단계 적용 (페이지 로딩 중)
-      const timeouts = [50, 100, 200, 300, 500, 800, 1000, 1500, 2000];
-      timeouts.forEach(delay => {
-        setTimeout(applyLogoScale, delay);
-      });
-      
-      // Nuclear Protection 활성화
-      setTimeout(() => {
-        nuclearProtection = activateNuclearProtection();
-      }, 100);
-      
-      // 주기적 보호 (100ms마다 빠른 체크)
-      setInterval(() => {
-        const logo = document.getElementById('entryPopupLogo');
-        if (logo && window.innerWidth <= 768 && !isProtecting) {
-          const computedStyle = window.getComputedStyle(logo);
-          const matrix = computedStyle.transform;
-          
-          // Matrix 값에서 스케일 확인
-          if (matrix && matrix !== 'none') {
-            const expectedScale = window.innerWidth <= 480 ? 1.5 : 2;
-            if (!matrix.includes(`${expectedScale}, 0, 0, ${expectedScale}`)) {
-              console.log('🔄 NUCLEAR: 주기 체크 - 복구 실행');
-              applyLogoScale();
-            }
-          } else {
-            // Transform이 없어진 경우
-            console.log('🚨 NUCLEAR: Transform 소실 감지 - 즉시 복구');
-            applyLogoScale();
-          }
+    // 즉시 실행
+    applyTransformScale();
+    
+    // 여러 시점에서 재실행
+    setTimeout(applyTransformScale, 100);
+    setTimeout(applyTransformScale, 300);
+    setTimeout(applyTransformScale, 500);
+    setTimeout(applyTransformScale, 1000);
+    setTimeout(applyTransformScale, 2000);
+    
+    // GUARDIAN 시작
+    setTimeout(startLogoGuardian, 1000);
+    
+    // 창 크기 변경 시 재실행
+    window.addEventListener('resize', applyTransformScale);
+    
+    // 강화된 주기적 체크 (250ms마다)
+    setInterval(function() {
+      const logo = document.getElementById('entryPopupLogo');
+      if (logo && window.innerWidth <= 768 && !isApplying) {
+        const computedStyle = window.getComputedStyle(logo);
+        const currentTransform = computedStyle.transform;
+        
+        if (currentTransform === 'none' || currentTransform === 'matrix(1, 0, 0, 1, 0, 0)') {
+          console.log('🔄 GUARDIAN: 주기적 체크 - Transform 복구');
+          applyTransformScale();
         }
-      }, 100);
-      
-      // 창 크기 변경 시
-      window.addEventListener('resize', () => {
-        setTimeout(applyLogoScale, 50);
-      });
-      
-      // 페이지 로딩 완료 후 최종 체크
-      window.addEventListener('load', () => {
-        setTimeout(applyLogoScale, 200);
-        console.log('🚀 NUCLEAR: 페이지 로딩 완료 - 최종 보호 활성화');
-      });
-    }
+      }
+    }, 250); // 1초에서 250ms로 단축
     
-    // 시스템 시작
-    initializeNuclearSystem();
+    // 페이지 로딩 완료 후 최종 적용
+    window.addEventListener('load', function() {
+      setTimeout(applyTransformScale, 500);
+      console.log('🚀 GUARDIAN: 페이지 로딩 완료 - 최종 적용');
+    });
   });
   </script>
   
