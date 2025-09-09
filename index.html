@@ -3868,56 +3868,71 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   </style>
   
-  <!-- 🔧 모바일 로고 2배 크기 스크립트 -->
+  <!-- 🔧 모바일 로고 2배 크기 스크립트 - TRANSFORM 방식 -->
   <script>
   document.addEventListener('DOMContentLoaded', function() {
     function enlargeMobileLogo() {
       const logo = document.getElementById('entryPopupLogo');
+      const logoContainer = logo?.parentElement;
       const screenWidth = window.innerWidth;
       
-      console.log('📱 화면 너비:', screenWidth);
+      console.log('📱 화면 너비:', screenWidth, '로고 요소:', !!logo, '컨테이너:', !!logoContainer);
       
       if (logo && screenWidth <= 768) {
-        // 모바일에서 로고를 2배 크게 - cssText로 인라인 스타일 완전 재작성
-        const newWidth = screenWidth <= 480 ? '720px' : '960px';  // 2배 크기
-        const newHeight = screenWidth <= 480 ? '600px' : '800px'; // 2배 크기
+        // 🔥 TRANSFORM SCALE 방식으로 2배 크기
+        const scaleValue = 2; // 2배 크기
         
-        // 기존 인라인 스타일을 완전히 덮어씀
-        logo.style.cssText = `
-          width: ${newWidth} !important;
-          height: ${newHeight} !important;
-          object-fit: contain !important;
-          filter: drop-shadow(0 10px 40px rgba(0,0,0,0.9)) !important;
-          flex-shrink: 0 !important;
-          max-width: none !important;
-          min-width: ${newWidth} !important;
-        `;
+        // 로고에 transform scale 적용
+        logo.style.setProperty('transform', `scale(${scaleValue})`, 'important');
+        logo.style.setProperty('transform-origin', 'center', 'important');
         
-        console.log('✅ 모바일 로고 크기 변경:', newWidth, 'x', newHeight);
+        // 컨테이너 크기도 조정하여 레이아웃 깨짐 방지
+        if (logoContainer) {
+          logoContainer.style.setProperty('transform', 'scale(1)', 'important');
+          logoContainer.style.setProperty('overflow', 'visible', 'important');
+          // 컨테이너를 더 크게 만들어서 확대된 로고가 잘리지 않게
+          logoContainer.style.setProperty('width', '100%', 'important');
+          logoContainer.style.setProperty('height', 'auto', 'important');
+        }
+        
+        console.log('✅ 모바일 로고 TRANSFORM SCALE 적용:', scaleValue + 'x');
+        
       } else if (logo) {
-        // PC에서는 원래 크기로 복원
-        logo.style.cssText = `
-          width: 480px !important;
-          height: 400px !important;
-          object-fit: contain !important;
-          filter: drop-shadow(0 10px 40px rgba(0,0,0,0.9)) !important;
-          flex-shrink: 0 !important;
-        `;
-        console.log('💻 PC 환경 - 기본 크기 유지');
+        // PC에서는 transform 제거
+        logo.style.setProperty('transform', 'none', 'important');
+        
+        if (logoContainer) {
+          logoContainer.style.setProperty('transform', 'none', 'important');
+          logoContainer.style.setProperty('overflow', 'visible', 'important');
+        }
+        
+        console.log('💻 PC 환경 - TRANSFORM 제거');
       }
     }
     
     // 즉시 실행
     enlargeMobileLogo();
     
-    // 100ms 후 재실행 (안전장치)
-    setTimeout(enlargeMobileLogo, 100);
-    
-    // 300ms 후 한번 더 재실행 (추가 안전장치)
-    setTimeout(enlargeMobileLogo, 300);
+    // 여러 시점에서 재실행 (DOM 완전 로딩 보장)
+    setTimeout(enlargeMobileLogo, 50);
+    setTimeout(enlargeMobileLogo, 200);
+    setTimeout(enlargeMobileLogo, 500);
     
     // 창 크기 변경 시 재실행
     window.addEventListener('resize', enlargeMobileLogo);
+    
+    // 팝업이 열릴 때도 재실행
+    const popup = document.getElementById('entryPopup');
+    if (popup) {
+      const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
+            setTimeout(enlargeMobileLogo, 10);
+          }
+        });
+      });
+      observer.observe(popup, { attributes: true });
+    }
   });
   </script>
   
