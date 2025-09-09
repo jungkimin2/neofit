@@ -3881,14 +3881,14 @@ document.addEventListener('DOMContentLoaded', function() {
     transition: transform 0.3s ease !important;
   }
   
-  /* 🔥 모바일에서 컨테이너와 로고 모두 조정 */
+  /* 🔥 로고 컨테이너 기본 스타일 - 위치 고정 */
+  .logo-container {
+    overflow: visible !important;
+    transform: translate(16px, -32px) !important;
+  }
+  
+  /* 🔥 모바일에서 로고만 크게 */
   @media screen and (max-width: 768px) {
-    /* 로고 컨테이너의 transform 유지하면서 로고만 scale */
-    .logo-container {
-      transform: translate(16px, -32px) !important;
-      overflow: visible !important;
-    }
-    
     #entryPopupLogo {
       transform: scale(3) !important;
       -webkit-transform: scale(3) !important;
@@ -3897,13 +3897,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
   
-  /* 🔥 작은 모바일에서는 1.5배 */
+  /* 🔥 작은 모바일에서는 2.5배 */
   @media screen and (max-width: 480px) {
-    .logo-container {
-      transform: translate(16px, -32px) !important;
-      overflow: visible !important;
-    }
-    
     #entryPopupLogo {
       transform: scale(2.5) !important;
       -webkit-transform: scale(2.5) !important;
@@ -3914,10 +3909,6 @@ document.addEventListener('DOMContentLoaded', function() {
   
   /* 🔥 PC에서는 기본 크기 */
   @media screen and (min-width: 769px) {
-    .logo-container {
-      transform: translate(16px, -32px) !important;
-    }
-    
     #entryPopupLogo {
       transform: scale(1) !important;
       -webkit-transform: scale(1) !important;
@@ -3927,129 +3918,6 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   </style>
   
-  <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    console.log('🔥🔥🔥 GUARDIAN: 로고 보호 시스템 시작');
-    console.log('📱 화면 너비:', window.innerWidth);
-    
-    let isApplying = false; // 재귀 방지 플래그
-    
-    function applyTransformScale() {
-      if (isApplying) return; // 재귀 방지
-      isApplying = true;
-      
-      const logo = document.getElementById('entryPopupLogo');
-      const logoContainer = logo?.parentElement;
-      
-      if (!logo) {
-        isApplying = false;
-        return;
-      }
-      
-      const screenWidth = window.innerWidth;
-      let scaleValue;
-      
-      if (screenWidth <= 480) {
-        scaleValue = 1.5;
-      } else if (screenWidth <= 768) {
-        scaleValue = 2;
-      } else {
-        scaleValue = 1;
-      }
-      
-      // 🔥 Transform scale 강제 적용
-      logo.style.setProperty('transform', `scale(${scaleValue})`, 'important');
-      logo.style.setProperty('-webkit-transform', `scale(${scaleValue})`, 'important');
-      logo.style.setProperty('-moz-transform', `scale(${scaleValue})`, 'important');
-      logo.style.setProperty('-ms-transform', `scale(${scaleValue})`, 'important');
-      logo.style.setProperty('transform-origin', 'center center', 'important');
-      
-      // 컨테이너 설정
-      if (logoContainer) {
-        logoContainer.style.setProperty('overflow', 'visible', 'important');
-        logoContainer.style.setProperty('transform', 'translate(16px, -32px)', 'important');
-      }
-      
-      console.log(`🛡️ GUARDIAN: scale(${scaleValue}) 적용됨`);
-      isApplying = false;
-    }
-    
-    // 🛡️ GUARDIAN: MutationObserver로 로고 보호
-    function startLogoGuardian() {
-      const logo = document.getElementById('entryPopupLogo');
-      if (!logo) return;
-      
-      const observer = new MutationObserver(function(mutations) {
-        mutations.forEach(function(mutation) {
-          if (mutation.type === 'attributes' && 
-              (mutation.attributeName === 'style' || mutation.attributeName === 'class')) {
-            
-            const computedStyle = window.getComputedStyle(logo);
-            const currentTransform = computedStyle.transform;
-            
-            // Transform이 우리가 원하는 값이 아니라면 즉시 복구
-            if (window.innerWidth <= 768 && !isApplying) {
-              const expectedScale = window.innerWidth <= 480 ? 1.5 : 2;
-              
-              // 현재 transform에서 scale 값 추출 (대략적으로)
-              const isCorrectScale = currentTransform.includes(`matrix(${expectedScale}, 0, 0, ${expectedScale}`);
-              
-              if (!isCorrectScale) {
-                console.log('🚨 GUARDIAN: 다른 스크립트가 로고 변경 감지! 즉시 복구');
-                console.log('현재:', currentTransform);
-                setTimeout(applyTransformScale, 10); // 10ms 후 복구
-              }
-            }
-          }
-        });
-      });
-      
-      observer.observe(logo, { 
-        attributes: true, 
-        attributeFilter: ['style', 'class'],
-        attributeOldValue: true 
-      });
-      
-      console.log('🛡️ GUARDIAN: 로고 보호 활성화됨');
-    }
-    
-    // 즉시 실행
-    applyTransformScale();
-    
-    // 여러 시점에서 재실행
-    setTimeout(applyTransformScale, 100);
-    setTimeout(applyTransformScale, 300);
-    setTimeout(applyTransformScale, 500);
-    setTimeout(applyTransformScale, 1000);
-    setTimeout(applyTransformScale, 2000);
-    
-    // GUARDIAN 시작
-    setTimeout(startLogoGuardian, 1000);
-    
-    // 창 크기 변경 시 재실행
-    window.addEventListener('resize', applyTransformScale);
-    
-    // 강화된 주기적 체크 (250ms마다)
-    setInterval(function() {
-      const logo = document.getElementById('entryPopupLogo');
-      if (logo && window.innerWidth <= 768 && !isApplying) {
-        const computedStyle = window.getComputedStyle(logo);
-        const currentTransform = computedStyle.transform;
-        
-        if (currentTransform === 'none' || currentTransform === 'matrix(1, 0, 0, 1, 0, 0)') {
-          console.log('🔄 GUARDIAN: 주기적 체크 - Transform 복구');
-          applyTransformScale();
-        }
-      }
-    }, 250); // 1초에서 250ms로 단축
-    
-    // 페이지 로딩 완료 후 최종 적용
-    window.addEventListener('load', function() {
-      setTimeout(applyTransformScale, 500);
-      console.log('🚀 GUARDIAN: 페이지 로딩 완료 - 최종 적용');
-    });
-  });
-  </script>
   
   <!-- 중앙 정렬 컨테이너 -->
   <div style="
@@ -4139,7 +4007,6 @@ document.addEventListener('DOMContentLoaded', function() {
             justify-content: center;
             align-items: center;
             margin-bottom: -31px;
-            transform: translate(16px, -32px);
             overflow: visible;
           ">
             <img src="./images/neohive4545.png" alt="Neo Hive" id="entryPopupLogo" style="
