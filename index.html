@@ -3638,7 +3638,16 @@ document.addEventListener('DOMContentLoaded', function() {
         width: 800px !important;
         height: 800px !important;
         min-width: 800px !important;
-        max-width: 800px !important;
+        max-width: none !important;
+        flex-shrink: 0 !important;
+      }
+      
+      /* 모든 가능한 선택자로 강제 적용 */
+      #entryPopup img[alt="Neo Hive"] {
+        width: 800px !important;
+        height: 800px !important;
+        min-width: 800px !important;
+        max-width: none !important;
       }
       /* 모바일에서 로고 컨테이너 여백 조정 */
       #entryPopup .logo-container {
@@ -3788,7 +3797,16 @@ document.addEventListener('DOMContentLoaded', function() {
         width: 600px !important;
         height: 600px !important;
         min-width: 600px !important;
-        max-width: 600px !important;
+        max-width: none !important;
+        flex-shrink: 0 !important;
+      }
+      
+      /* 모든 가능한 선택자로 강제 적용 (작은 모바일) */
+      #entryPopup img[alt="Neo Hive"] {
+        width: 600px !important;
+        height: 600px !important;
+        min-width: 600px !important;
+        max-width: none !important;
       }
       #entryPopup h1 {
         font-size: 13px !important;
