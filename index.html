@@ -3656,10 +3656,6 @@ document.addEventListener('DOMContentLoaded', function() {
         height: 800px !important;
         min-width: 800px !important;
         max-width: none !important;
-        object-fit: contain !important;
-        filter: drop-shadow(0 10px 40px rgba(0,0,0,0.9)) !important;
-        flex-shrink: 0 !important;
-        display: block !important;
       }
       /* 모바일에서 로고 컨테이너 여백 조정 */
       #entryPopup .logo-container {
@@ -3793,6 +3789,35 @@ document.addEventListener('DOMContentLoaded', function() {
       .popup-content {
         padding: 50px 10px 10px 10px !important;
       }
+      
+      /* 모바일 로고 크기 강제 적용 */
+      #entryPopup #entryPopupLogo {
+        width: 600px !important;
+        height: 600px !important;
+        min-width: 600px !important;
+        max-width: none !important;
+      }
+    }
+    
+    /* PC 환경에서 기본 크기 */
+    @media (min-width: 769px) {
+      #entryPopup #entryPopupLogo {
+        width: 480px !important;
+        height: 400px !important;
+        min-width: 480px !important;
+        max-width: none !important;
+      }
+    }
+    
+    /* 일반 모바일 환경에서 큰 크기 */
+    @media (max-width: 768px) and (min-width: 481px) {
+      #entryPopup #entryPopupLogo {
+        width: 800px !important;
+        height: 800px !important;
+        min-width: 800px !important;
+        max-width: none !important;
+      }
+    }
       #entryPopup img[src*="neohive4545.png"] {
         width: 600px !important;
         height: 600px !important;
@@ -3827,10 +3852,6 @@ document.addEventListener('DOMContentLoaded', function() {
         height: 600px !important;
         min-width: 600px !important;
         max-width: none !important;
-        object-fit: contain !important;
-        filter: drop-shadow(0 10px 40px rgba(0,0,0,0.9)) !important;
-        flex-shrink: 0 !important;
-        display: block !important;
       }
       #entryPopup h1 {
         font-size: 13px !important;
@@ -3936,7 +3957,15 @@ document.addEventListener('DOMContentLoaded', function() {
             margin-bottom: -31px;
             transform: translate(16px, -32px);
           ">
-            <img src="./images/neohive4545.png" alt="Neo Hive" class="popup-logo-mobile">
+            <img src="./images/neohive4545.png" alt="Neo Hive" id="entryPopupLogo" style="
+              width: 480px !important;
+              height: 400px !important;
+              object-fit: contain;
+              filter: drop-shadow(0 10px 40px rgba(0,0,0,0.9));
+              max-width: none !important;
+              flex-shrink: 0;
+              min-width: 480px !important;
+            ">
           </div>
           
           <!-- 메인 타이틀 -->
