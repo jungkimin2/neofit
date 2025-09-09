@@ -3788,10 +3788,13 @@ document.addEventListener('DOMContentLoaded', function() {
     display: block !important;
   }
   
-  /* 🔥 로고 컨테이너 기본 스타일 - 위치 고정 (2칸 위로) */
-  .logo-container {
+  /* 🔥🔥🔥 로고 컨테이너 기본 스타일 - 위치 고정 (2칸 위로) */
+  #entryPopup .logo-container,
+  .popup-content-card .logo-container,
+  div.logo-container {
     overflow: visible !important;
     transform: translate(16px, -64px) !important;
+    margin-top: -32px !important;
   }
   
   /* 🔥🔥🔥 모바일에서 로고만 크게 - 최강 선택자 */
@@ -3916,12 +3919,13 @@ document.addEventListener('DOMContentLoaded', function() {
           
           <!-- 로고 -->
           <div class="logo-container" style="
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: -31px;
-            overflow: visible;
-            transform: translate(16px, -64px);
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
+            margin-bottom: -31px !important;
+            margin-top: -32px !important;
+            overflow: visible !important;
+            transform: translate(16px, -64px) !important;
           ">
             <img src="./images/neohive4545.png" alt="Neo Hive" id="entryPopupLogo">
           </div>
