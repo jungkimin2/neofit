@@ -3628,6 +3628,17 @@ document.addEventListener('DOMContentLoaded', function() {
         margin: 20px auto 20px auto !important;
         display: block !important;
         transform: translateY(-20px) !important;
+        max-width: 800px !important;
+        min-width: 800px !important;
+        object-fit: contain !important;
+      }
+      
+      /* PC용 인라인 스타일 무시 */
+      #entryPopup .logo-container img[src*="neohive4545.png"] {
+        width: 800px !important;
+        height: 800px !important;
+        min-width: 800px !important;
+        max-width: 800px !important;
       }
       /* 모바일에서 로고 컨테이너 여백 조정 */
       #entryPopup .logo-container {
@@ -3767,6 +3778,17 @@ document.addEventListener('DOMContentLoaded', function() {
         margin: 10px auto 10px auto !important;
         display: block !important;
         transform: translateY(-30px) !important;
+        max-width: 600px !important;
+        min-width: 600px !important;
+        object-fit: contain !important;
+      }
+      
+      /* PC용 인라인 스타일 무시 (작은 모바일) */
+      #entryPopup .logo-container img[src*="neohive4545.png"] {
+        width: 600px !important;
+        height: 600px !important;
+        min-width: 600px !important;
+        max-width: 600px !important;
       }
       #entryPopup h1 {
         font-size: 13px !important;
