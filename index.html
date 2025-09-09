@@ -3870,7 +3870,9 @@ document.addEventListener('DOMContentLoaded', function() {
   
   <!-- 🔥🔥🔥 TRANSFORM SCALE 방식으로 로고 2배 크기 -->
   <style>
-  /* 🔥 로고 기본 스타일 */
+  /* 🔥🔥🔥 로고 기본 스타일 - 더 강력한 선택자 */
+  .logo-container #entryPopupLogo,
+  img#entryPopupLogo,
   #entryPopupLogo {
     width: 480px !important;
     height: 400px !important;
@@ -3878,7 +3880,8 @@ document.addEventListener('DOMContentLoaded', function() {
     filter: drop-shadow(0 10px 40px rgba(0,0,0,0.9)) !important;
     flex-shrink: 0 !important;
     transform-origin: center center !important;
-    transition: transform 0.3s ease !important;
+    transition: none !important;
+    display: block !important;
   }
   
   /* 🔥 로고 컨테이너 기본 스타일 - 위치 고정 */
@@ -3887,23 +3890,29 @@ document.addEventListener('DOMContentLoaded', function() {
     transform: translate(16px, -32px) !important;
   }
   
-  /* 🔥 모바일에서 로고만 크게 */
+  /* 🔥🔥🔥 모바일에서 로고만 크게 - 최강 선택자 */
   @media screen and (max-width: 768px) {
+    .logo-container #entryPopupLogo,
+    img#entryPopupLogo,
     #entryPopupLogo {
       transform: scale(4) !important;
       -webkit-transform: scale(4) !important;
       -moz-transform: scale(4) !important;
       -ms-transform: scale(4) !important;
+      -o-transform: scale(4) !important;
     }
   }
   
-  /* 🔥 작은 모바일에서는 3.5배 */
+  /* 🔥🔥🔥 작은 모바일에서는 3.5배 */
   @media screen and (max-width: 480px) {
+    .logo-container #entryPopupLogo,
+    img#entryPopupLogo,
     #entryPopupLogo {
       transform: scale(3.5) !important;
       -webkit-transform: scale(3.5) !important;
       -moz-transform: scale(3.5) !important;
       -ms-transform: scale(3.5) !important;
+      -o-transform: scale(3.5) !important;
     }
   }
   
@@ -4009,13 +4018,7 @@ document.addEventListener('DOMContentLoaded', function() {
             margin-bottom: -31px;
             overflow: visible;
           ">
-            <img src="./images/neohive4545.png" alt="Neo Hive" id="entryPopupLogo" style="
-              width: 480px;
-              height: 400px;
-              object-fit: contain;
-              filter: drop-shadow(0 10px 40px rgba(0,0,0,0.9));
-              flex-shrink: 0;
-            ">
+            <img src="./images/neohive4545.png" alt="Neo Hive" id="entryPopupLogo">
           </div>
           
           <!-- 메인 타이틀 -->
