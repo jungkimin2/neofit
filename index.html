@@ -3867,6 +3867,56 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     }
   </style>
+  
+  <!-- 모바일 팝업 로고 크기 강제 적용 스크립트 -->
+  <script>
+  (function() {
+    function resizePopupLogo() {
+      const logo = document.getElementById('entryPopupLogo');
+      if (logo) {
+        const width = window.innerWidth;
+        console.log('화면 너비:', width);
+        
+        if (width <= 480) {
+          // 작은 모바일
+          logo.style.width = '600px';
+          logo.style.height = '600px';
+          logo.style.minWidth = '600px';
+          logo.style.maxWidth = 'none';
+          console.log('작은 모바일 로고 크기 적용: 600px');
+        } else if (width <= 768) {
+          // 일반 모바일
+          logo.style.width = '800px';
+          logo.style.height = '800px';
+          logo.style.minWidth = '800px';
+          logo.style.maxWidth = 'none';
+          console.log('일반 모바일 로고 크기 적용: 800px');
+        } else {
+          // PC
+          logo.style.width = '480px';
+          logo.style.height = '400px';
+          logo.style.minWidth = '480px';
+          logo.style.maxWidth = 'none';
+          console.log('PC 로고 크기 적용: 480px x 400px');
+        }
+      }
+    }
+    
+    // DOM 로드 후 실행
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', resizePopupLogo);
+    } else {
+      resizePopupLogo();
+    }
+    
+    // 창 크기 변경 시에도 실행
+    window.addEventListener('resize', resizePopupLogo);
+    
+    // 1초 후 한 번 더 실행 (안전장치)
+    setTimeout(resizePopupLogo, 1000);
+  })();
+  </script>
+  
   <!-- 중앙 정렬 컨테이너 -->
   <div style="
     display: flex;
@@ -3958,13 +4008,9 @@ document.addEventListener('DOMContentLoaded', function() {
             transform: translate(16px, -32px);
           ">
             <img src="./images/neohive4545.png" alt="Neo Hive" id="entryPopupLogo" style="
-              width: 480px !important;
-              height: 400px !important;
               object-fit: contain;
               filter: drop-shadow(0 10px 40px rgba(0,0,0,0.9));
-              max-width: none !important;
               flex-shrink: 0;
-              min-width: 480px !important;
             ">
           </div>
           
