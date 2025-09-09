@@ -54,6 +54,8 @@ window.showHiveChallengePopup = function() {
   
   // 컨테이너 생성
   const container = document.createElement('div');
+  const isMobile = window.innerWidth <= 768;
+  
   container.style.cssText = `
     position: relative !important;
     max-width: 95% !important;
@@ -67,6 +69,7 @@ window.showHiveChallengePopup = function() {
     will-change: transform !important;
     isolation: isolate !important;
     contain: layout style paint !important;
+    ${isMobile ? 'padding-top: 40px !important;' : ''}
   `;
   
   // 이미지 생성
@@ -83,20 +86,35 @@ window.showHiveChallengePopup = function() {
     console.error('❌ 이미지 로드 실패!');
   };
   
-  image.style.cssText = `
-    width: 100%;
-    height: auto;
-    display: block;
-    max-width: 800px;
-    max-height: 600px;
-  `;
+  // 모바일과 데스크톱에 따른 이미지 스타일 적용
+  if (isMobile) {
+    image.style.cssText = `
+      width: 100%;
+      height: auto;
+      display: block;
+      max-width: 100%;
+      max-height: 70vh;
+      object-fit: contain;
+      margin: 0 auto;
+    `;
+  } else {
+    image.style.cssText = `
+      width: 100%;
+      height: auto;
+      display: block;
+      max-width: 800px;
+      max-height: 600px;
+      object-fit: contain;
+    `;
+  }
   
   // 닫기 버튼 생성
   const closeButton = document.createElement('button');
   closeButton.innerHTML = '×';
+  // 모바일과 데스크톱에 따른 닫기 버튼 위치 조정
   closeButton.style.cssText = `
     position: absolute;
-    top: 10px;
+    top: ${isMobile ? '50px' : '10px'};
     right: 15px;
     background: none;
     border: none;
@@ -110,6 +128,7 @@ window.showHiveChallengePopup = function() {
     align-items: center;
     justify-content: center;
     transition: background-color 0.3s ease;
+    z-index: 99999999999;
   `;
   
   // 팝업 닫기 함수
