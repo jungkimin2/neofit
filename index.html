@@ -3697,6 +3697,11 @@ document.addEventListener('DOMContentLoaded', function() {
         #entryPopup #closePopupBtn {
           display: none !important;
         }
+        
+        /* 모바일 환경에서만 로고 위치를 위로 올리기 (2칸 = 32px) */
+        #entryPopup .logo-container {
+          margin-top: -12px !important;
+        }
       }
       
       /* 모바일에서 X 버튼 터치 피드백 */
@@ -3920,7 +3925,6 @@ document.addEventListener('DOMContentLoaded', function() {
             justify-content: center;
             align-items: center;
             margin-bottom: -31px;
-            margin-top: 32px;
             overflow: visible;
           ">
             <img src="./images/neohive4545.png" alt="Neo Hive" id="entryPopupLogo">
