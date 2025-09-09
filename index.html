@@ -3622,41 +3622,6 @@ document.addEventListener('DOMContentLoaded', function() {
       .popup-content {
         padding: 60px 12px 8px 12px !important;
       }
-      #entryPopup img[src*="neohive4545.png"] {
-        width: 800px !important;
-        height: 800px !important;
-        margin: 20px auto 20px auto !important;
-        display: block !important;
-        transform: translateY(-20px) !important;
-        max-width: 800px !important;
-        min-width: 800px !important;
-        object-fit: contain !important;
-      }
-      
-      /* PC용 인라인 스타일 무시 */
-      #entryPopup .logo-container img[src*="neohive4545.png"] {
-        width: 800px !important;
-        height: 800px !important;
-        min-width: 800px !important;
-        max-width: none !important;
-        flex-shrink: 0 !important;
-      }
-      
-      /* 모든 가능한 선택자로 강제 적용 */
-      #entryPopup img[alt="Neo Hive"] {
-        width: 800px !important;
-        height: 800px !important;
-        min-width: 800px !important;
-        max-width: none !important;
-      }
-      
-      /* 인라인 스타일 강제 덮어쓰기 */
-      #entryPopup .popup-logo-mobile {
-        width: 800px !important;
-        height: 800px !important;
-        min-width: 800px !important;
-        max-width: none !important;
-      }
       /* 모바일에서 로고 컨테이너 여백 조정 */
       #entryPopup .logo-container {
         margin: 0 auto !important;
@@ -3790,69 +3755,8 @@ document.addEventListener('DOMContentLoaded', function() {
         padding: 50px 10px 10px 10px !important;
       }
       
-      /* 모바일 로고 크기 강제 적용 */
-      #entryPopup #entryPopupLogo {
-        width: 600px !important;
-        height: 600px !important;
-        min-width: 600px !important;
-        max-width: none !important;
       }
     }
-    
-    /* PC 환경에서 기본 크기 */
-    @media (min-width: 769px) {
-      #entryPopup #entryPopupLogo {
-        width: 480px !important;
-        height: 400px !important;
-        min-width: 480px !important;
-        max-width: none !important;
-      }
-    }
-    
-    /* 일반 모바일 환경에서 큰 크기 */
-    @media (max-width: 768px) and (min-width: 481px) {
-      #entryPopup #entryPopupLogo {
-        width: 800px !important;
-        height: 800px !important;
-        min-width: 800px !important;
-        max-width: none !important;
-      }
-    }
-      #entryPopup img[src*="neohive4545.png"] {
-        width: 600px !important;
-        height: 600px !important;
-        margin: 10px auto 10px auto !important;
-        display: block !important;
-        transform: translateY(-30px) !important;
-        max-width: 600px !important;
-        min-width: 600px !important;
-        object-fit: contain !important;
-      }
-      
-      /* PC용 인라인 스타일 무시 (작은 모바일) */
-      #entryPopup .logo-container img[src*="neohive4545.png"] {
-        width: 600px !important;
-        height: 600px !important;
-        min-width: 600px !important;
-        max-width: none !important;
-        flex-shrink: 0 !important;
-      }
-      
-      /* 모든 가능한 선택자로 강제 적용 (작은 모바일) */
-      #entryPopup img[alt="Neo Hive"] {
-        width: 600px !important;
-        height: 600px !important;
-        min-width: 600px !important;
-        max-width: none !important;
-      }
-      
-      /* 인라인 스타일 강제 덮어쓰기 (작은 모바일) */
-      #entryPopup .popup-logo-mobile {
-        width: 600px !important;
-        height: 600px !important;
-        min-width: 600px !important;
-        max-width: none !important;
-      }
       #entryPopup h1 {
         font-size: 13px !important;
       }
