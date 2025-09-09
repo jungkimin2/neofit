@@ -3868,27 +3868,50 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   </style>
   
-  <!-- 🔥 로고 크기 제어 - 초간단 확실한 방법 -->
+  <!-- 🔥🔥🔥 로고 크기 제어 - 최고 우선순위 강제 적용 -->
   <style>
-  /* 모바일에서만 로고 2배 크기 */
+  /* 🔥 최고 우선순위로 모든 간섭 차단 */
+  html body div.popup-content div.logo-container img#entryPopupLogo,
+  div#entryPopup div.popup-content div.logo-container img#entryPopupLogo,
+  #entryPopup #entryPopupLogo,
+  img#entryPopupLogo {
+    width: 480px !important;
+    height: 400px !important;
+    object-fit: contain !important;
+    filter: drop-shadow(0 10px 40px rgba(0,0,0,0.9)) !important;
+    flex-shrink: 0 !important;
+    max-width: none !important;
+    min-width: auto !important;
+  }
+  
+  /* 🔥 모바일에서 최고 우선순위로 2배 크기 */
   @media screen and (max-width: 768px) {
-    #entryPopupLogo {
+    html body div.popup-content div.logo-container img#entryPopupLogo,
+    div#entryPopup div.popup-content div.logo-container img#entryPopupLogo,
+    #entryPopup #entryPopupLogo,
+    img#entryPopupLogo {
       width: 960px !important;  /* 2배 크기 */
       height: 800px !important; /* 2배 크기 */
     }
   }
   
-  /* 작은 모바일에서는 조금 더 작게 */
+  /* 🔥 작은 모바일에서 최고 우선순위 */
   @media screen and (max-width: 480px) {
-    #entryPopupLogo {
+    html body div.popup-content div.logo-container img#entryPopupLogo,
+    div#entryPopup div.popup-content div.logo-container img#entryPopupLogo,
+    #entryPopup #entryPopupLogo,
+    img#entryPopupLogo {
       width: 720px !important;  /* 1.5배 크기 */
       height: 600px !important; /* 1.5배 크기 */
     }
   }
   
-  /* PC에서는 기본 크기 */
+  /* 🔥 PC에서 최고 우선순위로 기본 크기 */
   @media screen and (min-width: 769px) {
-    #entryPopupLogo {
+    html body div.popup-content div.logo-container img#entryPopupLogo,
+    div#entryPopup div.popup-content div.logo-container img#entryPopupLogo,
+    #entryPopup #entryPopupLogo,
+    img#entryPopupLogo {
       width: 480px !important;
       height: 400px !important;
     }
@@ -3897,20 +3920,83 @@ document.addEventListener('DOMContentLoaded', function() {
   
   <script>
   document.addEventListener('DOMContentLoaded', function() {
-    console.log('🔥 로고 크기 제어 시작');
+    console.log('🔥🔥🔥 강제 로고 크기 제어 시작');
     console.log('📱 화면 너비:', window.innerWidth);
     
-    const logo = document.getElementById('entryPopupLogo');
-    if (logo) {
-      const computedStyle = window.getComputedStyle(logo);
-      console.log('📏 현재 로고 크기:', computedStyle.width, 'x', computedStyle.height);
-      
-      if (window.innerWidth <= 768) {
-        console.log('📱 모바일 환경 - CSS로 2배 크기가 적용되어야 함');
-      } else {
-        console.log('💻 PC 환경 - 기본 크기');
+    function forceMobileLogoSize() {
+      const logo = document.getElementById('entryPopupLogo');
+      if (!logo) {
+        console.log('❌ 로고 요소 없음');
+        return;
       }
+      
+      const screenWidth = window.innerWidth;
+      let targetWidth, targetHeight;
+      
+      if (screenWidth <= 480) {
+        targetWidth = '720px';
+        targetHeight = '600px';
+        console.log('📱 작은 모바일 - 720x600 강제 적용');
+      } else if (screenWidth <= 768) {
+        targetWidth = '960px';
+        targetHeight = '800px';
+        console.log('📱 모바일 - 960x800 강제 적용');
+      } else {
+        targetWidth = '480px';
+        targetHeight = '400px';
+        console.log('💻 PC - 480x400 강제 적용');
+      }
+      
+      // 🔥 강제로 인라인 스타일 덮어쓰기
+      logo.style.setProperty('width', targetWidth, 'important');
+      logo.style.setProperty('height', targetHeight, 'important');
+      logo.style.setProperty('object-fit', 'contain', 'important');
+      logo.style.setProperty('max-width', 'none', 'important');
+      logo.style.setProperty('min-width', 'auto', 'important');
+      
+      // 실제 크기 확인
+      setTimeout(function() {
+        const computedStyle = window.getComputedStyle(logo);
+        console.log('✅ 실제 적용된 크기:', computedStyle.width, 'x', computedStyle.height);
+        
+        // 만약 여전히 크기가 안 맞다면 경고
+        const actualWidth = parseInt(computedStyle.width);
+        const expectedWidth = parseInt(targetWidth);
+        if (Math.abs(actualWidth - expectedWidth) > 10) {
+          console.log('⚠️ 크기가 예상과 다름! 다른 CSS가 간섭하고 있음');
+          console.log('예상:', targetWidth, '실제:', computedStyle.width);
+        }
+      }, 100);
     }
+    
+    // 즉시 실행
+    forceMobileLogoSize();
+    
+    // 여러 시점에서 재실행
+    setTimeout(forceMobileLogoSize, 100);
+    setTimeout(forceMobileLogoSize, 300);
+    setTimeout(forceMobileLogoSize, 500);
+    setTimeout(forceMobileLogoSize, 1000);
+    
+    // 창 크기 변경 시 재실행
+    window.addEventListener('resize', forceMobileLogoSize);
+    
+    // 1초마다 체크하여 크기가 바뀌었으면 다시 적용
+    setInterval(function() {
+      const logo = document.getElementById('entryPopupLogo');
+      if (logo && window.innerWidth <= 768) {
+        const computedStyle = window.getComputedStyle(logo);
+        const actualWidth = parseInt(computedStyle.width);
+        
+        if (window.innerWidth <= 480 && actualWidth < 700) {
+          console.log('🔄 작은 모바일 크기 복구');
+          forceMobileLogoSize();
+        } else if (window.innerWidth <= 768 && actualWidth < 900) {
+          console.log('🔄 모바일 크기 복구');
+          forceMobileLogoSize();
+        }
+      }
+    }, 1000);
   });
   </script>
   
