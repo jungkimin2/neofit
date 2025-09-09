@@ -3649,6 +3649,14 @@ document.addEventListener('DOMContentLoaded', function() {
         min-width: 800px !important;
         max-width: none !important;
       }
+      
+      /* 인라인 스타일 강제 덮어쓰기 */
+      #entryPopup .popup-logo-mobile {
+        width: 800px !important;
+        height: 800px !important;
+        min-width: 800px !important;
+        max-width: none !important;
+      }
       /* 모바일에서 로고 컨테이너 여백 조정 */
       #entryPopup .logo-container {
         margin: 0 auto !important;
@@ -3808,6 +3816,14 @@ document.addEventListener('DOMContentLoaded', function() {
         min-width: 600px !important;
         max-width: none !important;
       }
+      
+      /* 인라인 스타일 강제 덮어쓰기 (작은 모바일) */
+      #entryPopup .popup-logo-mobile {
+        width: 600px !important;
+        height: 600px !important;
+        min-width: 600px !important;
+        max-width: none !important;
+      }
       #entryPopup h1 {
         font-size: 13px !important;
       }
@@ -3920,7 +3936,7 @@ document.addEventListener('DOMContentLoaded', function() {
               max-width: none !important;
               flex-shrink: 0;
               min-width: 480px !important;
-            ">
+            " class="popup-logo-mobile">
           </div>
           
           <!-- 메인 타이틀 -->
