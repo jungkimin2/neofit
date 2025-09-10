@@ -3839,29 +3839,6 @@ document.addEventListener('DOMContentLoaded', function() {
       -ms-transform: scale(1) !important;
     }
   }
-  
-  /* 하이브 첼린지 팝업 모바일 최적화 */
-  @media screen and (max-width: 768px) {
-    #hiveChallengePopup .popup-content {
-      max-width: 95% !important;
-      max-height: 95% !important;
-      padding: 15px !important;
-      margin: 10px !important;
-    }
-    
-    #hiveChallengePopup .hive-challenge-image-container img {
-      max-height: 85vh !important;
-      width: auto !important;
-    }
-    
-    #closeHiveChallengeBtn {
-      width: 35px !important;
-      height: 35px !important;
-      font-size: 20px !important;
-      top: 5px !important;
-      right: 10px !important;
-    }
-  }
   </style>
   
   
@@ -4193,23 +4170,9 @@ document.addEventListener('DOMContentLoaded', function() {
     <a href="#" onclick="document.getElementById('simple-mobile-menu').style.display='none'; return true;" style="display: block; padding: 20px; color: #fff; text-decoration: none; border-bottom: 1px solid rgba(123,228,149,0.2); font-size: 18px; text-align: center;">네오핏</a>
     <a href="https://neofit-s.oopy.io/NEOFIT-S" onclick="window.open('https://neofit-s.oopy.io/NEOFIT-S', '_blank'); document.getElementById('simple-mobile-menu').style.display='none'; return false;" style="display: block; padding: 20px; color: #fff; text-decoration: none; border-bottom: 1px solid rgba(123,228,149,0.2); font-size: 18px; text-align: center;">네오핏 운동가이드</a>
     <a href="#hive" onclick="document.getElementById('simple-mobile-menu').style.display='none'; return true;" style="display: block; padding: 20px; color: #fff; text-decoration: none; border-bottom: 1px solid rgba(123,228,149,0.2); font-size: 18px; text-align: center;">네오 하이브</a>
-    <a href="javascript:void(0)" onclick="showHiveChallengePopup(); document.getElementById('simple-mobile-menu').style.display='none'; return false;" style="display: block; padding: 20px; color: #fff; text-decoration: none; border-bottom: 1px solid rgba(123,228,149,0.2); font-size: 18px; text-align: center;">하이브 첼린지</a>
     <a href="#smart" onclick="document.getElementById('simple-mobile-menu').style.display='none'; return true;" style="display: block; padding: 20px; color: #fff; text-decoration: none; border-bottom: 1px solid rgba(123,228,149,0.2); font-size: 18px; text-align: center;">네오 스마트</a>
     <a href="#pilates" onclick="document.getElementById('simple-mobile-menu').style.display='none'; return true;" style="display: block; padding: 20px; color: #fff; text-decoration: none; border-bottom: 1px solid rgba(123,228,149,0.2); font-size: 18px; text-align: center;">네오 필라테스</a>
     <a href="javascript:void(0)" onclick="openForm(); document.getElementById('simple-mobile-menu').style.display='none'; return false;" style="display: block; padding: 20px; color: #7BE495; text-decoration: none; font-weight: 600; font-size: 18px; text-align: center; border-bottom: 3px solid #7BE495; box-shadow: 0 3px 8px rgba(123, 228, 149, 0.3);">무료 체험하기</a>
-  </div>
-</div>
-
-<!-- 하이브 첼린지 팝업 -->
-<div id="hiveChallengePopup" class="popup-overlay" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.9); z-index: 2147483647; align-items: center; justify-content: center;">
-  <div class="popup-content" style="position: relative; background: #000; border-radius: 20px; padding: 20px; max-width: 90%; max-height: 90%; display: flex; flex-direction: column; align-items: center; border: 2px solid #7BE495; box-shadow: 0 0 30px rgba(123, 228, 149, 0.5);">
-    <!-- 닫기 버튼 -->
-    <button id="closeHiveChallengeBtn" onclick="closeHiveChallengePopup()" style="position: absolute; top: 10px; right: 15px; background: rgba(255, 0, 0, 0.8); color: white; border: none; border-radius: 50%; width: 30px; height: 30px; font-size: 18px; font-weight: bold; cursor: pointer; z-index: 999; display: flex; align-items: center; justify-content: center; line-height: 1;">×</button>
-    
-    <!-- 하이브 첼린지 이미지 -->
-    <div class="hive-challenge-image-container" style="width: 100%; display: flex; justify-content: center; align-items: center;">
-      <img src="./images/neohive93.png" alt="하이브 첼린지" style="max-width: 100%; max-height: 80vh; object-fit: contain; border-radius: 10px;">
-    </div>
   </div>
 </div>
 
@@ -18400,50 +18363,6 @@ document.addEventListener('DOMContentLoaded', function() {
     btn.dispatchEvent(event);
   };
 })();
-</script>
-
-<!-- 하이브 첼린지 팝업 스크립트 -->
-<script>
-// 하이브 첼린지 팝업 열기
-function showHiveChallengePopup() {
-  const popup = document.getElementById('hiveChallengePopup');
-  if (popup) {
-    popup.style.display = 'flex';
-    // 스크롤 방지
-    document.body.style.overflow = 'hidden';
-    console.log('하이브 첼린지 팝업 열림');
-  }
-}
-
-// 하이브 첼린지 팝업 닫기
-function closeHiveChallengePopup() {
-  const popup = document.getElementById('hiveChallengePopup');
-  if (popup) {
-    popup.style.display = 'none';
-    // 스크롤 복원
-    document.body.style.overflow = '';
-    console.log('하이브 첼린지 팝업 닫힘');
-  }
-}
-
-// 팝업 바깥 클릭시 닫기
-document.addEventListener('DOMContentLoaded', function() {
-  const popup = document.getElementById('hiveChallengePopup');
-  if (popup) {
-    popup.addEventListener('click', function(e) {
-      if (e.target === popup) {
-        closeHiveChallengePopup();
-      }
-    });
-  }
-});
-
-// ESC 키로 팝업 닫기
-document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') {
-    closeHiveChallengePopup();
-  }
-});
 </script>
 
 <!-- 간단한 메뉴 토글 스크립트 -->
