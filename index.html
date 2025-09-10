@@ -391,7 +391,7 @@ window.openHiveChallenge = function() {
     // 불필요한 리소스 로딩 방지
     window.lazyLoadEnabled = true;
     
-    // 모바일 성능 최적화 스타일
+    // 모바일 전용 스타일 우선 로드
     const style = document.createElement('style');
     style.textContent = `
       /* 모바일 빠른 렌더링 */
@@ -403,101 +403,8 @@ window.openHiveChallenge = function() {
         animation-duration: 0.2s !important;
         transition-duration: 0.2s !important;
       }
-      /* 큰 이미지 lazy loading 스타일 */
-      .lazy-load {
-        opacity: 0;
-        transition: opacity 0.3s;
-      }
-      .lazy-load.loaded {
-        opacity: 1;
-      }
-      /* 모바일에서 큰 이미지 크기 제한 */
-      .is-mobile img {
-        max-width: 100% !important;
-        height: auto !important;
-      }
-      /* 비디오 자동재생 비활성화로 데이터 절약 */
-      .is-mobile video {
-        preload: none !important;
-      }
-      /* 모바일 우선 로딩 최적화 */
-      .is-mobile .hero-section {
-        min-height: 100vh !important;
-        background: linear-gradient(135deg, #1a4d2e 0%, #2d5a3d 100%) !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-      }
-      /* 폰트 표시 최적화 */
-      .is-mobile * {
-        font-display: swap !important;
-        text-rendering: optimizeSpeed !important;
-      }
-      /* 중요하지 않은 섹션 지연 로드 */
-      .is-mobile .benefits-section,
-      .is-mobile .facility-gallery-new {
-        will-change: auto !important;
-        contain: layout style paint !important;
-      }
     `;
     document.head.insertBefore(style, document.head.firstChild);
-    
-    // 큰 이미지 lazy loading 구현
-    window.lazyLoadImages = function() {
-      const images = document.querySelectorAll('img[data-src]');
-      const imageObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const img = entry.target;
-            img.src = img.dataset.src;
-            img.classList.remove('lazy-load');
-            img.classList.add('loaded');
-            imageObserver.unobserve(img);
-          }
-        });
-      }, {
-        rootMargin: '50px 0px',
-        threshold: 0.01
-      });
-      
-      images.forEach(img => {
-        img.classList.add('lazy-load');
-        imageObserver.observe(img);
-      });
-    };
-    
-    // 모바일 성능 최적화를 위한 추가 조치
-    window.mobileOptimizations = function() {
-      // 불필요한 애니메이션 제거
-      const animatedElements = document.querySelectorAll('*[style*="animation"], *[style*="transition"]');
-      animatedElements.forEach(el => {
-        if (el.style.animationDuration !== '0.2s') {
-          el.style.animationDuration = '0.2s';
-          el.style.transitionDuration = '0.2s';
-        }
-      });
-      
-      // 비디오 preload 최적화
-      const videos = document.querySelectorAll('video');
-      videos.forEach(video => {
-        video.setAttribute('preload', 'none');
-        video.setAttribute('loading', 'lazy');
-      });
-      
-      // 중요하지 않은 스크립트 지연 로드
-      setTimeout(() => {
-        window.lazyLoadImages();
-      }, 500);
-    };
-    
-    // DOM 로드 후 최적화 및 lazy loading 활성화
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', () => {
-        setTimeout(window.mobileOptimizations, 100);
-      });
-    } else {
-      setTimeout(window.mobileOptimizations, 100);
-    }
   }
   
   // 팝업 체크를 위한 DOM 준비 상태 확인
@@ -7830,7 +7737,7 @@ if (window.innerWidth <= 768) {
     <div class="facility-gallery-new" style="margin: 40px auto; max-width: 1000px;">
       <!-- 메인 이미지 영역 -->
       <div class="facility-main-image" style="position: relative; border-radius: 16px; overflow: hidden; background: #000; cursor: pointer;" onclick="showFacilityPopup(currentFacilityIndex)">
-        <img id="facilityMainImage" data-src="./images/IMG7216.jpeg" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2RkZCIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjOTk5Ij5Mb2FkaW5nLi4uPC90ZXh0Pjwvc3ZnPg==" alt="시설 메인 이미지" style="width: 100%; height: 450px; object-fit: cover; display: block;">
+        <img id="facilityMainImage" src="./images/IMG7216.jpeg" alt="시설 메인 이미지" style="width: 100%; height: 450px; object-fit: cover; display: block;">
         <!-- 모바일용 화살표 (메인 이미지 위에 위치) -->
         <button class="mobile-gallery-prev" onclick="event.stopPropagation(); scrollThumbnails('left')" style="display: none; position: absolute; left: 10px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.7); border: 2px solid #7BE495; color: #7BE495; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; align-items: center; justify-content: center; z-index: 10;">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -7867,10 +7774,10 @@ if (window.innerWidth <= 768) {
           </div>
           <div class="facility-thumbnail-track" style="display: flex; gap: 16px; transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);">
           <div class="facility-thumbnail active" data-index="0" onclick="selectFacilityImage(0)" style="flex: 0 0 calc(20% - 13px); cursor: pointer; border-radius: 12px; overflow: hidden; border: 2px solid transparent; transition: all 0.3s;">
-            <img data-src="./images/IMG7216.jpeg" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2VlZSIvPjwvc3ZnPg==" alt="시설 이미지 1" style="width: 100%; height: 120px; object-fit: cover; display: block;">
+            <img src="./images/IMG7216.jpeg" alt="시설 이미지 1" style="width: 100%; height: 120px; object-fit: cover; display: block;">
           </div>
           <div class="facility-thumbnail" data-index="1" onclick="selectFacilityImage(1)" style="flex: 0 0 calc(20% - 13px); cursor: pointer; border-radius: 12px; overflow: hidden; border: 2px solid transparent; transition: all 0.3s;">
-            <img data-src="./images/IMG7217.jpeg" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2VlZSIvPjwvc3ZnPg==" alt="시설 이미지 2" style="width: 100%; height: 120px; object-fit: cover; display: block;">
+            <img src="./images/IMG7217.jpeg" alt="시설 이미지 2" style="width: 100%; height: 120px; object-fit: cover; display: block;">
           </div>
           <div class="facility-thumbnail" data-index="2" onclick="selectFacilityImage(2)" style="flex: 0 0 calc(20% - 13px); cursor: pointer; border-radius: 12px; overflow: hidden; border: 2px solid transparent; transition: all 0.3s;">
             <img src="./images/IMG7218.jpeg" alt="시설 이미지 3" style="width: 100%; height: 120px; object-fit: cover; display: block;">
