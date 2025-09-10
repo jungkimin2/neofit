@@ -10,52 +10,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Neo Hive - 스마트하게, 함께 하는 피트니스</title>
 
-<!-- FOUC 방지 - 팝업 깜박임 완전 제거 (최우선 로드) -->
-<style>
-  /* 페이지 로드시 팝업 완전 숨김 - 깜박임 완전 방지 */
-  #entryPopup {
-    display: none !important;
-    opacity: 0 !important;
-    visibility: hidden !important;
-    transform: translateY(-100vh) !important;
-    transition: none !important;
-    pointer-events: none !important;
-  }
-  
-  /* JavaScript에서 표시할 준비가 되었을 때 */
-  #entryPopup.popup-ready {
-    display: block !important;
-    transition: all 0.3s ease !important;
-    pointer-events: auto !important;
-  }
-  
-  /* 실제로 보여질 때 */
-  #entryPopup.popup-visible {
-    opacity: 1 !important;
-    visibility: visible !important;
-    transform: translateY(0) !important;
-  }
-  
-  /* 모든 내부 요소들도 완전히 숨김 */
-  #entryPopup:not(.popup-visible) * {
-    opacity: 0 !important;
-    visibility: hidden !important;
-    transform: scale(0) !important;
-  }
-  
-  /* 로고 확대 깜박임 방지 */
-  body:not(.popup-active) .logo-container img {
-    transform: scale(1) !important;
-  }
-  
-  /* body에 popup-active가 없을 때 완전 숨김 */
-  body:not(.popup-active) #entryPopup {
-    display: none !important;
-    opacity: 0 !important;
-    visibility: hidden !important;
-  }
-</style>
-
 <!-- Preload 중요 리소스 -->
 <link rel="preload" href="./images/neohive3.png" as="image">
 <link rel="preload" href="./images/hive3.png" as="image">
@@ -4252,7 +4206,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 transition: all 0.2s ease;
                 touch-action: manipulation;
                 -webkit-tap-highlight-color: transparent;
-              " onclick="console.log('🔥 하단 X버튼 클릭!'); var checkbox = document.getElementById('dontShowToday'); console.log('📦 체크박스 Element:', checkbox); console.log('✅ 체크박스 checked 상태:', checkbox ? checkbox.checked : 'element not found'); if(checkbox && checkbox.checked) { var today = new Date().toDateString(); console.log('📅 오늘 날짜 생성:', today); try { localStorage.setItem('dontShowPopupUntil', today); console.log('💾 localStorage.setItem 실행됨'); var stored = localStorage.getItem('dontShowPopupUntil'); console.log('🔍 저장 후 localStorage 확인:', stored); console.log('🎯 저장 성공 여부:', stored === today ? 'SUCCESS' : 'FAILED'); } catch(e) { console.error('❌ localStorage 저장 실패:', e); } } else { console.log('⚠️ 체크박스가 체크되지 않았거나 찾을 수 없음'); } var popup = document.getElementById('entryPopup'); if(popup) { popup.classList.remove('popup-visible'); setTimeout(function(){ popup.classList.remove('popup-ready'); popup.style.setProperty('display', 'none', 'important'); }, 300); console.log('✨ 팝업 닫기 실행 완료 (깜박임 방지)'); } document.body.classList.remove('popup-active', 'popup-open'); event.stopPropagation(); return false;"
+              " onclick="console.log('🔥 하단 X버튼 클릭!'); var checkbox = document.getElementById('dontShowToday'); console.log('📦 체크박스 Element:', checkbox); console.log('✅ 체크박스 checked 상태:', checkbox ? checkbox.checked : 'element not found'); if(checkbox && checkbox.checked) { var today = new Date().toDateString(); console.log('📅 오늘 날짜 생성:', today); try { localStorage.setItem('dontShowPopupUntil', today); console.log('💾 localStorage.setItem 실행됨'); var stored = localStorage.getItem('dontShowPopupUntil'); console.log('🔍 저장 후 localStorage 확인:', stored); console.log('🎯 저장 성공 여부:', stored === today ? 'SUCCESS' : 'FAILED'); } catch(e) { console.error('❌ localStorage 저장 실패:', e); } } else { console.log('⚠️ 체크박스가 체크되지 않았거나 찾을 수 없음'); } var popup = document.getElementById('entryPopup'); if(popup) { popup.style.setProperty('display', 'none', 'important'); popup.classList.remove('popup-visible'); console.log('✨ 팝업 닫기 실행 완료'); } document.body.classList.remove('popup-active'); event.stopPropagation(); return false;"
                  onmouseover="this.style.background='#7BE495'; this.style.color='white';"
                  onmouseout="this.style.background='rgba(255, 255, 255, 0.9)'; this.style.color='#333';">×</button>
             </div>
@@ -18708,26 +18662,18 @@ function initEntryPopup() {
   // 오늘 하루 보지 않기가 설정되어 있으면 팝업 표시하지 않음
   if (!shouldShowPopup()) {
     console.log('오늘 하루 보지 않기 설정으로 인해 팝업 숨김');
-    // 깜박임 완전 방지: 모든 팝업 클래스 완전 제거
-    popup.classList.remove('popup-visible', 'popup-ready');
-    popup.style.setProperty('display', 'none', 'important');
-    popup.style.setProperty('opacity', '0', 'important');
-    popup.style.setProperty('visibility', 'hidden', 'important');
+    popup.style.display = 'none';
     // 팝업을 사용하지 않을 때는 다른 요소들을 즉시 표시
     document.body.classList.add('popup-initialized');
-    document.body.classList.remove('popup-active', 'popup-open');
-    console.log('✅ 팝업 완전히 숨김 처리 완료 (깜박임 없음)');
     return;
   }
   
   console.log('팝업 표시 시작...');
   
-  // 깜박임 완전 방지: 단계적 클래스 적용
-  
-  // 1단계: 팝업이 표시될 때 popup-active 클래스 추가
+  // 팝업이 표시될 때 popup-active 클래스 추가
   document.body.classList.add('popup-active');
   
-  // 2단계: 모바일 스크롤 완전 차단
+  // 모바일 스크롤 완전 차단
   const scrollY = window.scrollY;
   document.body.style.position = 'fixed';
   document.body.style.top = `-${scrollY}px`;
@@ -18735,17 +18681,13 @@ function initEntryPopup() {
   document.body.style.overflow = 'hidden';
   document.body.classList.add('popup-open');
   
-  // 3단계: 팝업을 준비 상태로 설정
+  // 팝업을 안정적으로 표시
+  popup.style.opacity = '1';
+  popup.style.transform = 'translateY(0) scale(1)';
+  popup.style.display = 'block';
   popup.style.position = 'fixed';
   popup.style.zIndex = '999999999999';
   popup.style.width = '100vw';
-  popup.classList.add('popup-ready');
-  
-  // 4단계: 아주 짧은 지연 후 부드럽게 나타나게 함
-  setTimeout(() => {
-    popup.classList.add('popup-visible');
-    console.log('✨ 팝업 완전히 표시 완료 (깜박임 없음)');
-  }, 50);
   popup.style.height = '100vh';
   popup.style.top = '0';
   popup.style.left = '0';
