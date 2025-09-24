@@ -18,6 +18,7 @@
 
 <!-- 모바일 감지 및 최적화 -->
 <script src="./js/initial.js" defer></script>
+<link rel="stylesheet" href="./css/gallery.css">
 
 <!-- 모바일 전용 즉시 적용 스타일 - 페이지 로딩 시 깜빡임 방지 -->
 <style>
@@ -6300,7 +6301,10 @@ if (window.innerWidth <= 768) {
         <!-- 카드 1 -->
         <div class="pilates-card" data-index="0" style="position: absolute; width: 320px; height: 420px; left: 50%; top: 50%; transform: translate(-50%, -50%) translateZ(0) scale(1.2); transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1); z-index: 3;">
           <div style="position: relative; width: 100%; height: 100%; border-radius: 20px; background: #0F1A1C; border: 3px solid #e293ef; overflow: hidden; box-shadow: 0 0 40px rgba(226,147,239,0.8), 0 0 80px rgba(226,147,239,0.4), inset 0 0 30px rgba(226,147,239,0.3);">
-            <img src="./images/neopp.jpg" alt="네오 필라테스 강사 1" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover;">
+            <picture>
+              <source srcset="./images/neopp.webp" type="image/webp">
+              <img src="./images/neopp.jpg" alt="네오 필라테스 강사 1" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover;">
+            </picture>
             <div class="instructor-overlay" style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, transparent 60%); padding: 30px 20px; opacity: 0; transition: opacity 0.3s; display: none;">
               <p style="color: #fff; font-size: 0.95rem; opacity: 0.9;">체계적인 커리큘럼으로<br>개인별 맞춤 지도</p>
             </div>
@@ -6312,7 +6316,10 @@ if (window.innerWidth <= 768) {
         <!-- 카드 2 -->
         <div class="pilates-card" data-index="1" style="position: absolute; width: 320px; height: 420px; left: 50%; top: 50%; transform: translate(-170%, -50%) translateZ(-100px) scale(0.8); transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1); z-index: 2; opacity: 0.7;">
           <div style="position: relative; width: 100%; height: 100%; border-radius: 20px; background: #0F1A1C; border: 2px solid #00BFFF; overflow: hidden; box-shadow: 0 0 20px rgba(0,191,255,0.6), inset 0 0 20px rgba(0,191,255,0.2);">
-            <img src="./images/neopp2.jpg" alt="네오 필라테스 강사 2" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover;">
+            <picture>
+              <source srcset="./images/neopp2.webp" type="image/webp">
+              <img src="./images/neopp2.jpg" alt="네오 필라테스 강사 2" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover;">
+            </picture>
             <div class="instructor-overlay" style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, transparent 60%); padding: 30px 20px; opacity: 0; transition: opacity 0.3s; display: none;">
               <p style="color: #fff; font-size: 0.95rem; opacity: 0.9;">함께하는 운동의 즐거움<br>동기부여와 성취감</p>
             </div>
@@ -6324,7 +6331,10 @@ if (window.innerWidth <= 768) {
         <!-- 카드 3 -->
         <div class="pilates-card" data-index="2" style="position: absolute; width: 320px; height: 420px; left: 50%; top: 50%; transform: translate(70%, -50%) translateZ(-100px) scale(0.8); transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1); z-index: 2; opacity: 0.7;">
           <div style="position: relative; width: 100%; height: 100%; border-radius: 20px; background: #0F1A1C; border: 2px solid #7BE495; overflow: hidden; box-shadow: 0 0 20px rgba(123,228,149,0.6), inset 0 0 20px rgba(123,228,149,0.2);">
-            <img src="./images/neopp3.jpg" alt="네오 필라테스 강사 3" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover;">
+            <picture>
+              <source srcset="./images/neopp3.webp" type="image/webp">
+              <img src="./images/neopp3.jpg" alt="네오 필라테스 강사 3" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover;">
+            </picture>
             <div class="instructor-overlay" style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, transparent 60%); padding: 30px 20px; opacity: 0; transition: opacity 0.3s; display: none;">
               <p style="color: #fff; font-size: 0.95rem; opacity: 0.9;">최신 기구로 정확한 자세<br>효과적인 근력 강화</p>
             </div>
@@ -7358,8 +7368,11 @@ if (window.innerWidth <= 768) {
     <div class="facility-gallery-new" style="margin: 40px auto; max-width: 1000px;">
       <!-- 메인 이미지 영역 -->
       <div class="facility-main-image" style="position: relative; border-radius: 16px; overflow: hidden; background: #000; cursor: pointer;" onclick="showFacilityPopup(currentFacilityIndex)">
-        <img id="facilityMainImage" src="./images/IMG7216.jpeg" alt="시설 메인 이미지" loading="lazy" decoding="async" style="width: 100%; height: 450px; object-fit: cover; display: block;">
-        <!-- 모바일용 화살표 (메인 이미지 위에 위치) -->
+        <picture>
+          <source srcset="./images/IMG7216_480w.webp 480w, ./images/IMG7216_960w.webp 960w, ./images/IMG7216.webp 1600w" type="image/webp">
+          <img id="facilityMainImage" src="./images/IMG7216.jpeg" srcset="./images/IMG7216_480w.jpg 480w, ./images/IMG7216_960w.jpg 960w, ./images/IMG7216.jpeg 1600w" sizes="(max-width: 768px) 100vw, 600px" alt="시설 메인 이미지" loading="lazy" decoding="async" style="width: 100%; height: 450px; object-fit: cover; display: block;">
+        </picture>
+      <!-- 모바일용 화살표 (메인 이미지 위에 위치) -->
         <button class="mobile-gallery-prev" onclick="event.stopPropagation(); scrollThumbnails('left')" style="display: none; position: absolute; left: 10px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.7); border: 2px solid #7BE495; color: #7BE495; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; align-items: center; justify-content: center; z-index: 10;">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M15 18L9 12L15 6" stroke="#7BE495" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
@@ -7395,25 +7408,46 @@ if (window.innerWidth <= 768) {
           </div>
           <div class="facility-thumbnail-track" style="display: flex; gap: 16px; transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);">
           <div class="facility-thumbnail active" data-index="0" onclick="selectFacilityImage(0)" style="flex: 0 0 calc(20% - 13px); cursor: pointer; border-radius: 12px; overflow: hidden; border: 2px solid transparent; transition: all 0.3s;">
-            <img src="./images/IMG7216.jpeg" alt="시설 이미지 1" loading="lazy" decoding="async" style="width: 100%; height: 120px; object-fit: cover; display: block;">
+            <picture>
+              <source srcset="./images/IMG7216_480w.webp 480w, ./images/IMG7216_960w.webp 960w, ./images/IMG7216.webp 1600w" type="image/webp">
+              <img src="./images/IMG7216.jpeg" srcset="./images/IMG7216_480w.jpg 480w, ./images/IMG7216_960w.jpg 960w, ./images/IMG7216.jpeg 1600w" sizes="(max-width: 768px) 45vw, 180px" alt="시설 이미지 1" loading="lazy" decoding="async" style="width: 100%; height: 120px; object-fit: cover; display: block;">
+            </picture>
           </div>
           <div class="facility-thumbnail" data-index="1" onclick="selectFacilityImage(1)" style="flex: 0 0 calc(20% - 13px); cursor: pointer; border-radius: 12px; overflow: hidden; border: 2px solid transparent; transition: all 0.3s;">
-            <img src="./images/IMG7217.jpeg" alt="시설 이미지 2" loading="lazy" decoding="async" style="width: 100%; height: 120px; object-fit: cover; display: block;">
+            <picture>
+              <source srcset="./images/IMG7217_480w.webp 480w, ./images/IMG7217_960w.webp 960w, ./images/IMG7217.webp 1600w" type="image/webp">
+              <img src="./images/IMG7217.jpeg" srcset="./images/IMG7217_480w.jpg 480w, ./images/IMG7217_960w.jpg 960w, ./images/IMG7217.jpeg 1600w" sizes="(max-width: 768px) 45vw, 180px" alt="시설 이미지 2" loading="lazy" decoding="async" style="width: 100%; height: 120px; object-fit: cover; display: block;">
+            </picture>
           </div>
           <div class="facility-thumbnail" data-index="2" onclick="selectFacilityImage(2)" style="flex: 0 0 calc(20% - 13px); cursor: pointer; border-radius: 12px; overflow: hidden; border: 2px solid transparent; transition: all 0.3s;">
-            <img src="./images/IMG7218.jpeg" alt="시설 이미지 3" loading="lazy" decoding="async" style="width: 100%; height: 120px; object-fit: cover; display: block;">
+            <picture>
+              <source srcset="./images/IMG7218_480w.webp 480w, ./images/IMG7218_960w.webp 960w, ./images/IMG7218.webp 1600w" type="image/webp">
+              <img src="./images/IMG7218.jpeg" srcset="./images/IMG7218_480w.jpg 480w, ./images/IMG7218_960w.jpg 960w, ./images/IMG7218.jpeg 1600w" sizes="(max-width: 768px) 45vw, 180px" alt="시설 이미지 3" loading="lazy" decoding="async" style="width: 100%; height: 120px; object-fit: cover; display: block;">
+            </picture>
           </div>
           <div class="facility-thumbnail" data-index="3" onclick="selectFacilityImage(3)" style="flex: 0 0 calc(20% - 13px); cursor: pointer; border-radius: 12px; overflow: hidden; border: 2px solid transparent; transition: all 0.3s;">
-            <img src="./images/IMG7222.JPG" alt="시설 이미지 4" loading="lazy" decoding="async" style="width: 100%; height: 120px; object-fit: cover; display: block;">
+            <picture>
+              <source srcset="./images/IMG7222_480w.webp 480w, ./images/IMG7222_960w.webp 960w, ./images/IMG7222.webp 1600w" type="image/webp">
+              <img src="./images/IMG7222.JPG" srcset="./images/IMG7222_480w.jpg 480w, ./images/IMG7222_960w.jpg 960w, ./images/IMG7222.JPG 1600w" sizes="(max-width: 768px) 45vw, 180px" alt="시설 이미지 4" loading="lazy" decoding="async" style="width: 100%; height: 120px; object-fit: cover; display: block;">
+            </picture>
           </div>
           <div class="facility-thumbnail" data-index="4" onclick="selectFacilityImage(4)" style="flex: 0 0 calc(20% - 13px); cursor: pointer; border-radius: 12px; overflow: hidden; border: 2px solid transparent; transition: all 0.3s;">
-            <img src="./images/neoodod.JPG" alt="시설 이미지 5" loading="lazy" decoding="async" style="width: 100%; height: 120px; object-fit: cover; display: block;">
+            <picture>
+              <source srcset="./images/neoodod_480w.webp 480w, ./images/neoodod_960w.webp 960w, ./images/neoodod.webp 1600w" type="image/webp">
+              <img src="./images/neoodod.JPG" srcset="./images/neoodod_480w.jpg 480w, ./images/neoodod_960w.jpg 960w, ./images/neoodod.JPG 1600w" sizes="(max-width: 768px) 45vw, 180px" alt="시설 이미지 5" loading="lazy" decoding="async" style="width: 100%; height: 120px; object-fit: cover; display: block;">
+            </picture>
           </div>
           <div class="facility-thumbnail" data-index="5" onclick="selectFacilityImage(5)" style="flex: 0 0 calc(20% - 13px); cursor: pointer; border-radius: 12px; overflow: hidden; border: 2px solid transparent; transition: all 0.3s;">
-            <img src="./images/IMG3839.JPG" alt="시설 이미지 6" loading="lazy" decoding="async" style="width: 100%; height: 120px; object-fit: cover; display: block;">
+            <picture>
+              <source srcset="./images/IMG3839_480w.webp 480w, ./images/IMG3839_960w.webp 960w, ./images/IMG3839.webp 1600w" type="image/webp">
+              <img src="./images/IMG3839.JPG" srcset="./images/IMG3839_480w.jpg 480w, ./images/IMG3839_960w.jpg 960w, ./images/IMG3839.JPG 1600w" sizes="(max-width: 768px) 45vw, 180px" alt="시설 이미지 6" loading="lazy" decoding="async" style="width: 100%; height: 120px; object-fit: cover; display: block;">
+            </picture>
           </div>
           <div class="facility-thumbnail" data-index="6" onclick="selectFacilityImage(6)" style="flex: 0 0 calc(20% - 13px); cursor: pointer; border-radius: 12px; overflow: hidden; border: 2px solid transparent; transition: all 0.3s;">
-            <img src="./images/IMG3840.JPG" alt="시설 이미지 7" loading="lazy" decoding="async" style="width: 100%; height: 120px; object-fit: cover; display: block;">
+            <picture>
+              <source srcset="./images/IMG3840_480w.webp 480w, ./images/IMG3840_960w.webp 960w, ./images/IMG3840.webp 1600w" type="image/webp">
+              <img src="./images/IMG3840.JPG" srcset="./images/IMG3840_480w.jpg 480w, ./images/IMG3840_960w.jpg 960w, ./images/IMG3840.JPG 1600w" sizes="(max-width: 768px) 45vw, 180px" alt="시설 이미지 7" loading="lazy" decoding="async" style="width: 100%; height: 120px; object-fit: cover; display: block;">
+            </picture>
           </div>
           <div class="facility-thumbnail" data-index="7" onclick="selectFacilityImage(7)" style="flex: 0 0 calc(20% - 13px); cursor: pointer; border-radius: 12px; overflow: hidden; border: 2px solid transparent; transition: all 0.3s;">
             <img src="./images/IMG3805.JPG" alt="시설 이미지 8" loading="lazy" decoding="async" style="width: 100%; height: 120px; object-fit: cover; display: block;">
@@ -7425,13 +7459,22 @@ if (window.innerWidth <= 768) {
             <img src="./images/IMG3866.jpg" alt="시설 이미지 10" loading="lazy" decoding="async" style="width: 100%; height: 120px; object-fit: cover; display: block;">
           </div>
           <div class="facility-thumbnail" data-index="10" onclick="selectFacilityImage(10)" style="flex: 0 0 calc(20% - 13px); cursor: pointer; border-radius: 12px; overflow: hidden; border: 2px solid transparent; transition: all 0.3s;">
-            <img src="./images/IMG_3827.JPG" alt="시설 이미지 11" loading="lazy" decoding="async" style="width: 100%; height: 120px; object-fit: cover; display: block;">
+            <picture>
+              <source srcset="./images/IMG_3827_480w.webp 480w, ./images/IMG_3827_960w.webp 960w, ./images/IMG_3827.webp 1600w" type="image/webp">
+              <img src="./images/IMG_3827.JPG" srcset="./images/IMG_3827_480w.jpg 480w, ./images/IMG_3827_960w.jpg 960w, ./images/IMG_3827.JPG 1600w" sizes="(max-width: 768px) 45vw, 180px" alt="시설 이미지 11" loading="lazy" decoding="async" style="width: 100%; height: 120px; object-fit: cover; display: block;">
+            </picture>
           </div>
           <div class="facility-thumbnail" data-index="11" onclick="selectFacilityImage(11)" style="flex: 0 0 calc(20% - 13px); cursor: pointer; border-radius: 12px; overflow: hidden; border: 2px solid transparent; transition: all 0.3s;">
-            <img src="./images/IMG3826.JPG" alt="시설 이미지 12" loading="lazy" decoding="async" style="width: 100%; height: 120px; object-fit: cover; display: block;">
+            <picture>
+              <source srcset="./images/IMG3826_480w.webp 480w, ./images/IMG3826_960w.webp 960w, ./images/IMG3826.webp 1600w" type="image/webp">
+              <img src="./images/IMG3826.JPG" srcset="./images/IMG3826_480w.jpg 480w, ./images/IMG3826_960w.jpg 960w, ./images/IMG3826.JPG 1600w" sizes="(max-width: 768px) 45vw, 180px" alt="시설 이미지 12" loading="lazy" decoding="async" style="width: 100%; height: 120px; object-fit: cover; display: block;">
+            </picture>
           </div>
           <div class="facility-thumbnail" data-index="12" onclick="selectFacilityImage(12)" style="flex: 0 0 calc(20% - 13px); cursor: pointer; border-radius: 12px; overflow: hidden; border: 2px solid transparent; transition: all 0.3s;">
-            <img src="./images/IMG3829.JPG" alt="시설 이미지 13" loading="lazy" decoding="async" style="width: 100%; height: 120px; object-fit: cover; display: block;">
+            <picture>
+              <source srcset="./images/IMG3829_480w.webp 480w, ./images/IMG3829_960w.webp 960w, ./images/IMG3829.webp 1600w" type="image/webp">
+              <img src="./images/IMG3829.JPG" srcset="./images/IMG3829_480w.jpg 480w, ./images/IMG3829_960w.jpg 960w, ./images/IMG3829.JPG 1600w" sizes="(max-width: 768px) 45vw, 180px" alt="시설 이미지 13" loading="lazy" decoding="async" style="width: 100%; height: 120px; object-fit: cover; display: block;">
+            </picture>
           </div>
           </div>
         </div>
@@ -7472,446 +7515,112 @@ if (window.innerWidth <= 768) {
     </div>
     
     
-    <style>
-    /* 새로운 갤러리 스타일 */
-    /* 메인 이미지 슬라이드 효과 */
-    .gallery-slide-out {
-      animation: slideOut 0.3s ease-in-out forwards;
-    }
     
-    .gallery-slide-in {
-      animation: slideIn 0.3s ease-in-out forwards;
-    }
-    
-    @keyframes slideOut {
-      0% { 
-        transform: translateX(0) scale(1);
-        opacity: 1;
-      }
-      100% { 
-        transform: translateX(-30px) scale(0.95);
-        opacity: 0;
-      }
-    }
-    
-    @keyframes slideIn {
-      0% { 
-        transform: translateX(30px) scale(0.95);
-        opacity: 0;
-      }
-      100% { 
-        transform: translateX(0) scale(1);
-        opacity: 1;
-      }
-    }
-    
-    /* 모바일에서 페이드 + 줌 효과 */
-    @media (max-width: 768px) {
-      .gallery-mobile-fade {
-        animation: mobileFadeZoom 0.5s ease-in-out;
-      }
-      
-      @keyframes mobileFadeZoom {
-        0% { 
-          opacity: 1;
-          transform: scale(1);
-        }
-        40% { 
-          opacity: 0;
-          transform: scale(1.05);
-        }
-        60% { 
-          opacity: 0;
-          transform: scale(0.95);
-        }
-        100% { 
-          opacity: 1;
-          transform: scale(1);
-        }
-      }
-    }
-    
-    .facility-thumbnail {
-      transition: all 0.2s ease;
-    }
-    
-    .facility-thumbnail:hover:not(.active) {
-      border-color: rgba(123, 228, 149, 0.5) !important;
-      transform: scale(1.05);
-    }
-    
-    .facility-thumbnail.active {
-      border-color: #7BE495 !important;
-      transform: scale(1.05);
-      box-shadow: 0 4px 12px rgba(123, 228, 149, 0.3);
-    }
-    
-    /* 터치나 클릭 시에도 active 클래스가 있는 요소만 초록색 테두리 유지 */
-    .facility-thumbnail:active:not(.active),
-    .facility-thumbnail:focus:not(.active) {
-      border-color: transparent !important;
-    }
-    
-    .facility-thumbnail img {
-      transition: transform 0.3s;
-    }
-    
-    .facility-thumbnail:hover img {
-      transform: scale(1.1);
-    }
-    
-    /* 썸네일 네비게이션 버튼 스타일 */
-    .thumbnail-nav:hover {
-      background: rgba(123,228,149,0.1) !important;
-      border-color: #9DF3C4 !important;
-      transform: translateY(-50%) scale(1.1);
-    }
-    
-    .thumbnail-nav:active {
-      transform: translateY(-50%) scale(0.95);
-    }
-    
-    /* PC에서 모바일 화살표 숨기기 */
-    @media (min-width: 769px) {
-      .mobile-gallery-prev,
-      .mobile-gallery-next {
-        display: none !important;
-      }
-    }
-    
-    /* 모바일 반응형 스타일 */
-    @media (max-width: 768px) {
-      .facility-gallery-new {
-        margin: 20px auto !important;
-        max-width: 100% !important;
-        padding: 0 10px !important; /* 좌우 패딩 추가 */
-      }
-      
-      /* 썸네일만 좌측으로 이동 */
-      .facility-thumbnails {
-        transform: translateX(-16px) !important; /* 모바일에서 1칸(16px) 이동 */
-      }
-      
-      #facilityMainImage {
-        height: 280px !important;
-      }
-      
-      .facility-thumbnails {
-        margin-top: 12px !important;
-        margin-bottom: 30px !important; /* 스와이프 힌트를 위한 여백 */
-      }
-      
-      .facility-thumbnail {
-        flex: 0 0 calc(19% - 10px) !important; /* 모바일에서 5개가 여유있게 보이도록 조정 */
-      }
-      
-      /* 모바일에서 썸네일 트랙 gap 조정 */
-      .facility-thumbnail-track {
-        gap: 12px !important;
-        padding: 0 5px; /* 좌우 여백 줄여서 더 많은 공간 확보 */
-        -webkit-overflow-scrolling: touch; /* iOS에서 부드러운 스크롤 */
-      }
-      
-      /* 썸네일 컨테이너 overflow 영역 확장 */
-      .facility-thumbnails > div {
-        overflow-x: auto !important;
-        overflow-y: hidden !important;
-        width: calc(100% + 20px) !important; /* 보이는 영역 확장 */
-        margin-right: -20px !important; /* 우측 여백 제거 */
-      }
-      
-      /* 터치 중일 때 시각적 피드백 */
-      .facility-thumbnail-track.touching {
-        cursor: grabbing;
-      }
-      
-      /* 모바일에서 스와이프 힌트 숨김 */
-      .mobile-swipe-hint {
-        display: none !important;
-      }
-      
-      .facility-thumbnail img {
-        height: 60px !important; /* 5개가 잘 보이도록 높이 조정 */
-      }
-      
-      /* 썸네일 네비게이션 모바일 스타일 */
-      .thumbnail-nav {
-        width: 35px !important;
-        height: 35px !important;
-      }
-      
-      .thumbnail-nav svg {
-        width: 18px !important;
-        height: 18px !important;
-      }
-      
-      /* 모바일에서 기존 썸네일 화살표 숨기기 */
-      .thumbnail-prev,
-      .thumbnail-next {
-        display: none !important;
-      }
-      
-      /* 모바일용 메인 이미지 위 화살표 표시 */
-      .mobile-gallery-prev,
-      .mobile-gallery-next {
-        display: flex !important;
-      }
-      
-      /* 위치 안내 모바일 스타일 */
-      .location-info {
-        margin-top: 40px !important;
-      }
-      
-      .location-info h3 {
-        font-size: 1.4rem !important;
-        margin-bottom: 20px !important;
-      }
-      
-      .location-info > div {
-        padding: 24px 20px !important;
-        margin: 0 10px !important;
-      }
-      
-      .location-info p {
-        font-size: 0.85rem !important; /* 주소 텍스트 크기 더 작게 */
-        line-height: 1.6 !important;
-      }
-      
-      .location-info button {
-        padding: 12px 24px !important;
-        font-size: 0.95rem !important;
-      }
-      
-      .location-info button img {
-        width: 20px !important;
-        height: 20px !important;
-      }
-      
-      /* 모바일 팝업 스타일 - display 설정 제거 */
-      .facility-modal {
-        display: none !important;  /* 이전 팝업 숨김 */
-        position: fixed !important;
-        top: 0 !important;
-        left: 0 !important;
-        width: 100vw !important;
-        height: 100vh !important;
-        background: rgba(0,0,0,0.9) !important;
-        z-index: 999999 !important;
-      }
-      
-      .facility-modal-content {
-        width: 100% !important;
-        height: 100% !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        padding: 0 !important;
-      }
-      
-      .facility-modal-slider {
-        width: 100% !important;
-        height: 100% !important;
-        position: relative !important;
-        overflow: hidden !important;
-      }
-      
-      .facility-modal-track {
-        display: flex !important;
-        transition: transform 0.3s ease !important;
-        height: 100% !important;
-        align-items: center !important;
-        width: 400% !important; /* 4개 이미지를 위한 너비 */
-      }
-      
-      .facility-modal-slide {
-        flex: 0 0 100% !important;
-        width: 100% !important;
-        height: 100% !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        padding: 20px !important;
-        box-sizing: border-box !important;
-      }
-      
-      .facility-modal-slide img {
-        max-width: 90% !important;
-        max-height: 60vh !important;
-        width: auto !important;
-        height: auto !important;
-        object-fit: contain !important;
-        margin: auto !important;
-        display: block !important;
-        position: relative !important;
-      }
-      
-      /* 모바일 팝업 네비게이션 */
-      .facility-modal-prev,
-      .facility-modal-next {
-        width: 40px !important;
-        height: 40px !important;
-        background: rgba(0,0,0,0.8) !important;
-        border: 1px solid #7BE495 !important;
-        opacity: 0.8 !important;
-      }
-      
-      .facility-modal-prev {
-        left: 15px !important;
-      }
-      
-      .facility-modal-next {
-        right: 15px !important;
-      }
-      
-      /* 닫기 버튼 모바일 스타일 강화 */
-      .facility-modal-close {
-        position: fixed !important;
-        top: 20px !important;
-        right: 36px !important;
-        width: 40px !important;
-        height: 40px !important;
-        background: rgba(0,0,0,0.9) !important;
-        border: 2px solid #7BE495 !important;
-        box-shadow: 0 0 20px rgba(123,228,149,0.5) !important;
-        z-index: 2147483648 !important;
-        cursor: pointer !important;
-        touch-action: manipulation !important;
-        -webkit-tap-highlight-color: transparent !important;
-        user-select: none !important;
-      }
-      
-      .facility-modal-close svg {
-        width: 26px !important;
-        height: 26px !important;
-        pointer-events: none !important;
-      }
-    }
-    
-    /* 호버 효과 */
-    .facility-nav:hover {
-      background: rgba(123,228,149,0.1) !important;
-      border-color: #9DF3C4 !important;
-    }
-    
-    .facility-dot:hover {
-      background: #7BE495 !important;
-    }
-    
-    /* 닫기 버튼 호버 효과 */
-    .facility-modal-close:hover {
-      background: rgba(123,228,149,0.2) !important;
-      border-color: #9DF3C4 !important;
-      transform: scale(1.1);
-    }
-    
-    /* 모달 네비게이션 버튼 호버 */
-    .facility-modal-prev:hover,
-    .facility-modal-next:hover {
-      background: rgba(123,228,149,0.1) !important;
-      border-color: #9DF3C4 !important;
-    }
-    
-    .facility-slide {
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .facility-slide::after {
-      content: '클릭하여 확대';
-      position: absolute;
-      bottom: 20px;
-      right: 20px;
-      background: rgba(0,0,0,0.8);
-      color: #7BE495;
-      padding: 8px 16px;
-      border-radius: 4px;
-      font-size: 0.9rem;
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-    
-    .facility-slide:hover::after {
-      opacity: 1;
-    }
-    
-    /* 모바일에서는 항상 표시 */
-    @media (max-width: 768px) {
-      .facility-slide::after {
-        opacity: 0.8 !important;
-        bottom: 10px !important;
-        right: 10px !important;
-        font-size: 0.8rem !important;
-        padding: 6px 12px !important;
-        background: rgba(0,0,0,0.9) !important;
-        border: 1px solid #7BE495 !important;
-      }
-    }
-    /* 팝업 모달 스타일 - backdrop-filter 제거 */
-    .facility-modal {
-      display: none !important;  /* 이전 팝업 숨김 */
-      backdrop-filter: none !important;
-      -webkit-backdrop-filter: none !important;
-    }
-    
-    /* PC에서는 블러 효과 제거 - 모바일에서만 적용 */
-    @media (min-width: 769px) {
-      body.facility-modal-open > *:not(.facility-modal) {
-        filter: none !important;
-        -webkit-filter: none !important;
-      }
-      
-      /* PC에서 팝업이 최상단에 표시되도록 */
-      .facility-modal {
-        z-index: 2147483647 !important;
-      }
-      
-      .facility-modal * {
-        z-index: inherit !important;
-      }
-    }
-    
-    /* 모바일에서 팝업 중앙 정렬 강제 적용 */
-    @media (max-width: 768px) {
-      .facility-modal-content {
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        padding: 0 !important;
-      }
-      
-      .facility-modal-slider {
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        height: 100vh !important;
-      }
-    }
-    </style>
+
     
     <script>
     // 새로운 갤러리 기능
     let currentFacilityIndex = 0;
+    const canUseWebPInGallery = (() => {
+      try {
+        return document
+          .createElement('canvas')
+          .toDataURL('image/webp')
+          .startsWith('data:image/webp');
+      } catch (error) {
+        return false;
+      }
+    })();
+
     const facilityImages = [
-      './images/IMG7216.jpeg',
-      './images/IMG7217.jpeg', 
-      './images/IMG7218.jpeg',
-      './images/IMG7222.JPG',
-      './images/neoodod.JPG',
-      './images/IMG3839.JPG',
-      './images/IMG3840.JPG',
-      './images/IMG3805.JPG',  // 수정된 이미지 1
-      './images/IMG3864.jpg',  // 수정된 이미지 2
-      './images/IMG3866.jpg',  // 수정된 이미지 3
-      './images/IMG_3827.JPG', // 추가된 이미지 4
-      './images/IMG3826.JPG',  // 추가된 이미지 5
-      './images/IMG3829.JPG'   // 추가된 이미지 6
+      {
+        fallback: './images/IMG7216.jpeg',
+        fallbackSet: './images/IMG7216_480w.jpg 480w, ./images/IMG7216_960w.jpg 960w, ./images/IMG7216.jpeg 1600w',
+        webp: './images/IMG7216.webp',
+        webpSet: './images/IMG7216_480w.webp 480w, ./images/IMG7216_960w.webp 960w, ./images/IMG7216.webp 1600w'
+      },
+      {
+        fallback: './images/IMG7217.jpeg',
+        fallbackSet: './images/IMG7217_480w.jpg 480w, ./images/IMG7217_960w.jpg 960w, ./images/IMG7217.jpeg 1600w',
+        webp: './images/IMG7217.webp',
+        webpSet: './images/IMG7217_480w.webp 480w, ./images/IMG7217_960w.webp 960w, ./images/IMG7217.webp 1600w'
+      },
+      {
+        fallback: './images/IMG7218.jpeg',
+        fallbackSet: './images/IMG7218_480w.jpg 480w, ./images/IMG7218_960w.jpg 960w, ./images/IMG7218.jpeg 1600w',
+        webp: './images/IMG7218.webp',
+        webpSet: './images/IMG7218_480w.webp 480w, ./images/IMG7218_960w.webp 960w, ./images/IMG7218.webp 1600w'
+      },
+      {
+        fallback: './images/IMG7222.JPG',
+        fallbackSet: './images/IMG7222_480w.jpg 480w, ./images/IMG7222_960w.jpg 960w, ./images/IMG7222.JPG 1600w',
+        webp: './images/IMG7222.webp',
+        webpSet: './images/IMG7222_480w.webp 480w, ./images/IMG7222_960w.webp 960w, ./images/IMG7222.webp 1600w'
+      },
+      {
+        fallback: './images/neoodod.JPG',
+        fallbackSet: './images/neoodod_480w.jpg 480w, ./images/neoodod_960w.jpg 960w, ./images/neoodod.JPG 1600w',
+        webp: './images/neoodod.webp',
+        webpSet: './images/neoodod_480w.webp 480w, ./images/neoodod_960w.webp 960w, ./images/neoodod.webp 1600w'
+      },
+      {
+        fallback: './images/IMG3839.JPG',
+        fallbackSet: './images/IMG3839_480w.jpg 480w, ./images/IMG3839_960w.jpg 960w, ./images/IMG3839.JPG 1600w',
+        webp: './images/IMG3839.webp',
+        webpSet: './images/IMG3839_480w.webp 480w, ./images/IMG3839_960w.webp 960w, ./images/IMG3839.webp 1600w'
+      },
+      {
+        fallback: './images/IMG3840.JPG',
+        fallbackSet: './images/IMG3840_480w.jpg 480w, ./images/IMG3840_960w.jpg 960w, ./images/IMG3840.JPG 1600w',
+        webp: './images/IMG3840.webp',
+        webpSet: './images/IMG3840_480w.webp 480w, ./images/IMG3840_960w.webp 960w, ./images/IMG3840.webp 1600w'
+      },
+      { fallback: './images/IMG3805.JPG' },  // 수정된 이미지 1 (원본만 존재)
+      { fallback: './images/IMG3864.jpg' },  // 수정된 이미지 2 (원본만 존재)
+      { fallback: './images/IMG3866.jpg' },  // 수정된 이미지 3 (원본만 존재)
+      {
+        fallback: './images/IMG_3827.JPG',
+        fallbackSet: './images/IMG_3827_480w.jpg 480w, ./images/IMG_3827_960w.jpg 960w, ./images/IMG_3827.JPG 1600w',
+        webp: './images/IMG_3827.webp',
+        webpSet: './images/IMG_3827_480w.webp 480w, ./images/IMG_3827_960w.webp 960w, ./images/IMG_3827.webp 1600w'
+      },
+      {
+        fallback: './images/IMG3826.JPG',
+        fallbackSet: './images/IMG3826_480w.jpg 480w, ./images/IMG3826_960w.jpg 960w, ./images/IMG3826.JPG 1600w',
+        webp: './images/IMG3826.webp',
+        webpSet: './images/IMG3826_480w.webp 480w, ./images/IMG3826_960w.webp 960w, ./images/IMG3826.webp 1600w'
+      },
+      {
+        fallback: './images/IMG3829.JPG',
+        fallbackSet: './images/IMG3829_480w.jpg 480w, ./images/IMG3829_960w.jpg 960w, ./images/IMG3829.JPG 1600w',
+        webp: './images/IMG3829.webp',
+        webpSet: './images/IMG3829_480w.webp 480w, ./images/IMG3829_960w.webp 960w, ./images/IMG3829.webp 1600w'
+      }
     ];
+
+    const getFacilitySrc = (index) => {
+      const entry = facilityImages[index];
+      if (!entry) return '';
+      if (canUseWebPInGallery && entry.webp) {
+        return entry.webp;
+      }
+      return entry.fallback;
+    };
+
+    const getFacilitySrcSet = (index) => {
+      const entry = facilityImages[index];
+      if (!entry) return '';
+      if (canUseWebPInGallery && entry.webpSet) {
+        return entry.webpSet;
+      }
+      return entry.fallbackSet || '';
+    };
     
     // 모든 이미지 미리 로드
     window.addEventListener('load', () => {
-      facilityImages.forEach(src => {
+      facilityImages.forEach((entry, idx) => {
         const img = new Image();
-        img.src = src;
+        img.src = getFacilitySrc(idx);
       });
     });
     
@@ -7930,18 +7639,33 @@ if (window.innerWidth <= 768) {
       
       if (isMobile) {
         // 모바일: 검은 화면으로 덮은 후 이미지 변경
-        const wrapper = mainImage.parentElement;
+        const pictureEl = mainImage.closest('picture');
+        const wrapper = pictureEl ? pictureEl.parentElement : mainImage.parentElement;
         
         // 새 이미지 미리 로드
         const preloadImg = new Image();
-        preloadImg.src = facilityImages[index];
+        preloadImg.src = getFacilitySrc(index);
         
         // 검은 화면으로 덮기
         wrapper.classList.add('transitioning');
         
         // 200ms 후 이미지 변경 (화면이 완전히 검은색일 때)
         setTimeout(() => {
-          mainImage.src = facilityImages[index];
+          const sourceEl = pictureEl ? pictureEl.querySelector('source') : null;
+          if (sourceEl) {
+            if (canUseWebPInGallery && facilityImages[index].webpSet) {
+              sourceEl.srcset = facilityImages[index].webpSet;
+            } else if (facilityImages[index].webp) {
+              sourceEl.srcset = facilityImages[index].webp;
+            }
+          }
+          const fallbackSetMobile = facilityImages[index].fallbackSet || '';
+          if (fallbackSetMobile) {
+            mainImage.srcset = fallbackSetMobile;
+          } else {
+            mainImage.removeAttribute('srcset');
+          }
+          mainImage.src = getFacilitySrc(index);
           
           // contain/cover 설정
           if (index === 8 || index === 9 || index === 10 || index === 11 || index === 12) {
@@ -7969,9 +7693,24 @@ if (window.innerWidth <= 768) {
       } else {
         // PC: 슬라이드 효과 유지
         mainImage.classList.add('gallery-slide-out');
-        
+
         setTimeout(() => {
-          mainImage.src = facilityImages[index];
+          const pictureEl = mainImage.closest('picture');
+          const sourceEl = pictureEl ? pictureEl.querySelector('source') : null;
+          if (sourceEl) {
+            if (canUseWebPInGallery && facilityImages[index].webpSet) {
+              sourceEl.srcset = facilityImages[index].webpSet;
+            } else if (facilityImages[index].webp) {
+              sourceEl.srcset = facilityImages[index].webp;
+            }
+          }
+          const fallbackSet = facilityImages[index].fallbackSet || '';
+          if (fallbackSet) {
+            mainImage.srcset = fallbackSet;
+          } else {
+            mainImage.removeAttribute('srcset');
+          }
+          mainImage.src = getFacilitySrc(index);
           
           // contain/cover 설정
           if (index === 8 || index === 9 || index === 10 || index === 11 || index === 12) {
@@ -12769,7 +12508,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <span style="color: #7BE495; font-size: 20px; line-height: 1;">×</span>
       </button>
       <!-- 이미지 -->
-      <img id="popupImage" src="" alt="시설 이미지" style="width: 100%; height: auto; max-height: 85vh; object-fit: contain; display: block; transition: all 0.3s ease-in-out; opacity: 1; transform: scale(1); position: relative; z-index: 1;">
+      <img id="popupImage" src="" sizes="(max-width: 768px) 90vw, 500px" alt="시설 이미지" style="width: 100%; height: auto; max-height: 85vh; object-fit: contain; display: block; transition: all 0.3s ease-in-out; opacity: 1; transform: scale(1); position: relative; z-index: 1;">
       
       <!-- 네비게이션 버튼들 - 새로운 디자인 -->
       <button id="popupPrev" onclick="prevFacilityImage()" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); width: 50px; height: 50px; background: rgba(0, 0, 0, 0.7); border: none; border-radius: 50%; color: #7BE495; display: flex; align-items: center; justify-content: center; font-size: 20px; transition: all 0.3s; z-index: 1000; cursor: pointer; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);">
@@ -12808,7 +12547,13 @@ function showFacilityPopup(index) {
     document.body.appendChild(popup);
     
     // 이미지 설정
-    popupImage.src = facilityImages[currentFacilityIndex];
+    popupImage.src = getFacilitySrc(currentFacilityIndex);
+    const popupSrcSet = getFacilitySrcSet(currentFacilityIndex);
+    if (popupSrcSet) {
+      popupImage.srcset = popupSrcSet;
+    } else {
+      popupImage.removeAttribute('srcset');
+    }
     
     // 팝업 강제 표시
     popup.style.setProperty('display', 'block', 'important');
@@ -12869,7 +12614,13 @@ function nextFacilityImage() {
   setTimeout(() => {
     currentFacilityIndex = (currentFacilityIndex + 1) % facilityImages.length;
     console.log('현재 이미지 인덱스:', currentFacilityIndex);
-    popupImage.src = facilityImages[currentFacilityIndex];
+    popupImage.src = getFacilitySrc(currentFacilityIndex);
+    const nextSrcSet = getFacilitySrcSet(currentFacilityIndex);
+    if (nextSrcSet) {
+      popupImage.srcset = nextSrcSet;
+    } else {
+      popupImage.removeAttribute('srcset');
+    }
     
     // 페이드 인
     setTimeout(() => {
@@ -12896,7 +12647,13 @@ function prevFacilityImage() {
   setTimeout(() => {
     currentFacilityIndex = (currentFacilityIndex - 1 + facilityImages.length) % facilityImages.length;
     console.log('현재 이미지 인덱스:', currentFacilityIndex);
-    popupImage.src = facilityImages[currentFacilityIndex];
+    popupImage.src = getFacilitySrc(currentFacilityIndex);
+    const prevSrcSet = getFacilitySrcSet(currentFacilityIndex);
+    if (prevSrcSet) {
+      popupImage.srcset = prevSrcSet;
+    } else {
+      popupImage.removeAttribute('srcset');
+    }
     
     // 페이드 인
     setTimeout(() => {
