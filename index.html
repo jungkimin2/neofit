@@ -4325,7 +4325,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="card-inner" style="width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.3s; background: transparent; border: none;">
           <div class="card-front" style="position: absolute; width: 100%; height: 100%; backface-visibility: hidden; background: linear-gradient(135deg, #0A0F0D 0%, rgba(123,228,149,0.015) 100%); border: 2px solid #7BE495; border-radius: 20px; padding: 30px; display: flex; flex-direction: column; align-items: center; overflow: hidden;">
             <!-- 비디오 요소 추가 -->
-            <video class="sync-hover-video" src="./videos/neosyncvido.mp4" loop playsinline muted preload="auto" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.3s ease; z-index: 1; pointer-events: none;"></video>
+            <video class="sync-hover-video" src="./videos/neosyncvido.mp4" loop playsinline muted preload="metadata" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.3s ease; z-index: 1; pointer-events: none;"></video>
             
             <!-- 기존 콘텐츠를 relative로 변경하여 비디오 위에 표시 -->
             <div style="position: relative; z-index: 2; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; padding-top: 32px;">
@@ -4345,7 +4345,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="card-inner" style="width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.3s; background: transparent; border: none;">
           <div class="card-front" style="position: absolute; width: 100%; height: 100%; backface-visibility: hidden; background: linear-gradient(135deg, #0A0D0F 0%, rgba(147,197,253,0.015) 100%); border: 2px solid #93C5FD; border-radius: 20px; padding: 30px; display: flex; flex-direction: column; align-items: center; overflow: hidden;">
             <!-- 비디오 요소 추가 -->
-            <video class="balance-hover-video" src="./videos/neobalance.mp4" loop playsinline muted preload="auto" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.3s ease; z-index: 1; pointer-events: none;"></video>
+            <video class="balance-hover-video" src="./videos/neobalance.mp4" loop playsinline muted preload="metadata" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.3s ease; z-index: 1; pointer-events: none;"></video>
             
             <div style="position: relative; z-index: 2; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; padding-top: 32px;">
               <h3 style="color: #93C5FD; font-size: 2rem; margin-bottom: 20px; text-shadow: 0 0 20px rgba(147,197,253,0.8);">NEO BALANCE</h3>
@@ -4364,7 +4364,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="card-inner" style="width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.3s; background: transparent; border: none;">
           <div class="card-front" style="position: absolute; width: 100%; height: 100%; backface-visibility: hidden; background: linear-gradient(135deg, #0F0A0A 0%, rgba(248,113,113,0.015) 100%); border: 2px solid #F87171; border-radius: 20px; padding: 30px; display: flex; flex-direction: column; align-items: center; overflow: hidden;">
             <!-- 비디오 요소 추가 -->
-            <video class="boost-hover-video" src="./videos/neoboots.mp4" loop playsinline muted preload="auto" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.3s ease; z-index: 0; pointer-events: none;"></video>
+            <video class="boost-hover-video" src="./videos/neoboots.mp4" loop playsinline muted preload="metadata" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.3s ease; z-index: 0; pointer-events: none;"></video>
             
             <div style="position: relative; z-index: 2; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;">
               <h3 class="boost-title" style="color: #F87171; font-size: 2rem; margin-bottom: 20px; text-shadow: 0 0 20px rgba(248,113,113,0.8); display: block;">NEO BOOST</h3>
@@ -4440,7 +4440,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
       <!-- Center phone -->
       <div class="video-phone" style="position:absolute; left:50%; top:50%; transform:translate(-50%, -50%); width: 180px; height: 360px; border-radius: 20px; overflow: hidden; border: 4px solid #7BE495; background: radial-gradient(circle at center, rgba(123, 228, 149, 0.3), #0A0A0A); box-shadow: 0 0 20px rgba(123, 228, 149, 0.6); z-index: 2147483646; opacity: 1; visibility: visible; display: block;" data-original-left="50%" data-original-top="50%" data-original-transform="translate(-50%, -50%)" data-mobile-left="50%" data-mobile-top="50%" data-mobile-transform="translate(-50%, -50%)">
-        <video id="centerVideo" src="./videos/neohivevideos22.mp4" loop muted playsinline webkit-playsinline x-webkit-airplay="allow" preload="auto" autoplay style="width: 100%; height: 100%; object-fit: contain;"></video>
+        <video id="centerVideo" src="./videos/neohivevideos22.mp4" loop muted playsinline webkit-playsinline x-webkit-airplay="allow" preload="metadata" autoplay style="width: 100%; height: 100%; object-fit: contain;"></video>
         <!-- 스피커 버튼 -->
         <button class="speaker-button" onclick="toggleMute(event)" aria-label="음소거 토글">
           <svg id="speakerIcon" viewBox="0 0 24 24">
@@ -5217,7 +5217,7 @@ html body .core-value-fresh-mobile {
           <div class="mobile-video-container" style="display: none; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: transparent; transition: transform 0.3s ease-in-out;">
             <h4 style="color: #7BE495; font-size: 1.5rem; margin-bottom: 20px; text-align: center;">실제 사용 화면</h4>
             <div class="phone-frame" style="width: 240px; height: 480px; margin: 0 auto; border-radius: 30px; border: 3px solid #7BE495; overflow: hidden; position: relative; box-shadow: 0 0 40px rgba(123, 228, 149, 0.5), inset 0 0 0 1px #7BE495; background: #000; -webkit-mask-image: -webkit-radial-gradient(white, black); mask-image: radial-gradient(white, black);">
-              <video id="mobilePreviewVideo" src="./videos/neofits.mp4" loop playsinline style="width: 100%; height: 100%; object-fit: cover;">
+              <video id="mobilePreviewVideo" src="./videos/neofits.mp4" loop playsinline preload="metadata" style="width: 100%; height: 100%; object-fit: cover;">
               </video>
               <!-- 스피커 버튼 -->
               <div class="speaker-button-wrapper" style="position: absolute; top: 10px; right: 10px; z-index: 10;">
@@ -5242,7 +5242,7 @@ html body .core-value-fresh-mobile {
         <div class="phone-section pc-only" style="flex: 1; max-width: 400px; min-width: 300px; text-align: center; margin-top: -32px;">
           <h4 style="color: #7BE495; font-size: 1.5rem; margin-bottom: 20px;">실제 사용 화면</h4>
           <div class="phone-frame" style="width: 240px; height: 480px; margin: 0 auto; border-radius: 30px; border: 4px solid #7BE495; overflow: hidden; position: relative; box-shadow: 0 0 40px rgba(123, 228, 149, 0.5); background: #000;">
-            <video id="neofitsVideo" src="./videos/neofits.mp4" autoplay loop muted playsinline style="width: 100%; height: 100%; object-fit: cover;">
+            <video id="neofitsVideo" src="./videos/neofits.mp4" autoplay loop muted playsinline preload="metadata" style="width: 100%; height: 100%; object-fit: cover;">
             </video>
             <!-- neofits.mp4 전용 스피커 버튼 -->
             <div class="speaker-button-wrapper" style="position: absolute; top: 4px; right: 4px; z-index: 10;">
@@ -6679,7 +6679,7 @@ if (window.innerWidth <= 768) {
         <!-- 카드 1 -->
         <div class="pilates-card" data-index="0" style="position: absolute; width: 320px; height: 420px; left: 50%; top: 50%; transform: translate(-50%, -50%) translateZ(0) scale(1.2); transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1); z-index: 3;">
           <div style="position: relative; width: 100%; height: 100%; border-radius: 20px; background: #0F1A1C; border: 3px solid #e293ef; overflow: hidden; box-shadow: 0 0 40px rgba(226,147,239,0.8), 0 0 80px rgba(226,147,239,0.4), inset 0 0 30px rgba(226,147,239,0.3);">
-            <img src="./images/neopp.jpg" alt="네오 필라테스 강사 1" style="width: 100%; height: 100%; object-fit: cover;">
+            <img src="./images/neopp.jpg" alt="네오 필라테스 강사 1" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover;">
             <div class="instructor-overlay" style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, transparent 60%); padding: 30px 20px; opacity: 0; transition: opacity 0.3s; display: none;">
               <p style="color: #fff; font-size: 0.95rem; opacity: 0.9;">체계적인 커리큘럼으로<br>개인별 맞춤 지도</p>
             </div>
@@ -6691,7 +6691,7 @@ if (window.innerWidth <= 768) {
         <!-- 카드 2 -->
         <div class="pilates-card" data-index="1" style="position: absolute; width: 320px; height: 420px; left: 50%; top: 50%; transform: translate(-170%, -50%) translateZ(-100px) scale(0.8); transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1); z-index: 2; opacity: 0.7;">
           <div style="position: relative; width: 100%; height: 100%; border-radius: 20px; background: #0F1A1C; border: 2px solid #00BFFF; overflow: hidden; box-shadow: 0 0 20px rgba(0,191,255,0.6), inset 0 0 20px rgba(0,191,255,0.2);">
-            <img src="./images/neopp2.jpg" alt="네오 필라테스 강사 2" style="width: 100%; height: 100%; object-fit: cover;">
+            <img src="./images/neopp2.jpg" alt="네오 필라테스 강사 2" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover;">
             <div class="instructor-overlay" style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, transparent 60%); padding: 30px 20px; opacity: 0; transition: opacity 0.3s; display: none;">
               <p style="color: #fff; font-size: 0.95rem; opacity: 0.9;">함께하는 운동의 즐거움<br>동기부여와 성취감</p>
             </div>
@@ -6703,7 +6703,7 @@ if (window.innerWidth <= 768) {
         <!-- 카드 3 -->
         <div class="pilates-card" data-index="2" style="position: absolute; width: 320px; height: 420px; left: 50%; top: 50%; transform: translate(70%, -50%) translateZ(-100px) scale(0.8); transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1); z-index: 2; opacity: 0.7;">
           <div style="position: relative; width: 100%; height: 100%; border-radius: 20px; background: #0F1A1C; border: 2px solid #7BE495; overflow: hidden; box-shadow: 0 0 20px rgba(123,228,149,0.6), inset 0 0 20px rgba(123,228,149,0.2);">
-            <img src="./images/neopp3.jpg" alt="네오 필라테스 강사 3" style="width: 100%; height: 100%; object-fit: cover;">
+            <img src="./images/neopp3.jpg" alt="네오 필라테스 강사 3" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover;">
             <div class="instructor-overlay" style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, transparent 60%); padding: 30px 20px; opacity: 0; transition: opacity 0.3s; display: none;">
               <p style="color: #fff; font-size: 0.95rem; opacity: 0.9;">최신 기구로 정확한 자세<br>효과적인 근력 강화</p>
             </div>
@@ -7737,7 +7737,7 @@ if (window.innerWidth <= 768) {
     <div class="facility-gallery-new" style="margin: 40px auto; max-width: 1000px;">
       <!-- 메인 이미지 영역 -->
       <div class="facility-main-image" style="position: relative; border-radius: 16px; overflow: hidden; background: #000; cursor: pointer;" onclick="showFacilityPopup(currentFacilityIndex)">
-        <img id="facilityMainImage" src="./images/IMG7216.jpeg" alt="시설 메인 이미지" style="width: 100%; height: 450px; object-fit: cover; display: block;">
+        <img id="facilityMainImage" src="./images/IMG7216.jpeg" alt="시설 메인 이미지" loading="lazy" decoding="async" style="width: 100%; height: 450px; object-fit: cover; display: block;">
         <!-- 모바일용 화살표 (메인 이미지 위에 위치) -->
         <button class="mobile-gallery-prev" onclick="event.stopPropagation(); scrollThumbnails('left')" style="display: none; position: absolute; left: 10px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.7); border: 2px solid #7BE495; color: #7BE495; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; align-items: center; justify-content: center; z-index: 10;">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -7774,43 +7774,43 @@ if (window.innerWidth <= 768) {
           </div>
           <div class="facility-thumbnail-track" style="display: flex; gap: 16px; transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);">
           <div class="facility-thumbnail active" data-index="0" onclick="selectFacilityImage(0)" style="flex: 0 0 calc(20% - 13px); cursor: pointer; border-radius: 12px; overflow: hidden; border: 2px solid transparent; transition: all 0.3s;">
-            <img src="./images/IMG7216.jpeg" alt="시설 이미지 1" style="width: 100%; height: 120px; object-fit: cover; display: block;">
+            <img src="./images/IMG7216.jpeg" alt="시설 이미지 1" loading="lazy" decoding="async" style="width: 100%; height: 120px; object-fit: cover; display: block;">
           </div>
           <div class="facility-thumbnail" data-index="1" onclick="selectFacilityImage(1)" style="flex: 0 0 calc(20% - 13px); cursor: pointer; border-radius: 12px; overflow: hidden; border: 2px solid transparent; transition: all 0.3s;">
-            <img src="./images/IMG7217.jpeg" alt="시설 이미지 2" style="width: 100%; height: 120px; object-fit: cover; display: block;">
+            <img src="./images/IMG7217.jpeg" alt="시설 이미지 2" loading="lazy" decoding="async" style="width: 100%; height: 120px; object-fit: cover; display: block;">
           </div>
           <div class="facility-thumbnail" data-index="2" onclick="selectFacilityImage(2)" style="flex: 0 0 calc(20% - 13px); cursor: pointer; border-radius: 12px; overflow: hidden; border: 2px solid transparent; transition: all 0.3s;">
-            <img src="./images/IMG7218.jpeg" alt="시설 이미지 3" style="width: 100%; height: 120px; object-fit: cover; display: block;">
+            <img src="./images/IMG7218.jpeg" alt="시설 이미지 3" loading="lazy" decoding="async" style="width: 100%; height: 120px; object-fit: cover; display: block;">
           </div>
           <div class="facility-thumbnail" data-index="3" onclick="selectFacilityImage(3)" style="flex: 0 0 calc(20% - 13px); cursor: pointer; border-radius: 12px; overflow: hidden; border: 2px solid transparent; transition: all 0.3s;">
-            <img src="./images/IMG7222.JPG" alt="시설 이미지 4" style="width: 100%; height: 120px; object-fit: cover; display: block;">
+            <img src="./images/IMG7222.JPG" alt="시설 이미지 4" loading="lazy" decoding="async" style="width: 100%; height: 120px; object-fit: cover; display: block;">
           </div>
           <div class="facility-thumbnail" data-index="4" onclick="selectFacilityImage(4)" style="flex: 0 0 calc(20% - 13px); cursor: pointer; border-radius: 12px; overflow: hidden; border: 2px solid transparent; transition: all 0.3s;">
-            <img src="./images/neoodod.JPG" alt="시설 이미지 5" style="width: 100%; height: 120px; object-fit: cover; display: block;">
+            <img src="./images/neoodod.JPG" alt="시설 이미지 5" loading="lazy" decoding="async" style="width: 100%; height: 120px; object-fit: cover; display: block;">
           </div>
           <div class="facility-thumbnail" data-index="5" onclick="selectFacilityImage(5)" style="flex: 0 0 calc(20% - 13px); cursor: pointer; border-radius: 12px; overflow: hidden; border: 2px solid transparent; transition: all 0.3s;">
-            <img src="./images/IMG3839.JPG" alt="시설 이미지 6" style="width: 100%; height: 120px; object-fit: cover; display: block;">
+            <img src="./images/IMG3839.JPG" alt="시설 이미지 6" loading="lazy" decoding="async" style="width: 100%; height: 120px; object-fit: cover; display: block;">
           </div>
           <div class="facility-thumbnail" data-index="6" onclick="selectFacilityImage(6)" style="flex: 0 0 calc(20% - 13px); cursor: pointer; border-radius: 12px; overflow: hidden; border: 2px solid transparent; transition: all 0.3s;">
-            <img src="./images/IMG3840.JPG" alt="시설 이미지 7" style="width: 100%; height: 120px; object-fit: cover; display: block;">
+            <img src="./images/IMG3840.JPG" alt="시설 이미지 7" loading="lazy" decoding="async" style="width: 100%; height: 120px; object-fit: cover; display: block;">
           </div>
           <div class="facility-thumbnail" data-index="7" onclick="selectFacilityImage(7)" style="flex: 0 0 calc(20% - 13px); cursor: pointer; border-radius: 12px; overflow: hidden; border: 2px solid transparent; transition: all 0.3s;">
-            <img src="./images/IMG3805.JPG" alt="시설 이미지 8" style="width: 100%; height: 120px; object-fit: cover; display: block;">
+            <img src="./images/IMG3805.JPG" alt="시설 이미지 8" loading="lazy" decoding="async" style="width: 100%; height: 120px; object-fit: cover; display: block;">
           </div>
           <div class="facility-thumbnail" data-index="8" onclick="selectFacilityImage(8)" style="flex: 0 0 calc(20% - 13px); cursor: pointer; border-radius: 12px; overflow: hidden; border: 2px solid transparent; transition: all 0.3s;">
-            <img src="./images/IMG3864.jpg" alt="시설 이미지 9" style="width: 100%; height: 120px; object-fit: cover; display: block;">
+            <img src="./images/IMG3864.jpg" alt="시설 이미지 9" loading="lazy" decoding="async" style="width: 100%; height: 120px; object-fit: cover; display: block;">
           </div>
           <div class="facility-thumbnail" data-index="9" onclick="selectFacilityImage(9)" style="flex: 0 0 calc(20% - 13px); cursor: pointer; border-radius: 12px; overflow: hidden; border: 2px solid transparent; transition: all 0.3s;">
-            <img src="./images/IMG3866.jpg" alt="시설 이미지 10" style="width: 100%; height: 120px; object-fit: cover; display: block;">
+            <img src="./images/IMG3866.jpg" alt="시설 이미지 10" loading="lazy" decoding="async" style="width: 100%; height: 120px; object-fit: cover; display: block;">
           </div>
           <div class="facility-thumbnail" data-index="10" onclick="selectFacilityImage(10)" style="flex: 0 0 calc(20% - 13px); cursor: pointer; border-radius: 12px; overflow: hidden; border: 2px solid transparent; transition: all 0.3s;">
-            <img src="./images/IMG_3827.JPG" alt="시설 이미지 11" style="width: 100%; height: 120px; object-fit: cover; display: block;">
+            <img src="./images/IMG_3827.JPG" alt="시설 이미지 11" loading="lazy" decoding="async" style="width: 100%; height: 120px; object-fit: cover; display: block;">
           </div>
           <div class="facility-thumbnail" data-index="11" onclick="selectFacilityImage(11)" style="flex: 0 0 calc(20% - 13px); cursor: pointer; border-radius: 12px; overflow: hidden; border: 2px solid transparent; transition: all 0.3s;">
-            <img src="./images/IMG3826.JPG" alt="시설 이미지 12" style="width: 100%; height: 120px; object-fit: cover; display: block;">
+            <img src="./images/IMG3826.JPG" alt="시설 이미지 12" loading="lazy" decoding="async" style="width: 100%; height: 120px; object-fit: cover; display: block;">
           </div>
           <div class="facility-thumbnail" data-index="12" onclick="selectFacilityImage(12)" style="flex: 0 0 calc(20% - 13px); cursor: pointer; border-radius: 12px; overflow: hidden; border: 2px solid transparent; transition: all 0.3s;">
-            <img src="./images/IMG3829.JPG" alt="시설 이미지 13" style="width: 100%; height: 120px; object-fit: cover; display: block;">
+            <img src="./images/IMG3829.JPG" alt="시설 이미지 13" loading="lazy" decoding="async" style="width: 100%; height: 120px; object-fit: cover; display: block;">
           </div>
           </div>
         </div>
