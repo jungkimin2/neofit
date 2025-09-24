@@ -7140,6 +7140,99 @@ if (window.innerWidth <= 768) {
   <!-- 모바일 필라테스 카드 클릭 이벤트 -->
   <script>
   (function() {
+    if (window.innerWidth <= 768) {
+      return;
+    }
+
+    const cards = Array.from(document.querySelectorAll('.pilates-card'));
+    const indicators = Array.from(document.querySelectorAll('.pilates-indicator'));
+    if (!cards.length) {
+      return;
+    }
+
+    const highlightColors = ['#e293ef', '#00BFFF', '#7BE495'];
+    const highlightShadows = ['rgba(226,147,239,0.6)', 'rgba(0,191,255,0.6)', 'rgba(123,228,149,0.6)'];
+
+    let order = [0, 1, 2]; // index -> position (0 center, 1 left, 2 right)
+
+    const desktopLayout = {
+      0: {
+        left: '50%',
+        transform: 'translate(-50%, -50%) translateZ(0) scale(1.2)',
+        zIndex: '3',
+        opacity: '1'
+      },
+      1: {
+        left: '50%',
+        transform: 'translate(-170%, -50%) translateZ(-100px) scale(0.8)',
+        zIndex: '2',
+        opacity: '0.7'
+      },
+      2: {
+        left: '50%',
+        transform: 'translate(70%, -50%) translateZ(-100px) scale(0.8)',
+        zIndex: '2',
+        opacity: '0.7'
+      }
+    };
+
+    function applyDesktopLayout(animate = false) {
+      const centerIndex = order.indexOf(0);
+      cards.forEach((card, index) => {
+        const position = order[index];
+        card.setAttribute('data-position', position);
+        const layout = desktopLayout[position];
+        if (!layout) return;
+        if (animate) {
+          card.style.transition = 'left 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+        } else {
+          card.style.transition = 'none';
+        }
+        card.style.left = layout.left;
+        card.style.transform = layout.transform;
+        card.style.zIndex = layout.zIndex;
+        card.style.opacity = layout.opacity;
+      });
+
+      indicators.forEach((indicator, index) => {
+        if (index === centerIndex) {
+          indicator.style.background = highlightColors[index];
+          indicator.style.boxShadow = `0 0 8px ${highlightShadows[index]}`;
+        } else {
+          indicator.style.background = 'rgba(123, 228, 149, 0.3)';
+          indicator.style.boxShadow = 'none';
+        }
+      });
+    }
+
+    function moveCardToCenter(targetIndex) {
+      const centerIndex = order.indexOf(0);
+      if (centerIndex === targetIndex) return;
+      const targetPosition = order[targetIndex];
+      order[targetIndex] = 0;
+      order[centerIndex] = targetPosition;
+      applyDesktopLayout(true);
+    }
+
+    cards.forEach((card, index) => {
+      card.addEventListener('click', () => {
+        moveCardToCenter(index);
+      });
+    });
+
+    indicators.forEach((indicator, index) => {
+      indicator.addEventListener('click', (event) => {
+        event.preventDefault();
+        moveCardToCenter(index);
+      });
+    });
+
+    applyDesktopLayout(false);
+    // enable transitions after initial layout without visible movement
+    setTimeout(() => applyDesktopLayout(true), 60);
+  })();
+
+  (function() {
     // 모바일에서만 실행
     if (window.innerWidth <= 768) {
       // DOM 요소들이 준비될 때까지 대기
