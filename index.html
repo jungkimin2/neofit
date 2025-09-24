@@ -6346,117 +6346,96 @@ if (window.innerWidth <= 768) {
   </div>
   
   <script>
-    // 필라테스 캐러셀 기능 - PC 버전
+    // 필라테스 캐러셀 기능 - PC 버전 및 모바일 보조 기능
     (function() {
-      // PC에서만 실행 - 모바일에서는 아예 실행하지 않음
-      if (window.innerWidth <= 768) return;
-      
-      if (window.innerWidth > 768) {
-        let currentIndex = 0;
-        const cards = document.querySelectorAll('.pilates-card');
-        const indicators = document.querySelectorAll('.pilates-indicator');
-      
-        // 카드 위치 업데이트
-        function updateCarousel() {
-          // PC에서의 카드 배치
-          cards.forEach((card, index) => {
-            const offset = (index - currentIndex + 3) % 3;
-            
-            if (offset === 0) {
-              // 중앙 카드 (활성화)
-              card.style.transform = 'translate(-50%, -50%) translateZ(0) scale(1.2)';
-              card.style.zIndex = '3';
-              card.style.opacity = '1';
-            // 각 카드에 맞는 네온 효과 적용
-            if (card.getAttribute('data-index') === '0') {
-              // 전문 강사진(김하정) - 보라색 네온
-              card.querySelector('div').style.border = '3px solid #e293ef';
-              card.querySelector('div').style.boxShadow = '0 0 40px rgba(226,147,239,0.8), 0 0 80px rgba(226,147,239,0.4), inset 0 0 30px rgba(226,147,239,0.3)';
-            } else if (card.getAttribute('data-index') === '1') {
-              // 그룹 시너지 - 파란색 네온
-              card.querySelector('div').style.border = '3px solid #00BFFF';
-              card.querySelector('div').style.boxShadow = '0 0 40px rgba(0,191,255,0.8), 0 0 80px rgba(0,191,255,0.4), inset 0 0 30px rgba(0,191,255,0.3)';
+      const cards = Array.from(document.querySelectorAll('.pilates-card'));
+      const indicators = Array.from(document.querySelectorAll('.pilates-indicator'));
+
+      const accentStyles = [
+        {
+          indicatorColor: '#e293ef',
+          indicatorShadow: '0 0 8px rgba(226,147,239,0.6)',
+          activeBorder: '3px solid #e293ef',
+          idleBorder: '2px solid #e293ef',
+          activeShadow: '0 0 40px rgba(226,147,239,0.8), 0 0 80px rgba(226,147,239,0.4), inset 0 0 30px rgba(226,147,239,0.3)',
+          idleShadow: '0 0 20px rgba(226,147,239,0.6), inset 0 0 20px rgba(226,147,239,0.2)'
+        },
+        {
+          indicatorColor: '#00BFFF',
+          indicatorShadow: '0 0 8px rgba(0,191,255,0.6)',
+          activeBorder: '3px solid #00BFFF',
+          idleBorder: '2px solid #00BFFF',
+          activeShadow: '0 0 40px rgba(0,191,255,0.8), 0 0 80px rgba(0,191,255,0.4), inset 0 0 30px rgba(0,191,255,0.3)',
+          idleShadow: '0 0 20px rgba(0,191,255,0.6), inset 0 0 20px rgba(0,191,255,0.2)'
+        },
+        {
+          indicatorColor: '#7BE495',
+          indicatorShadow: '0 0 8px rgba(123,228,149,0.6)',
+          activeBorder: '3px solid #7BE495',
+          idleBorder: '2px solid #7BE495',
+          activeShadow: '0 0 40px rgba(123,228,149,0.8), 0 0 80px rgba(123,228,149,0.4), inset 0 0 30px rgba(123,228,149,0.3)',
+          idleShadow: '0 0 20px rgba(123,228,149,0.6), inset 0 0 20px rgba(123,228,149,0.2)'
+        }
+      ];
+
+      const transforms = {
+        center: 'translate(-50%, -50%) translateZ(0) scale(1.2)',
+        left: 'translate(-170%, -50%) translateZ(-100px) scale(0.8)',
+        right: 'translate(70%, -50%) translateZ(-100px) scale(0.8)'
+      };
+
+      let activeIndex = 0;
+      let desktopInitialized = false;
+
+      function applyLayout(animate) {
+        if (cards.length !== 3) {
+          return;
+        }
+
+        cards.forEach((card, index) => {
+          const relative = (index - activeIndex + cards.length) % cards.length;
+          const position = relative === 0 ? 'center' : relative === 1 ? 'right' : 'left';
+          const datasetIndex = Number(card.dataset.index ?? index);
+          const accent = !Number.isNaN(datasetIndex) && accentStyles[datasetIndex] ? accentStyles[datasetIndex] : accentStyles[index] || accentStyles[0];
+          const frame = card.firstElementChild;
+
+          card.style.transition = animate
+            ? 'left 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1)'
+            : 'none';
+          card.style.left = '50%';
+          card.style.transform = transforms[position];
+          card.style.zIndex = position === 'center' ? '3' : '2';
+          card.style.opacity = position === 'center' ? '1' : '0.7';
+          card.style.pointerEvents = 'auto';
+          card.style.cursor = position === 'center' ? 'default' : 'pointer';
+          card.dataset.desktopPosition = position;
+
+          if (frame && accent) {
+            if (position === 'center') {
+              frame.style.border = accent.activeBorder;
+              frame.style.boxShadow = accent.activeShadow;
             } else {
-              // 정밀한 운동(박유빈) - 초록색 네온
-              card.querySelector('div').style.border = '3px solid #7BE495';
-              card.querySelector('div').style.boxShadow = '0 0 40px rgba(123,228,149,0.8), 0 0 80px rgba(123,228,149,0.4), inset 0 0 30px rgba(123,228,149,0.3)';
+              frame.style.border = accent.idleBorder;
+              frame.style.boxShadow = accent.idleShadow;
             }
-            // 가운데 카드의 내부 텍스트 숨기기
-            card.querySelector('.instructor-overlay').style.opacity = '0';
-            // 가운데 카드에서도 설명 텍스트와 제목 모두 표시
-            card.querySelector('.card-description').style.opacity = '1';
-            // 제목은 항상 표시
-            card.querySelector('.card-title').style.opacity = '1';
-          } else if (offset === 1) {
-            // 오른쪽 카드
-            card.style.transform = 'translate(70%, -50%) translateZ(-100px) scale(0.8)';
-            card.style.zIndex = '2';
-            card.style.opacity = '0.7';
-            // 각 카드에 맞는 네온 효과 유지
-            if (card.getAttribute('data-index') === '0') {
-              // 전문 강사진(김하정) - 보라색 네온
-              card.querySelector('div').style.border = '2px solid #e293ef';
-              card.querySelector('div').style.boxShadow = '0 0 20px rgba(226,147,239,0.6), inset 0 0 20px rgba(226,147,239,0.2)';
-            } else if (card.getAttribute('data-index') === '1') {
-              // 그룹 시너지 - 파란색 네온
-              card.querySelector('div').style.border = '2px solid #00BFFF';
-              card.querySelector('div').style.boxShadow = '0 0 20px rgba(0,191,255,0.6), inset 0 0 20px rgba(0,191,255,0.2)';
-            } else {
-              // 정밀한 운동(박유빈) - 초록색 네온
-              card.querySelector('div').style.border = '2px solid #7BE495';
-              card.querySelector('div').style.boxShadow = '0 0 20px rgba(123,228,149,0.6), inset 0 0 20px rgba(123,228,149,0.2)';
-            }
-            // 좌우 카드의 내부 텍스트 숨기기 (외부로 이동했으므로)
-            card.querySelector('.instructor-overlay').style.opacity = '0';
-            // 좌우 카드의 외부 설명 텍스트 표시
-            card.querySelector('.card-description').style.opacity = '1';
-            // 제목은 항상 표시
-            card.querySelector('.card-title').style.opacity = '1';
-          } else {
-            // 왼쪽 카드
-            card.style.transform = 'translate(-170%, -50%) translateZ(-100px) scale(0.8)';
-            card.style.zIndex = '2';
-            card.style.opacity = '0.7';
-            // 각 카드에 맞는 네온 효과 유지
-            if (card.getAttribute('data-index') === '0') {
-              // 전문 강사진(김하정) - 보라색 네온
-              card.querySelector('div').style.border = '2px solid #e293ef';
-              card.querySelector('div').style.boxShadow = '0 0 20px rgba(226,147,239,0.6), inset 0 0 20px rgba(226,147,239,0.2)';
-            } else if (card.getAttribute('data-index') === '1') {
-              // 그룹 시너지 - 파란색 네온
-              card.querySelector('div').style.border = '2px solid #00BFFF';
-              card.querySelector('div').style.boxShadow = '0 0 20px rgba(0,191,255,0.6), inset 0 0 20px rgba(0,191,255,0.2)';
-            } else {
-              // 정밀한 운동(박유빈) - 초록색 네온
-              card.querySelector('div').style.border = '2px solid #7BE495';
-              card.querySelector('div').style.boxShadow = '0 0 20px rgba(123,228,149,0.6), inset 0 0 20px rgba(123,228,149,0.2)';
-            }
-            // 좌우 카드의 내부 텍스트 숨기기 (외부로 이동했으므로)
-            card.querySelector('.instructor-overlay').style.opacity = '0';
-            // 좌우 카드의 외부 설명 텍스트 표시
-            card.querySelector('.card-description').style.opacity = '1';
-            // 제목은 항상 표시
-            card.querySelector('.card-title').style.opacity = '1';
           }
+
+          const overlay = card.querySelector('.instructor-overlay');
+          const description = card.querySelector('.card-description');
+          const title = card.querySelector('.card-title');
+
+          if (overlay) overlay.style.opacity = '0';
+          if (description) description.style.opacity = '1';
+          if (title) title.style.opacity = '1';
         });
-        
-        // 인디케이터 업데이트
+
         indicators.forEach((indicator, index) => {
-          if (index === currentIndex) {
+          const accent = accentStyles[index];
+          if (index === activeIndex) {
             indicator.classList.add('active');
-            // 각 카드에 맞는 색상 적용
-            if (currentIndex === 0) {
-              // 전문 강사진(김하정) - 보라색
-              indicator.style.background = '#e293ef';
-              indicator.style.boxShadow = '0 0 8px rgba(226,147,239,0.6)';
-            } else if (currentIndex === 1) {
-              // 그룹 시너지 - 파란색
-              indicator.style.background = '#00BFFF';
-              indicator.style.boxShadow = '0 0 8px rgba(0,191,255,0.6)';
-            } else {
-              // 정밀한 운동(박유빈) - 초록색
-              indicator.style.background = '#7BE495';
-              indicator.style.boxShadow = '0 0 8px rgba(123,228,149,0.6)';
+            if (accent) {
+              indicator.style.background = accent.indicatorColor;
+              indicator.style.boxShadow = accent.indicatorShadow;
             }
           } else {
             indicator.classList.remove('active');
@@ -6464,31 +6443,65 @@ if (window.innerWidth <= 768) {
             indicator.style.boxShadow = 'none';
           }
         });
-        
-        }
-        
-        // 카드 클릭 이벤트
-        cards.forEach((card, index) => {
-          card.addEventListener('click', () => {
-            currentIndex = index;
-            updateCarousel();
-          });
-        });
-        
-        // 인디케이터 클릭
-        indicators.forEach((indicator, index) => {
-          indicator.addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            currentIndex = index;
-            updateCarousel();
-          });
-        });
-      
-        // 초기 실행
-        updateCarousel();
       }
-      
+
+      function setActive(index) {
+        if (cards.length !== 3) {
+          return;
+        }
+        const normalized = (index + cards.length) % cards.length;
+        if (normalized === activeIndex) {
+          return;
+        }
+        console.debug('setActive', { requestedIndex: index, normalized, previousActive: activeIndex });
+        activeIndex = normalized;
+        applyLayout(true);
+      }
+
+      function initDesktopCarousel() {
+        console.debug('initDesktopCarousel invoked', { width: window.innerWidth, cardCount: cards.length, desktopInitialized });
+        if (window.innerWidth <= 768 || cards.length !== 3) {
+          return;
+        }
+
+        if (!desktopInitialized) {
+          cards.forEach((card) => {
+            card.addEventListener('click', (event) => {
+              if (window.innerWidth <= 768) {
+                return;
+              }
+
+              event.preventDefault();
+
+              const datasetIndex = Number(card.dataset.index);
+              const targetIndex = Number.isNaN(datasetIndex) ? cards.indexOf(card) : datasetIndex;
+              if (targetIndex === activeIndex || targetIndex < 0) {
+                return;
+              }
+
+              console.debug('Pilates card click', { targetIndex, currentActive: activeIndex, datasetIndex: card.dataset.index });
+              setActive(targetIndex);
+            }, { passive: false });
+          });
+
+          indicators.forEach((indicator, index) => {
+            indicator.addEventListener('click', (event) => {
+              event.preventDefault();
+              event.stopPropagation();
+              setActive(index);
+            });
+          });
+
+          desktopInitialized = true;
+        }
+
+        applyLayout(false);
+        requestAnimationFrame(() => applyLayout(true));
+      }
+
+      initDesktopCarousel();
+      window.addEventListener('resize', initDesktopCarousel);
+
       // 모바일에서 NEO BOOST 카드 영상 재생 처리 - 완전 새로운 코드
       if (window.innerWidth <= 768) {
         // NEO BOOST 카드 클릭 이벤트 설정
@@ -6582,8 +6595,6 @@ if (window.innerWidth <= 768) {
               
               // 비디오 재생
               video.play().catch(err => console.error('Video play error:', err));
-              
-              // 비디오 클릭 이벤트 삭제됨 - 비디오는 자동 재생만 유지
               
               // 비디오 종료 시 원본으로 복원
               video.addEventListener('ended', function() {
@@ -7139,99 +7150,6 @@ if (window.innerWidth <= 768) {
   
   <!-- 모바일 필라테스 카드 클릭 이벤트 -->
   <script>
-  (function() {
-    if (window.innerWidth <= 768) {
-      return;
-    }
-
-    const cards = Array.from(document.querySelectorAll('.pilates-card'));
-    const indicators = Array.from(document.querySelectorAll('.pilates-indicator'));
-    if (!cards.length) {
-      return;
-    }
-
-    const highlightColors = ['#e293ef', '#00BFFF', '#7BE495'];
-    const highlightShadows = ['rgba(226,147,239,0.6)', 'rgba(0,191,255,0.6)', 'rgba(123,228,149,0.6)'];
-
-    let order = [0, 1, 2]; // index -> position (0 center, 1 left, 2 right)
-
-    const desktopLayout = {
-      0: {
-        left: '50%',
-        transform: 'translate(-50%, -50%) translateZ(0) scale(1.2)',
-        zIndex: '3',
-        opacity: '1'
-      },
-      1: {
-        left: '50%',
-        transform: 'translate(-170%, -50%) translateZ(-100px) scale(0.8)',
-        zIndex: '2',
-        opacity: '0.7'
-      },
-      2: {
-        left: '50%',
-        transform: 'translate(70%, -50%) translateZ(-100px) scale(0.8)',
-        zIndex: '2',
-        opacity: '0.7'
-      }
-    };
-
-    function applyDesktopLayout(animate = false) {
-      const centerIndex = order.indexOf(0);
-      cards.forEach((card, index) => {
-        const position = order[index];
-        card.setAttribute('data-position', position);
-        const layout = desktopLayout[position];
-        if (!layout) return;
-        if (animate) {
-          card.style.transition = 'left 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
-        } else {
-          card.style.transition = 'none';
-        }
-        card.style.left = layout.left;
-        card.style.transform = layout.transform;
-        card.style.zIndex = layout.zIndex;
-        card.style.opacity = layout.opacity;
-      });
-
-      indicators.forEach((indicator, index) => {
-        if (index === centerIndex) {
-          indicator.style.background = highlightColors[index];
-          indicator.style.boxShadow = `0 0 8px ${highlightShadows[index]}`;
-        } else {
-          indicator.style.background = 'rgba(123, 228, 149, 0.3)';
-          indicator.style.boxShadow = 'none';
-        }
-      });
-    }
-
-    function moveCardToCenter(targetIndex) {
-      const centerIndex = order.indexOf(0);
-      if (centerIndex === targetIndex) return;
-      const targetPosition = order[targetIndex];
-      order[targetIndex] = 0;
-      order[centerIndex] = targetPosition;
-      applyDesktopLayout(true);
-    }
-
-    cards.forEach((card, index) => {
-      card.addEventListener('click', () => {
-        moveCardToCenter(index);
-      });
-    });
-
-    indicators.forEach((indicator, index) => {
-      indicator.addEventListener('click', (event) => {
-        event.preventDefault();
-        moveCardToCenter(index);
-      });
-    });
-
-    applyDesktopLayout(false);
-    // enable transitions after initial layout without visible movement
-    setTimeout(() => applyDesktopLayout(true), 60);
-  })();
-
   (function() {
     // 모바일에서만 실행
     if (window.innerWidth <= 768) {
