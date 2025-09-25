@@ -5012,7 +5012,7 @@ function toggleVideoPreview() {
   }
 }
 
-function closeInlineVideo() {
+function closeInlineVideo(forceInstant = false) {
   const cardDisplay = document.querySelector('.card-display-area');
   const videoContainer = document.querySelector('.mobile-video-container');
   const video = document.getElementById('mobilePreviewVideo');
@@ -5022,6 +5022,14 @@ function closeInlineVideo() {
     video.pause();
     video.currentTime = 0;
     
+    if (forceInstant) {
+      videoContainer.style.display = 'none';
+      videoContainer.style.transform = 'rotateY(0deg)';
+      cardDisplay.style.display = 'block';
+      cardDisplay.style.transform = 'rotateY(0deg)';
+      return;
+    }
+
     // 심플한 가로 회전으로 닫기
     videoContainer.style.transform = 'rotateY(90deg)';
     
@@ -6406,8 +6414,8 @@ if (window.innerWidth <= 768) {
           card.style.transform = transforms[position];
           card.style.zIndex = position === 'center' ? '3' : '2';
           card.style.opacity = position === 'center' ? '1' : '0.7';
-          card.style.pointerEvents = 'auto';
-          card.style.cursor = position === 'center' ? 'default' : 'pointer';
+          card.style.setProperty('pointer-events', 'auto', 'important');
+          card.style.setProperty('cursor', position === 'center' ? 'default' : 'pointer', 'important');
           card.dataset.desktopPosition = position;
 
           if (frame && accent) {
@@ -10780,7 +10788,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   // 모든 비디오 정지 및 UI 복구 함수
-  function stopAllVideos() {
+function stopAllVideos() {
     // 네오 싱크 비디오 정지
     const syncVideo = syncCard.querySelector('.sync-hover-video');
     const syncContent = syncCard.querySelector('.card-front > div[style*="z-index: 2"]');
@@ -10879,8 +10887,13 @@ document.addEventListener('DOMContentLoaded', function() {
         isBoostVideoPlaying = false;
       }, 300);
     }
+
+    // 모바일 프리뷰 영상이 열려 있다면 즉시 닫아 기본 카드로 복구
+    if (isMobile) {
+      closeInlineVideo(true);
+    }
   }
-  
+
   // 카드 위치 설정 함수
   function setCardPosition(cardId, position) {
     const card = cards[cardId];
