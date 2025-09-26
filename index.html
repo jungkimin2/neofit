@@ -10457,6 +10457,9 @@ function stopAllVideos() {
         // 카드에서 video-playing 클래스 제거
         boostCard.classList.remove('video-playing');
 
+        // z-index를 기본값으로 복원 (위치는 setCardPosition 함수가 관리)
+        boostCard.style.zIndex = '100';
+
         isBoostVideoPlaying = false;
       }, 300);
     }
@@ -10906,12 +10909,8 @@ function stopAllVideos() {
           const cardElement = this;
           const cardFront = this.querySelector('.card-front');
 
-          // 카드 위치와 z-index 강제 유지 (모바일 중앙 카드)
-          cardElement.style.position = 'absolute';
-          cardElement.style.left = '50%';
-          cardElement.style.top = '50%';
-          cardElement.style.transform = 'translate(-50%, -50%)';
-          cardElement.style.zIndex = '10';
+          // 영상 재생 시 z-index만 높게 설정 (기존 위치 유지)
+          cardElement.style.zIndex = '1000';
           cardElement.style.overflow = 'hidden';
 
           if (cardFront) {
@@ -11002,12 +11001,8 @@ function stopAllVideos() {
             
             // 카드 overflow 및 테두리 복원
             cardElement.style.overflow = '';
-            // 카드 위치와 z-index 복원 (모바일 중앙 카드 유지)
-            cardElement.style.position = 'absolute';
-            cardElement.style.left = '50%';
-            cardElement.style.top = '50%';
-            cardElement.style.transform = 'translate(-50%, -50%)';
-            cardElement.style.zIndex = '3';
+            // z-index를 기본값으로 복원 (위치는 setCardPosition 함수가 관리)
+            cardElement.style.zIndex = '100';
 
             if (cardFront) {
               cardFront.style.overflow = '';
@@ -11078,12 +11073,8 @@ function stopAllVideos() {
           const cardElement = this;
           const cardFront = this.querySelector('.card-front');
           cardElement.style.overflow = '';
-          // 카드 위치와 z-index 복원 (모바일 중앙 카드 유지)
-          cardElement.style.position = 'absolute';
-          cardElement.style.left = '50%';
-          cardElement.style.top = '50%';
-          cardElement.style.transform = 'translate(-50%, -50%)';
-          cardElement.style.zIndex = '3';
+          // z-index를 기본값으로 복원 (위치는 setCardPosition 함수가 관리)
+          cardElement.style.zIndex = '100';
 
           if (cardFront) {
             cardFront.style.overflow = '';
