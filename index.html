@@ -10880,12 +10880,12 @@ function stopAllVideos() {
         if (boostVideo && !boostVideo.classList.contains('playing')) {
           // 비디오가 카드 전체를 덮도록 스타일 설정
           boostVideo.style.position = 'absolute';
-          boostVideo.style.top = '0';
-          boostVideo.style.left = '0';
-          boostVideo.style.width = '100%';
-          boostVideo.style.height = '100%';
+          boostVideo.style.top = '10px';
+          boostVideo.style.left = '10px';
+          boostVideo.style.width = 'calc(100% - 20px)';
+          boostVideo.style.height = 'calc(100% - 20px)';
           boostVideo.style.objectFit = 'cover';
-          boostVideo.style.borderRadius = '20px';
+          boostVideo.style.borderRadius = '16px';
           boostVideo.style.border = 'none';
           boostVideo.style.display = 'block';
           boostVideo.style.boxShadow = 'none';
@@ -10894,10 +10894,16 @@ function stopAllVideos() {
           boostVideo.style.opacity = '1';
           boostVideo.style.backgroundColor = '#000';
           boostVideo.classList.add('playing');
-
-          // 카드에 video-playing 클래스 추가하여 기본 UI 요소들 숨기기
-          this.classList.add('video-playing');
-
+          
+          // 카드와 카드 프론트의 overflow를 hidden으로 설정하여 하단 텍스트 숨기기
+          const cardElement = this;
+          const cardFront = this.querySelector('.card-front');
+          cardElement.style.overflow = 'hidden';
+          if (cardFront) {
+            cardFront.style.overflow = 'hidden';
+            // 영상 재생 시 빨간색 테두리 유지
+            cardFront.style.border = '2px solid #F87171';
+          }
           
           // NEO BOOST 글래시 테두리 추가
           const glassOverlay = document.createElement('div');
@@ -10979,6 +10985,12 @@ function stopAllVideos() {
             boostVideo.style.transform = '';
             boostVideo.currentTime = 0;
             
+            // 카드 overflow 및 테두리 복원
+            cardElement.style.overflow = '';
+            if (cardFront) {
+              cardFront.style.overflow = '';
+              cardFront.style.border = '2px solid #F87171';
+            }
             
             // NEO BOOST 타이틀 다시 표시
             const boostTitle = cards['boost'].querySelector('.boost-title');
@@ -11034,6 +11046,14 @@ function stopAllVideos() {
           boostVideo.style.zIndex = '';
           boostVideo.classList.remove('playing');
           
+          // 카드 overflow 및 테두리 복원
+          const cardElement = this;
+          const cardFront = this.querySelector('.card-front');
+          cardElement.style.overflow = '';
+          if (cardFront) {
+            cardFront.style.overflow = '';
+            cardFront.style.border = '2px solid #F87171';
+          }
           
           setTimeout(() => {
             boostVideo.style.display = 'none';
