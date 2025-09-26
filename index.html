@@ -10892,39 +10892,8 @@ function stopAllVideos() {
             playPromise.catch(e => console.log('Video play failed:', e));
           }
 
-          // 모든 UI 요소 완전히 숨기기
-          if (boostContent) {
-            boostContent.style.opacity = '0';
-            boostContent.style.visibility = 'hidden';
-          }
-          if (clickIndicator) {
-            clickIndicator.style.display = 'none';
-          }
-
-          // NEO BOOST 추가 텍스트 요소들 숨기기
-          const boostTitle = this.querySelector('.boost-title');
-          const boostText1 = this.querySelector('.boost-text-1');
-          const boostText2 = this.querySelector('.boost-text-2');
-          const cardFrontElements = this.querySelectorAll('.card-front h3, .card-front p, .card-front img');
-
-          if (boostTitle) {
-            boostTitle.style.opacity = '0';
-            boostTitle.style.visibility = 'hidden';
-          }
-          if (boostText1) {
-            boostText1.style.opacity = '0';
-            boostText1.style.visibility = 'hidden';
-          }
-          if (boostText2) {
-            boostText2.style.opacity = '0';
-            boostText2.style.visibility = 'hidden';
-          }
-
-          // 카드 앞면의 모든 텍스트/이미지 요소 숨기기
-          cardFrontElements.forEach(element => {
-            element.style.opacity = '0';
-            element.style.visibility = 'hidden';
-          });
+          // CSS 클래스로 모든 UI 요소 숨기기
+          this.classList.add('video-playing-boost');
           
           // 비디오 종료 시 원상복구
           boostVideo.addEventListener('ended', function() {
@@ -10942,39 +10911,8 @@ function stopAllVideos() {
               boostVideo.style.display = 'none';
             }, 300);
 
-            // 모든 UI 요소 복원
-            if (boostContent) {
-              boostContent.style.opacity = '1';
-              boostContent.style.visibility = 'visible';
-            }
-            if (clickIndicator) {
-              clickIndicator.style.display = 'block';
-            }
-
-            // NEO BOOST 추가 텍스트 요소들 복원
-            const boostTitle = this.querySelector('.boost-title');
-            const boostText1 = this.querySelector('.boost-text-1');
-            const boostText2 = this.querySelector('.boost-text-2');
-            const cardFrontElements = this.querySelectorAll('.card-front h3, .card-front p, .card-front img');
-
-            if (boostTitle) {
-              boostTitle.style.opacity = '1';
-              boostTitle.style.visibility = 'visible';
-            }
-            if (boostText1) {
-              boostText1.style.opacity = '1';
-              boostText1.style.visibility = 'visible';
-            }
-            if (boostText2) {
-              boostText2.style.opacity = '1';
-              boostText2.style.visibility = 'visible';
-            }
-
-            // 카드 앞면의 모든 텍스트/이미지 요소 복원
-            cardFrontElements.forEach(element => {
-              element.style.opacity = '1';
-              element.style.visibility = 'visible';
-            });
+            // CSS 클래스 제거로 모든 UI 요소 복원
+            this.classList.remove('video-playing-boost');
           }, { once: true });
         } else if (boostVideo && boostVideo.classList.contains('playing')) {
           // 재생 중인 비디오 정지
@@ -10994,39 +10932,8 @@ function stopAllVideos() {
             boostVideo.style.display = 'none';
           }, 300);
 
-          // 모든 UI 요소 복원
-          if (boostContent) {
-            boostContent.style.opacity = '1';
-            boostContent.style.visibility = 'visible';
-          }
-          if (clickIndicator) {
-            clickIndicator.style.display = 'block';
-          }
-
-          // NEO BOOST 추가 텍스트 요소들 복원
-          const boostTitle = this.querySelector('.boost-title');
-          const boostText1 = this.querySelector('.boost-text-1');
-          const boostText2 = this.querySelector('.boost-text-2');
-          const cardFrontElements = this.querySelectorAll('.card-front h3, .card-front p, .card-front img');
-
-          if (boostTitle) {
-            boostTitle.style.opacity = '1';
-            boostTitle.style.visibility = 'visible';
-          }
-          if (boostText1) {
-            boostText1.style.opacity = '1';
-            boostText1.style.visibility = 'visible';
-          }
-          if (boostText2) {
-            boostText2.style.opacity = '1';
-            boostText2.style.visibility = 'visible';
-          }
-
-          // 카드 앞면의 모든 텍스트/이미지 요소 복원
-          cardFrontElements.forEach(element => {
-            element.style.opacity = '1';
-            element.style.visibility = 'visible';
-          });
+          // CSS 클래스 제거로 모든 UI 요소 복원
+          this.classList.remove('video-playing-boost');
         }
       }
     });
@@ -17695,6 +17602,44 @@ setTimeout(function() {
 
 // 자동 팝업 테스트 제거됨 - 모바일에서 드래그 시 나타나는 문제 해결
 </script>
+
+<!-- NEO BOOST 비디오 재생 시 UI 숨김을 위한 CSS -->
+<style>
+@media (max-width: 768px) {
+  /* 비디오 재생 중 모든 UI 요소 강제 숨김 - 최고 우선순위 */
+  body #boost-card.video-playing-boost .boost-title,
+  body #boost-card.video-playing-boost .boost-text-1,
+  body #boost-card.video-playing-boost .boost-text-2,
+  body #boost-card.video-playing-boost .card-front h3,
+  body #boost-card.video-playing-boost .card-front p,
+  body #boost-card.video-playing-boost .card-front img,
+  body #boost-card.video-playing-boost .click-indicator,
+  body #boost-card.video-playing-boost .card-front > div[style*="z-index: 2"],
+  body #boost-card.video-playing-boost .card-front > div[style*="z-index: 2"] > *:not(.boost-hover-video) {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    display: none !important;
+    pointer-events: none !important;
+    z-index: -1 !important;
+  }
+
+  /* 비디오만 표시 */
+  body #boost-card.video-playing-boost .boost-hover-video {
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: block !important;
+    z-index: 9999 !important;
+    position: absolute !important;
+    top: 10px !important;
+    left: 10px !important;
+    width: calc(100% - 20px) !important;
+    height: calc(100% - 20px) !important;
+    object-fit: cover !important;
+    border-radius: 16px !important;
+    background: #000 !important;
+  }
+}
+</style>
 
 
 </html> 
