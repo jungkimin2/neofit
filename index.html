@@ -10453,6 +10453,10 @@ function stopAllVideos() {
           boostClickIndicator.style.opacity = '1';
           boostClickIndicator.style.display = 'block';
         }
+
+        // 카드에서 video-playing 클래스 제거
+        boostCard.classList.remove('video-playing');
+
         isBoostVideoPlaying = false;
       }, 300);
     }
@@ -10894,7 +10898,10 @@ function stopAllVideos() {
           boostVideo.style.opacity = '1';
           boostVideo.style.backgroundColor = '#000';
           boostVideo.classList.add('playing');
-          
+
+          // 카드에 video-playing 클래스 추가하여 기본 UI 요소들 숨기기
+          this.classList.add('video-playing');
+
           // 카드와 카드 프론트의 overflow를 hidden으로 설정하여 하단 텍스트 숨기기
           const cardElement = this;
           const cardFront = this.querySelector('.card-front');
@@ -11028,6 +11035,9 @@ function stopAllVideos() {
               boostVideo.style.backgroundColor = '';
               boostVideo.style.zIndex = '';
               boostVideo.classList.remove('playing');
+
+              // 카드에서 video-playing 클래스 제거
+              this.classList.remove('video-playing');
             }, 300);
           }, { once: true });
         } else if (boostVideo && boostVideo.classList.contains('playing')) {
@@ -11045,7 +11055,10 @@ function stopAllVideos() {
           boostVideo.style.backgroundColor = '';
           boostVideo.style.zIndex = '';
           boostVideo.classList.remove('playing');
-          
+
+          // 카드에서 video-playing 클래스 제거
+          this.classList.remove('video-playing');
+
           // 카드 overflow 및 테두리 복원
           const cardElement = this;
           const cardFront = this.querySelector('.card-front');
