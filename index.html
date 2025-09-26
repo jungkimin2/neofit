@@ -10646,24 +10646,73 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
   
-  // 카드 클릭 이벤트 - 모바일에서 좌우 카드 클릭 시 중앙으로 이동
+  // 카드 클릭 이벤트 - 모바일과 PC 환경 완전 분리 처리
   Object.entries(cards).forEach(([cardId, card]) => {
+    // 모바일 전용 터치 이벤트 핸들러
+    if (window.innerWidth <= 768) {
+      // 터치 시작 좌표 저장
+      let touchStartX = 0;
+      let touchStartY = 0;
+      let touchStartTime = 0;
+      
+      card.addEventListener('touchstart', function(e) {
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+        touchStartTime = Date.now();
+        
+        // 터치 피드백 효과
+        this.style.transform = this.style.transform + ' scale(0.98)';
+      }, { passive: true });
+      
+      card.addEventListener('touchend', function(e) {
+        const touchEndTime = Date.now();
+        const touchDuration = touchEndTime - touchStartTime;
+        const touchEndX = e.changedTouches[0].clientX;
+        const touchEndY = e.changedTouches[0].clientY;
+        const touchDistance = Math.sqrt(Math.pow(touchEndX - touchStartX, 2) + Math.pow(touchEndY - touchStartY, 2));
+        
+        // 터치 피드백 효과 제거
+        setTimeout(() => {
+          if (this.style.transform) {
+            this.style.transform = this.style.transform.replace(' scale(0.98)', '');
+          }
+        }, 100);
+        
+        // 탭으로 인식 (짧은 터치이고 거의 움직이지 않음)
+        if (touchDuration < 500 && touchDistance < 10) {
+          e.preventDefault();
+          
+          console.log('모바일 카드 터치 감지:', cardId, '활성 상태:', this.classList.contains('active'));
+          
+          // 카드가 중앙에 있지 않으면 중앙으로 이동
+          if (!this.classList.contains('active')) {
+            console.log('카드를 중앙으로 이동:', cardId);
+            switchCard(cardId);
+            return;
+          }
+          
+          // 이미 중앙에 있는 카드라면 비디오 재생
+          console.log('중앙 카드 클릭 - 비디오 재생 시도:', cardId);
+          handleMobileVideoPlay(cardId, this);
+        }
+      }, { passive: false });
+    }
+    
+    // 기존 클릭 이벤트 (PC용)
     card.addEventListener('click', function(e) {
-      // PC에서 sync, balance, boost 카드가 active일 때는 이미 클릭 이벤트 처리됨
-      if (!isMobile && (cardId === 'sync' || cardId === 'balance' || cardId === 'boost') && this.classList.contains('active')) {
+      // 모바일에서는 터치 이벤트만 사용
+      if (window.innerWidth <= 768) {
         return;
       }
       
-      // 모바일에서 카드 클릭 처리
-      if (isMobile) {
-        // 카드가 중앙에 있지 않으면 중앙으로 이동
-        if (!this.classList.contains('active')) {
-          switchCard(cardId);
-          return; // 중앙으로 이동만 하고 비디오는 재생하지 않음
-        }
-        // 이미 중앙에 있는 카드를 클릭한 경우에만 비디오 재생 처리 계속 진행
-      } else if (!this.classList.contains('active')) {
-        // PC에서 비활성 카드 클릭 시 중앙으로 이동
+      // PC에서 sync, balance, boost 카드가 active일 때는 이미 클릭 이벤트 처리됨
+      if ((cardId === 'sync' || cardId === 'balance' || cardId === 'boost') && this.classList.contains('active')) {
+        return;
+      }
+      
+      // PC에서 비활성 카드 클릭 시 중앙으로 이동
+      if (!this.classList.contains('active')) {
+        console.log('PC 카드 클릭 - 중앙으로 이동:', cardId);
         switchCard(cardId);
         return;
       }
@@ -11028,6 +11077,75 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   });
+  
+  // 모바일 비디오 재생 처리 함수
+  function handleMobileVideoPlay(cardId, cardElement) {
+    const videoSelector = videoSelectors[cardId];
+    if (!videoSelector) return;
+    
+    const video = cardElement.querySelector(videoSelector);
+    const content = cardElement.querySelector('.card-front > div[style*="z-index: 2"]');
+    const clickIndicator = cardElement.querySelector('.click-indicator');
+    
+    if (!video) return;
+    
+    if (!video.classList.contains('playing')) {
+      // 비디오 재생 시작
+      console.log('모바일 비디오 재생 시작:', cardId);
+      
+      // 비디오 스타일 설정
+      video.style.position = 'absolute';
+      video.style.top = '2px';
+      video.style.left = '2px';
+      video.style.width = 'calc(100% - 4px)';
+      video.style.height = 'calc(100% - 4px)';
+      video.style.objectFit = 'cover';
+      video.style.borderRadius = '18px';
+      video.style.border = 'none';
+      video.style.boxShadow = 'none';
+      video.style.zIndex = '999';
+      video.style.opacity = '1';
+      video.style.display = 'block';
+      video.style.backgroundColor = '#000';
+      video.classList.add('playing');
+      
+      // 비디오 재생
+      video.muted = false;
+      video.volume = 0.4;
+      video.currentTime = 0;
+      
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise.then(() => {
+          console.log('모바일 비디오 재생 성공:', cardId);
+        }).catch(e => {
+          console.log('모바일 비디오 재생 실패, 음소거로 재시도:', e);
+          video.muted = true;
+          video.play().catch(err => console.log('음소거 재생도 실패:', err));
+        });
+      }
+      
+      // 콘텐츠 숨기기
+      if (content) {
+        content.style.opacity = '0';
+        content.style.visibility = 'hidden';
+      }
+      if (clickIndicator) {
+        clickIndicator.style.display = 'none';
+      }
+      
+      // 비디오 종료 시 복원
+      video.addEventListener('ended', function() {
+        console.log('모바일 비디오 종료:', cardId);
+        resetCardVisual(cardId);
+      }, { once: true });
+      
+    } else {
+      // 비디오 정지
+      console.log('모바일 비디오 정지:', cardId);
+      resetCardVisual(cardId);
+    }
+  }
   
   // 자동 회전 (옵션)
   let autoRotate = null;
