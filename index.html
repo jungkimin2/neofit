@@ -10905,7 +10905,15 @@ function stopAllVideos() {
           // 카드와 카드 프론트의 overflow를 hidden으로 설정하여 하단 텍스트 숨기기
           const cardElement = this;
           const cardFront = this.querySelector('.card-front');
+
+          // 카드 위치와 z-index 강제 유지 (모바일 중앙 카드)
+          cardElement.style.position = 'absolute';
+          cardElement.style.left = '50%';
+          cardElement.style.top = '50%';
+          cardElement.style.transform = 'translate(-50%, -50%)';
+          cardElement.style.zIndex = '10';
           cardElement.style.overflow = 'hidden';
+
           if (cardFront) {
             cardFront.style.overflow = 'hidden';
             // 영상 재생 시 빨간색 테두리 유지
@@ -10994,6 +11002,13 @@ function stopAllVideos() {
             
             // 카드 overflow 및 테두리 복원
             cardElement.style.overflow = '';
+            // 카드 위치와 z-index 복원 (모바일 중앙 카드 유지)
+            cardElement.style.position = 'absolute';
+            cardElement.style.left = '50%';
+            cardElement.style.top = '50%';
+            cardElement.style.transform = 'translate(-50%, -50%)';
+            cardElement.style.zIndex = '3';
+
             if (cardFront) {
               cardFront.style.overflow = '';
               cardFront.style.border = '2px solid #F87171';
@@ -11063,6 +11078,13 @@ function stopAllVideos() {
           const cardElement = this;
           const cardFront = this.querySelector('.card-front');
           cardElement.style.overflow = '';
+          // 카드 위치와 z-index 복원 (모바일 중앙 카드 유지)
+          cardElement.style.position = 'absolute';
+          cardElement.style.left = '50%';
+          cardElement.style.top = '50%';
+          cardElement.style.transform = 'translate(-50%, -50%)';
+          cardElement.style.zIndex = '3';
+
           if (cardFront) {
             cardFront.style.overflow = '';
             cardFront.style.border = '2px solid #F87171';
