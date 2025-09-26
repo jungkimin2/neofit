@@ -10061,10 +10061,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const cardFront = card.querySelector('.card-front');
     if (cardFront) {
+      if (!cardFront.dataset.originalOverflow) {
+        cardFront.dataset.originalOverflow = getComputedStyle(cardFront).overflow || 'hidden';
+      }
+      if (!cardFront.dataset.originalBorder) {
+        cardFront.dataset.originalBorder = getComputedStyle(cardFront).border || '';
+      }
       if (isMobile && cardId === 'boost') {
         cardFront.style.border = '2px solid #F87171';
+        cardFront.style.overflow = 'hidden';
+      } else {
+        cardFront.style.border = cardFront.dataset.originalBorder || '';
+        cardFront.style.overflow = cardFront.dataset.originalOverflow || 'hidden';
       }
-      cardFront.style.removeProperty('overflow');
     }
 
     if (content) {
@@ -10084,7 +10093,7 @@ document.addEventListener('DOMContentLoaded', function() {
         indicator.style.display = indicator.dataset.originalDisplay || 'block';
         indicator.style.opacity = '1';
       } else {
-        indicator.style.removeProperty('display');
+        indicator.style.display = indicator.dataset.originalDisplay || 'block';
         indicator.style.removeProperty('opacity');
       }
     }
@@ -10096,7 +10105,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (cardId === 'boost') {
       card.classList.remove('video-playing');
-      card.style.removeProperty('overflow');
+      if (!card.dataset.originalOverflow) {
+        card.dataset.originalOverflow = getComputedStyle(card).overflow || 'hidden';
+      }
+      if (isMobile) {
+        card.style.overflow = 'hidden';
+      } else {
+        card.style.overflow = card.dataset.originalOverflow || 'hidden';
+      }
       const boostTitle = card.querySelector('.boost-title');
       if (boostTitle) {
         const originalText = boostTitle.getAttribute('data-original-text');
@@ -10456,9 +10472,22 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // 모든 비디오 정지 및 UI 복구 함수
   function stopAllVideos() {
-    ['sync', 'balance', 'boost'].forEach(resetCardVisual);
     if (isMobile) {
+      ['sync', 'balance', 'boost'].forEach(resetCardVisual);
       closeInlineVideo(true);
+      return;
+    }
+
+    if (syncVideo && (syncVideo.classList.contains('playing') || isSyncVideoPlaying)) {
+      resetCardVisual('sync');
+    }
+
+    if (balanceVideo && (balanceVideo.classList.contains('playing') || isBalanceVideoPlaying)) {
+      resetCardVisual('balance');
+    }
+
+    if (boostVideo && (boostVideo.classList.contains('playing') || isBoostVideoPlaying)) {
+      resetCardVisual('boost');
     }
   }
 
@@ -10574,8 +10603,10 @@ document.addEventListener('DOMContentLoaded', function() {
     
     currentCard = targetId;
 
-    // ensure freshly centered card shows base content until user taps again
-    resetCardVisual(targetId);
+    if (isMobile) {
+      // ensure freshly centered card shows base content until user taps again
+      resetCardVisual(targetId);
+    }
     
     setTimeout(() => {
       isAnimating = false;
