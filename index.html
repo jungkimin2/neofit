@@ -10884,12 +10884,12 @@ function stopAllVideos() {
         if (boostVideo && !boostVideo.classList.contains('playing')) {
           // 비디오가 카드 전체를 덮도록 스타일 설정
           boostVideo.style.position = 'absolute';
-          boostVideo.style.top = '10px';
-          boostVideo.style.left = '10px';
-          boostVideo.style.width = 'calc(100% - 20px)';
-          boostVideo.style.height = 'calc(100% - 20px)';
+          boostVideo.style.top = '0';
+          boostVideo.style.left = '0';
+          boostVideo.style.width = '100%';
+          boostVideo.style.height = '100%';
           boostVideo.style.objectFit = 'cover';
-          boostVideo.style.borderRadius = '16px';
+          boostVideo.style.borderRadius = '20px';
           boostVideo.style.border = 'none';
           boostVideo.style.display = 'block';
           boostVideo.style.boxShadow = 'none';
