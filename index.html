@@ -1145,10 +1145,22 @@ div > p.smart-guide-text {
   }
   
   /* 모바일에서 NEO BOOST 카드 콘텐츠 표시 보장 */
-  #boost-card .card-front > div[style*="z-index: 2"] {
+  #boost-card .card-content {
     opacity: 1 !important;
     visibility: visible !important;
     display: flex !important;
+  }
+
+  #boost-card.video-playing .card-content {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    display: none !important;
+  }
+
+  #boost-card.video-playing .click-indicator {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    display: none !important;
   }
   
   #boost-card h3 {
@@ -3827,7 +3839,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <video class="sync-hover-video" src="./videos/neosyncvido.mp4" loop playsinline muted preload="metadata" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.3s ease; z-index: 1; pointer-events: none;"></video>
             
             <!-- 기존 콘텐츠를 relative로 변경하여 비디오 위에 표시 -->
-            <div style="position: relative; z-index: 2; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; padding-top: 32px;">
+            <div class="card-content card-content--sync" style="position: relative; z-index: 2; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; padding-top: 32px;">
               <h3 style="color: #7BE495; font-size: 2rem; margin-bottom: 20px; text-shadow: 0 0 20px rgba(123,228,149,0.8);">NEO SYNC</h3>
               <img src="./images/neosync.png" data-webp="./images/neosync.webp" alt="네오 싱크" style="width: 80%; height: auto; margin-bottom: 36px; filter: drop-shadow(0 0 20px rgba(123,228,149,0.5));">
               <p style="color: #fff; font-size: 1.1rem; text-align: center;">기초 체력과 움직임의 동기화</p>
@@ -3846,7 +3858,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <!-- 비디오 요소 추가 -->
             <video class="balance-hover-video" src="./videos/neobalance.mp4" loop playsinline muted preload="metadata" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.3s ease; z-index: 1; pointer-events: none;"></video>
             
-            <div style="position: relative; z-index: 2; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; padding-top: 32px;">
+            <div class="card-content card-content--balance" style="position: relative; z-index: 2; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; padding-top: 32px;">
               <h3 style="color: #93C5FD; font-size: 2rem; margin-bottom: 20px; text-shadow: 0 0 20px rgba(147,197,253,0.8);">NEO BALANCE</h3>
               <img src="./images/neoblance.png" data-webp="./images/neoblance.webp" alt="네오 밸런스" style="width: 80%; height: auto; margin-bottom: 20px; filter: drop-shadow(0 0 20px rgba(147,197,253,0.5));">
               <p style="color: #fff; font-size: 1.1rem; text-align: center;">균형과 안정성 강화</p>
@@ -3865,7 +3877,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <!-- 비디오 요소 추가 -->
             <video class="boost-hover-video" src="./videos/neoboots.mp4" loop playsinline muted preload="metadata" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.3s ease; z-index: 0; pointer-events: none;"></video>
             
-            <div style="position: relative; z-index: 2; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+            <div class="card-content card-content--boost" style="position: relative; z-index: 2; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;">
               <h3 class="boost-title" style="color: #F87171; font-size: 2rem; margin-bottom: 20px; text-shadow: 0 0 20px rgba(248,113,113,0.8); display: block;">NEO BOOST</h3>
               <img src="./images/neoboots.png" data-webp="./images/neoboots.webp" alt="네오 부스트" style="width: 80%; height: auto; margin-bottom: 20px; filter: drop-shadow(0 0 20px rgba(248,113,113,0.5)); display: block; max-width: 280px;">
               <p class="boost-text-1" style="color: #fff; font-size: 1.1rem; text-align: center; display: block;">폭발적인 퍼포먼스 향상</p>
@@ -10059,7 +10071,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   if (window.innerWidth > 768) {
     // 네오 싱크 카드 클릭 이벤트
-    const syncContent = syncCard.querySelector('.card-front > div[style*="z-index: 2"]');
+    const syncContent = syncCard.querySelector('.card-content');
     const syncClickIndicator = syncCard.querySelector('.click-indicator');
     
     syncCard.addEventListener('click', function(e) {
@@ -10148,7 +10160,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // 네오 밸런스 카드 클릭 이벤트
-    const balanceContent = balanceCard.querySelector('.card-front > div[style*="z-index: 2"]');
+    const balanceContent = balanceCard.querySelector('.card-content');
     const balanceClickIndicator = balanceCard.querySelector('.click-indicator');
     
     balanceCard.addEventListener('click', function(e) {
@@ -10237,7 +10249,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // 네오 부스트 카드 클릭 이벤트
-    const boostContent = boostCard.querySelector('.card-front > div[style*="z-index: 2"]');
+    const boostContent = boostCard.querySelector('.card-content');
     const boostClickIndicator = boostCard.querySelector('.click-indicator');
     
     boostCard.addEventListener('click', function(e) {
@@ -10290,6 +10302,7 @@ document.addEventListener('DOMContentLoaded', function() {
           }
           
           isBoostVideoPlaying = true;
+          boostCard.classList.add('video-playing');
           
           // 비디오 종료 시 자동으로 정지 상태로 전환
           boostVideo.addEventListener('ended', function() {
@@ -10319,6 +10332,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 boostClickIndicator.style.transition = 'opacity 0.3s ease';
                 boostClickIndicator.style.opacity = '1';
               }
+              boostCard.classList.remove('video-playing');
               isBoostVideoPlaying = false;
             }, 300);
           }, { once: true });
@@ -10349,6 +10363,7 @@ document.addEventListener('DOMContentLoaded', function() {
               boostClickIndicator.style.transition = 'opacity 0.3s ease';
               boostClickIndicator.style.opacity = '1';
             }
+            boostCard.classList.remove('video-playing');
             isBoostVideoPlaying = false;
           }, 300);
         }
@@ -10360,7 +10375,7 @@ document.addEventListener('DOMContentLoaded', function() {
 function stopAllVideos() {
     // 네오 싱크 비디오 정지
     const syncVideo = syncCard.querySelector('.sync-hover-video');
-    const syncContent = syncCard.querySelector('.card-front > div[style*="z-index: 2"]');
+    const syncContent = syncCard.querySelector('.card-content');
     const syncClickIndicator = syncCard.querySelector('.click-indicator');
     
     if (syncVideo && (syncVideo.classList.contains('playing') || isSyncVideoPlaying)) {
@@ -10387,7 +10402,7 @@ function stopAllVideos() {
     
     // 네오 밸런스 비디오 정지
     const balanceVideo = balanceCard.querySelector('.balance-hover-video');
-    const balanceContent = balanceCard.querySelector('.card-front > div[style*="z-index: 2"]');
+    const balanceContent = balanceCard.querySelector('.card-content');
     const balanceClickIndicator = balanceCard.querySelector('.click-indicator');
     
     if (balanceVideo && (balanceVideo.classList.contains('playing') || isBalanceVideoPlaying)) {
@@ -10414,7 +10429,7 @@ function stopAllVideos() {
     
     // 네오 부스트 비디오 정지
     const boostVideo = boostCard.querySelector('.boost-hover-video');
-    const boostContent = boostCard.querySelector('.card-front > div[style*="z-index: 2"]');
+    const boostContent = boostCard.querySelector('.card-content');
     const boostClickIndicator = boostCard.querySelector('.click-indicator');
     
     if (boostVideo && (boostVideo.classList.contains('playing') || isBoostVideoPlaying)) {
@@ -10453,6 +10468,7 @@ function stopAllVideos() {
           boostClickIndicator.style.opacity = '1';
           boostClickIndicator.style.display = 'block';
         }
+        boostCard.classList.remove('video-playing');
         isBoostVideoPlaying = false;
       }, 300);
     }
@@ -10638,7 +10654,7 @@ function stopAllVideos() {
       // 모바일에서 네오 싱크 카드가 활성화되고 클릭된 경우 비디오 재생
       if (isMobile && cardId === 'sync' && this.classList.contains('active')) {
         const syncVideo = this.querySelector('.sync-hover-video');
-        const syncContent = this.querySelector('.card-front > div[style*="z-index: 2"]');
+        const syncContent = this.querySelector('.card-content');
         const clickIndicator = this.querySelector('.click-indicator');
         
         if (syncVideo && !syncVideo.classList.contains('playing')) {
@@ -10756,7 +10772,7 @@ function stopAllVideos() {
       // 모바일에서 네오 밸런스 카드가 활성화되고 클릭된 경우 비디오 재생
       if (isMobile && cardId === 'balance' && this.classList.contains('active')) {
         const balanceVideo = this.querySelector('.balance-hover-video');
-        const balanceContent = this.querySelector('.card-front > div[style*="z-index: 2"]');
+        const balanceContent = this.querySelector('.card-content');
         const clickIndicator = this.querySelector('.click-indicator');
         
         if (balanceVideo && !balanceVideo.classList.contains('playing')) {
@@ -10874,10 +10890,12 @@ function stopAllVideos() {
       // 모바일에서 네오 부스트 카드가 활성화되고 클릭된 경우 비디오 재생
       if (isMobile && cardId === 'boost' && this.classList.contains('active')) {
         const boostVideo = this.querySelector('.boost-hover-video');
-        const boostContent = this.querySelector('.card-front > div[style*="z-index: 2"]');
+        const boostContent = this.querySelector('.card-content');
         const clickIndicator = this.querySelector('.click-indicator');
         
         if (boostVideo && !boostVideo.classList.contains('playing')) {
+          const cardElement = this;
+          const cardFront = cardElement.querySelector('.card-front');
           // 비디오가 카드 전체를 덮도록 스타일 설정
           boostVideo.style.position = 'absolute';
           boostVideo.style.top = '10px';
@@ -10894,10 +10912,9 @@ function stopAllVideos() {
           boostVideo.style.opacity = '1';
           boostVideo.style.backgroundColor = '#000';
           boostVideo.classList.add('playing');
+          cardElement.classList.add('video-playing');
           
           // 카드와 카드 프론트의 overflow를 hidden으로 설정하여 하단 텍스트 숨기기
-          const cardElement = this;
-          const cardFront = this.querySelector('.card-front');
           cardElement.style.overflow = 'hidden';
           if (cardFront) {
             cardFront.style.overflow = 'hidden';
@@ -11014,9 +11031,10 @@ function stopAllVideos() {
               clickIndicator.style.display = 'block';
               clickIndicator.style.opacity = '1';
             }
-            
-            // 비디오 완전히 숨기기
-            setTimeout(() => {
+            cardElement.classList.remove('video-playing');
+           
+           // 비디오 완전히 숨기기
+           setTimeout(() => {
               boostVideo.style.display = 'none';
               boostVideo.style.position = '';
               boostVideo.style.top = '';
@@ -11080,6 +11098,7 @@ function stopAllVideos() {
           if (clickIndicator) {
             clickIndicator.style.display = 'block';
           }
+          this.classList.remove('video-playing');
         }
       }
     });
@@ -11520,7 +11539,7 @@ function stopAllVideos() {
   }
   
   /* 모바일에서 NEO BALANCE 카드 내부 컨테이너 padding-top 원복 */
-  #balance-card .card-front > div[style*="z-index: 2"] {
+  #balance-card .card-content {
     padding-top: 0 !important;
   }
   
@@ -11552,9 +11571,9 @@ function stopAllVideos() {
   }
   
   /* 모바일에서 로고 아래 설명 문구 위치 조정 - 3.5칸 위로 (-56px) */
-  #sync-card div[style*="z-index: 2"] > p:first-of-type,
-  #balance-card div[style*="z-index: 2"] > p:first-of-type,
-  #boost-card div[style*="z-index: 2"] > p:first-of-type {
+  #sync-card .card-content > p:first-of-type,
+  #balance-card .card-content > p:first-of-type,
+  #boost-card .card-content > p:first-of-type {
     margin-top: -56px !important;
   }
   
