@@ -60,55 +60,18 @@ body.popup-active {
 /* 모바일에서만 적용 - PC 환경 완전 보호 */
 @media screen and (max-width: 768px) and (orientation: portrait),
        screen and (max-width: 768px) and (orientation: landscape) {
-
+  
   /* 3D 회전 효과를 위한 모바일 전용 스타일 */
   .card-section {
     transform-style: preserve-3d !important;
   }
-
+  
   /* 페이지 로딩 시 즉시 적용되는 모바일 전용 transform */
   .mobile-ui-position-adjustment {
     transform: translateY(-280px) !important;
     -webkit-transform: translateY(-280px) !important;
     position: relative !important;
     z-index: 9999 !important;
-  }
-
-  /* NEO BOOST 비디오 재생 시 기본 카드 내용 강제 숨김 - 최고 우선순위 */
-  #boost-card.video-playing .card-front * {
-    opacity: 0 !important;
-    visibility: hidden !important;
-    pointer-events: none !important;
-  }
-
-  #boost-card.video-playing .boost-hover-video {
-    opacity: 1 !important;
-    visibility: visible !important;
-    pointer-events: auto !important;
-    z-index: 99999 !important;
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover !important;
-    border-radius: 20px !important;
-  }
-
-  /* NEO BOOST 비디오 재생 시 모든 기본 내용 강제 숨김 - 최고 우선순위 */
-  #boost-card.video-playing .card-front > div[style*="z-index: 2"],
-  #boost-card.video-playing h3,
-  #boost-card.video-playing p,
-  #boost-card.video-playing img,
-  #boost-card.video-playing .boost-title,
-  #boost-card.video-playing .boost-text-1,
-  #boost-card.video-playing .boost-text-2,
-  #boost-card.video-playing .click-indicator {
-    opacity: 0 !important;
-    visibility: hidden !important;
-    display: none !important;
-    z-index: -9999 !important;
-    pointer-events: none !important;
   }
   
   /* 네오 하이브 섹션 위로 이동 */
@@ -1181,28 +1144,28 @@ div > p.smart-guide-text {
     pointer-events: auto !important;
   }
   
-  /* 모바일에서 NEO BOOST 카드 콘텐츠 표시 보장 - 비디오 재생 시 예외 */
-  #boost-card:not(.video-playing) .card-front > div[style*="z-index: 2"] {
+  /* 모바일에서 NEO BOOST 카드 콘텐츠 표시 보장 */
+  #boost-card .card-front > div[style*="z-index: 2"] {
     opacity: 1 !important;
     visibility: visible !important;
     display: flex !important;
   }
-
-  #boost-card:not(.video-playing) h3 {
+  
+  #boost-card h3 {
     font-size: 1.5rem !important;
     opacity: 1 !important;
     visibility: visible !important;
     display: block !important;
   }
-
-  #boost-card:not(.video-playing) p {
+  
+  #boost-card p {
     font-size: 0.9rem !important;
     opacity: 1 !important;
     visibility: visible !important;
     display: block !important;
   }
   
-  #boost-card:not(.video-playing) img {
+  #boost-card img {
     opacity: 1 !important;
     visibility: visible !important;
     display: block !important;
@@ -10040,12 +10003,6 @@ document.addEventListener('DOMContentLoaded', function() {
   let currentCard = 'sync';
   let isAnimating = false;
   let isMobile = window.innerWidth <= 768;
-  const positionState = {
-    left: 'balance',
-    center: 'sync',
-    right: 'boost'
-  };
-
   
   // 네오싱크 카드 비디오 호버 효과
   const syncCard = document.getElementById('sync-card');
@@ -10058,157 +10015,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // 네오 부스트 카드 비디오 효과
   const boostCard = document.getElementById('boost-card');
   const boostVideo = boostCard.querySelector('.boost-hover-video');
-
-  let isSyncVideoPlaying = false;
-  let isBalanceVideoPlaying = false;
-  let isBoostVideoPlaying = false;
-
-  const videoSelectors = {
-    sync: '.sync-hover-video',
-    balance: '.balance-hover-video',
-    boost: '.boost-hover-video'
-  };
-
-  function resetCardVisual(cardId) {
-    const card = cards[cardId];
-    if (!card) return;
-
-    const video = card.querySelector(videoSelectors[cardId]);
-    const content = card.querySelector('.card-front > div[style*\"z-index: 2\"]');
-    const indicator = card.querySelector('.click-indicator');
-
-    if (video) {
-      video.pause();
-      video.currentTime = 0;
-      video.classList.remove('playing');
-      video.style.opacity = '0';
-      video.style.borderRadius = '';
-      video.style.transform = '';
-      video.style.removeProperty('backgroundColor');
-      video.style.removeProperty('zIndex');
-      video.style.removeProperty('position');
-      video.style.removeProperty('top');
-      video.style.removeProperty('left');
-      video.style.removeProperty('width');
-      video.style.removeProperty('height');
-      video.style.removeProperty('border');
-      video.style.removeProperty('boxShadow');
-      if (isMobile) {
-        video.style.display = 'none';
-        video.muted = true;
-        video.volume = 0;
-      } else {
-        video.style.removeProperty('display');
-      }
-    }
-
-    const cardFront = card.querySelector('.card-front');
-    if (cardFront) {
-      if (!cardFront.dataset.originalOverflow) {
-        cardFront.dataset.originalOverflow = getComputedStyle(cardFront).overflow || 'hidden';
-      }
-      if (!cardFront.dataset.originalBorder) {
-        cardFront.dataset.originalBorder = getComputedStyle(cardFront).border || '';
-      }
-      if (isMobile && cardId === 'boost') {
-        cardFront.style.border = '2px solid #F87171';
-        cardFront.style.overflow = 'hidden';
-      } else {
-        cardFront.style.border = cardFront.dataset.originalBorder || '';
-        cardFront.style.overflow = cardFront.dataset.originalOverflow || 'hidden';
-      }
-    }
-
-    if (content) {
-      if (!content.dataset.originalDisplay) {
-        content.dataset.originalDisplay = getComputedStyle(content).display || 'flex';
-      }
-      content.style.opacity = '1';
-      content.style.visibility = 'visible';
-      content.style.display = content.dataset.originalDisplay || 'flex';
-    }
-
-    if (indicator) {
-      if (!indicator.dataset.originalDisplay) {
-        indicator.dataset.originalDisplay = getComputedStyle(indicator).display || 'block';
-      }
-      if (isMobile) {
-        indicator.style.display = indicator.dataset.originalDisplay || 'block';
-        indicator.style.opacity = '1';
-      } else {
-        indicator.style.display = indicator.dataset.originalDisplay || 'block';
-        indicator.style.removeProperty('opacity');
-      }
-    }
-
-    const overlay = card.querySelector('.video-glass-overlay');
-    if (overlay) {
-      overlay.remove();
-    }
-
-    if (cardId === 'boost') {
-      card.classList.remove('video-playing');
-
-      // 모바일에서 모든 기본 카드 내용을 다시 표시
-      const cardContent = card.querySelector('.card-front > div[style*="z-index: 2"]');
-      const allTextElements = card.querySelectorAll('h3, p, .boost-title, .boost-text-1, .boost-text-2');
-      const allImages = card.querySelectorAll('img');
-      const clickIndicator = card.querySelector('.click-indicator');
-
-      if (cardContent) {
-        cardContent.style.removeProperty('opacity');
-        cardContent.style.removeProperty('visibility');
-        cardContent.style.removeProperty('display');
-      }
-
-      allTextElements.forEach(el => {
-        el.style.removeProperty('opacity');
-        el.style.removeProperty('visibility');
-        el.style.removeProperty('display');
-      });
-
-      allImages.forEach(el => {
-        el.style.removeProperty('opacity');
-        el.style.removeProperty('visibility');
-        el.style.removeProperty('display');
-      });
-
-      if (clickIndicator) {
-        clickIndicator.style.removeProperty('opacity');
-        clickIndicator.style.removeProperty('visibility');
-        clickIndicator.style.removeProperty('display');
-      }
-
-      if (!card.dataset.originalOverflow) {
-        card.dataset.originalOverflow = getComputedStyle(card).overflow || 'hidden';
-      }
-      if (isMobile) {
-        card.style.overflow = 'hidden';
-      } else {
-        card.style.overflow = card.dataset.originalOverflow || 'hidden';
-      }
-      const boostTitle = card.querySelector('.boost-title');
-      if (boostTitle) {
-        const originalText = boostTitle.getAttribute('data-original-text');
-        if (originalText && !boostTitle.textContent.trim()) {
-          boostTitle.textContent = originalText;
-        }
-        boostTitle.style.opacity = '1';
-        boostTitle.style.visibility = 'visible';
-        boostTitle.style.pointerEvents = '';
-      }
-      isBoostVideoPlaying = false;
-    }
-
-    if (cardId === 'sync') {
-      isSyncVideoPlaying = false;
-    }
-
-    if (cardId === 'balance') {
-      isBalanceVideoPlaying = false;
-    }
-  }
-
+  
   // 모바일에서 비디오 미리 로드하여 재생 지연 방지
   if (isMobile) {
     // 비디오 preload 설정 - 네오 부스트는 metadata로 설정하여 빠른 로딩
@@ -10234,6 +10041,11 @@ document.addEventListener('DOMContentLoaded', function() {
     preloadVideo(balanceVideo);
     preloadVideo(boostVideo); // 부스트 비디오도 페이지 로드 시 미리 로드
   }
+  
+  // PC 환경에서 비디오 클릭 효과 적용
+  let isSyncVideoPlaying = false;
+  let isBalanceVideoPlaying = false;
+  let isBoostVideoPlaying = false;
   
   // 모바일에서 비디오 초기화
   if (window.innerWidth <= 768) {
@@ -10545,23 +10357,109 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   // 모든 비디오 정지 및 UI 복구 함수
-  function stopAllVideos() {
-    if (isMobile) {
-      ['sync', 'balance', 'boost'].forEach(resetCardVisual);
-      closeInlineVideo(true);
-      return;
-    }
-
+function stopAllVideos() {
+    // 네오 싱크 비디오 정지
+    const syncVideo = syncCard.querySelector('.sync-hover-video');
+    const syncContent = syncCard.querySelector('.card-front > div[style*="z-index: 2"]');
+    const syncClickIndicator = syncCard.querySelector('.click-indicator');
+    
     if (syncVideo && (syncVideo.classList.contains('playing') || isSyncVideoPlaying)) {
-      resetCardVisual('sync');
+      syncVideo.pause();
+      syncVideo.currentTime = 0;
+      syncVideo.style.opacity = '0';
+      syncVideo.classList.remove('playing');
+      if (isMobile) {
+        setTimeout(() => {
+          syncVideo.style.display = 'none';
+        }, 300);
+      }
+      
+      if (syncContent) {
+        syncContent.style.opacity = '1';
+        syncContent.style.visibility = 'visible';
+      }
+      if (syncClickIndicator) {
+        syncClickIndicator.style.opacity = '1';
+        syncClickIndicator.style.display = 'block';
+      }
+      isSyncVideoPlaying = false;
     }
-
+    
+    // 네오 밸런스 비디오 정지
+    const balanceVideo = balanceCard.querySelector('.balance-hover-video');
+    const balanceContent = balanceCard.querySelector('.card-front > div[style*="z-index: 2"]');
+    const balanceClickIndicator = balanceCard.querySelector('.click-indicator');
+    
     if (balanceVideo && (balanceVideo.classList.contains('playing') || isBalanceVideoPlaying)) {
-      resetCardVisual('balance');
+      balanceVideo.pause();
+      balanceVideo.currentTime = 0;
+      balanceVideo.style.opacity = '0';
+      balanceVideo.classList.remove('playing');
+      if (isMobile) {
+        setTimeout(() => {
+          balanceVideo.style.display = 'none';
+        }, 300);
+      }
+      
+      if (balanceContent) {
+        balanceContent.style.opacity = '1';
+        balanceContent.style.visibility = 'visible';
+      }
+      if (balanceClickIndicator) {
+        balanceClickIndicator.style.opacity = '1';
+        balanceClickIndicator.style.display = 'block';
+      }
+      isBalanceVideoPlaying = false;
+    }
+    
+    // 네오 부스트 비디오 정지
+    const boostVideo = boostCard.querySelector('.boost-hover-video');
+    const boostContent = boostCard.querySelector('.card-front > div[style*="z-index: 2"]');
+    const boostClickIndicator = boostCard.querySelector('.click-indicator');
+    
+    if (boostVideo && (boostVideo.classList.contains('playing') || isBoostVideoPlaying)) {
+      // 비디오 부드럽게 페이드 아웃
+      boostVideo.style.transition = 'opacity 0.3s ease';
+      boostVideo.style.opacity = '0';
+      boostVideo.classList.remove('playing');
+      
+      // NEO BOOST 오버레이 삭제됨
+      // const overlay = boostCard.querySelector('.video-glass-overlay');
+      // if (overlay) {
+      //   overlay.style.transition = 'opacity 0.3s ease';
+      //   overlay.style.opacity = '0';
+      //   setTimeout(() => overlay.remove(), 300);
+      // }
+      
+      // 300ms 후 비디오 정지 및 스타일 초기화
+      setTimeout(() => {
+        boostVideo.pause();
+        boostVideo.currentTime = 0;
+        boostVideo.style.borderRadius = '';
+        boostVideo.style.transform = '';
+        
+        if (isMobile) {
+          boostVideo.style.display = 'none';
+        }
+        
+        // 콘텐츠와 CLICK 버튼 부드럽게 다시 보이기
+        if (boostContent) {
+          boostContent.style.transition = 'opacity 0.3s ease';
+          boostContent.style.opacity = '1';
+          boostContent.style.visibility = 'visible';
+        }
+        if (boostClickIndicator) {
+          boostClickIndicator.style.transition = 'opacity 0.3s ease';
+          boostClickIndicator.style.opacity = '1';
+          boostClickIndicator.style.display = 'block';
+        }
+        isBoostVideoPlaying = false;
+      }, 300);
     }
 
-    if (boostVideo && (boostVideo.classList.contains('playing') || isBoostVideoPlaying)) {
-      resetCardVisual('boost');
+    // 모바일 프리뷰 영상이 열려 있다면 즉시 닫아 기본 카드로 복구
+    if (isMobile) {
+      closeInlineVideo(true);
     }
   }
 
@@ -10569,132 +10467,119 @@ document.addEventListener('DOMContentLoaded', function() {
   function setCardPosition(cardId, position) {
     const card = cards[cardId];
     if (!card) return;
-
-    console.log('setCardPosition 호출:', cardId, position, 'isMobile:', isMobile);
-
+    
     if (isMobile) {
-      let transformValue = 'translateX(-50%) translateY(calc(-50% - 48px))';
-      let opacity = '0.9';
-      let zIndex = '10';
-
-      if (position === 'center') {
-        transformValue += ' translateZ(50px) scale(1)';
-        opacity = '1';
-        zIndex = '100';
-        card.classList.add('active');
-      } else if (position === 'left') {
-        transformValue += ' translateX(-150px) translateZ(-50px) rotateY(25deg) scale(0.85)';
-        card.classList.remove('active');
-      } else if (position === 'right') {
-        transformValue += ' translateX(150px) translateZ(-50px) rotateY(-25deg) scale(0.85)';
-        card.classList.remove('active');
-      } else {
-        card.classList.remove('active');
+      // 모바일에서의 카드 위치
+      switch(position) {
+        case 'center':
+          card.style.transform = 'translateX(-50%) translateY(calc(-50% - 48px)) translateZ(50px) scale(1)';
+          card.style.opacity = '1';
+          card.style.zIndex = '100';
+          card.classList.add('active');
+          break;
+        case 'left':
+          card.style.transform = 'translateX(-50%) translateY(calc(-50% - 48px)) translateX(-150px) translateZ(-50px) rotateY(25deg) scale(0.85)';
+          card.style.opacity = '0.9';
+          card.style.zIndex = '10';
+          card.classList.remove('active');
+          break;
+        case 'right':
+          card.style.transform = 'translateX(-50%) translateY(calc(-50% - 48px)) translateX(150px) translateZ(-50px) rotateY(-25deg) scale(0.85)';
+          card.style.opacity = '0.9';
+          card.style.zIndex = '10';
+          card.classList.remove('active');
+          break;
       }
-
-      card.dataset.position = position;
-      card.style.setProperty('transform', transformValue, 'important');
-      card.style.setProperty('opacity', opacity, 'important');
-      card.style.setProperty('z-index', zIndex, 'important');
-      card.style.setProperty('pointer-events', 'auto', 'important');
-      return;
-    }
-
-    card.style.removeProperty('transform');
-    card.style.removeProperty('z-index');
-    card.style.removeProperty('opacity');
-    card.style.removeProperty('pointer-events');
-
-    switch(position) {
-      case 'center':
-        card.style.transform = 'translateX(-50%) translateY(-50%) translateZ(0) scale(1)';
-        card.style.opacity = '1';
-        card.style.zIndex = '10';
-        card.classList.add('active');
-        break;
-      case 'left':
-        card.style.transform = 'translateX(-50%) translateY(-50%) translateX(-450px) translateZ(-150px) rotateY(25deg) scale(0.8)';
-        card.style.opacity = '0.6';
-        card.style.zIndex = '5';
-        card.classList.remove('active');
-        break;
-      case 'right':
-        card.style.transform = 'translateX(-50%) translateY(-50%) translateX(450px) translateZ(-150px) rotateY(-25deg) scale(0.8)';
-        card.style.opacity = '0.6';
-        card.style.zIndex = '5';
-        card.classList.remove('active');
-        break;
-      default:
-        card.classList.remove('active');
+    } else {
+      // PC에서의 카드 위치
+      switch(position) {
+        case 'center':
+          card.style.transform = 'translateX(-50%) translateY(-50%) translateZ(0) scale(1)';
+          card.style.opacity = '1';
+          card.style.zIndex = '10';
+          card.classList.add('active');
+          break;
+        case 'left':
+          card.style.transform = 'translateX(-50%) translateY(-50%) translateX(-450px) translateZ(-150px) rotateY(25deg) scale(0.8)';
+          card.style.opacity = '0.6';
+          card.style.zIndex = '5';
+          card.classList.remove('active');
+          break;
+        case 'right':
+          card.style.transform = 'translateX(-50%) translateY(-50%) translateX(450px) translateZ(-150px) rotateY(-25deg) scale(0.8)';
+          card.style.opacity = '0.6';
+          card.style.zIndex = '5';
+          card.classList.remove('active');
+          break;
+      }
     }
   }
-
-  function getCardPosition(cardId) {
-    return Object.keys(positionState).find(key => positionState[key] === cardId) || null;
-  }
-
-  function updateContainerState() {
-    cardContainer.classList.remove('sync-active', 'balance-active', 'boost-active');
-    const centerId = positionState.center;
-    if (centerId) {
-      cardContainer.classList.add(`${centerId}-active`);
+  
+  // 카드 전환 함수
+  function switchCard(targetId) {
+    if (isAnimating || targetId === currentCard) return;
+    isAnimating = true;
+    
+    // 현재 활성화된 카드의 비디오 정지 및 UI 복구
+    stopAllVideos();
+    
+    // 모바일에서 컨테이너 클래스 업데이트
+    if (window.innerWidth <= 768) {
+      cardContainer.classList.remove('sync-active', 'balance-active', 'boost-active');
+      cardContainer.classList.add(targetId + '-active');
     }
-  }
-
-  function updateIndicators() {
+    
+    // 이전 카드 위치 설정
+    if (currentCard === 'sync') {
+      if (targetId === 'balance') {
+        setCardPosition('sync', 'right');
+        setCardPosition('balance', 'center');
+        setCardPosition('boost', 'left');
+      } else {
+        setCardPosition('sync', 'left');
+        setCardPosition('balance', 'right');
+        setCardPosition('boost', 'center');
+      }
+    } else if (currentCard === 'balance') {
+      if (targetId === 'sync') {
+        setCardPosition('sync', 'center');
+        setCardPosition('balance', 'left');
+        setCardPosition('boost', 'right');
+      } else {
+        setCardPosition('sync', 'right');
+        setCardPosition('balance', 'left');
+        setCardPosition('boost', 'center');
+      }
+    } else {
+      if (targetId === 'sync') {
+        setCardPosition('sync', 'center');
+        setCardPosition('balance', 'left');
+        setCardPosition('boost', 'right');
+      } else {
+        setCardPosition('sync', 'left');
+        setCardPosition('balance', 'center');
+        setCardPosition('boost', 'right');
+      }
+    }
+    
+    // 인디케이터 업데이트
     indicators.forEach(ind => {
-      const isActive = ind.dataset.target === positionState.center;
-      ind.classList.toggle('active', isActive);
-      if (isActive) {
-        ind.style.background = getIndicatorColor(positionState.center);
+      ind.classList.remove('active');
+      if (ind.dataset.target === targetId) {
+        ind.classList.add('active');
+        ind.style.background = getIndicatorColor(targetId);
       } else {
         ind.style.background = 'transparent';
       }
     });
-  }
-
-  function applyPositions() {
-    setCardPosition(positionState.left, 'left');
-    setCardPosition(positionState.center, 'center');
-    setCardPosition(positionState.right, 'right');
-    currentCard = positionState.center;
-    updateContainerState();
-    updateIndicators();
-  }
-
-  // 카드 전환 함수
-  function switchCard(targetId) {
-    if (isAnimating || targetId === positionState.center) return;
-
-    const targetPosition = getCardPosition(targetId);
-    if (!targetPosition || targetPosition === 'center') return;
-
-    isAnimating = true;
-
-    // 현재 활성화된 카드의 비디오 정지 및 UI 복구
-    stopAllVideos();
-
-    if (targetPosition === 'left') {
-      const previousCenter = positionState.center;
-      positionState.center = positionState.left;
-      positionState.left = previousCenter;
-    } else if (targetPosition === 'right') {
-      const previousCenter = positionState.center;
-      positionState.center = positionState.right;
-      positionState.right = previousCenter;
-    }
-
-    applyPositions();
-
-    if (isMobile) {
-      resetCardVisual(positionState.center);
-    }
-
+    
+    currentCard = targetId;
+    
     setTimeout(() => {
       isAnimating = false;
     }, 300);
   }
-
+  
   // 인디케이터 색상 가져오기
   function getIndicatorColor(cardId) {
     switch(cardId) {
@@ -10704,39 +10589,22 @@ document.addEventListener('DOMContentLoaded', function() {
       default: return 'transparent';
     }
   }
-
+  
   // 인디케이터 클릭 이벤트
   indicators.forEach(indicator => {
-    // 클릭 이벤트 강화
-    indicator.addEventListener('click', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
+    indicator.addEventListener('click', function() {
       const target = this.dataset.target;
-      console.log('인디케이터 클릭:', target);
-      if (target && target !== currentCard) {
-        switchCard(target);
-      }
+      switchCard(target);
     });
-
-    // 모바일 터치 이벤트 추가
-    indicator.addEventListener('touchend', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      const target = this.dataset.target;
-      console.log('인디케이터 터치:', target);
-      if (target && target !== currentCard) {
-        switchCard(target);
-      }
-    }, { passive: false });
-
-    // 호버 효과 (모바일에서도 작동)
+    
+    // 호버 효과
     indicator.addEventListener('mouseenter', function() {
       if (!this.classList.contains('active')) {
         this.style.background = getIndicatorColor(this.dataset.target);
         this.style.opacity = '0.5';
       }
     });
-
+    
     indicator.addEventListener('mouseleave', function() {
       if (!this.classList.contains('active')) {
         this.style.background = 'transparent';
@@ -10744,64 +10612,35 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   });
-
-  // 카드 클릭 이벤트
+  
+  // 카드 클릭 이벤트 - 모바일에서 좌우 카드 클릭 시 중앙으로 이동
   Object.entries(cards).forEach(([cardId, card]) => {
-    // 모바일 터치 이벤트 개선
-    card.addEventListener('touchend', function(e) {
-      if (window.innerWidth > 768) {
-        return;
-      }
-      e.preventDefault();
-      e.stopPropagation();
-      console.log('모바일 카드 터치:', cardId, '활성 상태:', this.classList.contains('active'));
-
-      if (!this.classList.contains('active')) {
-        console.log('비활성 카드 클릭 - 중앙으로 이동:', cardId);
-        switchCard(cardId);
-        return;
-      }
-
-      console.log('활성 카드 클릭 - 비디오 재생:', cardId);
-      handleMobileVideoPlay(cardId, this);
-    }, { passive: false });
-
-    // 기존 클릭 이벤트 (PC용)
     card.addEventListener('click', function(e) {
-      const isMobileView = window.innerWidth <= 768;
-
-      if (isMobileView) {
-        e.preventDefault();
-        e.stopPropagation();
-        console.log('모바일 카드 클릭 감지:', cardId, '활성 상태:', this.classList.contains('active'));
-        if (!this.classList.contains('active')) {
-          console.log('모바일 카드 중앙 이동:', cardId);
-          switchCard(cardId);
-          return;
-        }
-        console.log('모바일 중앙 카드 비디오 재생 시도:', cardId);
-        handleMobileVideoPlay(cardId, this);
-        return;
-      }
-
       // PC에서 sync, balance, boost 카드가 active일 때는 이미 클릭 이벤트 처리됨
-      if ((cardId === 'sync' || cardId === 'balance' || cardId === 'boost') && this.classList.contains('active')) {
+      if (!isMobile && (cardId === 'sync' || cardId === 'balance' || cardId === 'boost') && this.classList.contains('active')) {
         return;
       }
-
-      // PC에서 비활성 카드 클릭 시 중앙으로 이동
-      if (!this.classList.contains('active')) {
-        console.log('PC 카드 클릭 - 중앙으로 이동:', cardId);
+      
+      // 모바일에서 카드 클릭 처리
+      if (isMobile) {
+        // 카드가 중앙에 있지 않으면 중앙으로 이동
+        if (!this.classList.contains('active')) {
+          switchCard(cardId);
+          return; // 중앙으로 이동만 하고 비디오는 재생하지 않음
+        }
+        // 이미 중앙에 있는 카드를 클릭한 경우에만 비디오 재생 처리 계속 진행
+      } else if (!this.classList.contains('active')) {
+        // PC에서 비활성 카드 클릭 시 중앙으로 이동
         switchCard(cardId);
         return;
       }
-
+      
       // 모바일에서 네오 싱크 카드가 활성화되고 클릭된 경우 비디오 재생
       if (isMobile && cardId === 'sync' && this.classList.contains('active')) {
         const syncVideo = this.querySelector('.sync-hover-video');
         const syncContent = this.querySelector('.card-front > div[style*="z-index: 2"]');
         const clickIndicator = this.querySelector('.click-indicator');
-
+        
         if (syncVideo && !syncVideo.classList.contains('playing')) {
           // 비디오가 카드 전체를 덮도록 스타일 설정
           syncVideo.style.position = 'absolute';
@@ -10818,7 +10657,26 @@ document.addEventListener('DOMContentLoaded', function() {
           syncVideo.style.display = 'block';
           syncVideo.style.backgroundColor = '#000';
           syncVideo.classList.add('playing');
-
+          
+          // NEO SYNC 테두리 삭제
+          // const glassOverlay = document.createElement('div');
+          // glassOverlay.className = 'video-glass-overlay';
+          // glassOverlay.style.cssText = `
+          //   position: absolute;
+          //   top: 0;
+          //   left: 0;
+          //   right: 0;
+          //   bottom: 0;
+          //   border-radius: 20px;
+          //   border: 2px solid rgba(123, 228, 149, 0.8);
+          //   background: transparent;
+          //   pointer-events: none;
+          //   z-index: 10000;
+          //   box-shadow: inset 0 0 30px rgba(123, 228, 149, 0.3),
+          //                 0 0 60px rgba(123, 228, 149, 0.4);
+          // `;
+          // this.querySelector('.card-front').appendChild(glassOverlay);
+          
           // 비디오 즉시 재생 (카드 클릭 시에는 소리 재생)
           syncVideo.muted = false; // 카드 클릭 시 소리 재생
           syncVideo.volume = 0.3;
@@ -10827,7 +10685,7 @@ document.addEventListener('DOMContentLoaded', function() {
           if (playPromise !== undefined) {
             playPromise.catch(e => console.log('Video play failed:', e));
           }
-
+          
           // 콘텐츠 완전히 숨기기
           if (syncContent) {
             syncContent.style.opacity = '0';
@@ -10836,7 +10694,7 @@ document.addEventListener('DOMContentLoaded', function() {
           if (clickIndicator) {
             clickIndicator.style.display = 'none';
           }
-
+          
           // 비디오 종료 시 원상복구
           syncVideo.addEventListener('ended', function() {
             syncVideo.style.opacity = '0';
@@ -10848,22 +10706,177 @@ document.addEventListener('DOMContentLoaded', function() {
             syncVideo.style.border = '';
             syncVideo.style.boxShadow = '';
             syncVideo.classList.remove('playing');
-
-            syncContent.style.opacity = '1';
-            syncContent.style.visibility = 'visible';
+            
+            // NEO SYNC 오버레이 삭제됨
+            // const overlay = cards['sync'].querySelector('.video-glass-overlay');
+            // if (overlay) overlay.remove();
+            
+            setTimeout(() => {
+              syncVideo.style.display = 'none';
+            }, 300);
+            if (syncContent) {
+              syncContent.style.opacity = '1';
+              syncContent.style.visibility = 'visible';
+            }
             if (clickIndicator) {
               clickIndicator.style.display = 'block';
             }
           }, { once: true });
+        } else if (syncVideo && syncVideo.classList.contains('playing')) {
+          // 재생 중인 비디오 정지
+          syncVideo.pause();
+          syncVideo.currentTime = 0;
+          syncVideo.style.opacity = '0';
+          syncVideo.style.top = '';
+          syncVideo.style.left = '';
+          syncVideo.style.width = '';
+          syncVideo.style.height = '';
+          syncVideo.style.borderRadius = '';
+          syncVideo.style.border = '';
+          syncVideo.style.boxShadow = '';
+          syncVideo.classList.remove('playing');
+          
+          // 글래스 오버레이 제거
+          const overlay = cards['sync'].querySelector('.video-glass-overlay');
+          if (overlay) overlay.remove();
+          
+          setTimeout(() => {
+            syncVideo.style.display = 'none';
+          }, 300);
+          if (syncContent) {
+            syncContent.style.opacity = '1';
+            syncContent.style.visibility = 'visible';
+          }
+          if (clickIndicator) {
+            clickIndicator.style.display = 'block';
+          }
         }
       }
-
+      
+      // 모바일에서 네오 밸런스 카드가 활성화되고 클릭된 경우 비디오 재생
+      if (isMobile && cardId === 'balance' && this.classList.contains('active')) {
+        const balanceVideo = this.querySelector('.balance-hover-video');
+        const balanceContent = this.querySelector('.card-front > div[style*="z-index: 2"]');
+        const clickIndicator = this.querySelector('.click-indicator');
+        
+        if (balanceVideo && !balanceVideo.classList.contains('playing')) {
+          // 비디오가 카드 전체를 덮도록 스타일 설정
+          balanceVideo.style.position = 'absolute';
+          balanceVideo.style.top = '10px';
+          balanceVideo.style.left = '10px';
+          balanceVideo.style.width = 'calc(100% - 20px)';
+          balanceVideo.style.height = 'calc(100% - 20px)';
+          balanceVideo.style.objectFit = 'cover';
+          balanceVideo.style.borderRadius = '16px';
+          balanceVideo.style.border = 'none';
+          balanceVideo.style.boxShadow = 'none';
+          balanceVideo.style.zIndex = '999';
+          balanceVideo.style.opacity = '1';
+          balanceVideo.style.display = 'block';
+          balanceVideo.style.backgroundColor = '#000';
+          balanceVideo.classList.add('playing');
+          
+          // NEO BALANCE 테두리 삭제
+          // const glassOverlay = document.createElement('div');
+          // glassOverlay.className = 'video-glass-overlay';
+          // glassOverlay.style.cssText = `
+          //   position: absolute;
+          //   top: 0;
+          //   left: 0;
+          //   right: 0;
+          //   bottom: 0;
+          //   border-radius: 20px;
+          //   border: 2px solid rgba(147, 197, 253, 0.8);
+          //   background: transparent;
+          //   pointer-events: none;
+          //   z-index: 10000;
+          //   box-shadow: inset 0 0 30px rgba(147, 197, 253, 0.3),
+          //                 0 0 60px rgba(147, 197, 253, 0.4);
+          // `;
+          // this.querySelector('.card-front').appendChild(glassOverlay);
+          
+          // 비디오 즉시 재생 (카드 클릭 시에는 소리 재생)
+          balanceVideo.muted = false; // 카드 클릭 시 소리 재생
+          balanceVideo.volume = 0.3;
+          balanceVideo.currentTime = 0; // 처음부터 재생
+          const playPromise = balanceVideo.play();
+          if (playPromise !== undefined) {
+            playPromise.catch(e => console.log('Video play failed:', e));
+          }
+          
+          // 콘텐츠 완전히 숨기기
+          if (balanceContent) {
+            balanceContent.style.opacity = '0';
+            balanceContent.style.visibility = 'hidden';
+          }
+          if (clickIndicator) {
+            clickIndicator.style.display = 'none';
+          }
+          
+          // 비디오 종료 시 원상복구
+          balanceVideo.addEventListener('ended', function() {
+            balanceVideo.style.opacity = '0';
+            balanceVideo.style.top = '';
+            balanceVideo.style.left = '';
+            balanceVideo.style.width = '';
+            balanceVideo.style.height = '';
+            balanceVideo.style.borderRadius = '';
+            balanceVideo.style.border = '';
+            balanceVideo.style.boxShadow = '';
+            balanceVideo.classList.remove('playing');
+            
+            // NEO BALANCE 오버레이 삭제됨
+            // const overlay = cards['balance'].querySelector('.video-glass-overlay');
+            // if (overlay) overlay.remove();
+            
+            setTimeout(() => {
+              balanceVideo.style.display = 'none';
+            }, 300);
+            if (balanceContent) {
+              balanceContent.style.opacity = '1';
+              balanceContent.style.visibility = 'visible';
+            }
+            if (clickIndicator) {
+              clickIndicator.style.display = 'block';
+            }
+          }, { once: true });
+        } else if (balanceVideo && balanceVideo.classList.contains('playing')) {
+          // 재생 중인 비디오 정지
+          balanceVideo.pause();
+          balanceVideo.currentTime = 0;
+          balanceVideo.style.opacity = '0';
+          balanceVideo.style.top = '';
+          balanceVideo.style.left = '';
+          balanceVideo.style.width = '';
+          balanceVideo.style.height = '';
+          balanceVideo.style.borderRadius = '';
+          balanceVideo.style.border = '';
+          balanceVideo.style.boxShadow = '';
+          balanceVideo.classList.remove('playing');
+          
+          // 글래스 오버레이 제거
+          const overlay = cards['balance'].querySelector('.video-glass-overlay');
+          if (overlay) overlay.remove();
+          
+          setTimeout(() => {
+            balanceVideo.style.display = 'none';
+          }, 300);
+          if (balanceContent) {
+            balanceContent.style.opacity = '1';
+            balanceContent.style.visibility = 'visible';
+          }
+          if (clickIndicator) {
+            clickIndicator.style.display = 'block';
+          }
+        }
+      }
+      
       // 모바일에서 네오 부스트 카드가 활성화되고 클릭된 경우 비디오 재생
       if (isMobile && cardId === 'boost' && this.classList.contains('active')) {
         const boostVideo = this.querySelector('.boost-hover-video');
         const boostContent = this.querySelector('.card-front > div[style*="z-index: 2"]');
         const clickIndicator = this.querySelector('.click-indicator');
-
+        
         if (boostVideo && !boostVideo.classList.contains('playing')) {
           // 비디오가 카드 전체를 덮도록 스타일 설정
           boostVideo.style.position = 'absolute';
@@ -10881,47 +10894,18 @@ document.addEventListener('DOMContentLoaded', function() {
           boostVideo.style.opacity = '1';
           boostVideo.style.backgroundColor = '#000';
           boostVideo.classList.add('playing');
-
+          
+          // 카드와 카드 프론트의 overflow를 hidden으로 설정하여 하단 텍스트 숨기기
           const cardElement = this;
           const cardFront = this.querySelector('.card-front');
           cardElement.style.overflow = 'hidden';
-          cardElement.classList.add('video-playing');
-
-          // 모바일에서 모든 기본 카드 내용을 강제로 숨김
-          const cardContent = cardElement.querySelector('.card-front > div[style*="z-index: 2"]');
-          const allTextElements = cardElement.querySelectorAll('h3, p, .boost-title, .boost-text-1, .boost-text-2');
-          const allImages = cardElement.querySelectorAll('img');
-          const clickIndicator = cardElement.querySelector('.click-indicator');
-
-          if (cardContent) {
-            cardContent.style.setProperty('opacity', '0', 'important');
-            cardContent.style.setProperty('visibility', 'hidden', 'important');
-            cardContent.style.setProperty('display', 'none', 'important');
-          }
-
-          allTextElements.forEach(el => {
-            el.style.setProperty('opacity', '0', 'important');
-            el.style.setProperty('visibility', 'hidden', 'important');
-            el.style.setProperty('display', 'none', 'important');
-          });
-
-          allImages.forEach(el => {
-            el.style.setProperty('opacity', '0', 'important');
-            el.style.setProperty('visibility', 'hidden', 'important');
-            el.style.setProperty('display', 'none', 'important');
-          });
-
-          if (clickIndicator) {
-            clickIndicator.style.setProperty('opacity', '0', 'important');
-            clickIndicator.style.setProperty('visibility', 'hidden', 'important');
-            clickIndicator.style.setProperty('display', 'none', 'important');
-          }
-
           if (cardFront) {
             cardFront.style.overflow = 'hidden';
+            // 영상 재생 시 빨간색 테두리 유지
             cardFront.style.border = '2px solid #F87171';
           }
-
+          
+          // NEO BOOST 글래시 테두리 추가
           const glassOverlay = document.createElement('div');
           glassOverlay.className = 'video-glass-overlay';
           glassOverlay.style.cssText = `
@@ -10939,18 +10923,21 @@ document.addEventListener('DOMContentLoaded', function() {
                           0 0 40px rgba(248, 113, 113, 0.3);
           `;
           this.querySelector('.card-front').appendChild(glassOverlay);
-
-          boostVideo.muted = false;
-          boostVideo.volume = 0.5;
-
-          if (boostVideo.readyState >= 3) {
-            boostVideo.currentTime = 0;
+          
+          // 비디오 즉시 재생 (모바일에서도 소리 재생)
+          boostVideo.muted = false; // 모바일에서도 소리 재생
+          boostVideo.volume = 0.5; // 볼륨 50%
+          
+          // 비디오가 이미 로드되어 있는지 확인
+          if (boostVideo.readyState >= 3) { // HAVE_FUTURE_DATA 이상
+            boostVideo.currentTime = 0; // 처음부터 재생
             boostVideo.play().catch(e => {
               console.log('Video play failed:', e);
               boostVideo.muted = true;
               boostVideo.play().catch(err => console.log('Muted play also failed:', err));
             });
           } else {
+            // 비디오가 아직 로드되지 않은 경우 로드 후 재생
             boostVideo.currentTime = 0;
             boostVideo.addEventListener('loadeddata', function() {
               boostVideo.play().catch(e => {
@@ -10960,99 +10947,261 @@ document.addEventListener('DOMContentLoaded', function() {
               });
             }, { once: true });
           }
-
+          
+          // 콘텐츠 부드럽게 숨기기
           if (boostContent) {
-            boostContent.style.transition = 'opacity 0.2s ease';
+            boostContent.style.transition = 'opacity 0.3s ease';
             boostContent.style.opacity = '0';
-            boostContent.style.visibility = 'hidden';
-            boostContent.style.display = 'none';
+            setTimeout(() => {
+              boostContent.style.visibility = 'hidden';
+              boostContent.style.display = 'none'; // 완전히 숨기기
+            }, 300);
           }
-
+          
+          // 모바일에서 NEO BOOST 타이틀만 숨기기
           const boostTitle = this.querySelector('.boost-title');
-
+          
           if (boostTitle) {
             boostTitle.style.transition = 'opacity 0.3s ease';
             boostTitle.style.opacity = '0';
             boostTitle.style.visibility = 'hidden';
             boostTitle.style.pointerEvents = 'none';
+            // 강제로 텍스트 내용을 임시 저장하고 비우기
+            boostTitle.setAttribute('data-original-text', boostTitle.textContent);
+            boostTitle.textContent = '';
           }
-
-          const clickLabel = this.querySelector('.click-indicator');
-          if (clickLabel) {
-            clickLabel.style.transition = 'opacity 0.3s ease';
-            clickLabel.style.opacity = '0';
-            clickLabel.style.visibility = 'hidden';
-            clickLabel.style.pointerEvents = 'none';
-          }
-
-          boostVideo.addEventListener('ended', function() {
-            boostVideo.style.transition = 'opacity 0.3s ease';
-            boostVideo.style.opacity = '0';
+          if (clickIndicator) {
+            clickIndicator.style.transition = 'opacity 0.3s ease';
+            clickIndicator.style.opacity = '0';
             setTimeout(() => {
-              resetCardVisual('boost');
+              clickIndicator.style.display = 'none';
+            }, 300);
+          }
+          
+          // 비디오 종료 시 원상복구
+          boostVideo.addEventListener('ended', function() {
+            boostVideo.style.opacity = '0';
+            boostVideo.style.borderRadius = '';
+            boostVideo.style.transform = '';
+            boostVideo.currentTime = 0;
+            
+            // 카드 overflow 및 테두리 복원
+            cardElement.style.overflow = '';
+            if (cardFront) {
+              cardFront.style.overflow = '';
+              cardFront.style.border = '2px solid #F87171';
+            }
+            
+            // NEO BOOST 타이틀 다시 표시
+            const boostTitle = cards['boost'].querySelector('.boost-title');
+            if (boostTitle) {
+              const originalText = boostTitle.getAttribute('data-original-text');
+              if (originalText) {
+                boostTitle.textContent = originalText;
+              }
+              boostTitle.style.opacity = '1';
+              boostTitle.style.visibility = 'visible';
+              boostTitle.style.pointerEvents = '';
+            }
+            
+            // 콘텐츠와 CLICK 버튼 복원
+            if (boostContent) {
+              boostContent.style.display = '';
+              boostContent.style.opacity = '1';
+              boostContent.style.visibility = 'visible';
+            }
+            if (clickIndicator) {
+              clickIndicator.style.display = 'block';
+              clickIndicator.style.opacity = '1';
+            }
+            
+            // 비디오 완전히 숨기기
+            setTimeout(() => {
+              boostVideo.style.display = 'none';
+              boostVideo.style.position = '';
+              boostVideo.style.top = '';
+              boostVideo.style.left = '';
+              boostVideo.style.width = '';
+              boostVideo.style.height = '';
+              boostVideo.style.border = '';
+              boostVideo.style.boxShadow = '';
+              boostVideo.style.backgroundColor = '';
+              boostVideo.style.zIndex = '';
+              boostVideo.classList.remove('playing');
             }, 300);
           }, { once: true });
+        } else if (boostVideo && boostVideo.classList.contains('playing')) {
+          // 재생 중인 비디오 정지 - NEO SYNC, NEO BALANCE와 동일한 방식
+          boostVideo.pause();
+          boostVideo.currentTime = 0;
+          boostVideo.style.opacity = '0';
+          boostVideo.style.top = '';
+          boostVideo.style.left = '';
+          boostVideo.style.width = '';
+          boostVideo.style.height = '';
+          boostVideo.style.borderRadius = '';
+          boostVideo.style.border = '';
+          boostVideo.style.boxShadow = '';
+          boostVideo.style.backgroundColor = '';
+          boostVideo.style.zIndex = '';
+          boostVideo.classList.remove('playing');
+          
+          // 카드 overflow 및 테두리 복원
+          const cardElement = this;
+          const cardFront = this.querySelector('.card-front');
+          cardElement.style.overflow = '';
+          if (cardFront) {
+            cardFront.style.overflow = '';
+            cardFront.style.border = '2px solid #F87171';
+          }
+          
+          setTimeout(() => {
+            boostVideo.style.display = 'none';
+          }, 300);
+          
+          // NEO BOOST 타이틀 복원
+          const boostTitle = this.querySelector('.boost-title');
+          if (boostTitle) {
+            const originalText = boostTitle.getAttribute('data-original-text');
+            if (originalText) {
+              boostTitle.textContent = originalText;
+            }
+            boostTitle.style.opacity = '1';
+            boostTitle.style.visibility = 'visible';
+            boostTitle.style.pointerEvents = '';
+          }
+          
+          // 콘텐츠 즉시 복원
+          if (boostContent) {
+            boostContent.style.display = '';
+            boostContent.style.opacity = '1';
+            boostContent.style.visibility = 'visible';
+          }
+          if (clickIndicator) {
+            clickIndicator.style.display = 'block';
+          }
         }
       }
     });
   });
-
+  
+  // 자동 회전 (옵션)
+  let autoRotate = null;
+  let isPaused = false;
+  
+  function startAutoRotate() {
+    autoRotate = setInterval(() => {
+      if (!isPaused && !isAnimating) {
+        const cardIds = ['sync', 'balance', 'boost'];
+        const currentIndex = cardIds.indexOf(currentCard);
+        const nextIndex = (currentIndex + 1) % 3;
+        switchCard(cardIds[nextIndex]);
+      }
+    }, 4000);
+  }
+  
+  // 마우스 호버시 자동 회전 일시정지 제거 (전환 문제 해결)
+  // cardContainer.addEventListener('mouseenter', () => {
+  //   isPaused = true;
+  // });
+  // 
+  // cardContainer.addEventListener('mouseleave', () => {
+  //   isPaused = false;
+  // });
+  
+  // 터치 이벤트 (모바일)
+  let touchStartX = 0;
+  let touchEndX = 0;
+  
+  cardContainer.addEventListener('touchstart', (e) => {
+    touchStartX = e.touches[0].clientX;
+  }, { passive: true });
+  
+  cardContainer.addEventListener('touchend', (e) => {
+    touchEndX = e.changedTouches[0].clientX;
+    handleSwipe();
+  }, { passive: true });
+  
   function handleSwipe() {
     const swipeThreshold = 50;
     const diff = touchEndX - touchStartX;
-
+    
     if (Math.abs(diff) > swipeThreshold) {
+      const cardIds = ['sync', 'balance', 'boost'];
+      const currentIndex = cardIds.indexOf(currentCard);
+      
       if (diff > 0) {
         // 오른쪽으로 스와이프 (이전 카드)
-        if (positionState.left) {
-          switchCard(positionState.left);
-        }
+        const prevIndex = (currentIndex - 1 + 3) % 3;
+        switchCard(cardIds[prevIndex]);
       } else {
         // 왼쪽으로 스와이프 (다음 카드)
-        if (positionState.right) {
-          switchCard(positionState.right);
-        }
+        const nextIndex = (currentIndex + 1) % 3;
+        switchCard(cardIds[nextIndex]);
       }
     }
   }
-
+  
   // 자동 회전 시작 (원하면 주석 해제)
   // startAutoRotate();
-
+  
   // 초기 카드 위치 설정
   function initializeCards() {
-    console.log('카드 초기화 시작, isMobile:', isMobile);
-
-    positionState.left = 'balance';
-    positionState.center = 'sync';
-    positionState.right = 'boost';
-
-    applyPositions();
-
-    resetCardVisual('sync');
-    resetCardVisual('balance');
-    resetCardVisual('boost');
+    if (isMobile) {
+      // 모바일에서 네오 싱크를 중앙에 배치
+      cardContainer.classList.add('sync-active');
+      setCardPosition('sync', 'center');
+      setCardPosition('balance', 'left');
+      setCardPosition('boost', 'right');
+      currentCard = 'sync';
+      
+      // 활성 카드 설정
+      cards['sync'].classList.add('active');
+      cards['balance'].classList.remove('active');
+      cards['boost'].classList.remove('active');
+    } else {
+      // PC에서 초기 카드 위치 설정
+      cards['sync'].style.transform = 'translateX(-50%) translateY(-50%) translateZ(0)';
+      cards['sync'].style.opacity = '1';
+      cards['sync'].style.zIndex = '3';
+      cards['sync'].classList.add('active');
+      
+      cards['balance'].style.transform = 'translateX(-50%) translateY(-50%) translateX(-500px) translateZ(-250px) rotateY(30deg)';
+      cards['balance'].style.opacity = '0.7';
+      cards['balance'].style.zIndex = '1';
+      cards['balance'].classList.remove('active');
+      
+      cards['boost'].style.transform = 'translateX(-50%) translateY(-50%) translateX(500px) translateZ(-250px) rotateY(-30deg)';
+      cards['boost'].style.opacity = '0.7';
+      cards['boost'].style.zIndex = '1';
+      cards['boost'].classList.remove('active');
+      
+      currentCard = 'sync';
+    }
+    
+    // 인디케이터 업데이트 (공통)
+    indicators.forEach(ind => {
+      ind.classList.remove('active');
+      if (ind.dataset.target === currentCard) {
+        ind.classList.add('active');
+        ind.style.background = getIndicatorColor(currentCard);
+      } else {
+        ind.style.background = 'transparent';
+      }
+    });
   }
-
+  
   // 초기화 실행
   initializeCards();
-
+  
   // 화면 크기 변경 시 모바일 여부 체크
   window.addEventListener('resize', function() {
-    const wasMobile = isMobile;
     isMobile = window.innerWidth <= 768;
-
-    if (wasMobile !== isMobile) {
-      resetCardVisual('sync');
-      resetCardVisual('balance');
-      resetCardVisual('boost');
-    }
-
-    applyPositions();
+    // 현재 카드 위치 재설정
+    switchCard(currentCard);
   });
 });
 </script>
-
 
 <!-- Training Cards Enhanced Styles -->
 <style>
@@ -11689,58 +11838,6 @@ document.addEventListener('DOMContentLoaded', function() {
 .training-card .card-front > * {
   position: relative;
   z-index: 1;
-}
-
-#boost-card.video-playing .card-front > *:not(.boost-hover-video):not(.video-glass-overlay) {
-  display: none !important;
-}
-
-/* 모바일에서 비디오 재생 시 모든 기본 카드 내용 완전히 숨기기 - 최고 우선순위 */
-@media screen and (max-width: 768px) {
-  /* NEO BOOST 카드 비디오 재생 시 모든 텍스트와 이미지 강제 숨김 */
-  body #boost-card.video-playing .card-front h3,
-  body #boost-card.video-playing .card-front img,
-  body #boost-card.video-playing .card-front p,
-  body #boost-card.video-playing .card-front .boost-title,
-  body #boost-card.video-playing .card-front .boost-text-1,
-  body #boost-card.video-playing .card-front .boost-text-2,
-  body #boost-card.video-playing .card-front .click-indicator,
-  body #boost-card.video-playing .card-front div[style*="z-index: 2"] h3,
-  body #boost-card.video-playing .card-front div[style*="z-index: 2"] img,
-  body #boost-card.video-playing .card-front div[style*="z-index: 2"] p {
-    opacity: 0 !important;
-    visibility: hidden !important;
-    display: none !important;
-    z-index: -999 !important;
-    transform: scale(0) !important;
-    width: 0 !important;
-    height: 0 !important;
-    margin: 0 !important;
-    padding: 0 !important;
-  }
-
-  /* 비디오가 카드 전체를 완전히 덮도록 설정 */
-  body #boost-card.video-playing .boost-hover-video {
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100% !important;
-    height: 100% !important;
-    z-index: 9999 !important;
-    opacity: 1 !important;
-    visibility: visible !important;
-    display: block !important;
-    object-fit: cover !important;
-    border-radius: 20px !important;
-    background: #000 !important;
-  }
-
-  /* 카드 자체의 내용을 모두 숨기기 */
-  body #boost-card.video-playing .card-front > div[style*="z-index: 2"] {
-    opacity: 0 !important;
-    visibility: hidden !important;
-    z-index: -999 !important;
-  }
 }
 
 /* 빠른 전환을 위한 최적화 */
