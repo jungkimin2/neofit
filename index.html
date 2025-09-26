@@ -10894,20 +10894,10 @@ function stopAllVideos() {
           boostVideo.style.opacity = '1';
           boostVideo.style.backgroundColor = '#000';
           boostVideo.classList.add('playing');
-
-          // 카드에 video-playing 클래스 추가하여 기본 UI 요소들 숨기기
-          this.classList.add('video-playing');
-
-          // 영상 재생 시 카드를 강제로 중앙에 고정 (모바일)
+          
+          // 카드와 카드 프론트의 overflow를 hidden으로 설정하여 하단 텍스트 숨기기
           const cardElement = this;
           const cardFront = this.querySelector('.card-front');
-
-          // 카드 위치를 중앙으로 강제 설정
-          cardElement.style.position = 'absolute';
-          cardElement.style.left = '50%';
-          cardElement.style.top = '50%';
-          cardElement.style.transform = 'translateX(-50%) translateY(calc(-50% - 48px)) translateZ(50px) scale(1)';
-          cardElement.style.zIndex = '1000';
           cardElement.style.overflow = 'hidden';
           if (cardFront) {
             cardFront.style.overflow = 'hidden';
@@ -11038,17 +11028,6 @@ function stopAllVideos() {
               boostVideo.style.backgroundColor = '';
               boostVideo.style.zIndex = '';
               boostVideo.classList.remove('playing');
-
-              // 카드에서 video-playing 클래스 제거
-              this.classList.remove('video-playing');
-
-              // 카드 위치를 원래 상태로 복원 (setCardPosition 함수가 관리)
-              const cardElement = this;
-              cardElement.style.position = '';
-              cardElement.style.left = '';
-              cardElement.style.top = '';
-              cardElement.style.transform = '';
-              cardElement.style.zIndex = '';
             }, 300);
           }, { once: true });
         } else if (boostVideo && boostVideo.classList.contains('playing')) {
@@ -11066,17 +11045,7 @@ function stopAllVideos() {
           boostVideo.style.backgroundColor = '';
           boostVideo.style.zIndex = '';
           boostVideo.classList.remove('playing');
-
-          // 카드에서 video-playing 클래스 제거
-          this.classList.remove('video-playing');
-
-          // 카드 위치를 원래 상태로 복원 (setCardPosition 함수가 관리)
-          cardElement.style.position = '';
-          cardElement.style.left = '';
-          cardElement.style.top = '';
-          cardElement.style.transform = '';
-          cardElement.style.zIndex = '';
-
+          
           // 카드 overflow 및 테두리 복원
           const cardElement = this;
           const cardFront = this.querySelector('.card-front');
@@ -17779,64 +17748,5 @@ setTimeout(function() {
 
 // 자동 팝업 테스트 제거됨 - 모바일에서 드래그 시 나타나는 문제 해결
 </script>
-
-<!-- NEO BOOST 모바일 비디오 재생 시 기본 카드 내용 완전 숨김 - 최고 우선순위 -->
-<style>
-@media (max-width: 768px) {
-  /* NEO BOOST 비디오 재생 시 모든 카드 내용 완전 숨김 */
-  body #boost-card.video-playing .card-front h3,
-  body #boost-card.video-playing .card-front p,
-  body #boost-card.video-playing .card-front img,
-  body #boost-card.video-playing .card-front .boost-title,
-  body #boost-card.video-playing .card-front .boost-text-1,
-  body #boost-card.video-playing .card-front .boost-text-2,
-  body #boost-card.video-playing .card-front .click-indicator,
-  body #boost-card.video-playing .card-front > div[style*="z-index: 2"],
-  body #boost-card.video-playing .card-front > div[style*="z-index: 2"] > * {
-    opacity: 0 !important;
-    visibility: hidden !important;
-    display: none !important;
-    z-index: -1 !important;
-    pointer-events: none !important;
-  }
-
-  /* NEO BOOST 비디오만 표시 */
-  body #boost-card.video-playing .boost-hover-video {
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100% !important;
-    height: 100% !important;
-    z-index: 9999 !important;
-    opacity: 1 !important;
-    visibility: visible !important;
-    display: block !important;
-    object-fit: cover !important;
-    border-radius: 20px !important;
-    background: #000 !important;
-    pointer-events: auto !important;
-  }
-
-  /* NEO BOOST 비디오 재생 중 모든 호버 효과 비활성화 */
-  body #boost-card.video-playing:hover .card-front h3,
-  body #boost-card.video-playing:hover .card-front p,
-  body #boost-card.video-playing:hover .card-front img,
-  body #boost-card.video-playing:hover .card-front .boost-title,
-  body #boost-card.video-playing:hover .card-front .boost-text-1,
-  body #boost-card.video-playing:hover .card-front .boost-text-2,
-  body #boost-card.video-playing:hover .card-front .click-indicator,
-  body #boost-card.video-playing:hover .card-front > div[style*="z-index: 2"],
-  body #boost-card.video-playing:hover .card-front > div[style*="z-index: 2"] > * {
-    opacity: 0 !important;
-    visibility: hidden !important;
-    display: none !important;
-  }
-
-  /* NEO BOOST 비디오에만 포인터 이벤트 허용 */
-  body #boost-card.video-playing .boost-hover-video {
-    pointer-events: auto !important;
-  }
-}
-</style>
 
 </html> 
