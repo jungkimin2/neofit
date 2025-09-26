@@ -10090,6 +10090,10 @@ document.addEventListener('DOMContentLoaded', function() {
           syncVideo.muted = false; // PC에서는 소리 재생 허용
           syncVideo.volume = 0.3;
           syncVideo.play().catch(e => console.log('Video play failed:', e));
+
+          // CSS 클래스로 확대 효과 및 UI 숨김 적용 (PC)
+          this.classList.add('video-playing-sync');
+
           // 콘텐츠와 CLICK 버튼 숨기기
           syncContent.style.opacity = '0';
           if (syncClickIndicator) {
@@ -10107,7 +10111,10 @@ document.addEventListener('DOMContentLoaded', function() {
             // 글래스 오버레이 제거
             const overlay = syncCard.querySelector('.video-glass-overlay');
             if (overlay) overlay.remove();
-            
+
+            // CSS 클래스 제거로 확대 효과 및 UI 요소 복원 (PC)
+            syncCard.classList.remove('video-playing-sync');
+
             syncContent.style.opacity = '1';
             if (syncClickIndicator) {
               syncClickIndicator.style.opacity = '1';
@@ -10125,7 +10132,10 @@ document.addEventListener('DOMContentLoaded', function() {
           // 글래스 오버레이 제거
           const overlay = syncCard.querySelector('.video-glass-overlay');
           if (overlay) overlay.remove();
-          
+
+          // CSS 클래스 제거로 확대 효과 및 UI 요소 복원 (PC)
+          this.classList.remove('video-playing-sync');
+
           // 콘텐츠와 CLICK 버튼 다시 보이기
           syncContent.style.opacity = '1';
           if (syncClickIndicator) {
@@ -10179,6 +10189,10 @@ document.addEventListener('DOMContentLoaded', function() {
           balanceVideo.muted = false; // PC에서는 소리 재생 허용
           balanceVideo.volume = 0.3;
           balanceVideo.play().catch(e => console.log('Video play failed:', e));
+
+          // CSS 클래스로 확대 효과 및 UI 숨김 적용 (PC)
+          this.classList.add('video-playing-balance');
+
           // 콘텐츠와 CLICK 버튼 숨기기
           balanceContent.style.opacity = '0';
           if (balanceClickIndicator) {
@@ -10196,7 +10210,10 @@ document.addEventListener('DOMContentLoaded', function() {
             // 글래스 오버레이 제거
             const overlay = balanceCard.querySelector('.video-glass-overlay');
             if (overlay) overlay.remove();
-            
+
+            // CSS 클래스 제거로 확대 효과 및 UI 요소 복원 (PC)
+            balanceCard.classList.remove('video-playing-balance');
+
             balanceContent.style.opacity = '1';
             if (balanceClickIndicator) {
               balanceClickIndicator.style.opacity = '1';
@@ -10214,7 +10231,10 @@ document.addEventListener('DOMContentLoaded', function() {
           // 글래스 오버레이 제거
           const overlay = balanceCard.querySelector('.video-glass-overlay');
           if (overlay) overlay.remove();
-          
+
+          // CSS 클래스 제거로 확대 효과 및 UI 요소 복원 (PC)
+          this.classList.remove('video-playing-balance');
+
           // 콘텐츠와 CLICK 버튼 다시 보이기
           balanceContent.style.opacity = '1';
           if (balanceClickIndicator) {
@@ -10269,7 +10289,10 @@ document.addEventListener('DOMContentLoaded', function() {
           boostVideo.muted = false; // PC에서는 소리 재생 허용
           boostVideo.volume = 0.3;
           boostVideo.play().catch(e => console.log('Boost video play failed:', e));
-          
+
+          // CSS 클래스로 확대 효과 및 UI 숨김 적용 (PC)
+          this.classList.add('video-playing-boost');
+
           // 콘텐츠와 CLICK 버튼 부드럽게 숨기기
           boostContent.style.transition = 'opacity 0.3s ease';
           boostContent.style.opacity = '0';
@@ -10300,7 +10323,10 @@ document.addEventListener('DOMContentLoaded', function() {
               boostVideo.style.transform = '';
               boostVideo.pause();
               boostVideo.currentTime = 0;
-              
+
+              // CSS 클래스 제거로 확대 효과 및 UI 요소 복원 (PC)
+              boostCard.classList.remove('video-playing-boost');
+
               // 콘텐츠와 CLICK 버튼 부드럽게 다시 보이기
               boostContent.style.transition = 'opacity 0.3s ease';
               boostContent.style.opacity = '1';
@@ -10330,7 +10356,10 @@ document.addEventListener('DOMContentLoaded', function() {
             boostVideo.currentTime = 0;
             boostVideo.style.borderRadius = '';
             boostVideo.style.transform = '';
-            
+
+            // CSS 클래스 제거로 확대 효과 및 UI 요소 복원 (PC)
+            boostCard.classList.remove('video-playing-boost');
+
             // 콘텐츠와 CLICK 버튼 부드럽게 다시 보이기
             boostContent.style.transition = 'opacity 0.3s ease';
             boostContent.style.opacity = '1';
@@ -10651,6 +10680,9 @@ function stopAllVideos() {
           syncVideo.style.display = 'block';
           syncVideo.style.backgroundColor = '#000';
           syncVideo.classList.add('playing');
+
+          // CSS 클래스로 확대 효과 및 UI 숨김 적용
+          this.classList.add('video-playing-sync');
           
           // NEO SYNC 테두리 삭제
           // const glassOverlay = document.createElement('div');
@@ -10700,11 +10732,10 @@ function stopAllVideos() {
             syncVideo.style.border = '';
             syncVideo.style.boxShadow = '';
             syncVideo.classList.remove('playing');
-            
-            // NEO SYNC 오버레이 삭제됨
-            // const overlay = cards['sync'].querySelector('.video-glass-overlay');
-            // if (overlay) overlay.remove();
-            
+
+            // CSS 클래스 제거로 확대 효과 및 UI 요소 복원
+            this.classList.remove('video-playing-sync');
+
             setTimeout(() => {
               syncVideo.style.display = 'none';
             }, 300);
@@ -10729,11 +10760,10 @@ function stopAllVideos() {
           syncVideo.style.border = '';
           syncVideo.style.boxShadow = '';
           syncVideo.classList.remove('playing');
-          
-          // 글래스 오버레이 제거
-          const overlay = cards['sync'].querySelector('.video-glass-overlay');
-          if (overlay) overlay.remove();
-          
+
+          // CSS 클래스 제거로 확대 효과 및 UI 요소 복원
+          this.classList.remove('video-playing-sync');
+
           setTimeout(() => {
             syncVideo.style.display = 'none';
           }, 300);
@@ -10769,6 +10799,9 @@ function stopAllVideos() {
           balanceVideo.style.display = 'block';
           balanceVideo.style.backgroundColor = '#000';
           balanceVideo.classList.add('playing');
+
+          // CSS 클래스로 확대 효과 및 UI 숨김 적용
+          this.classList.add('video-playing-balance');
           
           // NEO BALANCE 테두리 삭제
           // const glassOverlay = document.createElement('div');
@@ -10818,11 +10851,10 @@ function stopAllVideos() {
             balanceVideo.style.border = '';
             balanceVideo.style.boxShadow = '';
             balanceVideo.classList.remove('playing');
-            
-            // NEO BALANCE 오버레이 삭제됨
-            // const overlay = cards['balance'].querySelector('.video-glass-overlay');
-            // if (overlay) overlay.remove();
-            
+
+            // CSS 클래스 제거로 확대 효과 및 UI 요소 복원
+            this.classList.remove('video-playing-balance');
+
             setTimeout(() => {
               balanceVideo.style.display = 'none';
             }, 300);
@@ -10847,7 +10879,10 @@ function stopAllVideos() {
           balanceVideo.style.border = '';
           balanceVideo.style.boxShadow = '';
           balanceVideo.classList.remove('playing');
-          
+
+          // CSS 클래스 제거로 확대 효과 및 UI 요소 복원
+          this.classList.remove('video-playing-balance');
+
           // 글래스 오버레이 제거
           const overlay = cards['balance'].querySelector('.video-glass-overlay');
           if (overlay) overlay.remove();
@@ -17623,19 +17658,19 @@ setTimeout(function() {
     position: absolute !important;
     left: 50% !important;
     top: 50% !important;
-    transform: translateX(-50%) translateY(calc(-50% - 48px)) translateZ(50px) scale(1) !important;
+    transform: translateX(-50%) translateY(calc(-50% - 48px)) translateZ(50px) scale(1.1) !important;
     z-index: 100 !important;
     margin: 0 !important;
     width: 350px !important;
     height: 450px !important;
-    transition: none !important;
+    transition: all 0.3s ease !important;
   }
 
   /* 비디오 재생 중 다른 모든 transform 및 position 속성 무효화 */
   #boost-card.video-playing-boost[style*="translateX"],
   #boost-card.video-playing-boost[style*="translateY"],
   #boost-card.video-playing-boost[style*="scale"] {
-    transform: translateX(-50%) translateY(calc(-50% - 48px)) translateZ(50px) scale(1) !important;
+    transform: translateX(-50%) translateY(calc(-50% - 48px)) translateZ(50px) scale(1.1) !important;
   }
 
   /* 비디오 재생 중 모든 UI 요소 강제 숨김 - 최고 우선순위 */
@@ -17669,6 +17704,131 @@ setTimeout(function() {
     object-fit: cover !important;
     border-radius: 16px !important;
     background: #000 !important;
+  }
+}
+
+  /* 네오 싱크 카드 비디오 재생 시 확대 효과 */
+  html body .training-cards-container #sync-card.video-playing-sync,
+  html body .training-cards-container #sync-card.video-playing-sync.active,
+  html body .training-cards-container.sync-active #sync-card.video-playing-sync,
+  html body .training-cards-container.sync-active #sync-card.video-playing-sync.active,
+  html body #sync-card.video-playing-sync[style*="transform"],
+  html body #sync-card.video-playing-sync[style*="position"],
+  html body #sync-card.video-playing-sync[style],
+  body #sync-card.video-playing-sync {
+    position: absolute !important;
+    left: 50% !important;
+    top: 50% !important;
+    transform: translateX(-50%) translateY(calc(-50% - 48px)) translateZ(50px) scale(1.1) !important;
+    z-index: 100 !important;
+    margin: 0 !important;
+    width: 350px !important;
+    height: 450px !important;
+    transition: all 0.3s ease !important;
+  }
+
+  /* 네오 싱크 비디오 재생 중 모든 UI 요소 강제 숨김 */
+  body #sync-card.video-playing-sync .card-front h3,
+  body #sync-card.video-playing-sync .card-front p,
+  body #sync-card.video-playing-sync .card-front img,
+  body #sync-card.video-playing-sync .click-indicator,
+  body #sync-card.video-playing-sync .card-front > div[style*="z-index: 2"],
+  body #sync-card.video-playing-sync .card-front > div[style*="z-index: 2"] > *:not(.sync-hover-video) {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    display: none !important;
+    pointer-events: none !important;
+    z-index: -1 !important;
+  }
+
+  /* 네오 싱크 비디오만 표시 */
+  body #sync-card.video-playing-sync .sync-hover-video {
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: block !important;
+    z-index: 9999 !important;
+    position: absolute !important;
+    top: 10px !important;
+    left: 10px !important;
+    width: calc(100% - 20px) !important;
+    height: calc(100% - 20px) !important;
+    object-fit: cover !important;
+    border-radius: 16px !important;
+    background: #000 !important;
+  }
+
+  /* 네오 밸런스 카드 비디오 재생 시 확대 효과 */
+  html body .training-cards-container #balance-card.video-playing-balance,
+  html body .training-cards-container #balance-card.video-playing-balance.active,
+  html body .training-cards-container.balance-active #balance-card.video-playing-balance,
+  html body .training-cards-container.balance-active #balance-card.video-playing-balance.active,
+  html body #balance-card.video-playing-balance[style*="transform"],
+  html body #balance-card.video-playing-balance[style*="position"],
+  html body #balance-card.video-playing-balance[style],
+  body #balance-card.video-playing-balance {
+    position: absolute !important;
+    left: 50% !important;
+    top: 50% !important;
+    transform: translateX(-50%) translateY(calc(-50% - 48px)) translateZ(50px) scale(1.1) !important;
+    z-index: 100 !important;
+    margin: 0 !important;
+    width: 350px !important;
+    height: 450px !important;
+    transition: all 0.3s ease !important;
+  }
+
+  /* 네오 밸런스 비디오 재생 중 모든 UI 요소 강제 숨김 */
+  body #balance-card.video-playing-balance .card-front h3,
+  body #balance-card.video-playing-balance .card-front p,
+  body #balance-card.video-playing-balance .card-front img,
+  body #balance-card.video-playing-balance .click-indicator,
+  body #balance-card.video-playing-balance .card-front > div[style*="z-index: 2"],
+  body #balance-card.video-playing-balance .card-front > div[style*="z-index: 2"] > *:not(.balance-hover-video) {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    display: none !important;
+    pointer-events: none !important;
+    z-index: -1 !important;
+  }
+
+  /* 네오 밸런스 비디오만 표시 */
+  body #balance-card.video-playing-balance .balance-hover-video {
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: block !important;
+    z-index: 9999 !important;
+    position: absolute !important;
+    top: 10px !important;
+    left: 10px !important;
+    width: calc(100% - 20px) !important;
+    height: calc(100% - 20px) !important;
+    object-fit: cover !important;
+    border-radius: 16px !important;
+    background: #000 !important;
+  }
+}
+
+/* PC 환경에서 모든 카드 비디오 재생 시 확대 효과 */
+@media (min-width: 769px) {
+  /* 네오 싱크 카드 PC 확대 효과 */
+  #sync-card.video-playing-sync {
+    transform: translateX(-50%) translateY(-50%) translateZ(50px) scale(1.1) !important;
+    transition: all 0.3s ease !important;
+    z-index: 1000 !important;
+  }
+
+  /* 네오 밸런스 카드 PC 확대 효과 */
+  #balance-card.video-playing-balance {
+    transform: translateX(-50%) translateY(-50%) translateZ(50px) scale(1.1) !important;
+    transition: all 0.3s ease !important;
+    z-index: 1000 !important;
+  }
+
+  /* 네오 부스트 카드 PC 확대 효과 */
+  #boost-card.video-playing-boost {
+    transform: translateX(-50%) translateY(-50%) translateZ(50px) scale(1.1) !important;
+    transition: all 0.3s ease !important;
+    z-index: 1000 !important;
   }
 }
 </style>
