@@ -17606,6 +17606,15 @@ setTimeout(function() {
 <!-- NEO BOOST 비디오 재생 시 UI 숨김을 위한 CSS -->
 <style>
 @media (max-width: 768px) {
+  /* 비디오 재생 중 카드 위치 고정 - 절대 이동하지 않도록 */
+  body #boost-card.video-playing-boost {
+    position: absolute !important;
+    left: 50% !important;
+    top: 50% !important;
+    transform: translateX(-50%) translateY(calc(-50% - 48px)) translateZ(50px) scale(1) !important;
+    z-index: 100 !important;
+  }
+
   /* 비디오 재생 중 모든 UI 요소 강제 숨김 - 최고 우선순위 */
   body #boost-card.video-playing-boost .boost-title,
   body #boost-card.video-playing-boost .boost-text-1,
