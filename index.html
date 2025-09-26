@@ -3879,10 +3879,10 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
     
     <!-- 네비게이션 인디케이터 -->
-    <div class="card-indicators" style="display: flex; justify-content: center; gap: 15px; margin-top: 30px; position: relative; z-index: 1000;">
-      <button class="indicator active" data-target="sync" aria-label="View NEO SYNC card" style="width: 12px; height: 12px; border-radius: 50%; border: 2px solid #7BE495; background: #7BE495; cursor: pointer; transition: all 0.3s; pointer-events: auto;"></button>
-      <button class="indicator" data-target="balance" aria-label="View NEO BALANCE card" style="width: 12px; height: 12px; border-radius: 50%; border: 2px solid #93C5FD; background: transparent; cursor: pointer; transition: all 0.3s; pointer-events: auto;"></button>
-      <button class="indicator" data-target="boost" aria-label="View NEO BOOST card" style="width: 12px; height: 12px; border-radius: 50%; border: 2px solid #F87171; background: transparent; cursor: pointer; transition: all 0.3s; pointer-events: auto;"></button>
+    <div class="card-indicators" style="display: flex; justify-content: center; gap: 15px; margin-top: 30px;">
+      <button class="indicator active" data-target="sync" aria-label="View NEO SYNC card" style="width: 12px; height: 12px; border-radius: 50%; border: 2px solid #7BE495; background: #7BE495; cursor: pointer; transition: all 0.3s;"></button>
+      <button class="indicator" data-target="balance" aria-label="View NEO BALANCE card" style="width: 12px; height: 12px; border-radius: 50%; border: 2px solid #93C5FD; background: transparent; cursor: pointer; transition: all 0.3s;"></button>
+      <button class="indicator" data-target="boost" aria-label="View NEO BOOST card" style="width: 12px; height: 12px; border-radius: 50%; border: 2px solid #F87171; background: transparent; cursor: pointer; transition: all 0.3s;"></button>
     </div>
   </div>
 </section>
@@ -10659,22 +10659,15 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // 카드 클릭 이벤트
   Object.entries(cards).forEach(([cardId, card]) => {
-    // 모바일 터치 이벤트 개선
     card.addEventListener('touchend', function(e) {
       if (window.innerWidth > 768) {
         return;
       }
       e.preventDefault();
-      e.stopPropagation();
-      console.log('모바일 카드 터치:', cardId, '활성 상태:', this.classList.contains('active'));
-      
       if (!this.classList.contains('active')) {
-        console.log('비활성 카드 클릭 - 중앙으로 이동:', cardId);
         switchCard(cardId);
         return;
       }
-      
-      console.log('활성 카드 클릭 - 비디오 재생:', cardId);
       handleMobileVideoPlay(cardId, this);
     }, { passive: false });
 
@@ -10684,7 +10677,6 @@ document.addEventListener('DOMContentLoaded', function() {
       
       if (isMobileView) {
         e.preventDefault();
-        e.stopPropagation();
         console.log('모바일 카드 클릭 감지:', cardId, '활성 상태:', this.classList.contains('active'));
         if (!this.classList.contains('active')) {
           console.log('모바일 카드 중앙 이동:', cardId);
@@ -11200,28 +11192,18 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // 초기 카드 위치 설정
   function initializeCards() {
-    console.log('카드 초기화 시작, isMobile:', isMobile);
-    
     if (isMobile) {
       // 모바일에서 네오 싱크를 중앙에 배치
-      cardContainer.classList.remove('sync-active', 'balance-active', 'boost-active');
       cardContainer.classList.add('sync-active');
-      
       setCardPosition('sync', 'center');
       setCardPosition('balance', 'left');
       setCardPosition('boost', 'right');
       currentCard = 'sync';
       
-      // 활성 카드 설정 강화
-      Object.keys(cards).forEach(cardId => {
-        if (cardId === 'sync') {
-          cards[cardId].classList.add('active');
-        } else {
-          cards[cardId].classList.remove('active');
-        }
-      });
-      
-      console.log('모바일 카드 초기화 완료');
+      // 활성 카드 설정
+      cards['sync'].classList.add('active');
+      cards['balance'].classList.remove('active');
+      cards['boost'].classList.remove('active');
     } else {
       // PC에서 초기 카드 위치 설정
       cards['sync'].style.transform = 'translateX(-50%) translateY(-50%) translateZ(0)';
@@ -11240,7 +11222,6 @@ document.addEventListener('DOMContentLoaded', function() {
       cards['boost'].classList.remove('active');
       
       currentCard = 'sync';
-      console.log('PC 카드 초기화 완료');
     }
     
     resetCardVisual('sync');
@@ -11455,10 +11436,7 @@ document.addEventListener('DOMContentLoaded', function() {
 /* 인디케이터 개선 */
 .card-indicators {
   position: relative;
-  z-index: 1000;
-  display: flex !important;
-  visibility: visible !important;
-  opacity: 1 !important;
+  z-index: 20;
 }
 
 .card-indicators .indicator {
@@ -11567,11 +11545,6 @@ document.addEventListener('DOMContentLoaded', function() {
   .card-indicators {
     gap: 20px !important;
     margin-top: 40px !important;
-    display: flex !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    z-index: 1000 !important;
-    position: relative !important;
   }
   
   .card-indicators .indicator {
