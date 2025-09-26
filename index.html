@@ -1182,6 +1182,39 @@ div > p.smart-guide-text {
   #boost-card.video-playing .boost-hover-video {
     z-index: 1000 !important;
   }
+
+  /* 모바일에서 NEO BOOST 비디오 재생 시 모든 기본 UI 완전히 숨김 - 다른 카드와 동일하게 */
+  @media (max-width: 768px) {
+    /* NEO BOOST 카드의 모든 강제 표시 규칙을 video-playing 상태에서 무효화 */
+    body #boost-card.video-playing .card-front h3,
+    body #boost-card.video-playing .card-front p,
+    body #boost-card.video-playing .card-front img,
+    body #boost-card.video-playing .card-front .boost-title,
+    body #boost-card.video-playing .card-front .boost-text-1,
+    body #boost-card.video-playing .card-front .boost-text-2,
+    body #boost-card.video-playing .card-front .click-indicator,
+    body #boost-card.video-playing .card-front > div[style*="z-index: 2"],
+    body #boost-card.video-playing .card-front > div {
+      opacity: 0 !important;
+      visibility: hidden !important;
+      color: transparent !important;
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+      text-shadow: none !important;
+      filter: opacity(0) !important;
+      z-index: -999 !important;
+      pointer-events: none !important;
+    }
+
+    /* 비디오만 표시 - 기존 위치 유지 */
+    body #boost-card.video-playing .boost-hover-video {
+      z-index: 9999 !important;
+      opacity: 1 !important;
+      visibility: visible !important;
+      pointer-events: auto !important;
+    }
+  }
   
   .training-card p {
     font-size: 0.8rem !important;
