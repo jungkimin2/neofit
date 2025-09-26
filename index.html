@@ -10456,7 +10456,12 @@ function stopAllVideos() {
   function setCardPosition(cardId, position) {
     const card = cards[cardId];
     if (!card) return;
-    
+
+    // 네오 부스트 카드가 비디오 재생 중이면 위치 변경 금지
+    if (cardId === 'boost' && card.classList.contains('video-playing-boost')) {
+      return;
+    }
+
     if (isMobile) {
       // 모바일에서의 카드 위치
       switch(position) {
@@ -17606,13 +17611,31 @@ setTimeout(function() {
 <!-- NEO BOOST 비디오 재생 시 UI 숨김을 위한 CSS -->
 <style>
 @media (max-width: 768px) {
-  /* 비디오 재생 중 카드 위치 고정 - 절대 이동하지 않도록 */
+  /* 비디오 재생 중 카드 위치 강제 고정 - 절대 이동 금지 */
+  html body .training-cards-container #boost-card.video-playing-boost,
+  html body .training-cards-container #boost-card.video-playing-boost.active,
+  html body .training-cards-container.boost-active #boost-card.video-playing-boost,
+  html body .training-cards-container.boost-active #boost-card.video-playing-boost.active,
+  html body #boost-card.video-playing-boost[style*="transform"],
+  html body #boost-card.video-playing-boost[style*="position"],
+  html body #boost-card.video-playing-boost[style],
   body #boost-card.video-playing-boost {
     position: absolute !important;
     left: 50% !important;
     top: 50% !important;
     transform: translateX(-50%) translateY(calc(-50% - 48px)) translateZ(50px) scale(1) !important;
     z-index: 100 !important;
+    margin: 0 !important;
+    width: 350px !important;
+    height: 450px !important;
+    transition: none !important;
+  }
+
+  /* 비디오 재생 중 다른 모든 transform 및 position 속성 무효화 */
+  #boost-card.video-playing-boost[style*="translateX"],
+  #boost-card.video-playing-boost[style*="translateY"],
+  #boost-card.video-playing-boost[style*="scale"] {
+    transform: translateX(-50%) translateY(calc(-50% - 48px)) translateZ(50px) scale(1) !important;
   }
 
   /* 비디오 재생 중 모든 UI 요소 강제 숨김 - 최고 우선순위 */
