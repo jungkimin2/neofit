@@ -6378,6 +6378,10 @@ if (window.innerWidth <= 768) {
               }
 
               console.debug('Pilates card click', { targetIndex, currentActive: activeIndex, datasetIndex: card.dataset.index });
+
+              // 카드 전환 전에 모든 비디오 정지 및 CSS 클래스 정리
+              stopAllVideos();
+
               setActive(targetIndex);
             }, { passive: false });
           });
@@ -6386,6 +6390,10 @@ if (window.innerWidth <= 768) {
             indicator.addEventListener('click', (event) => {
               event.preventDefault();
               event.stopPropagation();
+
+              // 카드 전환 전에 모든 비디오 정지 및 CSS 클래스 정리
+              stopAllVideos();
+
               setActive(index);
             });
           });
@@ -10192,6 +10200,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
           // CSS 클래스로 확대 효과 및 UI 숨김 적용 (PC)
           this.classList.add('video-playing-balance');
+          console.log('PC 네오 밸런스 확대 클래스 추가됨');
 
           // 콘텐츠와 CLICK 버튼 숨기기
           balanceContent.style.opacity = '0';
@@ -10260,31 +10269,31 @@ document.addEventListener('DOMContentLoaded', function() {
           // 비디오 보이기 및 재생
           boostVideo.style.opacity = '1';
           boostVideo.style.borderRadius = '20px';
-          boostVideo.style.transform = 'scale(0.94)';
+          // PC에서는 비디오에 별도 transform 적용하지 않음 (카드 전체 확대 효과 사용)
           
-          // PC에서도 NEO BOOST 테두리 제거
-          // const glassOverlay = document.createElement('div');
-          // glassOverlay.className = 'video-glass-overlay';
-          // glassOverlay.style.cssText = `
-          //   position: absolute;
-          //   top: 0;
-          //   left: 0;
-          //   right: 0;
-          //   bottom: 0;
-          //   border-radius: 20px;
-          //   border: 1px solid rgba(248, 113, 113, 0.5);
-          //   display: block;
-          //   background: linear-gradient(135deg, 
-          //     rgba(248, 113, 113, 0.15) 0%, 
-          //     transparent 40%, 
-          //     transparent 60%,
-          //     rgba(248, 113, 113, 0.15) 100%);
-          //   pointer-events: none;
-          //   z-index: 10;
-          //   box-shadow: inset 0 0 30px rgba(248, 113, 113, 0.2),
-          //                 0 0 60px rgba(248, 113, 113, 0.3);
-          // `;
-          // this.querySelector('.card-front').appendChild(glassOverlay);
+          // PC에서 NEO BOOST 글래스모피즘 테두리 오버레이 추가
+          const glassOverlay = document.createElement('div');
+          glassOverlay.className = 'video-glass-overlay';
+          glassOverlay.style.cssText = `
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 20px;
+            border: 1px solid rgba(248, 113, 113, 0.5);
+            display: block;
+            background: linear-gradient(135deg,
+              rgba(248, 113, 113, 0.15) 0%,
+              transparent 40%,
+              transparent 60%,
+              rgba(248, 113, 113, 0.15) 100%);
+            pointer-events: none;
+            z-index: 10;
+            box-shadow: inset 0 0 30px rgba(248, 113, 113, 0.2),
+                          0 0 60px rgba(248, 113, 113, 0.3);
+          `;
+          this.querySelector('.card-front').appendChild(glassOverlay);
           
           boostVideo.muted = false; // PC에서는 소리 재생 허용
           boostVideo.volume = 0.3;
@@ -10292,6 +10301,29 @@ document.addEventListener('DOMContentLoaded', function() {
 
           // CSS 클래스로 확대 효과 및 UI 숨김 적용 (PC)
           this.classList.add('video-playing-boost');
+          console.log('PC 네오 부스트 확대 클래스 추가됨');
+          console.log('현재 클래스 리스트:', this.className);
+          console.log('카드 ID:', this.id);
+
+          // 기존 transform에 scale 추가 (PC 환경에서 인라인 스타일 덮어쓰기)
+          setTimeout(() => {
+            const currentTransform = this.style.transform || '';
+            console.log('현재 transform:', currentTransform);
+            console.log('카드 active 상태:', this.classList.contains('active'));
+
+            // scale이 이미 있으면 제거하고 새로 추가
+            let baseTransform = currentTransform.replace(/\s*scale\([^)]*\)\s*/g, '').trim();
+
+            if (baseTransform) {
+              // 기존 transform에 scale(1.1) 추가
+              this.style.transform = baseTransform + ' scale(1.1)';
+              console.log('확대 효과 추가된 transform:', this.style.transform);
+            } else {
+              // transform이 없으면 scale만 적용
+              this.style.transform = 'scale(1.1)';
+              console.log('새로운 확대 transform 적용:', this.style.transform);
+            }
+          }, 50);
 
           // 콘텐츠와 CLICK 버튼 부드럽게 숨기기
           boostContent.style.transition = 'opacity 0.3s ease';
@@ -10309,23 +10341,31 @@ document.addEventListener('DOMContentLoaded', function() {
             boostVideo.style.transition = 'opacity 0.3s ease';
             boostVideo.style.opacity = '0';
             
-            // PC에서도 NEO BOOST 오버레이 삭제됨
-            // const overlay = boostCard.querySelector('.video-glass-overlay');
-            // if (overlay) {
-            //   overlay.style.transition = 'opacity 0.3s ease';
-            //   overlay.style.opacity = '0';
-            //   setTimeout(() => overlay.remove(), 300);
-            // }
+            // PC에서도 NEO BOOST 오버레이 삭제
+            const overlay = boostCard.querySelector('.video-glass-overlay');
+            if (overlay) {
+              overlay.style.transition = 'opacity 0.3s ease';
+              overlay.style.opacity = '0';
+              setTimeout(() => overlay.remove(), 300);
+            }
             
             // 300ms 후 스타일 초기화 및 콘텐츠 복원
             setTimeout(() => {
               boostVideo.style.borderRadius = '';
-              boostVideo.style.transform = '';
+              // PC에서는 비디오 transform 제거하지 않음 (카드 확대 효과와 충돌 방지)
               boostVideo.pause();
               boostVideo.currentTime = 0;
 
               // CSS 클래스 제거로 확대 효과 및 UI 요소 복원 (PC)
               boostCard.classList.remove('video-playing-boost');
+
+              // transform에서 scale만 제거하고 나머지는 유지
+              const currentTransform = boostCard.style.transform || '';
+              if (currentTransform.includes('scale')) {
+                const transformWithoutScale = currentTransform.replace(/\s*scale\([^)]*\)\s*/g, '').trim();
+                boostCard.style.transform = transformWithoutScale;
+                console.log('확대 효과 제거, 기존 transform 복원:', transformWithoutScale);
+              }
 
               // 콘텐츠와 CLICK 버튼 부드럽게 다시 보이기
               boostContent.style.transition = 'opacity 0.3s ease';
@@ -10342,23 +10382,31 @@ document.addEventListener('DOMContentLoaded', function() {
           boostVideo.style.transition = 'opacity 0.3s ease';
           boostVideo.style.opacity = '0';
           
-          // PC에서도 NEO BOOST 오버레이 삭제됨
-          // const overlay = boostCard.querySelector('.video-glass-overlay');
-          // if (overlay) {
-          //   overlay.style.transition = 'opacity 0.3s ease';
-          //   overlay.style.opacity = '0';
-          //   setTimeout(() => overlay.remove(), 300);
-          // }
+          // PC에서도 NEO BOOST 오버레이 삭제
+          const overlay = boostCard.querySelector('.video-glass-overlay');
+          if (overlay) {
+            overlay.style.transition = 'opacity 0.3s ease';
+            overlay.style.opacity = '0';
+            setTimeout(() => overlay.remove(), 300);
+          }
           
           // 300ms 후 스타일 초기화 및 콘텐츠 복원
           setTimeout(() => {
             boostVideo.pause();
             boostVideo.currentTime = 0;
             boostVideo.style.borderRadius = '';
-            boostVideo.style.transform = '';
+            // PC에서는 비디오 transform 제거하지 않음 (카드 확대 효과와 충돌 방지)
 
             // CSS 클래스 제거로 확대 효과 및 UI 요소 복원 (PC)
             boostCard.classList.remove('video-playing-boost');
+
+            // transform에서 scale만 제거하고 나머지는 유지
+            const currentTransform = boostCard.style.transform || '';
+            if (currentTransform.includes('scale')) {
+              const transformWithoutScale = currentTransform.replace(/\s*scale\([^)]*\)\s*/g, '').trim();
+              boostCard.style.transform = transformWithoutScale;
+              console.log('확대 효과 제거, 기존 transform 복원:', transformWithoutScale);
+            }
 
             // 콘텐츠와 CLICK 버튼 부드럽게 다시 보이기
             boostContent.style.transition = 'opacity 0.3s ease';
@@ -10392,6 +10440,9 @@ function stopAllVideos() {
         }, 300);
       }
       
+      // CSS 클래스 제거로 확대 효과 및 UI 요소 복원
+      syncCard.classList.remove('video-playing-sync');
+
       if (syncContent) {
         syncContent.style.opacity = '1';
         syncContent.style.visibility = 'visible';
@@ -10419,6 +10470,9 @@ function stopAllVideos() {
         }, 300);
       }
       
+      // CSS 클래스 제거로 확대 효과 및 UI 요소 복원
+      balanceCard.classList.remove('video-playing-balance');
+
       if (balanceContent) {
         balanceContent.style.opacity = '1';
         balanceContent.style.visibility = 'visible';
@@ -10441,13 +10495,13 @@ function stopAllVideos() {
       boostVideo.style.opacity = '0';
       boostVideo.classList.remove('playing');
       
-      // NEO BOOST 오버레이 삭제됨
-      // const overlay = boostCard.querySelector('.video-glass-overlay');
-      // if (overlay) {
-      //   overlay.style.transition = 'opacity 0.3s ease';
-      //   overlay.style.opacity = '0';
-      //   setTimeout(() => overlay.remove(), 300);
-      // }
+      // NEO BOOST 오버레이 삭제
+      const overlay = boostCard.querySelector('.video-glass-overlay');
+      if (overlay) {
+        overlay.style.transition = 'opacity 0.3s ease';
+        overlay.style.opacity = '0';
+        setTimeout(() => overlay.remove(), 300);
+      }
       
       // 300ms 후 비디오 정지 및 스타일 초기화
       setTimeout(() => {
@@ -10460,6 +10514,17 @@ function stopAllVideos() {
           boostVideo.style.display = 'none';
         }
         
+        // CSS 클래스 제거로 확대 효과 및 UI 요소 복원
+        boostCard.classList.remove('video-playing-boost');
+
+        // transform에서 scale만 제거하고 나머지는 유지
+        const currentTransform = boostCard.style.transform || '';
+        if (currentTransform.includes('scale')) {
+          const transformWithoutScale = currentTransform.replace(/\s*scale\([^)]*\)\s*/g, '').trim();
+          boostCard.style.transform = transformWithoutScale;
+          console.log('stopAllVideos: 네오 부스트 확대 효과 제거, 기존 transform 복원:', transformWithoutScale);
+        }
+
         // 콘텐츠와 CLICK 버튼 부드럽게 다시 보이기
         if (boostContent) {
           boostContent.style.transition = 'opacity 0.3s ease';
@@ -10485,11 +10550,6 @@ function stopAllVideos() {
   function setCardPosition(cardId, position) {
     const card = cards[cardId];
     if (!card) return;
-
-    // 네오 부스트 카드가 비디오 재생 중이면 위치 변경 금지
-    if (cardId === 'boost' && card.classList.contains('video-playing-boost')) {
-      return;
-    }
 
     if (isMobile) {
       // 모바일에서의 카드 위치
@@ -17811,26 +17871,86 @@ setTimeout(function() {
 /* PC 환경에서 모든 카드 비디오 재생 시 확대 효과 */
 @media (min-width: 769px) {
   /* 네오 싱크 카드 PC 확대 효과 */
-  #sync-card.video-playing-sync {
-    transform: translateX(-50%) translateY(-50%) translateZ(50px) scale(1.1) !important;
+  html body .training-cards-container #sync-card.video-playing-sync,
+  html body #sync-card.video-playing-sync.active,
+  html body #sync-card.video-playing-sync {
+    transform: scale(1.1) !important;
     transition: all 0.3s ease !important;
     z-index: 1000 !important;
   }
 
-  /* 네오 밸런스 카드 PC 확대 효과 */
-  #balance-card.video-playing-balance {
-    transform: translateX(-50%) translateY(-50%) translateZ(50px) scale(1.1) !important;
+  /* 네오 밸런스 카드 PC 확대 효과 - 높은 특이성 */
+  html body .training-cards-container #balance-card.video-playing-balance[style],
+  html body .training-cards-container #balance-card.video-playing-balance.active[style],
+  html body .training-cards-container #balance-card.video-playing-balance,
+  html body #balance-card.video-playing-balance.active,
+  html body #balance-card.video-playing-balance {
+    transform: scale(1.1) !important;
     transition: all 0.3s ease !important;
     z-index: 1000 !important;
   }
 
-  /* 네오 부스트 카드 PC 확대 효과 */
+  /* 네오 부스트 카드 PC 확대 효과 - 높은 특이성 */
+  html body .training-cards-container #boost-card.video-playing-boost[style],
+  html body .training-cards-container #boost-card.video-playing-boost.active[style],
+  html body .training-cards-container #boost-card.video-playing-boost,
+  html body #boost-card.video-playing-boost.active,
+  html body #boost-card.video-playing-boost {
+    transform: scale(1.1) !important;
+    transition: all 0.3s ease !important;
+    z-index: 1000 !important;
+  }
+
+  /* 추가 강제 적용 - 인라인 스타일까지 덮어쓰기 */
+  html body #balance-card.video-playing-balance[style*="transform"] {
+    transform: scale(1.1) !important;
+  }
+
+  html body #boost-card.video-playing-boost[style*="transform"] {
+    transform: scale(1.1) !important;
+  }
+
+  /* 네오 부스트 최강 특이성 - 모든 상황에서 확대 적용 */
+  html body .training-cards-container.boost-active #boost-card.video-playing-boost.active,
+  html body .training-cards-container #boost-card.video-playing-boost.active,
+  html body .training-cards-container #boost-card.video-playing-boost,
+  html body #boost-card.video-playing-boost.active,
+  html body #boost-card.video-playing-boost,
   #boost-card.video-playing-boost {
-    transform: translateX(-50%) translateY(-50%) translateZ(50px) scale(1.1) !important;
+    transform: scale(1.1) !important;
     transition: all 0.3s ease !important;
     z-index: 1000 !important;
+  }
+
+  /* 네오 부스트 강제 확대 - 절대적 우선순위 */
+  body #boost-card.video-playing-boost,
+  #boost-card.video-playing-boost {
+    transform: scale(1.1) !important;
   }
 }
+
+/* 네오 부스트 확대 효과 - 최종 강제 적용 (PC 환경) */
+@media (min-width: 769px) {
+  #boost-card.video-playing-boost {
+    transform: scale(1.1) !important;
+    transition: all 0.3s ease !important;
+    z-index: 1000 !important;
+  }
+
+  html body #boost-card.video-playing-boost {
+    transform: scale(1.1) !important;
+  }
+
+  html body .training-cards-container #boost-card.video-playing-boost {
+    transform: scale(1.1) !important;
+  }
+
+  /* 모든 경우의 수를 다 커버 */
+  [id="boost-card"].video-playing-boost {
+    transform: scale(1.1) !important;
+  }
+}
+
 </style>
 
 
