@@ -1171,17 +1171,6 @@ div > p.smart-guide-text {
     display: block !important;
   }
   
-  /* 비디오 재생 중 NEO BOOST 타이틀만 숨기기 */
-  #boost-card.video-playing .boost-title {
-    opacity: 0 !important;
-    visibility: hidden !important;
-    transition: opacity 0.3s ease;
-  }
-  
-  /* 비디오 재생 중 비디오 z-index 높이기 */
-  #boost-card.video-playing .boost-hover-video {
-    z-index: 1000 !important;
-  }
   
   .training-card p {
     font-size: 0.8rem !important;
@@ -10887,151 +10876,56 @@ function stopAllVideos() {
           boostVideo.style.objectFit = 'cover';
           boostVideo.style.borderRadius = '16px';
           boostVideo.style.border = 'none';
-          boostVideo.style.display = 'block';
           boostVideo.style.boxShadow = 'none';
           boostVideo.style.zIndex = '999';
-          boostVideo.style.transition = 'opacity 0.3s ease';
           boostVideo.style.opacity = '1';
+          boostVideo.style.display = 'block';
           boostVideo.style.backgroundColor = '#000';
           boostVideo.classList.add('playing');
-          
-          // 카드와 카드 프론트의 overflow를 hidden으로 설정하여 하단 텍스트 숨기기
-          const cardElement = this;
-          const cardFront = this.querySelector('.card-front');
-          cardElement.style.overflow = 'hidden';
-          if (cardFront) {
-            cardFront.style.overflow = 'hidden';
-            // 영상 재생 시 빨간색 테두리 유지
-            cardFront.style.border = '2px solid #F87171';
+
+          // 비디오 즉시 재생 (카드 클릭 시에는 소리 재생)
+          boostVideo.muted = false; // 카드 클릭 시 소리 재생
+          boostVideo.volume = 0.3;
+          boostVideo.currentTime = 0; // 처음부터 재생
+          const playPromise = boostVideo.play();
+          if (playPromise !== undefined) {
+            playPromise.catch(e => console.log('Video play failed:', e));
           }
-          
-          // NEO BOOST 글래시 테두리 추가
-          const glassOverlay = document.createElement('div');
-          glassOverlay.className = 'video-glass-overlay';
-          glassOverlay.style.cssText = `
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            border-radius: 20px;
-            border: 1px solid rgba(248, 113, 113, 0.3);
-            background: transparent;
-            pointer-events: none;
-            z-index: 1000;
-            box-shadow: inset 0 0 20px rgba(248, 113, 113, 0.2),
-                          0 0 40px rgba(248, 113, 113, 0.3);
-          `;
-          this.querySelector('.card-front').appendChild(glassOverlay);
-          
-          // 비디오 즉시 재생 (모바일에서도 소리 재생)
-          boostVideo.muted = false; // 모바일에서도 소리 재생
-          boostVideo.volume = 0.5; // 볼륨 50%
-          
-          // 비디오가 이미 로드되어 있는지 확인
-          if (boostVideo.readyState >= 3) { // HAVE_FUTURE_DATA 이상
-            boostVideo.currentTime = 0; // 처음부터 재생
-            boostVideo.play().catch(e => {
-              console.log('Video play failed:', e);
-              boostVideo.muted = true;
-              boostVideo.play().catch(err => console.log('Muted play also failed:', err));
-            });
-          } else {
-            // 비디오가 아직 로드되지 않은 경우 로드 후 재생
-            boostVideo.currentTime = 0;
-            boostVideo.addEventListener('loadeddata', function() {
-              boostVideo.play().catch(e => {
-                console.log('Video play failed:', e);
-                boostVideo.muted = true;
-                boostVideo.play().catch(err => console.log('Muted play also failed:', err));
-              });
-            }, { once: true });
-          }
-          
-          // 콘텐츠 부드럽게 숨기기
+
+          // 콘텐츠 완전히 숨기기
           if (boostContent) {
-            boostContent.style.transition = 'opacity 0.3s ease';
             boostContent.style.opacity = '0';
-            setTimeout(() => {
-              boostContent.style.visibility = 'hidden';
-              boostContent.style.display = 'none'; // 완전히 숨기기
-            }, 300);
-          }
-          
-          // 모바일에서 NEO BOOST 타이틀만 숨기기
-          const boostTitle = this.querySelector('.boost-title');
-          
-          if (boostTitle) {
-            boostTitle.style.transition = 'opacity 0.3s ease';
-            boostTitle.style.opacity = '0';
-            boostTitle.style.visibility = 'hidden';
-            boostTitle.style.pointerEvents = 'none';
-            // 강제로 텍스트 내용을 임시 저장하고 비우기
-            boostTitle.setAttribute('data-original-text', boostTitle.textContent);
-            boostTitle.textContent = '';
+            boostContent.style.visibility = 'hidden';
           }
           if (clickIndicator) {
-            clickIndicator.style.transition = 'opacity 0.3s ease';
-            clickIndicator.style.opacity = '0';
-            setTimeout(() => {
-              clickIndicator.style.display = 'none';
-            }, 300);
+            clickIndicator.style.display = 'none';
           }
           
           // 비디오 종료 시 원상복구
           boostVideo.addEventListener('ended', function() {
             boostVideo.style.opacity = '0';
+            boostVideo.style.top = '';
+            boostVideo.style.left = '';
+            boostVideo.style.width = '';
+            boostVideo.style.height = '';
             boostVideo.style.borderRadius = '';
-            boostVideo.style.transform = '';
-            boostVideo.currentTime = 0;
-            
-            // 카드 overflow 및 테두리 복원
-            cardElement.style.overflow = '';
-            if (cardFront) {
-              cardFront.style.overflow = '';
-              cardFront.style.border = '2px solid #F87171';
-            }
-            
-            // NEO BOOST 타이틀 다시 표시
-            const boostTitle = cards['boost'].querySelector('.boost-title');
-            if (boostTitle) {
-              const originalText = boostTitle.getAttribute('data-original-text');
-              if (originalText) {
-                boostTitle.textContent = originalText;
-              }
-              boostTitle.style.opacity = '1';
-              boostTitle.style.visibility = 'visible';
-              boostTitle.style.pointerEvents = '';
-            }
-            
-            // 콘텐츠와 CLICK 버튼 복원
+            boostVideo.style.border = '';
+            boostVideo.style.boxShadow = '';
+            boostVideo.classList.remove('playing');
+
+            setTimeout(() => {
+              boostVideo.style.display = 'none';
+            }, 300);
             if (boostContent) {
-              boostContent.style.display = '';
               boostContent.style.opacity = '1';
               boostContent.style.visibility = 'visible';
             }
             if (clickIndicator) {
               clickIndicator.style.display = 'block';
-              clickIndicator.style.opacity = '1';
             }
-            
-            // 비디오 완전히 숨기기
-            setTimeout(() => {
-              boostVideo.style.display = 'none';
-              boostVideo.style.position = '';
-              boostVideo.style.top = '';
-              boostVideo.style.left = '';
-              boostVideo.style.width = '';
-              boostVideo.style.height = '';
-              boostVideo.style.border = '';
-              boostVideo.style.boxShadow = '';
-              boostVideo.style.backgroundColor = '';
-              boostVideo.style.zIndex = '';
-              boostVideo.classList.remove('playing');
-            }, 300);
           }, { once: true });
         } else if (boostVideo && boostVideo.classList.contains('playing')) {
-          // 재생 중인 비디오 정지 - NEO SYNC, NEO BALANCE와 동일한 방식
+          // 재생 중인 비디오 정지
           boostVideo.pause();
           boostVideo.currentTime = 0;
           boostVideo.style.opacity = '0';
@@ -11042,38 +10936,12 @@ function stopAllVideos() {
           boostVideo.style.borderRadius = '';
           boostVideo.style.border = '';
           boostVideo.style.boxShadow = '';
-          boostVideo.style.backgroundColor = '';
-          boostVideo.style.zIndex = '';
           boostVideo.classList.remove('playing');
-          
-          // 카드 overflow 및 테두리 복원
-          const cardElement = this;
-          const cardFront = this.querySelector('.card-front');
-          cardElement.style.overflow = '';
-          if (cardFront) {
-            cardFront.style.overflow = '';
-            cardFront.style.border = '2px solid #F87171';
-          }
-          
+
           setTimeout(() => {
             boostVideo.style.display = 'none';
           }, 300);
-          
-          // NEO BOOST 타이틀 복원
-          const boostTitle = this.querySelector('.boost-title');
-          if (boostTitle) {
-            const originalText = boostTitle.getAttribute('data-original-text');
-            if (originalText) {
-              boostTitle.textContent = originalText;
-            }
-            boostTitle.style.opacity = '1';
-            boostTitle.style.visibility = 'visible';
-            boostTitle.style.pointerEvents = '';
-          }
-          
-          // 콘텐츠 즉시 복원
           if (boostContent) {
-            boostContent.style.display = '';
             boostContent.style.opacity = '1';
             boostContent.style.visibility = 'visible';
           }
@@ -17748,5 +17616,6 @@ setTimeout(function() {
 
 // 자동 팝업 테스트 제거됨 - 모바일에서 드래그 시 나타나는 문제 해결
 </script>
+
 
 </html> 
