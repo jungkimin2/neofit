@@ -10898,9 +10898,16 @@ function stopAllVideos() {
           // 카드에 video-playing 클래스 추가하여 기본 UI 요소들 숨기기
           this.classList.add('video-playing');
 
-          // 카드와 카드 프론트의 overflow를 hidden으로 설정하여 하단 텍스트 숨기기
+          // 영상 재생 시 카드를 강제로 중앙에 고정 (모바일)
           const cardElement = this;
           const cardFront = this.querySelector('.card-front');
+
+          // 카드 위치를 중앙으로 강제 설정
+          cardElement.style.position = 'absolute';
+          cardElement.style.left = '50%';
+          cardElement.style.top = '50%';
+          cardElement.style.transform = 'translateX(-50%) translateY(calc(-50% - 48px)) translateZ(50px) scale(1)';
+          cardElement.style.zIndex = '1000';
           cardElement.style.overflow = 'hidden';
           if (cardFront) {
             cardFront.style.overflow = 'hidden';
@@ -11034,6 +11041,14 @@ function stopAllVideos() {
 
               // 카드에서 video-playing 클래스 제거
               this.classList.remove('video-playing');
+
+              // 카드 위치를 원래 상태로 복원 (setCardPosition 함수가 관리)
+              const cardElement = this;
+              cardElement.style.position = '';
+              cardElement.style.left = '';
+              cardElement.style.top = '';
+              cardElement.style.transform = '';
+              cardElement.style.zIndex = '';
             }, 300);
           }, { once: true });
         } else if (boostVideo && boostVideo.classList.contains('playing')) {
@@ -11054,6 +11069,13 @@ function stopAllVideos() {
 
           // 카드에서 video-playing 클래스 제거
           this.classList.remove('video-playing');
+
+          // 카드 위치를 원래 상태로 복원 (setCardPosition 함수가 관리)
+          cardElement.style.position = '';
+          cardElement.style.left = '';
+          cardElement.style.top = '';
+          cardElement.style.transform = '';
+          cardElement.style.zIndex = '';
 
           // 카드 overflow 및 테두리 복원
           const cardElement = this;
