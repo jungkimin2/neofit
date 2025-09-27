@@ -20,6 +20,84 @@
 <script src="./js/initial.js" defer></script>
 <link rel="stylesheet" href="./css/gallery.css">
 
+<!-- 네비게이션 핸들러 - 즉시 실행 -->
+<script>
+function handleNavigation(target, type) {
+  console.log('🚀 네비게이션 클릭:', target, type);
+
+  if (type === 'section') {
+    console.log('📍 섹션으로 스크롤:', target);
+
+    const targetElement = document.getElementById(target);
+    console.log('🎯 타겟 엘리먼트:', targetElement);
+
+    if (targetElement) {
+      // 부드러운 스크롤
+      targetElement.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+
+      // 헤더 높이를 고려한 추가 조정
+      setTimeout(() => {
+        const headerHeight = 80;
+        const elementTop = targetElement.offsetTop;
+        window.scrollTo({
+          top: elementTop - headerHeight,
+          behavior: 'smooth'
+        });
+      }, 100);
+
+      console.log('✅ 스크롤 완료');
+    } else {
+      console.error('❌ 타겟 엘리먼트를 찾을 수 없음:', target);
+
+      // 모든 섹션 ID 확인
+      const sections = document.querySelectorAll('section[id]');
+      console.log('📋 사용 가능한 섹션들:');
+      sections.forEach(section => console.log(' -', section.id));
+    }
+
+  } else if (type === 'action') {
+    console.log('⚡ 액션 실행:', target);
+
+    if (target === 'hive-challenge') {
+      // 하이브 챌린지 팝업
+      if (typeof showHiveChallengePopup === 'function') {
+        showHiveChallengePopup();
+        console.log('✅ 하이브 챌린지 팝업 열림');
+      } else if (typeof showMobileHiveChallengePopup === 'function') {
+        showMobileHiveChallengePopup();
+        console.log('✅ 모바일 하이브 챌린지 팝업 열림');
+      } else {
+        console.error('❌ 하이브 챌린지 함수를 찾을 수 없음');
+      }
+
+    } else if (target === 'form') {
+      // 무료 체험신청 폼
+      if (typeof showForm === 'function') {
+        showForm();
+        console.log('✅ 체험신청 폼 열림');
+      } else if (typeof openForm === 'function') {
+        openForm();
+        console.log('✅ 체험신청 폼 열림 (openForm)');
+      } else {
+        console.error('❌ 폼 함수를 찾을 수 없음');
+
+        // 사용 가능한 함수들 확인
+        console.log('🔍 사용 가능한 함수들 확인:');
+        console.log('showForm:', typeof showForm);
+        console.log('openForm:', typeof openForm);
+      }
+    }
+  }
+
+  return false;
+}
+
+console.log('🎉 네비게이션 핸들러 로드 완료');
+</script>
+
 <!-- 모바일 전용 즉시 적용 스타일 - 페이지 로딩 시 깜빡임 방지 -->
 <style>
 /* 스피커 버튼 클릭 가능 */
@@ -3749,12 +3827,12 @@ document.addEventListener('DOMContentLoaded', function() {
 <!-- 모바일 메뉴 오버레이 -->
 <div id="simple-mobile-menu" class="mobile-menu-overlay" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.95); z-index: 2147483646;">
   <div class="mobile-menu-content" style="position: fixed; top: 51px; left: 0; right: 0; background: #000;">
-    <a href="#" onclick="document.getElementById('simple-mobile-menu').style.display='none'; return true;" style="display: block; padding: 20px; color: #fff; text-decoration: none; border-bottom: 1px solid rgba(123,228,149,0.2); font-size: 18px; text-align: center;">네오핏</a>
-    <a href="https://neofit-s.oopy.io/NEOFIT-S" onclick="window.open('https://neofit-s.oopy.io/NEOFIT-S', '_blank'); document.getElementById('simple-mobile-menu').style.display='none'; return false;" style="display: block; padding: 20px; color: #fff; text-decoration: none; border-bottom: 1px solid rgba(123,228,149,0.2); font-size: 18px; text-align: center;">네오핏 운동가이드</a>
-    <a href="#hive" onclick="document.getElementById('simple-mobile-menu').style.display='none'; return true;" style="display: block; padding: 20px; color: #fff; text-decoration: none; border-bottom: 1px solid rgba(123,228,149,0.2); font-size: 18px; text-align: center;">네오 하이브</a>
-    <a href="#smart" onclick="document.getElementById('simple-mobile-menu').style.display='none'; return true;" style="display: block; padding: 20px; color: #fff; text-decoration: none; border-bottom: 1px solid rgba(123,228,149,0.2); font-size: 18px; text-align: center;">네오 스마트</a>
-    <a href="#pilates" onclick="document.getElementById('simple-mobile-menu').style.display='none'; return true;" style="display: block; padding: 20px; color: #fff; text-decoration: none; border-bottom: 1px solid rgba(123,228,149,0.2); font-size: 18px; text-align: center;">네오 필라테스</a>
-    <a href="javascript:void(0)" onclick="openForm(); document.getElementById('simple-mobile-menu').style.display='none'; return false;" style="display: block; padding: 20px; color: #7BE495; text-decoration: none; font-weight: 600; font-size: 18px; text-align: center; border-bottom: 3px solid #7BE495; box-shadow: 0 3px 8px rgba(123, 228, 149, 0.3);">무료 체험하기</a>
+    <a href="javascript:void(0)" onclick="handleNavigation('neofit-training', 'section'); closeMobileMenu(); return false;" style="display: block; padding: 20px; color: #fff; text-decoration: none; border-bottom: 1px solid rgba(123,228,149,0.2); font-size: 18px; text-align: center; cursor: pointer;">네오핏</a>
+    <a href="https://neofit-s.oopy.io/NEOFIT-S" onclick="window.open('https://neofit-s.oopy.io/NEOFIT-S', '_blank'); closeMobileMenu(); return false;" style="display: block; padding: 20px; color: #fff; text-decoration: none; border-bottom: 1px solid rgba(123,228,149,0.2); font-size: 18px; text-align: center; cursor: pointer;">네오핏 운동가이드</a>
+    <a href="javascript:void(0)" onclick="handleNavigation('hive', 'section'); closeMobileMenu(); return false;" style="display: block; padding: 20px; color: #fff; text-decoration: none; border-bottom: 1px solid rgba(123,228,149,0.2); font-size: 18px; text-align: center; cursor: pointer;">네오 하이브</a>
+    <a href="javascript:void(0)" onclick="handleNavigation('smart', 'section'); closeMobileMenu(); return false;" style="display: block; padding: 20px; color: #fff; text-decoration: none; border-bottom: 1px solid rgba(123,228,149,0.2); font-size: 18px; text-align: center; cursor: pointer;">네오 스마트</a>
+    <a href="javascript:void(0)" onclick="handleNavigation('neo-pilates', 'section'); closeMobileMenu(); return false;" style="display: block; padding: 20px; color: #fff; text-decoration: none; border-bottom: 1px solid rgba(123,228,149,0.2); font-size: 18px; text-align: center; cursor: pointer;">네오 필라테스</a>
+    <a href="javascript:void(0)" onclick="openForm(); closeMobileMenu(); return false;" style="display: block; padding: 20px; color: #7BE495; text-decoration: none; font-weight: 600; font-size: 18px; text-align: center; border-bottom: 3px solid #7BE495; box-shadow: 0 3px 8px rgba(123, 228, 149, 0.3); cursor: pointer;">무료 체험하기</a>
   </div>
 </div>
 
@@ -3772,12 +3850,12 @@ document.addEventListener('DOMContentLoaded', function() {
         </a>
       </div>
       <nav class="desktop-nav">
-        <span role="button" tabindex="0" data-section="neofit-training" style="cursor: pointer;">네오핏</span>
-        <span role="button" tabindex="0" data-section="hive" style="cursor: pointer;">네오 하이브</span>
-        <span role="button" tabindex="0" data-section="smart" style="cursor: pointer;">네오 스마트</span>
-        <span role="button" tabindex="0" data-section="neo-pilates" style="cursor: pointer;">네오 필라테스</span>
-        <span role="button" tabindex="0" data-action="hive-challenge" class="nav-neon-purple" style="cursor: pointer;">하이브 챌린지</span>
-        <span role="button" tabindex="0" data-action="form" class="nav-neon-green" style="cursor: pointer;">무료 체험신청</span>
+        <span role="button" tabindex="0" data-section="neofit-training" style="cursor: pointer;" onclick="handleNavigation('neofit-training', 'section')">네오핏</span>
+        <span role="button" tabindex="0" data-section="hive" style="cursor: pointer;" onclick="handleNavigation('hive', 'section')">네오 하이브</span>
+        <span role="button" tabindex="0" data-section="smart" style="cursor: pointer;" onclick="handleNavigation('smart', 'section')">네오 스마트</span>
+        <span role="button" tabindex="0" data-section="neo-pilates" style="cursor: pointer;" onclick="handleNavigation('neo-pilates', 'section')">네오 필라테스</span>
+        <span role="button" tabindex="0" data-action="hive-challenge" class="nav-neon-purple" style="cursor: pointer;" onclick="handleNavigation('hive-challenge', 'action')">하이브 챌린지</span>
+        <span role="button" tabindex="0" data-action="form" class="nav-neon-green" style="cursor: pointer;" onclick="handleNavigation('form', 'action')">무료 체험신청</span>
       </nav>
     </div>
     </header>
@@ -9197,91 +9275,50 @@ if (window.innerWidth <= 768) {
   
   // 간단한 모바일 네비게이션 함수들
   window.toggleNav = function() {
-    console.log('toggleNav 호출됨');
-    
-    // 모든 기존 메뉴 숨기기
-    const allMenus = document.querySelectorAll('.nav-menu, #nav-menu');
-    allMenus.forEach(menu => {
-      menu.style.display = 'none';
-    });
-    
-    // 모바일 드롭다운 메뉴 찾기 또는 생성
-    let dropdown = document.getElementById('mobile-dropdown-overlay');
-    
-    if (!dropdown) {
-      console.log('드롭다운 생성 시작');
-      // 드롭다운이 없으면 생성
-      dropdown = document.createElement('div');
-      dropdown.id = 'mobile-dropdown-overlay';
-      dropdown.style.cssText = `
-        display: none;
-        position: fixed !important;
-        top: 60px !important;
-        left: 0 !important;
-        right: 0 !important;
-        width: 100% !important;
-        background-color: #000000 !important;
-        z-index: 2147483647 !important;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.8) !important;
-        padding: 0 !important;
-        margin: 0 !important;
-        opacity: 1 !important;
-        visibility: visible !important;
-        transform: none !important;
-        -webkit-transform: none !important;
-      `;
-      
-      // 메뉴 아이템 추가
-      dropdown.innerHTML = `
-        <a href="#" onclick="window.closeMobileMenu();return false;" style="display: block !important; padding: 18px 20px !important; color: #ffffff !important; text-decoration: none !important; border-bottom: 1px solid rgba(123,228,149,0.2) !important; font-size: 18px !important; background-color: #000000 !important; position: relative !important; z-index: 2147483647 !important;">네오핏</a>
-        <a href="https://neofit-s.oopy.io/NEOFIT-S" onclick="window.open('https://neofit-s.oopy.io/NEOFIT-S', '_blank');window.closeMobileMenu();return false;" style="display: block !important; padding: 18px 20px !important; color: #ffffff !important; text-decoration: none !important; border-bottom: 1px solid rgba(123,228,149,0.2) !important; font-size: 18px !important; background-color: #000000 !important; position: relative !important; z-index: 2147483647 !important;">네오핏 운동가이드</a>
-        <a href="#hive" onclick="window.closeMobileMenu();return false;" style="display: block !important; padding: 18px 20px !important; color: #ffffff !important; text-decoration: none !important; border-bottom: 1px solid rgba(123,228,149,0.2) !important; font-size: 18px !important; background-color: #000000 !important; position: relative !important; z-index: 2147483647 !important;">네오 하이브</a>
-        <a href="#smart" onclick="window.closeMobileMenu();return false;" style="display: block !important; padding: 18px 20px !important; color: #ffffff !important; text-decoration: none !important; border-bottom: 1px solid rgba(123,228,149,0.2) !important; font-size: 18px !important; background-color: #000000 !important; position: relative !important; z-index: 2147483647 !important;">네오 스마트</a>
-        <a href="#pilates" onclick="window.closeMobileMenu();return false;" style="display: block !important; padding: 18px 20px !important; color: #ffffff !important; text-decoration: none !important; border-bottom: 1px solid rgba(123,228,149,0.2) !important; font-size: 18px !important; background-color: #000000 !important; position: relative !important; z-index: 2147483647 !important;">네오 필라테스</a>
-        <a href="javascript:void(0)" id="mobileHiveChallengeBtn" onclick="console.log('📱 모바일 하이브 챌린지 클릭됨!');setTimeout(function(){showMobileHiveChallengePopup();},100);setTimeout(function(){window.closeMobileMenu();},200);return false;" ontouchend="console.log('📱 모바일 하이브 챌린지 터치됨!');setTimeout(function(){showMobileHiveChallengePopup();},100);setTimeout(function(){window.closeMobileMenu();},200);return false;" style="display: block !important; padding: 18px 20px !important; color: #ff6c79 !important; text-decoration: none !important; border-bottom: 1px solid rgba(255,108,121,0.3) !important; font-size: 18px !important; background-color: #000000 !important; position: relative !important; z-index: 2147483647 !important; font-weight: 600 !important; text-shadow: 0 0 5px #ff6c79, 0 0 10px #ff6c79 !important; -webkit-tap-highlight-color: rgba(255,108,121,0.3) !important;">하이브 챌린지</a>
-        <a href="javascript:void(0)" onclick="openForm();window.closeMobileMenu();return false;" style="display: block !important; padding: 18px 20px !important; color: #7BE495 !important; text-decoration: none !important; font-weight: 600 !important; font-size: 18px !important; background-color: #000000 !important; position: relative !important; z-index: 2147483647 !important; border-bottom: 3px solid #7BE495 !important; box-shadow: 0 3px 8px rgba(123, 228, 149, 0.3) !important;">무료 체험하기</a>
-      `;
-      
-      // body의 가장 마지막에 추가
-      document.body.appendChild(dropdown);
-      console.log('드롭다운 생성 완료', dropdown);
-    }
-    
+    console.log('🎯 toggleNav 호출됨');
+
+    // 기존 static 메뉴 사용
+    const mobileMenu = document.getElementById('simple-mobile-menu');
     const btn = document.querySelector('.nav-menu-btn');
-    
+
+    if (!mobileMenu) {
+      console.log('❌ simple-mobile-menu 요소를 찾을 수 없음');
+      return;
+    }
+
     // 현재 상태 확인
-    const currentDisplay = window.getComputedStyle(dropdown).display;
-    console.log('현재 드롭다운 display:', currentDisplay);
-    console.log('드롭다운 위치:', dropdown.getBoundingClientRect());
-    
+    const currentDisplay = window.getComputedStyle(mobileMenu).display;
+    console.log('📱 현재 모바일 메뉴 display:', currentDisplay);
+
     // 토글 동작
     if (currentDisplay === 'none') {
       // 메뉴 열기
-      console.log('드롭다운 메뉴 열기');
-      dropdown.style.setProperty('display', 'block', 'important');
-      dropdown.style.setProperty('opacity', '0', 'important');
-      dropdown.style.setProperty('transform', 'translateY(-20px)', 'important');
-      dropdown.style.setProperty('transition', 'opacity 0.3s ease-out, transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)', 'important');
-      
+      console.log('🟢 모바일 메뉴 열기');
+      mobileMenu.style.setProperty('display', 'block', 'important');
+      mobileMenu.style.setProperty('opacity', '0', 'important');
+      mobileMenu.style.setProperty('transform', 'translateY(-20px)', 'important');
+      mobileMenu.style.setProperty('transition', 'opacity 0.3s ease-out, transform 0.3s ease-out', 'important');
+
       // 애니메이션 트리거
       setTimeout(() => {
-        dropdown.style.setProperty('opacity', '1', 'important');
-        dropdown.style.setProperty('transform', 'translateY(0)', 'important');
+        mobileMenu.style.setProperty('opacity', '1', 'important');
+        mobileMenu.style.setProperty('transform', 'translateY(0)', 'important');
       }, 10);
-      
+
       // 버튼 X로 변경
       if (btn) {
         btn.innerHTML = '✕';
         btn.style.fontSize = '20px';
+        console.log('🔄 햄버거 버튼을 X로 변경');
       }
-      
+
       // 메뉴 아이템 애니메이션
-      const menuItems = dropdown.querySelectorAll('a');
+      const menuItems = mobileMenu.querySelectorAll('a');
       menuItems.forEach((item, index) => {
         item.style.setProperty('opacity', '0', 'important');
         item.style.setProperty('transform', 'translateX(-20px)', 'important');
         item.style.setProperty('transition', 'opacity 0.3s ease-out, transform 0.3s ease-out', 'important');
-        
+
         setTimeout(() => {
           item.style.setProperty('opacity', '1', 'important');
           item.style.setProperty('transform', 'translateX(0)', 'important');
@@ -9289,42 +9326,85 @@ if (window.innerWidth <= 768) {
       });
     } else {
       // 메뉴 닫기
-      console.log('드롭다운 메뉴 닫기');
-      dropdown.style.setProperty('opacity', '0', 'important');
-      dropdown.style.setProperty('transform', 'translateY(-20px)', 'important');
-      
+      console.log('🔴 모바일 메뉴 닫기');
+      mobileMenu.style.setProperty('opacity', '0', 'important');
+      mobileMenu.style.setProperty('transform', 'translateY(-20px)', 'important');
+
       // 애니메이션 후 숨기기
       setTimeout(() => {
-        dropdown.style.setProperty('display', 'none', 'important');
+        mobileMenu.style.setProperty('display', 'none', 'important');
       }, 300);
-      
+
       // 버튼 원래대로
       if (btn) {
         btn.innerHTML = '&#9776;';
         btn.style.fontSize = '24px';
+        console.log('🔄 X 버튼을 햄버거로 변경');
       }
     }
   }
   
   // 메뉴 닫기 함수
   window.closeMobileMenu = function() {
-    const dropdown = document.getElementById('mobile-dropdown-overlay');
+    console.log('🎯 closeMobileMenu 호출됨');
+
+    const mobileMenu = document.getElementById('simple-mobile-menu');
     const btn = document.querySelector('.nav-menu-btn');
-    
-    if (dropdown) {
-      dropdown.style.setProperty('opacity', '0', 'important');
-      dropdown.style.setProperty('transform', 'translateY(-20px)', 'important');
-      
+
+    if (mobileMenu) {
+      console.log('🔴 모바일 메뉴 닫기');
+      mobileMenu.style.setProperty('opacity', '0', 'important');
+      mobileMenu.style.setProperty('transform', 'translateY(-20px)', 'important');
+
       setTimeout(() => {
-        dropdown.style.display = 'none';
+        mobileMenu.style.setProperty('display', 'none', 'important');
+        console.log('💤 모바일 메뉴 숨김 완료');
       }, 300);
     }
-    
+
     if (btn) {
       btn.innerHTML = '&#9776;';
       btn.style.fontSize = '24px';
+      console.log('🔄 버튼을 햄버거로 변경');
     }
   }
+
+  // 모바일 메뉴 배경 클릭시 닫기 기능 추가
+  document.addEventListener('DOMContentLoaded', function() {
+    const mobileMenu = document.getElementById('simple-mobile-menu');
+    if (mobileMenu) {
+      // 배경 클릭시 메뉴 닫기
+      mobileMenu.addEventListener('click', function(e) {
+        if (e.target === mobileMenu) {
+          console.log('📱 모바일 메뉴 배경 클릭 - 메뉴 닫기');
+          closeMobileMenu();
+        }
+      });
+
+      // 터치 이벤트도 추가
+      mobileMenu.addEventListener('touchend', function(e) {
+        if (e.target === mobileMenu) {
+          console.log('👆 모바일 메뉴 배경 터치 - 메뉴 닫기');
+          closeMobileMenu();
+        }
+      });
+
+      console.log('✅ 모바일 메뉴 배경 클릭/터치 이벤트 등록 완료');
+    }
+
+    // ESC 키로 메뉴 닫기
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        const mobileMenu = document.getElementById('simple-mobile-menu');
+        if (mobileMenu && window.getComputedStyle(mobileMenu).display !== 'none') {
+          console.log('⌨️ ESC 키로 모바일 메뉴 닫기');
+          closeMobileMenu();
+        }
+      }
+    });
+
+    console.log('🎯 모바일 네비게이션 이벤트 핸들러 강화 완료');
+  });
   
   window.closeNav = function() {
     const menu = document.getElementById('nav-menu');
@@ -10281,17 +10361,16 @@ document.addEventListener('DOMContentLoaded', function() {
             right: 0;
             bottom: 0;
             border-radius: 20px;
-            border: 2px solid rgba(248, 113, 113, 0.8);
+            border: 1px solid rgba(248, 113, 113, 0.5);
             background: linear-gradient(135deg,
-              rgba(248, 113, 113, 0.2) 0%,
+              rgba(248, 113, 113, 0.15) 0%,
               transparent 40%,
               transparent 60%,
-              rgba(248, 113, 113, 0.2) 100%);
+              rgba(248, 113, 113, 0.15) 100%);
             pointer-events: none;
             z-index: 10;
-            box-shadow: inset 0 0 40px rgba(248, 113, 113, 0.4),
-                        0 0 80px rgba(248, 113, 113, 0.5),
-                        0 0 20px rgba(248, 113, 113, 0.3);
+            box-shadow: inset 0 0 30px rgba(248, 113, 113, 0.2),
+                        0 0 60px rgba(248, 113, 113, 0.3);
           `;
           this.querySelector('.card-front').appendChild(glassOverlay);
           
@@ -10302,27 +10381,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
           // CSS 클래스로 확대 효과 및 UI 숨김 적용 (PC)
           this.classList.add('video-playing-boost');
-
-          // 강제로 확대 효과 적용 (기존 transform 보존하면서 scale 추가)
-          setTimeout(() => {
-            const currentTransform = this.style.transform || '';
-            let newTransform;
-
-            if (currentTransform && !currentTransform.includes('scale')) {
-              // 기존 transform이 있으면 scale만 추가
-              newTransform = currentTransform + ' scale(1.1)';
-            } else if (currentTransform.includes('scale')) {
-              // 이미 scale이 있으면 교체
-              newTransform = currentTransform.replace(/scale\([^)]*\)/g, 'scale(1.1)');
-            } else {
-              // 기존 transform이 없으면 scale만 적용
-              newTransform = 'scale(1.1)';
-            }
-
-            this.style.setProperty('transform', newTransform, 'important');
-            this.style.setProperty('transition', 'all 0.3s ease', 'important');
-            this.style.setProperty('z-index', '1000', 'important');
-          }, 10);
 
           // 콘텐츠와 CLICK 버튼 숨기기
           boostContent.style.opacity = '0';
@@ -10346,24 +10404,12 @@ document.addEventListener('DOMContentLoaded', function() {
             // CSS 클래스 제거로 확대 효과 및 UI 요소 복원 (PC)
             boostCard.classList.remove('video-playing-boost');
 
-            // 강제 transform에서 scale만 제거하고 나머지는 유지
-            const currentTransform = boostCard.style.transform || '';
-            if (currentTransform.includes('scale')) {
-              const transformWithoutScale = currentTransform.replace(/\s*scale\([^)]*\)\s*/g, '').trim();
-              if (transformWithoutScale) {
-                boostCard.style.setProperty('transform', transformWithoutScale, 'important');
-              } else {
-                boostCard.style.removeProperty('transform');
-              }
-            }
-            boostCard.style.removeProperty('z-index');
-
             boostContent.style.opacity = '1';
             if (boostClickIndicator) {
               boostClickIndicator.style.opacity = '1';
             }
             isBoostVideoPlaying = false;
-          });
+          }, { once: true });
         } else {
           // 비디오 정지
           boostVideo.style.opacity = '0';
@@ -10379,18 +10425,7 @@ document.addEventListener('DOMContentLoaded', function() {
           // CSS 클래스 제거로 확대 효과 및 UI 요소 복원 (PC)
           this.classList.remove('video-playing-boost');
 
-          // 강제 transform에서 scale만 제거하고 나머지는 유지
-          const currentTransform = this.style.transform || '';
-          if (currentTransform.includes('scale')) {
-            const transformWithoutScale = currentTransform.replace(/\s*scale\([^)]*\)\s*/g, '').trim();
-            if (transformWithoutScale) {
-              this.style.setProperty('transform', transformWithoutScale, 'important');
-            } else {
-              this.style.removeProperty('transform');
-            }
-          }
-          this.style.removeProperty('z-index');
-
+          // 콘텐츠와 CLICK 버튼 다시 보이기
           boostContent.style.opacity = '1';
           if (boostClickIndicator) {
             boostClickIndicator.style.opacity = '1';
@@ -17958,6 +17993,121 @@ setTimeout(function() {
 }
 
 </style>
+
+<script>
+// PC 네비게이션 이벤트 핸들러 - 강력한 방식
+(function() {
+  function setupNavigation() {
+    console.log('네비게이션 설정 시작');
+
+    // PC 환경에서만 실행
+    if (window.innerWidth <= 768) {
+      console.log('모바일 환경 - PC 네비게이션 건너뛰기');
+      return;
+    }
+
+    const navItems = document.querySelectorAll('.desktop-nav span[data-section], .desktop-nav span[data-action]');
+    console.log('찾은 네비게이션 아이템:', navItems.length);
+
+    navItems.forEach((item, index) => {
+      console.log(`네비게이션 아이템 ${index}:`, item.textContent, item.getAttribute('data-section'), item.getAttribute('data-action'));
+
+      // 기존 이벤트 제거
+      item.removeEventListener('click', handleNavClick);
+
+      // 새로운 이벤트 추가
+      item.addEventListener('click', handleNavClick);
+
+      // 추가 보장을 위한 인라인 핸들러
+      item.onclick = handleNavClick;
+    });
+  }
+
+  function handleNavClick(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    console.log('네비게이션 클릭됨:', this.textContent);
+
+    const section = this.getAttribute('data-section');
+    const action = this.getAttribute('data-action');
+
+    if (section) {
+      console.log('섹션으로 스크롤:', section);
+
+      // 섹션 매핑
+      let targetId = section;
+      if (section === 'neo-pilates') {
+        targetId = 'neo-pilates'; // 이미 올바른 ID
+      } else if (section === 'neofit-training') {
+        targetId = 'neofit-training'; // 이미 올바른 ID
+      }
+
+      const targetElement = document.getElementById(targetId);
+      console.log('타겟 엘리먼트:', targetElement);
+
+      if (targetElement) {
+        // 부드러운 스크롤
+        targetElement.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+
+        // 백업 방법
+        setTimeout(() => {
+          const elementTop = targetElement.offsetTop;
+          window.scrollTo({
+            top: elementTop - 80,
+            behavior: 'smooth'
+          });
+        }, 100);
+      } else {
+        console.error('타겟 엘리먼트를 찾을 수 없음:', targetId);
+      }
+
+    } else if (action) {
+      console.log('액션 실행:', action);
+
+      if (action === 'hive-challenge') {
+        // 하이브 챌린지 팝업
+        if (typeof showHiveChallengePopup === 'function') {
+          showHiveChallengePopup();
+        } else if (typeof showMobileHiveChallengePopup === 'function') {
+          showMobileHiveChallengePopup();
+        } else {
+          console.log('하이브 챌린지 함수를 찾을 수 없음');
+        }
+      } else if (action === 'form') {
+        // 무료 체험신청 폼
+        if (typeof showForm === 'function') {
+          showForm();
+        } else if (typeof openForm === 'function') {
+          openForm();
+        } else {
+          console.log('폼 함수를 찾을 수 없음');
+        }
+      }
+    }
+
+    return false;
+  }
+
+  // 즉시 실행
+  setupNavigation();
+
+  // DOM 로드 후 재실행
+  document.addEventListener('DOMContentLoaded', setupNavigation);
+
+  // 페이지 완전 로드 후 재실행
+  window.addEventListener('load', setupNavigation);
+
+  // 1초 후 재실행 (다른 스크립트 대응)
+  setTimeout(setupNavigation, 1000);
+
+  // 3초 후 재실행 (최종 보장)
+  setTimeout(setupNavigation, 3000);
+})();
+</script>
 
 
 </html> 
