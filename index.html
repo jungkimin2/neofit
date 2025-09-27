@@ -18110,28 +18110,58 @@ setTimeout(function() {
     background: #000 !important;
   }
 
-  /* 모바일에서 모든 비디오 카드를 페이지 최상위로 강제 이동 */
+  /* 모바일에서 모든 비디오 카드를 페이지 최상위로 강제 이동 - 더 작은 크기로 */
   #sync-card.video-playing-sync,
   #balance-card.video-playing-balance,
   #boost-card.video-playing-boost {
     position: fixed !important;
     top: 50% !important;
     left: 50% !important;
-    transform: translateX(-50%) translateY(-50%) scale(1.1) !important;
+    transform: translateX(-50%) translateY(-50%) scale(0.9) !important;
     z-index: 2147483647 !important;
     transition: all 0.3s ease !important;
-    width: 350px !important;
-    height: 450px !important;
+    width: 320px !important;
+    height: 400px !important;
     margin: 0 !important;
+    max-width: 90vw !important;
+    max-height: 90vh !important;
   }
 
-  /* NEO HIVE 섹션을 비디오 재생 중에 숨김 */
+  /* NEO HIVE 섹션을 비디오 재생 중에 완전히 숨김 */
   body.video-playing #hive,
   body.video-playing section#hive,
   .video-playing #hive,
   .video-playing section#hive {
+    display: none !important;
+    visibility: hidden !important;
+    z-index: -1 !important;
+    position: relative !important;
+  }
+
+  /* 모든 페이지 요소를 비디오 재생 중에 숨김 */
+  body.video-playing > *:not(.training-cards-container):not(style):not(script),
+  body.video-playing section:not(.training-cards-container *),
+  body.video-playing .section:not(.training-cards-container *),
+  body.video-playing header,
+  body.video-playing nav,
+  body.video-playing footer,
+  body.video-playing .desktop-nav,
+  body.video-playing .mobile-nav {
     z-index: 1 !important;
     position: relative !important;
+  }
+
+  /* 비디오 재생 중 전체 배경을 어둡게 */
+  body.video-playing::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 1000;
+    pointer-events: none;
   }
 
   /* 비디오 자체는 최고 우선순위 */
