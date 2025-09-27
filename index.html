@@ -4163,7 +4163,7 @@ document.addEventListener('DOMContentLoaded', function() {
   </div>
 </section>
 
-<section id="hive" class="section animate-on-scroll" style="background:#000; padding-top:24px; padding-bottom: 100px; margin-top: 200px;">
+<section id="hive" class="section animate-on-scroll" style="background:#000; padding-top:24px; padding-bottom: 100px;">
   <div class="container" style="text-align:center; padding-top:0; max-width: 1100px; margin: 0 auto; padding: 0 20px;">
     <h2 style="font-size: 2rem; text-align: left; color: #FFFFFF; margin-top:0;">
       네오 하이브 : <span class="neon-green">"하나되는 우리"</span>
@@ -18050,6 +18050,11 @@ setTimeout(function() {
     margin: 0 !important;
     max-width: 90vw !important;
     max-height: 70vh !important;
+  }
+
+  /* 모바일에서만 NEO HIVE 섹션을 아래로 이동 */
+  section#hive {
+    margin-top: 200px !important;
   }
 
   /* 비디오 자체는 최고 우선순위 */
