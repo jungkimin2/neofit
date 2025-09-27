@@ -17987,14 +17987,19 @@ setTimeout(function() {
 <!-- NEO BOOST 비디오 재생 시 UI 숨김을 위한 CSS -->
 <style>
 @media (max-width: 768px) {
-  /* 네오 부스트 카드 모바일 확대 효과 - 최고 z-index로 다른 요소들 위에 표시 */
+  /* 네오 부스트 카드 모바일 확대 효과 - 페이지 최상위로 강제 이동 */
   html body .training-cards-container #boost-card.video-playing-boost,
   html body #boost-card.video-playing-boost.active,
   html body #boost-card.video-playing-boost {
-    transform: scale(1.1) !important;
-    z-index: 9999 !important;
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translateX(-50%) translateY(-50%) scale(1.1) !important;
+    z-index: 2147483647 !important;
     transition: all 0.3s ease !important;
-    position: relative !important;
+    width: 350px !important;
+    height: 450px !important;
+    margin: 0 !important;
   }
 
   /* 비디오 재생 중 모든 UI 요소 강제 숨김 - 최고 우선순위 */
@@ -18030,19 +18035,25 @@ setTimeout(function() {
     background: #000 !important;
   }
 
-  /* 모바일에서 비디오 재생 시 다른 모든 요소들보다 위에 표시 */
-  #boost-card.video-playing-boost,
+  /* 모바일에서 모든 비디오 카드를 페이지 최상위로 강제 이동 */
   #sync-card.video-playing-sync,
   #balance-card.video-playing-balance {
-    z-index: 999999 !important;
-    position: relative !important;
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translateX(-50%) translateY(-50%) scale(1.1) !important;
+    z-index: 2147483647 !important;
+    transition: all 0.3s ease !important;
+    width: 350px !important;
+    height: 450px !important;
+    margin: 0 !important;
   }
 
   /* 비디오 자체는 최고 우선순위 */
   .boost-hover-video.playing,
   .sync-hover-video.playing,
   .balance-hover-video.playing {
-    z-index: 9999999 !important;
+    z-index: 2147483647 !important;
   }
 }
 
@@ -18323,9 +18334,18 @@ body #boost-card.video-playing-boost .boost-hover-video {
   background: #000 !important;
 }
 
-/* 네오 부스트 비디오 재생 시 카드 테두리 숨김 - 글래스 오버레이만 표시 */
-body #boost-card.video-playing-boost .card-front {
-  border: none !important;
+/* 네오 부스트 비디오 재생 시 빨간 테두리 유지 - 모바일에서만 적용 */
+@media (max-width: 768px) {
+  body #boost-card.video-playing-boost .card-front {
+    border: 2px solid #F87171 !important;
+  }
+}
+
+/* PC에서는 글래스 오버레이만 표시 */
+@media (min-width: 769px) {
+  body #boost-card.video-playing-boost .card-front {
+    border: none !important;
+  }
 }
 </style>
 
