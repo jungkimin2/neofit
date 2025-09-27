@@ -17987,13 +17987,14 @@ setTimeout(function() {
 <!-- NEO BOOST 비디오 재생 시 UI 숨김을 위한 CSS -->
 <style>
 @media (max-width: 768px) {
-  /* 네오 부스트 카드 모바일 확대 효과 - PC와 동일하게 간단히 */
+  /* 네오 부스트 카드 모바일 확대 효과 - 최고 z-index로 다른 요소들 위에 표시 */
   html body .training-cards-container #boost-card.video-playing-boost,
   html body #boost-card.video-playing-boost.active,
   html body #boost-card.video-playing-boost {
     transform: scale(1.1) !important;
-    z-index: 100 !important;
+    z-index: 9999 !important;
     transition: all 0.3s ease !important;
+    position: relative !important;
   }
 
   /* 비디오 재생 중 모든 UI 요소 강제 숨김 - 최고 우선순위 */
@@ -18013,12 +18014,12 @@ setTimeout(function() {
     z-index: -1 !important;
   }
 
-  /* 비디오만 표시 */
+  /* 비디오만 표시 - 최고 z-index로 모든 요소 위에 표시 */
   body #boost-card.video-playing-boost .boost-hover-video {
     opacity: 1 !important;
     visibility: visible !important;
     display: block !important;
-    z-index: 9999 !important;
+    z-index: 99999 !important;
     position: absolute !important;
     top: 10px !important;
     left: 10px !important;
@@ -18027,6 +18028,21 @@ setTimeout(function() {
     object-fit: cover !important;
     border-radius: 16px !important;
     background: #000 !important;
+  }
+
+  /* 모바일에서 비디오 재생 시 다른 모든 요소들보다 위에 표시 */
+  #boost-card.video-playing-boost,
+  #sync-card.video-playing-sync,
+  #balance-card.video-playing-balance {
+    z-index: 999999 !important;
+    position: relative !important;
+  }
+
+  /* 비디오 자체는 최고 우선순위 */
+  .boost-hover-video.playing,
+  .sync-hover-video.playing,
+  .balance-hover-video.playing {
+    z-index: 9999999 !important;
   }
 }
 
