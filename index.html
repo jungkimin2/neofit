@@ -9273,69 +9273,92 @@ if (window.innerWidth <= 768) {
     }
   });
   
-  // 모바일 네비게이션 함수
+  // 자연스러운 모바일 드롭다운 네비게이션 함수
   window.toggleNav = function() {
     console.log('🎯 toggleNav 호출됨');
 
     try {
-      const mobileMenu = document.getElementById('simple-mobile-menu');
       const btn = document.querySelector('.nav-menu-btn');
 
-      if (!mobileMenu) {
-        console.log('❌ simple-mobile-menu 요소를 찾을 수 없음');
-        return;
+      // 기존 드롭다운이 있는지 확인
+      let dropdown = document.getElementById('mobile-nav-dropdown');
+
+      if (!dropdown) {
+        // 드롭다운이 없으면 생성
+        console.log('📋 새로운 모바일 드롭다운 생성');
+        dropdown = document.createElement('div');
+        dropdown.id = 'mobile-nav-dropdown';
+        dropdown.style.cssText = `
+          position: fixed !important;
+          top: 48px !important;
+          left: 0 !important;
+          right: 0 !important;
+          background: #000000 !important;
+          z-index: 999999999 !important;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.8) !important;
+          transform: translateY(-100%) !important;
+          transition: transform 0.3s ease-out !important;
+          opacity: 0 !important;
+          visibility: hidden !important;
+        `;
+
+        // 메뉴 아이템들 추가
+        dropdown.innerHTML = `
+          <a href="javascript:void(0)" onclick="handleNavigation('neofit-training', 'section'); closeDropdown(); return false;" style="display: block; padding: 18px 20px; color: #ffffff; text-decoration: none; border-bottom: 1px solid rgba(123,228,149,0.2); font-size: 18px; background: #000; transition: background 0.2s;">네오핏</a>
+          <a href="https://neofit-s.oopy.io/NEOFIT-S" onclick="window.open('https://neofit-s.oopy.io/NEOFIT-S', '_blank'); closeDropdown(); return false;" style="display: block; padding: 18px 20px; color: #ffffff; text-decoration: none; border-bottom: 1px solid rgba(123,228,149,0.2); font-size: 18px; background: #000; transition: background 0.2s;">네오핏 운동가이드</a>
+          <a href="javascript:void(0)" onclick="handleNavigation('hive', 'section'); closeDropdown(); return false;" style="display: block; padding: 18px 20px; color: #ffffff; text-decoration: none; border-bottom: 1px solid rgba(123,228,149,0.2); font-size: 18px; background: #000; transition: background 0.2s;">네오 하이브</a>
+          <a href="javascript:void(0)" onclick="handleNavigation('smart', 'section'); closeDropdown(); return false;" style="display: block; padding: 18px 20px; color: #ffffff; text-decoration: none; border-bottom: 1px solid rgba(123,228,149,0.2); font-size: 18px; background: #000; transition: background 0.2s;">네오 스마트</a>
+          <a href="javascript:void(0)" onclick="handleNavigation('neo-pilates', 'section'); closeDropdown(); return false;" style="display: block; padding: 18px 20px; color: #ffffff; text-decoration: none; border-bottom: 1px solid rgba(123,228,149,0.2); font-size: 18px; background: #000; transition: background 0.2s;">네오 필라테스</a>
+          <a href="javascript:void(0)" onclick="openForm(); closeDropdown(); return false;" style="display: block; padding: 18px 20px; color: #7BE495; text-decoration: none; font-weight: 600; font-size: 18px; background: #000; border-bottom: 3px solid #7BE495; box-shadow: 0 3px 8px rgba(123, 228, 149, 0.3); transition: background 0.2s;">무료 체험하기</a>
+        `;
+
+        // hover 효과 추가
+        const menuItems = dropdown.querySelectorAll('a');
+        menuItems.forEach(item => {
+          item.addEventListener('mouseenter', function() {
+            this.style.background = '#222';
+          });
+          item.addEventListener('mouseleave', function() {
+            this.style.background = '#000';
+          });
+        });
+
+        // body에 추가
+        document.body.appendChild(dropdown);
+        console.log('✅ 모바일 드롭다운 생성 완료');
       }
 
-      // 현재 상태 확인
-      const currentDisplay = window.getComputedStyle(mobileMenu).display;
-      console.log('📱 현재 모바일 메뉴 display:', currentDisplay);
+      // 현재 상태 확인 (transform 기준)
+      const currentTransform = dropdown.style.transform;
+      const isHidden = currentTransform.includes('translateY(-100%)') || currentTransform === '';
 
-      // 토글 동작
-      if (currentDisplay === 'none') {
-        // 메뉴 열기
-        console.log('🟢 모바일 메뉴 열기');
-
-        // 메뉴 스타일 적용 (기존 HTML 구조 유지)
-        mobileMenu.style.setProperty('display', 'block', 'important');
-        mobileMenu.style.setProperty('position', 'fixed', 'important');
-        mobileMenu.style.setProperty('top', '0', 'important');
-        mobileMenu.style.setProperty('left', '0', 'important');
-        mobileMenu.style.setProperty('right', '0', 'important');
-        mobileMenu.style.setProperty('bottom', '0', 'important');
-        mobileMenu.style.setProperty('background', 'rgba(0,0,0,0.95)', 'important');
-        mobileMenu.style.setProperty('z-index', '2147483646', 'important');
-        mobileMenu.style.setProperty('opacity', '1', 'important');
-        mobileMenu.style.setProperty('visibility', 'visible', 'important');
-
-        // 메뉴 내용도 보이게 설정
-        const menuContent = mobileMenu.querySelector('.mobile-menu-content');
-        if (menuContent) {
-          menuContent.style.setProperty('display', 'block', 'important');
-          menuContent.style.setProperty('position', 'fixed', 'important');
-          menuContent.style.setProperty('top', '51px', 'important');
-          menuContent.style.setProperty('left', '0', 'important');
-          menuContent.style.setProperty('right', '0', 'important');
-          menuContent.style.setProperty('background', '#000', 'important');
-          menuContent.style.setProperty('z-index', '2147483647', 'important');
-        }
+      if (isHidden) {
+        // 메뉴 열기 - 자연스럽게 아래로 슬라이드
+        console.log('🟢 모바일 드롭다운 열기');
+        dropdown.style.visibility = 'visible';
+        dropdown.style.opacity = '1';
+        dropdown.style.transform = 'translateY(0)';
 
         // 버튼 X로 변경
         if (btn) {
           btn.innerHTML = '✕';
           btn.style.fontSize = '20px';
-          console.log('🔄 햄버거 버튼을 X로 변경');
         }
-
       } else {
-        // 메뉴 닫기
-        console.log('🔴 모바일 메뉴 닫기');
-        mobileMenu.style.setProperty('display', 'none', 'important');
+        // 메뉴 닫기 - 자연스럽게 위로 슬라이드
+        console.log('🔴 모바일 드롭다운 닫기');
+        dropdown.style.transform = 'translateY(-100%)';
+        dropdown.style.opacity = '0';
+
+        // 애니메이션 완료 후 숨기기
+        setTimeout(() => {
+          dropdown.style.visibility = 'hidden';
+        }, 300);
 
         // 버튼 원래대로
         if (btn) {
           btn.innerHTML = '&#9776;';
           btn.style.fontSize = '24px';
-          console.log('🔄 X 버튼을 햄버거로 변경');
         }
       }
 
@@ -9343,80 +9366,51 @@ if (window.innerWidth <= 768) {
       console.error('🚨 toggleNav 오류:', error);
     }
   }
-  
-  // 메뉴 닫기 함수
-  window.closeMobileMenu = function() {
-    console.log('🎯 closeMobileMenu 호출됨');
 
-    const mobileMenu = document.getElementById('simple-mobile-menu');
+  // 드롭다운 닫기 함수
+  window.closeDropdown = function() {
+    console.log('🎯 closeDropdown 호출됨');
+    const dropdown = document.getElementById('mobile-nav-dropdown');
     const btn = document.querySelector('.nav-menu-btn');
 
-    if (mobileMenu) {
-      console.log('🔴 모바일 메뉴 닫기');
-      mobileMenu.style.setProperty('display', 'none', 'important');
+    if (dropdown) {
+      dropdown.style.transform = 'translateY(-100%)';
+      dropdown.style.opacity = '0';
+      setTimeout(() => {
+        dropdown.style.visibility = 'hidden';
+      }, 300);
     }
 
     if (btn) {
       btn.innerHTML = '&#9776;';
       btn.style.fontSize = '24px';
-      console.log('🔄 버튼을 햄버거로 변경');
     }
   }
+  
+  // 메뉴 닫기 함수 (호환성 유지)
+  window.closeMobileMenu = function() {
+    console.log('🎯 closeMobileMenu 호출됨 - closeDropdown으로 리다이렉트');
+    closeDropdown();
+  }
 
-  // 🚨 강화된 모바일 메뉴 이벤트 설정
+  // 모바일 드롭다운 이벤트 설정
   document.addEventListener('DOMContentLoaded', function() {
-    console.log('🚀 DOMContentLoaded - 모바일 네비게이션 설정 시작');
+    console.log('🚀 DOMContentLoaded - 모바일 드롭다운 설정 시작');
 
-    const mobileMenu = document.getElementById('simple-mobile-menu');
     const mobileNavBtn = document.querySelector('.nav-menu-btn');
-
-    console.log('🔍 DOMContentLoaded 요소 검색:');
-    console.log('- mobileMenu:', mobileMenu);
-    console.log('- mobileNavBtn:', mobileNavBtn);
-
-    // 추가 보안: 버튼에 직접 이벤트 리스너 추가 (onclick 백업)
-    if (mobileNavBtn) {
-      // onclick이 작동하지 않을 경우를 대비한 백업 이벤트 리스너
-      mobileNavBtn.addEventListener('click', function(e) {
-        // onclick이 먼저 실행되고, 실패했을 경우에만 이것이 실행됨
-        setTimeout(() => {
-          const menu = document.getElementById('simple-mobile-menu');
-          if (menu && window.getComputedStyle(menu).display === 'none') {
-            console.log('🔄 onclick 백업: 직접 이벤트 리스너 실행');
-            toggleNav(); // onclick이 실패했으므로 수동으로 함수 호출
-          }
-        }, 50);
-      });
-
-      console.log('✅ 모바일 네비게이션 버튼 백업 이벤트 리스너 등록 완료');
-    }
-
-    if (mobileMenu) {
-      // 배경 클릭시 메뉴 닫기
-      mobileMenu.addEventListener('click', function(e) {
-        if (e.target === mobileMenu) {
-          console.log('📱 모바일 메뉴 배경 클릭 - 메뉴 닫기');
-          mobileMenu.style.display = 'none';
-          if (mobileNavBtn) mobileNavBtn.innerHTML = '&#9776;';
-        }
-      });
-
-      console.log('✅ 모바일 메뉴 배경 클릭 이벤트 등록 완료');
-    }
 
     // ESC 키로 메뉴 닫기
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') {
-        const mobileMenu = document.getElementById('simple-mobile-menu');
-        if (mobileMenu && window.getComputedStyle(mobileMenu).display !== 'none') {
-          console.log('⌨️ ESC 키로 모바일 메뉴 닫기');
-          mobileMenu.style.display = 'none';
-          if (mobileNavBtn) mobileNavBtn.innerHTML = '&#9776;';
+        const dropdown = document.getElementById('mobile-nav-dropdown');
+        if (dropdown && !dropdown.style.transform.includes('translateY(-100%)')) {
+          console.log('⌨️ ESC 키로 모바일 드롭다운 닫기');
+          closeDropdown();
         }
       }
     });
 
-    console.log('🎯 모바일 네비게이션 이벤트 핸들러 강화 완료');
+    console.log('🎯 모바일 드롭다운 이벤트 핸들러 설정 완료');
   });
   
   window.closeNav = function() {
