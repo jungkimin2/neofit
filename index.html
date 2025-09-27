@@ -9302,42 +9302,51 @@ if (window.innerWidth <= 768) {
           visibility: hidden !important;
         `;
 
-        // 메뉴 아이템들 추가 (그린 터치 효과 및 완벽한 텍스트 정렬)
+        // 메뉴 아이템들 추가 (완벽한 텍스트 중앙 정렬 및 그린 터치 효과)
+        const menuItemStyle = "display: flex; align-items: center; justify-content: flex-start; padding: 0; margin: 0; color: #ffffff; text-decoration: none; border-bottom: 1px solid rgba(123,228,149,0.2); font-size: 18px; background: #000; transition: background 0.3s ease; height: 54px; line-height: 54px; -webkit-tap-highlight-color: rgba(123, 228, 149, 0.3); box-sizing: border-box;";
+        const menuTextStyle = "display: block; width: 100%; height: 54px; line-height: 54px; padding: 0 20px; margin: 0; text-align: left; vertical-align: middle;";
+
         dropdown.innerHTML = `
-          <a href="javascript:void(0)" onclick="handleNavigation('neofit-training', 'section'); closeDropdown(); return false;" style="display: flex; align-items: center; justify-content: flex-start; padding: 18px 20px; color: #ffffff; text-decoration: none; border-bottom: 1px solid rgba(123,228,149,0.2); font-size: 18px; background: #000; transition: background 0.3s ease; min-height: 54px; line-height: 1; -webkit-tap-highlight-color: rgba(123, 228, 149, 0.3);">네오핏</a>
-          <a href="https://neofit-s.oopy.io/NEOFIT-S" onclick="window.open('https://neofit-s.oopy.io/NEOFIT-S', '_blank'); closeDropdown(); return false;" style="display: flex; align-items: center; justify-content: flex-start; padding: 18px 20px; color: #ffffff; text-decoration: none; border-bottom: 1px solid rgba(123,228,149,0.2); font-size: 18px; background: #000; transition: background 0.3s ease; min-height: 54px; line-height: 1; -webkit-tap-highlight-color: rgba(123, 228, 149, 0.3);">네오핏 운동가이드</a>
-          <a href="javascript:void(0)" onclick="handleNavigation('hive', 'section'); closeDropdown(); return false;" style="display: flex; align-items: center; justify-content: flex-start; padding: 18px 20px; color: #ffffff; text-decoration: none; border-bottom: 1px solid rgba(123,228,149,0.2); font-size: 18px; background: #000; transition: background 0.3s ease; min-height: 54px; line-height: 1; -webkit-tap-highlight-color: rgba(123, 228, 149, 0.3);">네오 하이브</a>
-          <a href="javascript:void(0)" onclick="handleNavigation('smart', 'section'); closeDropdown(); return false;" style="display: flex; align-items: center; justify-content: flex-start; padding: 18px 20px; color: #ffffff; text-decoration: none; border-bottom: 1px solid rgba(123,228,149,0.2); font-size: 18px; background: #000; transition: background 0.3s ease; min-height: 54px; line-height: 1; -webkit-tap-highlight-color: rgba(123, 228, 149, 0.3);">네오 스마트</a>
-          <a href="javascript:void(0)" onclick="handleNavigation('neo-pilates', 'section'); closeDropdown(); return false;" style="display: flex; align-items: center; justify-content: flex-start; padding: 18px 20px; color: #ffffff; text-decoration: none; border-bottom: 1px solid rgba(123,228,149,0.2); font-size: 18px; background: #000; transition: background 0.3s ease; min-height: 54px; line-height: 1; -webkit-tap-highlight-color: rgba(123, 228, 149, 0.3);">네오 필라테스</a>
-          <a href="javascript:void(0)" onclick="console.log('📱 모바일 하이브 챌린지 클릭!'); if(typeof showHiveChallengePopup === 'function') showHiveChallengePopup(); else console.log('하이브 챌린지 팝업 함수 없음'); closeDropdown(); return false;" style="display: flex; align-items: center; justify-content: flex-start; padding: 18px 20px; color: #ff6c79; text-decoration: none; border-bottom: 1px solid rgba(255,108,121,0.3); font-size: 18px; background: #000; transition: background 0.3s ease; min-height: 54px; line-height: 1; font-weight: 600; text-shadow: 0 0 5px #ff6c79, 0 0 10px #ff6c79; -webkit-tap-highlight-color: rgba(255, 108, 121, 0.3);">하이브 챌린지</a>
-          <a href="javascript:void(0)" onclick="openForm(); closeDropdown(); return false;" style="display: flex; align-items: center; justify-content: flex-start; padding: 18px 20px; color: #7BE495; text-decoration: none; font-weight: 600; font-size: 18px; background: #000; border-bottom: 3px solid #7BE495; box-shadow: 0 3px 8px rgba(123, 228, 149, 0.3); transition: background 0.3s ease; min-height: 54px; line-height: 1; -webkit-tap-highlight-color: rgba(123, 228, 149, 0.3);">무료 체험하기</a>
+          <a href="javascript:void(0)" onclick="handleNavigation('neofit-training', 'section'); closeDropdown(); return false;" style="${menuItemStyle}"><span style="${menuTextStyle}">네오핏</span></a>
+          <a href="https://neofit-s.oopy.io/NEOFIT-S" onclick="window.open('https://neofit-s.oopy.io/NEOFIT-S', '_blank'); closeDropdown(); return false;" style="${menuItemStyle}"><span style="${menuTextStyle}">네오핏 운동가이드</span></a>
+          <a href="javascript:void(0)" onclick="handleNavigation('hive', 'section'); closeDropdown(); return false;" style="${menuItemStyle}"><span style="${menuTextStyle}">네오 하이브</span></a>
+          <a href="javascript:void(0)" onclick="handleNavigation('smart', 'section'); closeDropdown(); return false;" style="${menuItemStyle}"><span style="${menuTextStyle}">네오 스마트</span></a>
+          <a href="javascript:void(0)" onclick="handleNavigation('neo-pilates', 'section'); closeDropdown(); return false;" style="${menuItemStyle}"><span style="${menuTextStyle}">네오 필라테스</span></a>
+          <a href="javascript:void(0)" onclick="console.log('📱 모바일 하이브 챌린지 클릭!'); if(typeof showHiveChallengePopup === 'function') showHiveChallengePopup(); else console.log('하이브 챌린지 팝업 함수 없음'); closeDropdown(); return false;" style="display: flex; align-items: center; justify-content: flex-start; padding: 0; margin: 0; color: #ff6c79; text-decoration: none; border-bottom: 1px solid rgba(255,108,121,0.3); font-size: 18px; background: #000; transition: background 0.3s ease; height: 54px; line-height: 54px; font-weight: 600; text-shadow: 0 0 5px #ff6c79, 0 0 10px #ff6c79; -webkit-tap-highlight-color: rgba(255, 108, 121, 0.3); box-sizing: border-box;"><span style="display: block; width: 100%; height: 54px; line-height: 54px; padding: 0 20px; margin: 0; text-align: left; vertical-align: middle; font-weight: 600; text-shadow: 0 0 5px #ff6c79, 0 0 10px #ff6c79;">하이브 챌린지</span></a>
+          <a href="javascript:void(0)" onclick="openForm(); closeDropdown(); return false;" style="display: flex; align-items: center; justify-content: flex-start; padding: 0; margin: 0; color: #7BE495; text-decoration: none; font-weight: 600; font-size: 18px; background: #000; border-bottom: 3px solid #7BE495; box-shadow: 0 3px 8px rgba(123, 228, 149, 0.3); transition: background 0.3s ease; height: 54px; line-height: 54px; -webkit-tap-highlight-color: rgba(123, 228, 149, 0.3); box-sizing: border-box;"><span style="display: block; width: 100%; height: 54px; line-height: 54px; padding: 0 20px; margin: 0; text-align: left; vertical-align: middle; font-weight: 600;">무료 체험하기</span></a>
         `;
 
-        // 네오핏 그린 테마 hover 및 터치 효과 추가
+        // 네오핏 그린 테마 hover 및 터치 효과 추가 (span 기반)
         const menuItems = dropdown.querySelectorAll('a');
         menuItems.forEach((item, index) => {
+          const span = item.querySelector('span');
+          const isHiveChallenge = span.textContent.includes('하이브 챌린지');
+          const isFreeTrial = span.textContent.includes('무료 체험하기');
+
           // 마우스 호버 효과
           item.addEventListener('mouseenter', function() {
-            if (this.style.color === 'rgb(255, 108, 121)') {
+            if (isHiveChallenge) {
               // 하이브 챌린지는 빨간색 테마
               this.style.background = 'rgba(255, 108, 121, 0.2)';
             } else {
               // 나머지는 네오핏 그린 테마
               this.style.background = 'rgba(123, 228, 149, 0.2)';
-              this.style.color = '#7BE495';
+              if (!isFreeTrial) {
+                span.style.color = '#7BE495';
+              }
             }
           });
 
           item.addEventListener('mouseleave', function() {
             this.style.background = '#000';
-            if (this.style.color !== 'rgb(255, 108, 121)' && this !== menuItems[menuItems.length - 1]) {
-              this.style.color = '#ffffff';
+            if (!isHiveChallenge && !isFreeTrial) {
+              span.style.color = '#ffffff';
             }
           });
 
           // 모바일 터치 효과 강화
           item.addEventListener('touchstart', function() {
-            if (this.style.color === 'rgb(255, 108, 121)') {
+            if (isHiveChallenge) {
               this.style.background = 'rgba(255, 108, 121, 0.3)';
             } else {
               this.style.background = 'rgba(123, 228, 149, 0.3)';
