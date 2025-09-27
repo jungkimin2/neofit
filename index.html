@@ -96,6 +96,136 @@ function handleNavigation(target, type) {
 }
 
 console.log('🎉 네비게이션 핸들러 로드 완료');
+
+// 하이브 챌린지 팝업 함수 - 전역 정의
+window.showHiveChallengePopup = function(event) {
+  console.log('=== 하이브 챌린지 팝업 열기 (전역 함수) ===');
+
+  // 스크롤 방지
+  if (event) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+
+  // 기존 팝업이 있으면 제거
+  const existingModal = document.getElementById('hiveChallengeModal');
+  if (existingModal) {
+    existingModal.remove();
+  }
+
+  const existingOverlay = document.getElementById('hiveChallengeOverlay');
+  if (existingOverlay) {
+    existingOverlay.remove();
+  }
+
+  // 오버레이 생성
+  const overlay = document.createElement('div');
+  overlay.id = 'hiveChallengeOverlay';
+  overlay.style.cssText = `
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  `;
+
+  // 팝업 모달 생성
+  const modal = document.createElement('div');
+  modal.id = 'hiveChallengeModal';
+  modal.style.cssText = `
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    transform: scale(0.8);
+    transition: transform 0.3s ease;
+  `;
+
+  // 이미지 생성
+  const img = document.createElement('img');
+  img.src = 'images/neohive93.jpg';
+  img.style.cssText = `
+    width: 100%;
+    height: auto;
+    display: block;
+  `;
+
+  // 닫기 버튼 생성
+  const closeBtn = document.createElement('button');
+  closeBtn.innerHTML = '×';
+  closeBtn.style.cssText = `
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    transition: background 0.2s ease;
+  `;
+
+  // 닫기 함수
+  const closePopup = () => {
+    overlay.style.opacity = '0';
+    modal.style.transform = 'scale(0.8)';
+    setTimeout(() => {
+      if (overlay && overlay.parentNode) {
+        overlay.remove();
+      }
+    }, 300);
+  };
+
+  // 이벤트 리스너 추가
+  closeBtn.addEventListener('click', closePopup);
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) {
+      closePopup();
+    }
+  });
+
+  // ESC 키로 닫기
+  const handleEsc = (e) => {
+    if (e.key === 'Escape') {
+      closePopup();
+      document.removeEventListener('keydown', handleEsc);
+    }
+  };
+  document.addEventListener('keydown', handleEsc);
+
+  // 요소들 조립
+  modal.appendChild(img);
+  modal.appendChild(closeBtn);
+  overlay.appendChild(modal);
+  document.body.appendChild(overlay);
+
+  // 애니메이션 실행
+  requestAnimationFrame(() => {
+    overlay.style.opacity = '1';
+    modal.style.transform = 'scale(1)';
+  });
+
+  console.log('✅ 하이브 챌린지 팝업 표시 완료 (전역)');
+};
+
+console.log('🎯 하이브 챌린지 팝업 함수 정의 완료');
 </script>
 
 <!-- 모바일 전용 즉시 적용 스타일 - 페이지 로딩 시 깜빡임 방지 -->
@@ -8452,133 +8582,7 @@ if (window.innerWidth <= 768) {
     }
   });
   
-  // 하이브 챌린지 팝업 함수
-  window.showHiveChallengePopup = function(event) {
-    console.log('=== 하이브 챌린지 팝업 열기 ===');
-
-    // 스크롤 방지
-    if (event) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-
-    // 기존 팝업이 있으면 제거
-    const existingModal = document.getElementById('hiveChallengeModal');
-    if (existingModal) {
-      existingModal.remove();
-    }
-
-    const existingOverlay = document.getElementById('hiveChallengeOverlay');
-    if (existingOverlay) {
-      existingOverlay.remove();
-    }
-
-    // 오버레이 생성
-    const overlay = document.createElement('div');
-    overlay.id = 'hiveChallengeOverlay';
-    overlay.style.cssText = `
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.8);
-      z-index: 9999;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    `;
-
-    // 팝업 모달 생성
-    const modal = document.createElement('div');
-    modal.id = 'hiveChallengeModal';
-    modal.style.cssText = `
-      position: relative;
-      max-width: 90vw;
-      max-height: 90vh;
-      background: #fff;
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-      transform: scale(0.8);
-      transition: transform 0.3s ease;
-    `;
-
-    // 이미지 생성
-    const img = document.createElement('img');
-    img.src = 'images/neohive93.jpg';
-    img.style.cssText = `
-      width: 100%;
-      height: auto;
-      display: block;
-    `;
-
-    // 닫기 버튼 생성
-    const closeBtn = document.createElement('button');
-    closeBtn.innerHTML = '×';
-    closeBtn.style.cssText = `
-      position: absolute;
-      top: 10px;
-      right: 15px;
-      background: rgba(0, 0, 0, 0.7);
-      color: white;
-      border: none;
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      font-size: 18px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 10000;
-      transition: background 0.2s ease;
-    `;
-
-    // 닫기 함수
-    const closePopup = () => {
-      overlay.style.opacity = '0';
-      modal.style.transform = 'scale(0.8)';
-      setTimeout(() => {
-        if (overlay && overlay.parentNode) {
-          overlay.remove();
-        }
-      }, 300);
-    };
-
-    // 이벤트 리스너 추가
-    closeBtn.addEventListener('click', closePopup);
-    overlay.addEventListener('click', (e) => {
-      if (e.target === overlay) {
-        closePopup();
-      }
-    });
-
-    // ESC 키로 닫기
-    const handleEsc = (e) => {
-      if (e.key === 'Escape') {
-        closePopup();
-        document.removeEventListener('keydown', handleEsc);
-      }
-    };
-    document.addEventListener('keydown', handleEsc);
-
-    // 요소들 조립
-    modal.appendChild(img);
-    modal.appendChild(closeBtn);
-    overlay.appendChild(modal);
-    document.body.appendChild(overlay);
-
-    // 애니메이션 실행
-    requestAnimationFrame(() => {
-      overlay.style.opacity = '1';
-      modal.style.transform = 'scale(1)';
-    });
-
-    console.log('✅ 하이브 챌린지 팝업 표시 완료');
-  };
+  // 하이브 챌린지 팝업 함수 (중복 제거됨 - 상단에 전역으로 정의됨)
 
   function openForm(event) {
     console.log('=== openForm called ===');
@@ -9418,7 +9422,7 @@ if (window.innerWidth <= 768) {
         dropdown.id = 'mobile-nav-dropdown';
         dropdown.style.cssText = `
           position: fixed !important;
-          top: 48px !important;
+          top: 60px !important;
           left: 0 !important;
           right: 0 !important;
           background: #000000 !important;
@@ -9440,7 +9444,7 @@ if (window.innerWidth <= 768) {
           <a href="javascript:void(0)" onclick="handleNavigation('hive', 'section'); closeDropdown(); return false;" style="${menuItemStyle}"><span style="${menuTextStyle}">네오 하이브</span></a>
           <a href="javascript:void(0)" onclick="handleNavigation('smart', 'section'); closeDropdown(); return false;" style="${menuItemStyle}"><span style="${menuTextStyle}">네오 스마트</span></a>
           <a href="javascript:void(0)" onclick="handleNavigation('neo-pilates', 'section'); closeDropdown(); return false;" style="${menuItemStyle}"><span style="${menuTextStyle}">네오 필라테스</span></a>
-          <a href="javascript:void(0)" onclick="console.log('📱 모바일 하이브 챌린지 클릭!'); if(typeof showHiveChallengePopup === 'function') showHiveChallengePopup(); else console.log('하이브 챌린지 팝업 함수 없음'); closeDropdown(); return false;" style="display: flex; align-items: center; justify-content: flex-start; padding: 0; margin: 0; color: #ff6c79; text-decoration: none; border-bottom: 1px solid rgba(255,108,121,0.3); font-size: 18px; background: #000; transition: background 0.3s ease; height: 54px; line-height: 54px; font-weight: 600; text-shadow: 0 0 5px #ff6c79, 0 0 10px #ff6c79; -webkit-tap-highlight-color: rgba(255, 108, 121, 0.3); box-sizing: border-box;"><span style="display: block; width: 100%; height: 54px; line-height: 54px; padding: 0 20px; margin: 0; text-align: left; vertical-align: middle; font-weight: 600; text-shadow: 0 0 5px #ff6c79, 0 0 10px #ff6c79;">하이브 챌린지</span></a>
+          <a href="javascript:void(0)" onclick="console.log('📱 모바일 하이브 챌린지 클릭됨!'); console.log('함수 타입 확인:', typeof window.showHiveChallengePopup); try { window.showHiveChallengePopup(); console.log('✅ 하이브 챌린지 팝업 함수 실행 완료'); } catch(e) { console.error('❌ 하이브 챌린지 팝업 오류:', e); } closeDropdown(); return false;" style="display: flex; align-items: center; justify-content: flex-start; padding: 0; margin: 0; color: #ff6c79; text-decoration: none; border-bottom: 1px solid rgba(255,108,121,0.3); font-size: 18px; background: #000; transition: background 0.3s ease; height: 54px; line-height: 54px; font-weight: 600; text-shadow: 0 0 5px #ff6c79, 0 0 10px #ff6c79; -webkit-tap-highlight-color: rgba(255, 108, 121, 0.3); box-sizing: border-box;"><span style="display: block; width: 100%; height: 54px; line-height: 54px; padding: 0 20px; margin: 0; text-align: left; vertical-align: middle; font-weight: 600; text-shadow: 0 0 5px #ff6c79, 0 0 10px #ff6c79;">하이브 챌린지</span></a>
           <a href="javascript:void(0)" onclick="openForm(); closeDropdown(); return false;" style="display: flex; align-items: center; justify-content: flex-start; padding: 0; margin: 0; color: #7BE495; text-decoration: none; font-weight: 600; font-size: 18px; background: #000; border-bottom: 3px solid #7BE495; box-shadow: 0 3px 8px rgba(123, 228, 149, 0.3); transition: background 0.3s ease; height: 54px; line-height: 54px; -webkit-tap-highlight-color: rgba(123, 228, 149, 0.3); box-sizing: border-box;"><span style="display: block; width: 100%; height: 54px; line-height: 54px; padding: 0 20px; margin: 0; text-align: left; vertical-align: middle; font-weight: 600;">무료 체험하기</span></a>
         `;
 
