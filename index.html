@@ -9273,74 +9273,94 @@ if (window.innerWidth <= 768) {
     }
   });
   
-  // 간단한 모바일 네비게이션 함수들
+  // 🚨 강화된 모바일 네비게이션 함수들
   window.toggleNav = function() {
-    console.log('🎯 toggleNav 호출됨');
+    // 즉시 알림으로 함수 호출 확인
+    alert('🎯 toggleNav 함수가 호출되었습니다!');
+    console.log('🎯 toggleNav 호출됨 - 타임스탬프:', new Date().toISOString());
 
-    // 기존 static 메뉴 사용
-    const mobileMenu = document.getElementById('simple-mobile-menu');
-    const btn = document.querySelector('.nav-menu-btn');
+    try {
+      // 기존 static 메뉴 사용
+      const mobileMenu = document.getElementById('simple-mobile-menu');
+      const btn = document.querySelector('.nav-menu-btn');
 
-    if (!mobileMenu) {
-      console.log('❌ simple-mobile-menu 요소를 찾을 수 없음');
-      return;
-    }
+      console.log('🔍 요소 검색 결과:');
+      console.log('- mobileMenu:', mobileMenu);
+      console.log('- btn:', btn);
 
-    // 현재 상태 확인
-    const currentDisplay = window.getComputedStyle(mobileMenu).display;
-    console.log('📱 현재 모바일 메뉴 display:', currentDisplay);
-
-    // 토글 동작
-    if (currentDisplay === 'none') {
-      // 메뉴 열기
-      console.log('🟢 모바일 메뉴 열기');
-      mobileMenu.style.setProperty('display', 'block', 'important');
-      mobileMenu.style.setProperty('opacity', '0', 'important');
-      mobileMenu.style.setProperty('transform', 'translateY(-20px)', 'important');
-      mobileMenu.style.setProperty('transition', 'opacity 0.3s ease-out, transform 0.3s ease-out', 'important');
-
-      // 애니메이션 트리거
-      setTimeout(() => {
-        mobileMenu.style.setProperty('opacity', '1', 'important');
-        mobileMenu.style.setProperty('transform', 'translateY(0)', 'important');
-      }, 10);
-
-      // 버튼 X로 변경
-      if (btn) {
-        btn.innerHTML = '✕';
-        btn.style.fontSize = '20px';
-        console.log('🔄 햄버거 버튼을 X로 변경');
+      if (!mobileMenu) {
+        alert('❌ simple-mobile-menu 요소를 찾을 수 없습니다!');
+        console.log('❌ simple-mobile-menu 요소를 찾을 수 없음');
+        return;
       }
 
-      // 메뉴 아이템 애니메이션
-      const menuItems = mobileMenu.querySelectorAll('a');
-      menuItems.forEach((item, index) => {
-        item.style.setProperty('opacity', '0', 'important');
-        item.style.setProperty('transform', 'translateX(-20px)', 'important');
-        item.style.setProperty('transition', 'opacity 0.3s ease-out, transform 0.3s ease-out', 'important');
+      // 현재 상태 확인
+      const currentDisplay = window.getComputedStyle(mobileMenu).display;
+      console.log('📱 현재 모바일 메뉴 display:', currentDisplay);
+      console.log('📱 현재 모바일 메뉴 visibility:', window.getComputedStyle(mobileMenu).visibility);
+      console.log('📱 현재 모바일 메뉴 opacity:', window.getComputedStyle(mobileMenu).opacity);
 
+      // 토글 동작
+      if (currentDisplay === 'none') {
+        // 메뉴 열기
+        alert('🟢 모바일 메뉴를 열겠습니다!');
+        console.log('🟢 모바일 메뉴 열기 시작');
+
+        // 가장 강력한 방식으로 메뉴 표시
+        mobileMenu.style.cssText = `
+          display: block !important;
+          position: fixed !important;
+          top: 0 !important;
+          left: 0 !important;
+          right: 0 !important;
+          bottom: 0 !important;
+          background: rgba(0,0,0,0.95) !important;
+          z-index: 2147483646 !important;
+          opacity: 1 !important;
+          visibility: visible !important;
+          transform: none !important;
+        `;
+
+        console.log('🟢 메뉴 스타일 강제 적용 완료');
+
+        // 버튼 X로 변경
+        if (btn) {
+          btn.innerHTML = '✕';
+          btn.style.fontSize = '20px';
+          console.log('🔄 햄버거 버튼을 X로 변경');
+        }
+
+        // 메뉴가 제대로 표시되었는지 확인
         setTimeout(() => {
-          item.style.setProperty('opacity', '1', 'important');
-          item.style.setProperty('transform', 'translateX(0)', 'important');
-        }, 100 + (index * 50));
-      });
-    } else {
-      // 메뉴 닫기
-      console.log('🔴 모바일 메뉴 닫기');
-      mobileMenu.style.setProperty('opacity', '0', 'important');
-      mobileMenu.style.setProperty('transform', 'translateY(-20px)', 'important');
+          const newDisplay = window.getComputedStyle(mobileMenu).display;
+          console.log('✅ 메뉴 열기 후 확인 - display:', newDisplay);
+          if (newDisplay === 'none') {
+            alert('⚠️ 메뉴가 여전히 숨겨져 있습니다!');
+          } else {
+            alert('✅ 메뉴가 성공적으로 열렸습니다!');
+          }
+        }, 100);
 
-      // 애니메이션 후 숨기기
-      setTimeout(() => {
-        mobileMenu.style.setProperty('display', 'none', 'important');
-      }, 300);
+      } else {
+        // 메뉴 닫기
+        alert('🔴 모바일 메뉴를 닫겠습니다!');
+        console.log('🔴 모바일 메뉴 닫기');
 
-      // 버튼 원래대로
-      if (btn) {
-        btn.innerHTML = '&#9776;';
-        btn.style.fontSize = '24px';
-        console.log('🔄 X 버튼을 햄버거로 변경');
+        mobileMenu.style.cssText = `
+          display: none !important;
+        `;
+
+        // 버튼 원래대로
+        if (btn) {
+          btn.innerHTML = '&#9776;';
+          btn.style.fontSize = '24px';
+          console.log('🔄 X 버튼을 햄버거로 변경');
+        }
       }
+
+    } catch (error) {
+      alert('🚨 toggleNav 함수에서 오류 발생: ' + error.message);
+      console.error('🚨 toggleNav 오류:', error);
     }
   }
   
@@ -9369,27 +9389,73 @@ if (window.innerWidth <= 768) {
     }
   }
 
-  // 모바일 메뉴 배경 클릭시 닫기 기능 추가
+  // 🚨 강화된 모바일 메뉴 이벤트 설정
   document.addEventListener('DOMContentLoaded', function() {
+    console.log('🚀 DOMContentLoaded - 모바일 네비게이션 설정 시작');
+
     const mobileMenu = document.getElementById('simple-mobile-menu');
+    const mobileNavBtn = document.querySelector('.nav-menu-btn');
+
+    console.log('🔍 DOMContentLoaded 요소 검색:');
+    console.log('- mobileMenu:', mobileMenu);
+    console.log('- mobileNavBtn:', mobileNavBtn);
+
+    // 🔥 추가 보안: 버튼에 직접 이벤트 리스너 추가
+    if (mobileNavBtn) {
+      // onclick 속성 외에 추가로 이벤트 리스너도 등록
+      mobileNavBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log('🎯 직접 이벤트 리스너로 버튼 클릭 감지!');
+        alert('🎯 직접 이벤트 리스너가 버튼 클릭을 감지했습니다!');
+
+        // 즉시 메뉴 토글
+        const menu = document.getElementById('simple-mobile-menu');
+        if (menu) {
+          const isHidden = window.getComputedStyle(menu).display === 'none';
+          if (isHidden) {
+            menu.style.cssText = `
+              display: block !important;
+              position: fixed !important;
+              top: 0 !important;
+              left: 0 !important;
+              right: 0 !important;
+              bottom: 0 !important;
+              background: rgba(0,0,0,0.95) !important;
+              z-index: 2147483646 !important;
+              opacity: 1 !important;
+              visibility: visible !important;
+            `;
+            this.innerHTML = '✕';
+            alert('✅ 메뉴를 열었습니다!');
+          } else {
+            menu.style.display = 'none';
+            this.innerHTML = '&#9776;';
+            alert('✅ 메뉴를 닫았습니다!');
+          }
+        }
+      });
+
+      // 터치 이벤트도 추가
+      mobileNavBtn.addEventListener('touchend', function(e) {
+        e.preventDefault();
+        console.log('👆 터치 이벤트로 버튼 클릭 감지!');
+      });
+
+      console.log('✅ 모바일 네비게이션 버튼에 직접 이벤트 리스너 등록 완료');
+    }
+
     if (mobileMenu) {
       // 배경 클릭시 메뉴 닫기
       mobileMenu.addEventListener('click', function(e) {
         if (e.target === mobileMenu) {
           console.log('📱 모바일 메뉴 배경 클릭 - 메뉴 닫기');
-          closeMobileMenu();
+          mobileMenu.style.display = 'none';
+          if (mobileNavBtn) mobileNavBtn.innerHTML = '&#9776;';
         }
       });
 
-      // 터치 이벤트도 추가
-      mobileMenu.addEventListener('touchend', function(e) {
-        if (e.target === mobileMenu) {
-          console.log('👆 모바일 메뉴 배경 터치 - 메뉴 닫기');
-          closeMobileMenu();
-        }
-      });
-
-      console.log('✅ 모바일 메뉴 배경 클릭/터치 이벤트 등록 완료');
+      console.log('✅ 모바일 메뉴 배경 클릭 이벤트 등록 완료');
     }
 
     // ESC 키로 메뉴 닫기
@@ -9398,7 +9464,8 @@ if (window.innerWidth <= 768) {
         const mobileMenu = document.getElementById('simple-mobile-menu');
         if (mobileMenu && window.getComputedStyle(mobileMenu).display !== 'none') {
           console.log('⌨️ ESC 키로 모바일 메뉴 닫기');
-          closeMobileMenu();
+          mobileMenu.style.display = 'none';
+          if (mobileNavBtn) mobileNavBtn.innerHTML = '&#9776;';
         }
       }
     });
