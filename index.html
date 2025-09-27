@@ -4163,7 +4163,7 @@ document.addEventListener('DOMContentLoaded', function() {
   </div>
 </section>
 
-<section id="hive" class="section animate-on-scroll mobile-transform-target" style="background:#000; padding-top:24px; padding-bottom: 100px; margin-top: 80px;">
+<section id="hive" class="section animate-on-scroll" style="background:#000; padding-top:24px; padding-bottom: 100px; margin-top: 120px;">
   <div class="container" style="text-align:center; padding-top:0; max-width: 1100px; margin: 0 auto; padding: 0 20px;">
     <h2 style="font-size: 2rem; text-align: left; color: #FFFFFF; margin-top:0;">
       네오 하이브 : <span class="neon-green">"하나되는 우리"</span>
@@ -4902,7 +4902,7 @@ html body .core-value-fresh-mobile {
 
 
 <!-- <div id="hive"></div> -->
-          <section id="smart" class="section animate-on-scroll mobile-transform-target smart-trainer-section-mobile" style="background: #000; padding-top: 0px; margin-top: 32px; position: relative; z-index: 100;">
+          <section id="smart" class="section animate-on-scroll smart-trainer-section-mobile" style="background: #000; padding-top: 0px; margin-top: 80px; position: relative; z-index: 100;">
   <div class="container" style="text-align:left; max-width: 1100px; margin: 0 auto; padding: 0 20px;">
     <h2 style="font-size: 2rem; text-align: left; margin-top: 20px; line-height: 1.4; padding-bottom: 10px; overflow: visible;">
       <span style="color: #FFFFFF;">네오 스마트 :</span>
@@ -7197,7 +7197,7 @@ if (window.innerWidth <= 768) {
   </script>
 </section>
 
-<section id="benefits" class="section animate-on-scroll" style="background: #000; padding-bottom: 40px; padding-top: 40px; margin-top: 80px;">
+<section id="benefits" class="section animate-on-scroll" style="background: #000; padding-bottom: 40px; padding-top: 40px; margin-top: 120px;">
   <div class="container" style="max-width: 1200px; margin: 0 auto; text-align: center;">
     <h2 style="font-size: 2.2rem; font-weight: bold; margin-bottom: 40px; letter-spacing: -1px; line-height: 1.2;">
       <span style="color: #FFFFFF;">시설 정보 및 위치 안내</span>
@@ -18035,18 +18035,21 @@ setTimeout(function() {
     background: #000 !important;
   }
 
-  /* 모바일에서 모든 비디오 카드를 페이지 최상위로 강제 이동 */
+  /* 모바일에서 모든 비디오 카드를 페이지 최상위로 강제 이동 - 위쪽으로 더 이동 */
   #sync-card.video-playing-sync,
-  #balance-card.video-playing-balance {
+  #balance-card.video-playing-balance,
+  #boost-card.video-playing-boost {
     position: fixed !important;
-    top: 50% !important;
+    top: 35% !important;
     left: 50% !important;
-    transform: translateX(-50%) translateY(-50%) scale(1.1) !important;
+    transform: translateX(-50%) translateY(-50%) scale(1.0) !important;
     z-index: 2147483647 !important;
     transition: all 0.3s ease !important;
-    width: 350px !important;
-    height: 450px !important;
+    width: 320px !important;
+    height: 400px !important;
     margin: 0 !important;
+    max-width: 90vw !important;
+    max-height: 70vh !important;
   }
 
   /* 비디오 자체는 최고 우선순위 */
