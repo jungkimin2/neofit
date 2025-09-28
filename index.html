@@ -22,6 +22,9 @@
 
 <!-- 네비게이션 핸들러 - 즉시 실행 -->
 <script>
+// 전역 팝업 상태 변수
+window.facilityPopupOpen = false;
+
 function handleNavigation(target, type) {
   console.log('🚀 네비게이션 클릭:', target, type);
 
@@ -42,10 +45,12 @@ function handleNavigation(target, type) {
       setTimeout(() => {
         const headerHeight = 80;
         const elementTop = targetElement.offsetTop;
-        window.scrollTo({
-          top: elementTop - headerHeight,
-          behavior: 'smooth'
-        });
+        if (!window.facilityPopupOpen) {
+          window.scrollTo({
+            top: elementTop - headerHeight,
+            behavior: 'smooth'
+          });
+        }
       }, 100);
 
       console.log('✅ 스크롤 완료');
@@ -7208,13 +7213,26 @@ if (window.innerWidth <= 768) {
       <!-- 메인 이미지 영역 -->
       <div class="facility-main-image" style="position: relative; border-radius: 16px; overflow: hidden; background: #000; cursor: pointer;" onclick="showFacilityPopup(currentFacilityIndex)">
         <img id="facilityMainImage" src="./images/IMG7216.jpeg" data-webp="./images/IMG7216.webp" alt="시설 메인 이미지" loading="lazy" decoding="async" style="width: 100%; height: 450px; object-fit: cover; display: block;">
-      <!-- 모바일용 화살표 (메인 이미지 위에 위치) -->
-        <button class="mobile-gallery-prev" onclick="event.stopPropagation(); scrollThumbnails('left')" style="display: none; position: absolute; left: 10px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.7); border: 2px solid #7BE495; color: #7BE495; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; align-items: center; justify-content: center; z-index: 10;">
+
+      <!-- PC용 화살표 (메인 이미지 위에 위치) -->
+        <button class="desktop-gallery-prev" onclick="event.stopPropagation(); prevGalleryImage()" style="display: flex; position: absolute; left: 20px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.8); border: 2px solid #7BE495; color: #7BE495; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; align-items: center; justify-content: center; z-index: 10; transition: all 0.3s; box-shadow: 0 2px 10px rgba(0,0,0,0.5);">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M15 18L9 12L15 6" stroke="#7BE495" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </button>
-        <button class="mobile-gallery-next" onclick="event.stopPropagation(); scrollThumbnails('right')" style="display: none; position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.7); border: 2px solid #7BE495; color: #7BE495; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; align-items: center; justify-content: center; z-index: 10;">
+        <button class="desktop-gallery-next" onclick="event.stopPropagation(); nextGalleryImage()" style="display: flex; position: absolute; right: 20px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.8); border: 2px solid #7BE495; color: #7BE495; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; align-items: center; justify-content: center; z-index: 10; transition: all 0.3s; box-shadow: 0 2px 10px rgba(0,0,0,0.5);">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9 18L15 12L9 6" stroke="#7BE495" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+
+      <!-- 모바일용 화살표 (메인 이미지 위에 위치) -->
+        <button class="mobile-gallery-prev" onclick="event.stopPropagation(); prevGalleryImage()" style="display: none; position: absolute; left: 10px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.7); border: 2px solid #7BE495; color: #7BE495; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; align-items: center; justify-content: center; z-index: 10;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15 18L9 12L15 6" stroke="#7BE495" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <button class="mobile-gallery-next" onclick="event.stopPropagation(); nextGalleryImage()" style="display: none; position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.7); border: 2px solid #7BE495; color: #7BE495; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; align-items: center; justify-content: center; z-index: 10;">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M9 18L15 12L9 6" stroke="#7BE495" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
@@ -7223,19 +7241,6 @@ if (window.innerWidth <= 768) {
       
       <!-- 썸네일 슬라이드 영역 -->
       <div class="facility-thumbnails" style="margin-top: 20px; position: relative;">
-        <!-- 왼쪽 화살표 -->
-        <button class="thumbnail-nav thumbnail-prev" onclick="scrollThumbnails('left')" style="position: absolute; left: -60px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.8); border: 2px solid #7BE495; color: #7BE495; width: 45px; height: 45px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 20; transition: all 0.3s; box-shadow: 0 2px 10px rgba(0,0,0,0.5);">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M15 18L9 12L15 6" stroke="#7BE495" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </button>
-        
-        <!-- 오른쪽 화살표 -->
-        <button class="thumbnail-nav thumbnail-next" onclick="scrollThumbnails('right')" style="position: absolute; right: -60px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.8); border: 2px solid #7BE495; color: #7BE495; width: 45px; height: 45px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 20; transition: all 0.3s; box-shadow: 0 2px 10px rgba(0,0,0,0.5);">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M9 18L15 12L9 6" stroke="#7BE495" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </button>
         
         <div style="overflow: hidden; border-radius: 12px; padding: 4px 0;">
           <!-- 모바일 스와이프 힌트 -->
@@ -7286,7 +7291,61 @@ if (window.innerWidth <= 768) {
         </div>
       </div>
     </div>
-    
+
+    <!-- 갤러리 반응형 스타일 -->
+    <style>
+    /* PC 환경에서는 PC용 화살표만 표시 */
+    @media (min-width: 769px) {
+      .desktop-gallery-prev, .desktop-gallery-next {
+        display: flex !important;
+      }
+      .mobile-gallery-prev, .mobile-gallery-next {
+        display: none !important;
+      }
+      .desktop-gallery-prev:hover, .desktop-gallery-next:hover {
+        background: rgba(123,228,149,0.2);
+        transform: translateY(-50%) scale(1.1);
+      }
+    }
+
+    /* 모바일 환경에서는 모바일용 화살표만 표시 */
+    @media (max-width: 768px) {
+      .desktop-gallery-prev, .desktop-gallery-next {
+        display: none !important;
+      }
+      .mobile-gallery-prev, .mobile-gallery-next {
+        display: flex !important;
+      }
+    }
+
+    /* 팝업 반응형 스타일 */
+    @media (max-width: 768px) {
+      #facilityPopup .popup-container {
+        width: 95% !important;
+        max-width: 95vw !important;
+      }
+      #popupImage {
+        max-height: 80vh !important;
+      }
+      #popupClose {
+        top: 5px !important;
+        right: 5px !important;
+        width: 35px !important;
+        height: 35px !important;
+      }
+    }
+
+    @media (min-width: 769px) {
+      #facilityPopup .popup-container {
+        width: 80% !important;
+        max-width: 80vw !important;
+      }
+      #popupImage {
+        max-height: 85vh !important;
+      }
+    }
+    </style>
+
     <!-- 위치 안내 섹션 -->
     <div class="location-info" style="margin-top: 60px; text-align: center;">
       <h3 style="font-size: 1.8rem; color: #7BE495; margin-bottom: 30px; font-weight: bold;">오시는 길</h3>
@@ -7388,6 +7447,15 @@ if (window.innerWidth <= 768) {
         } else {
           thumb.removeAttribute('data-webp');
           thumb.src = entry.fallback;
+        }
+
+        // 초기 로드 시 썸네일에 세로 사진 처리 적용
+        if (index === 8 || index === 9 || index === 10 || index === 11 || index === 12) {
+          thumb.style.objectFit = 'contain';
+          thumb.style.backgroundColor = '#000';
+        } else {
+          thumb.style.objectFit = 'cover';
+          thumb.style.backgroundColor = 'transparent';
         }
       });
     });
@@ -7500,6 +7568,7 @@ if (window.innerWidth <= 768) {
       
       // 썸네일 활성화 상태 업데이트
       document.querySelectorAll('.facility-thumbnail').forEach((thumb, i) => {
+        const thumbImg = thumb.querySelector('img');
         if (i === index) {
           thumb.classList.add('active');
           thumb.style.borderColor = '#7BE495';
@@ -7509,42 +7578,66 @@ if (window.innerWidth <= 768) {
           thumb.style.borderColor = 'transparent';
           thumb.style.transform = 'scale(1)';
         }
+
+        // 썸네일에도 세로 사진 처리 적용
+        if (thumbImg && (i === 8 || i === 9 || i === 10 || i === 11 || i === 12)) {
+          thumbImg.style.objectFit = 'contain';
+          thumbImg.style.backgroundColor = '#000';
+        } else if (thumbImg) {
+          thumbImg.style.objectFit = 'cover';
+          thumbImg.style.backgroundColor = 'transparent';
+        }
       });
       
       // 썸네일 스크롤 위치 업데이트 - 네이티브 스크롤 사용 시 필요없음
     }
     
-    // 썸네일 스크롤 함수 - 순환 기능 추가
+    // 메인 이미지 이전/다음 함수 (PC, 모바일 메인 이미지 화살표용)
+    function prevGalleryImage() {
+      if (currentFacilityIndex > 0) {
+        currentFacilityIndex--;
+      } else {
+        currentFacilityIndex = facilityImages.length - 1; // 처음에서 마지막으로 순환
+      }
+      selectFacilityImage(currentFacilityIndex);
+      updateThumbnailScroll();
+    }
+
+    function nextGalleryImage() {
+      if (currentFacilityIndex < facilityImages.length - 1) {
+        currentFacilityIndex++;
+      } else {
+        currentFacilityIndex = 0; // 마지막에서 처음으로 순환
+      }
+      selectFacilityImage(currentFacilityIndex);
+      updateThumbnailScroll();
+    }
+
+    // 썸네일 스크롤 함수 - 썸네일 영역 스크롤만 담당
     let thumbnailScrollPosition = 0;
     function scrollThumbnails(direction) {
-      // 현재 인덱스를 기준으로 이전/다음 이미지로 이동 (순환)
+      const track = document.querySelector('.facility-thumbnail-track');
+      const thumbnails = document.querySelectorAll('.facility-thumbnail');
+
+      if (!thumbnails.length) return;
+
+      const thumbnailWidth = thumbnails[0].offsetWidth + 16; // width + gap
+      const containerWidth = track.parentElement.offsetWidth;
+      const totalWidth = thumbnails.length * thumbnailWidth;
+
       if (direction === 'left') {
-        // 이전 이미지로 (처음에서 마지막으로 순환)
-        if (currentFacilityIndex > 0) {
-          currentFacilityIndex--;
-        } else {
-          currentFacilityIndex = facilityImages.length - 1; // 처음에서 마지막으로
+        thumbnailScrollPosition -= thumbnailWidth * 2; // 2개씩 이동
+        if (thumbnailScrollPosition < 0) {
+          thumbnailScrollPosition = 0;
         }
       } else {
-        // 다음 이미지로 (마지막에서 처음으로 순환)
-        if (currentFacilityIndex < facilityImages.length - 1) {
-          currentFacilityIndex++;
-        } else {
-          currentFacilityIndex = 0; // 마지막에서 처음으로
+        thumbnailScrollPosition += thumbnailWidth * 2; // 2개씩 이동
+        if (thumbnailScrollPosition > totalWidth - containerWidth) {
+          thumbnailScrollPosition = Math.max(0, totalWidth - containerWidth);
         }
       }
-      
-      // 메인 이미지와 썸네일 선택 상태 업데이트
-      selectFacilityImage(currentFacilityIndex);
-      
-      // 썸네일 스크롤 위치 업데이트
-      updateThumbnailScroll();
-      
-      // 버튼은 항상 표시 (순환하므로)
-      const prevBtn = document.querySelector('.mobile-gallery-prev');
-      const nextBtn = document.querySelector('.mobile-gallery-next');
-      if (prevBtn) prevBtn.style.display = 'flex';
-      if (nextBtn) nextBtn.style.display = 'flex';
+
+      track.style.transform = `translateX(-${thumbnailScrollPosition}px)`;
     }
     
     // 썸네일 스크롤 위치 업데이트 - 단순화
@@ -8477,8 +8570,10 @@ if (window.innerWidth <= 768) {
     }
     
     // 즉시 스크롤 초기화 (더 빠른 실행)
-    // 모든 디바이스에서 페이지 최상단으로 스크롤
-    window.scrollTo(0, 0);
+    // 팝업이 열려있지 않을 때만 스크롤
+    if (!window.facilityPopupOpen) {
+      window.scrollTo(0, 0);
+    }
   }
   
   // 모바일에서 z-index 강제 적용
@@ -8507,11 +8602,15 @@ if (window.innerWidth <= 768) {
       document.body.style.overflowX = 'hidden';
       document.documentElement.style.overflowX = 'hidden';
       document.body.style.webkitOverflowScrolling = 'touch';
-      // 모바일에서도 페이지 최상단으로 스크롤
-      window.scrollTo(0, 0);
+      // 팝업이 열려있지 않을 때만 스크롤
+      if (!window.facilityPopupOpen) {
+        window.scrollTo(0, 0);
+      }
     } else {
-      // PC에서 스크롤 초기화
-      window.scrollTo(0, 0);
+      // 팝업이 열려있지 않을 때만 스크롤
+      if (!window.facilityPopupOpen) {
+        window.scrollTo(0, 0);
+      }
     }
     
     // 모바일에서 z-index 강제 적용 (DOM 로드 후)
@@ -8633,15 +8732,19 @@ if (window.innerWidth <= 768) {
   
   // 페이지 언로드 시 스크롤 초기화 (모바일 포함)
   window.addEventListener('beforeunload', function() {
-    // 모든 디바이스에서 페이지 최상단으로
-    window.scrollTo(0, 0);
+    // 팝업이 열려있지 않을 때만 스크롤
+    if (!window.facilityPopupOpen) {
+      window.scrollTo(0, 0);
+    }
   });
 
   // 페이지 완전 로드 후 모바일 스크롤 초기화 재확인
   window.addEventListener('load', function() {
-    // 모바일에서도 페이지 최상단에 유지
+    // 팝업이 열려있지 않을 때만 스크롤
     if (window.innerWidth <= 768) {
-      window.scrollTo(0, 0);
+      if (!window.facilityPopupOpen) {
+        window.scrollTo(0, 0);
+      }
       
       // NEO BOOST 텍스트 크기 최종 강제 적용
       const boostText1 = document.querySelector('.boost-text-1');
@@ -9680,8 +9783,8 @@ if (window.innerWidth <= 768) {
   function scrollToSection(sectionId) {
     closeNav();
     
-    // 하이브 시스템 클릭 시 특별 처리 - 페이지 최상단으로 스크롤
-    if (sectionId === 'hive' && window.innerWidth <= 768) {
+    // 하이브 시스템 클릭 시 특별 처리 - 페이지 최상단으로 스크롤 (팝업이 열려있지 않을 때만)
+    if (sectionId === 'hive' && window.innerWidth <= 768 && !window.facilityPopupOpen) {
       // 페이지 최상단으로 부드럽게 스크롤
       window.scrollTo({ top: 0, behavior: 'smooth' });
       return false;
@@ -9700,7 +9803,9 @@ if (window.innerWidth <= 768) {
           const showcaseCenter = showcaseRect.top + (showcaseRect.height / 2);
           const viewportCenter = window.innerHeight / 2;
           const targetPosition = window.pageYOffset + showcaseCenter - viewportCenter;
-          window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+          if (!window.facilityPopupOpen) {
+            window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+          }
           return false;
         }
       }
@@ -9723,13 +9828,17 @@ if (window.innerWidth <= 768) {
           if (buttonBottom > viewportHeight) {
             // 버튼이 화면에 완전히 보이도록 스크롤
             const targetPosition = currentScroll + (buttonBottom - viewportHeight) + 20; // 20px 여유 공간
+            if (!window.facilityPopupOpen) {
             window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+          }
             return false;
           }
         }
         // 파트너 버튼이 없거나 이미 보이는 경우 섹션 상단으로 스크롤
         const sectionTop = benefitsSection.getBoundingClientRect().top + window.pageYOffset - mobileNavHeight;
-        window.scrollTo({ top: sectionTop, behavior: 'smooth' });
+        if (!window.facilityPopupOpen) {
+          window.scrollTo({ top: sectionTop, behavior: 'smooth' });
+        }
         return false;
       }
     }
@@ -9765,10 +9874,12 @@ if (window.innerWidth <= 768) {
       const headerHeight = 60; // PC 헤더 높이
       const sectionTop = section.offsetTop - headerHeight;
       
-      window.scrollTo({
-        top: sectionTop,
-        behavior: 'smooth'
-      });
+      if (!window.facilityPopupOpen) {
+        window.scrollTo({
+          top: sectionTop,
+          behavior: 'smooth'
+        });
+      }
     }
     return false;
   }
@@ -9778,8 +9889,8 @@ if (window.innerWidth <= 768) {
     const logoElement = document.querySelector('.nav-logo');
     if (logoElement) {
       logoElement.addEventListener('click', function(e) {
-        // 모바일 환경에서만 작동
-        if (window.innerWidth <= 768) {
+        // 모바일 환경에서만 작동, 팝업이 열려있지 않을 때만
+        if (window.innerWidth <= 768 && !window.facilityPopupOpen) {
           e.preventDefault();
           window.scrollTo({
             top: 0,
@@ -12194,18 +12305,18 @@ function stopAllVideos() {
 <!-- 새로운 시설 정보 팝업 - 모바일 최적화 -->
 <div id="facilityPopup" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 2147483647;">
   <!-- 배경 오버레이 -->
-  <div id="popupOverlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9);"></div>
+  <div id="popupOverlay" onclick="closeFacilityPopup()" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); cursor: pointer;"></div>
   
   <!-- 팝업 컨텐츠 -->
   <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; flex-direction: column;">
     <!-- 이미지와 네비게이션 -->
-    <div style="position: relative; width: 90%; max-width: 500px;">
+    <div class="popup-container" style="position: relative; width: 95%; max-width: 90vw; max-height: 90vh;">
       <!-- X 버튼 - 이미지 우측 상단에 겹침 -->
       <button id="popupClose" onclick="closeFacilityPopup()" style="position: absolute; top: 10px; right: 52px; width: 40px; height: 40px; background: rgba(0,0,0,0.7); border: 1.5px solid #7BE495; border-radius: 50%; cursor: pointer; z-index: 2147483647;">
         <span style="color: #7BE495; font-size: 20px; line-height: 1;">×</span>
       </button>
       <!-- 이미지 -->
-      <img id="popupImage" src="" sizes="(max-width: 768px) 90vw, 500px" alt="시설 이미지" style="width: 100%; height: auto; max-height: 85vh; object-fit: contain; display: block; transition: all 0.3s ease-in-out; opacity: 1; transform: scale(1); position: relative; z-index: 1;">
+      <img id="popupImage" src="" sizes="(max-width: 768px) 90vw, 80vw" alt="시설 이미지" style="width: 100%; height: auto; max-height: 90vh; object-fit: contain; display: block; transition: all 0.3s ease-in-out; opacity: 1; transform: scale(1); position: relative; z-index: 1;">
       
       <!-- 네비게이션 버튼들 - 새로운 디자인 -->
       <button id="popupPrev" onclick="prevFacilityImage()" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); width: 50px; height: 50px; background: rgba(0, 0, 0, 0.7); border: none; border-radius: 50%; color: #7BE495; display: flex; align-items: center; justify-content: center; font-size: 20px; transition: all 0.3s; z-index: 1000; cursor: pointer; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);">
@@ -12233,16 +12344,19 @@ function showFacilityPopup(index) {
   if (typeof index === 'undefined') {
     index = currentFacilityIndex;
   }
-  
+
   currentFacilityIndex = index;
-  
+
   const popup = document.getElementById('facilityPopup');
   const popupImage = document.getElementById('popupImage');
-  
+
   if (popup && popupImage) {
+    // 팝업 상태 설정
+    window.facilityPopupOpen = true;
+
     // 팝업을 body의 맨 끝으로 이동
     document.body.appendChild(popup);
-    
+
     // 이미지 설정
     popupImage.removeAttribute('srcset');
     const popupEntry = facilityImages[currentFacilityIndex];
@@ -12257,7 +12371,16 @@ function showFacilityPopup(index) {
         popupImage.src = popupEntry.fallback;
       }
     }
-    
+
+    // 세로 사진 처리
+    if (currentFacilityIndex === 8 || currentFacilityIndex === 9 || currentFacilityIndex === 10 || currentFacilityIndex === 11 || currentFacilityIndex === 12) {
+      popupImage.style.objectFit = 'contain';
+      popupImage.style.backgroundColor = '#000';
+    } else {
+      popupImage.style.objectFit = 'cover';
+      popupImage.style.backgroundColor = 'transparent';
+    }
+
     // 팝업 강제 표시
     popup.style.setProperty('display', 'block', 'important');
     popup.style.setProperty('position', 'fixed', 'important');
@@ -12287,12 +12410,19 @@ function showFacilityPopup(index) {
 
 // 팝업 닫기
 function closeFacilityPopup() {
+  // 팝업 상태 설정
+  window.facilityPopupOpen = false;
+
   const popup = document.getElementById('facilityPopup');
-  popup.style.display = 'none';
+  if (popup) {
+    popup.style.display = 'none';
+  }
+
+  // body 스타일 복원 (스크롤 위치는 건드리지 않음)
   document.body.style.overflow = '';
   document.body.style.position = '';
   document.body.style.zIndex = '';
-  
+
   // 블러 제거
   const sections = document.querySelectorAll('section');
   sections.forEach(section => {
@@ -12330,7 +12460,16 @@ function nextFacilityImage() {
         popupImage.src = nextEntry.fallback;
       }
     }
-    
+
+    // 세로 사진 처리
+    if (currentFacilityIndex === 8 || currentFacilityIndex === 9 || currentFacilityIndex === 10 || currentFacilityIndex === 11 || currentFacilityIndex === 12) {
+      popupImage.style.objectFit = 'contain';
+      popupImage.style.backgroundColor = '#000';
+    } else {
+      popupImage.style.objectFit = 'cover';
+      popupImage.style.backgroundColor = 'transparent';
+    }
+
     // 페이드 인
     setTimeout(() => {
       popupImage.style.opacity = '1';
@@ -12369,7 +12508,16 @@ function prevFacilityImage() {
         popupImage.src = prevEntry.fallback;
       }
     }
-    
+
+    // 세로 사진 처리
+    if (currentFacilityIndex === 8 || currentFacilityIndex === 9 || currentFacilityIndex === 10 || currentFacilityIndex === 11 || currentFacilityIndex === 12) {
+      popupImage.style.objectFit = 'contain';
+      popupImage.style.backgroundColor = '#000';
+    } else {
+      popupImage.style.objectFit = 'cover';
+      popupImage.style.backgroundColor = 'transparent';
+    }
+
     // 페이드 인
     setTimeout(() => {
       popupImage.style.opacity = '1';
@@ -17642,9 +17790,7 @@ function closeEntryPopup() {
     document.body.style.width = '';
     document.body.style.overflow = '';
     
-    // 스크롤 위치 복원
-    const scrollY = popup.dataset.scrollY || '0';
-    window.scrollTo(0, parseInt(scrollY, 10));
+    // 팝업 관련 스크롤 위치 복원은 하지 않음 (현재 위치 유지)
     
     console.log('팝업 강제 닫기 완료');
   } else {
@@ -18419,10 +18565,12 @@ body #boost-card.video-playing-boost .boost-hover-video {
         // 백업 방법
         setTimeout(() => {
           const elementTop = targetElement.offsetTop;
-          window.scrollTo({
-            top: elementTop - 80,
-            behavior: 'smooth'
-          });
+          if (!window.facilityPopupOpen) {
+            window.scrollTo({
+              top: elementTop - 80,
+              behavior: 'smooth'
+            });
+          }
         }, 100);
       } else {
         console.error('타겟 엘리먼트를 찾을 수 없음:', targetId);
