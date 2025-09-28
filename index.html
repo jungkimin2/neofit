@@ -7423,18 +7423,39 @@ if (window.innerWidth <= 768) {
       }
 
       try {
+        // 현재 src 저장 (fallback으로 사용)
+        const currentSrc = imgElement.src || fallbackSrc || imgElement.dataset.fallback;
+
         // WebP 지원 확인
         if (typeof supportsWebP !== 'undefined' && supportsWebP && imgElement.dataset.webp) {
           console.log('WebP 이미지 적용:', imgElement.dataset.webp);
+
+          // 이미지 로딩 에러 처리
+          imgElement.onerror = function() {
+            console.warn('WebP 이미지 로딩 실패, fallback 사용:', currentSrc);
+            this.src = currentSrc;
+            this.onerror = null; // 무한 루프 방지
+          };
+
           imgElement.src = imgElement.dataset.webp;
         } else {
-          console.log('Fallback 이미지 적용:', fallbackSrc || imgElement.dataset.fallback);
-          imgElement.src = fallbackSrc || imgElement.dataset.fallback;
+          console.log('Fallback 이미지 적용:', currentSrc);
+
+          // Fallback 이미지 로딩 에러 처리
+          imgElement.onerror = function() {
+            console.error('Fallback 이미지 로딩도 실패:', currentSrc);
+            this.onerror = null;
+          };
+
+          imgElement.src = currentSrc;
         }
       } catch (e) {
         console.error('applyResponsiveImage 오류:', e);
         // 오류 발생 시 fallback 이미지 사용
-        imgElement.src = fallbackSrc || imgElement.dataset.fallback;
+        const safeFallback = fallbackSrc || imgElement.dataset.fallback || imgElement.src;
+        if (safeFallback) {
+          imgElement.src = safeFallback;
+        }
       }
     };
 
@@ -7493,6 +7514,38 @@ if (window.innerWidth <= 768) {
       window.prevGalleryImage = prevGalleryImage;
       window.nextGalleryImage = nextGalleryImage;
       window.selectFacilityImage = selectFacilityImage;
+
+      // 네오 카드 이미지들에 applyResponsiveImage 적용
+      const neoImages = document.querySelectorAll('#sync-card img[data-webp], #balance-card img[data-webp], #boost-card img[data-webp]');
+      neoImages.forEach(img => {
+        console.log('네오 카드 이미지 적용:', img.alt, img.dataset.webp);
+        applyResponsiveImage(img, img.src);
+      });
+
+      // 네오 필라테스 이미지들에 applyResponsiveImage 적용
+      const pilatesImages = document.querySelectorAll('.pilates-card img[data-webp]');
+      pilatesImages.forEach(img => {
+        console.log('필라테스 이미지 적용:', img.alt, img.dataset.webp);
+        applyResponsiveImage(img, img.src);
+      });
+
+      // 모든 WebP 이미지 상태 확인 및 적용
+      const allWebPImages = document.querySelectorAll('img[data-webp]:not(.facility-thumbnail img):not(#facilityMainImage):not(#popupImage)');
+      console.log('전체 WebP 이미지 개수:', allWebPImages.length);
+      allWebPImages.forEach((img, index) => {
+        console.log(`이미지 ${index + 1}:`, {
+          src: img.src,
+          dataWebp: img.dataset.webp,
+          alt: img.alt,
+          complete: img.complete,
+          naturalWidth: img.naturalWidth
+        });
+
+        // WebP 데이터가 있지만 아직 적용되지 않은 이미지들 처리
+        if (img.dataset.webp && !img.src.includes('.webp')) {
+          applyResponsiveImage(img, img.src);
+        }
+      });
 
       console.log('✅ 갤러리 시스템 초기화 완료!');
     });
