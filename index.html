@@ -7405,8 +7405,12 @@ if (window.innerWidth <= 768) {
     const getFacilitySrc = (index) => {
       const entry = facilityImages[index];
       if (!entry) return '';
-      if (supportsWebP && entry.webp) {
-        return entry.webp;
+      try {
+        if (typeof supportsWebP !== 'undefined' && supportsWebP && entry.webp) {
+          return entry.webp;
+        }
+      } catch (e) {
+        console.log('WebP 지원 확인 중 오류:', e);
       }
       return entry.fallback;
     };
@@ -7464,9 +7468,7 @@ if (window.innerWidth <= 768) {
       window.nextGalleryImage = nextGalleryImage;
       window.selectFacilityImage = selectFacilityImage;
 
-      console.log('🎯 갤러리 함수들이 전역으로 등록되었습니다!');
-      console.log('prevGalleryImage:', typeof window.prevGalleryImage);
-      console.log('nextGalleryImage:', typeof window.nextGalleryImage);
+      console.log('✅ 갤러리 시스템 초기화 완료!');
     });
     
     // 갤러리 이미지 전환 함수 - 모바일/PC 분리
