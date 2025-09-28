@@ -7215,24 +7215,24 @@ if (window.innerWidth <= 768) {
         <img id="facilityMainImage" src="./images/IMG7216.jpeg" data-webp="./images/IMG7216.webp" alt="시설 메인 이미지" loading="lazy" decoding="async" style="width: 100%; height: 450px; object-fit: cover; display: block;">
 
       <!-- PC용 화살표 (메인 이미지 위에 위치) -->
-        <button class="desktop-gallery-prev" onclick="event.stopPropagation(); prevGalleryImage()" style="display: flex; position: absolute; left: 20px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.8); border: 2px solid #7BE495; color: #7BE495; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; align-items: center; justify-content: center; z-index: 10; transition: all 0.3s; box-shadow: 0 2px 10px rgba(0,0,0,0.5);">
+        <button class="desktop-gallery-prev" onclick="event.stopPropagation(); if(window.prevGalleryImage) window.prevGalleryImage(); else console.error('prevGalleryImage not found');" style="display: flex; position: absolute; left: 20px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.8); border: 2px solid #7BE495; color: #7BE495; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; align-items: center; justify-content: center; z-index: 10; transition: all 0.3s; box-shadow: 0 2px 10px rgba(0,0,0,0.5);">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M15 18L9 12L15 6" stroke="#7BE495" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </button>
-        <button class="desktop-gallery-next" onclick="event.stopPropagation(); nextGalleryImage()" style="display: flex; position: absolute; right: 20px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.8); border: 2px solid #7BE495; color: #7BE495; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; align-items: center; justify-content: center; z-index: 10; transition: all 0.3s; box-shadow: 0 2px 10px rgba(0,0,0,0.5);">
+        <button class="desktop-gallery-next" onclick="event.stopPropagation(); if(window.nextGalleryImage) window.nextGalleryImage(); else console.error('nextGalleryImage not found');" style="display: flex; position: absolute; right: 20px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.8); border: 2px solid #7BE495; color: #7BE495; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; align-items: center; justify-content: center; z-index: 10; transition: all 0.3s; box-shadow: 0 2px 10px rgba(0,0,0,0.5);">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M9 18L15 12L9 6" stroke="#7BE495" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </button>
 
       <!-- 모바일용 화살표 (메인 이미지 위에 위치) -->
-        <button class="mobile-gallery-prev" onclick="event.stopPropagation(); prevGalleryImage()" style="display: none; position: absolute; left: 10px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.7); border: 2px solid #7BE495; color: #7BE495; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; align-items: center; justify-content: center; z-index: 10;">
+        <button class="mobile-gallery-prev" onclick="event.stopPropagation(); if(window.prevGalleryImage) window.prevGalleryImage(); else console.error('prevGalleryImage not found');" style="display: none; position: absolute; left: 10px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.7); border: 2px solid #7BE495; color: #7BE495; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; align-items: center; justify-content: center; z-index: 10;">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M15 18L9 12L15 6" stroke="#7BE495" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </button>
-        <button class="mobile-gallery-next" onclick="event.stopPropagation(); nextGalleryImage()" style="display: none; position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.7); border: 2px solid #7BE495; color: #7BE495; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; align-items: center; justify-content: center; z-index: 10;">
+        <button class="mobile-gallery-next" onclick="event.stopPropagation(); if(window.nextGalleryImage) window.nextGalleryImage(); else console.error('nextGalleryImage not found');" style="display: none; position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.7); border: 2px solid #7BE495; color: #7BE495; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; align-items: center; justify-content: center; z-index: 10;">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M9 18L15 12L9 6" stroke="#7BE495" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
@@ -7248,43 +7248,43 @@ if (window.innerWidth <= 768) {
             좌우로 스와이프하여 더 많은 사진 보기 →
           </div>
           <div class="facility-thumbnail-track" style="display: flex; gap: 16px; transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);">
-          <div class="facility-thumbnail active" data-index="0" onclick="selectFacilityImage(0)" style="flex: 0 0 calc(20% - 13px); cursor: pointer; border-radius: 12px; overflow: hidden; border: 2px solid transparent; transition: all 0.3s;">
+          <div class="facility-thumbnail active" data-index="0" onclick="if(window.selectFacilityImage) window.selectFacilityImage(0); else console.error('selectFacilityImage not found');" style="flex: 0 0 calc(20% - 13px); cursor: pointer; border-radius: 12px; overflow: hidden; border: 2px solid transparent; transition: all 0.3s;">
             <img src="./images/IMG7216.jpeg" data-webp="./images/IMG7216.webp" alt="시설 이미지 1" loading="lazy" decoding="async" style="width: 100%; height: 120px; object-fit: cover; display: block;">
           </div>
-          <div class="facility-thumbnail" data-index="1" onclick="selectFacilityImage(1)" style="flex: 0 0 calc(20% - 13px); cursor: pointer; border-radius: 12px; overflow: hidden; border: 2px solid transparent; transition: all 0.3s;">
+          <div class="facility-thumbnail" data-index="1" onclick="if(window.selectFacilityImage) window.selectFacilityImage(1); else console.error('selectFacilityImage not found');" style="flex: 0 0 calc(20% - 13px); cursor: pointer; border-radius: 12px; overflow: hidden; border: 2px solid transparent; transition: all 0.3s;">
             <img src="./images/IMG7217.jpeg" data-webp="./images/IMG7217.webp" alt="시설 이미지 2" loading="lazy" decoding="async" style="width: 100%; height: 120px; object-fit: cover; display: block;">
           </div>
-          <div class="facility-thumbnail" data-index="2" onclick="selectFacilityImage(2)" style="flex: 0 0 calc(20% - 13px); cursor: pointer; border-radius: 12px; overflow: hidden; border: 2px solid transparent; transition: all 0.3s;">
+          <div class="facility-thumbnail" data-index="2" onclick="if(window.selectFacilityImage) window.selectFacilityImage(2); else console.error('selectFacilityImage not found');" style="flex: 0 0 calc(20% - 13px); cursor: pointer; border-radius: 12px; overflow: hidden; border: 2px solid transparent; transition: all 0.3s;">
             <img src="./images/IMG7218.jpeg" data-webp="./images/IMG7218.webp" alt="시설 이미지 3" loading="lazy" decoding="async" style="width: 100%; height: 120px; object-fit: cover; display: block;">
           </div>
-          <div class="facility-thumbnail" data-index="3" onclick="selectFacilityImage(3)" style="flex: 0 0 calc(20% - 13px); cursor: pointer; border-radius: 12px; overflow: hidden; border: 2px solid transparent; transition: all 0.3s;">
+          <div class="facility-thumbnail" data-index="3" onclick="if(window.selectFacilityImage) window.selectFacilityImage(3); else console.error('selectFacilityImage not found');" style="flex: 0 0 calc(20% - 13px); cursor: pointer; border-radius: 12px; overflow: hidden; border: 2px solid transparent; transition: all 0.3s;">
             <img src="./images/IMG7222.JPG" data-webp="./images/IMG7222.webp" alt="시설 이미지 4" loading="lazy" decoding="async" style="width: 100%; height: 120px; object-fit: cover; display: block;">
           </div>
-          <div class="facility-thumbnail" data-index="4" onclick="selectFacilityImage(4)" style="flex: 0 0 calc(20% - 13px); cursor: pointer; border-radius: 12px; overflow: hidden; border: 2px solid transparent; transition: all 0.3s;">
+          <div class="facility-thumbnail" data-index="4" onclick="if(window.selectFacilityImage) window.selectFacilityImage(4); else console.error('selectFacilityImage not found');" style="flex: 0 0 calc(20% - 13px); cursor: pointer; border-radius: 12px; overflow: hidden; border: 2px solid transparent; transition: all 0.3s;">
             <img src="./images/neoodod.JPG" data-webp="./images/neoodod.webp" alt="시설 이미지 5" loading="lazy" decoding="async" style="width: 100%; height: 120px; object-fit: cover; display: block;">
           </div>
-          <div class="facility-thumbnail" data-index="5" onclick="selectFacilityImage(5)" style="flex: 0 0 calc(20% - 13px); cursor: pointer; border-radius: 12px; overflow: hidden; border: 2px solid transparent; transition: all 0.3s;">
+          <div class="facility-thumbnail" data-index="5" onclick="if(window.selectFacilityImage) window.selectFacilityImage(5); else console.error('selectFacilityImage not found');" style="flex: 0 0 calc(20% - 13px); cursor: pointer; border-radius: 12px; overflow: hidden; border: 2px solid transparent; transition: all 0.3s;">
             <img src="./images/IMG3839.JPG" data-webp="./images/IMG3839.webp" alt="시설 이미지 6" loading="lazy" decoding="async" style="width: 100%; height: 120px; object-fit: cover; display: block;">
           </div>
-          <div class="facility-thumbnail" data-index="6" onclick="selectFacilityImage(6)" style="flex: 0 0 calc(20% - 13px); cursor: pointer; border-radius: 12px; overflow: hidden; border: 2px solid transparent; transition: all 0.3s;">
+          <div class="facility-thumbnail" data-index="6" onclick="if(window.selectFacilityImage) window.selectFacilityImage(6); else console.error('selectFacilityImage not found');" style="flex: 0 0 calc(20% - 13px); cursor: pointer; border-radius: 12px; overflow: hidden; border: 2px solid transparent; transition: all 0.3s;">
             <img src="./images/IMG3840.JPG" data-webp="./images/IMG3840.webp" alt="시설 이미지 7" loading="lazy" decoding="async" style="width: 100%; height: 120px; object-fit: cover; display: block;">
           </div>
-          <div class="facility-thumbnail" data-index="7" onclick="selectFacilityImage(7)" style="flex: 0 0 calc(20% - 13px); cursor: pointer; border-radius: 12px; overflow: hidden; border: 2px solid transparent; transition: all 0.3s;">
+          <div class="facility-thumbnail" data-index="7" onclick="if(window.selectFacilityImage) window.selectFacilityImage(7); else console.error('selectFacilityImage not found');" style="flex: 0 0 calc(20% - 13px); cursor: pointer; border-radius: 12px; overflow: hidden; border: 2px solid transparent; transition: all 0.3s;">
             <img src="./images/IMG3805.JPG" alt="시설 이미지 8" loading="lazy" decoding="async" style="width: 100%; height: 120px; object-fit: cover; display: block;">
           </div>
-          <div class="facility-thumbnail" data-index="8" onclick="selectFacilityImage(8)" style="flex: 0 0 calc(20% - 13px); cursor: pointer; border-radius: 12px; overflow: hidden; border: 2px solid transparent; transition: all 0.3s;">
+          <div class="facility-thumbnail" data-index="8" onclick="if(window.selectFacilityImage) window.selectFacilityImage(8); else console.error('selectFacilityImage not found');" style="flex: 0 0 calc(20% - 13px); cursor: pointer; border-radius: 12px; overflow: hidden; border: 2px solid transparent; transition: all 0.3s;">
             <img src="./images/IMG3864.jpg" alt="시설 이미지 9" loading="lazy" decoding="async" style="width: 100%; height: 120px; object-fit: cover; display: block;">
           </div>
-          <div class="facility-thumbnail" data-index="9" onclick="selectFacilityImage(9)" style="flex: 0 0 calc(20% - 13px); cursor: pointer; border-radius: 12px; overflow: hidden; border: 2px solid transparent; transition: all 0.3s;">
+          <div class="facility-thumbnail" data-index="9" onclick="if(window.selectFacilityImage) window.selectFacilityImage(9); else console.error('selectFacilityImage not found');" style="flex: 0 0 calc(20% - 13px); cursor: pointer; border-radius: 12px; overflow: hidden; border: 2px solid transparent; transition: all 0.3s;">
             <img src="./images/IMG3866.jpg" alt="시설 이미지 10" loading="lazy" decoding="async" style="width: 100%; height: 120px; object-fit: cover; display: block;">
           </div>
-          <div class="facility-thumbnail" data-index="10" onclick="selectFacilityImage(10)" style="flex: 0 0 calc(20% - 13px); cursor: pointer; border-radius: 12px; overflow: hidden; border: 2px solid transparent; transition: all 0.3s;">
+          <div class="facility-thumbnail" data-index="10" onclick="if(window.selectFacilityImage) window.selectFacilityImage(10); else console.error('selectFacilityImage not found');" style="flex: 0 0 calc(20% - 13px); cursor: pointer; border-radius: 12px; overflow: hidden; border: 2px solid transparent; transition: all 0.3s;">
             <img src="./images/IMG_3827.JPG" data-webp="./images/IMG_3827.webp" alt="시설 이미지 11" loading="lazy" decoding="async" style="width: 100%; height: 120px; object-fit: cover; display: block;">
           </div>
-          <div class="facility-thumbnail" data-index="11" onclick="selectFacilityImage(11)" style="flex: 0 0 calc(20% - 13px); cursor: pointer; border-radius: 12px; overflow: hidden; border: 2px solid transparent; transition: all 0.3s;">
+          <div class="facility-thumbnail" data-index="11" onclick="if(window.selectFacilityImage) window.selectFacilityImage(11); else console.error('selectFacilityImage not found');" style="flex: 0 0 calc(20% - 13px); cursor: pointer; border-radius: 12px; overflow: hidden; border: 2px solid transparent; transition: all 0.3s;">
             <img src="./images/IMG3826.JPG" data-webp="./images/IMG3826.webp" alt="시설 이미지 12" loading="lazy" decoding="async" style="width: 100%; height: 120px; object-fit: cover; display: block;">
           </div>
-          <div class="facility-thumbnail" data-index="12" onclick="selectFacilityImage(12)" style="flex: 0 0 calc(20% - 13px); cursor: pointer; border-radius: 12px; overflow: hidden; border: 2px solid transparent; transition: all 0.3s;">
+          <div class="facility-thumbnail" data-index="12" onclick="if(window.selectFacilityImage) window.selectFacilityImage(12); else console.error('selectFacilityImage not found');" style="flex: 0 0 calc(20% - 13px); cursor: pointer; border-radius: 12px; overflow: hidden; border: 2px solid transparent; transition: all 0.3s;">
             <img src="./images/IMG3829.JPG" data-webp="./images/IMG3829.webp" alt="시설 이미지 13" loading="lazy" decoding="async" style="width: 100%; height: 120px; object-fit: cover; display: block;">
           </div>
           </div>
@@ -7458,6 +7458,15 @@ if (window.innerWidth <= 768) {
           thumb.style.backgroundColor = 'transparent';
         }
       });
+
+      // 전역 함수 등록 (DOMContentLoaded 시점에서도 확실히 등록)
+      window.prevGalleryImage = prevGalleryImage;
+      window.nextGalleryImage = nextGalleryImage;
+      window.selectFacilityImage = selectFacilityImage;
+
+      console.log('🎯 갤러리 함수들이 전역으로 등록되었습니다!');
+      console.log('prevGalleryImage:', typeof window.prevGalleryImage);
+      console.log('nextGalleryImage:', typeof window.nextGalleryImage);
     });
     
     // 갤러리 이미지 전환 함수 - 모바일/PC 분리
@@ -7616,6 +7625,11 @@ if (window.innerWidth <= 768) {
       selectFacilityImage(currentFacilityIndex);
       updateThumbnailScroll();
     }
+
+    // 전역 함수로 등록 (웹페이지에서 호출 가능하도록)
+    window.prevGalleryImage = prevGalleryImage;
+    window.nextGalleryImage = nextGalleryImage;
+    window.selectFacilityImage = selectFacilityImage;
 
     // 썸네일 스크롤 함수 - 썸네일 영역 스크롤만 담당
     let thumbnailScrollPosition = 0;
