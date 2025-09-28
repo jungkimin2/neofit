@@ -16,6 +16,15 @@
 <link rel="preload" href="./images/neosync.webp" as="image">
 <link rel="preload" href="./images/neoblance.webp" as="image">
 <link rel="preload" href="./images/neoboots.webp" as="image">
+
+<!-- 필라테스 카드 이미지 preload (PC 성능 최적화) -->
+<link rel="preload" href="./images/neopp.webp" as="image" fetchpriority="high">
+<link rel="preload" href="./images/neopp2.webp" as="image" fetchpriority="high">
+<link rel="preload" href="./images/neopp3.webp" as="image" fetchpriority="high">
+<link rel="preload" href="./images/neopp.jpg" as="image" media="(max-width: 768px)">
+<link rel="preload" href="./images/neopp2.jpg" as="image" media="(max-width: 768px)">
+<link rel="preload" href="./images/neopp3.jpg" as="image" media="(max-width: 768px)">
+
 <link rel="dns-prefetch" href="https://fonts.googleapis.com">
 <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
 
@@ -6521,7 +6530,7 @@ if (window.innerWidth <= 768) {
         <!-- 카드 1 -->
         <div class="pilates-card" data-index="0" style="position: absolute; width: 320px; height: 420px; left: 50%; top: 50%; transform: translate(-50%, -50%) translateZ(0) scale(1.2); transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1); z-index: 3;">
           <div style="position: relative; width: 100%; height: 100%; border-radius: 20px; background: #0F1A1C; border: 3px solid #e293ef; overflow: hidden; box-shadow: 0 0 40px rgba(226,147,239,0.8), 0 0 80px rgba(226,147,239,0.4), inset 0 0 30px rgba(226,147,239,0.3);">
-            <img src="./images/neopp.jpg" data-webp="./images/neopp.webp" alt="네오 필라테스 강사 1" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover;">
+            <img src="./images/neopp.jpg" data-webp="./images/neopp.webp" alt="네오 필라테스 강사 1" loading="eager" decoding="async" fetchpriority="high" style="width: 100%; height: 100%; object-fit: cover;">
             <div class="instructor-overlay" style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, transparent 60%); padding: 30px 20px; opacity: 0; transition: opacity 0.3s; display: none;">
               <p style="color: #fff; font-size: 0.95rem; opacity: 0.9;">체계적인 커리큘럼으로<br>개인별 맞춤 지도</p>
             </div>
@@ -6533,7 +6542,7 @@ if (window.innerWidth <= 768) {
         <!-- 카드 2 -->
         <div class="pilates-card" data-index="1" style="position: absolute; width: 320px; height: 420px; left: 50%; top: 50%; transform: translate(-170%, -50%) translateZ(-100px) scale(0.8); transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1); z-index: 2; opacity: 0.7;">
           <div style="position: relative; width: 100%; height: 100%; border-radius: 20px; background: #0F1A1C; border: 2px solid #00BFFF; overflow: hidden; box-shadow: 0 0 20px rgba(0,191,255,0.6), inset 0 0 20px rgba(0,191,255,0.2);">
-            <img src="./images/neopp2.jpg" data-webp="./images/neopp2.webp" alt="네오 필라테스 강사 2" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover;">
+            <img src="./images/neopp2.jpg" data-webp="./images/neopp2.webp" alt="네오 필라테스 강사 2" loading="eager" decoding="async" fetchpriority="high" style="width: 100%; height: 100%; object-fit: cover;">
             <div class="instructor-overlay" style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, transparent 60%); padding: 30px 20px; opacity: 0; transition: opacity 0.3s; display: none;">
               <p style="color: #fff; font-size: 0.95rem; opacity: 0.9;">함께하는 운동의 즐거움<br>동기부여와 성취감</p>
             </div>
@@ -6545,7 +6554,7 @@ if (window.innerWidth <= 768) {
         <!-- 카드 3 -->
         <div class="pilates-card" data-index="2" style="position: absolute; width: 320px; height: 420px; left: 50%; top: 50%; transform: translate(70%, -50%) translateZ(-100px) scale(0.8); transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1); z-index: 2; opacity: 0.7;">
           <div style="position: relative; width: 100%; height: 100%; border-radius: 20px; background: #0F1A1C; border: 2px solid #7BE495; overflow: hidden; box-shadow: 0 0 20px rgba(123,228,149,0.6), inset 0 0 20px rgba(123,228,149,0.2);">
-            <img src="./images/neopp3.jpg" data-webp="./images/neopp3.webp" alt="네오 필라테스 강사 3" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover;">
+            <img src="./images/neopp3.jpg" data-webp="./images/neopp3.webp" alt="네오 필라테스 강사 3" loading="eager" decoding="async" fetchpriority="high" style="width: 100%; height: 100%; object-fit: cover;">
             <div class="instructor-overlay" style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, transparent 60%); padding: 30px 20px; opacity: 0; transition: opacity 0.3s; display: none;">
               <p style="color: #fff; font-size: 0.95rem; opacity: 0.9;">최신 기구로 정확한 자세<br>효과적인 근력 강화</p>
             </div>
@@ -7254,6 +7263,18 @@ if (window.innerWidth <= 768) {
       .pilates-fixed-arrow:active {
         transform: translateY(-50%) scale(0.95) !important;
       }
+
+      /* 필라테스 이미지 최적화 (PC 전용) */
+      .pilates-card img {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+        transform: translateZ(0);
+        will-change: transform;
+      }
+
+      .pilates-card img.loaded {
+        transition: opacity 0.3s ease;
+      }
     }
 
       .pilates-indicator {
@@ -7920,11 +7941,44 @@ if (window.innerWidth <= 768) {
         applyResponsiveImage(img, img.src);
       });
 
-      // 네오 필라테스 이미지들에 applyResponsiveImage 적용
+      // 네오 필라테스 이미지들에 applyResponsiveImage 적용 (PC 우선 최적화)
       const pilatesImages = document.querySelectorAll('.pilates-card img[data-webp]');
-      pilatesImages.forEach(img => {
+      pilatesImages.forEach((img, index) => {
         console.log('필라테스 이미지 적용:', img.alt, img.dataset.webp);
-        applyResponsiveImage(img, img.src);
+
+        // PC 환경에서는 즉시 WebP 적용 (preload 덕분에 이미 로딩 시작됨)
+        if (window.innerWidth > 768) {
+          // WebP 지원하면 즉시 적용
+          if (typeof supportsWebP !== 'undefined' && supportsWebP && img.dataset.webp) {
+            // 로딩 상태 추가
+            img.classList.add('loading-placeholder');
+
+            img.onload = function() {
+              this.classList.remove('loading-placeholder');
+              this.classList.add('loaded');
+              console.log('PC 필라테스 이미지 로딩 완료:', this.dataset.webp);
+            };
+
+            img.onerror = function() {
+              this.classList.remove('loading-placeholder');
+              this.src = this.dataset.fallback || './images/neopp.jpg';
+              console.warn('WebP 로딩 실패, fallback 사용:', this.src);
+            };
+
+            img.src = img.dataset.webp;
+            console.log('PC 환경 WebP 즉시 적용:', img.dataset.webp);
+          } else {
+            // WebP 미지원시 JPG 사용
+            img.classList.add('loading-placeholder');
+            img.onload = function() {
+              this.classList.remove('loading-placeholder');
+              this.classList.add('loaded');
+            };
+          }
+        } else {
+          // 모바일에서는 기존 방식 사용
+          applyResponsiveImage(img, img.src);
+        }
       });
 
       // 모든 WebP 이미지 상태 확인 및 적용
