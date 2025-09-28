@@ -18,7 +18,6 @@
 
 <!-- 모바일 감지 및 최적화 -->
 <script src="./js/initial.js" defer></script>
-<link rel="stylesheet" href="./css/gallery.css">
 
 <!-- 네비게이션 핸들러 - 즉시 실행 -->
 <script>
@@ -7386,6 +7385,18 @@ if (window.innerWidth <= 768) {
     <script>
     // 새로운 갤러리 기능
     let currentFacilityIndex = 0;
+
+    // WebP 지원 여부 확인
+    const supportsWebP = (() => {
+      try {
+        const canvas = document.createElement('canvas');
+        canvas.width = 1;
+        canvas.height = 1;
+        return canvas.toDataURL('image/webp').indexOf('data:image/webp') === 0;
+      } catch (e) {
+        return false;
+      }
+    })();
     const facilityImages = [
       { fallback: './images/IMG7216.jpeg', webp: './images/IMG7216.webp' },
       { fallback: './images/IMG7217.jpeg', webp: './images/IMG7217.webp' },
@@ -7557,17 +7568,22 @@ if (window.innerWidth <= 768) {
             mainImage.style.backgroundColor = 'transparent';
           }
           
-          mainImage.classList.remove('gallery-slide-out');
-          mainImage.classList.add('gallery-slide-in');
-          
-          setTimeout(() => {
-            mainImage.classList.remove('gallery-slide-in');
-          }, 300);
+          if (mainImage) {
+            mainImage.classList.remove('gallery-slide-out');
+            mainImage.classList.add('gallery-slide-in');
+
+            setTimeout(() => {
+              if (mainImage) {
+                mainImage.classList.remove('gallery-slide-in');
+              }
+            }, 300);
+          }
         }, 300);
       }
       
       // 썸네일 활성화 상태 업데이트
       document.querySelectorAll('.facility-thumbnail').forEach((thumb, i) => {
+        if (!thumb) return; // null 체크
         const thumbImg = thumb.querySelector('img');
         if (i === index) {
           thumb.classList.add('active');
@@ -7594,21 +7610,25 @@ if (window.innerWidth <= 768) {
     
     // 메인 이미지 이전/다음 함수 (PC, 모바일 메인 이미지 화살표용)
     function prevGalleryImage() {
+      console.log('prevGalleryImage 함수 호출됨! 현재 인덱스:', currentFacilityIndex);
       if (currentFacilityIndex > 0) {
         currentFacilityIndex--;
       } else {
         currentFacilityIndex = facilityImages.length - 1; // 처음에서 마지막으로 순환
       }
+      console.log('새 인덱스:', currentFacilityIndex);
       selectFacilityImage(currentFacilityIndex);
       updateThumbnailScroll();
     }
 
     function nextGalleryImage() {
+      console.log('nextGalleryImage 함수 호출됨! 현재 인덱스:', currentFacilityIndex);
       if (currentFacilityIndex < facilityImages.length - 1) {
         currentFacilityIndex++;
       } else {
         currentFacilityIndex = 0; // 마지막에서 처음으로 순환
       }
+      console.log('새 인덱스:', currentFacilityIndex);
       selectFacilityImage(currentFacilityIndex);
       updateThumbnailScroll();
     }
