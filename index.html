@@ -148,14 +148,18 @@ window.showHiveChallengePopup = function(event) {
   // 팝업 모달 생성
   const modal = document.createElement('div');
   modal.id = 'hiveChallengeModal';
+  // PC와 모바일에 따른 반응형 크기 설정
+  const isPC = window.innerWidth > 768;
+
   modal.style.cssText = `
     position: relative !important;
-    max-width: 85vw !important;
-    max-height: 85vh !important;
-    background: #fff !important;
-    border-radius: 10px !important;
-    overflow: hidden !important;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8) !important;
+    max-width: ${isPC ? '500px' : '90vw'} !important;
+    max-height: ${isPC ? 'auto' : '85vh'} !important;
+    width: ${isPC ? 'fit-content' : '90vw'} !important;
+    background: transparent !important;
+    border-radius: 15px !important;
+    overflow: visible !important;
+    box-shadow: none !important;
     transform: scale(0.7) !important;
     transition: transform 0.3s ease !important;
     z-index: 2147483647 !important;
@@ -166,11 +170,14 @@ window.showHiveChallengePopup = function(event) {
   const img = document.createElement('img');
   img.src = 'images/neohive93.jpg';
   img.style.cssText = `
-    width: 100% !important;
+    width: ${isPC ? '480px' : '100%'} !important;
     height: auto !important;
     display: block !important;
-    max-width: none !important;
-    max-height: none !important;
+    max-width: ${isPC ? '480px' : 'none'} !important;
+    max-height: ${isPC ? '75vh' : 'none'} !important;
+    object-fit: cover !important;
+    border-radius: 15px !important;
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5) !important;
   `;
 
   // 닫기 버튼 생성 - 네오핏 테마
@@ -178,8 +185,8 @@ window.showHiveChallengePopup = function(event) {
   closeBtn.innerHTML = '×';
   closeBtn.style.cssText = `
     position: absolute !important;
-    top: 15px !important;
-    right: 20px !important;
+    top: 10px !important;
+    right: 10px !important;
     background: linear-gradient(135deg, #7BE495, #62C8A8) !important;
     color: #000 !important;
     border: 2px solid #7BE495 !important;
@@ -7211,7 +7218,7 @@ if (window.innerWidth <= 768) {
     <!-- 새로운 시설 정보 갤러리 - 메인사진 + 썸네일 구조 -->
     <div class="facility-gallery-new" style="margin: 40px auto; max-width: 1000px;">
       <!-- 메인 이미지 영역 -->
-      <div class="facility-main-image" style="position: relative; border-radius: 16px; overflow: hidden; background: #000; cursor: pointer;" onclick="showFacilityPopup(currentFacilityIndex)">
+      <div class="facility-main-image" style="position: relative; border-radius: 16px; overflow: hidden; background: #000;" onclick="if(window.innerWidth > 768) showFacilityPopup(currentFacilityIndex); else console.log('모바일에서는 팝업 비활성화')">
         <img id="facilityMainImage" src="./images/IMG7216.jpeg" data-webp="./images/IMG7216.webp" alt="시설 메인 이미지" loading="lazy" decoding="async" style="width: 100%; height: 450px; object-fit: cover; display: block;">
 
       <!-- PC용 화살표 (메인 이미지 위에 위치) -->
@@ -7294,6 +7301,18 @@ if (window.innerWidth <= 768) {
 
     <!-- 갤러리 반응형 스타일 -->
     <style>
+    /* 모바일에서 메인 이미지 클릭 비활성화 */
+    @media (max-width: 768px) {
+      .facility-main-image {
+        cursor: default !important;
+      }
+    }
+    @media (min-width: 769px) {
+      .facility-main-image {
+        cursor: pointer !important;
+      }
+    }
+
     /* PC 환경에서는 PC용 화살표만 표시 */
     @media (min-width: 769px) {
       .desktop-gallery-prev, .desktop-gallery-next {
