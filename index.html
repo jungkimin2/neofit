@@ -13,11 +13,58 @@
 <!-- Preload 중요 리소스 -->
 <link rel="preload" href="./images/neohive3.png" as="image">
 <link rel="preload" href="./images/hive3.png" as="image">
+<link rel="preload" href="./images/neosync.webp" as="image">
+<link rel="preload" href="./images/neoblance.webp" as="image">
+<link rel="preload" href="./images/neoboots.webp" as="image">
 <link rel="dns-prefetch" href="https://fonts.googleapis.com">
 <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
 
 <!-- 모바일 감지 및 최적화 -->
 <script src="./js/initial.js" defer></script>
+
+<!-- 모바일 성능 최적화 -->
+<style>
+@media (max-width: 768px) {
+  /* 모바일에서 GPU 가속 제한 */
+  * {
+    transform: translateZ(0);
+    will-change: auto !important;
+  }
+
+  /* 애니메이션 최적화 */
+  .training-card {
+    transition: transform 0.2s ease !important;
+  }
+
+  /* 백그라운드 이미지 최적화 */
+  .hero-section, .video-background {
+    background-attachment: scroll !important;
+  }
+
+  /* 이미지 로딩 최적화 */
+  img[loading="lazy"] {
+    content-visibility: auto;
+    contain-intrinsic-size: 200px;
+  }
+
+  /* 비디오 로딩 최적화 */
+  video {
+    content-visibility: auto;
+  }
+
+  /* 초기 로딩 시 스켈레톤 UI */
+  .loading-placeholder {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+  }
+
+  @keyframes loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+}
+</style>
 <link rel="stylesheet" href="./css/gallery.css">
 
 <!-- 네비게이션 핸들러 - 즉시 실행 -->
@@ -4112,7 +4159,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="card-inner" style="width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.3s; background: transparent; border: none;">
           <div class="card-front" style="position: absolute; width: 100%; height: 100%; backface-visibility: hidden; background: linear-gradient(135deg, #0A0F0D 0%, rgba(123,228,149,0.015) 100%); border: 2px solid #7BE495; border-radius: 20px; padding: 30px; display: flex; flex-direction: column; align-items: center; overflow: hidden;">
             <!-- 비디오 요소 추가 -->
-            <video class="sync-hover-video" src="./videos/neosyncvido.mp4" loop playsinline muted preload="metadata" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.3s ease; z-index: 1; pointer-events: none;"></video>
+            <video class="sync-hover-video" src="./videos/neosyncvido.mp4" loop playsinline muted preload="none" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.3s ease; z-index: 1; pointer-events: none;"></video>
             
             <!-- 기존 콘텐츠를 relative로 변경하여 비디오 위에 표시 -->
             <div style="position: relative; z-index: 2; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; padding-top: 32px;">
@@ -4132,7 +4179,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="card-inner" style="width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.3s; background: transparent; border: none;">
           <div class="card-front" style="position: absolute; width: 100%; height: 100%; backface-visibility: hidden; background: linear-gradient(135deg, #0A0D0F 0%, rgba(147,197,253,0.015) 100%); border: 2px solid #93C5FD; border-radius: 20px; padding: 30px; display: flex; flex-direction: column; align-items: center; overflow: hidden;">
             <!-- 비디오 요소 추가 -->
-            <video class="balance-hover-video" src="./videos/neobalance.mp4" loop playsinline muted preload="metadata" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.3s ease; z-index: 1; pointer-events: none;"></video>
+            <video class="balance-hover-video" src="./videos/neobalance.mp4" loop playsinline muted preload="none" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.3s ease; z-index: 1; pointer-events: none;"></video>
             
             <div style="position: relative; z-index: 2; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; padding-top: 32px;">
               <h3 style="color: #93C5FD; font-size: 2rem; margin-bottom: 20px; text-shadow: 0 0 20px rgba(147,197,253,0.8);">NEO BALANCE</h3>
@@ -4151,7 +4198,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="card-inner" style="width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.3s; background: transparent; border: none;">
           <div class="card-front" style="position: absolute; width: 100%; height: 100%; backface-visibility: hidden; background: linear-gradient(135deg, #0F0A0A 0%, rgba(248,113,113,0.015) 100%); border: 2px solid #F87171; border-radius: 20px; padding: 30px; display: flex; flex-direction: column; align-items: center; overflow: hidden;">
             <!-- 비디오 요소 추가 -->
-            <video class="boost-hover-video" src="./videos/neoboots.mp4" loop playsinline muted preload="metadata" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.3s ease; z-index: 0; pointer-events: none;"></video>
+            <video class="boost-hover-video" src="./videos/neoboots.mp4" loop playsinline muted preload="none" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.3s ease; z-index: 0; pointer-events: none;"></video>
             
             <div style="position: relative; z-index: 2; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;">
               <h3 class="boost-title" style="color: #F87171; font-size: 2rem; margin-bottom: 20px; text-shadow: 0 0 20px rgba(248,113,113,0.8); display: block;">NEO BOOST</h3>
@@ -4227,7 +4274,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
       <!-- Center phone -->
       <div class="video-phone" style="position:absolute; left:50%; top:50%; transform:translate(-50%, -50%); width: 180px; height: 360px; border-radius: 20px; overflow: hidden; border: 4px solid #7BE495; background: radial-gradient(circle at center, rgba(123, 228, 149, 0.3), #0A0A0A); box-shadow: 0 0 20px rgba(123, 228, 149, 0.6); z-index: 2147483646; opacity: 1; visibility: visible; display: block;" data-original-left="50%" data-original-top="50%" data-original-transform="translate(-50%, -50%)" data-mobile-left="50%" data-mobile-top="50%" data-mobile-transform="translate(-50%, -50%)">
-        <video id="centerVideo" src="./videos/neohivevideos22.mp4" loop muted playsinline webkit-playsinline x-webkit-airplay="allow" preload="metadata" autoplay style="width: 100%; height: 100%; object-fit: contain;"></video>
+        <video id="centerVideo" src="./videos/neohivevideos22.mp4" loop muted playsinline webkit-playsinline x-webkit-airplay="allow" preload="none" autoplay style="width: 100%; height: 100%; object-fit: contain;"></video>
         <!-- 스피커 버튼 -->
         <button class="speaker-button" onclick="toggleMute(event)" aria-label="음소거 토글">
           <svg id="speakerIcon" viewBox="0 0 24 24">
@@ -5004,7 +5051,7 @@ html body .core-value-fresh-mobile {
           <div class="mobile-video-container" style="display: none; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: transparent; transition: transform 0.3s ease-in-out;">
             <h4 style="color: #7BE495; font-size: 1.5rem; margin-bottom: 20px; text-align: center;">실제 사용 화면</h4>
             <div class="phone-frame" style="width: 240px; height: 480px; margin: 0 auto; border-radius: 30px; border: 3px solid #7BE495; overflow: hidden; position: relative; box-shadow: 0 0 40px rgba(123, 228, 149, 0.5), inset 0 0 0 1px #7BE495; background: #000; -webkit-mask-image: -webkit-radial-gradient(white, black); mask-image: radial-gradient(white, black);">
-              <video id="mobilePreviewVideo" src="./videos/neofits.mp4" loop playsinline preload="metadata" style="width: 100%; height: 100%; object-fit: cover;">
+              <video id="mobilePreviewVideo" src="./videos/neofits.mp4" loop playsinline preload="none" style="width: 100%; height: 100%; object-fit: cover;">
               </video>
               <!-- 스피커 버튼 -->
               <div class="speaker-button-wrapper" style="position: absolute; top: 10px; right: 10px; z-index: 10;">
@@ -5029,7 +5076,7 @@ html body .core-value-fresh-mobile {
         <div class="phone-section pc-only" style="flex: 1; max-width: 400px; min-width: 300px; text-align: center; margin-top: -32px;">
           <h4 style="color: #7BE495; font-size: 1.5rem; margin-bottom: 20px;">실제 사용 화면</h4>
           <div class="phone-frame" style="width: 240px; height: 480px; margin: 0 auto; border-radius: 30px; border: 4px solid #7BE495; overflow: hidden; position: relative; box-shadow: 0 0 40px rgba(123, 228, 149, 0.5); background: #000;">
-            <video id="neofitsVideo" src="./videos/neofits.mp4" autoplay loop muted playsinline preload="metadata" style="width: 100%; height: 100%; object-fit: cover;">
+            <video id="neofitsVideo" src="./videos/neofits.mp4" autoplay loop muted playsinline preload="none" style="width: 100%; height: 100%; object-fit: cover;">
             </video>
             <!-- neofits.mp4 전용 스피커 버튼 -->
             <div class="speaker-button-wrapper" style="position: absolute; top: 4px; right: 4px; z-index: 10;">
@@ -10598,12 +10645,12 @@ document.addEventListener('DOMContentLoaded', function() {
   const boostCard = document.getElementById('boost-card');
   const boostVideo = boostCard.querySelector('.boost-hover-video');
   
-  // 모바일에서 비디오 미리 로드하여 재생 지연 방지
+  // 모바일에서 비디오 로딩 최적화 - 성능 개선
   if (isMobile) {
-    // 비디오 preload 설정 - 네오 부스트는 metadata로 설정하여 빠른 로딩
-    syncVideo.setAttribute('preload', 'auto');
-    balanceVideo.setAttribute('preload', 'auto');
-    boostVideo.setAttribute('preload', 'metadata');
+    // 모바일에서는 데이터 절약을 위해 preload를 none으로 설정
+    syncVideo.setAttribute('preload', 'none');
+    balanceVideo.setAttribute('preload', 'none');
+    boostVideo.setAttribute('preload', 'none');
     
     // 비디오를 미리 로드하고 준비
     const preloadVideo = (video) => {
