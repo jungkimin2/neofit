@@ -7479,11 +7479,14 @@ if (window.innerWidth <= 768) {
       const isMobile = window.innerWidth <= 768;
       console.log('📱 isMobile:', isMobile);
       
-      // PC에서만 애니메이션 중복 방지
-      if (!isMobile && (mainImage.classList.contains('gallery-slide-out') || 
+      // PC에서만 애니메이션 중복 방지 (임시 비활성화)
+      /*
+      if (!isMobile && (mainImage.classList.contains('gallery-slide-out') ||
           mainImage.classList.contains('gallery-slide-in'))) {
+        console.log('⚠️ 애니메이션 진행 중이므로 함수 종료');
         return;
       }
+      */
       
       if (isMobile) {
         // 모바일: 검은 화면으로 덮은 후 이미지 변경
@@ -7556,7 +7559,14 @@ if (window.innerWidth <= 768) {
           }
           const newSrc = getFacilitySrc(index);
           console.log('🔄 새로운 이미지 src:', newSrc);
-          mainImage.src = newSrc;
+          console.log('🔄 현재 이미지 src:', mainImage.src);
+
+          // 강제 이미지 업데이트
+          mainImage.src = '';  // 먼저 비우기
+          setTimeout(() => {
+            mainImage.src = newSrc;  // 새 이미지 설정
+            console.log('✅ 이미지 src 업데이트 완료:', mainImage.src);
+          }, 10);
           if (entry && entry.webp) {
             applyResponsiveImage(mainImage, entry.fallback);
           }
@@ -7575,11 +7585,11 @@ if (window.innerWidth <= 768) {
           
           mainImage.classList.remove('gallery-slide-out');
           mainImage.classList.add('gallery-slide-in');
-          
+
           setTimeout(() => {
             mainImage.classList.remove('gallery-slide-in');
-          }, 300);
-        }, 300);
+          }, 150);
+        }, 150);
       }
       
       // 썸네일 활성화 상태 업데이트
