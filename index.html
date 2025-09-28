@@ -6630,6 +6630,8 @@ if (window.innerWidth <= 768) {
 
       let activeIndex = 0;
       let desktopInitialized = false;
+      let leftArrow = null;
+      let rightArrow = null;
 
       function applyLayout(animate) {
         if (cards.length !== 3) {
@@ -6653,6 +6655,7 @@ if (window.innerWidth <= 768) {
           card.style.setProperty('pointer-events', 'auto', 'important');
           card.style.setProperty('cursor', position === 'center' ? 'default' : 'pointer', 'important');
           card.dataset.desktopPosition = position;
+
 
           if (frame && accent) {
             if (position === 'center') {
@@ -6700,56 +6703,291 @@ if (window.innerWidth <= 768) {
         console.debug('setActive', { requestedIndex: index, normalized, previousActive: activeIndex });
         activeIndex = normalized;
         applyLayout(true);
+        updateArrowsVisibility();
+      }
+
+      function createFixedArrowButtons() {
+        const carouselContainer = document.querySelector('.pilates-carousel-container');
+        if (!carouselContainer) {
+          console.error('필라테스 캐러셀 컨테이너를 찾을 수 없습니다');
+          return;
+        }
+
+        // 왼쪽 화살표 생성
+        leftArrow = document.createElement('div');
+        leftArrow.className = 'pilates-fixed-arrow pilates-left-arrow';
+        leftArrow.innerHTML = '‹';
+        leftArrow.style.cssText = `
+          position: absolute;
+          top: 50%;
+          left: -60px;
+          transform: translateY(-50%);
+          width: 45px;
+          height: 45px;
+          background: rgba(0, 0, 0, 0.8);
+          border: 2px solid rgba(123, 228, 149, 0.6);
+          border-radius: 50%;
+          color: #7BE495;
+          font-size: 28px;
+          font-weight: bold;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          z-index: 100;
+          transition: all 0.3s ease;
+          backdrop-filter: blur(10px);
+          user-select: none;
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        `;
+
+        // 오른쪽 화살표 생성
+        rightArrow = document.createElement('div');
+        rightArrow.className = 'pilates-fixed-arrow pilates-right-arrow';
+        rightArrow.innerHTML = '›';
+        rightArrow.style.cssText = `
+          position: absolute;
+          top: 50%;
+          right: -60px;
+          transform: translateY(-50%);
+          width: 45px;
+          height: 45px;
+          background: rgba(0, 0, 0, 0.8);
+          border: 2px solid rgba(123, 228, 149, 0.6);
+          border-radius: 50%;
+          color: #7BE495;
+          font-size: 28px;
+          font-weight: bold;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          z-index: 100;
+          transition: all 0.3s ease;
+          backdrop-filter: blur(10px);
+          user-select: none;
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        `;
+
+        // 호버 효과 추가
+        [leftArrow, rightArrow].forEach(arrow => {
+          arrow.addEventListener('mouseenter', () => {
+            arrow.style.background = 'rgba(123, 228, 149, 0.9)';
+            arrow.style.borderColor = 'rgba(123, 228, 149, 1)';
+            arrow.style.color = '#000';
+            arrow.style.transform = 'translateY(-50%) scale(1.1)';
+            arrow.style.boxShadow = '0 0 25px rgba(123, 228, 149, 0.7)';
+          });
+
+          arrow.addEventListener('mouseleave', () => {
+            arrow.style.background = 'rgba(0, 0, 0, 0.8)';
+            arrow.style.borderColor = 'rgba(123, 228, 149, 0.6)';
+            arrow.style.color = '#7BE495';
+            arrow.style.transform = 'translateY(-50%) scale(1)';
+            arrow.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.3)';
+          });
+        });
+
+        // 클릭 이벤트 추가
+        leftArrow.addEventListener('click', (event) => {
+          event.preventDefault();
+          event.stopPropagation();
+          console.log('🏹 왼쪽 화살표 클릭됨! 이전 카드로 이동');
+
+          const prevIndex = (activeIndex - 1 + cards.length) % cards.length;
+          console.log('🔄 카드 전환:', activeIndex, '→', prevIndex);
+
+          try {
+            if (typeof stopAllVideos === 'function') {
+              stopAllVideos();
+            }
+          } catch(e) {
+            console.log('stopAllVideos 호출 중 오류 (무시됨):', e);
+          }
+
+          setActive(prevIndex);
+        });
+
+        rightArrow.addEventListener('click', (event) => {
+          event.preventDefault();
+          event.stopPropagation();
+          console.log('🏹 오른쪽 화살표 클릭됨! 다음 카드로 이동');
+
+          const nextIndex = (activeIndex + 1) % cards.length;
+          console.log('🔄 카드 전환:', activeIndex, '→', nextIndex);
+
+          try {
+            if (typeof stopAllVideos === 'function') {
+              stopAllVideos();
+            }
+          } catch(e) {
+            console.log('stopAllVideos 호출 중 오류 (무시됨):', e);
+          }
+
+          setActive(nextIndex);
+        });
+
+        carouselContainer.appendChild(leftArrow);
+        carouselContainer.appendChild(rightArrow);
+
+        console.log('✅ 고정된 화살표 버튼 생성 완료');
+        updateArrowsVisibility();
+      }
+
+      function updateArrowsVisibility() {
+        // 항상 양쪽 화살표 모두 표시 (순환 구조이므로)
+        if (leftArrow && rightArrow && window.innerWidth > 768) {
+          leftArrow.style.display = 'flex';
+          rightArrow.style.display = 'flex';
+        } else if (leftArrow && rightArrow) {
+          leftArrow.style.display = 'none';
+          rightArrow.style.display = 'none';
+        }
       }
 
       function initDesktopCarousel() {
-        console.debug('initDesktopCarousel invoked', { width: window.innerWidth, cardCount: cards.length, desktopInitialized });
+        console.log('🔄 initDesktopCarousel invoked', {
+          width: window.innerWidth,
+          cardCount: cards.length,
+          desktopInitialized,
+          cardsFound: cards.map(c => ({ index: c.dataset.index, element: c }))
+        });
         if (window.innerWidth <= 768 || cards.length !== 3) {
+          console.log('❌ 조건 불만족: 모바일이거나 카드 개수가 3개가 아님');
           return;
         }
 
         if (!desktopInitialized) {
-          cards.forEach((card) => {
-            card.addEventListener('click', (event) => {
+          console.log('✅ PC 필라테스 캐러셀 초기화 시작');
+          cards.forEach((card, cardIndex) => {
+            console.log('🎯 PC 필라테스 카드 이벤트 리스너 추가:', {
+              cardIndex,
+              dataIndex: card.dataset.index,
+              element: card,
+              currentStyles: {
+                pointerEvents: getComputedStyle(card).pointerEvents,
+                cursor: getComputedStyle(card).cursor,
+                position: getComputedStyle(card).position
+              }
+            });
+            // 간단하고 확실한 클릭 핸들러
+            const clickHandler = (event) => {
               if (window.innerWidth <= 768) {
+                console.log('모바일 환경이므로 PC 카드 클릭 무시');
                 return;
               }
-
-              event.preventDefault();
 
               const datasetIndex = Number(card.dataset.index);
               const targetIndex = Number.isNaN(datasetIndex) ? cards.indexOf(card) : datasetIndex;
+
+              console.log('🖱️ PC 필라테스 카드 클릭됨:', {
+                targetIndex,
+                currentActive: activeIndex,
+                datasetIndex: card.dataset.index
+              });
+
               if (targetIndex === activeIndex || targetIndex < 0) {
+                console.log('⚠️ 동일한 카드거나 유효하지 않은 인덱스');
                 return;
               }
 
-              console.debug('Pilates card click', { targetIndex, currentActive: activeIndex, datasetIndex: card.dataset.index });
-
               // 카드 전환 전에 모든 비디오 정지 및 CSS 클래스 정리
-              stopAllVideos();
+              try {
+                if (typeof stopAllVideos === 'function') {
+                  stopAllVideos();
+                }
+              } catch(e) {
+                console.log('stopAllVideos 호출 중 오류 (무시됨):', e);
+              }
 
+              console.log('🔄 카드 전환 실행:', activeIndex, '→', targetIndex);
               setActive(targetIndex);
-            }, { passive: false });
+            };
+
           });
 
           indicators.forEach((indicator, index) => {
+            console.log('PC 필라테스 인디케이터 이벤트 리스너 추가:', index);
             indicator.addEventListener('click', (event) => {
+              console.log('PC 필라테스 인디케이터 클릭됨:', index);
               event.preventDefault();
               event.stopPropagation();
 
               // 카드 전환 전에 모든 비디오 정지 및 CSS 클래스 정리
-              stopAllVideos();
+              try {
+                if (typeof stopAllVideos === 'function') {
+                  stopAllVideos();
+                }
+              } catch(e) {
+                console.log('stopAllVideos 호출 중 오류 (무시됨):', e);
+              }
 
               setActive(index);
             });
           });
 
+          // 고정된 화살표 버튼 생성
+          createFixedArrowButtons();
+
           desktopInitialized = true;
+          console.log('PC 필라테스 캐러셀 초기화 완료');
         }
 
+        console.log('PC 필라테스 레이아웃 적용 시작');
         applyLayout(false);
-        requestAnimationFrame(() => applyLayout(true));
+        requestAnimationFrame(() => {
+          applyLayout(true);
+          // 초기화 후 화살표 상태 확인
+          console.log('🔍 초기화 후 화살표 상태 확인:');
+          cards.forEach((card, i) => {
+            if (card._arrowButton) {
+              console.log(`카드 ${i}:`, {
+                display: card._arrowButton.style.display,
+                position: card.dataset.desktopPosition,
+                dataIndex: card.dataset.index
+              });
+            }
+          });
+        });
       }
+
+      // 강제 초기화 및 디버깅 함수 (개발용)
+      window.debugPilatesCarousel = function() {
+        console.log('🔧 디버그: 강제 초기화 시작');
+        console.log('현재 상태:', {
+          windowWidth: window.innerWidth,
+          cardCount: cards.length,
+          desktopInitialized,
+          activeIndex
+        });
+
+        cards.forEach((card, i) => {
+          console.log(`카드 ${i}:`, {
+            element: card,
+            dataIndex: card.dataset.index,
+            computedStyles: {
+              pointerEvents: getComputedStyle(card).pointerEvents,
+              cursor: getComputedStyle(card).cursor,
+              zIndex: getComputedStyle(card).zIndex,
+              transform: getComputedStyle(card).transform
+            }
+          });
+        });
+
+        // 강제로 레이아웃 적용
+        applyLayout(true);
+
+        // 화살표 버튼 강제 테스트
+        cards.forEach((card, i) => {
+          if (card._arrowButton) {
+            console.log(`화살표 ${i} 테스트 클릭:`, card._arrowButton);
+            // 강제로 화살표 표시
+            card._arrowButton.style.display = 'flex';
+            card._arrowButton.style.pointerEvents = 'auto';
+          }
+        });
+      };
+
 
       initDesktopCarousel();
       window.addEventListener('resize', initDesktopCarousel);
@@ -6871,10 +7109,10 @@ if (window.innerWidth <= 768) {
         position: absolute !important;
         width: 300px !important;
         height: 400px !important;
+        cursor: pointer !important;
+        pointer-events: auto !important;
         transform: none !important;
         top: 50% !important;
-        pointer-events: auto !important;
-        cursor: pointer !important;
         /* transition은 JavaScript에서 제어 */
       }
       
@@ -6915,7 +7153,7 @@ if (window.innerWidth <= 768) {
         font-size: 1.1rem;
       }
       
-      /* 인디케이터는 모바일에서 표시 */
+      /* PC와 모바일 모두에서 인디케이터 표시 */
       .pilates-indicators {
         display: flex !important;
         position: absolute !important;
@@ -6932,10 +7170,104 @@ if (window.innerWidth <= 768) {
       }
       
       .pilates-indicator {
-        width: 10px !important;
-        height: 10px !important;
+        width: 12px !important;
+        height: 12px !important;
+        cursor: pointer !important;
+        pointer-events: auto !important;
+        transition: all 0.3s ease !important;
       }
-      
+
+      .pilates-indicator:hover {
+        transform: scale(1.2) !important;
+      }
+    }
+
+    /* PC 전용 스타일 추가 */
+    @media (min-width: 769px) {
+      .pilates-card {
+        pointer-events: auto !important;
+        cursor: pointer !important;
+        position: absolute !important;
+        transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1) !important;
+      }
+
+      /* PC에서 모바일 전용 data-position 스타일 무시 */
+      .pilates-card[data-position] {
+        left: auto !important;
+        transform: none !important;
+        z-index: auto !important;
+      }
+
+      /* PC에서 JavaScript가 적용하는 스타일이 우선되도록 */
+      .pilates-card[data-desktop-position="center"] {
+        z-index: 3 !important;
+        opacity: 1 !important;
+      }
+
+      .pilates-card[data-desktop-position="left"],
+      .pilates-card[data-desktop-position="right"] {
+        z-index: 2 !important;
+        opacity: 0.7 !important;
+        cursor: pointer !important;
+      }
+
+      /* 카드 내부 요소들도 클릭 가능하도록 */
+      .pilates-card img,
+      .pilates-card > div {
+        cursor: pointer !important;
+        pointer-events: auto !important;
+      }
+
+      /* 중앙 카드는 기본 커서 */
+      .pilates-card[data-desktop-position="center"] img,
+      .pilates-card[data-desktop-position="center"] > div {
+        cursor: default !important;
+      }
+
+      /* 화살표 버튼 스타일 (PC 전용) */
+      .pilates-arrow-button {
+        opacity: 0.8;
+        transition: all 0.3s ease !important;
+        pointer-events: auto !important;
+        z-index: 20 !important;
+      }
+
+      .pilates-arrow-button:hover {
+        opacity: 1 !important;
+        transform: translateY(-50%) scale(1.1) !important;
+      }
+
+      .pilates-arrow-button:active {
+        transform: translateY(-50%) scale(0.95) !important;
+      }
+
+      /* 고정된 화살표 버튼 스타일 (PC 전용) */
+      .pilates-fixed-arrow {
+        pointer-events: auto !important;
+        transition: all 0.3s ease !important;
+      }
+
+      .pilates-fixed-arrow:hover {
+        transform: translateY(-50%) scale(1.1) !important;
+      }
+
+      .pilates-fixed-arrow:active {
+        transform: translateY(-50%) scale(0.95) !important;
+      }
+    }
+
+      .pilates-indicator {
+        pointer-events: auto !important;
+        cursor: pointer !important;
+      }
+
+      .pilates-indicators {
+        pointer-events: auto !important;
+        z-index: 1000 !important;
+      }
+    }
+
+    @media (max-width: 768px) {
       /* 모바일에서 강사 정보 표시 */
       .mobile-pilates-info {
         display: block !important;
@@ -17639,6 +17971,14 @@ document.addEventListener('DOMContentLoaded', function() {
   
   /* 모바일 필라테스 카드 간단한 스타일 */
   @media (max-width: 768px) {
+    /* 모바일에서 화살표 버튼 완전히 숨김 */
+    .pilates-arrow-button,
+    .pilates-fixed-arrow {
+      display: none !important;
+      visibility: hidden !important;
+      pointer-events: none !important;
+    }
+
     .pilates-card {
       position: absolute !important;
       width: 300px !important;
