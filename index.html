@@ -10,20 +10,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Neo Hive - 스마트하게, 함께 하는 피트니스</title>
 
-<!-- Preload 중요 리소스 -->
-<link rel="preload" href="./images/neohive3.png" as="image">
-<link rel="preload" href="./images/hive3.png" as="image">
-<link rel="preload" href="./images/neosync.webp" as="image">
-<link rel="preload" href="./images/neoblance.webp" as="image">
-<link rel="preload" href="./images/neoboots.webp" as="image">
+<!-- Preload 중요 리소스 - PC만 -->
+<link rel="preload" href="./images/neohive3.png" as="image" media="(min-width: 769px)">
+<link rel="preload" href="./images/hive3.png" as="image" media="(min-width: 769px)">
 
-<!-- 필라테스 카드 이미지 preload (PC 성능 최적화) -->
-<link rel="preload" href="./images/neopp.webp" as="image" fetchpriority="high">
-<link rel="preload" href="./images/neopp2.webp" as="image" fetchpriority="high">
-<link rel="preload" href="./images/neopp3.webp" as="image" fetchpriority="high">
-<link rel="preload" href="./images/neopp.jpg" as="image" media="(max-width: 768px)">
-<link rel="preload" href="./images/neopp2.jpg" as="image" media="(max-width: 768px)">
-<link rel="preload" href="./images/neopp3.jpg" as="image" media="(max-width: 768px)">
+<!-- 모바일에서는 최소한의 preload만 -->
+<link rel="preload" href="./images/neosync.webp" as="image" media="(min-width: 769px)">
+<link rel="preload" href="./images/neoblance.webp" as="image" media="(min-width: 769px)">
+<link rel="preload" href="./images/neoboots.webp" as="image" media="(min-width: 769px)">
+
+<!-- 필라테스 카드 이미지 preload (PC만) -->
+<link rel="preload" href="./images/neopp.webp" as="image" fetchpriority="high" media="(min-width: 769px)">
+<link rel="preload" href="./images/neopp2.webp" as="image" media="(min-width: 769px)">
+<link rel="preload" href="./images/neopp3.webp" as="image" media="(min-width: 769px)">
 
 <link rel="dns-prefetch" href="https://fonts.googleapis.com">
 <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
@@ -31,16 +30,17 @@
 <!-- 모바일 감지 및 최적화 -->
 <script src="./js/initial.js" defer></script>
 
-<!-- 모바일 성능 최적화 -->
+<!-- 모바일 성능 최적화 (강화) -->
 <style>
 @media (max-width: 768px) {
-  /* 모바일에서 GPU 가속 제한 */
+  /* 모바일에서 GPU 가속 최적화 */
   * {
-    transform: translateZ(0);
     will-change: auto !important;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
   }
 
-  /* 애니메이션 최적화 */
+  /* 애니메이션 최적화 - 모바일에서 간소화 */
   .training-card {
     transition: transform 0.2s ease !important;
   }
@@ -51,19 +51,26 @@
   }
 
   /* 이미지 로딩 최적화 */
-  img[loading="lazy"] {
+  img {
     content-visibility: auto;
-    contain-intrinsic-size: 200px;
+    contain-intrinsic-size: 300px 200px;
   }
 
-  /* 비디오 로딩 최적화 */
+  /* 비디오 로딩 최적화 - 모바일에서 지연 로드 */
   video {
     content-visibility: auto;
+    contain-intrinsic-size: 300px 200px;
+  }
+
+  /* 화면 밖 요소 렌더링 최적화 */
+  section {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 500px;
   }
 
   /* 초기 로딩 시 스켈레톤 UI */
   .loading-placeholder {
-    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background: linear-gradient(90deg, #1a1a1a 25%, #2a2a2a 50%, #1a1a1a 75%);
     background-size: 200% 100%;
     animation: loading 1.5s infinite;
   }
@@ -72,8 +79,58 @@
     0% { background-position: 200% 0; }
     100% { background-position: -200% 0; }
   }
+
+  /* 복잡한 그림자/필터 간소화 */
+  .pilates-card, .training-card {
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3) !important;
+  }
+
+  /* 애니메이션 간소화 */
+  .animate-on-scroll {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* 저사양 기기 감지 시 추가 최적화 */
+@media (max-width: 768px) and (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
 }
 </style>
+
+<!-- 모바일 초기 로딩 속도 개선 스크립트 -->
+<script>
+// 모바일 감지 시 불필요한 리소스 지연 로드
+if (window.innerWidth <= 768) {
+  document.documentElement.classList.add('mobile-optimized');
+
+  // Intersection Observer로 화면에 보일 때만 이미지 로드
+  if ('IntersectionObserver' in window) {
+    const imageObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const img = entry.target;
+          if (img.dataset.src) {
+            img.src = img.dataset.src;
+            img.removeAttribute('data-src');
+          }
+          observer.unobserve(img);
+        }
+      });
+    }, { rootMargin: '100px' });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('img[data-src]').forEach(img => {
+        imageObserver.observe(img);
+      });
+    });
+  }
+}
+</script>
 <link rel="stylesheet" href="./css/gallery.css">
 
 <!-- 네비게이션 핸들러 - 즉시 실행 -->
