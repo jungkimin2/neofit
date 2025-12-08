@@ -391,7 +391,8 @@ window.testPopup = function() {
 }
 
 /* 페이지 로딩 시 팝업이 활성화될 때만 다른 요소들 숨김 */
-/* 팝업 활성화시 배경 처리 - 배경이 잘 보이도록 */
+/* ⚠️ 임시 비활성화 - 팝업 관련 스타일 */
+/*
 body.popup-active > *:not(#entryPopup) {
   opacity: 0.8 !important;
   filter: blur(1px) brightness(0.7) !important;
@@ -399,7 +400,6 @@ body.popup-active > *:not(#entryPopup) {
   transition: all 0.3s ease !important;
 }
 
-/* 팝업 최상위 표시 */
 body.popup-active #entryPopup {
   z-index: 999999999999 !important;
   display: flex !important;
@@ -407,9 +407,17 @@ body.popup-active #entryPopup {
   visibility: visible !important;
 }
 
-/* body 고정 */
 body.popup-active {
   overflow: hidden !important;
+}
+*/
+
+/* 팝업 완전 숨김 (임시) */
+#entryPopup {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
 }
 
 /* 모바일에서만 적용 - PC 환경 완전 보호 */
@@ -1807,7 +1815,8 @@ section {
   hr {
     display: none !important;
   }
-  body { font-family: 'SUIT', 'Noto Sans KR', sans-serif; line-height: 1.6; color: #fff; background: #000; }
+  html { background: #000 !important; }
+  body { font-family: 'SUIT', 'Noto Sans KR', sans-serif; line-height: 1.6; color: #fff; background: #000 !important; }
   /* PC 환경에서만 적용되는 header 스타일 */
   @media screen and (min-width: 769px) {
     header {
@@ -3394,8 +3403,10 @@ document.addEventListener('DOMContentLoaded', function() {
 // 가장 먼저 실행 - 팝업 깜빡임 완전 차단
 (function() {
   // localStorage 즉시 체크
-  let shouldHidePopup = false;
-  
+  // ⚠️ 임시로 팝업 비활성화 - 다시 활성화하려면 아래 true를 false로 변경
+  let shouldHidePopup = true; // 임시 팝업 숨김
+
+  /* 원본 코드 (팝업 다시 활성화 시 사용)
   try {
     const dontShowUntil = localStorage.getItem('dontShowPopupUntil');
     if (dontShowUntil) {
@@ -3407,6 +3418,7 @@ document.addEventListener('DOMContentLoaded', function() {
     console.error('localStorage 접근 실패:', e);
     shouldHidePopup = false;
   }
+  */
   
   // 전역 변수로 설정하여 다른 스크립트들이 확인할 수 있도록 함
   window.POPUP_SHOULD_HIDE = shouldHidePopup;
@@ -3445,31 +3457,35 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 })();
 </script>
-<body class="popup-active">
-<!-- 진입 팝업 - 전체 화면 오버레이 -->
+<body class="">
+<!-- 진입 팝업 - 전체 화면 오버레이 (임시 비활성화) -->
 <div id="entryPopup" style="
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.4);
-  z-index: 999999999999;
-  opacity: 1;
-  pointer-events: auto;
-  overflow-y: auto;
-  padding: 15px;
-  box-sizing: border-box;
-  justify-content: center;
-  align-items: center;
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  position: absolute !important;
+  left: -9999px !important;
+  top: -9999px !important;
+  width: 0 !important;
+  height: 0 !important;
+  background: transparent !important;
+  z-index: -1 !important;
 " onclick="event.target === this && closeEntryPopup()">
   <style>
+    /* 임시 비활성화 - 팝업 완전 숨김 */
     #entryPopup {
-      z-index: 999999999999 !important;
-      position: fixed !important;
-      isolation: isolate !important;
-      background: rgba(0, 0, 0, 0.4) !important;
+      display: none !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+      position: absolute !important;
+      left: -9999px !important;
+      top: -9999px !important;
+      width: 0 !important;
+      height: 0 !important;
+      background: transparent !important;
+      z-index: -1 !important;
     }
     
     /* 팝업이 열렸을 때 body 스크롤 완전 차단 */
@@ -4231,7 +4247,7 @@ document.addEventListener('DOMContentLoaded', function() {
   </div>
 </section>
 
-<section id="hive" class="section animate-on-scroll" style="background:#000; padding-top:24px; padding-bottom: 100px;">
+<section id="hive" class="section animate-on-scroll" style="background:#000; padding-top:24px; padding-bottom: 0px;">
   <div class="container" style="text-align:center; padding-top:0; max-width: 1100px; margin: 0 auto; padding: 0 20px;">
     <h2 style="font-size: 2rem; text-align: left; color: #FFFFFF; margin-top:0;">
       네오 하이브 : <span class="neon-green">"하나되는 우리"</span>
@@ -4968,9 +4984,11 @@ html body .core-value-fresh-mobile {
   </div>
 </section>
 
+<!-- 섹션 간 검은색 여백 -->
+<div style="background: #000; height: 80px;"></div>
 
 <!-- <div id="hive"></div> -->
-          <section id="smart" class="section animate-on-scroll smart-trainer-section-mobile" style="background: #000; padding-top: 0px; margin-top: 80px; position: relative; z-index: 100;">
+          <section id="smart" class="section animate-on-scroll smart-trainer-section-mobile" style="background: #000; padding-top: 0px; margin-top: 0px; position: relative; z-index: 100;">
   <div class="container" style="text-align:left; max-width: 1100px; margin: 0 auto; padding: 0 20px;">
     <h2 style="font-size: 2rem; text-align: left; margin-top: 20px; line-height: 1.4; padding-bottom: 10px; overflow: visible;">
       <span style="color: #FFFFFF;">네오 스마트 :</span>
@@ -6523,54 +6541,73 @@ if (window.innerWidth <= 768) {
       </p>
     </div>
     
-    <!-- 강사진 소개 카드 - 3D 캐러셀 -->
+    <!-- 강사진 소개 카드 - 3D 캐러셀 (리뉴얼) -->
     <div class="pilates-carousel-container" style="position: relative; width: 100%; height: 600px; margin-top: -22px; perspective: 1000px; overflow: visible;">
       <div class="pilates-carousel" style="position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);">
-        
-        <!-- 카드 1 -->
+
+        <!-- 카드 1 - 전문 강사진 (김하정 강사 이미지) -->
         <div class="pilates-card" data-index="0" style="position: absolute; width: 320px; height: 420px; left: 50%; top: 50%; transform: translate(-50%, -50%) translateZ(0) scale(1.2); transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1); z-index: 3;">
           <div style="position: relative; width: 100%; height: 100%; border-radius: 20px; background: #0F1A1C; border: 3px solid #e293ef; overflow: hidden; box-shadow: 0 0 40px rgba(226,147,239,0.8), 0 0 80px rgba(226,147,239,0.4), inset 0 0 30px rgba(226,147,239,0.3);">
-            <img src="./images/neopp.jpg" data-webp="./images/neopp.webp" alt="네오 필라테스 강사 1" loading="eager" decoding="async" fetchpriority="high" style="width: 100%; height: 100%; object-fit: cover;">
-            <div class="instructor-overlay" style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, transparent 60%); padding: 30px 20px; opacity: 0; transition: opacity 0.3s; display: none;">
-              <p style="color: #fff; font-size: 0.95rem; opacity: 0.9;">체계적인 커리큘럼으로<br>개인별 맞춤 지도</p>
-            </div>
+            <img src="./images/neopp.jpg" data-webp="./images/neopp.webp" alt="김하정 강사" loading="eager" decoding="async" fetchpriority="high" style="width: 100%; height: 100%; object-fit: cover;">
           </div>
           <h3 class="card-title" style="position: absolute; bottom: -50px; left: 50%; transform: translateX(-50%); color: #e293ef; font-size: 1.4rem; margin: 0; white-space: nowrap; text-shadow: 0 0 10px rgba(226,147,239,0.8);">전문 강사진</h3>
           <p class="card-description" style="position: absolute; bottom: -90px; left: 50%; transform: translateX(-50%); color: #fff; font-size: 0.9rem; margin: 0; text-align: center; white-space: nowrap; opacity: 1; transition: opacity 0.3s;">체계적인 커리큘럼으로<br>개인별 맞춤 지도</p>
         </div>
-        
-        <!-- 카드 2 -->
+
+        <!-- 카드 2 - 정밀한 운동 (문구 박스) - 블루 테마 -->
         <div class="pilates-card" data-index="1" style="position: absolute; width: 320px; height: 420px; left: 50%; top: 50%; transform: translate(-170%, -50%) translateZ(-100px) scale(0.8); transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1); z-index: 2; opacity: 0.7;">
-          <div style="position: relative; width: 100%; height: 100%; border-radius: 20px; background: #0F1A1C; border: 2px solid #00BFFF; overflow: hidden; box-shadow: 0 0 20px rgba(0,191,255,0.6), inset 0 0 20px rgba(0,191,255,0.2);">
-            <img src="./images/neopp2.jpg" data-webp="./images/neopp2.webp" alt="네오 필라테스 강사 2" loading="eager" decoding="async" fetchpriority="high" style="width: 100%; height: 100%; object-fit: cover;">
-            <div class="instructor-overlay" style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, transparent 60%); padding: 30px 20px; opacity: 0; transition: opacity 0.3s; display: none;">
-              <p style="color: #fff; font-size: 0.95rem; opacity: 0.9;">함께하는 운동의 즐거움<br>동기부여와 성취감</p>
+          <div style="position: relative; width: 100%; height: 100%; border-radius: 20px; background: linear-gradient(145deg, rgba(15,26,28,0.95) 0%, rgba(15,25,35,0.98) 100%); border: 2px solid #00BFFF; overflow: hidden; box-shadow: 0 0 30px rgba(0,191,255,0.5), inset 0 0 40px rgba(0,191,255,0.1); padding: 30px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: center;">
+            <!-- 아이콘 -->
+            <div style="text-align: center; margin-bottom: 20px;">
+              <div style="width: 70px; height: 70px; margin: 0 auto; border-radius: 50%; background: linear-gradient(135deg, rgba(0,191,255,0.3) 0%, rgba(0,191,255,0.1) 100%); border: 2px solid #00BFFF; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 20px rgba(0,191,255,0.4);">
+                <span style="font-size: 2rem;">🎯</span>
+              </div>
+            </div>
+            <!-- 제목 -->
+            <h3 style="color: #00BFFF; font-size: 1.4rem; text-align: center; margin-bottom: 20px; text-shadow: 0 0 15px rgba(0,191,255,0.6); font-weight: 700;">정밀한 운동</h3>
+            <!-- 구분선 -->
+            <div style="width: 60px; height: 2px; background: linear-gradient(90deg, transparent, #00BFFF, transparent); margin: 0 auto 20px;"></div>
+            <!-- 내용 -->
+            <div style="text-align: center;">
+              <p style="color: #00BFFF; font-size: 1rem; font-weight: 600; margin-bottom: 12px;">최신 기구로 정확한 자세</p>
+              <p style="color: rgba(255,255,255,0.8); font-size: 0.85rem; line-height: 1.6; margin-bottom: 16px;">리포머, 캐딜락, 체어 등 전문 기구로<br>정확한 움직임을 유도합니다</p>
+              <p style="color: #00BFFF; font-size: 1rem; font-weight: 600; margin-bottom: 12px;">효과적인 근력 강화</p>
+              <p style="color: rgba(255,255,255,0.8); font-size: 0.85rem; line-height: 1.6;">기구 저항을 활용해 코어 강화,<br>체형 교정, 유연성 향상을 동시에</p>
             </div>
           </div>
-          <h3 class="card-title" style="position: absolute; bottom: -50px; left: 50%; transform: translateX(-50%); color: #00BFFF; font-size: 1.4rem; margin: 0; white-space: nowrap; text-shadow: 0 0 10px rgba(0,191,255,0.8);">그룹 시너지</h3>
-          <p class="card-description" style="position: absolute; bottom: -90px; left: 50%; transform: translateX(-50%); color: #fff; font-size: 0.9rem; margin: 0; text-align: center; white-space: nowrap; opacity: 1; transition: opacity 0.3s;">함께하는 운동의 즐거움<br>동기부여와 성취감</p>
-        </div>
-        
-        <!-- 카드 3 -->
+          </div>
+
+        <!-- 카드 3 - 그룹 시너지 (문구 박스) - 그린 테마 -->
         <div class="pilates-card" data-index="2" style="position: absolute; width: 320px; height: 420px; left: 50%; top: 50%; transform: translate(70%, -50%) translateZ(-100px) scale(0.8); transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1); z-index: 2; opacity: 0.7;">
-          <div style="position: relative; width: 100%; height: 100%; border-radius: 20px; background: #0F1A1C; border: 2px solid #7BE495; overflow: hidden; box-shadow: 0 0 20px rgba(123,228,149,0.6), inset 0 0 20px rgba(123,228,149,0.2);">
-            <img src="./images/neopp3.jpg" data-webp="./images/neopp3.webp" alt="네오 필라테스 강사 3" loading="eager" decoding="async" fetchpriority="high" style="width: 100%; height: 100%; object-fit: cover;">
-            <div class="instructor-overlay" style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, transparent 60%); padding: 30px 20px; opacity: 0; transition: opacity 0.3s; display: none;">
-              <p style="color: #fff; font-size: 0.95rem; opacity: 0.9;">최신 기구로 정확한 자세<br>효과적인 근력 강화</p>
+          <div style="position: relative; width: 100%; height: 100%; border-radius: 20px; background: linear-gradient(145deg, rgba(15,26,28,0.95) 0%, rgba(20,35,30,0.98) 100%); border: 2px solid #7BE495; overflow: hidden; box-shadow: 0 0 30px rgba(123,228,149,0.5), inset 0 0 40px rgba(123,228,149,0.1); padding: 30px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: center;">
+            <!-- 아이콘 -->
+            <div style="text-align: center; margin-bottom: 20px;">
+              <div style="width: 70px; height: 70px; margin: 0 auto; border-radius: 50%; background: linear-gradient(135deg, rgba(123,228,149,0.3) 0%, rgba(123,228,149,0.1) 100%); border: 2px solid #7BE495; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 20px rgba(123,228,149,0.4);">
+                <img src="./images/neo44.png" alt="그룹 시너지" style="width: 40px; height: 40px; object-fit: contain;">
+              </div>
+            </div>
+            <!-- 제목 -->
+            <h3 style="color: #7BE495; font-size: 1.4rem; text-align: center; margin-bottom: 20px; text-shadow: 0 0 15px rgba(123,228,149,0.6); font-weight: 700;">그룹 시너지</h3>
+            <!-- 구분선 -->
+            <div style="width: 60px; height: 2px; background: linear-gradient(90deg, transparent, #7BE495, transparent); margin: 0 auto 20px;"></div>
+            <!-- 내용 -->
+            <div style="text-align: center;">
+              <p style="color: #7BE495; font-size: 1rem; font-weight: 600; margin-bottom: 12px;">함께하는 운동의 즐거움</p>
+              <p style="color: rgba(255,255,255,0.8); font-size: 0.85rem; line-height: 1.6; margin-bottom: 16px;">같은 목표를 가진 회원들과 함께<br>서로 자극을 주고받습니다</p>
+              <p style="color: #7BE495; font-size: 1rem; font-weight: 600; margin-bottom: 12px;">동기부여와 성취감</p>
+              <p style="color: rgba(255,255,255,0.8); font-size: 0.85rem; line-height: 1.6;">꾸준한 운동 습관 형성과<br>함께 성장하는 성취감</p>
             </div>
           </div>
-          <h3 class="card-title" style="position: absolute; bottom: -50px; left: 50%; transform: translateX(-50%); color: #7BE495; font-size: 1.4rem; margin: 0; white-space: nowrap; text-shadow: 0 0 10px rgba(123,228,149,0.8);">정밀한 운동</h3>
-          <p class="card-description" style="position: absolute; bottom: -90px; left: 50%; transform: translateX(-50%); color: #fff; font-size: 0.9rem; margin: 0; text-align: center; white-space: nowrap; opacity: 1; transition: opacity 0.3s;">최신 기구로 정확한 자세<br>효과적인 근력 강화</p>
-        </div>
+          </div>
       </div>
-      
+
       <!-- 인디케이터 -->
-      <div class="pilates-indicators" style="position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; z-index: 10;">
-        <button class="pilates-indicator active" data-index="0" style="width: 12px; height: 12px; border-radius: 50%; background: #e293ef; border: none; cursor: pointer; transition: all 0.3s; box-shadow: 0 0 8px rgba(226,147,239,0.6);"></button>
-        <button class="pilates-indicator" data-index="1" style="width: 12px; height: 12px; border-radius: 50%; background: rgba(123,228,149,0.3); border: none; cursor: pointer; transition: all 0.3s;"></button>
-        <button class="pilates-indicator" data-index="2" style="width: 12px; height: 12px; border-radius: 50%; background: rgba(123,228,149,0.3); border: none; cursor: pointer; transition: all 0.3s;"></button>
+      <div class="pilates-indicators" style="position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%); display: flex; gap: 12px; z-index: 10;">
+        <button class="pilates-indicator active" data-index="0" style="width: 12px; height: 12px; border-radius: 50%; background: #e293ef; border: none; cursor: pointer; transition: all 0.3s; box-shadow: 0 0 10px rgba(226,147,239,0.8);"></button>
+        <button class="pilates-indicator" data-index="1" style="width: 12px; height: 12px; border-radius: 50%; background: rgba(0,191,255,0.4); border: none; cursor: pointer; transition: all 0.3s;"></button>
+        <button class="pilates-indicator" data-index="2" style="width: 12px; height: 12px; border-radius: 50%; background: rgba(123,228,149,0.4); border: none; cursor: pointer; transition: all 0.3s;"></button>
       </div>
-      
+
       <!-- 모바일에서 표시될 강사 정보 -->
       <div class="mobile-pilates-info" style="display: none; text-align: center; margin-top: -12px; color: #fff;" id="mobile-pilates-info">
         <h3 style="font-size: 1.3rem; margin-bottom: 10px; font-weight: bold;">
@@ -6581,6 +6618,13 @@ if (window.innerWidth <= 768) {
         </p>
       </div>
     </div>
+
+    <!-- 인디케이터 호버 효과 스타일 -->
+    <style>
+      .pilates-indicator:hover {
+        transform: scale(1.2);
+      }
+    </style>
     
     <!-- 추가 정보 -->
     <div style="text-align: center; margin-top: 82px; padding: 40px; background: rgba(123,228,149,0.05); border-radius: 20px; border: 1px solid rgba(123,228,149,0.2);" class="neo-pilates-info-box" id="neo-pilates-info-box">
