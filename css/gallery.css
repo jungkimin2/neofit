@@ -1,0 +1,427 @@
+    /* 새로운 갤러리 스타일 */
+    /* 메인 이미지 슬라이드 효과 */
+    .gallery-slide-out {
+      animation: slideOut 0.3s ease-in-out forwards;
+    }
+    
+    .gallery-slide-in {
+      animation: slideIn 0.3s ease-in-out forwards;
+    }
+    
+    @keyframes slideOut {
+      0% { 
+        transform: translateX(0) scale(1);
+        opacity: 1;
+      }
+      100% { 
+        transform: translateX(-30px) scale(0.95);
+        opacity: 0;
+      }
+    }
+    
+    @keyframes slideIn {
+      0% { 
+        transform: translateX(30px) scale(0.95);
+        opacity: 0;
+      }
+      100% { 
+        transform: translateX(0) scale(1);
+        opacity: 1;
+      }
+    }
+    
+    /* 모바일에서 페이드 + 줌 효과 */
+    @media (max-width: 768px) {
+      .gallery-mobile-fade {
+        animation: mobileFadeZoom 0.5s ease-in-out;
+      }
+      
+      @keyframes mobileFadeZoom {
+        0% { 
+          opacity: 1;
+          transform: scale(1);
+        }
+        40% { 
+          opacity: 0;
+          transform: scale(1.05);
+        }
+        60% { 
+          opacity: 0;
+          transform: scale(0.95);
+        }
+        100% { 
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+    }
+    
+    .facility-thumbnail {
+      transition: all 0.2s ease;
+    }
+    
+    .facility-thumbnail:hover:not(.active) {
+      border-color: rgba(123, 228, 149, 0.5) !important;
+      transform: scale(1.05);
+    }
+    
+    .facility-thumbnail.active {
+      border-color: #7BE495 !important;
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(123, 228, 149, 0.3);
+    }
+    
+    /* 터치나 클릭 시에도 active 클래스가 있는 요소만 초록색 테두리 유지 */
+    .facility-thumbnail:active:not(.active),
+    .facility-thumbnail:focus:not(.active) {
+      border-color: transparent !important;
+    }
+    
+.facility-thumbnail img {
+  transition: transform 0.3s;
+}
+
+.facility-thumbnail:hover img {
+  transform: scale(1.1);
+}
+
+.transitioning {
+  position: relative;
+}
+
+.transitioning::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+    
+    /* 썸네일 네비게이션 버튼 스타일 */
+    .thumbnail-nav:hover {
+      background: rgba(123,228,149,0.1) !important;
+      border-color: #9DF3C4 !important;
+      transform: translateY(-50%) scale(1.1);
+    }
+    
+    .thumbnail-nav:active {
+      transform: translateY(-50%) scale(0.95);
+    }
+    
+    /* PC에서 모바일 화살표 숨기기 */
+    @media (min-width: 769px) {
+      .mobile-gallery-prev,
+      .mobile-gallery-next {
+        display: none !important;
+      }
+    }
+    
+    /* 모바일 반응형 스타일 */
+    @media (max-width: 768px) {
+      .facility-gallery-new {
+        margin: 20px auto !important;
+        max-width: 100% !important;
+        padding: 0 10px !important; /* 좌우 패딩 추가 */
+      }
+      
+      /* 썸네일만 좌측으로 이동 */
+      .facility-thumbnails {
+        transform: translateX(-16px) !important; /* 모바일에서 1칸(16px) 이동 */
+      }
+      
+      #facilityMainImage {
+        height: 280px !important;
+      }
+      
+      .facility-thumbnails {
+        margin-top: 12px !important;
+        margin-bottom: 30px !important; /* 스와이프 힌트를 위한 여백 */
+      }
+      
+      .facility-thumbnail {
+        flex: 0 0 calc(19% - 10px) !important; /* 모바일에서 5개가 여유있게 보이도록 조정 */
+      }
+      
+      /* 모바일에서 썸네일 트랙 gap 조정 */
+      .facility-thumbnail-track {
+        gap: 12px !important;
+        padding: 0 5px; /* 좌우 여백 줄여서 더 많은 공간 확보 */
+        -webkit-overflow-scrolling: touch; /* iOS에서 부드러운 스크롤 */
+      }
+      
+      /* 썸네일 컨테이너 overflow 영역 확장 */
+      .facility-thumbnails > div {
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+        width: calc(100% + 20px) !important; /* 보이는 영역 확장 */
+        margin-right: -20px !important; /* 우측 여백 제거 */
+      }
+      
+      /* 터치 중일 때 시각적 피드백 */
+      .facility-thumbnail-track.touching {
+        cursor: grabbing;
+      }
+      
+      /* 모바일에서 스와이프 힌트 숨김 */
+      .mobile-swipe-hint {
+        display: none !important;
+      }
+      
+      .facility-thumbnail img {
+        height: 60px !important; /* 5개가 잘 보이도록 높이 조정 */
+      }
+      
+      /* 썸네일 네비게이션 모바일 스타일 */
+      .thumbnail-nav {
+        width: 35px !important;
+        height: 35px !important;
+      }
+      
+      .thumbnail-nav svg {
+        width: 18px !important;
+        height: 18px !important;
+      }
+      
+      /* 모바일에서 기존 썸네일 화살표 숨기기 */
+      .thumbnail-prev,
+      .thumbnail-next {
+        display: none !important;
+      }
+      
+      /* 모바일용 메인 이미지 위 화살표 표시 */
+      .mobile-gallery-prev,
+      .mobile-gallery-next {
+        display: flex !important;
+      }
+      
+      /* 위치 안내 모바일 스타일 */
+      .location-info {
+        margin-top: 40px !important;
+      }
+      
+      .location-info h3 {
+        font-size: 1.4rem !important;
+        margin-bottom: 20px !important;
+      }
+      
+      .location-info > div {
+        padding: 24px 20px !important;
+        margin: 0 10px !important;
+      }
+      
+      .location-info p {
+        font-size: 0.85rem !important; /* 주소 텍스트 크기 더 작게 */
+        line-height: 1.6 !important;
+      }
+      
+      .location-info button {
+        padding: 12px 24px !important;
+        font-size: 0.95rem !important;
+      }
+      
+      .location-info button img {
+        width: 20px !important;
+        height: 20px !important;
+      }
+      
+      /* 모바일 팝업 스타일 - display 설정 제거 */
+      .facility-modal {
+        display: none !important;  /* 이전 팝업 숨김 */
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        background: rgba(0,0,0,0.9) !important;
+        z-index: 999999 !important;
+      }
+      
+      .facility-modal-content {
+        width: 100% !important;
+        height: 100% !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        padding: 0 !important;
+      }
+      
+      .facility-modal-slider {
+        width: 100% !important;
+        height: 100% !important;
+        position: relative !important;
+        overflow: hidden !important;
+      }
+      
+      .facility-modal-track {
+        display: flex !important;
+        transition: transform 0.3s ease !important;
+        height: 100% !important;
+        align-items: center !important;
+        width: 400% !important; /* 4개 이미지를 위한 너비 */
+      }
+      
+      .facility-modal-slide {
+        flex: 0 0 100% !important;
+        width: 100% !important;
+        height: 100% !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        padding: 20px !important;
+        box-sizing: border-box !important;
+      }
+      
+      .facility-modal-slide img {
+        max-width: 90% !important;
+        max-height: 60vh !important;
+        width: auto !important;
+        height: auto !important;
+        object-fit: contain !important;
+        margin: auto !important;
+        display: block !important;
+        position: relative !important;
+      }
+      
+      /* 모바일 팝업 네비게이션 */
+      .facility-modal-prev,
+      .facility-modal-next {
+        width: 40px !important;
+        height: 40px !important;
+        background: rgba(0,0,0,0.8) !important;
+        border: 1px solid #7BE495 !important;
+        opacity: 0.8 !important;
+      }
+      
+      .facility-modal-prev {
+        left: 15px !important;
+      }
+      
+      .facility-modal-next {
+        right: 15px !important;
+      }
+      
+      /* 닫기 버튼 모바일 스타일 강화 */
+      .facility-modal-close {
+        position: fixed !important;
+        top: 20px !important;
+        right: 36px !important;
+        width: 40px !important;
+        height: 40px !important;
+        background: rgba(0,0,0,0.9) !important;
+        border: 2px solid #7BE495 !important;
+        box-shadow: 0 0 20px rgba(123,228,149,0.5) !important;
+        z-index: 2147483648 !important;
+        cursor: pointer !important;
+        touch-action: manipulation !important;
+        -webkit-tap-highlight-color: transparent !important;
+        user-select: none !important;
+      }
+      
+      .facility-modal-close svg {
+        width: 26px !important;
+        height: 26px !important;
+        pointer-events: none !important;
+      }
+    }
+    
+    /* 호버 효과 */
+    .facility-nav:hover {
+      background: rgba(123,228,149,0.1) !important;
+      border-color: #9DF3C4 !important;
+    }
+    
+    .facility-dot:hover {
+      background: #7BE495 !important;
+    }
+    
+    /* 닫기 버튼 호버 효과 */
+    .facility-modal-close:hover {
+      background: rgba(123,228,149,0.2) !important;
+      border-color: #9DF3C4 !important;
+      transform: scale(1.1);
+    }
+    
+    /* 모달 네비게이션 버튼 호버 */
+    .facility-modal-prev:hover,
+    .facility-modal-next:hover {
+      background: rgba(123,228,149,0.1) !important;
+      border-color: #9DF3C4 !important;
+    }
+    
+    .facility-slide {
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .facility-slide::after {
+      content: '클릭하여 확대';
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      background: rgba(0,0,0,0.8);
+      color: #7BE495;
+      padding: 8px 16px;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    
+    .facility-slide:hover::after {
+      opacity: 1;
+    }
+    
+    /* 모바일에서는 항상 표시 */
+    @media (max-width: 768px) {
+      .facility-slide::after {
+        opacity: 0.8 !important;
+        bottom: 10px !important;
+        right: 10px !important;
+        font-size: 0.8rem !important;
+        padding: 6px 12px !important;
+        background: rgba(0,0,0,0.9) !important;
+        border: 1px solid #7BE495 !important;
+      }
+    }
+    /* 팝업 모달 스타일 - backdrop-filter 제거 */
+    .facility-modal {
+      display: none !important;  /* 이전 팝업 숨김 */
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+    }
+    
+    /* PC에서는 블러 효과 제거 - 모바일에서만 적용 */
+    @media (min-width: 769px) {
+      body.facility-modal-open > *:not(.facility-modal) {
+        filter: none !important;
+        -webkit-filter: none !important;
+      }
+      
+      /* PC에서 팝업이 최상단에 표시되도록 */
+      .facility-modal {
+        z-index: 2147483647 !important;
+      }
+      
+      .facility-modal * {
+        z-index: inherit !important;
+      }
+    }
+    
+    /* 모바일에서 팝업 중앙 정렬 강제 적용 */
+    @media (max-width: 768px) {
+      .facility-modal-content {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        padding: 0 !important;
+      }
+      
+      .facility-modal-slider {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        height: 100vh !important;
+      }
+    }
+    
