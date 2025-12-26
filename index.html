@@ -3575,6 +3575,7 @@ document.addEventListener('DOMContentLoaded', function() {
       border-radius: 16px;
       overflow: hidden;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) inset;
+      z-index: 1;
     }
 
     .naver-banner-container img {
@@ -3582,6 +3583,8 @@ document.addEventListener('DOMContentLoaded', function() {
       height: auto;
       display: block;
       border-radius: 16px;
+      position: relative;
+      z-index: 1;
     }
 
     .naver-banner-close {
@@ -3604,7 +3607,8 @@ document.addEventListener('DOMContentLoaded', function() {
         0 6px 20px rgba(0, 0, 0, 0.3),
         0 0 0 4px rgba(123, 228, 149, 0.2);
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      z-index: 10;
+      z-index: 999999;
+      pointer-events: auto;
     }
 
     .naver-banner-close:hover {
@@ -3657,12 +3661,15 @@ document.addEventListener('DOMContentLoaded', function() {
       }
 
       .naver-banner-close {
-        top: -10px;
-        right: -10px;
-        width: 38px;
-        height: 38px;
-        font-size: 20px;
-        border: 2px solid #7BE495;
+        top: -10px !important;
+        right: -10px !important;
+        width: 38px !important;
+        height: 38px !important;
+        font-size: 20px !important;
+        border: 2px solid #7BE495 !important;
+        z-index: 999999 !important;
+        pointer-events: auto !important;
+        position: absolute !important;
       }
     }
 
@@ -3675,11 +3682,14 @@ document.addEventListener('DOMContentLoaded', function() {
       }
 
       .naver-banner-close {
-        top: -8px;
-        right: -8px;
-        width: 34px;
-        height: 34px;
-        font-size: 18px;
+        top: -8px !important;
+        right: -8px !important;
+        width: 34px !important;
+        height: 34px !important;
+        font-size: 18px !important;
+        z-index: 999999 !important;
+        pointer-events: auto !important;
+        position: absolute !important;
       }
     }
 
