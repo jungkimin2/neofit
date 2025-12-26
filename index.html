@@ -27,8 +27,47 @@
 <!-- 모바일 감지 및 최적화 -->
 <script src="./js/initial.js" defer></script>
 
+<!-- 페이지 로딩 완료 시 표시 -->
+<script>
+(function() {
+  // DOM 로드 시 즉시 표시
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+      document.documentElement.classList.add('fonts-loaded');
+    });
+  } else {
+    document.documentElement.classList.add('fonts-loaded');
+  }
+
+  // 폰트 로드 완료 시에도 표시 (백업)
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(function() {
+      document.documentElement.classList.add('wf-active');
+    });
+  }
+
+  // 최악의 경우 300ms 후 강제 표시
+  setTimeout(function() {
+    document.documentElement.classList.add('fonts-loaded', 'wf-active');
+  }, 300);
+})();
+</script>
+
 <!-- 모바일 성능 최적화 (강화) -->
 <style>
+/* 페이지 로딩 시 깜박임 방지 */
+html {
+  visibility: hidden;
+  opacity: 0;
+}
+
+html.wf-active,
+html.fonts-loaded {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 0.3s ease-in;
+}
+
 @media (max-width: 768px) {
   /* 모바일에서 GPU 가속 최적화 */
   * {
