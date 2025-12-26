@@ -3516,15 +3516,15 @@ document.addEventListener('DOMContentLoaded', function() {
 <!-- 네이버 배너 팝업 -->
 <div id="naverBannerPopup" style="
   display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.8);
-  z-index: 999999;
-  justify-content: center;
-  align-items: center;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  background: rgba(0, 0, 0, 0.8) !important;
+  z-index: 9999999999 !important;
+  justify-content: center !important;
+  align-items: center !important;
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
 " onclick="if(event.target === this) closeNaverBanner()">
@@ -3719,6 +3719,29 @@ document.addEventListener('DOMContentLoaded', function() {
     /* body 스크롤 방지 */
     body.naver-popup-open {
       overflow: hidden;
+    }
+
+    /* 모바일 환경에서 팝업 강제 표시 */
+    @media (max-width: 768px) {
+      #naverBannerPopup {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        z-index: 9999999999 !important;
+      }
+
+      #naverBannerPopup.show {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+      }
+
+      .naver-banner-container {
+        position: relative !important;
+        z-index: 10000000000 !important;
+      }
     }
   </style>
 
@@ -18379,39 +18402,75 @@ document.addEventListener('DOMContentLoaded', function() {
 <script>
 // 네이버 배너 팝업 열기
 function openNaverBanner() {
+  console.log('🎯 네이버 배너 팝업 열기 시도');
   const popup = document.getElementById('naverBannerPopup');
   if (popup) {
+    console.log('✅ 팝업 요소 찾음');
     popup.style.display = 'flex';
+    popup.style.visibility = 'visible';
+    popup.style.opacity = '1';
     document.body.classList.add('naver-popup-open');
     // 애니메이션 효과를 위해 약간의 지연 후 show 클래스 추가
     setTimeout(() => {
       popup.classList.add('show');
+      console.log('✅ 팝업 애니메이션 시작');
     }, 10);
+  } else {
+    console.error('❌ 팝업 요소를 찾을 수 없음');
   }
 }
 
 // 네이버 배너 팝업 닫기
 function closeNaverBanner() {
+  console.log('🔒 네이버 배너 팝업 닫기');
   const popup = document.getElementById('naverBannerPopup');
   if (popup) {
     popup.classList.remove('show');
     // 애니메이션이 끝난 후 display none 처리
     setTimeout(() => {
       popup.style.display = 'none';
+      popup.style.visibility = 'hidden';
+      popup.style.opacity = '0';
       document.body.classList.remove('naver-popup-open');
     }, 300);
   }
 }
 
-// 페이지 로드 시 팝업 자동 표시
-window.addEventListener('load', function() {
-  // 페이지 로드 후 0.5초 뒤에 팝업 표시
+// 페이지 로드 시 팝업 자동 표시 - 여러 이벤트로 확실하게
+function initNaverBannerPopup() {
+  console.log('📱 디바이스 체크:', window.innerWidth <= 768 ? '모바일' : 'PC');
   setTimeout(openNaverBanner, 500);
+}
+
+// DOMContentLoaded 이벤트 (모바일에서 더 안정적)
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initNaverBannerPopup);
+} else {
+  initNaverBannerPopup();
+}
+
+// window.load 이벤트 (백업)
+window.addEventListener('load', function() {
+  console.log('🌐 페이지 완전 로드됨');
+  // DOMContentLoaded에서 실행 안됐을 경우를 위한 백업
+  const popup = document.getElementById('naverBannerPopup');
+  if (popup && popup.style.display === 'none') {
+    console.log('⚠️ 백업 로직으로 팝업 열기');
+    setTimeout(openNaverBanner, 300);
+  }
 });
 
 // ESC 키로 팝업 닫기
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape' || e.key === 'Esc') {
+    closeNaverBanner();
+  }
+});
+
+// 터치 이벤트로도 배경 닫기 (모바일 최적화)
+document.addEventListener('touchstart', function(e) {
+  const popup = document.getElementById('naverBannerPopup');
+  if (popup && e.target === popup) {
     closeNaverBanner();
   }
 });
