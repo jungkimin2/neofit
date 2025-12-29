@@ -4170,38 +4170,38 @@ body.popup-active {
           <video id="promoVideo" src="./images/naver_banner_final_v2.mp4" autoplay loop muted playsinline
             style="width: 100%; height: auto; display: block; border-radius: 16px;"></video>
         </a>
-        <!-- 소리 조절 버튼 (SVG 아이콘 사용) -->
+        <!-- 소리 조절 버튼 (SVG 아이콘 개선) -->
         <button id="videoSoundBtn" onclick="togglePromoSound(event)" style="
           position: absolute;
-          bottom: 12px;
-          right: 12px;
+          bottom: 15px;
+          right: 15px;
           background: rgba(0, 0, 0, 0.7);
-          border: 1px solid #7BE495;
-          width: 36px;
-          height: 36px;
+          border: 1.5px solid #7BE495;
+          width: 40px;
+          height: 40px;
           border-radius: 50%;
-          color: #7BE495;
           display: flex;
           align-items: center;
           justify-content: center;
           cursor: pointer;
-          z-index: 10;
+          z-index: 100;
           backdrop-filter: blur(4px);
           transition: all 0.2s ease;
           padding: 0;
+          outline: none;
         ">
-          <!-- 음소거 상태 아이콘 (스피커 + 사선) -->
-          <svg id="muteSvg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: block;">
+          <!-- 음소거 상태 (스피커 + 사선) -->
+          <svg id="muteSvg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7BE495" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round" style="display: block;">
             <path d="M11 5L6 9H2v6h4l5 4V5z"></path>
             <line x1="23" y1="1" x2="1" y2="23"></line>
           </svg>
-          <!-- 소리 켬 상태 아이콘 (스피커 + 파동 ))) 복구) -->
-          <svg id="unmuteSvg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+          <!-- 소리 켬 상태 (스피커 + 파동 ))) ) -->
+          <svg id="unmuteSvg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7BE495" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round" style="display: none;">
             <path d="M11 5L6 9H2v6h4l5 4V5z"></path>
-            <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
             <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
           </svg>
         </button>
       </div>
