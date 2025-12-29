@@ -4170,53 +4170,56 @@ body.popup-active {
           <video id="promoVideo" src="./images/naver_banner_final_v2.mp4" autoplay loop muted playsinline
             style="width: 100%; height: auto; display: block; border-radius: 16px;"></video>
         </a>
-        <!-- 소리 조절 버튼 (SVG 아이콘 개선) -->
+        <!-- 소리 조절 버튼 (프리미엄 디자인 적용) -->
         <button id="videoSoundBtn" onclick="togglePromoSound(event)" style="
           position: absolute;
-          bottom: 15px;
-          right: 15px;
-          background: rgba(0, 0, 0, 0.7);
+          bottom: 20px;
+          right: 20px;
+          background: rgba(10, 14, 39, 0.85); /* 네오네이비 투명 배경 */
           border: 1.5px solid #7BE495;
-          width: 40px;
-          height: 40px;
-          border-radius: 50%;
+          width: 44px;
+          height: 44px;
+          border-radius: 12px; /* 깔끔한 라운드 사각형 */
           display: flex;
           align-items: center;
           justify-content: center;
           cursor: pointer;
           z-index: 100;
-          backdrop-filter: blur(4px);
-          transition: all 0.2s ease;
+          backdrop-filter: blur(8px);
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
           padding: 0;
-          outline: none;
+          box-shadow: 0 4px 15px rgba(123, 228, 149, 0.2);
         ">
           <!-- 음소거 상태 (스피커 + 사선) -->
-          <svg id="muteSvg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7BE495" stroke-width="2.5"
+          <svg id="muteSvg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#7BE495" stroke-width="2"
             stroke-linecap="round" stroke-linejoin="round" style="display: block;">
             <path d="M11 5L6 9H2v6h4l5 4V5z"></path>
-            <line x1="23" y1="1" x2="1" y2="23"></line>
+            <line x1="23" y1="1" x2="1" y2="23" stroke="#ff4d4d" stroke-width="2.5"></line>
+            <!-- 사선은 강조를 위해 레드빛 추가 가능하나 테마에 맞춰 유지 -->
           </svg>
-          <!-- 소리 켬 상태 (스피커 + 파동 ))) ) -->
-          <svg id="unmuteSvg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7BE495" stroke-width="2.5"
+          <!-- 소미 켬 상태 (스피커 + 풍부한 파동 ))) ) -->
+          <svg id="unmuteSvg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#7BE495" stroke-width="2"
             stroke-linecap="round" stroke-linejoin="round" style="display: none;">
             <path d="M11 5L6 9H2v6h4l5 4V5z"></path>
             <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
             <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+            <path d="M22.5 12c0-8-3-11-3-11" opacity="0.5"></path>
           </svg>
         </button>
       </div>
       <div class="event-date-footer" style="
         text-align: center;
-        padding: 15px 0 8px 0;
-        color: #0A0E27; /* 네오네이비 색상으로 가독성 향상 */
+        padding: 16px 0;
+        color: #FFFFFF; /* 완전 화이트로 변경 */
         font-weight: 800;
-        font-size: 16px;
-        letter-spacing: 1.5px;
-        background: rgba(255, 255, 255, 0.1);
+        font-size: 17px;
+        letter-spacing: 2px;
+        background: #0A0E27; /* 배경을 진한 네이비로 고정하여 대비 극대화 */
         border-bottom-left-radius: 20px;
         border-bottom-right-radius: 20px;
+        box-shadow: 0 -5px 15px rgba(0,0,0,0.2);
       ">
-        <span style="opacity: 0.7; font-size: 12px; margin-right: 5px;">EVENT PERIOD:</span>
+        <span style="color: #7BE495; font-size: 13px; margin-right: 8px; vertical-align: middle;">[EVENT]</span>
         01.01 ~ 01.31
       </div>
       <button class="naver-banner-close" onclick="closeNaverBanner()" aria-label="닫기">×</button>
@@ -4229,16 +4232,21 @@ body.popup-active {
         const video = document.getElementById('promoVideo');
         const muteSvg = document.getElementById('muteSvg');
         const unmuteSvg = document.getElementById('unmuteSvg');
+        const btn = document.getElementById('videoSoundBtn');
 
         if (video.muted) {
           video.muted = false;
           muteSvg.style.display = 'none';
           unmuteSvg.style.display = 'block';
+          btn.style.borderColor = '#7BE495';
+          btn.style.boxShadow = '0 0 15px rgba(123, 228, 149, 0.4)';
           video.play().catch(err => console.log("Sound play failed:", err));
         } else {
           video.muted = true;
           muteSvg.style.display = 'block';
           unmuteSvg.style.display = 'none';
+          btn.style.borderColor = 'rgba(123, 228, 149, 0.5)';
+          btn.style.boxShadow = 'none';
         }
       }
     </script>
