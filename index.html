@@ -4164,26 +4164,79 @@ body.popup-active {
     </style>
 
     <div class="naver-banner-container" onclick="event.stopPropagation()">
-      <div class="naver-banner-wrapper">
+      <div class="naver-banner-wrapper" style="position: relative;">
         <a href="https://m.booking.naver.com/booking/10/bizes/987028/items/5583476?area=pll&lang=ko&startDate=2025-12-28&theme=place"
           target="_blank" rel="noopener noreferrer" class="naver-banner-link">
-          <video src="./images/naver_banner_event_1to1.mp4" autoplay loop muted playsinline
+          <video id="promoVideo" src="./images/naver_banner_final_v2.mp4" autoplay loop muted playsinline
             style="width: 100%; height: auto; display: block; border-radius: 16px;"></video>
         </a>
+        <!-- 소리 조절 버튼 -->
+        <button id="videoSoundBtn" onclick="togglePromoSound(event)" style="
+          position: absolute;
+          bottom: 12px;
+          right: 12px;
+          background: rgba(0, 0, 0, 0.6);
+          border: 1px solid rgba(123, 228, 149, 0.5);
+          width: 32px;
+          height: 32px;
+          border-radius: 50%;
+          color: #7BE495;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          z-index: 10;
+          backdrop-filter: blur(4px);
+          transition: all 0.2s ease;
+        ">
+          <i id="volumeIcon" class="fas fa-volume-mute"></i>
+        </button>
       </div>
       <div class="event-date-footer" style="
-      text-align: center;
-      padding: 12px 0 5px 0;
-      color: #7BE495;
-      font-weight: bold;
-      font-size: 15px;
-      letter-spacing: 1px;
-      text-shadow: 0 0 10px rgba(123, 228, 149, 0.5);
-    ">
-        EVENT: 01.01 ~ 01.31
+        text-align: center;
+        padding: 15px 0 8px 0;
+        color: #7BE495;
+        font-weight: bold;
+        font-size: 16px;
+        letter-spacing: 1.5px;
+        text-shadow: 0 0 10px rgba(123, 228, 149, 0.5);
+        background: rgba(0,0,0,0.05);
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+      ">
+        <span style="opacity: 0.8; font-size: 12px; margin-right: 5px;">EVENT PERIOD:</span>
+        01.01 ~ 01.31
       </div>
       <button class="naver-banner-close" onclick="closeNaverBanner()" aria-label="닫기">×</button>
     </div>
+
+    <script>
+      function togglePromoSound(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        const video = document.getElementById('promoVideo');
+        const icon = document.getElementById('volumeIcon');
+
+        if (video.muted) {
+          video.muted = false;
+          icon.className = 'fas fa-volume-up';
+          // 만약 자동으로 재생이 안될 경우 대비
+          video.play().catch(err => console.log("Sound play after mute toggle failed:", err));
+        } else {
+          video.muted = true;
+          icon.className = 'fas fa-volume-mute';
+        }
+      }
+
+      // 사용자 상호작용이 있을 때 소리 켜기 시도 (브라우저 정책 대응)
+      document.body.addEventListener('click', function () {
+        const video = document.getElementById('promoVideo');
+        if (video && video.src.includes('naver_banner_final_v2.mp4')) {
+          // 첫 클릭 시 자동으로 소리 켜지는 것을 원하시면 여기 코드를 추가할 수 있습니다.
+          // 지금은 버튼으로 제어하도록 했습니다.
+        }
+      }, { once: true });
+    </script>
   </div>
 
   <!-- 진입 팝업 - 전체 화면 오버레이 (임시 비활성화) -->
