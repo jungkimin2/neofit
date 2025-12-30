@@ -46,26 +46,26 @@
         });
       }
 
-      // 최악의 경우 300ms 후 강제 표시
+      // 최악의 경우 모바일은 150ms, PC는 300ms 후 강제 표시
+      const timeout = window.innerWidth <= 768 ? 150 : 300;
       setTimeout(function () {
         document.documentElement.classList.add('fonts-loaded', 'wf-active');
-      }, 300);
+      }, timeout);
     })();
   </script>
 
   <!-- 모바일 성능 최적화 (강화) -->
   <style>
-    /* 페이지 로딩 시 깜박임 방지 */
+    /* 페이지 로딩 시 깜박임 방지 - 모바일에서는 빠르게 해제 */
     html {
-      visibility: hidden;
-      opacity: 0;
+      opacity: 0.01;
+      /* 최소 투명도로 시작하여 파싱 즉시 노출 유도 */
     }
 
     html.wf-active,
     html.fonts-loaded {
-      visibility: visible;
       opacity: 1;
-      transition: opacity 0.3s ease-in;
+      transition: opacity 0.2s ease-in;
     }
 
     @media (max-width: 768px) {
@@ -152,7 +152,18 @@
     if (window.innerWidth <= 768) {
       document.documentElement.classList.add('mobile-optimized');
 
-      // Intersection Observer로 화면에 보일 때만 이미지 로드
+      // 이미지 지연 로딩 자동화 (스크립트로 일괄 적용)
+      document.addEventListener('DOMContentLoaded', () => {
+        const images = document.querySelectorAll('img:not([loading])');
+        images.forEach((img, index) => {
+          // 첫 3개 이미지는 'above-the-fold'로 간주하여 즉시 로드, 나머지는 지연 로드
+          if (index > 3) {
+            img.setAttribute('loading', 'lazy');
+          }
+        });
+      });
+
+      // Intersection Observer로 화면에 보일 때만 이미지 로드 (기존 로직 유지)
       if ('IntersectionObserver' in window) {
         const imageObserver = new IntersectionObserver((entries, observer) => {
           entries.forEach(entry => {
@@ -4203,7 +4214,7 @@ body.popup-active {
       <div class="naver-banner-wrapper" style="position: relative;">
         <a href="https://m.booking.naver.com/booking/10/bizes/987028/items/5583476?area=pll&lang=ko&startDate=2025-12-28&theme=place"
           target="_blank" rel="noopener noreferrer" class="naver-banner-link">
-          <video id="promoVideo" src="./images/naver_banner_final_v2.mp4" autoplay loop muted playsinline
+          <video id="promoVideo" src="./images/naver_banner_final_v2.mp4" loop muted playsinline preload="none"
             style="width: 100%; height: auto; display: block; border-radius: 16px;"></video>
         </a>
         <!-- 소리 조절 버튼 (모바일 사이즈 대응) -->
@@ -19865,8 +19876,13 @@ body.popup-active {
   function openNaverBanner() {
     console.log('🎯 네이버 배너 팝업 열기 시도');
     const popup = document.getElementById('naverBannerPopup');
+    const video = document.getElementById('promoVideo');
     if (popup) {
       console.log('✅ 팝업 요소 찾음');
+      if (video && video.preload === 'none') {
+        video.preload = 'auto'; // 팝업 열릴 때 비디오 로드 시작
+        video.load();
+      }
       popup.style.display = 'flex';
       popup.style.visibility = 'visible';
       popup.style.opacity = '1';
@@ -19874,6 +19890,7 @@ body.popup-active {
       // 애니메이션 효과를 위해 약간의 지연 후 show 클래스 추가
       setTimeout(() => {
         popup.classList.add('show');
+        if (video) video.play().catch(err => console.log("Auto play prevented:", err));
         console.log('✅ 팝업 애니메이션 시작');
       }, 10);
     } else {
