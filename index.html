@@ -19914,10 +19914,10 @@ body.popup-active {
     }
   }
 
-  // 페이지 로드 시 팝업 자동 표시 - 여러 이벤트로 확실하게
+  // 페이지 로드 시 팝업 즉시 표시
   function initNaverBannerPopup() {
     console.log('📱 디바이스 체크:', window.innerWidth <= 768 ? '모바일' : 'PC');
-    setTimeout(openNaverBanner, 500);
+    openNaverBanner(); // 지연 시간(500ms) 제거
   }
 
   // DOMContentLoaded 이벤트 (모바일에서 더 안정적)
@@ -19934,7 +19934,7 @@ body.popup-active {
     const popup = document.getElementById('naverBannerPopup');
     if (popup && popup.style.display === 'none') {
       console.log('⚠️ 백업 로직으로 팝업 열기');
-      setTimeout(openNaverBanner, 300);
+      openNaverBanner();
     }
   });
 
