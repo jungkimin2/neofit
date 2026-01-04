@@ -4741,9 +4741,12 @@ body.popup-active {
           -webkit-user-select: none !important;
         }
 
-        /* 모바일 네비게이터 위치 조정 */
+        /* 모바일 네비게이터 위치 조정 (박스 바깥 하단) */
         .popup-navigator {
-          bottom: 25px;
+          bottom: -30px !important;
+          width: 100% !important;
+          justify-content: center !important;
+          padding-top: 10px !important;
         }
 
         /* 팝업 높이 조절 */
