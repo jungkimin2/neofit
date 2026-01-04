@@ -4126,34 +4126,44 @@ body.popup-active {
       @media (max-width: 768px) {
         .naver-banner-container {
           max-width: 85%;
-          max-height: 80vh;
+          /* 높이 제한 해제하여 네비게이터 확보 */
+          max-height: none !important;
           padding: 6px;
           border-radius: 16px;
-        }
-
-        .naver-banner-container::before {
-          border-radius: 16px;
-          padding: 2px;
+          margin-bottom: 50px;
+          /* 네비게이터 공간 확보 */
+          overflow: visible !important;
+          /* 중요: 내부 요소 잘림 방지 */
         }
 
         .naver-banner-wrapper {
-          border-radius: 12px;
-        }
-
-        .naver-banner-container img {
-          border-radius: 12px;
+          overflow: visible !important;
         }
 
         .naver-banner-close {
-          top: -8px !important;
-          right: -8px !important;
-          width: 32px !important;
-          height: 32px !important;
-          font-size: 18px !important;
-          border: 1.5px solid #7BE495 !important;
-          z-index: 999999 !important;
-          pointer-events: auto !important;
-          position: absolute !important;
+          /* 헤더 상단 외부로 배치 */
+          top: -40px !important;
+          right: 0px !important;
+          width: 36px !important;
+          height: 36px !important;
+          background: rgba(0, 0, 0, 0.5) !important;
+          border: 2px solid #fff !important;
+          color: #fff !important;
+          z-index: 99999999 !important;
+        }
+
+        /* 네비게이터 위치 조정 */
+        .naver-banner-navigator {
+          bottom: -35px !important;
+          height: 30px !important;
+          z-index: 99999999 !important;
+        }
+
+        .naver-slider-container {
+          height: auto !important;
+          aspect-ratio: 1 / 1;
+          /* 정사각형 비율 유지 or video ratio */
+          max-height: 50vh;
         }
       }
 
