@@ -25,7 +25,7 @@
   <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
 
   <!-- 모바일 감지 및 최적화 -->
-  <script src="./js/initial.js?v=20260105_1" defer></script>
+  <script src="./js/initial.js?v=20260105_2" defer></script>
 
   <!-- 페이지 로딩 완료 시 표시 -->
   <script>
@@ -4610,7 +4610,8 @@ body.popup-active {
           max-height: 85vh !important;
           margin: 0 auto !important;
           max-height: 92vh !important;
-          overflow-y: auto !important;
+          overflow: visible !important;
+          /* X버튼이 잘리지 않도록 보이게 설정 */
           position: relative !important;
         }
 
@@ -20478,6 +20479,8 @@ body.popup-active {
     // 슬라이더 타이머 시작
     if (window.popupSlider) {
       window.popupSlider.startTimer();
+      // 터치 리스너도 여기서 강제로 한번 더 초기화 보장
+      window.popupSlider.addTouchListeners();
     }
 
     console.log('팝업이 강제로 표시되었습니다!');
