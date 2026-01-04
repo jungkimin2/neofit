@@ -3879,10 +3879,10 @@ body.popup-active {
       console.log('🚫 강력한 팝업 숨김 처리 완료');
     } else {
       console.log('✅ 팝업 표시 허용');
-      // 팝업이 표시될 때 자동 슬라이드 시작
+      // 팝업이 표시될 때 자동 슬라이드 시작 (V6)
       window.onload = function () {
-        if (window.naverBannerSlider) {
-          setTimeout(() => { window.naverBannerSlider.startTimer(); }, 500);
+        if (window.naverBannerSliderV6) {
+          setTimeout(() => { window.naverBannerSliderV6.startTimer(); }, 500);
         }
       };
     }
@@ -3954,11 +3954,10 @@ body.popup-active {
         background: #000;
         border-radius: 16px;
         overflow: visible;
-        /* 잘림 방지 */
+        /* 잘림 방지 필수 */
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) inset;
         z-index: 1 !important;
         height: auto;
-        /* 내용물에 따라 늘어남 */
       }
 
       .naver-banner-link {
@@ -4311,39 +4310,33 @@ body.popup-active {
         outline: none;
       }
     </style>
-
     <div class="naver-banner-container" onclick="event.stopPropagation()">
       <!-- 고정된 닫기 버튼 -->
       <button class="naver-banner-close" onclick="closeNaverBanner()" aria-label="닫기">×</button>
 
-      <div class="naver-banner-wrapper" style="position: relative;">
-        <!-- 슬라이더 컨테이너 (앨범 방식) -->
+      <div class="naver-banner-wrapper" style="position: relative; overflow: visible; height: auto;">
+
+        <!-- 슬라이더 영역 -->
         <div class="naver-slider-container">
-          <!-- 슬라이더 컨테이너 (앨범 방식) -->
-          <div class="naver-slider-container">
-            <!-- ID변경으로 캐시 회피 -->
-            <div class="naver-slider-wrapper" id="naverSliderWrapperV5">
-              <!-- 슬라이드 0: 홍보 영상 -->
-              <div class="naver-slide">
-                <a href="https://m.booking.naver.com/booking/10/bizes/987028/items/5583476?area=pll&lang=ko&startDate=2025-12-28&theme=place"
-                  target="_blank" rel="noopener noreferrer" class="naver-banner-link">
-                  <video id="promoVideo" src="./images/naver_banner_final_v2.mp4" loop muted playsinline
-                    autoplay></video>
-                </a>
-              </div>
-              <!-- 슬라이드 1: 필라테스 등록 시 헬스 무료 (신규 생성 배너) -->
-              <div class="naver-slide">
-                <div class="naver-banner-link">
-                  <!-- 사용자가 선택한 최종 박스 디자인 이미지 (파일명 변경됨) -->
-                  <img src="./images/pilates_event_2026.jpg" alt="필라테스 등록시 헬스 전액 무료">
-                </div>
+          <!-- V6 ID 적용 -->
+          <div class="naver-slider-wrapper" id="naverSliderWrapperV6">
+            <!-- 슬라이드 0 -->
+            <div class="naver-slide">
+              <a href="https://m.booking.naver.com/booking/10/bizes/987028/items/5583476?area=pll&lang=ko&startDate=2025-12-28&theme=place"
+                target="_blank" rel="noopener noreferrer" class="naver-banner-link">
+                <video id="promoVideoV6" src="./images/naver_banner_final_v2.mp4" loop muted playsinline
+                  autoplay></video>
+              </a>
+            </div>
+            <!-- 슬라이드 1 -->
+            <div class="naver-slide">
+              <div class="naver-banner-link">
+                <img src="./images/pilates_event_2026.jpg" alt="필라테스 등록시 헬스 전액 무료">
               </div>
             </div>
-
           </div>
 
-
-          <!-- 소리 조절 버튼 (고정 위치) -->
+          <!-- 소리 버튼 -->
           <button id="videoSoundBtn" onclick="togglePromoSound(event)">
             <svg id="muteSvg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#7BE495" stroke-width="2"
               stroke-linecap="round" stroke-linejoin="round" style="display: block;">
@@ -4358,70 +4351,54 @@ body.popup-active {
             </svg>
           </button>
         </div>
-      </div>
 
-      <!-- 날짜 푸터 (다시 Wrapper 내부로 복귀) -->
-      <div class="event-date-footer" style="
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          padding: 14px 20px;
-          color: #FFFFFF;
-          font-weight: 800;
-          font-size: 17px;
-          letter-spacing: 2px;
-          background: #0A0E27;
-          margin-top: 4px; /* 영상 박스와의 미세한 간격 */
-          border-top-left-radius: 12px;
-          border-top-right-radius: 12px;
-          border-bottom-left-radius: 15px; /* 하단 모서리 컨테이너에 맞춤 */
-          border-bottom-right-radius: 15px;
-          box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
-          position: relative;
-          z-index: 20;
+        <!-- 날짜 푸터 -->
+        <div class="event-date-footer" style="
+          display: flex; justify-content: space-between; align-items: center;
+          padding: 14px 20px; color: #FFFFFF; font-weight: 800; font-size: 17px;
+          letter-spacing: 2px; background: #0A0E27; margin-top: 4px;
+          border-radius: 12px; border-bottom-left-radius: 15px; border-bottom-right-radius: 15px;
+          box-shadow: 0 -2px 10px rgba(0,0,0,0.1); position: relative; z-index: 20;
         ">
-        <div style="display: flex; align-items: center;">
-          <span style="color: #7BE495; font-size: 13px; margin-right: 8px;">[EVENT]</span>
-          01.01 ~ 01.31
+          <div style="display: flex; align-items: center;">
+            <span style="color: #7BE495; font-size: 13px; margin-right: 8px;">[EVENT]</span>
+            01.01 ~ 01.31
+          </div>
         </div>
-      </div>
 
-      <!-- 네비게이터 dots (다시 Wrapper 내부로 복귀) -->
-      <div class="naver-banner-navigator">
-        <div class="naver-nav-dot active" onclick="naverBannerSlider.move(0)"></div>
-        <div class="naver-nav-dot" onclick="naverBannerSlider.move(1)"></div>
+        <!-- 네비게이터 -->
+        <div class="naver-banner-navigator">
+          <div class="naver-nav-dot active" onclick="naverBannerSliderV6.move(0)"></div>
+          <div class="naver-nav-dot" onclick="naverBannerSliderV6.move(1)"></div>
+        </div>
+
       </div>
     </div>
   </div>
 
   <script>
-    // 네이버 배너 슬라이더 객체
-    window.naverBannerSlider = {
+    // V6: 네이버 배너 슬라이더 객체 (인라인 정의로 캐시 무시)
+    window.naverBannerSliderV6 = {
       currentIndex: 0,
       timer: null,
       touchStartX: 0,
       touchEndX: 0,
 
       move: function (index) {
-        // V5 ID 참조
-        const wrapper = document.getElementById('naverSliderWrapperV5');
+        const wrapper = document.getElementById('naverSliderWrapperV6');
         const dots = document.querySelectorAll('.naver-nav-dot');
-        const video = document.getElementById('promoVideo');
+        const video = document.getElementById('promoVideoV6');
 
-        if (!wrapper) {
-          console.error("Slider Wrapper V5 not found!");
-          return;
-        }
+        if (!wrapper) return;
 
-        console.log(`Moving to slide ${index}`);
+        console.log(`[V6] Moving to slide ${index}`);
         this.currentIndex = index;
-        // 2개 슬라이드 대응 (100 / 2 = 50%)
         wrapper.style.transform = `translateX(-${index * 50}%)`;
 
-        // 영상 슬라이드(0)가 아닐 경우 음소거 처리
+        // 영상 제어
         if (video && index !== 0) {
           video.muted = true;
-          // 아이콘 상태 업데이트
+          // UI 업데이트
           const muteSvg = document.getElementById('muteSvg');
           const unmuteSvg = document.getElementById('unmuteSvg');
           const btn = document.getElementById('videoSoundBtn');
@@ -4433,6 +4410,7 @@ body.popup-active {
           }
         }
 
+        // Dots 업데이트
         dots.forEach((dot, i) => {
           if (i === index) dot.classList.add('active');
           else dot.classList.remove('active');
@@ -4444,9 +4422,7 @@ body.popup-active {
         this.timer = setInterval(() => {
           let nextIndex = (this.currentIndex + 1) % 2;
           this.move(nextIndex);
-        }, 5000); // 5초
-
-        // 터치 리스너 추가
+        }, 5000);
         this.addTouchListeners();
       },
 
@@ -4458,8 +4434,7 @@ body.popup-active {
       },
 
       addTouchListeners: function () {
-        // V5 ID 참조
-        const wrapper = document.getElementById('naverSliderWrapperV5');
+        const wrapper = document.getElementById('naverSliderWrapperV6');
         if (!wrapper || wrapper.dataset.touchAdded) return;
 
         wrapper.dataset.touchAdded = 'true';
@@ -4479,17 +4454,9 @@ body.popup-active {
       handleSwipe: function () {
         const swipeThreshold = 50;
         const diff = this.touchStartX - this.touchEndX;
-
         if (Math.abs(diff) > swipeThreshold) {
-          if (diff > 0) {
-            // 왼쪽으로 스와이프 (다음 슬라이드)
-            let nextIndex = (this.currentIndex + 1) % 2;
-            this.move(nextIndex);
-          } else {
-            // 오른쪽으로 스와이프 (이전 슬라이드)
-            let prevIndex = this.currentIndex === 0 ? 1 : 0;
-            this.move(prevIndex);
-          }
+          if (diff > 0) this.move((this.currentIndex + 1) % 2);
+          else this.move(this.currentIndex === 0 ? 1 : 0);
         }
       }
     };
@@ -4497,7 +4464,7 @@ body.popup-active {
     function togglePromoSound(e) {
       e.preventDefault();
       e.stopPropagation();
-      const video = document.getElementById('promoVideo');
+      const video = document.getElementById('promoVideoV6'); // V6 ID로 변경
       const muteSvg = document.getElementById('muteSvg');
       const unmuteSvg = document.getElementById('unmuteSvg');
       const btn = document.getElementById('videoSoundBtn');
