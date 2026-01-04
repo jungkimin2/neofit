@@ -4520,12 +4520,29 @@ body.popup-active {
       }
     }
 
-    // Auto-Start Timer (Robust Placement)
+    // Auto-Start Timer & Bind Events (Robust Placement)
     window.addEventListener('load', function () {
       if (window.naverBannerSliderV6) {
-        // Timer reset is safe (clears existing)
+        // 1. Force Video Play (Mobile Policy)
+        const video = document.getElementById('promoVideoV6');
+        if (video) {
+          video.muted = true; // Ensure muted for autoplay
+          video.play().catch(e => console.log('Force play failed:', e));
+        }
+
+        // 2. Bind Dot Clicks (Robust)
+        const dots = document.querySelectorAll('.naver-nav-dot');
+        dots.forEach((dot, idx) => {
+          dot.onclick = function (e) {
+            e.stopPropagation();
+            window.naverBannerSliderV6.move(idx);
+            window.naverBannerSliderV6.startTimer(); // Reset timer on interaction
+          };
+        });
+
+        // 3. Start Timer
         window.naverBannerSliderV6.startTimer();
-        console.log("✅ V6 Banner Auto-Started");
+        console.log("✅ V6 Banner Auto-Started & Events Bound");
       }
     });
   </script>
