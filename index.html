@@ -25,7 +25,7 @@
   <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
 
   <!-- 모바일 감지 및 최적화 -->
-  <script src="./js/initial.js?v=20260105_6" defer></script>
+  <script src="./js/initial.js?v=20260105_8" defer></script>
 
   <!-- 페이지 로딩 완료 시 표시 -->
   <script>
@@ -3898,8 +3898,7 @@ body.popup-active {
   justify-content: center !important;
   align-items: center !important;
   backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
-" onclick="if(event.target === this) closeNaverBanner()">
+  -webkit-backdrop-filter: blur(5px);">
     <style>
       /* 네이버 배너 팝업 스타일 */
       #naverBannerPopup {
@@ -4313,42 +4312,46 @@ body.popup-active {
       <div class="naver-banner-wrapper" style="position: relative;">
         <!-- 슬라이더 컨테이너 (앨범 방식) -->
         <div class="naver-slider-container">
-          <div class="naver-slider-wrapper" id="naverSliderWrapper">
-            <!-- 슬라이드 0: 홍보 영상 -->
-            <div class="naver-slide">
-              <a href="https://m.booking.naver.com/booking/10/bizes/987028/items/5583476?area=pll&lang=ko&startDate=2025-12-28&theme=place"
-                target="_blank" rel="noopener noreferrer" class="naver-banner-link">
-                <video id="promoVideo" src="./images/naver_banner_final_v2.mp4" loop muted playsinline autoplay></video>
-              </a>
-            </div>
-            <!-- 슬라이드 1: 필라테스 등록 시 헬스 무료 (신규 생성 배너) -->
-            <div class="naver-slide">
-              <div class="naver-banner-link">
-                <!-- 사용자가 선택한 최종 박스 디자인 이미지 (파일명 변경됨) -->
-                <img src="./images/pilates_event_2026.jpg" alt="필라테스 등록시 헬스 전액 무료">
+          <!-- 슬라이더 컨테이너 (앨범 방식) -->
+          <div class="naver-slider-container">
+            <!-- ID변경으로 캐시 회피 -->
+            <div class="naver-slider-wrapper" id="naverSliderWrapperV5">
+              <!-- 슬라이드 0: 홍보 영상 -->
+              <div class="naver-slide">
+                <a href="https://m.booking.naver.com/booking/10/bizes/987028/items/5583476?area=pll&lang=ko&startDate=2025-12-28&theme=place"
+                  target="_blank" rel="noopener noreferrer" class="naver-banner-link">
+                  <video id="promoVideo" src="./images/naver_banner_final_v2.mp4" loop muted playsinline
+                    autoplay></video>
+                </a>
+              </div>
+              <!-- 슬라이드 1: 필라테스 등록 시 헬스 무료 (신규 생성 배너) -->
+              <div class="naver-slide">
+                <div class="naver-banner-link">
+                  <!-- 사용자가 선택한 최종 박스 디자인 이미지 (파일명 변경됨) -->
+                  <img src="./images/pilates_event_2026.jpg" alt="필라테스 등록시 헬스 전액 무료">
+                </div>
               </div>
             </div>
+
           </div>
 
+
+          <!-- 소리 조절 버튼 (고정 위치) -->
+          <button id="videoSoundBtn" onclick="togglePromoSound(event)">
+            <svg id="muteSvg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#7BE495" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round" style="display: block;">
+              <path d="M11 5L6 9H2v6h4l5 4V5z"></path>
+              <line x1="23" y1="1" x2="1" y2="23" stroke="#7BE495" stroke-width="2"></line>
+            </svg>
+            <svg id="unmuteSvg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#7BE495" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+              <path d="M11 5L6 9H2v6h4l5 4V5z"></path>
+              <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+            </svg>
+          </button>
         </div>
-
-
-        <!-- 소리 조절 버튼 (고정 위치) -->
-        <button id="videoSoundBtn" onclick="togglePromoSound(event)">
-          <svg id="muteSvg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#7BE495" stroke-width="2"
-            stroke-linecap="round" stroke-linejoin="round" style="display: block;">
-            <path d="M11 5L6 9H2v6h4l5 4V5z"></path>
-            <line x1="23" y1="1" x2="1" y2="23" stroke="#7BE495" stroke-width="2"></line>
-          </svg>
-          <svg id="unmuteSvg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#7BE495" stroke-width="2"
-            stroke-linecap="round" stroke-linejoin="round" style="display: none;">
-            <path d="M11 5L6 9H2v6h4l5 4V5z"></path>
-            <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-            <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
-          </svg>
-        </button>
-      </div>
-      <div class="event-date-footer" style="
+        <div class="event-date-footer" style="
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -4365,149 +4368,155 @@ body.popup-active {
         border-bottom-right-radius: 15px;
         box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
       ">
-        <div style="display: flex; align-items: center;">
-          <span style="color: #7BE495; font-size: 13px; margin-right: 8px;">[EVENT]</span>
-          01.01 ~ 01.31
+          <div style="display: flex; align-items: center;">
+            <span style="color: #7BE495; font-size: 13px; margin-right: 8px;">[EVENT]</span>
+            01.01 ~ 01.31
+          </div>
+
         </div>
 
+        <!-- 네비게이터 dots (위치 이동됨: 박스 바깥 하단) -->
+        <div class="naver-banner-navigator">
+          <div class="naver-nav-dot active" onclick="naverBannerSlider.move(0)"></div>
+          <div class="naver-nav-dot" onclick="naverBannerSlider.move(1)"></div>
+        </div>
       </div>
 
-      <!-- 네비게이터 dots (위치 이동됨: 박스 바깥 하단) -->
-      <div class="naver-banner-navigator">
-        <div class="naver-nav-dot active" onclick="naverBannerSlider.move(0)"></div>
-        <div class="naver-nav-dot" onclick="naverBannerSlider.move(1)"></div>
-      </div>
-    </div>
+      <script>
+        // 네이버 배너 슬라이더 객체
+        window.naverBannerSlider = {
+          currentIndex: 0,
+          timer: null,
+          touchStartX: 0,
+          touchEndX: 0,
 
-    <script>
-      // 네이버 배너 슬라이더 객체
-      window.naverBannerSlider = {
-        currentIndex: 0,
-        timer: null,
-        touchStartX: 0,
-        touchEndX: 0,
+          move: function (index) {
+            // V5 ID 참조
+            const wrapper = document.getElementById('naverSliderWrapperV5');
+            const dots = document.querySelectorAll('.naver-nav-dot');
+            const video = document.getElementById('promoVideo');
 
-        move: function (index) {
-          const wrapper = document.getElementById('naverSliderWrapper');
-          const dots = document.querySelectorAll('.naver-nav-dot');
-          const video = document.getElementById('promoVideo');
-
-          if (!wrapper) return;
-
-          this.currentIndex = index;
-          // 2개 슬라이드 대응 (100 / 2 = 50%)
-          wrapper.style.transform = `translateX(-${index * 50}%)`;
-
-          // 영상 슬라이드(0)가 아닐 경우 음소거 처리
-          if (video && index !== 0) {
-            video.muted = true;
-            // 아이콘 상태 업데이트
-            const muteSvg = document.getElementById('muteSvg');
-            const unmuteSvg = document.getElementById('unmuteSvg');
-            const btn = document.getElementById('videoSoundBtn');
-            if (muteSvg && unmuteSvg && btn) {
-              muteSvg.style.display = 'block';
-              unmuteSvg.style.display = 'none';
-              btn.style.borderColor = 'rgba(123, 228, 149, 0.5)';
-              btn.style.boxShadow = 'none';
+            if (!wrapper) {
+              console.error("Slider Wrapper V5 not found!");
+              return;
             }
-          }
 
-          dots.forEach((dot, i) => {
-            if (i === index) dot.classList.add('active');
-            else dot.classList.remove('active');
-          });
-        },
+            console.log(`Moving to slide ${index}`);
+            this.currentIndex = index;
+            // 2개 슬라이드 대응 (100 / 2 = 50%)
+            wrapper.style.transform = `translateX(-${index * 50}%)`;
 
-        startTimer: function () {
-          this.stopTimer();
-          this.timer = setInterval(() => {
-            let nextIndex = (this.currentIndex + 1) % 2;
-            this.move(nextIndex);
-          }, 5000); // 5초
+            // 영상 슬라이드(0)가 아닐 경우 음소거 처리
+            if (video && index !== 0) {
+              video.muted = true;
+              // 아이콘 상태 업데이트
+              const muteSvg = document.getElementById('muteSvg');
+              const unmuteSvg = document.getElementById('unmuteSvg');
+              const btn = document.getElementById('videoSoundBtn');
+              if (muteSvg && unmuteSvg && btn) {
+                muteSvg.style.display = 'block';
+                unmuteSvg.style.display = 'none';
+                btn.style.borderColor = 'rgba(123, 228, 149, 0.5)';
+                btn.style.boxShadow = 'none';
+              }
+            }
 
-          // 터치 리스너 추가
-          this.addTouchListeners();
-        },
+            dots.forEach((dot, i) => {
+              if (i === index) dot.classList.add('active');
+              else dot.classList.remove('active');
+            });
+          },
 
-        stopTimer: function () {
-          if (this.timer) {
-            clearInterval(this.timer);
-            this.timer = null;
-          }
-        },
-
-        addTouchListeners: function () {
-          const wrapper = document.getElementById('naverSliderWrapper');
-          if (!wrapper || wrapper.dataset.touchAdded) return;
-
-          wrapper.dataset.touchAdded = 'true';
-
-          wrapper.addEventListener('touchstart', (e) => {
-            this.touchStartX = e.touches[0].clientX;
+          startTimer: function () {
             this.stopTimer();
-          }, { passive: true });
-
-          wrapper.addEventListener('touchend', (e) => {
-            this.touchEndX = e.changedTouches[0].clientX;
-            this.handleSwipe();
-            this.startTimer();
-          }, { passive: true });
-        },
-
-        handleSwipe: function () {
-          const swipeThreshold = 50;
-          const diff = this.touchStartX - this.touchEndX;
-
-          if (Math.abs(diff) > swipeThreshold) {
-            if (diff > 0) {
-              // 왼쪽으로 스와이프 (다음 슬라이드)
+            this.timer = setInterval(() => {
               let nextIndex = (this.currentIndex + 1) % 2;
               this.move(nextIndex);
-            } else {
-              // 오른쪽으로 스와이프 (이전 슬라이드)
-              let prevIndex = this.currentIndex === 0 ? 1 : 0;
-              this.move(prevIndex);
+            }, 5000); // 5초
+
+            // 터치 리스너 추가
+            this.addTouchListeners();
+          },
+
+          stopTimer: function () {
+            if (this.timer) {
+              clearInterval(this.timer);
+              this.timer = null;
+            }
+          },
+
+          addTouchListeners: function () {
+            // V5 ID 참조
+            const wrapper = document.getElementById('naverSliderWrapperV5');
+            if (!wrapper || wrapper.dataset.touchAdded) return;
+
+            wrapper.dataset.touchAdded = 'true';
+
+            wrapper.addEventListener('touchstart', (e) => {
+              this.touchStartX = e.touches[0].clientX;
+              this.stopTimer();
+            }, { passive: true });
+
+            wrapper.addEventListener('touchend', (e) => {
+              this.touchEndX = e.changedTouches[0].clientX;
+              this.handleSwipe();
+              this.startTimer();
+            }, { passive: true });
+          },
+
+          handleSwipe: function () {
+            const swipeThreshold = 50;
+            const diff = this.touchStartX - this.touchEndX;
+
+            if (Math.abs(diff) > swipeThreshold) {
+              if (diff > 0) {
+                // 왼쪽으로 스와이프 (다음 슬라이드)
+                let nextIndex = (this.currentIndex + 1) % 2;
+                this.move(nextIndex);
+              } else {
+                // 오른쪽으로 스와이프 (이전 슬라이드)
+                let prevIndex = this.currentIndex === 0 ? 1 : 0;
+                this.move(prevIndex);
+              }
             }
           }
+        };
+
+        function togglePromoSound(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          const video = document.getElementById('promoVideo');
+          const muteSvg = document.getElementById('muteSvg');
+          const unmuteSvg = document.getElementById('unmuteSvg');
+          const btn = document.getElementById('videoSoundBtn');
+
+          if (!video) return;
+
+          if (video.muted) {
+            video.muted = false;
+            muteSvg.style.display = 'none';
+            unmuteSvg.style.display = 'block';
+            btn.style.borderColor = '#7BE495';
+            btn.style.boxShadow = '0 0 15px rgba(123, 228, 149, 0.4)';
+            video.play().catch(err => console.log("Sound play failed:", err));
+          } else {
+            video.muted = true;
+            muteSvg.style.display = 'block';
+            unmuteSvg.style.display = 'none';
+            btn.style.borderColor = 'rgba(123, 228, 149, 0.5)';
+            btn.style.boxShadow = 'none';
+          }
         }
-      };
 
-      function togglePromoSound(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        const video = document.getElementById('promoVideo');
-        const muteSvg = document.getElementById('muteSvg');
-        const unmuteSvg = document.getElementById('unmuteSvg');
-        const btn = document.getElementById('videoSoundBtn');
+        // 페이지 로드 시 타이머 시작
+        document.addEventListener('DOMContentLoaded', () => {
+          if (window.naverBannerSlider) naverBannerSlider.startTimer();
+        });
+      </script>
+    </div>
 
-        if (!video) return;
-
-        if (video.muted) {
-          video.muted = false;
-          muteSvg.style.display = 'none';
-          unmuteSvg.style.display = 'block';
-          btn.style.borderColor = '#7BE495';
-          btn.style.boxShadow = '0 0 15px rgba(123, 228, 149, 0.4)';
-          video.play().catch(err => console.log("Sound play failed:", err));
-        } else {
-          video.muted = true;
-          muteSvg.style.display = 'block';
-          unmuteSvg.style.display = 'none';
-          btn.style.borderColor = 'rgba(123, 228, 149, 0.5)';
-          btn.style.boxShadow = 'none';
-        }
-      }
-
-      // 페이지 로드 시 타이머 시작
-      document.addEventListener('DOMContentLoaded', () => {
-        if (window.naverBannerSlider) naverBannerSlider.startTimer();
-      });
-    </script>
-  </div>
-
-  <!-- 진입 팝업 - 전체 화면 오버레이 (임시 비활성화) -->
-  <div id="entryPopup" style="
+    <!-- 진입 팝업 - 전체 화면 오버레이 (임시 비활성화) -->
+    <div id="entryPopup" style="
   display: none;
   visibility: hidden;
   opacity: 0;
@@ -4522,396 +4531,396 @@ body.popup-active {
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 " onclick="event.target === this && closeEntryPopup()">
-    <style>
-      /* 임시 비활성화 - 팝업 완전 숨김 */
-      /* 팝업 활성화 스타일 */
-      #entryPopup.popup-visible {
-        display: flex !important;
-        visibility: visible !important;
-        opacity: 1 !important;
-        pointer-events: auto !important;
-      }
-
-      /* 슬라이더 스타일 */
-      .popup-slider-container {
-        width: 100%;
-        max-width: 420px;
-        height: 550px;
-        /* 고정 높이로 밸런스 유지 (1030px에서 550px로 조정) */
-        overflow: hidden;
-        position: relative;
-        border-radius: 25px;
-        border: 3px solid #7BE495;
-        background: #000;
-        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
-      }
-
-      .popup-slider-wrapper {
-        display: flex;
-        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-        width: 200%;
-        height: 100%;
-      }
-
-      .popup-slide {
-        width: 50%;
-        height: 100%;
-        flex-shrink: 0;
-        box-sizing: border-box;
-        position: relative;
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
-      }
-
-      /* 슬라이드 이미지 표준화 */
-      .popup-slide img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        display: block;
-      }
-
-      /* 슬라이드 1 내부 콘텐츠 정렬 */
-      .popup-slide-content {
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        box-sizing: border-box;
-        padding: 0;
-      }
-
-      .popup-navigator {
-        position: absolute;
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        display: flex;
-        gap: 10px;
-        z-index: 20;
-      }
-
-      .nav-dot {
-        width: 10px;
-        height: 10px;
-        background: rgba(255, 255, 255, 0.4);
-        border-radius: 50%;
-        cursor: pointer;
-        transition: all 0.3s ease;
-      }
-
-      .nav-dot.active {
-        background: #7BE495;
-        transform: scale(1.2);
-        box-shadow: 0 0 10px #7BE495;
-      }
-
-      /* 팝업이 열렸을 때 body 스크롤 완전 차단 */
-      body.popup-open {
-        overflow: hidden !important;
-        position: fixed !important;
-        width: 100% !important;
-        height: 100% !important;
-        top: 0 !important;
-        left: 0 !important;
-      }
-
-      /* 팝업 외 모든 요소 완전 숨김 */
-      body.popup-open>*:not(#entryPopup) {
-        visibility: hidden !important;
-        opacity: 0 !important;
-        pointer-events: none !important;
-        z-index: -1 !important;
-      }
-
-      /* 팝업만 보이도록 */
-      body.popup-open #entryPopup {
-        visibility: visible !important;
-        opacity: 1 !important;
-        pointer-events: auto !important;
-        z-index: 999999999999 !important;
-      }
-
-      /* 데스크톱에서 로고 중앙 정렬 보장 */
-      @media (min-width: 769px) {
-        #entryPopup .logo-container {
+      <style>
+        /* 임시 비활성화 - 팝업 완전 숨김 */
+        /* 팝업 활성화 스타일 */
+        #entryPopup.popup-visible {
           display: flex !important;
-          justify-content: center !important;
-          align-items: center !important;
-          margin: 0 auto !important;
-          width: 100% !important;
-          text-align: center !important;
+          visibility: visible !important;
+          opacity: 1 !important;
+          pointer-events: auto !important;
         }
-      }
 
-      #entryPopup::-webkit-scrollbar {
-        width: 8px;
-      }
+        /* 슬라이더 스타일 */
+        .popup-slider-container {
+          width: 100%;
+          max-width: 420px;
+          height: 550px;
+          /* 고정 높이로 밸런스 유지 (1030px에서 550px로 조정) */
+          overflow: hidden;
+          position: relative;
+          border-radius: 25px;
+          border: 3px solid #7BE495;
+          background: #000;
+          box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+        }
 
-      #entryPopup::-webkit-scrollbar-track {
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 4px;
-      }
+        .popup-slider-wrapper {
+          display: flex;
+          transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+          width: 200%;
+          height: 100%;
+        }
 
-      #entryPopup::-webkit-scrollbar-thumb {
-        background: rgba(123, 228, 149, 0.5);
-        border-radius: 4px;
-      }
+        .popup-slide {
+          width: 50%;
+          height: 100%;
+          flex-shrink: 0;
+          box-sizing: border-box;
+          position: relative;
+          overflow: hidden;
+          display: flex;
+          flex-direction: column;
+        }
 
-      #entryPopup::-webkit-scrollbar-thumb:hover {
-        background: rgba(123, 228, 149, 0.8);
-      }
+        /* 슬라이드 이미지 표준화 */
+        .popup-slide img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+        }
 
-      /* 모바일에서 팝업이 최상위에 나타나도록 보장 */
-      @media (max-width: 768px) {
-        #entryPopup {
-          z-index: 999999999999 !important;
+        /* 슬라이드 1 내부 콘텐츠 정렬 */
+        .popup-slide-content {
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          box-sizing: border-box;
+          padding: 0;
+        }
+
+        .popup-navigator {
+          position: absolute;
+          bottom: 20px;
+          left: 50%;
+          transform: translateX(-50%);
+          display: flex;
+          gap: 10px;
+          z-index: 20;
+        }
+
+        .nav-dot {
+          width: 10px;
+          height: 10px;
+          background: rgba(255, 255, 255, 0.4);
+          border-radius: 50%;
+          cursor: pointer;
+          transition: all 0.3s ease;
+        }
+
+        .nav-dot.active {
+          background: #7BE495;
+          transform: scale(1.2);
+          box-shadow: 0 0 10px #7BE495;
+        }
+
+        /* 팝업이 열렸을 때 body 스크롤 완전 차단 */
+        body.popup-open {
+          overflow: hidden !important;
           position: fixed !important;
+          width: 100% !important;
+          height: 100% !important;
           top: 0 !important;
           left: 0 !important;
-          width: 100vw !important;
-          height: 100vh !important;
-          background: rgba(0, 0, 0, 0.9) !important;
-          backdrop-filter: blur(10px) !important;
-          -webkit-backdrop-filter: blur(10px) !important;
-          padding: 10px !important;
-          display: flex !important;
-          align-items: center !important;
-          justify-content: center !important;
-          overflow-y: auto !important;
         }
 
-        #entryPopup>div:first-of-type {
-          display: flex !important;
-          align-items: center !important;
-          justify-content: center !important;
-          width: 100% !important;
-          min-height: 100vh !important;
-          padding: 10px 0 !important;
+        /* 팝업 외 모든 요소 완전 숨김 */
+        body.popup-open>*:not(#entryPopup) {
+          visibility: hidden !important;
+          opacity: 0 !important;
+          pointer-events: none !important;
+          z-index: -1 !important;
         }
 
-        .popup-content-card {
-          max-width: 350px !important;
-          width: 95% !important;
-          max-height: 85vh !important;
-          margin: 0 auto !important;
-          max-height: 92vh !important;
-          overflow: visible !important;
-          /* X버튼이 잘리지 않도록 보이게 설정 */
-          position: relative !important;
+        /* 팝업만 보이도록 */
+        body.popup-open #entryPopup {
+          visibility: visible !important;
+          opacity: 1 !important;
+          pointer-events: auto !important;
+          z-index: 999999999999 !important;
         }
 
-        .popup-content {
-          padding: 60px 12px 8px 12px !important;
+        /* 데스크톱에서 로고 중앙 정렬 보장 */
+        @media (min-width: 769px) {
+          #entryPopup .logo-container {
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
+            margin: 0 auto !important;
+            width: 100% !important;
+            text-align: center !important;
+          }
         }
 
-        /* 모바일에서 로고 컨테이너 여백 조정 */
-        #entryPopup .logo-container {
-          margin: 0 auto !important;
-          padding: 0 !important;
-          margin-bottom: 24px !important;
-          margin-top: 20px !important;
-          display: flex !important;
-          justify-content: center !important;
-          align-items: center !important;
+        #entryPopup::-webkit-scrollbar {
+          width: 8px;
+        }
+
+        #entryPopup::-webkit-scrollbar-track {
+          background: rgba(255, 255, 255, 0.1);
+          border-radius: 4px;
+        }
+
+        #entryPopup::-webkit-scrollbar-thumb {
+          background: rgba(123, 228, 149, 0.5);
+          border-radius: 4px;
+        }
+
+        #entryPopup::-webkit-scrollbar-thumb:hover {
+          background: rgba(123, 228, 149, 0.8);
+        }
+
+        /* 모바일에서 팝업이 최상위에 나타나도록 보장 */
+        @media (max-width: 768px) {
+          #entryPopup {
+            z-index: 999999999999 !important;
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100vw !important;
+            height: 100vh !important;
+            background: rgba(0, 0, 0, 0.9) !important;
+            backdrop-filter: blur(10px) !important;
+            -webkit-backdrop-filter: blur(10px) !important;
+            padding: 10px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            overflow-y: auto !important;
+          }
+
+          #entryPopup>div:first-of-type {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            width: 100% !important;
+            min-height: 100vh !important;
+            padding: 10px 0 !important;
+          }
+
+          .popup-content-card {
+            max-width: 350px !important;
+            width: 95% !important;
+            max-height: 85vh !important;
+            margin: 0 auto !important;
+            max-height: 92vh !important;
+            overflow: visible !important;
+            /* X버튼이 잘리지 않도록 보이게 설정 */
+            position: relative !important;
+          }
+
+          .popup-content {
+            padding: 60px 12px 8px 12px !important;
+          }
+
+          /* 모바일에서 로고 컨테이너 여백 조정 */
+          #entryPopup .logo-container {
+            margin: 0 auto !important;
+            padding: 0 !important;
+            margin-bottom: 24px !important;
+            margin-top: 20px !important;
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
+          }
+
+          #entryPopup h1 {
+            font-size: 13px !important;
+            margin: 0px 0 16px 0 !important;
+            line-height: 1.0 !important;
+            transform: translateY(-12px) !important;
+          }
+
+          #entryPopup h2 {
+            font-size: 11px !important;
+            margin: 0 0 20px 0 !important;
+            line-height: 1.1 !important;
+            transform: translateY(-12px) !important;
+          }
+
+          #entryPopup h3 {
+            font-size: 14px !important;
+            margin: 0 !important;
+            line-height: 1.0 !important;
+          }
+
+          #entryPopup .event-content {
+            padding: 6px !important;
+            margin-top: 0px !important;
+          }
+
+          #entryPopup .event-content>div {
+            margin-bottom: 3px !important;
+          }
+
+          #entryPopup .event-content h4 {
+            font-size: 11px !important;
+            margin: 0 0 1px 0 !important;
+          }
+
+          #entryPopup .event-content p {
+            font-size: 9px !important;
+            line-height: 1.2 !important;
+            margin: 0 !important;
+          }
+
+          #entryPopup .button-container {
+            margin-top: 1px !important;
+          }
+
+          /* 상금 박스 위치 조정 */
+          #entryPopup div[style*="background: rgba(255, 255, 255, 0.95)"] {
+            margin: 0px 0 24px 0 !important;
+            padding: 4px 12px !important;
+            transform: translateY(-16px) !important;
+          }
+
+          /* 챌린지 패키지 박스 여백 축소 */
+          #entryPopup div[style*="background: rgba(123, 228, 149, 0.15)"] {
+            margin: 0px 0 !important;
+            padding: 4px 8px !important;
+          }
+
+          /* 기간 정보 여백 축소 */
+          #entryPopup p[style*="📅"] {
+            margin: 0px 0 0px 0 !important;
+            font-size: 11px !important;
+          }
+
+          /* 버튼 크기 축소 */
+          #entryPopup .button-container a {
+            padding: 6px 16px !important;
+            font-size: 12px !important;
+          }
+
+          #entryPopup .button-container label {
+            font-size: 10px !important;
+          }
+
+          /* 모바일에서만 X 버튼 보장 및 스타일 강화 */
+          @media screen and (max-width: 768px) {
+            #entryPopup #closePopupBtn {
+              display: flex !important;
+              top: -15px !important;
+              right: -10px !important;
+              width: 44px !important;
+              height: 44px !important;
+              background: rgba(0, 0, 0, 0.8) !important;
+              border: 2px solid #fff !important;
+              box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5) !important;
+              z-index: 2147483647 !important;
+            }
+          }
+
+          /* 모바일에서 X 버튼 터치 피드백 */
+          #entryPopup #closePopupBtn:active {
+            background: rgba(255, 0, 0, 1) !important;
+            transform: scale(0.95) !important;
+          }
+
+          /* 모바일에서 체크박스 터치 영역 개선 */
+          #entryPopup #dontShowToday {
+            width: 20px !important;
+            height: 20px !important;
+            transform: scale(1.2) !important;
+            touch-action: manipulation !important;
+            -webkit-tap-highlight-color: transparent !important;
+          }
+
+          /* 모바일에서 체크박스 라벨 터치 영역 개선 */
+          #entryPopup label {
+            padding: 8px !important;
+            touch-action: manipulation !important;
+            -webkit-tap-highlight-color: transparent !important;
+            user-select: none !important;
+            -webkit-user-select: none !important;
+          }
+
+          /* 모바일 네비게이터 위치 조정 (박스 바깥 하단) */
+          .popup-navigator {
+            bottom: -30px !important;
+            width: 100% !important;
+            justify-content: center !important;
+            padding-top: 10px !important;
+          }
+
+          /* 팝업 높이 조절 */
+          .popup-slider-container {
+            height: 520px;
+          }
+
+          /* 모바일에서 스크롤 완전 차단 */
+          body.popup-open {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100vw !important;
+            height: 100vh !important;
+            overflow: hidden !important;
+            -webkit-overflow-scrolling: touch;
+          }
+
+          /* 모바일에서 팝업 외 모든 요소 완전 숨김 */
+          body.popup-open>*:not(#entryPopup) {
+            display: none !important;
+          }
+
+          /* 모바일에서 팝업 배경 투명도 조정 */
+          #entryPopup {
+            background: rgba(0, 0, 0, 0.8) !important;
+          }
+
+          #entryPopup p {
+            font-size: 11px !important;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .popup-content-card {
+            max-width: 300px !important;
+            max-height: 80vh !important;
+          }
+
+          .popup-content {
+            padding: 50px 10px 10px 10px !important;
+          }
+
         }
 
         #entryPopup h1 {
           font-size: 13px !important;
-          margin: 0px 0 16px 0 !important;
-          line-height: 1.0 !important;
-          transform: translateY(-12px) !important;
         }
 
         #entryPopup h2 {
           font-size: 11px !important;
-          margin: 0 0 20px 0 !important;
-          line-height: 1.1 !important;
-          transform: translateY(-12px) !important;
         }
 
         #entryPopup h3 {
-          font-size: 14px !important;
-          margin: 0 !important;
-          line-height: 1.0 !important;
-        }
-
-        #entryPopup .event-content {
-          padding: 6px !important;
-          margin-top: 0px !important;
-        }
-
-        #entryPopup .event-content>div {
-          margin-bottom: 3px !important;
-        }
-
-        #entryPopup .event-content h4 {
-          font-size: 11px !important;
-          margin: 0 0 1px 0 !important;
-        }
-
-        #entryPopup .event-content p {
-          font-size: 9px !important;
-          line-height: 1.2 !important;
-          margin: 0 !important;
-        }
-
-        #entryPopup .button-container {
-          margin-top: 1px !important;
-        }
-
-        /* 상금 박스 위치 조정 */
-        #entryPopup div[style*="background: rgba(255, 255, 255, 0.95)"] {
-          margin: 0px 0 24px 0 !important;
-          padding: 4px 12px !important;
-          transform: translateY(-16px) !important;
-        }
-
-        /* 챌린지 패키지 박스 여백 축소 */
-        #entryPopup div[style*="background: rgba(123, 228, 149, 0.15)"] {
-          margin: 0px 0 !important;
-          padding: 4px 8px !important;
-        }
-
-        /* 기간 정보 여백 축소 */
-        #entryPopup p[style*="📅"] {
-          margin: 0px 0 0px 0 !important;
-          font-size: 11px !important;
-        }
-
-        /* 버튼 크기 축소 */
-        #entryPopup .button-container a {
-          padding: 6px 16px !important;
-          font-size: 12px !important;
-        }
-
-        #entryPopup .button-container label {
-          font-size: 10px !important;
-        }
-
-        /* 모바일에서만 X 버튼 보장 및 스타일 강화 */
-        @media screen and (max-width: 768px) {
-          #entryPopup #closePopupBtn {
-            display: flex !important;
-            top: -15px !important;
-            right: -10px !important;
-            width: 44px !important;
-            height: 44px !important;
-            background: rgba(0, 0, 0, 0.8) !important;
-            border: 2px solid #fff !important;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5) !important;
-            z-index: 2147483647 !important;
-          }
-        }
-
-        /* 모바일에서 X 버튼 터치 피드백 */
-        #entryPopup #closePopupBtn:active {
-          background: rgba(255, 0, 0, 1) !important;
-          transform: scale(0.95) !important;
-        }
-
-        /* 모바일에서 체크박스 터치 영역 개선 */
-        #entryPopup #dontShowToday {
-          width: 20px !important;
-          height: 20px !important;
-          transform: scale(1.2) !important;
-          touch-action: manipulation !important;
-          -webkit-tap-highlight-color: transparent !important;
-        }
-
-        /* 모바일에서 체크박스 라벨 터치 영역 개선 */
-        #entryPopup label {
-          padding: 8px !important;
-          touch-action: manipulation !important;
-          -webkit-tap-highlight-color: transparent !important;
-          user-select: none !important;
-          -webkit-user-select: none !important;
-        }
-
-        /* 모바일 네비게이터 위치 조정 (박스 바깥 하단) */
-        .popup-navigator {
-          bottom: -30px !important;
-          width: 100% !important;
-          justify-content: center !important;
-          padding-top: 10px !important;
-        }
-
-        /* 팝업 높이 조절 */
-        .popup-slider-container {
-          height: 520px;
-        }
-
-        /* 모바일에서 스크롤 완전 차단 */
-        body.popup-open {
-          position: fixed !important;
-          top: 0 !important;
-          left: 0 !important;
-          width: 100vw !important;
-          height: 100vh !important;
-          overflow: hidden !important;
-          -webkit-overflow-scrolling: touch;
-        }
-
-        /* 모바일에서 팝업 외 모든 요소 완전 숨김 */
-        body.popup-open>*:not(#entryPopup) {
-          display: none !important;
-        }
-
-        /* 모바일에서 팝업 배경 투명도 조정 */
-        #entryPopup {
-          background: rgba(0, 0, 0, 0.8) !important;
+          font-size: 15px !important;
         }
 
         #entryPopup p {
-          font-size: 11px !important;
+          font-size: 10px !important;
         }
-      }
-
-      @media (max-width: 480px) {
-        .popup-content-card {
-          max-width: 300px !important;
-          max-height: 80vh !important;
-        }
-
-        .popup-content {
-          padding: 50px 10px 10px 10px !important;
-        }
-
-      }
-
-      #entryPopup h1 {
-        font-size: 13px !important;
-      }
-
-      #entryPopup h2 {
-        font-size: 11px !important;
-      }
-
-      #entryPopup h3 {
-        font-size: 15px !important;
-      }
-
-      #entryPopup p {
-        font-size: 10px !important;
-      }
-    </style>
+      </style>
 
 
 
 
-    <!-- 중앙 정렬 컨테이너 -->
-    <div style="
+      <!-- 중앙 정렬 컨테이너 -->
+      <div style="
     display: flex;
     align-items: center;
     justify-content: center;
     min-height: 100vh;
     padding: 15px 0;
   ">
-      <!-- 팝업 콘텐츠 카드 -->
-      <div class="popup-content-card" style="
+        <!-- 팝업 콘텐츠 카드 -->
+        <div class="popup-content-card" style="
       position: relative;
       width: 100%;
       max-width: 420px;
@@ -4922,33 +4931,33 @@ body.popup-active {
       z-index: 10;
     " onclick="event.stopPropagation()">
 
-        <!-- 슬라이더 컨테이너 -->
-        <div class="popup-slider-container">
-          <div class="popup-slider-wrapper" id="popupSliderWrapper">
-            <!-- 슬라이드 1: 브랜드 웰컴 (영상) -->
-            <div class="popup-slide">
-              <div class="popup-slide-content">
-                <video src="./images/naver_banner_final_v2.mp4" autoplay muted loop playsinline
-                  style="width: 100%; height: 100%; object-fit: cover; display: block;"></video>
-              </div>
-            </div> <!-- 슬라이드 1 끝 -->
+          <!-- 슬라이더 컨테이너 -->
+          <div class="popup-slider-container">
+            <div class="popup-slider-wrapper" id="popupSliderWrapper">
+              <!-- 슬라이드 1: 브랜드 웰컴 (영상) -->
+              <div class="popup-slide">
+                <div class="popup-slide-content">
+                  <video src="./images/naver_banner_final_v2.mp4" autoplay muted loop playsinline
+                    style="width: 100%; height: 100%; object-fit: cover; display: block;"></video>
+                </div>
+              </div> <!-- 슬라이드 1 끝 -->
 
-            <!-- 슬라이드 2: 필라테스 배너 (신규 이미지) -->
-            <div class="popup-slide" style="background: #000;">
-              <img src="./images/pilates_event_2026.jpg" alt="필라테스 등록시 헬스 무료"
-                style="width: 100%; height: 100%; object-fit: cover; display: block;">
-            </div> <!-- 슬라이드 2 끝 -->
+              <!-- 슬라이드 2: 필라테스 배너 (신규 이미지) -->
+              <div class="popup-slide" style="background: #000;">
+                <img src="./images/pilates_event_2026.jpg" alt="필라테스 등록시 헬스 무료"
+                  style="width: 100%; height: 100%; object-fit: cover; display: block;">
+              </div> <!-- 슬라이드 2 끝 -->
+            </div>
           </div>
-        </div>
 
-        <!-- 네비게이터 인디케이터 -->
-        <div class="popup-navigator">
-          <div class="nav-dot active" onclick="popupSlider.move(0)"></div>
-          <div class="nav-dot" onclick="popupSlider.move(1)"></div>
-        </div>
+          <!-- 네비게이터 인디케이터 -->
+          <div class="popup-navigator">
+            <div class="nav-dot active" onclick="popupSlider.move(0)"></div>
+            <div class="nav-dot" onclick="popupSlider.move(1)"></div>
+          </div>
 
-        <!-- 닫기 버튼 추가 -->
-        <button id="closePopupBtn" style="
+          <!-- 닫기 버튼 추가 -->
+          <button id="closePopupBtn" style="
           position: absolute;
           top: 15px;
           right: 15px;
@@ -4966,9 +4975,9 @@ body.popup-active {
           z-index: 1000;
           backdrop-filter: blur(4px);
         ">×</button>
+        </div>
       </div>
     </div>
-  </div>
   </div>
   </div>
 
