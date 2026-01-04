@@ -66,15 +66,15 @@ const applyResponsiveImage = (imgElement, fallbackPath) => {
 };
 
 // 모바일 전용 간단한 하이브 챌린지 팝업 함수 (PC와 완전 분리)
-window.showMobileHiveChallengePopup = function() {
+window.showMobileHiveChallengePopup = function () {
   console.log('🚀 모바일 하이브 챌린지 팝업 열기! (PC 영향 없음)');
-  
+
   // 기존 모바일 팝업이 있다면 제거
   const existingPopup = document.getElementById('mobileHiveChallengePopup');
   if (existingPopup) {
     existingPopup.remove();
   }
-  
+
   // 오버레이 생성
   const overlay = document.createElement('div');
   overlay.id = 'mobileHiveChallengePopup';
@@ -92,7 +92,7 @@ window.showMobileHiveChallengePopup = function() {
     opacity: 0 !important;
     transition: opacity 0.3s ease !important;
   `;
-  
+
   // 이미지 생성 (PC와 동일한 이미지)
   const img = document.createElement('img');
   applyResponsiveImage(img, './images/neohive93.jpg');
@@ -102,7 +102,7 @@ window.showMobileHiveChallengePopup = function() {
     max-height: 85%;
     object-fit: contain;
   `;
-  
+
   // 닫기 버튼 생성
   const closeBtn = document.createElement('button');
   closeBtn.innerHTML = '×';
@@ -120,7 +120,7 @@ window.showMobileHiveChallengePopup = function() {
     z-index: 2147483647;
     color: #333;
   `;
-  
+
   // 팝업 닫기 함수
   function closeMobilePopup() {
     overlay.style.opacity = '0';
@@ -131,29 +131,29 @@ window.showMobileHiveChallengePopup = function() {
       document.body.style.overflow = '';
     }, 300);
   }
-  
+
   // 이벤트 리스너
   closeBtn.onclick = closeMobilePopup;
-  overlay.onclick = function(e) {
+  overlay.onclick = function (e) {
     if (e.target === overlay) closeMobilePopup();
   };
-  
+
   // 이미지 로딩 확인
-  img.onload = function() {
+  img.onload = function () {
     console.log('✅ 모바일 하이브 챌린지 이미지 로딩 완료!');
   };
-  img.onerror = function() {
+  img.onerror = function () {
     console.error('❌ 모바일 하이브 챌린지 이미지 로딩 실패!', img.src);
   };
-  
+
   // DOM 조립 및 추가
   overlay.appendChild(img);
   overlay.appendChild(closeBtn);
   document.body.appendChild(overlay);
   document.body.style.overflow = 'hidden';
-  
+
   console.log('✅ 모바일 팝업 DOM에 추가됨');
-  
+
   // 페이드 인 효과
   setTimeout(() => {
     overlay.style.opacity = '1';
@@ -162,16 +162,16 @@ window.showMobileHiveChallengePopup = function() {
 };
 
 // 하이브 챌린지 팝업 함수 - 전역 최상위에서 먼저 정의
-window.showHiveChallengePopup = function() {
+window.showHiveChallengePopup = function () {
   console.log('🚀 showHiveChallengePopup 함수 시작!');
-  
+
   // 기존 팝업이 있다면 제거
   const existingPopup = document.getElementById('hiveChallengePopup');
   if (existingPopup) {
     console.log('🗑️ 기존 팝업 제거');
     existingPopup.remove();
   }
-  
+
   // 오버레이 생성
   const overlay = document.createElement('div');
   overlay.id = 'hiveChallengePopup';
@@ -194,11 +194,11 @@ window.showHiveChallengePopup = function() {
     isolation: isolate !important;
     contain: layout style paint !important;
   `;
-  
+
   // 컨테이너 생성
   const container = document.createElement('div');
   const isMobile = window.innerWidth <= 768;
-  
+
   container.style.cssText = `
     position: relative !important;
     max-width: 95% !important;
@@ -214,10 +214,10 @@ window.showHiveChallengePopup = function() {
     contain: layout style paint !important;
     ${isMobile ? 'padding-top: 88px !important;' : ''}
   `;
-  
+
   // 컨텐츠 생성 (모바일은 HTML, PC는 이미지)
   let contentElement;
-  
+
   if (isMobile) {
     // 모바일용 HTML 구조
     contentElement = document.createElement('div');
@@ -320,7 +320,7 @@ window.showHiveChallengePopup = function() {
 
     contentElement = picture;
   }
-  
+
   // 닫기 버튼 생성
   const closeButton = document.createElement('button');
   closeButton.innerHTML = '×';
@@ -343,7 +343,7 @@ window.showHiveChallengePopup = function() {
     transition: background-color 0.3s ease;
     z-index: 99999999999;
   `;
-  
+
   // 팝업 닫기 함수
   function closeHiveChallengePopup() {
     overlay.style.opacity = '0';
@@ -357,30 +357,30 @@ window.showHiveChallengePopup = function() {
       document.body.style.width = '';
     }, 300);
   }
-  
+
   // 이벤트 리스너 추가
   closeButton.addEventListener('click', closeHiveChallengePopup);
-  overlay.addEventListener('click', function(e) {
+  overlay.addEventListener('click', function (e) {
     if (e.target === overlay) {
       closeHiveChallengePopup();
     }
   });
-  
+
   // 요소들 조립
   container.appendChild(contentElement);
   container.appendChild(closeButton);
   overlay.appendChild(container);
-  
+
   // DOM에 추가 (문서의 맨 마지막으로)
   document.body.insertAdjacentElement('beforeend', overlay);
   console.log('✅ 팝업이 DOM 맨 마지막에 추가됨');
-  
+
   // 스크롤 방지
   document.body.style.overflow = 'hidden';
   document.body.style.position = 'fixed';
   document.body.style.top = '0';
   document.body.style.width = '100%';
-  
+
   // 페이드 인 효과
   setTimeout(() => {
     overlay.style.opacity = '1';
@@ -402,35 +402,40 @@ if (window.innerWidth <= 768) {
 
   let touchStartTime = 0;
   let touchStartY = 0;
-  
+
   // 터치 시작 감지
-  document.addEventListener('touchstart', function(e) {
+  document.addEventListener('touchstart', function (e) {
     if (!isEntryPopupActive()) {
       return;
     }
     touchStartTime = Date.now();
     touchStartY = e.touches[0].clientY;
-    
+
     // 멀티터치는 방지
     if (e.touches.length > 1) {
       e.preventDefault();
     }
   }, { passive: false });
-  
+
   // 터치 움직임 제한 (드래그 방지)
-  document.addEventListener('touchmove', function(e) {
+  document.addEventListener('touchmove', function (e) {
     if (!isEntryPopupActive()) {
+      return;
+    }
+
+    // 예외 처리: 슬라이더나 배너 내부에서의 터치는 허용
+    if (e.target.closest('.popup-slider-container') || e.target.closest('.naver-banner-container')) {
       return;
     }
     const touchDuration = Date.now() - touchStartTime;
     const touchDistance = Math.abs(e.touches[0].clientY - touchStartY);
-    
+
     // 50ms 이상 터치하거나 20px 이상 이동하면 드래그로 판단하여 차단
     if (touchDuration > 50 || touchDistance > 20) {
       e.preventDefault();
     }
   }, { passive: false });
-  
+
   // 바운스 효과 제거
   document.body.style.overscrollBehavior = 'none';
   document.body.style.userSelect = 'none';
@@ -439,7 +444,7 @@ if (window.innerWidth <= 768) {
 }
 
 // 하이브 챌린지 팝업 함수 - 간단한 전역 함수 (모바일 메뉴용)
-window.openHiveChallenge = function() {
+window.openHiveChallenge = function () {
   console.log('🚀 openHiveChallenge 호출됨! (모바일 메뉴에서)');
   try {
     if (typeof window.showHiveChallengePopup === 'function') {
@@ -454,16 +459,16 @@ window.openHiveChallenge = function() {
 };
 
 // 모바일 즉시 감지 및 최적화
-(function() {
+(function () {
   const isMobile = window.innerWidth <= 768;
-  
+
   if (isMobile) {
     // 모바일 전용 클래스 즉시 추가
     document.documentElement.classList.add('is-mobile');
-    
+
     // 불필요한 리소스 로딩 방지
     window.lazyLoadEnabled = true;
-    
+
     // 모바일 전용 스타일 우선 로드
     const style = document.createElement('style');
     style.textContent = `
@@ -479,13 +484,13 @@ window.openHiveChallenge = function() {
     `;
     document.head.insertBefore(style, document.head.firstChild);
   }
-  
+
   // 팝업 체크를 위한 DOM 준비 상태 확인
   function checkPopupStatus() {
     // 초기에는 팝업이 표시되어야 하므로 다른 요소들을 숨긴 상태 유지
     // 팝업이 실제로 닫히거나 사용하지 않을 때만 popup-initialized 클래스 추가
   }
-  
+
   // DOM이 준비되면 바로 확인 (실제로는 아무것도 하지 않음)
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', checkPopupStatus);

@@ -4702,10 +4702,17 @@ body.popup-active {
           font-size: 10px !important;
         }
 
-        /* 모바일에서만 X 버튼 숨김 */
+        /* 모바일에서만 X 버튼 보장 및 스타일 강화 */
         @media screen and (max-width: 768px) {
           #entryPopup #closePopupBtn {
-            display: none !important;
+            display: flex !important;
+            top: 20px !important;
+            right: 20px !important;
+            width: 40px !important;
+            height: 40px !important;
+            background: rgba(0, 0, 0, 0.6) !important;
+            border: 2px solid #fff !important;
+            z-index: 2147483647 !important;
           }
         }
 
@@ -4845,6 +4852,26 @@ body.popup-active {
           <div class="nav-dot active" onclick="popupSlider.move(0)"></div>
           <div class="nav-dot" onclick="popupSlider.move(1)"></div>
         </div>
+
+        <!-- 닫기 버튼 추가 -->
+        <button id="closePopupBtn" style="
+          position: absolute;
+          top: 15px;
+          right: 15px;
+          background: rgba(0, 0, 0, 0.5);
+          border: 2px solid white;
+          color: white;
+          font-size: 24px;
+          border-radius: 50%;
+          width: 36px;
+          height: 36px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          z-index: 1000;
+          backdrop-filter: blur(4px);
+        ">×</button>
       </div>
     </div>
   </div>
@@ -20457,6 +20484,8 @@ body.popup-active {
     currentIndex: 0,
     timer: null,
     isPaused: false,
+    touchStartX: 0,
+    touchEndX: 0,
 
     move: function (index) {
       console.log('슬라이드 이동:', index);
@@ -20487,6 +20516,9 @@ body.popup-active {
         }
       }, 4000);
       console.log('슬라이더 타이머 시작 (4초)');
+
+      // 터치 이벤트 리스너 추가
+      this.addTouchListeners();
     },
 
     stopTimer: function () {
@@ -20495,6 +20527,35 @@ body.popup-active {
         this.timer = null;
         this.isPaused = true;
         console.log('슬라이더 타이머 중지 (사용자 상호작용)');
+      }
+    },
+
+    addTouchListeners: function () {
+      const wrapper = document.getElementById('popupSliderWrapper');
+      if (!wrapper || wrapper.dataset.touchAdded) return;
+
+      wrapper.addEventListener('touchstart', (e) => {
+        this.touchStartX = e.changedTouches[0].screenX;
+        this.stopTimer(); // 터치 시 타이머 중지
+      }, { passive: true });
+
+      wrapper.addEventListener('touchend', (e) => {
+        this.touchEndX = e.changedTouches[0].screenX;
+        this.handleSwipe();
+      }, { passive: true });
+
+      wrapper.dataset.touchAdded = 'true';
+    },
+
+    handleSwipe: function () {
+      const swipeThreshold = 50;
+      if (this.touchEndX < this.touchStartX - swipeThreshold) {
+        // 왼쪽으로 스와이프 (다음 슬라이드)
+        if (this.currentIndex === 0) this.move(1);
+      }
+      if (this.touchEndX > this.touchStartX + swipeThreshold) {
+        // 오른쪽으로 스와이프 (이전 슬라이드)
+        if (this.currentIndex === 1) this.move(0);
       }
     }
   };
