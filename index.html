@@ -4109,82 +4109,6 @@ body.popup-active {
         }
       }
 
-      /* 모바일 스타일 */
-      @media (max-width: 768px) {
-        .naver-banner-container {
-          max-width: 85%;
-          /* 높이 제한 해제하여 네비게이터 확보 */
-          max-height: none !important;
-          padding: 6px;
-          border-radius: 16px;
-          margin-bottom: 50px;
-          /* 네비게이터 공간 확보 */
-          overflow: visible !important;
-          /* 중요: 내부 요소 잘림 방지 */
-        }
-
-        .naver-banner-wrapper {
-          overflow: visible !important;
-        }
-
-        .naver-banner-close {
-          /* 헤더 상단 외부로 배치 */
-          top: -40px !important;
-          right: 0px !important;
-          width: 36px !important;
-          height: 36px !important;
-          background: rgba(0, 0, 0, 0.5) !important;
-          border: 2px solid #fff !important;
-          color: #fff !important;
-          z-index: 99999999 !important;
-        }
-
-        /* 네비게이터 위치 조정 */
-        .naver-banner-navigator {
-          bottom: -40px !important;
-          height: 30px !important;
-          z-index: 2147483647 !important;
-          pointer-events: auto !important;
-        }
-
-        .naver-slider-container {
-          width: 100% !important;
-          height: auto !important;
-          aspect-ratio: 1 / 1 !important;
-          /* Restore 1:1 as requested */
-          max-height: 60vh !important;
-        }
-
-        .naver-slide img,
-        .naver-slide video {
-          width: 100% !important;
-          height: 100% !important;
-          object-fit: contain !important;
-          /* Fix zoom issue */
-          background: #000;
-        }
-      }
-
-      /* 작은 모바일 화면 */
-      @media (max-width: 480px) {
-        .naver-banner-container {
-          max-width: 92%;
-          max-height: 70vh;
-          padding: 5px;
-        }
-
-        .naver-banner-close {
-          top: -8px !important;
-          right: -8px !important;
-          width: 34px !important;
-          height: 34px !important;
-          font-size: 18px !important;
-          z-index: 999999 !important;
-          pointer-events: auto !important;
-          position: absolute !important;
-        }
-      }
-
       /* 팝업 애니메이션 */
       #naverBannerPopup.show {
         animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -4226,7 +4150,7 @@ body.popup-active {
         overflow: hidden;
       }
 
-      /* 모바일 환경에서 팝업 강제 표시 */
+      /* [통합 모바일 스타일] PC와 동일한 고기능 레이아웃 */
       @media (max-width: 768px) {
         #naverBannerPopup {
           position: fixed !important;
@@ -4234,72 +4158,110 @@ body.popup-active {
           left: 0 !important;
           width: 100vw !important;
           height: 100vh !important;
-          z-index: 9999999999 !important;
+          z-index: 2147483647 !important;
+          display: none;
+          align-items: center;
+          justify-content: center;
+          background: rgba(0, 0, 0, 0.7);
         }
 
         #naverBannerPopup.show {
           display: flex !important;
-          visibility: visible !important;
-          opacity: 1 !important;
         }
 
         .naver-banner-container {
-          position: relative !important;
-          z-index: 10000000000 !important;
+          width: 90% !important;
+          max-width: 420px !important;
+          padding: 8px !important;
+          border-radius: 20px !important;
+          margin-bottom: 60px !important;
           overflow: visible !important;
-          /* X버튼 및 네비게이터 잘림 방지 */
+          position: relative;
         }
 
-        /* 모바일에서 wrapper는 낮은 z-index */
         .naver-banner-wrapper {
-          z-index: 1 !important;
+          border-radius: 16px !important;
+          overflow: visible !important;
+          background: #000;
         }
 
-        /* 모바일에서 X 버튼은 최상위 z-index 및 위치 조정 */
-        .naver-banner-close {
-          z-index: 99999999 !important;
-          position: absolute !important;
-          pointer-events: auto !important;
-          top: -20px !important;
-          /* 박스 바깥으로 이동 */
-          right: -10px !important;
-          background: rgba(10, 14, 39, 0.9) !important;
-          /* 배경 진하게 */
-          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5) !important;
-        }
-
-        /* 모바일 네비게이터 위치 강제 고정 */
-        .naver-banner-navigator {
-          position: absolute !important;
-          bottom: -45px !important;
+        .naver-slider-container {
           width: 100% !important;
-          left: 0 !important;
+          height: auto !important;
+          aspect-ratio: 1 / 1 !important;
+          max-height: 55vh;
+          border-radius: 14px !important;
+          overflow: hidden !important;
+          position: relative;
+        }
+
+        .naver-slide {
+          display: flex !important;
+          align-items: center !important;
           justify-content: center !important;
-          z-index: 2147483647 !important;
-          /* Max Z-Index */
-          pointer-events: auto !important;
+          background: #000 !important;
+          width: 50%;
+          height: 100%;
         }
 
+        .naver-banner-link {
+          width: 100% !important;
+          height: 100% !important;
+          display: flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+        }
+
+        .naver-slide img,
+        .naver-slide video {
+          width: 100% !important;
+          height: 100% !important;
+          object-fit: contain !important;
+          /* 화면 확대 방지 및 중앙 정렬 */
+          background: #000;
+        }
+
+        /* 닫기 버튼: 우측 상단 외부 */
         .naver-banner-close {
-          top: -25px !important;
-          right: -8px !important;
+          top: -45px !important;
+          right: 0px !important;
+          width: 40px !important;
+          height: 40px !important;
+          font-size: 28px !important;
+          background: #0A0E27 !important;
+          border: 2px solid #7BE495 !important;
+          color: #7BE495 !important;
           z-index: 2147483647 !important;
-          /* Max Z-Index */
-          pointer-events: auto !important;
         }
 
-        /* 모바일에서 스피커 아이콘 크기 축소 */
+        /* 네비게이터: 하단 외부 */
+        .naver-banner-navigator {
+          bottom: -50px !important;
+          z-index: 2147483647 !important;
+        }
+
+        /* 스피커 버튼: 영상 내 우하단 */
         #videoSoundBtn {
-          width: 28px !important;
-          height: 28px !important;
-          bottom: 10px !important;
-          right: 10px !important;
-          border-radius: 6px !important;
+          width: 38px !important;
+          height: 38px !important;
+          bottom: 15px !important;
+          right: 15px !important;
+          z-index: 2147483647 !important;
+          background: rgba(10, 14, 39, 0.8) !important;
+          border: 1px solid #7BE495 !important;
+          display: flex !important;
         }
 
         #videoSoundBtn svg {
-          width: 16px !important;
-          height: 16px !important;
+          width: 20px !important;
+          height: 20px !important;
+        }
+
+        .event-date-footer {
+          padding: 12px 18px !important;
+          font-size: 15px !important;
+          margin-top: 5px !important;
+          border-radius: 14px !important;
         }
       }
 
