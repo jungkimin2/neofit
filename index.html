@@ -4160,12 +4160,11 @@ body.popup-active {
           bottom: 0 !important;
           width: 100% !important;
           height: 100% !important;
-          z-index: 2147483647 !important;
+          z-index: 2000000000 !important;
           display: none;
           align-items: center;
           justify-content: center;
-          background: rgba(0, 0, 0, 0.8) !important;
-          /* Slightly darker for better focus */
+          background: rgba(0, 0, 0, 0.85) !important;
         }
 
         #naverBannerPopup.show {
@@ -4174,11 +4173,12 @@ body.popup-active {
 
         .naver-banner-container {
           width: 90% !important;
-          max-width: 420px !important;
-          padding: 8px !important;
+          max-width: 400px !important;
+          padding: 6px !important;
           border-radius: 20px !important;
-          margin-bottom: 60px !important;
+          margin-bottom: 70px !important;
           overflow: visible !important;
+          background: linear-gradient(135deg, #7BE495 0%, #5fd17f 100%) !important;
           position: relative;
         }
 
@@ -4192,19 +4192,32 @@ body.popup-active {
           width: 100% !important;
           height: auto !important;
           aspect-ratio: 1 / 1 !important;
-          max-height: 55vh;
+          max-height: 50vh;
           border-radius: 14px !important;
           overflow: hidden !important;
           position: relative;
-        }
-
-        .naver-slide {
+          background: #000;
           display: flex !important;
           align-items: center !important;
           justify-content: center !important;
+        }
+
+        .naver-slider-wrapper {
+          display: flex !important;
+          width: 200% !important;
+          height: 100% !important;
+          align-items: center !important;
+        }
+
+        .naver-slide {
+          width: 50% !important;
+          height: 100% !important;
+          display: flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          flex-shrink: 0 !important;
           background: #000 !important;
-          width: 50%;
-          height: 100%;
+          overflow: hidden !important;
         }
 
         .naver-banner-link {
@@ -4213,59 +4226,72 @@ body.popup-active {
           display: flex !important;
           align-items: center !important;
           justify-content: center !important;
+          position: relative;
         }
 
         .naver-slide img,
         .naver-slide video {
-          width: 100% !important;
-          height: 100% !important;
+          max-width: 100% !important;
+          max-height: 100% !important;
+          width: auto !important;
+          height: auto !important;
           object-fit: contain !important;
-          /* 화면 확대 방지 및 중앙 정렬 */
-          background: #000;
+          /* 수직/수평 중앙 정렬 보장 */
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
         }
 
-        /* 닫기 버튼: 우측 상단 외부 */
+        /* 닫기 버튼: 확실한 가시성 확보 */
         .naver-banner-close {
           top: -45px !important;
-          right: 0px !important;
-          width: 40px !important;
-          height: 40px !important;
-          font-size: 28px !important;
+          right: -5px !important;
+          width: 42px !important;
+          height: 42px !important;
+          font-size: 30px !important;
           background: #0A0E27 !important;
           border: 2px solid #7BE495 !important;
           color: #7BE495 !important;
-          z-index: 2147483647 !important;
+          z-index: 2000000001 !important;
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5) !important;
         }
 
-        /* 네비게이터: 하단 외부 */
+        /* 네비게이터 */
         .naver-banner-navigator {
-          bottom: -50px !important;
-          z-index: 2147483647 !important;
+          bottom: -55px !important;
+          z-index: 2000000001 !important;
         }
 
-        /* 스피커 버튼: 영상 내 우하단 */
+        /* 스피커 버튼: 레이어 최상단 강조 */
         #videoSoundBtn {
-          width: 38px !important;
-          height: 38px !important;
-          bottom: 15px !important;
-          right: 15px !important;
-          z-index: 2147483647 !important;
-          background: rgba(10, 14, 39, 0.8) !important;
-          border: 1px solid #7BE495 !important;
+          width: 42px !important;
+          height: 42px !important;
+          bottom: 12px !important;
+          right: 12px !important;
+          z-index: 2000000005 !important;
+          background: rgba(10, 14, 39, 0.9) !important;
+          border: 2px solid #7BE495 !important;
           display: flex !important;
+          box-shadow: 0 0 15px rgba(123, 228, 149, 0.4) !important;
         }
 
         #videoSoundBtn svg {
-          width: 20px !important;
-          height: 20px !important;
+          width: 22px !important;
+          height: 22px !important;
         }
 
         .event-date-footer {
           padding: 12px 18px !important;
           font-size: 15px !important;
-          margin-top: 5px !important;
+          margin-top: 6px !important;
           border-radius: 14px !important;
         }
+      }
+
+      /* body 스크롤 방지 */
+      body.naver-popup-open {
+        overflow: hidden;
       }
 
       /* 스피커 버튼 기본 스타일 (PC용) */
@@ -4310,9 +4336,10 @@ body.popup-active {
             </div>
             <!-- 슬라이드 1 -->
             <div class="naver-slide">
-              <div class="naver-banner-link">
-                <img src="./images/pilates_event_2026.jpg" alt="필라테스 등록시 헬스 전액 무료">
-              </div>
+              <a href="https://m.booking.naver.com/booking/10/bizes/987028/items/5583476?area=pll&lang=ko&startDate=2025-12-28&theme=place"
+                target="_blank" rel="noopener noreferrer" class="naver-banner-link">
+                <img src="images/pilates_event_2026.jpg" alt="필라테스 등록시 헬스 전액 무료">
+              </a>
             </div>
           </div>
 
