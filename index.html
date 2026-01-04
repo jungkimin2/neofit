@@ -3878,20 +3878,7 @@ body.popup-active {
 
       console.log('🚫 강력한 팝업 숨김 처리 완료');
     } else {
-      console.log('✅ 팝업 표시 허용');
-      // 팝업이 표시될 때 자동 슬라이드 시작 (V6 - Robust)
-      const initBanner = () => {
-        if (window.naverBannerSliderV6) {
-          console.log('🚀 Auto-slide timer started (V6)');
-          window.naverBannerSliderV6.startTimer();
-        }
-      };
-
-      if (document.readyState === 'complete') {
-        setTimeout(initBanner, 500);
-      } else {
-        window.addEventListener('load', () => setTimeout(initBanner, 500));
-      }
+      console.log('✅ 팝업 표시 허용 (Auto-slide moved to component)');
     }
   })();
 </script>
@@ -4521,6 +4508,15 @@ body.popup-active {
         }
       }
     }
+
+    // Auto-Start Timer (Robust Placement)
+    window.addEventListener('load', function () {
+      if (window.naverBannerSliderV6) {
+        // Timer reset is safe (clears existing)
+        window.naverBannerSliderV6.startTimer();
+        console.log("✅ V6 Banner Auto-Started");
+      }
+    });
   </script>
   </div>
 
