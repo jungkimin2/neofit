@@ -25,7 +25,7 @@
   <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
 
   <!-- 모바일 감지 및 최적화 -->
-  <script src="./js/initial.js?v=20260105_9" defer></script>
+  <script src="./js/initial.js?v=20260105_10" defer></script>
 
   <!-- 페이지 로딩 완료 시 표시 -->
   <script>
@@ -3953,11 +3953,12 @@ body.popup-active {
         position: relative;
         background: #000;
         border-radius: 16px;
-        overflow: hidden;
+        overflow: visible;
+        /* 잘림 방지 */
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) inset;
         z-index: 1 !important;
-        height: 360px;
-        /* 고정 높이로 원래 느낌 복구 */
+        height: auto;
+        /* 내용물에 따라 늘어남 */
       }
 
       .naver-banner-link {
@@ -4358,169 +4359,172 @@ body.popup-active {
           </button>
         </div>
       </div>
-    </div>
 
-    <!-- 날짜 푸터 (Wrapper 밖으로 이동하여 잘림 방지) -->
-    <div class="event-date-footer" style="
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 14px 20px;
-        color: #FFFFFF;
-        font-weight: 800;
-        font-size: 17px;
-        letter-spacing: 2px;
-        background: #0A0E27;
-        margin-top: 4px; /* 영상 박스와의 미세한 간격 */
-        border-top-left-radius: 12px; /* 상단 모서리 부드럽게 */
-        border-top-right-radius: 12px;
-        border-bottom-left-radius: 15px; /* 하단 모서리 컨테이너에 맞춤 */
-        border-bottom-right-radius: 15px;
-        box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
-      ">
-      <div style="display: flex; align-items: center;">
-        <span style="color: #7BE495; font-size: 13px; margin-right: 8px;">[EVENT]</span>
-        01.01 ~ 01.31
+      <!-- 날짜 푸터 (다시 Wrapper 내부로 복귀) -->
+      <div class="event-date-footer" style="
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 14px 20px;
+          color: #FFFFFF;
+          font-weight: 800;
+          font-size: 17px;
+          letter-spacing: 2px;
+          background: #0A0E27;
+          margin-top: 4px; /* 영상 박스와의 미세한 간격 */
+          border-top-left-radius: 12px;
+          border-top-right-radius: 12px;
+          border-bottom-left-radius: 15px; /* 하단 모서리 컨테이너에 맞춤 */
+          border-bottom-right-radius: 15px;
+          box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+          position: relative;
+          z-index: 20;
+        ">
+        <div style="display: flex; align-items: center;">
+          <span style="color: #7BE495; font-size: 13px; margin-right: 8px;">[EVENT]</span>
+          01.01 ~ 01.31
+        </div>
+      </div>
+
+      <!-- 네비게이터 dots (다시 Wrapper 내부로 복귀) -->
+      <div class="naver-banner-navigator">
+        <div class="naver-nav-dot active" onclick="naverBannerSlider.move(0)"></div>
+        <div class="naver-nav-dot" onclick="naverBannerSlider.move(1)"></div>
       </div>
     </div>
+  </div>
 
-    <!-- 네비게이터 dots (Wrapper 밖으로 이동하여 잘림 방지) -->
-    <div class="naver-banner-navigator">
-      <div class="naver-nav-dot active" onclick="naverBannerSlider.move(0)"></div>
-      <div class="naver-nav-dot" onclick="naverBannerSlider.move(1)"></div>
-    </div>
+  <script>
+    // 네이버 배너 슬라이더 객체
+    window.naverBannerSlider = {
+      currentIndex: 0,
+      timer: null,
+      touchStartX: 0,
+      touchEndX: 0,
 
-    <script>
-      // 네이버 배너 슬라이더 객체
-      window.naverBannerSlider = {
-        currentIndex: 0,
-        timer: null,
-        touchStartX: 0,
-        touchEndX: 0,
+      move: function (index) {
+        // V5 ID 참조
+        const wrapper = document.getElementById('naverSliderWrapperV5');
+        const dots = document.querySelectorAll('.naver-nav-dot');
+        const video = document.getElementById('promoVideo');
 
-        move: function (index) {
-          // V5 ID 참조
-          const wrapper = document.getElementById('naverSliderWrapperV5');
-          const dots = document.querySelectorAll('.naver-nav-dot');
-          const video = document.getElementById('promoVideo');
+        if (!wrapper) {
+          console.error("Slider Wrapper V5 not found!");
+          return;
+        }
 
-          if (!wrapper) {
-            console.error("Slider Wrapper V5 not found!");
-            return;
+        console.log(`Moving to slide ${index}`);
+        this.currentIndex = index;
+        // 2개 슬라이드 대응 (100 / 2 = 50%)
+        wrapper.style.transform = `translateX(-${index * 50}%)`;
+
+        // 영상 슬라이드(0)가 아닐 경우 음소거 처리
+        if (video && index !== 0) {
+          video.muted = true;
+          // 아이콘 상태 업데이트
+          const muteSvg = document.getElementById('muteSvg');
+          const unmuteSvg = document.getElementById('unmuteSvg');
+          const btn = document.getElementById('videoSoundBtn');
+          if (muteSvg && unmuteSvg && btn) {
+            muteSvg.style.display = 'block';
+            unmuteSvg.style.display = 'none';
+            btn.style.borderColor = 'rgba(123, 228, 149, 0.5)';
+            btn.style.boxShadow = 'none';
           }
+        }
 
-          console.log(`Moving to slide ${index}`);
-          this.currentIndex = index;
-          // 2개 슬라이드 대응 (100 / 2 = 50%)
-          wrapper.style.transform = `translateX(-${index * 50}%)`;
+        dots.forEach((dot, i) => {
+          if (i === index) dot.classList.add('active');
+          else dot.classList.remove('active');
+        });
+      },
 
-          // 영상 슬라이드(0)가 아닐 경우 음소거 처리
-          if (video && index !== 0) {
-            video.muted = true;
-            // 아이콘 상태 업데이트
-            const muteSvg = document.getElementById('muteSvg');
-            const unmuteSvg = document.getElementById('unmuteSvg');
-            const btn = document.getElementById('videoSoundBtn');
-            if (muteSvg && unmuteSvg && btn) {
-              muteSvg.style.display = 'block';
-              unmuteSvg.style.display = 'none';
-              btn.style.borderColor = 'rgba(123, 228, 149, 0.5)';
-              btn.style.boxShadow = 'none';
-            }
-          }
+      startTimer: function () {
+        this.stopTimer();
+        this.timer = setInterval(() => {
+          let nextIndex = (this.currentIndex + 1) % 2;
+          this.move(nextIndex);
+        }, 5000); // 5초
 
-          dots.forEach((dot, i) => {
-            if (i === index) dot.classList.add('active');
-            else dot.classList.remove('active');
-          });
-        },
+        // 터치 리스너 추가
+        this.addTouchListeners();
+      },
 
-        startTimer: function () {
+      stopTimer: function () {
+        if (this.timer) {
+          clearInterval(this.timer);
+          this.timer = null;
+        }
+      },
+
+      addTouchListeners: function () {
+        // V5 ID 참조
+        const wrapper = document.getElementById('naverSliderWrapperV5');
+        if (!wrapper || wrapper.dataset.touchAdded) return;
+
+        wrapper.dataset.touchAdded = 'true';
+
+        wrapper.addEventListener('touchstart', (e) => {
+          this.touchStartX = e.touches[0].clientX;
           this.stopTimer();
-          this.timer = setInterval(() => {
+        }, { passive: true });
+
+        wrapper.addEventListener('touchend', (e) => {
+          this.touchEndX = e.changedTouches[0].clientX;
+          this.handleSwipe();
+          this.startTimer();
+        }, { passive: true });
+      },
+
+      handleSwipe: function () {
+        const swipeThreshold = 50;
+        const diff = this.touchStartX - this.touchEndX;
+
+        if (Math.abs(diff) > swipeThreshold) {
+          if (diff > 0) {
+            // 왼쪽으로 스와이프 (다음 슬라이드)
             let nextIndex = (this.currentIndex + 1) % 2;
             this.move(nextIndex);
-          }, 5000); // 5초
-
-          // 터치 리스너 추가
-          this.addTouchListeners();
-        },
-
-        stopTimer: function () {
-          if (this.timer) {
-            clearInterval(this.timer);
-            this.timer = null;
+          } else {
+            // 오른쪽으로 스와이프 (이전 슬라이드)
+            let prevIndex = this.currentIndex === 0 ? 1 : 0;
+            this.move(prevIndex);
           }
-        },
-
-        addTouchListeners: function () {
-          // V5 ID 참조
-          const wrapper = document.getElementById('naverSliderWrapperV5');
-          if (!wrapper || wrapper.dataset.touchAdded) return;
-
-          wrapper.dataset.touchAdded = 'true';
-
-          wrapper.addEventListener('touchstart', (e) => {
-            this.touchStartX = e.touches[0].clientX;
-            this.stopTimer();
-          }, { passive: true });
-
-          wrapper.addEventListener('touchend', (e) => {
-            this.touchEndX = e.changedTouches[0].clientX;
-            this.handleSwipe();
-            this.startTimer();
-          }, { passive: true });
-        },
-
-        handleSwipe: function () {
-          const swipeThreshold = 50;
-          const diff = this.touchStartX - this.touchEndX;
-
-          if (Math.abs(diff) > swipeThreshold) {
-            if (diff > 0) {
-              // 왼쪽으로 스와이프 (다음 슬라이드)
-              let nextIndex = (this.currentIndex + 1) % 2;
-              this.move(nextIndex);
-            } else {
-              // 오른쪽으로 스와이프 (이전 슬라이드)
-              let prevIndex = this.currentIndex === 0 ? 1 : 0;
-              this.move(prevIndex);
-            }
-          }
-        }
-      };
-
-      function togglePromoSound(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        const video = document.getElementById('promoVideo');
-        const muteSvg = document.getElementById('muteSvg');
-        const unmuteSvg = document.getElementById('unmuteSvg');
-        const btn = document.getElementById('videoSoundBtn');
-
-        if (!video) return;
-
-        if (video.muted) {
-          video.muted = false;
-          muteSvg.style.display = 'none';
-          unmuteSvg.style.display = 'block';
-          btn.style.borderColor = '#7BE495';
-          btn.style.boxShadow = '0 0 15px rgba(123, 228, 149, 0.4)';
-          video.play().catch(err => console.log("Sound play failed:", err));
-        } else {
-          video.muted = true;
-          muteSvg.style.display = 'block';
-          unmuteSvg.style.display = 'none';
-          btn.style.borderColor = 'rgba(123, 228, 149, 0.5)';
-          btn.style.boxShadow = 'none';
         }
       }
+    };
 
-      // 페이지 로드 시 타이머 시작
-      document.addEventListener('DOMContentLoaded', () => {
-        if (window.naverBannerSlider) naverBannerSlider.startTimer();
-      });
-    </script>
+    function togglePromoSound(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      const video = document.getElementById('promoVideo');
+      const muteSvg = document.getElementById('muteSvg');
+      const unmuteSvg = document.getElementById('unmuteSvg');
+      const btn = document.getElementById('videoSoundBtn');
+
+      if (!video) return;
+
+      if (video.muted) {
+        video.muted = false;
+        muteSvg.style.display = 'none';
+        unmuteSvg.style.display = 'block';
+        btn.style.borderColor = '#7BE495';
+        btn.style.boxShadow = '0 0 15px rgba(123, 228, 149, 0.4)';
+        video.play().catch(err => console.log("Sound play failed:", err));
+      } else {
+        video.muted = true;
+        muteSvg.style.display = 'block';
+        unmuteSvg.style.display = 'none';
+        btn.style.borderColor = 'rgba(123, 228, 149, 0.5)';
+        btn.style.boxShadow = 'none';
+      }
+    }
+
+    // 페이지 로드 시 타이머 시작
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.naverBannerSlider) naverBannerSlider.startTimer();
+    });
+  </script>
   </div>
 
   <!-- 진입 팝업 - 전체 화면 오버레이 (임시 비활성화) -->
