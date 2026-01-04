@@ -3908,8 +3908,8 @@ body.popup-active {
 
       .naver-banner-container {
         position: relative;
-        max-width: 600px;
-        max-height: 85vh;
+        width: 100%;
+        max-width: 450px;
         cursor: default;
         padding: 8px;
         background: linear-gradient(135deg, #7BE495 0%, #5fd17f 100%);
@@ -3938,16 +3938,21 @@ body.popup-active {
           linear-gradient(#fff 0 0);
         -webkit-mask-composite: xor;
         mask-composite: exclude;
+        mask:
+          linear-gradient(#fff 0 0) content-box exclude,
+          linear-gradient(#fff 0 0);
         pointer-events: none;
       }
 
       .naver-banner-wrapper {
         position: relative;
-        background: #fff;
+        background: #000;
         border-radius: 16px;
         overflow: hidden;
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) inset;
         z-index: 1 !important;
+        height: 360px;
+        /* 고정 높이로 원래 느낌 복구 */
       }
 
       .naver-banner-link {
@@ -3972,13 +3977,12 @@ body.popup-active {
 
       .naver-banner-container img {
         width: 100%;
-        height: auto;
+        height: 100%;
         display: block;
         border-radius: 16px;
         position: relative;
         z-index: 1;
-        transition: transform 0.3s ease;
-        vertical-align: top;
+        object-fit: cover;
         margin: 0;
         padding: 0;
       }
@@ -3991,41 +3995,87 @@ body.popup-active {
         transform: scale(0.98);
       }
 
+      /* 네이버 배너 전용 슬라이더 스타일 */
+      .naver-slider-container {
+        position: relative;
+        overflow: hidden;
+        border-radius: 16px;
+        width: 100%;
+        height: 100%;
+      }
+
+      .naver-slider-wrapper {
+        display: flex;
+        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        width: 200%;
+        height: 100%;
+      }
+
+      .naver-slide {
+        width: 50%;
+        height: 100%;
+        flex-shrink: 0;
+      }
+
       .naver-banner-close {
         position: absolute;
         top: -12px;
         right: -12px;
-        width: 44px;
-        height: 44px;
-        background: linear-gradient(135deg, #fff 0%, #f8f8f8 100%);
+        width: 38px;
+        height: 38px;
+        background: #0A0E27;
+        border: 2px solid #7BE495;
+        color: #7BE495;
         border-radius: 50%;
-        border: 3px solid #7BE495;
-        cursor: pointer;
-        font-size: 22px;
-        font-weight: bold;
-        color: #333;
         display: flex;
         align-items: center;
         justify-content: center;
-        box-shadow:
-          0 6px 20px rgba(0, 0, 0, 0.3),
-          0 0 0 4px rgba(123, 228, 149, 0.2);
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        z-index: 999999;
-        pointer-events: auto;
+        font-size: 24px;
+        cursor: pointer;
+        z-index: 1000;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        transition: all 0.3s ease;
+        padding: 0;
+        line-height: 1;
       }
 
       .naver-banner-close:hover {
-        background: linear-gradient(135deg, #7BE495 0%, #5fd17f 100%);
-        color: #fff;
-        transform: scale(1.15) rotate(90deg);
-        box-shadow:
-          0 8px 25px rgba(123, 228, 149, 0.5),
-          0 0 0 6px rgba(123, 228, 149, 0.3);
+        background: #7BE495;
+        color: #0A0E27;
+        transform: rotate(90deg);
       }
 
-      .naver-banner-close:active {
-        transform: scale(1.05) rotate(90deg);
+      .naver-banner-navigator {
+        display: flex;
+        gap: 8px;
+        z-index: 10;
+        /* Position reset for footer placement */
+        position: static;
+        transform: none;
+      }
+
+      .naver-nav-dot {
+        width: 8px;
+        height: 8px;
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .naver-nav-dot.active {
+        background: #7BE495;
+        box-shadow: 0 0 8px rgba(123, 228, 149, 0.8);
+        transform: scale(1.1);
+      }
+
+      .naver-banner-link img,
+      .naver-banner-link video {
+        border-radius: 16px;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        background: #000;
       }
 
       /* PC 큰 화면 */
@@ -4038,7 +4088,7 @@ body.popup-active {
       /* 태블릿 */
       @media (min-width: 769px) and (max-width: 1199px) {
         .naver-banner-container {
-          max-width: 550px;
+          max-width: 650px;
         }
       }
 
@@ -4065,12 +4115,12 @@ body.popup-active {
         }
 
         .naver-banner-close {
-          top: -10px !important;
-          right: -10px !important;
-          width: 38px !important;
-          height: 38px !important;
-          font-size: 20px !important;
-          border: 2px solid #7BE495 !important;
+          top: -8px !important;
+          right: -8px !important;
+          width: 32px !important;
+          height: 32px !important;
+          font-size: 18px !important;
+          border: 1.5px solid #7BE495 !important;
           z-index: 999999 !important;
           pointer-events: auto !important;
           position: absolute !important;
@@ -4080,7 +4130,7 @@ body.popup-active {
       /* 작은 모바일 화면 */
       @media (max-width: 480px) {
         .naver-banner-container {
-          max-width: 90%;
+          max-width: 92%;
           max-height: 70vh;
           padding: 5px;
         }
@@ -4174,29 +4224,29 @@ body.popup-active {
 
         /* 모바일에서 스피커 아이콘 크기 축소 */
         #videoSoundBtn {
-          width: 34px !important;
-          height: 34px !important;
-          bottom: 12px !important;
-          right: 12px !important;
-          border-radius: 8px !important;
+          width: 28px !important;
+          height: 28px !important;
+          bottom: 10px !important;
+          right: 10px !important;
+          border-radius: 6px !important;
         }
 
         #videoSoundBtn svg {
-          width: 18px !important;
-          height: 18px !important;
+          width: 16px !important;
+          height: 16px !important;
         }
       }
 
       /* 스피커 버튼 기본 스타일 (PC용) */
       #videoSoundBtn {
         position: absolute;
-        bottom: 20px;
-        right: 20px;
+        bottom: 15px;
+        right: 15px;
         background: rgba(10, 14, 39, 0.85);
-        border: 1.5px solid #7BE495;
-        width: 44px;
-        height: 44px;
-        border-radius: 12px;
+        border: 1px solid #7BE495;
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -4211,21 +4261,39 @@ body.popup-active {
     </style>
 
     <div class="naver-banner-container" onclick="event.stopPropagation()">
+      <!-- 고정된 닫기 버튼 -->
+      <button class="naver-banner-close" onclick="closeNaverBanner()" aria-label="닫기">×</button>
+
       <div class="naver-banner-wrapper" style="position: relative;">
-        <a href="https://m.booking.naver.com/booking/10/bizes/987028/items/5583476?area=pll&lang=ko&startDate=2025-12-28&theme=place"
-          target="_blank" rel="noopener noreferrer" class="naver-banner-link">
-          <video id="promoVideo" src="./images/naver_banner_final_v2.mp4" loop muted playsinline preload="none"
-            style="width: 100%; height: auto; display: block; border-radius: 16px;"></video>
-        </a>
-        <!-- 소리 조절 버튼 (모바일 사이즈 대응) -->
+        <!-- 슬라이더 컨테이너 (앨범 방식) -->
+        <div class="naver-slider-container">
+          <div class="naver-slider-wrapper" id="naverSliderWrapper">
+            <!-- 슬라이드 0: 홍보 영상 -->
+            <div class="naver-slide">
+              <a href="https://m.booking.naver.com/booking/10/bizes/987028/items/5583476?area=pll&lang=ko&startDate=2025-12-28&theme=place"
+                target="_blank" rel="noopener noreferrer" class="naver-banner-link">
+                <video id="promoVideo" src="./images/naver_banner_final_v2.mp4" loop muted playsinline autoplay></video>
+              </a>
+            </div>
+            <!-- 슬라이드 1: 필라테스 등록 시 헬스 무료 (신규 생성 배너) -->
+            <div class="naver-slide">
+              <div class="naver-banner-link">
+                <!-- 사용자가 선택한 최종 박스 디자인 이미지 (파일명 변경됨) -->
+                <img src="./images/pilates_event_final.png" alt="필라테스 등록시 헬스 전액 무료">
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+
+        <!-- 소리 조절 버튼 (고정 위치) -->
         <button id="videoSoundBtn" onclick="togglePromoSound(event)">
-          <!-- 음소거 상태 (스피커 + 사선) -->
           <svg id="muteSvg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#7BE495" stroke-width="2"
             stroke-linecap="round" stroke-linejoin="round" style="display: block;">
             <path d="M11 5L6 9H2v6h4l5 4V5z"></path>
             <line x1="23" y1="1" x2="1" y2="23" stroke="#7BE495" stroke-width="2"></line>
           </svg>
-          <!-- 소리 켬 상태 (정리된 파동 아이콘) -->
           <svg id="unmuteSvg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#7BE495" stroke-width="2"
             stroke-linecap="round" stroke-linejoin="round" style="display: none;">
             <path d="M11 5L6 9H2v6h4l5 4V5z"></path>
@@ -4235,8 +4303,10 @@ body.popup-active {
         </button>
       </div>
       <div class="event-date-footer" style="
-        text-align: center;
-        padding: 14px 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 14px 20px;
         color: #FFFFFF;
         font-weight: 800;
         font-size: 17px;
@@ -4249,13 +4319,73 @@ body.popup-active {
         border-bottom-right-radius: 15px;
         box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
       ">
-        <span style="color: #7BE495; font-size: 13px; margin-right: 8px; vertical-align: middle;">[EVENT]</span>
-        01.01 ~ 01.31
+        <div style="display: flex; align-items: center;">
+          <span style="color: #7BE495; font-size: 13px; margin-right: 8px;">[EVENT]</span>
+          01.01 ~ 01.31
+        </div>
+
+        <!-- 네비게이터 dots (위치 이동됨) -->
+        <div class="naver-banner-navigator">
+          <div class="naver-nav-dot active" onclick="naverBannerSlider.move(0)"></div>
+          <div class="naver-nav-dot" onclick="naverBannerSlider.move(1)"></div>
+        </div>
       </div>
-      <button class="naver-banner-close" onclick="closeNaverBanner()" aria-label="닫기">×</button>
     </div>
 
     <script>
+      // 네이버 배너 슬라이더 객체
+      window.naverBannerSlider = {
+        currentIndex: 0,
+        timer: null,
+
+        move: function (index) {
+          const wrapper = document.getElementById('naverSliderWrapper');
+          const dots = document.querySelectorAll('.naver-nav-dot');
+          const video = document.getElementById('promoVideo');
+
+          if (!wrapper) return;
+
+          this.currentIndex = index;
+          // 2개 슬라이드 대응 (100 / 2 = 50%)
+          wrapper.style.transform = `translateX(-${index * 50}%)`;
+
+          // 영상 슬라이드(0)가 아닐 경우 음소거 처리
+          if (video && index !== 0) {
+            video.muted = true;
+            // 아이콘 상태 업데이트
+            const muteSvg = document.getElementById('muteSvg');
+            const unmuteSvg = document.getElementById('unmuteSvg');
+            const btn = document.getElementById('videoSoundBtn');
+            if (muteSvg && unmuteSvg && btn) {
+              muteSvg.style.display = 'block';
+              unmuteSvg.style.display = 'none';
+              btn.style.borderColor = 'rgba(123, 228, 149, 0.5)';
+              btn.style.boxShadow = 'none';
+            }
+          }
+
+          dots.forEach((dot, i) => {
+            if (i === index) dot.classList.add('active');
+            else dot.classList.remove('active');
+          });
+        },
+
+        startTimer: function () {
+          this.stopTimer();
+          this.timer = setInterval(() => {
+            let nextIndex = (this.currentIndex + 1) % 2;
+            this.move(nextIndex);
+          }, 5000); // 5초
+        },
+
+        stopTimer: function () {
+          if (this.timer) {
+            clearInterval(this.timer);
+            this.timer = null;
+          }
+        }
+      };
+
       function togglePromoSound(e) {
         e.preventDefault();
         e.stopPropagation();
@@ -4279,37 +4409,115 @@ body.popup-active {
           btn.style.boxShadow = 'none';
         }
       }
+
+      // 페이지 로드 시 타이머 시작
+      document.addEventListener('DOMContentLoaded', () => {
+        if (window.naverBannerSlider) naverBannerSlider.startTimer();
+      });
     </script>
   </div>
 
   <!-- 진입 팝업 - 전체 화면 오버레이 (임시 비활성화) -->
   <div id="entryPopup" style="
-  display: none !important;
-  visibility: hidden !important;
-  opacity: 0 !important;
-  pointer-events: none !important;
-  position: absolute !important;
-  left: -9999px !important;
-  top: -9999px !important;
-  width: 0 !important;
-  height: 0 !important;
-  background: transparent !important;
-  z-index: -1 !important;
+  display: none;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  position: fixed !important;
+  left: 0 !important;
+  top: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  background: rgba(0, 0, 0, 0.9) !important;
+  z-index: 999999999999 !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 " onclick="event.target === this && closeEntryPopup()">
     <style>
       /* 임시 비활성화 - 팝업 완전 숨김 */
-      #entryPopup {
-        display: none !important;
-        visibility: hidden !important;
-        opacity: 0 !important;
-        pointer-events: none !important;
-        position: absolute !important;
-        left: -9999px !important;
-        top: -9999px !important;
-        width: 0 !important;
-        height: 0 !important;
-        background: transparent !important;
-        z-index: -1 !important;
+      /* 팝업 활성화 스타일 */
+      #entryPopup.popup-visible {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+      }
+
+      /* 슬라이더 스타일 */
+      .popup-slider-container {
+        width: 100%;
+        max-width: 420px;
+        height: 550px;
+        /* 고정 높이로 밸런스 유지 (1030px에서 550px로 조정) */
+        overflow: hidden;
+        position: relative;
+        border-radius: 25px;
+        border: 3px solid #7BE495;
+        background: #000;
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+      }
+
+      .popup-slider-wrapper {
+        display: flex;
+        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        width: 200%;
+        height: 100%;
+      }
+
+      .popup-slide {
+        width: 50%;
+        height: 100%;
+        flex-shrink: 0;
+        box-sizing: border-box;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* 슬라이드 이미지 표준화 */
+      .popup-slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      /* 슬라이드 1 내부 콘텐츠 정렬 */
+      .popup-slide-content {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        box-sizing: border-box;
+        padding: 0;
+      }
+
+      .popup-navigator {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 10px;
+        z-index: 20;
+      }
+
+      .nav-dot {
+        width: 10px;
+        height: 10px;
+        background: rgba(255, 255, 255, 0.4);
+        border-radius: 50%;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .nav-dot.active {
+        background: #7BE495;
+        transform: scale(1.2);
+        box-shadow: 0 0 10px #7BE495;
       }
 
       /* 팝업이 열렸을 때 body 스크롤 완전 차단 */
@@ -4525,6 +4733,16 @@ body.popup-active {
           -webkit-user-select: none !important;
         }
 
+        /* 모바일 네비게이터 위치 조정 */
+        .popup-navigator {
+          bottom: 25px;
+        }
+
+        /* 팝업 높이 조절 */
+        .popup-slider-container {
+          height: 520px;
+        }
+
         /* 모바일에서 스크롤 완전 차단 */
         body.popup-open {
           position: fixed !important;
@@ -4562,7 +4780,6 @@ body.popup-active {
         }
 
       }
-      }
 
       #entryPopup h1 {
         font-size: 13px !important;
@@ -4579,77 +4796,9 @@ body.popup-active {
       #entryPopup p {
         font-size: 10px !important;
       }
-      }
     </style>
 
-    <!-- 🔥🔥🔥 TRANSFORM SCALE 방식으로 로고 2배 크기 -->
-    <style>
-      /* 🔥🔥🔥 로고 기본 스타일 - 더 강력한 선택자 */
-      .logo-container #entryPopupLogo,
-      img#entryPopupLogo,
-      #entryPopupLogo {
-        width: 480px !important;
-        height: 400px !important;
-        object-fit: contain !important;
-        filter: drop-shadow(0 10px 40px rgba(0, 0, 0, 0.9)) !important;
-        flex-shrink: 0 !important;
-        transform-origin: center center !important;
-        transition: none !important;
-        display: block !important;
-      }
 
-      /* 🔥 팝업 내 로고 컨테이너 기본 스타일 */
-      #entryPopup .logo-container {
-        overflow: visible !important;
-        transform: translate(16px, -64px) !important;
-      }
-
-      /* 🔥🔥🔥 모바일에서 로고만 크게 - 팝업이 열렸을 때만 */
-      @media screen and (max-width: 768px) {
-
-        /* 팝업 내 로고 컨테이너를 모바일에서 2칸 더 아래로 + 좌측 1칸 이동 */
-        #entryPopup.popup-visible .logo-container {
-          transform: translate(0px, -32px) !important;
-        }
-
-        #entryPopup.popup-visible .logo-container #entryPopupLogo,
-        #entryPopup.popup-visible img#entryPopupLogo {
-          transform: scale(4) !important;
-          -webkit-transform: scale(4) !important;
-          -moz-transform: scale(4) !important;
-          -ms-transform: scale(4) !important;
-          -o-transform: scale(4) !important;
-        }
-      }
-
-      /* 🔥🔥🔥 작은 모바일에서는 3.5배 - 팝업이 열렸을 때만 */
-      @media screen and (max-width: 480px) {
-
-        /* 작은 모바일에서도 2칸 더 아래로 + 좌측 1칸 이동 */
-        #entryPopup.popup-visible .logo-container {
-          transform: translate(0px, -32px) !important;
-        }
-
-        #entryPopup.popup-visible .logo-container #entryPopupLogo,
-        #entryPopup.popup-visible img#entryPopupLogo {
-          transform: scale(3.5) !important;
-          -webkit-transform: scale(3.5) !important;
-          -moz-transform: scale(3.5) !important;
-          -ms-transform: scale(3.5) !important;
-          -o-transform: scale(3.5) !important;
-        }
-      }
-
-      /* 🔥 PC에서는 기본 크기 */
-      @media screen and (min-width: 769px) {
-        #entryPopupLogo {
-          transform: scale(1) !important;
-          -webkit-transform: scale(1) !important;
-          -moz-transform: scale(1) !important;
-          -ms-transform: scale(1) !important;
-        }
-      }
-    </style>
 
 
     <!-- 중앙 정렬 컨테이너 -->
@@ -4665,297 +4814,40 @@ body.popup-active {
       position: relative;
       width: 100%;
       max-width: 420px;
-      background: linear-gradient(135deg, rgba(15, 76, 58, 0.95), rgba(30, 140, 85, 0.95));
+      background: transparent;
       border-radius: 25px;
       overflow: visible;
       box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
-      border: 3px solid #7BE495;
-      backdrop-filter: blur(20px);
+      z-index: 10;
     " onclick="event.stopPropagation()">
 
-        <!-- 팝업 콘텐츠 -->
-        <div class="popup-content" style="
-        padding: 15px 20px 25px 20px;
-        width: 100%;
-        box-sizing: border-box;
-      ">
-          <!-- 배경 장식 원들 -->
-          <div style="
-          position: absolute;
-          top: -50px;
-          right: -50px;
-          width: 150px;
-          height: 150px;
-          background: rgba(123, 228, 149, 0.2);
-          border-radius: 50%;
-          opacity: 0.8;
-        "></div>
-          <div style="
-          position: absolute;
-          bottom: -30px;
-          left: -30px;
-          width: 100px;
-          height: 100px;
-          background: rgba(123, 228, 149, 0.15);
-          border-radius: 50%;
-          opacity: 0.6;
-        "></div>
+        <!-- 슬라이더 컨테이너 -->
+        <div class="popup-slider-container">
+          <div class="popup-slider-wrapper" id="popupSliderWrapper">
+            <!-- 슬라이드 1: 브랜드 웰컴 (영상) -->
+            <div class="popup-slide">
+              <div class="popup-slide-content">
+                <video src="./images/naver_banner_final_v2.mp4" autoplay muted loop playsinline
+                  style="width: 100%; height: 100%; object-fit: cover; display: block;"></video>
+              </div>
+            </div> <!-- 슬라이드 1 끝 -->
 
-          <!-- 콘텐츠 시작 -->
-          <!-- 배경 장식 -->
-          <div style="
-            position: absolute;
-            top: -50px;
-            right: -50px;
-            width: 150px;
-            height: 150px;
-            background: rgba(123, 228, 149, 0.2);
-            border-radius: 50%;
-            opacity: 0.8;
-          "></div>
-          <div style="
-            position: absolute;
-            bottom: -30px;
-            left: -30px;
-            width: 100px;
-            height: 100px;
-            background: rgba(123, 228, 149, 0.3);
-            border-radius: 50%;
-            opacity: 0.6;
-          "></div>
-          <div style="
-            position: absolute;
-            top: 50%;
-            left: -40px;
-            width: 80px;
-            height: 80px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            opacity: 0.4;
-          "></div>
-
-          <!-- 로고 -->
-          <div class="logo-container" style="
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: -31px;
-            overflow: visible;
-          ">
-            <img src="./images/neohive4545.png" data-webp="./images/neohive4545.webp" alt="Neo Hive"
-              id="entryPopupLogo">
+            <!-- 슬라이드 2: 필라테스 배너 (신규 이미지) -->
+            <div class="popup-slide" style="background: #000;">
+              <img src="./images/pilates_event_new.png" alt="필라테스 등록시 헬스 무료"
+                style="width: 100%; height: 100%; object-fit: cover; display: block;">
+            </div> <!-- 슬라이드 2 끝 -->
           </div>
+        </div>
 
-          <!-- 메인 타이틀 -->
-          <h1 style="
-            color: #fff;
-            font-size: 16px;
-            font-weight: bold;
-            text-align: center;
-            margin: -48px 0 6px 0;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-            line-height: 1.2;
-            position: relative;
-            z-index: 10;
-            transform: translateY(-16px);
-          ">성장, 팀워크, 그리고 상금의 기회!</h1>
-          <!-- 서브 타이틀 -->
-          <h2 style="
-            color: #ffffff;
-            font-size: 14px;
-            font-weight: bold;
-            text-align: center;
-            margin: -5px 0 8px 0;
-            line-height: 1.3;
-            transform: translateY(-60px);
-            position: relative;
-            z-index: 10;
-          ">"네오-하이브 시즌2: 우리팀, 우리의 성장"</h2>
-
-          <!-- 상금 강조 -->
-          <div class="prize-announcement-box" style="
-            background: rgba(255, 255, 255, 0.95);
-            padding: 8px 16px;
-            border-radius: 20px;
-            margin: -32px 0 40px 0;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-            border: 2px solid #7BE495;
-            position: relative;
-            z-index: 5;
-          ">
-            <h3 style="
-              color: #0f4c3a;
-              font-size: 18px;
-              font-weight: bold;
-              margin: 0;
-              text-align: center;
-              text-shadow: none;
-            ">총 상금 300만원!!</h3>
-          </div>
-
-          <!-- 챌린지 패키지 할인 정보 -->
-          <div style="
-            background: rgba(0, 0, 0, 0.9);
-            border: 2px solid #7BE495;
-            border-radius: 15px;
-            padding: 8px 12px;
-            margin: -30px 0 1px 0;
-            backdrop-filter: blur(5px);
-            box-shadow: 0 3px 10px rgba(0,0,0,0.4), 0 0 20px rgba(123, 228, 149, 0.3);
-          ">
-            <h4 style="
-              color: #7BE495;
-              font-size: 13px;
-              font-weight: bold;
-              margin: 0 0 4px 0;
-              text-align: center;
-              text-shadow: 0 0 8px rgba(123, 228, 149, 0.8), 0 0 16px rgba(123, 228, 149, 0.6), 0 0 24px rgba(123, 228, 149, 0.4);
-              filter: drop-shadow(0 0 4px rgba(123, 228, 149, 0.7));
-            ">🎯 네오 하이브 챌린지 패키지</h4>
-            <p style="
-              color: #fff;
-              font-size: 13px;
-              margin: 0;
-              text-align: left;
-              line-height: 1.4;
-              text-shadow: 0 1px 2px rgba(0,0,0,0.3);
-              font-weight: 500;
-            ">• 5~15% 함께 이용권 할인 받고 바로 챌린지 도전!<br>• 지금 신청하면 성장과 보상이 함께 찾아옵니다.</p>
-          </div>
-
-          <!-- 기간 -->
-          <p style="
-            color: #fff;
-            font-size: 13px;
-            font-weight: bold;
-            margin: 20px 0 2px 0;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
-          ">📅 시즌2 참가&팀매칭 기간 : 9/15 ~ 10/31</p>
-
-          <!-- 이벤트 내용 -->
-          <div class="event-content" style="
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
-            padding: 12px;
-            border-radius: 15px;
-            width: 100%;
-            max-width: 420px;
-            margin-top: 0px;
-            border: 1px solid rgba(123, 228, 149, 0.3);
-          ">
-            <div style="margin-bottom: 8px;">
-              <h4 style="color: #fff; font-size: 13px; margin: 0 0 4px 0; font-weight: bold;">🎯 이벤트 개요</h4>
-              <p style="color: #fff; font-size: 12px; margin: 0; opacity: 0.95;">회원이라면 누구나 참여 가능한 이벤트</p>
-            </div>
-
-            <div style="margin-bottom: 8px;">
-              <h4 style="color: #fff; font-size: 13px; margin: 0 0 4px 0; font-weight: bold;">🤝 팀 매칭 및 팀 운동</h4>
-              <p style="color: #fff; font-size: 11px; margin: 0; line-height: 1.4; opacity: 0.95;">
-                • 팀 매칭 기간동안 자유롭게 여러 팀원과 운동 진행<br>
-                • 다양한 팀과 운동을 통해 서로 알아가고 최종 시즌2 챌린지 기간에 팀 신청!!
-              </p>
-            </div>
-
-            <div style="margin-bottom: 8px;">
-              <h4 style="color: #fff; font-size: 13px; margin: 0 0 4px 0; font-weight: bold;">📈 점수 상승 조건</h4>
-              <p style="color: #fff; font-size: 11px; margin: 0; line-height: 1.4; opacity: 0.95;">
-                • 팀원들과 함께 운동할수록 점수 UP!<br>
-                • 몸의 건강한 변화 - 체중, 근육량, 체력 등이 좋아질수록 점수 UP!
-              </p>
-            </div>
-
-            <div>
-              <h4 style="color: #fff; font-size: 13px; margin: 0 0 4px 0; font-weight: bold;">🎁 팀 참가만 해도 혜택!!</h4>
-              <p style="color: #fff; font-size: 12px; margin: 0; opacity: 0.95;">운동복, 락커, 회원권 할인 혜택!!</p>
-            </div>
-          </div>
-
-          <!-- 버튼과 체크박스 컨테이너 -->
-          <div class="button-container" style="
-            margin-top: 2px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-          ">
-            <!-- 오늘 하루 않보기 체크박스와 모바일 X 버튼 -->
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <label style="
-                display: flex;
-                align-items: center;
-                color: #fff;
-                font-size: 11px;
-                cursor: pointer;
-                text-shadow: 0 1px 3px rgba(0,0,0,0.3);
-                white-space: nowrap;
-                touch-action: manipulation;
-              " onclick="event.stopPropagation();" ontouchstart="event.stopPropagation();"
-                ontouchend="event.stopPropagation();">
-                <input type="checkbox" id="dontShowToday" style="
-                  margin-right: 4px;
-                  transform: scale(1.1);
-                  accent-color: #7BE495;
-                  cursor: pointer;
-                  touch-action: manipulation;
-                " onchange="handleDontShowToday(this.checked)" onclick="event.stopPropagation();"
-                  ontouchstart="event.stopPropagation();" ontouchend="event.stopPropagation();">
-                오늘 하루 않보기
-              </label>
-
-              <!-- 모바일용 X 버튼 -->
-              <button id="mobileCloseBtn" style="
-                display: block;
-                width: 24px;
-                height: 24px;
-                border-radius: 50%;
-                background: rgba(255, 255, 255, 0.9);
-                border: 1px solid #7BE495;
-                color: #333;
-                font-size: 14px;
-                font-weight: bold;
-                cursor: pointer;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                transition: all 0.2s ease;
-                touch-action: manipulation;
-                -webkit-tap-highlight-color: transparent;
-              " onclick="console.log('🔥 하단 X버튼 클릭!'); var checkbox = document.getElementById('dontShowToday'); console.log('📦 체크박스 Element:', checkbox); console.log('✅ 체크박스 checked 상태:', checkbox ? checkbox.checked : 'element not found'); if(checkbox && checkbox.checked) { var today = new Date().toDateString(); console.log('📅 오늘 날짜 생성:', today); try { localStorage.setItem('dontShowPopupUntil', today); console.log('💾 localStorage.setItem 실행됨'); var stored = localStorage.getItem('dontShowPopupUntil'); console.log('🔍 저장 후 localStorage 확인:', stored); console.log('🎯 저장 성공 여부:', stored === today ? 'SUCCESS' : 'FAILED'); } catch(e) { console.error('❌ localStorage 저장 실패:', e); } } else { console.log('⚠️ 체크박스가 체크되지 않았거나 찾을 수 없음'); } var popup = document.getElementById('entryPopup'); if(popup) { popup.style.setProperty('display', 'none', 'important'); popup.classList.remove('popup-visible'); console.log('✨ 팝업 닫기 실행 완료'); } document.body.classList.remove('popup-active'); event.stopPropagation(); return false;"
-                onmouseover="this.style.background='#7BE495'; this.style.color='white';"
-                onmouseout="this.style.background='rgba(255, 255, 255, 0.9)'; this.style.color='#333';">×</button>
-            </div>
-
-            <!-- 참가하기 버튼 -->
-            <a href="https://m.booking.naver.com/booking/10/bizes/987028/items/5583476?area=pll&lang=ko&startDate=2025-09-08&theme=place"
-              target="_blank" rel="noopener noreferrer" style="
-                 display: inline-block;
-                 background: rgba(123, 228, 149, 0.9);
-                 color: #0a0a0a;
-                 text-decoration: none;
-                 padding: 8px 20px;
-                 border-radius: 18px;
-                 font-size: 13px;
-                 font-weight: 600;
-                 box-shadow: 0 3px 12px rgba(123, 228, 149, 0.3);
-                 transition: all 0.2s ease;
-                 border: 1px solid rgba(255, 255, 255, 0.4);
-                 backdrop-filter: blur(5px);
-                 letter-spacing: 0.3px;
-               " onmouseover="
-                 this.style.transform='scale(1.05)';
-                 this.style.background='rgba(123, 228, 149, 1)';
-                 this.style.boxShadow='0 4px 16px rgba(123, 228, 149, 0.5)';
-               " onmouseout="
-                 this.style.transform='scale(1)';
-                 this.style.background='rgba(123, 228, 149, 0.9)';
-                 this.style.boxShadow='0 3px 12px rgba(123, 228, 149, 0.3)';
-               ">
-              참가하기
-            </a>
-          </div>
+        <!-- 네비게이터 인디케이터 -->
+        <div class="popup-navigator">
+          <div class="nav-dot active" onclick="popupSlider.move(0)"></div>
+          <div class="nav-dot" onclick="popupSlider.move(1)"></div>
         </div>
       </div>
     </div>
+  </div>
   </div>
   </div>
 
@@ -5043,8 +4935,9 @@ body.popup-active {
       <div class="container" style="text-align:center; max-width: 1100px; margin: 0 auto; padding: 0 20px;">
         <h1 class="neofit-title" style="font-size: 3.2rem; color: #FFFFFF; margin-bottom: 40px;">
           <span class="pc-only">네오핏 : 새로운 피트니스, <span class="neon-green">"함께하는 문화"</span></span>
-          <span class="mobile-only" style="color: #FFFFFF; display: inline; white-space: nowrap;">새로운 피트니스,</span><span
-            class="neon-green mobile-text-format mobile-only" style="display: inline; white-space: nowrap;">"함께하는
+          <span class="mobile-only" style="color: #FFFFFF; display: inline; white-space: nowrap;">새로운
+            피트니스,</span><span class="neon-green mobile-text-format mobile-only"
+            style="display: inline; white-space: nowrap;">"함께하는
             문화"</span>
         </h1>
         <p class="neofit-description"
@@ -5053,7 +4946,8 @@ body.popup-active {
               기반 그룹 트레이닝</span> 시스템입니다.<br>
             <span class="neon-green">체계적인 단계별 프로그램</span>을 통해 기초부터 퍼포먼스까지 <span class="neon-green">함께
               성장</span>합니다.</span>
-          <span class="mobile-only">네오핏은 <span style="color: #aaa;">1~4명이</span> 함께 운동하는 <span class="neon-green">팀 기반
+          <span class="mobile-only">네오핏은 <span style="color: #aaa;">1~4명이</span> 함께 운동하는 <span class="neon-green">팀
+              기반
               그룹 트레이닝</span><br>시스템입니다.<br>
             <span class="neon-green">체계적인 단계별 프로그램</span>을 통해 기초부터 퍼포먼스까지<br class="mobile-only">
             <span class="neon-green">함께 성장</span>합니다.</span>
@@ -5082,7 +4976,8 @@ body.popup-active {
                   <img src="./images/neosync.png" data-webp="./images/neosync.webp" alt="네오 싱크"
                     style="width: 80%; height: auto; margin-bottom: 36px; filter: drop-shadow(0 0 20px rgba(123,228,149,0.5));">
                   <p style="color: #fff; font-size: 1.1rem; text-align: center;">기초 체력과 움직임의 동기화</p>
-                  <p style="color: #aaa; font-size: 0.95rem; text-align: center; margin-top: 10px;">팀원들과 함께 기본기를 다지는 입문
+                  <p style="color: #aaa; font-size: 0.95rem; text-align: center; margin-top: 10px;">팀원들과 함께 기본기를 다지는
+                    입문
                     프로그램</p>
                 </div>
                 <!-- CLICK 표시 추가 - card-front에 직접 위치 -->
@@ -5111,7 +5006,8 @@ body.popup-active {
                   <img src="./images/neoblance.png" data-webp="./images/neoblance.webp" alt="네오 밸런스"
                     style="width: 80%; height: auto; margin-bottom: 20px; filter: drop-shadow(0 0 20px rgba(147,197,253,0.5));">
                   <p style="color: #fff; font-size: 1.1rem; text-align: center;">균형과 안정성 강화</p>
-                  <p style="color: #aaa; font-size: 0.95rem; text-align: center; margin-top: 10px;">중급자를 위한 균형 잡힌 트레이닝
+                  <p style="color: #aaa; font-size: 0.95rem; text-align: center; margin-top: 10px;">중급자를 위한 균형 잡힌
+                    트레이닝
                   </p>
                 </div>
                 <!-- CLICK 표시 추가 -->
@@ -5142,7 +5038,8 @@ body.popup-active {
                   <p class="boost-text-1" style="color: #fff; font-size: 1.1rem; text-align: center; display: block;">
                     폭발적인 퍼포먼스 향상</p>
                   <p class="boost-text-2"
-                    style="color: #aaa; font-size: 0.95rem; text-align: center; margin-top: 10px; display: block;">상급자를
+                    style="color: #aaa; font-size: 0.95rem; text-align: center; margin-top: 10px; display: block;">
+                    상급자를
                     위한 고강도 프로그램</p>
                 </div>
                 <!-- CLICK 표시 추가 -->
@@ -5173,7 +5070,8 @@ body.popup-active {
           네오 하이브 : <span class="neon-green">"하나되는 우리"</span>
         </h2>
         <p style="margin: 10px 0 24px; color: #aaa; text-align: left; line-height: 1.6;">
-          <span class="neon-green">하루 팀방에서 자유롭게 팀원을 만나고,<span class="mobile-break"><br></span> 함께 챌린지에 도전하자!</span><br>
+          <span class="neon-green">하루 팀방에서 자유롭게 팀원을 만나고,<span class="mobile-break"><br></span> 함께 챌린지에
+            도전하자!</span><br>
           일상의 운동 습관이 곧 성장과 도전으로 이어집니다.
         </p>
 
@@ -5272,7 +5170,8 @@ body.popup-active {
         <div class="slide-container p-10 mobile-flow-rounded-box"
           style="margin-top: 64px; max-width: 1100px; margin-left: auto; margin-right: auto;">
           <div class="flex items-center mb-8">
-            <h1 class="text-4xl font-bold neon-green" style="text-align: left; margin-top: 48px;">NEO HIVE SYSTEM</h1>
+            <h1 class="text-4xl font-bold neon-green" style="text-align: left; margin-top: 48px;">NEO HIVE SYSTEM
+            </h1>
             <div class="flex-grow mx-5 h-px bg-gradient-to-r from-transparent via-gray-500 to-transparent desktop-only"
               style="display: none !important;"></div>
           </div>
@@ -5287,7 +5186,8 @@ body.popup-active {
                   style="width: 36px; height: 36px; object-fit: contain;">
               </div>
               <div class="font-semibold mt-2" style="font-weight: 700; text-align: left;">매칭</div>
-              <div class="text-sm text-gray-400 mt-1" style="font-size: 0.75rem; color: #bbb; text-align: left;">센터내 목표
+              <div class="text-sm text-gray-400 mt-1" style="font-size: 0.75rem; color: #bbb; text-align: left;">센터내
+                목표
                 기반<br><span
                   style="color: #7BE495; text-shadow: 0 0 8px rgba(123, 228, 149, 0.8), 0 0 16px rgba(123, 228, 149, 0.6);">파트너
                   매칭</span></div>
@@ -5295,11 +5195,14 @@ body.popup-active {
             </div>
             <div class="flow-step">
               <div class="step-number">2</div>
-              <div class="flow-icon"><img src="./images/neo44.png" alt="팀 구성" style="width: 36px; height: 36px;"></div>
+              <div class="flow-icon"><img src="./images/neo44.png" alt="팀 구성" style="width: 36px; height: 36px;">
+              </div>
               <div class="font-semibold mt-2" style="font-weight: 700; text-align: left;">팀 구성</div>
-              <div class="text-sm text-gray-400 mt-1" style="font-size: 0.75rem; color: #bbb; text-align: left;"><span
+              <div class="text-sm text-gray-400 mt-1" style="font-size: 0.75rem; color: #bbb; text-align: left;">
+                <span
                   style="color: #7BE495; text-shadow: 0 0 8px rgba(123, 228, 149, 0.8), 0 0 16px rgba(123, 228, 149, 0.6);">3~4인
-                  매칭</span>으로 팀명<br>설정 및 리더 지정</div>
+                  매칭</span>으로 팀명<br>설정 및 리더 지정
+              </div>
               <div class="flow-arrow-inside">➔</div>
             </div>
             <div class="flow-step">
@@ -5307,9 +5210,11 @@ body.popup-active {
               <div class="flow-icon"><img src="./images/neo42.png" alt="센터 예약 아이콘" style="width: 30px; height: 30px;">
               </div>
               <div class="font-semibold mt-2" style="font-weight: 700; text-align: left;">팀 운동</div>
-              <div class="text-sm text-gray-400 mt-1" style="font-size: 0.75rem; color: #bbb; text-align: left;"><span
+              <div class="text-sm text-gray-400 mt-1" style="font-size: 0.75rem; color: #bbb; text-align: left;">
+                <span
                   style="color: #7BE495; text-shadow: 0 0 8px rgba(123, 228, 149, 0.8), 0 0 16px rgba(123, 228, 149, 0.6);">화합과
-                  협동</span> 속에<br>즐기는 팀 운동</div>
+                  협동</span> 속에<br>즐기는 팀 운동
+              </div>
               <div class="flow-arrow-inside">➔</div>
             </div>
             <div class="flow-step">
@@ -5317,7 +5222,8 @@ body.popup-active {
               <div class="flow-icon"><img src="./images/neo32.png" alt="관리자 알림" style="width: 30px; height: 30px;">
               </div>
               <div class="font-semibold mt-2" style="font-weight: 700; text-align: left;">출석보상</div>
-              <div class="text-sm text-gray-400 mt-1" style="font-size: 0.75rem; color: #bbb; text-align: left;">함께 출석만
+              <div class="text-sm text-gray-400 mt-1" style="font-size: 0.75rem; color: #bbb; text-align: left;">함께
+                출석만
                 해도<br><span
                   style="color: #7BE495; text-shadow: 0 0 8px rgba(123, 228, 149, 0.8), 0 0 16px rgba(123, 228, 149, 0.6);">할인,
                   락커, 운동복 혜택!</span></div>
@@ -5328,7 +5234,8 @@ body.popup-active {
               <div class="flow-icon"><img src="./images/neo35.png" alt="출입 코드 발급" style="width: 36px; height: 36px;">
               </div>
               <div class="font-semibold mt-2" style="font-weight: 700; text-align: left;">챌린지 보상</div>
-              <div class="text-sm text-gray-400 mt-1" style="font-size: 0.75rem; color: #bbb; text-align: left;">시즌 챌린지에
+              <div class="text-sm text-gray-400 mt-1" style="font-size: 0.75rem; color: #bbb; text-align: left;">시즌
+                챌린지에
                 도전하고,<br><span
                   style="color: #7BE495; text-shadow: 0 0 8px rgba(123, 228, 149, 0.8), 0 0 16px rgba(123, 228, 149, 0.6);">상금
                   혜택까지</span></div>
@@ -5336,7 +5243,8 @@ body.popup-active {
             </div>
             <div class="flow-step">
               <div class="step-number">6</div>
-              <div class="flow-icon"><img src="./images/chek.png" alt="출석 인증" style="width: 36px; height: 36px;"></div>
+              <div class="flow-icon"><img src="./images/chek.png" alt="출석 인증" style="width: 36px; height: 36px;">
+              </div>
               <div class="font-semibold mt-2" style="font-weight: 700; text-align: left;">팀 동기부여</div>
               <div class="text-sm text-gray-400 mt-1" style="font-size: 0.75rem; color: #bbb; text-align: left;">함께
                 성장하고,<br><span
@@ -5432,7 +5340,8 @@ body.popup-active {
                   <div
                     style="position: absolute; top: 16px; right: 16px; background: rgba(123, 228, 149, 0.2); border: 1px solid rgba(123, 228, 149, 0.5); border-radius: 20px; padding: 3px 10px; display: inline-flex; align-items: center; gap: 4px;">
                     <img src="./images/neo43.png" alt="앱 아이콘" style="width: 12px; height: 12px;">
-                    <span style="color: #7BE495; font-size: 0.65rem; font-weight: 500; white-space: nowrap;">설치만해도 일일권
+                    <span style="color: #7BE495; font-size: 0.65rem; font-weight: 500; white-space: nowrap;">설치만해도
+                      일일권
                       제공</span>
                   </div>
 
@@ -6146,7 +6055,8 @@ body.popup-active {
               <!-- 모바일 영상 컨테이너 (시현 시 표시) -->
               <div class="mobile-video-container"
                 style="display: none; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: transparent; transition: transform 0.3s ease-in-out;">
-                <h4 style="color: #7BE495; font-size: 1.5rem; margin-bottom: 20px; text-align: center;">실제 사용 화면</h4>
+                <h4 style="color: #7BE495; font-size: 1.5rem; margin-bottom: 20px; text-align: center;">실제 사용 화면
+                </h4>
                 <div class="phone-frame"
                   style="width: 240px; height: 480px; margin: 0 auto; border-radius: 30px; border: 3px solid #7BE495; overflow: hidden; position: relative; box-shadow: 0 0 40px rgba(123, 228, 149, 0.5), inset 0 0 0 1px #7BE495; background: #000; -webkit-mask-image: -webkit-radial-gradient(white, black); mask-image: radial-gradient(white, black);">
                   <video id="mobilePreviewVideo" src="./videos/neofits.mp4" loop playsinline preload="none"
@@ -7274,7 +7184,8 @@ body.popup-active {
         <div class="smart-health-system-box"
           style="display: none !important; flex-direction: row; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 16px; color: #ccc; font-size: 0.85rem; line-height: 1.6; text-align: left; background: linear-gradient(135deg, #112921 0%, #0C1612 100%); border-radius: 16px; border: 1px solid #7BE495; box-shadow: 0 0 20px rgba(123, 228, 149, 0.15); padding: 20px 40px; margin: 20px auto; max-width: 1100px; position: relative; overflow: hidden;">
           <div style="flex: 1 1 48%; min-width: 280px; text-align: left;">
-            <h4 style="color:#7BE495; font-size: 1.1rem; font-weight: bold; margin-bottom: 12px; text-align: left;">설치 한
+            <h4 style="color:#7BE495; font-size: 1.1rem; font-weight: bold; margin-bottom: 12px; text-align: left;">
+              설치 한
               번으로 스마트 헬스장 완성</h4>
             <div class="code-method-box"
               style="background: linear-gradient(135deg, #112921 0%, #0C1612 100%); border-left:4px solid #62D2A2; border-radius:8px; padding:20px; margin-bottom:24px;">
@@ -7296,7 +7207,8 @@ body.popup-active {
             </p>
           </div>
           <div style="flex: 1 1 48%; min-width: 280px; text-align: left;">
-            <h4 style="color: #7BE495; margin: 0 0 8px 24px; font-size: 1.1rem; font-weight: bold; text-align: left;">+
+            <h4 style="color: #7BE495; margin: 0 0 8px 24px; font-size: 1.1rem; font-weight: bold; text-align: left;">
+              +
               전용 스마트 카드 및 스티커 제공 (선택 옵션)</h4>
             <ul
               style="padding-left: 24px; margin: 0; list-style-type: none; font-size: 0.85rem; color: #ccc; line-height: 1.6;">
@@ -7765,10 +7677,20 @@ body.popup-active {
           <span class="neon-green">네오 필라테스</span> :
           <span style="font-size: 2rem;">기구로 더 정확하게, 함께해서 더 즐겁게</span>
         </h2>
-        <p style="font-size: 1.2rem; color: #ccc; line-height: 1.8; margin: 0 auto; max-width: 600px;">
-          기구 필라테스의 정밀함과<br>
-          그룹 운동의 에너지를 동시에 경험해보세요.
-        </p>
+        <div style="font-size: 1.2rem; color: #ccc; line-height: 1.8; margin: 0 auto; max-width: 650px;">
+          <div class="promo-neon-box"
+            style="display: inline-block; padding: 15px 30px; margin-bottom: 24px; border: 2px solid #7BE495; border-radius: 15px; background: rgba(123, 228, 149, 0.1); backdrop-filter: blur(5px); box-shadow: 0 0 20px rgba(123, 228, 149, 0.2), inset 0 0 20px rgba(123, 228, 149, 0.05);">
+            <span
+              style="background: linear-gradient(90deg, #FFFFFF 0%, #7BE495 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 1.5rem; font-weight: 800; filter: drop-shadow(0 0 8px rgba(123, 228, 149, 0.4)); letter-spacing: -0.5px; display: inline-block;">
+              "필라테스 등록 시 헬스 전액 무료"
+            </span>
+          </div>
+          <br>
+          <span style="color: #7BE495; font-weight: 600; text-shadow: 0 0 10px rgba(123, 228, 149, 0.4);">
+            기구 필라테스의 정밀함과 그룹 운동의 에너지
+          </span>를<br>
+          동시에 경험해보세요.
+        </div>
       </div>
 
       <!-- 강사진 소개 카드 - 3D 캐러셀 (리뉴얼) -->
@@ -7816,10 +7738,12 @@ body.popup-active {
               <!-- 내용 -->
               <div style="text-align: center;">
                 <p style="color: #00BFFF; font-size: 1rem; font-weight: 600; margin-bottom: 12px;">최신 기구로 정확한 자세</p>
-                <p style="color: rgba(255,255,255,0.8); font-size: 0.85rem; line-height: 1.6; margin-bottom: 16px;">리포머,
+                <p style="color: rgba(255,255,255,0.8); font-size: 0.85rem; line-height: 1.6; margin-bottom: 16px;">
+                  리포머,
                   캐딜락, 체어 등 전문 기구로<br>정확한 움직임을 유도합니다</p>
                 <p style="color: #00BFFF; font-size: 1rem; font-weight: 600; margin-bottom: 12px;">효과적인 근력 강화</p>
-                <p style="color: rgba(255,255,255,0.8); font-size: 0.85rem; line-height: 1.6;">기구 저항을 활용해 코어 강화,<br>체형
+                <p style="color: rgba(255,255,255,0.8); font-size: 0.85rem; line-height: 1.6;">기구 저항을 활용해 코어
+                  강화,<br>체형
                   교정, 유연성 향상을 동시에</p>
               </div>
             </div>
@@ -7848,10 +7772,12 @@ body.popup-active {
               <!-- 내용 -->
               <div style="text-align: center;">
                 <p style="color: #7BE495; font-size: 1rem; font-weight: 600; margin-bottom: 12px;">함께하는 운동의 즐거움</p>
-                <p style="color: rgba(255,255,255,0.8); font-size: 0.85rem; line-height: 1.6; margin-bottom: 16px;">같은
+                <p style="color: rgba(255,255,255,0.8); font-size: 0.85rem; line-height: 1.6; margin-bottom: 16px;">
+                  같은
                   목표를 가진 회원들과 함께<br>서로 자극을 주고받습니다</p>
                 <p style="color: #7BE495; font-size: 1rem; font-weight: 600; margin-bottom: 12px;">동기부여와 성취감</p>
-                <p style="color: rgba(255,255,255,0.8); font-size: 0.85rem; line-height: 1.6;">꾸준한 운동 습관 형성과<br>함께 성장하는
+                <p style="color: rgba(255,255,255,0.8); font-size: 0.85rem; line-height: 1.6;">꾸준한 운동 습관 형성과<br>함께
+                  성장하는
                   성취감</p>
               </div>
             </div>
@@ -9963,7 +9889,8 @@ body.popup-active {
                 ">
                     <span style="color: #7BE495; text-shadow: 0 0 20px rgba(123, 228, 149, 0.8);">매출 상승 효과!</span>
                     파트너 신청 시,
-                    <span style="color: #7BE495; text-shadow: 0 0 20px rgba(123, 228, 149, 0.8);">3개월 무료 체험 기회</span>까지.
+                    <span style="color: #7BE495; text-shadow: 0 0 20px rgba(123, 228, 149, 0.8);">3개월 무료 체험
+                      기회</span>까지.
                   </p>
                 </div>
               </div>
@@ -19902,6 +19829,11 @@ body.popup-active {
   function closeNaverBanner() {
     console.log('🔒 네이버 배너 팝업 닫기');
     const popup = document.getElementById('naverBannerPopup');
+    const video = document.getElementById('promoVideo');
+    if (video) {
+      video.pause();
+      video.muted = true;
+    }
     if (popup) {
       popup.classList.remove('show');
       // 애니메이션이 끝난 후 display none 처리
@@ -20430,16 +20362,12 @@ body.popup-active {
     document.body.classList.add('popup-open');
 
     // 팝업을 안정적으로 표시
-    popup.style.opacity = '1';
-    popup.style.transform = 'translateY(0) scale(1)';
-    popup.style.display = 'block';
-    popup.style.position = 'fixed';
-    popup.style.zIndex = '999999999999';
-    popup.style.width = '100vw';
-    popup.style.height = '100vh';
-    popup.style.top = '0';
-    popup.style.left = '0';
-    popup.style.background = '#000000';
+    popup.classList.add('popup-visible');
+
+    // 슬라이더 타이머 시작
+    if (window.popupSlider) {
+      window.popupSlider.startTimer();
+    }
 
     // 팝업 저장하여 닫기시 스크롤 위치 복원
     popup.dataset.scrollY = scrollY;
@@ -20504,10 +20432,7 @@ body.popup-active {
     console.log('팝업 엘리먼트 발견 - 강제 표시 시작');
 
     // 팝업 강제 표시
-    popup.style.display = 'flex';
-    popup.style.visibility = 'visible';
-    popup.style.opacity = '1';
-    popup.style.zIndex = '2147483647';
+    popup.classList.add('popup-visible');
 
     // body에 popup-active 클래스 추가
     document.body.classList.add('popup-active');
@@ -20519,8 +20444,60 @@ body.popup-active {
     document.body.style.top = '0';
     document.body.style.width = '100%';
 
+    // 슬라이더 타이머 시작
+    if (window.popupSlider) {
+      window.popupSlider.startTimer();
+    }
+
     console.log('팝업이 강제로 표시되었습니다!');
   }
+
+  // 팝업 슬라이더 로직
+  window.popupSlider = {
+    currentIndex: 0,
+    timer: null,
+    isPaused: false,
+
+    move: function (index) {
+      console.log('슬라이드 이동:', index);
+      const wrapper = document.getElementById('popupSliderWrapper');
+      const dots = document.querySelectorAll('.nav-dot');
+
+      if (!wrapper) return;
+
+      this.currentIndex = index;
+      wrapper.style.transform = `translateX(-${index * 50}%)`;
+
+      dots.forEach((dot, i) => {
+        if (i === index) dot.classList.add('active');
+        else dot.classList.remove('active');
+      });
+
+      // 사용자가 클릭하면 타이머 중지
+      if (arguments.length > 0 && event && event.type === 'click') {
+        this.stopTimer();
+      }
+    },
+
+    startTimer: function () {
+      this.stopTimer();
+      this.timer = setTimeout(() => {
+        if (!this.isPaused && this.currentIndex === 0) {
+          this.move(1);
+        }
+      }, 4000);
+      console.log('슬라이더 타이머 시작 (4초)');
+    },
+
+    stopTimer: function () {
+      if (this.timer) {
+        clearTimeout(this.timer);
+        this.timer = null;
+        this.isPaused = true;
+        console.log('슬라이더 타이머 중지 (사용자 상호작용)');
+      }
+    }
+  };
 
   // 페이지 로드 시 팝업 초기화 - 즉시 실행
   (function () {
