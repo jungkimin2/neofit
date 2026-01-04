@@ -25,7 +25,7 @@
   <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
 
   <!-- 모바일 감지 및 최적화 -->
-  <script src="./js/initial.js?v=20260105_10" defer></script>
+  <script src="./js/initial.js?v=20260105_11" defer></script>
 
   <!-- 페이지 로딩 완료 시 표시 -->
   <script>
@@ -4509,7 +4509,7 @@ body.popup-active {
   z-index: 999999999999 !important;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-" onclick="event.target === this && closeEntryPopup()">
+">
     <style>
       /* 임시 비활성화 - 팝업 완전 숨김 */
       /* 팝업 활성화 스타일 */
@@ -4578,23 +4578,30 @@ body.popup-active {
         left: 50%;
         transform: translateX(-50%);
         display: flex;
-        gap: 10px;
-        z-index: 20;
+        gap: 15px;
+        z-index: 100;
+        background: rgba(0, 0, 0, 0.5);
+        padding: 10px 20px;
+        border-radius: 20px;
+        pointer-events: auto;
       }
 
       .nav-dot {
-        width: 10px;
-        height: 10px;
-        background: rgba(255, 255, 255, 0.4);
+        width: 12px;
+        height: 12px;
+        background: rgba(255, 255, 255, 0.5);
         border-radius: 50%;
         cursor: pointer;
         transition: all 0.3s ease;
+        pointer-events: auto;
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: rgba(123, 228, 149, 0.3);
       }
 
       .nav-dot.active {
         background: #7BE495;
-        transform: scale(1.2);
-        box-shadow: 0 0 10px #7BE495;
+        transform: scale(1.3);
+        box-shadow: 0 0 15px rgba(123, 228, 149, 0.8);
       }
 
       /* 팝업이 열렸을 때 body 스크롤 완전 차단 */
@@ -4819,12 +4826,53 @@ body.popup-active {
           -webkit-user-select: none !important;
         }
 
-        /* 모바일 네비게이터 위치 조정 (박스 바깥 하단) */
+        /* 모바일 네비게이터 위치 조정 (박스 내부 하단) */
         .popup-navigator {
-          bottom: -30px !important;
-          width: 100% !important;
+          position: absolute !important;
+          bottom: 15px !important;
+          left: 50% !important;
+          transform: translateX(-50%) !important;
+          width: auto !important;
+          display: flex !important;
           justify-content: center !important;
-          padding-top: 10px !important;
+          gap: 15px !important;
+          padding: 10px 20px !important;
+          background: rgba(0, 0, 0, 0.5) !important;
+          border-radius: 20px !important;
+          z-index: 100 !important;
+          pointer-events: auto !important;
+        }
+
+        /* 모바일 네비게이터 점 터치 영역 확대 */
+        .popup-navigator .nav-dot {
+          width: 14px !important;
+          height: 14px !important;
+          min-width: 44px !important;
+          min-height: 44px !important;
+          display: flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          background: rgba(255, 255, 255, 0.4) !important;
+          border-radius: 50% !important;
+          cursor: pointer !important;
+          touch-action: manipulation !important;
+          -webkit-tap-highlight-color: rgba(123, 228, 149, 0.3) !important;
+          pointer-events: auto !important;
+          position: relative !important;
+        }
+
+        .popup-navigator .nav-dot::before {
+          content: '' !important;
+          position: absolute !important;
+          width: 44px !important;
+          height: 44px !important;
+          border-radius: 50% !important;
+        }
+
+        .popup-navigator .nav-dot.active {
+          background: #7BE495 !important;
+          box-shadow: 0 0 15px rgba(123, 228, 149, 0.8) !important;
+          transform: scale(1.3) !important;
         }
 
         /* 팝업 높이 조절 */
@@ -4908,7 +4956,7 @@ body.popup-active {
       overflow: visible;
       box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
       z-index: 10;
-    " onclick="event.stopPropagation()">
+    ">
 
         <!-- 슬라이더 컨테이너 -->
         <div class="popup-slider-container">
@@ -4929,10 +4977,10 @@ body.popup-active {
           </div>
         </div>
 
-        <!-- 네비게이터 인디케이터 -->
-        <div class="popup-navigator">
-          <div class="nav-dot active" onclick="popupSlider.move(0)"></div>
-          <div class="nav-dot" onclick="popupSlider.move(1)"></div>
+        <!-- 네비게이터 인디케이터 (터치/클릭은 JS에서 처리) -->
+        <div class="popup-navigator" style="pointer-events: auto;">
+          <div class="nav-dot active" data-slide="0"></div>
+          <div class="nav-dot" data-slide="1"></div>
         </div>
 
         <!-- 닫기 버튼 추가 -->
@@ -20563,83 +20611,156 @@ body.popup-active {
     console.log('팝업이 강제로 표시되었습니다!');
   }
 
-  // 팝업 슬라이더 로직
+  // 팝업 슬라이더 로직 (모바일 최적화)
   window.popupSlider = {
     currentIndex: 0,
     timer: null,
     isPaused: false,
     touchStartX: 0,
     touchEndX: 0,
+    slideCount: 2,
+    autoSlideInterval: 5000, // 5초
 
-    move: function (index) {
-      console.log('슬라이드 이동:', index);
+    move: function (index, isUserAction) {
+      console.log('슬라이드 이동:', index, isUserAction ? '(사용자 액션)' : '(자동)');
       const wrapper = document.getElementById('popupSliderWrapper');
-      const dots = document.querySelectorAll('.nav-dot');
+      const dots = document.querySelectorAll('.popup-navigator .nav-dot');
 
-      if (!wrapper) return;
+      if (!wrapper) {
+        console.error('슬라이더 wrapper를 찾을 수 없음');
+        return;
+      }
 
       this.currentIndex = index;
       wrapper.style.transform = `translateX(-${index * 50}%)`;
 
       dots.forEach((dot, i) => {
-        if (i === index) dot.classList.add('active');
-        else dot.classList.remove('active');
+        dot.classList.remove('active');
+        if (i === index) {
+          dot.classList.add('active');
+        }
       });
 
-      // 사용자가 클릭하면 타이머 중지
-      if (arguments.length > 0 && event && event.type === 'click') {
-        this.stopTimer();
+      // 사용자 상호작용이면 타이머 리셋
+      if (isUserAction) {
+        this.restartTimer();
       }
     },
 
+    next: function () {
+      const nextIndex = (this.currentIndex + 1) % this.slideCount;
+      this.move(nextIndex, false);
+    },
+
+    prev: function () {
+      const prevIndex = (this.currentIndex - 1 + this.slideCount) % this.slideCount;
+      this.move(prevIndex, false);
+    },
+
     startTimer: function () {
+      const self = this;
       this.stopTimer();
-      this.timer = setTimeout(() => {
-        if (!this.isPaused && this.currentIndex === 0) {
-          this.move(1);
+      this.isPaused = false;
+
+      // 5초마다 자동 슬라이드 (setInterval 사용)
+      this.timer = setInterval(function() {
+        if (!self.isPaused) {
+          self.next();
         }
-      }, 4000);
-      console.log('슬라이더 타이머 시작 (4초)');
+      }, this.autoSlideInterval);
+
+      console.log('슬라이더 자동 재생 시작 (' + this.autoSlideInterval/1000 + '초 간격)');
 
       // 터치 이벤트 리스너 추가
       this.addTouchListeners();
+      // 네비게이터 터치 이벤트 추가
+      this.addNavDotListeners();
+    },
+
+    restartTimer: function () {
+      this.startTimer();
     },
 
     stopTimer: function () {
       if (this.timer) {
-        clearTimeout(this.timer);
+        clearInterval(this.timer);
         this.timer = null;
-        this.isPaused = true;
-        console.log('슬라이더 타이머 중지 (사용자 상호작용)');
+        console.log('슬라이더 타이머 중지');
       }
+    },
+
+    pause: function () {
+      this.isPaused = true;
+      console.log('슬라이더 일시정지');
+    },
+
+    resume: function () {
+      this.isPaused = false;
+      console.log('슬라이더 재개');
     },
 
     addTouchListeners: function () {
       const wrapper = document.getElementById('popupSliderWrapper');
-      if (!wrapper || wrapper.dataset.touchAdded) return;
+      if (!wrapper || wrapper.dataset.touchAdded === 'true') return;
 
-      wrapper.addEventListener('touchstart', (e) => {
-        this.touchStartX = e.changedTouches[0].screenX;
-        this.stopTimer(); // 터치 시 타이머 중지
+      const self = this;
+
+      wrapper.addEventListener('touchstart', function(e) {
+        self.touchStartX = e.changedTouches[0].screenX;
+        self.pause();
       }, { passive: true });
 
-      wrapper.addEventListener('touchend', (e) => {
-        this.touchEndX = e.changedTouches[0].screenX;
-        this.handleSwipe();
+      wrapper.addEventListener('touchend', function(e) {
+        self.touchEndX = e.changedTouches[0].screenX;
+        self.handleSwipe();
+        self.resume();
       }, { passive: true });
 
       wrapper.dataset.touchAdded = 'true';
+      console.log('터치 리스너 추가됨');
+    },
+
+    addNavDotListeners: function () {
+      const dots = document.querySelectorAll('.popup-navigator .nav-dot');
+      const self = this;
+
+      dots.forEach(function(dot, index) {
+        // 기존 리스너 제거를 위해 새 함수로 감싸기
+        if (dot.dataset.listenerAdded === 'true') return;
+
+        // 터치 이벤트 (모바일)
+        dot.addEventListener('touchend', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          console.log('네비게이터 터치:', index);
+          self.move(index, true);
+        }, { passive: false });
+
+        // 클릭 이벤트 (PC)
+        dot.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          console.log('네비게이터 클릭:', index);
+          self.move(index, true);
+        });
+
+        dot.dataset.listenerAdded = 'true';
+      });
+      console.log('네비게이터 리스너 추가됨');
     },
 
     handleSwipe: function () {
       const swipeThreshold = 50;
-      if (this.touchEndX < this.touchStartX - swipeThreshold) {
+      const diff = this.touchEndX - this.touchStartX;
+
+      if (diff < -swipeThreshold) {
         // 왼쪽으로 스와이프 (다음 슬라이드)
-        if (this.currentIndex === 0) this.move(1);
-      }
-      if (this.touchEndX > this.touchStartX + swipeThreshold) {
+        this.next();
+        console.log('왼쪽 스와이프 → 다음 슬라이드');
+      } else if (diff > swipeThreshold) {
         // 오른쪽으로 스와이프 (이전 슬라이드)
-        if (this.currentIndex === 1) this.move(0);
+        this.prev();
+        console.log('오른쪽 스와이프 → 이전 슬라이드');
       }
     }
   };
