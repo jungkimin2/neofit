@@ -3879,312 +3879,638 @@ body.popup-active {
       console.log('🚫 강력한 팝업 숨김 처리 완료');
     } else {
       console.log('✅ 팝업 표시 허용');
-      // 팝업이 표시될 때 자동 슬라이드 시작 (V7)
-      window.onload = function () {
-        if (window.naverBannerV7) {
-          setTimeout(() => { window.naverBannerV7.init(); }, 500);
+      // 팝업이 표시될 때 자동 슬라이드 시작 (V6 - Robust)
+      const initBanner = () => {
+        if (window.naverBannerSliderV6) {
+          console.log('🚀 Auto-slide timer started (V6)');
+          window.naverBannerSliderV6.startTimer();
         }
       };
+
+      if (document.readyState === 'complete') {
+        setTimeout(initBanner, 500);
+      } else {
+        window.addEventListener('load', () => setTimeout(initBanner, 500));
+      }
     }
   })();
 </script>
 
 <body class="">
 
-  <!-- V7 Safe Zone Redesign: 모바일 전용 구조 -->
-  <div id="naverBannerV7_Container">
-    <!-- 1. 헤더 (닫기 버튼 전용 구역) -->
-    <div class="nb-v7-header">
-      <button class="nb-v7-close" onclick="window.naverBannerV7.close()" aria-label="닫기">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <line x1="18" y1="6" x2="6" y2="18"></line>
-          <line x1="6" y1="6" x2="18" y2="18"></line>
-        </svg>
-      </button>
-    </div>
+  <!-- 네이버 배너 팝업 -->
+  <div id="naverBannerPopup" style="
+  display: none;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  background: rgba(0, 0, 0, 0.8) !important;
+  z-index: 9999999999 !important;
+  justify-content: center !important;
+  align-items: center !important;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);">
+    <style>
+      /* 네이버 배너 팝업 스타일 */
+      #naverBannerPopup {
+        cursor: pointer;
+      }
 
-    <!-- 2. 바디 (슬라이더 전용 구역) -->
-    <div class="nb-v7-body" id="nbV7SliderRoot">
-      <div class="nb-v7-slider-wrapper" id="nbV7Wrapper">
-        <!-- 슬라이드 0 -->
-        <div class="nb-v7-slide">
-          <a href="https://m.booking.naver.com/booking/10/bizes/987028/items/5583476?area=pll&lang=ko&startDate=2025-12-28&theme=place"
-            target="_blank" class="nb-v7-link">
-            <video id="nbV7Video" src="./images/naver_banner_final_v2.mp4" loop muted playsinline autoplay></video>
-          </a>
+      .naver-banner-container {
+        position: relative;
+        width: 100%;
+        max-width: 450px;
+        cursor: default;
+        padding: 8px;
+        background: linear-gradient(135deg, #7BE495 0%, #5fd17f 100%);
+        border-radius: 20px;
+        box-shadow:
+          0 20px 60px rgba(0, 0, 0, 0.6),
+          0 0 0 1px rgba(255, 255, 255, 0.1) inset,
+          0 0 40px rgba(123, 228, 149, 0.3);
+      }
+
+      .naver-banner-container::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border-radius: 20px;
+        padding: 3px;
+        background: linear-gradient(135deg,
+            rgba(255, 255, 255, 0.4) 0%,
+            rgba(255, 255, 255, 0.1) 50%,
+            rgba(123, 228, 149, 0.3) 100%);
+        -webkit-mask:
+          linear-gradient(#fff 0 0) content-box,
+          linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        mask:
+          linear-gradient(#fff 0 0) content-box exclude,
+          linear-gradient(#fff 0 0);
+        pointer-events: none;
+      }
+
+      .naver-banner-wrapper {
+        position: relative;
+        background: #000;
+        border-radius: 16px;
+        overflow: visible;
+        /* 잘림 방지 필수 */
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) inset;
+        z-index: 1 !important;
+        height: auto;
+      }
+
+      .naver-banner-link {
+        display: block;
+        width: 100%;
+        text-decoration: none;
+        cursor: pointer;
+        transition: opacity 0.3s ease;
+        line-height: 0;
+        font-size: 0;
+        margin: 0;
+        padding: 0;
+      }
+
+      .naver-banner-link:hover {
+        opacity: 0.95;
+      }
+
+      .naver-banner-link:active {
+        opacity: 0.9;
+      }
+
+      .naver-banner-container img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        border-radius: 16px;
+        position: relative;
+        z-index: 1;
+        object-fit: cover;
+        margin: 0;
+        padding: 0;
+      }
+
+      .naver-banner-link:hover img {
+        transform: scale(1.02);
+      }
+
+      .naver-banner-link:active img {
+        transform: scale(0.98);
+      }
+
+      /* 네이버 배너 전용 슬라이더 스타일 */
+      .naver-slider-container {
+        position: relative;
+        overflow: hidden;
+        border-radius: 16px;
+        width: 100%;
+        height: 360px;
+        /* 고정 높이 부여로 이미지 가출 방지 */
+      }
+
+      .naver-slider-wrapper {
+        display: flex;
+        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        width: 200%;
+        height: 100%;
+      }
+
+      .naver-slide {
+        width: 50%;
+        height: 100%;
+        flex-shrink: 0;
+      }
+
+      .naver-slide img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        border-radius: 16px;
+      }
+
+      .naver-banner-close {
+        position: absolute;
+        top: -15px;
+        right: -15px;
+        width: 38px;
+        height: 38px;
+        background: #0A0E27;
+        border: 2px solid #7BE495;
+        color: #7BE495;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        cursor: pointer;
+        z-index: 2147483647 !important;
+        /* Max Z-Index 강제 */
+        pointer-events: auto !important;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        transition: all 0.3s ease;
+        padding: 0;
+        line-height: 1;
+      }
+
+      .naver-banner-close:hover {
+        background: #7BE495;
+        color: #0A0E27;
+        transform: rotate(90deg);
+      }
+
+      .naver-banner-navigator {
+        position: absolute;
+        bottom: -45px;
+        left: 0;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        z-index: 2147483647 !important;
+        /* Max Z-Index 강제 */
+        pointer-events: auto !important;
+      }
+
+      .naver-nav-dot {
+        width: 10px;
+        height: 10px;
+        background: rgba(255, 255, 255, 0.4);
+        border: 1px solid rgba(123, 228, 149, 0.5);
+        border-radius: 50%;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        pointer-events: auto !important;
+      }
+
+      .naver-nav-dot.active {
+        background: #7BE495;
+        box-shadow: 0 0 10px rgba(123, 228, 149, 0.8);
+        transform: scale(1.2);
+        width: 12px;
+        height: 12px;
+      }
+
+      .naver-banner-link img,
+      .naver-banner-link video {
+        border-radius: 16px;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        background: #000;
+      }
+
+      /* PC 큰 화면 */
+      @media (min-width: 1200px) {
+        .naver-banner-container {
+          max-width: 650px;
+        }
+      }
+
+      /* 태블릿 */
+      @media (min-width: 769px) and (max-width: 1199px) {
+        .naver-banner-container {
+          max-width: 650px;
+        }
+      }
+
+      /* 모바일 스타일 */
+      @media (max-width: 768px) {
+        .naver-banner-container {
+          max-width: 85%;
+          max-height: 80vh;
+          padding: 6px;
+          border-radius: 16px;
+        }
+
+        .naver-banner-container::before {
+          border-radius: 16px;
+          padding: 2px;
+        }
+
+        .naver-banner-wrapper {
+          border-radius: 12px;
+        }
+
+        .naver-banner-container img {
+          border-radius: 12px;
+        }
+
+        .naver-banner-close {
+          top: -8px !important;
+          right: -8px !important;
+          width: 32px !important;
+          height: 32px !important;
+          font-size: 18px !important;
+          border: 1.5px solid #7BE495 !important;
+          z-index: 999999 !important;
+          pointer-events: auto !important;
+          position: absolute !important;
+        }
+      }
+
+      /* 작은 모바일 화면 */
+      @media (max-width: 480px) {
+        .naver-banner-container {
+          max-width: 92%;
+          max-height: 70vh;
+          padding: 5px;
+        }
+
+        .naver-banner-close {
+          top: -8px !important;
+          right: -8px !important;
+          width: 34px !important;
+          height: 34px !important;
+          font-size: 18px !important;
+          z-index: 999999 !important;
+          pointer-events: auto !important;
+          position: absolute !important;
+        }
+      }
+
+      /* 팝업 애니메이션 */
+      #naverBannerPopup.show {
+        animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      #naverBannerPopup.show .naver-banner-container {
+        animation: zoomInBounce 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+
+        to {
+          opacity: 1;
+        }
+      }
+
+      @keyframes zoomInBounce {
+        0% {
+          transform: scale(0.5);
+          opacity: 0;
+        }
+
+        60% {
+          transform: scale(1.05);
+          opacity: 1;
+        }
+
+        100% {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+
+      /* body 스크롤 방지 */
+      body.naver-popup-open {
+        overflow: hidden;
+      }
+
+      /* 모바일 환경에서 팝업 강제 표시 */
+      @media (max-width: 768px) {
+        #naverBannerPopup {
+          position: fixed !important;
+          top: 0 !important;
+          left: 0 !important;
+          width: 100vw !important;
+          height: 100vh !important;
+          z-index: 9999999999 !important;
+        }
+
+        #naverBannerPopup.show {
+          display: flex !important;
+          visibility: visible !important;
+          opacity: 1 !important;
+        }
+
+        .naver-banner-container {
+          position: relative !important;
+          z-index: 10000000000 !important;
+          overflow: visible !important;
+          /* X버튼 및 네비게이터 잘림 방지 */
+        }
+
+        /* 모바일에서 wrapper는 낮은 z-index */
+        .naver-banner-wrapper {
+          z-index: 1 !important;
+        }
+
+        /* 모바일에서 X 버튼은 최상위 z-index 및 위치 조정 */
+        .naver-banner-close {
+          z-index: 99999999 !important;
+          position: absolute !important;
+          pointer-events: auto !important;
+          top: -20px !important;
+          /* 박스 바깥으로 이동 */
+          right: -10px !important;
+          background: rgba(10, 14, 39, 0.9) !important;
+          /* 배경 진하게 */
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5) !important;
+        }
+
+        /* 모바일 네비게이터 위치 강제 고정 */
+        .naver-banner-navigator {
+          position: absolute !important;
+          bottom: -45px !important;
+          width: 100% !important;
+          left: 0 !important;
+          justify-content: center !important;
+          z-index: 2147483647 !important;
+          /* Max Z-Index */
+          pointer-events: auto !important;
+        }
+
+        .naver-banner-close {
+          top: -25px !important;
+          right: -8px !important;
+          z-index: 2147483647 !important;
+          /* Max Z-Index */
+          pointer-events: auto !important;
+        }
+
+        /* 모바일에서 스피커 아이콘 크기 축소 */
+        #videoSoundBtn {
+          width: 28px !important;
+          height: 28px !important;
+          bottom: 10px !important;
+          right: 10px !important;
+          border-radius: 6px !important;
+        }
+
+        #videoSoundBtn svg {
+          width: 16px !important;
+          height: 16px !important;
+        }
+      }
+
+      /* 스피커 버튼 기본 스타일 (PC용) */
+      #videoSoundBtn {
+        position: absolute;
+        bottom: 15px;
+        right: 15px;
+        background: rgba(10, 14, 39, 0.85);
+        border: 1px solid #7BE495;
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 100;
+        backdrop-filter: blur(8px);
+        transition: all 0.3s ease;
+        padding: 0;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        outline: none;
+      }
+    </style>
+    <div class="naver-banner-container" onclick="event.stopPropagation()">
+      <!-- 고정된 닫기 버튼 -->
+      <button class="naver-banner-close" onclick="closeNaverBanner()" aria-label="닫기">×</button>
+
+      <div class="naver-banner-wrapper" style="position: relative; overflow: visible; height: auto;">
+
+        <!-- 슬라이더 영역 -->
+        <div class="naver-slider-container">
+          <!-- V6 ID 적용 -->
+          <div class="naver-slider-wrapper" id="naverSliderWrapperV6">
+            <!-- 슬라이드 0 -->
+            <div class="naver-slide">
+              <a href="https://m.booking.naver.com/booking/10/bizes/987028/items/5583476?area=pll&lang=ko&startDate=2025-12-28&theme=place"
+                target="_blank" rel="noopener noreferrer" class="naver-banner-link">
+                <video id="promoVideoV6" src="./images/naver_banner_final_v2.mp4" loop muted playsinline
+                  autoplay></video>
+              </a>
+            </div>
+            <!-- 슬라이드 1 -->
+            <div class="naver-slide">
+              <div class="naver-banner-link">
+                <img src="./images/pilates_event_2026.jpg" alt="필라테스 등록시 헬스 전액 무료">
+              </div>
+            </div>
+          </div>
+
           <!-- 소리 버튼 -->
-          <button class="nb-v7-sound" onclick="window.naverBannerV7.toggleSound(event)">
-            <svg id="nbV7Mute" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-              stroke-width="2">
-              <path d="M11 5L6 9H2v6h4l5 4V5z" />
-              <line x1="23" y1="1" x2="1" y2="23" />
+          <button id="videoSoundBtn" onclick="togglePromoSound(event)">
+            <svg id="muteSvg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#7BE495" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round" style="display: block;">
+              <path d="M11 5L6 9H2v6h4l5 4V5z"></path>
+              <line x1="23" y1="1" x2="1" y2="23" stroke="#7BE495" stroke-width="2"></line>
             </svg>
-            <svg id="nbV7Unmute" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-              stroke-width="2" style="display:none">
-              <path d="M11 5L6 9H2v6h4l5 4V5z" />
-              <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
-              <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
+            <svg id="unmuteSvg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#7BE495" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+              <path d="M11 5L6 9H2v6h4l5 4V5z"></path>
+              <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
             </svg>
           </button>
         </div>
-        <!-- 슬라이드 1 -->
-        <div class="nb-v7-slide">
-          <a href="#" class="nb-v7-link">
-            <img src="./images/pilates_event_2026.jpg" alt="이벤트">
-          </a>
+
+        <!-- 날짜 푸터 -->
+        <div class="event-date-footer" style="
+          display: flex; justify-content: space-between; align-items: center;
+          padding: 14px 20px; color: #FFFFFF; font-weight: 800; font-size: 17px;
+          letter-spacing: 2px; background: #0A0E27; margin-top: 4px;
+          border-radius: 12px; border-bottom-left-radius: 15px; border-bottom-right-radius: 15px;
+          box-shadow: 0 -2px 10px rgba(0,0,0,0.1); position: relative; z-index: 20;
+        ">
+          <div style="display: flex; align-items: center;">
+            <span style="color: #7BE495; font-size: 13px; margin-right: 8px;">[EVENT]</span>
+            01.01 ~ 01.31
+          </div>
         </div>
-      </div>
-    </div>
 
-    <!-- 3. 푸터 (네비게이터 전용 구역) -->
-    <div class="nb-v7-footer">
-      <div class="nb-v7-dots">
-        <div class="nb-v7-dot active" onclick="window.naverBannerV7.go(0)"></div>
-        <div class="nb-v7-dot" onclick="window.naverBannerV7.go(1)"></div>
-      </div>
-      <div class="nb-v7-date">
-        <span>EVENT</span> 01.01 ~ 01.31
+        <!-- 네비게이터 -->
+        <div class="naver-banner-navigator">
+          <div class="naver-nav-dot active" onclick="naverBannerSliderV6.move(0)"></div>
+          <div class="naver-nav-dot" onclick="naverBannerSliderV6.move(1)"></div>
+        </div>
+
       </div>
     </div>
   </div>
-  </div>
-
-  <style>
-    /* V7 Core Styles - 강제 적용 */
-    #naverBannerPopup {
-      display: none;
-      /* JS로 제어 */
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0, 0, 0, 0.85);
-      z-index: 999999;
-      justify-content: center;
-      align-items: center;
-      backdrop-filter: blur(5px);
-      /* 클릭 이벤트 리스너 제거됨 - CSS로도 터치 무시 가능하지만 내부 컨텐츠는 가능해야함 */
-    }
-
-    #naverBannerV7_Container {
-      width: 360px;
-      max-width: 90%;
-      background: #0A0E27;
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-      border: 1px solid rgba(123, 228, 149, 0.3);
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* Header */
-    .nb-v7-header {
-      height: 44px;
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      padding: 0 10px;
-      background: rgba(255, 255, 255, 0.05);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    }
-
-    .nb-v7-close {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      background: none;
-      border: none;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-    }
-
-    /* Body */
-    .nb-v7-body {
-      width: 100%;
-      height: 360px;
-      position: relative;
-      overflow: hidden;
-      background: #000;
-    }
-
-    .nb-v7-slider-wrapper {
-      display: flex;
-      width: 200%;
-      height: 100%;
-      transition: transform 0.4s ease-out;
-    }
-
-    .nb-v7-slide {
-      width: 50%;
-      height: 100%;
-      position: relative;
-    }
-
-    .nb-v7-link,
-    .nb-v7-link img,
-    .nb-v7-link video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      border: none;
-    }
-
-    .nb-v7-sound {
-      position: absolute;
-      bottom: 12px;
-      right: 12px;
-      width: 32px;
-      height: 32px;
-      background: rgba(0, 0, 0, 0.6);
-      border: 1px solid rgba(123, 228, 149, 0.5);
-      border-radius: 50%;
-      color: #7BE495;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-    }
-
-    /* Footer */
-    .nb-v7-footer {
-      padding: 15px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: #0A0E27;
-    }
-
-    .nb-v7-dots {
-      display: flex;
-      gap: 8px;
-    }
-
-    .nb-v7-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.2);
-      transition: all 0.3s;
-      cursor: pointer;
-    }
-
-    .nb-v7-dot.active {
-      background: #7BE495;
-      transform: scale(1.2);
-    }
-
-    .nb-v7-date {
-      color: #fff;
-      font-size: 14px;
-      font-weight: 700;
-    }
-
-    .nb-v7-date span {
-      color: #7BE495;
-      margin-right: 5px;
-      font-size: 12px;
-    }
-
-    /* Mobile Responsive */
-    @media (max-width: 480px) {
-      #naverBannerV7_Container {
-        width: 92%;
-      }
-
-      .nb-v7-body {
-        height: 320px;
-      }
-
-      /* 화면 작으면 높이 줄임 */
-    }
-  </style>
 
   <script>
-    // V7 Safe Zone Logic
-    window.naverBannerV7 = {
-      current: 0, timer: null,
-      wrapper: null, dots: null, video: null,
+    // V6: 네이버 배너 슬라이더 객체 (인라인 정의로 캐시 무시)
+    window.naverBannerSliderV6 = {
+      currentIndex: 0,
+      timer: null,
+      touchStartX: 0,
+      touchEndX: 0,
 
-      init: function () {
-        this.wrapper = document.getElementById('nbV7Wrapper');
-        this.dots = document.querySelectorAll('.nb-v7-dot');
-        this.video = document.getElementById('nbV7Video');
+      move: function (index) {
+        const wrapper = document.getElementById('naverSliderWrapperV6');
+        const dots = document.querySelectorAll('.naver-nav-dot');
+        const video = document.getElementById('promoVideoV6');
 
-        if (!this.wrapper) return;
+        if (!wrapper) return;
 
-        // 터치 이벤트 연결
-        let startX = 0;
-        this.wrapper.addEventListener('touchstart', e => {
-          startX = e.touches[0].clientX;
-          this.stop();
-        }, { passive: true });
+        console.log(`[V6] Moving to slide ${index}`);
+        this.currentIndex = index;
+        wrapper.style.transform = `translateX(-${index * 50}%)`;
 
-        this.wrapper.addEventListener('touchend', e => {
-          const diff = startX - e.changedTouches[0].clientX;
-          if (Math.abs(diff) > 40) {
-            if (diff > 0) this.go(1); // Next
-            else this.go(0); // Prev
+        // 영상 제어
+        if (video && index !== 0) {
+          video.muted = true;
+          // UI 업데이트
+          const muteSvg = document.getElementById('muteSvg');
+          const unmuteSvg = document.getElementById('unmuteSvg');
+          const btn = document.getElementById('videoSoundBtn');
+          if (muteSvg && unmuteSvg && btn) {
+            muteSvg.style.display = 'block';
+            unmuteSvg.style.display = 'none';
+            btn.style.borderColor = 'rgba(123, 228, 149, 0.5)';
+            btn.style.boxShadow = 'none';
           }
-          this.start();
-        }, { passive: true });
+        }
 
-        this.start();
-        console.log("✅ V7 Banner Initialized");
+        // Dots 업데이트
+        dots.forEach((dot, i) => {
+          if (i === index) dot.classList.add('active');
+          else dot.classList.remove('active');
+        });
       },
 
-      go: function (idx) {
-        this.current = idx;
-        this.wrapper.style.transform = `translateX(-${idx * 50}%)`;
+      startTimer: function () {
+        this.stopTimer();
+        this.timer = setInterval(() => {
+          let nextIndex = (this.currentIndex + 1) % 2;
+          this.move(nextIndex);
+        }, 5000);
+        this.addTouchListeners();
+      },
 
-        this.dots.forEach((d, i) => d.classList.toggle('active', i === idx));
-
-        // 비디오 제어
-        if (this.video) {
-          if (idx === 1) this.video.muted = true; // 2번 슬라이드 가면 음소거
-          // UI 업데이트는 간단하게 생략하거나 필요시 추가
-          const mute = document.getElementById('nbV7Mute');
-          const unmute = document.getElementById('nbV7Unmute');
-          if (idx === 1 && mute) { mute.style.display = 'block'; unmute.style.display = 'none'; }
+      stopTimer: function () {
+        if (this.timer) {
+          clearInterval(this.timer);
+          this.timer = null;
         }
       },
 
-      start: function () {
-        this.stop();
-        this.timer = setInterval(() => {
-          this.go((this.current + 1) % 2);
-        }, 5000);
+      addTouchListeners: function () {
+        const wrapper = document.getElementById('naverSliderWrapperV6');
+        if (!wrapper || wrapper.dataset.touchAdded) return;
+
+        wrapper.dataset.touchAdded = 'true';
+
+        wrapper.addEventListener('touchstart', (e) => {
+          this.touchStartX = e.touches[0].clientX;
+          this.stopTimer();
+        }, { passive: true });
+
+        wrapper.addEventListener('touchend', (e) => {
+          this.touchEndX = e.changedTouches[0].clientX;
+          this.handleSwipe();
+          this.startTimer();
+        }, { passive: true });
       },
 
-      stop: function () {
-        clearInterval(this.timer);
-      },
-
-      close: function () {
-        document.getElementById('naverBannerPopup').style.display = 'none';
-        document.body.classList.remove('naver-popup-open');
-        this.stop();
-      },
-
-      toggleSound: function (e) {
-        e.stopPropagation();
-        if (!this.video) return;
-        this.video.muted = !this.video.muted;
-        document.getElementById('nbV7Mute').style.display = this.video.muted ? 'block' : 'none';
-        document.getElementById('nbV7Unmute').style.display = this.video.muted ? 'none' : 'block';
+      handleSwipe: function () {
+        const swipeThreshold = 50;
+        const diff = this.touchStartX - this.touchEndX;
+        if (Math.abs(diff) > swipeThreshold) {
+          if (diff > 0) this.move((this.currentIndex + 1) % 2);
+          else this.move(this.currentIndex === 0 ? 1 : 0);
+        }
       }
     };
 
+    // V6 Global Functions
+    function closeNaverBanner() {
+      const popup = document.getElementById('naverBannerPopup');
+      if (popup) {
+        popup.style.display = 'none';
+        document.body.classList.remove('naver-popup-open');
+        if (window.naverBannerSliderV6) {
+          window.naverBannerSliderV6.stopTimer();
+        }
+      }
+    }
 
-    // 페이지 로드 시 타이머 시작
-    document.addEventListener('DOMContentLoaded', () => {
-      if (window.naverBannerSlider) naverBannerSlider.startTimer();
-    });
+    function togglePromoSound(event) {
+      if (event) event.stopPropagation();
+
+      const video = document.getElementById('promoVideoV6');
+      const muteSvg = document.getElementById('muteSvg');
+      const unmuteSvg = document.getElementById('unmuteSvg');
+      const btn = document.getElementById('videoSoundBtn');
+
+      if (video) {
+        video.muted = !video.muted;
+
+        if (muteSvg && unmuteSvg) {
+          if (video.muted) {
+            muteSvg.style.display = 'block';
+            unmuteSvg.style.display = 'none';
+            if (btn) {
+              btn.style.borderColor = 'rgba(123, 228, 149, 0.5)';
+              btn.style.boxShadow = 'none';
+            }
+          } else {
+            muteSvg.style.display = 'none';
+            unmuteSvg.style.display = 'block';
+            if (btn) {
+              btn.style.borderColor = '#7BE495';
+              btn.style.boxShadow = '0 0 15px rgba(123, 228, 149, 0.6)';
+            }
+            video.play().catch(e => console.log('Playback failed:', e));
+          }
+        }
+      }
+    }
   </script>
   </div>
 
