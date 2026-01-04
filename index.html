@@ -4150,15 +4150,17 @@ body.popup-active {
         .naver-slider-container {
           width: 100% !important;
           height: auto !important;
-          aspect-ratio: 16 / 9 !important;
-          /* 4:3 or 16:9 to prevent zoom */
+          aspect-ratio: 1 / 1 !important;
+          /* Restore 1:1 as requested */
           max-height: 60vh !important;
         }
 
         .naver-slide img,
         .naver-slide video {
+          width: 100% !important;
+          height: 100% !important;
           object-fit: contain !important;
-          /* Ensure full content is visible */
+          /* Fix zoom issue */
           background: #000;
         }
       }
