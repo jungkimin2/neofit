@@ -4141,16 +4141,25 @@ body.popup-active {
 
         /* 네비게이터 위치 조정 */
         .naver-banner-navigator {
-          bottom: -35px !important;
+          bottom: -40px !important;
           height: 30px !important;
-          z-index: 99999999 !important;
+          z-index: 2147483647 !important;
+          pointer-events: auto !important;
         }
 
         .naver-slider-container {
+          width: 100% !important;
           height: auto !important;
-          aspect-ratio: 1 / 1;
-          /* 정사각형 비율 유지 or video ratio */
-          max-height: 50vh;
+          aspect-ratio: 16 / 9 !important;
+          /* 4:3 or 16:9 to prevent zoom */
+          max-height: 60vh !important;
+        }
+
+        .naver-slide img,
+        .naver-slide video {
+          object-fit: contain !important;
+          /* Ensure full content is visible */
+          background: #000;
         }
       }
 
