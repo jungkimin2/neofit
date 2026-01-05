@@ -6802,22 +6802,22 @@ body.popup-active {
               display: none !important;
             }
 
-            /* NEO-S 쇼케이스 전체를 5칸(80px) 아래로 이동 */
+            /* NEO-S 쇼케이스 전체를 약간 위로 조정 (기존 96px에서 32px로 축소) */
             .new-neos-showcase {
-              transform: translateY(96px) !important;
+              transform: translateY(32px) !important;
               position: relative !important;
             }
 
-            /* 네오 스마트 제목과 설명도 함께 아래로 이동 - 강제 적용 */
+            /* 네오 스마트 제목과 설명도 함께 위로 조정 - 강제 적용 */
             body section#smart h2,
             html body section#smart h2 {
-              transform: translateY(96px) !important;
+              transform: translateY(32px) !important;
               position: relative !important;
             }
 
             body section#smart>.container>p,
             html body section#smart>.container>p {
-              transform: translateY(96px) !important;
+              transform: translateY(32px) !important;
               position: relative !important;
             }
 
@@ -7384,10 +7384,10 @@ body.popup-active {
       <!-- 핵심 UX 흐름: 네오 하이브 counterpart와 동일한 구조로 삽입 -->
       <!-- <div id="smart"></div> -->
       <div class="slide-container p-10 smart-section-mobile"
-        style="margin-top: 2.5rem; max-width: 1100px; margin-left: auto; margin-right: auto;">
+        style="margin-top: 1rem !important; max-width: 1100px; margin-left: auto; margin-right: auto;">
         <div class="flex items-center mb-8">
           <h1 class="text-4xl font-bold smart-title-mobile"
-            style="text-align: left; margin-top: calc(6rem - 16px); margin-bottom: 12px;">
+            style="text-align: left; margin-top: 2rem !important; margin-bottom: 12px;">
             <span style="color: #FFFFFF;">태그 한 번,</span>
             <span class="neon-green"
               style="color: #7BE495; text-shadow: 0 0 8px rgba(123, 228, 149, 0.8), 0 0 16px rgba(123, 228, 149, 0.6);">
