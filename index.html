@@ -6907,14 +6907,19 @@ body.popup-active {
 
             /* 비디오 섹션과 싱크 맞추기 위해 상단 여백 보정 */
             .smart-section-mobile {
-              margin-top: -60px !important;
-              padding-top: 0 !important;
+              margin-top: -100px !important;
+              padding: 0 !important;
               transform: none !important;
             }
 
-            /* 카드 섹션 스타일 */
+            /* 헤더 하단 마진 축소 */
+            .smart-section-mobile .flex.items-center.mb-8 {
+              margin-bottom: 4px !important;
+            }
+
+            /* 카드 섹션 스타일 (모바일에서 높이 제약 제거) */
             .new-neos-showcase .card-section {
-              min-height: 600px;
+              min-height: auto !important;
               perspective: 1000px;
             }
 
@@ -7548,7 +7553,7 @@ body.popup-active {
         </div>
         <!-- NEO SMART 카드형 주요 UI -->
         <div class="neos-card-list"
-          style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; justify-items: center; margin-top: 56px !important;">
+          style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; justify-items: center;">
           <div class="neos-card" style="display: flex; align-items: center; min-width: 240px;">
             <div class="neos-icon"
               style="width: 42px; height: 42px; background: linear-gradient(135deg, #7BE495, #62D2A2); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-right: 16px;">
