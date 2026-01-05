@@ -6849,7 +6849,7 @@ body.popup-active {
               z-index: 200 !important;
               margin-top: 12px !important;
               /* 설명 문구와 더 밀착 */
-              margin-bottom: 60px !important;
+              margin-bottom: 20px !important;
               display: grid !important;
               grid-template-columns: repeat(2, 1fr) !important;
               gap: 12px !important;
@@ -6858,56 +6858,67 @@ body.popup-active {
               opacity: 1 !important;
             }
 
-            /* 모바일 전용 프리미엄 카드 디자인 */
+            /* 모바일 전용 프리미엄 카드 디자인 - 캡처 이미지 가이드 반영 (가로형) */
             .neos-card {
-              background: rgba(123, 228, 149, 0.05) !important;
-              border: 1px solid rgba(123, 228, 149, 0.2) !important;
-              border-radius: 16px !important;
-              padding: 16px !important;
+              background: rgba(255, 255, 255, 0.04) !important;
+              border: 0.5px solid rgba(123, 228, 149, 0.4) !important;
+              border-radius: 12px !important;
+              padding: 12px 14px !important;
               display: flex !important;
-              flex-direction: column !important;
+              flex-direction: row !important;
               align-items: center !important;
-              justify-content: center !important;
-              min-height: 110px !important;
+              justify-content: flex-start !important;
+              min-height: auto !important;
               transition: all 0.3s ease !important;
-              box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
-              text-align: center !important;
+              box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3) !important;
+              text-align: left !important;
               min-width: unset !important;
-              /* 모바일에서 고정폭 제거 */
+              width: 100% !important;
             }
 
             .neos-icon {
-              margin-bottom: 12px !important;
-              margin-right: 0 !important;
-              width: 48px !important;
-              height: 48px !important;
+              margin-bottom: 0 !important;
+              margin-right: 14px !important;
+              width: 38px !important;
+              height: 38px !important;
+              flex-shrink: 0 !important;
               display: flex !important;
               align-items: center !important;
               justify-content: center !important;
               background: #7BE495 !important;
-              /* 아주 밝은 그린 브랜드 컬러 - 시인성 극대화 */
-              border-radius: 12px !important;
-              box-shadow: 0 0 15px rgba(123, 228, 149, 0.5) !important;
-              /* 선명한 아이콘 광채 */
+              /* 단색 네온 그린 박스 */
+              border-radius: 8px !important;
+              box-shadow: 0 0 10px rgba(123, 228, 149, 0.3) !important;
+            }
+
+            /* 아이콘 이미지를 검은색으로 반전 (단색 박스 대비) */
+            .neos-icon img {
+              filter: brightness(0) !important;
+              width: 24px !important;
+              height: 24px !important;
+              object-fit: contain !important;
             }
 
             .neos-text {
               font-family: 'Inter', 'Noto Sans KR', sans-serif !important;
               font-weight: 600 !important;
-              font-size: 0.95rem !important;
+              font-size: 0.85rem !important;
+              /* 텍스트 크기 최적화 (1줄 유지) */
               color: #fff !important;
               letter-spacing: -0.02em !important;
+              line-height: 1.2 !important;
             }
 
-            .no-bg-mobile {
-              background: transparent !important;
-              box-shadow: none !important;
-              border-radius: 0 !important;
+            /* 기존 no-bg 클래스 오버라이드 (통일성 유지) */
+            .smart-section-mobile .no-bg-mobile {
+              background: #7BE495 !important;
+              box-shadow: 0 0 10px rgba(123, 228, 149, 0.3) !important;
+              border-radius: 8px !important;
             }
 
-            /* 비디오 섹션과 싱크 맞추기 위해 상단 여백 보정 (초강력 밀착) */
+            /* 비디오 섹션과 싱크 맞추기 위해 상단 여백 보정 (겹침 방지를 위해 완화) */
             .smart-section-mobile {
-              margin-top: -220px !important;
+              margin-top: -120px !important;
               padding: 0 !important;
               transform: none !important;
             }
@@ -19342,7 +19353,7 @@ body.popup-active {
           { selector: '#mobile-moved-merged-box', transform: 'translateY(-48px)' },
           { selector: '.core-value-fresh-mobile', transform: 'translateY(-132px)' },
           { selector: '.mobile-system-box-wrapper', transform: 'translateY(-164px)' },
-          { selector: '#smart', transform: 'translateY(-220px)' },
+          { selector: '#smart', transform: 'translateY(-120px)' },
           { selector: '#hive', transform: 'translateY(-149px)' }
           // { selector: '#neo-pilates', transform: 'translateY(144px)' } // 제거 - 스크롤 버그 수정
         ];
@@ -19371,17 +19382,17 @@ body.popup-active {
           backTextOverlay.style.setProperty('opacity', '0', 'important');
         }
 
-        // NEOS 카드 리스트 위치 조정 - 2칸 위로 올림
+        // NEOS 카드 리스트 위치 조정
         const neosCardList = document.querySelector('div.neos-card-list');
         if (neosCardList) {
-          neosCardList.style.setProperty('transform', 'translateY(-180px) translateX(32px)', 'important');
+          neosCardList.style.setProperty('transform', 'translateY(-100px)', 'important');
           neosCardList.style.setProperty('position', 'relative', 'important');
-          neosCardList.style.setProperty('z-index', '15', 'important');
+          neosCardList.style.setProperty('z-index', '200', 'important');
           neosCardList.style.setProperty('grid-template-columns', 'repeat(2, 1fr)', 'important');
-          neosCardList.style.setProperty('gap', '8px', 'important');
-          neosCardList.style.setProperty('padding', '12px', 'important');
-          neosCardList.style.setProperty('max-width', '90%', 'important');
-          neosCardList.style.setProperty('margin-left', '-25px', 'important');
+          neosCardList.style.setProperty('gap', '10px', 'important');
+          neosCardList.style.setProperty('padding', '0 20px', 'important');
+          neosCardList.style.setProperty('max-width', '100%', 'important');
+          neosCardList.style.setProperty('margin-left', '0', 'important');
         }
 
         // 모바일 환경에서 발광효과 강제 표시
