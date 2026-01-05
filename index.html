@@ -7310,63 +7310,7 @@ body.popup-active {
           }
         }
       </style>
-      <style>
-        /* 모바일에서 NFC 제목과 설명 문구 정렬 맞추기 */
-        @media (max-width: 768px) {
-          .smart-title-mobile {
-            padding-left: 20px !important;
-            padding-right: 20px !important;
-          }
 
-          .smart-desc-mobile {
-            padding-left: 20px !important;
-            padding-right: 20px !important;
-          }
-
-          /* NFC 섹션 전체를 위로 3칸 이동 */
-          .smart-section-mobile {
-            margin-top: -48px !important;
-            position: relative !important;
-          }
-
-          /* 더 구체적인 선택자로 우선순위 높이기 */
-          div.slide-container.smart-section-mobile {
-            margin-top: -48px !important;
-          }
-
-          /* 추가로 transform 사용 */
-          .smart-section-mobile {
-            transform: translateY(-48px) !important;
-          }
-
-          /* 태그 한 번 제목과 설명 문구만 아래로 1.5칸 이동 - 더 구체적인 선택자 사용 */
-          body .smart-section-mobile h1.smart-title-mobile,
-          html body .smart-section-mobile h1.smart-title-mobile,
-          body div.smart-section-mobile h1.smart-title-mobile {
-            margin-top: calc(6rem - 16px + 24px) !important;
-            /* 기존 위치에서 24px(1.5칸) 아래로 */
-          }
-
-          body .smart-section-mobile p.smart-desc-mobile,
-          html body .smart-section-mobile p.smart-desc-mobile,
-          body div.smart-section-mobile div p.smart-desc-mobile {
-            margin-top: calc(-16px + 24px) !important;
-            /* 기존 -16px에서 24px(1.5칸) 아래로 = 8px */
-          }
-
-          /* 네오 스마트 트레이너 섹션 위로 3칸 이동 */
-          .smart-trainer-section-mobile {
-            margin-top: -80px !important;
-            position: relative !important;
-          }
-
-          /* 더 구체적인 선택자로 우선순위 높이기 */
-          section#smart.smart-trainer-section-mobile {
-            margin-top: -80px !important;
-            transform: translateY(-16px) !important;
-          }
-        }
-      </style>
       <style>
         /* 모바일에서 자물쇠 아이콘과 문구 정렬 */
         @media (max-width: 768px) {
@@ -7401,8 +7345,7 @@ body.popup-active {
       <div class="slide-container p-10 smart-section-mobile"
         style="margin-top: 2.5rem; max-width: 1100px; margin-left: auto; margin-right: auto;">
         <div class="flex items-center mb-8">
-          <h1 class="text-4xl font-bold smart-title-mobile"
-            style="text-align: left; margin-top: calc(6rem - 16px); margin-bottom: 12px;">
+          <h1 class="text-4xl font-bold smart-title-mobile" style="text-align: left; margin-bottom: 12px;">
             <span style="color: #FFFFFF;">태그 한 번,</span>
             <span class="neon-green"
               style="color: #7BE495; text-shadow: 0 0 8px rgba(123, 228, 149, 0.8), 0 0 16px rgba(123, 228, 149, 0.6);">
@@ -7542,7 +7485,7 @@ body.popup-active {
         </div>
         <!-- NEO SMART 카드형 주요 UI -->
         <div class="neos-card-list"
-          style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; justify-items: center; margin-top: calc(56px - 16px);">
+          style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; justify-items: center;">
           <div class="neos-card" style="display: flex; align-items: center; min-width: 240px;">
             <div class="neos-icon"
               style="width: 42px; height: 42px; background: linear-gradient(135deg, #7BE495, #62D2A2); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-right: 16px;">
