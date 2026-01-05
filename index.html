@@ -4208,6 +4208,8 @@ body.popup-active {
           width: 200% !important;
           height: 100% !important;
           transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1) !important;
+          transform: translateX(0) !important;
+          /* Mobile Init Fix */
         }
 
         .naver-slide {
@@ -4334,16 +4336,16 @@ body.popup-active {
           <div class="naver-banner-arrow next" onclick="naverBannerSliderV6.move(1); naverBannerSliderV6.startTimer();">
             &gt;</div>
           <!-- V6 ID 적용 -->
-          <div class="naver-slider-wrapper" id="naverSliderWrapperV6" style="transform: translateX(0) !important;">
+          <div class="naver-slider-wrapper" id="naverSliderWrapperV6">
             <!-- 슬라이드 0 (Video) -->
             <div class="naver-slide" style="z-index: 10;">
               <!-- poster removed to avoid confusion -->
               <video id="promoVideoV6" src="images/naver_banner_final_v2.mp4" loop muted playsinline autoplay
                 style="z-index: 20;"></video>
-              <!-- Manual Play Overlay -->
+              <!-- Manual Play Overlay (Mobile Only via CSS/JS) -->
               <div id="v6PlayOverlay" style="
                   position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-                  display: flex; align-items: center; justify-content: center;
+                  display: none; align-items: center; justify-content: center;
                   z-index: 25; pointer-events: none; opacity: 0; transition: opacity 0.3s;
                 ">
                 <div style="
@@ -4576,11 +4578,15 @@ body.popup-active {
         window.naverBannerSliderV6.startTimer();
         console.log("✅ V6 Banner Initialized (Slide 0 Priority)");
 
-        // V6 Video Playback Handling (Manual Play Overlay)
+        // V6 Video Playback Handling (Manual Play Overlay) - Mobile Only
         const v6Video = document.getElementById('promoVideoV6');
         const v6Overlay = document.getElementById('v6PlayOverlay');
+        const isMobile = window.innerWidth <= 768;
 
-        if (v6Video && v6Overlay) {
+        if (v6Video && v6Overlay && isMobile) {
+          // Enable Overlay Display via JS for Mobile Only
+          v6Overlay.style.display = 'flex';
+
           function updateOverlay() {
             if (v6Video.paused || v6Video.ended) {
               v6Overlay.style.opacity = '1';
@@ -4604,6 +4610,9 @@ body.popup-active {
 
           // Initial check
           updateOverlay();
+        } else if (v6Overlay) {
+          // Ensure hidden on PC
+          v6Overlay.style.display = 'none';
         }
       }
     }
