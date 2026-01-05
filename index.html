@@ -6874,7 +6874,7 @@ body.popup-active {
               background: rgba(255, 255, 255, 0.04) !important;
               border: 0.5px solid rgba(123, 228, 149, 0.4) !important;
               border-radius: 12px !important;
-              padding: 12px 14px !important;
+              padding: 16px 14px !important;
               display: flex !important;
               flex-direction: row !important;
               align-items: center !important;
@@ -21435,11 +21435,19 @@ body.popup-active {
                             margin-bottom: 0 !important;
                         }
 
-                        /* CARDS: Reset */
+                        /* CARDS: Reset - 상하 간격 조정 */
                         .neos-card-list {
-                            margin-top: -60px !important;
+                            margin-top: 20px !important;
+                            margin-bottom: 40px !important;
                             position: relative !important;
                             z-index: 101 !important;
+                            display: grid !important;
+                            grid-template-columns: 1fr 1fr !important;
+                            gap: 24px 12px !important;
+                        }
+
+                        .neos-card {
+                            padding: 14px 12px !important;
                         }
 
                         /* CONTAINER: MINIMIZED DOWN (10px) + SCROLL FIX */
