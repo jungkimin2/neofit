@@ -21418,8 +21418,8 @@ body.popup-active {
                             transition: none !important;
                         }
 
-                        /* 2. OVERLAP FIX: PHYSICAL SEPARATION (Optimized Gap) */
-                        /* 120px was too far. 50px is the sweet spot to clear overlap but keep it close. */
+                        /* 2. OVERLAP FIX: PHYSICAL SEPARATION (Minimal Gap + Scroll Safety) */
+                        /* 50px was too far. 10px is the sweet spot. Added scroll safety props. */
                         
                         /* HEADER: Reset internal margin since container acts as spacer */
                         body #smart.smart-trainer-section-mobile h2 {
@@ -21442,17 +21442,23 @@ body.popup-active {
                             z-index: 101 !important;
                         }
 
-                        /* CONTAINER: OPTIMIZED DOWN (50px) */
-                        /* Reduced from 120px to 50px to close the visual gap while preventing overlap */
+                        /* CONTAINER: MINIMIZED DOWN (10px) + SCROLL FIX */
+                        /* Reduced margin to 10px. Added overflow/height/touch-action to fix "stuck scroll" */
                         body #smart.smart-trainer-section-mobile {
-                            margin-top: 50px !important;
+                            margin-top: 10px !important;
                             padding-top: 20px !important; 
                             padding-bottom: 120px !important; 
+                            /* SCROLL SAFETY PROPERTIES */
+                            position: relative !important;
+                            height: auto !important;
+                            overflow: visible !important;
+                            touch-action: auto !important;
+                            pointer-events: auto !important;
                         }
                     }
                  `;
           document.head.appendChild(style);
-          console.log("Neo Smart Mobile Layout Enforced via CSS Injection (Optimized Gap 50px)");
+          console.log("Neo Smart Mobile Layout Enforced via CSS Injection (Gap 10px + Scroll Fix)");
         }
       }
     }
