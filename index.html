@@ -4334,12 +4334,14 @@ body.popup-active {
           <div class="naver-banner-arrow next" onclick="naverBannerSliderV6.move(1); naverBannerSliderV6.startTimer();">
             &gt;</div>
           <!-- V6 ID 적용 -->
-          <div class="naver-slider-wrapper" id="naverSliderWrapperV6">
-            <!-- 슬라이드 0 -->
-            <div class="naver-slide">
+          <div class="naver-slider-wrapper" id="naverSliderWrapperV6" style="transform: translateX(0) !important;">
+            <!-- 슬라이드 0 (Video) -->
+            <div class="naver-slide" style="z-index: 10;">
               <a href="https://m.booking.naver.com/booking/10/bizes/987028/items/5583476?area=pll&lang=ko&startDate=2025-12-28&theme=place"
                 target="_blank" rel="noopener noreferrer" class="naver-banner-link">
-                <video id="promoVideoV6" src="images/naver_banner_final_v2.mp4" loop muted playsinline autoplay></video>
+                <!-- poster added to prevent black screen, playsinline/muted/autoplay/loop checked -->
+                <video id="promoVideoV6" src="images/naver_banner_final_v2.mp4" loop muted playsinline autoplay
+                  poster="images/pilates_event_2026.jpg" style="z-index: 20;"></video>
               </a>
             </div>
             <!-- 슬라이드 1 -->
