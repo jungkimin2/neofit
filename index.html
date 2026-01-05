@@ -4220,7 +4220,9 @@ body.popup-active {
         .naver-slide {
           width: 50% !important;
           height: 100% !important;
-          flex-shrink: 0 !important;
+          flex: 0 0 50% !important;
+          max-width: 50% !important;
+          /* Strict Flex Locking */
           background: #000 !important;
           position: relative !important;
           overflow: hidden !important;
@@ -4601,6 +4603,7 @@ body.popup-active {
         if (v6Video && v6Overlay && isMobile) {
           // Mobile: Remove poster to avoid confusion, enable manual play overlay
           v6Video.removeAttribute('poster');
+          v6Video.poster = ''; // Force clear
           v6Overlay.style.display = 'flex';
 
           function updateOverlay() {
