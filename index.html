@@ -8888,9 +8888,9 @@ body.popup-active {
           z-index: 200 !important;
         }
 
-        /* 필라테스 섹션의 transform 고정 */
+        /* 필라테스 섹션의 transform 고정 - 상단 여백 축소 */
         #neo-pilates {
-          transform: translateY(144px) !important;
+          transform: translateY(50px) !important;
         }
 
         .pilates-indicator {
@@ -19880,27 +19880,27 @@ body.popup-active {
   /* 모바일에서 네오 필라테스 섹션 아래로 이동 - 최종 override */
   @media screen and (max-width: 768px) {
 
-    /* 네오 필라테스 섹션 강제로 아래로 이동 - 카드 가림 방지 */
+    /* 네오 필라테스 섹션 - 상단 여백 축소 */
     body section#neo-pilates.section.animate-on-scroll.mobile-transform-target,
     html body section#neo-pilates.section.animate-on-scroll.mobile-transform-target,
     section#neo-pilates[style],
     body #neo-pilates,
     html body #neo-pilates {
-      margin-top: 80px !important;
-      transform: translateY(100px) !important;
-      -webkit-transform: translateY(100px) !important;
+      margin-top: 30px !important;
+      transform: translateY(40px) !important;
+      -webkit-transform: translateY(40px) !important;
       position: relative !important;
       z-index: 50 !important;
-      padding-top: 20px !important;
+      padding-top: 10px !important;
       background: #000 !important;
       display: block !important;
     }
 
     /* JavaScript로 설정되는 인라인 스타일도 override */
     section#neo-pilates.section.animate-on-scroll.mobile-transform-target {
-      margin-top: 80px !important;
-      transform: translateY(100px) !important;
-      -webkit-transform: translateY(100px) !important;
+      margin-top: 30px !important;
+      transform: translateY(40px) !important;
+      -webkit-transform: translateY(40px) !important;
     }
 
     /* benefits 섹션의 하단 여백 추가 */
