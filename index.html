@@ -6830,16 +6830,12 @@ body.popup-active {
               position: relative !important;
             }
 
-            /* 네오 스마트 상단 제목과 설명도 원래 위치로 복구 (96px 아래로) */
+            /* 네오 스마트 상단 제목과 설명 여백 제거 */
             body section#smart h2,
-            html body section#smart h2 {
-              transform: translateY(96px) !important;
-              position: relative !important;
-            }
-
+            html body section#smart h2,
             body section#smart>.container>p,
             html body section#smart>.container>p {
-              transform: translateY(96px) !important;
+              transform: none !important;
               position: relative !important;
             }
 
@@ -6850,40 +6846,23 @@ body.popup-active {
               z-index: 201 !important;
             }
 
-            /* 하단 설명 문구와 카드 그리드를 훨씬 더 공격적으로 위로 끌어올림 */
+            /* 하단 설명 문구와 카드 그리드를 훨씬 더 공격적으로 위로 끌어올림 (Cascade Fix) */
             .smart-desc-mobile {
-              transform: translateY(-130px) !important;
+              transform: translateY(-140px) !important;
               position: relative !important;
-              z-index: 201 !important;
+              z-index: 205 !important;
             }
 
-            /* "태그 한 번, 자동 학습 시작!" 문구 사이즈 더 축소 - 강제 적용 */
-            h1.smart-title-mobile,
-            .smart-section-mobile h1.smart-title-mobile {
-              font-size: 1rem !important;
-            }
-
-            h1.smart-title-mobile span,
-            .smart-section-mobile h1.smart-title-mobile span {
-              font-size: 1rem !important;
-            }
-
-            h1.smart-title-mobile .neon-green,
-            .smart-section-mobile h1.smart-title-mobile .neon-green {
-              font-size: 1.1rem !important;
-            }
-
-            /* NEOS 카드 리스트(기구 사용법, 체형 교정 영상 등) 위치 조정 - 위로 3칸 올림 */
+            /* NEOS 카드 리스트 전체 견인 */
             body .neos-card-list,
             html body .neos-card-list,
             body div.neos-card-list[style*="margin-top"],
-            body section#smart div.neos-card-list {
-              transform: translateY(-48px) translateX(0) !important;
+            .smart-section-mobile .neos-card-list {
+              transform: translate(27px, -200px) !important;
               position: relative !important;
               z-index: 200 !important;
               margin-top: 56px !important;
               margin-bottom: 60px !important;
-              /* 하단 여백 추가 */
               display: grid !important;
               grid-template-columns: repeat(2, 1fr) !important;
               gap: 12px !important;
@@ -7564,41 +7543,6 @@ body.popup-active {
         <!-- NEO SMART 카드형 주요 UI -->
         <div class="neos-card-list"
           style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; justify-items: center; margin-top: calc(56px - 16px);">
-          <style>
-            @media (max-width: 768px) {
-              .neos-card-list {
-                grid-template-columns: repeat(2, 1fr) !important;
-                gap: 12px !important;
-                justify-items: center !important;
-                align-items: center !important;
-                padding: 0 20px !important;
-                margin: 0 auto !important;
-                max-width: 100% !important;
-                transform: translate(27px, -180px) !important;
-              }
-
-              .neos-card {
-                justify-content: flex-start !important;
-                text-align: left !important;
-                min-width: 150px !important;
-                max-width: 170px !important;
-                margin: 0 auto !important;
-                padding: 8px !important;
-              }
-
-              /* 모바일에서 아이콘 크기 조정 */
-              .neos-card .neos-icon {
-                width: 36px !important;
-                height: 36px !important;
-                margin-right: 12px !important;
-              }
-
-              /* 모바일에서 텍스트 크기 조정 */
-              .neos-card .neos-text {
-                font-size: 0.85rem !important;
-              }
-            }
-          </style>
           <div class="neos-card" style="display: flex; align-items: center; min-width: 240px;">
             <div class="neos-icon"
               style="width: 42px; height: 42px; background: linear-gradient(135deg, #7BE495, #62D2A2); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-right: 16px;">
