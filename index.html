@@ -6891,12 +6891,27 @@ body.popup-active {
               box-shadow: 0 0 10px rgba(123, 228, 149, 0.3) !important;
             }
 
-            /* 아이콘 이미지를 검은색으로 반전 (단색 박스 대비) */
-            .neos-icon img {
+            /* .no-bg-mobile 클래스가 있는 아이콘 컨테이너는 배경 제거 (네오핏 클래스 N 로고용) */
+            .neos-icon.no-bg-mobile {
+              background: transparent !important;
+              box-shadow: none !important;
+            }
+
+            /* 일반 아이콘은 검은색으로 반전 */
+            .neos-icon:not(.no-bg-mobile) img {
               filter: brightness(0) !important;
               width: 24px !important;
               height: 24px !important;
               object-fit: contain !important;
+            }
+
+            /* N 로고(네오핏 클래스) 이미지는 원래 색상 유지 및 크기 조정 */
+            .neos-icon.no-bg-mobile img {
+              filter: none !important;
+              width: 38px !important;
+              height: 38px !important;
+              object-fit: contain !important;
+              margin-top: 0 !important;
             }
 
             .neos-text {
@@ -6909,12 +6924,7 @@ body.popup-active {
               line-height: 1.2 !important;
             }
 
-            /* 기존 no-bg 클래스 오버라이드 (통일성 유지) */
-            .smart-section-mobile .no-bg-mobile {
-              background: #7BE495 !important;
-              box-shadow: 0 0 10px rgba(123, 228, 149, 0.3) !important;
-              border-radius: 8px !important;
-            }
+            /* 기존 no-bg 클래스 오버라이드 삭제 (위에서 통합 처리함) */
 
             /* 비디오 섹션과 싱크를 맞추되, 내부 겹침 없이 섹션 전체를 이동 */
             .smart-section-mobile {
