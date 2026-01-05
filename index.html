@@ -6839,7 +6839,7 @@ body.popup-active {
               /* 가독성 상향 */
             }
 
-            /* NEOS 카드 리스트 전체 (설명문구와 아주 촘촘하게) */
+            /* 모바일 카드 리스트 - 텍스트 겹침 방지 (초기화) */
             body .neos-card-list,
             html body .neos-card-list,
             body div.neos-card-list,
@@ -6916,11 +6916,18 @@ body.popup-active {
               border-radius: 8px !important;
             }
 
-            /* 비디오 섹션과 싱크 맞추기 위해 상단 여백 보정 (겹침 방지를 위해 완화) */
+            /* 비디오 섹션과 싱크를 맞추되, 내부 겹침 없이 섹션 전체를 이동 */
             .smart-section-mobile {
-              margin-top: -120px !important;
-              padding: 0 !important;
+              margin-top: -100px !important;
+              padding-top: 20px !important;
+              /* 내부 여백 확보 */
               transform: none !important;
+            }
+
+            /* 설명 텍스트 하단 여백 확보 */
+            .smart-section-mobile .explanation-text,
+            .smart-section-mobile p {
+              margin-bottom: 24px !important;
             }
 
             /* 헤더 하단 마진 축소 */
@@ -19382,10 +19389,11 @@ body.popup-active {
           backTextOverlay.style.setProperty('opacity', '0', 'important');
         }
 
-        // NEOS 카드 리스트 위치 조정
+        // NEOS 카드 리스트 위치 조정 - 겹침 방지를 위해 내부 리프트 제거 (0px)
         const neosCardList = document.querySelector('div.neos-card-list');
         if (neosCardList) {
-          neosCardList.style.setProperty('transform', 'translateY(-100px)', 'important');
+          neosCardList.style.setProperty('transform', 'translateY(0px)', 'important');
+          neosCardList.style.setProperty('margin-top', '0px', 'important');
           neosCardList.style.setProperty('position', 'relative', 'important');
           neosCardList.style.setProperty('z-index', '200', 'important');
           neosCardList.style.setProperty('grid-template-columns', 'repeat(2, 1fr)', 'important');
