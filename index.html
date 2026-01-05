@@ -21417,16 +21417,16 @@ body.popup-active {
         if (section) {
           section.style.setProperty('margin-top', '-290px', 'important');
           section.style.setProperty('padding-bottom', '240px', 'important');
-          section.style.setProperty('transform', 'none', 'important');
+          // Reduced aggression: Removed transform override to prevent scroll locking
         }
       }
     }
 
-    // Run on critical events to override any conflicting scripts
+    // Run on load and resize only. Scroll listener removed to fix "sticky" scroll.
     window.addEventListener('load', enforceNeoSmartLayout);
     window.addEventListener('resize', enforceNeoSmartLayout);
-    window.addEventListener('scroll', enforceNeoSmartLayout);
-    setInterval(enforceNeoSmartLayout, 500);
+    // window.addEventListener('scroll', enforceNeoSmartLayout); <--- REMOVED
+    setInterval(enforceNeoSmartLayout, 1000); // Polling reduced to 1s
   })();
 </script>
 
