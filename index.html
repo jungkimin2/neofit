@@ -4339,8 +4339,7 @@ body.popup-active {
             <div class="naver-slide">
               <a href="https://m.booking.naver.com/booking/10/bizes/987028/items/5583476?area=pll&lang=ko&startDate=2025-12-28&theme=place"
                 target="_blank" rel="noopener noreferrer" class="naver-banner-link">
-                <video id="promoVideoV6" src="./images/naver_banner_final_v2.mp4" loop muted playsinline
-                  autoplay></video>
+                <video id="promoVideoV6" src="images/naver_banner_final_v2.mp4" loop muted playsinline autoplay></video>
               </a>
             </div>
             <!-- 슬라이드 1 -->
@@ -4526,8 +4525,16 @@ body.popup-active {
       if (window.naverBannerSliderV6) {
         // 1. Force Video Play (Mobile Policy)
         const video = document.getElementById('promoVideoV6');
+        const wrapper = document.getElementById('naverSliderWrapperV6');
+
+        if (wrapper) {
+          wrapper.style.transform = 'translateX(0)'; // Ensure Slide 0 is visible
+        }
+
         if (video) {
           video.muted = true; // Ensure muted for autoplay
+          video.style.display = 'block'; // Ensure visibility
+          video.load(); // Reload to ensure src change is picked up
           video.play().catch(e => console.log('Force play failed:', e));
         }
 
