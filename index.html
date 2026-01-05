@@ -4377,11 +4377,9 @@ body.popup-active {
           width: 100% !important;
           height: 100% !important;
           object-fit: contain !important;
-          /* 유저 요청 스크린샷과 동일하게 contain으로 복구 */
           transform: scale(1.6) !important;
-          /* 보기 좋았던 1.6배로 복구 */
-          object-position: center 25% !important;
-          /* 중심 위치도 이전의 25%로 복구 */
+          object-position: center 50% !important;
+          /* 상단 여백 제거를 위해 정중앙(50%)으로 이동 */
           will-change: transform;
         }
       }
@@ -4433,7 +4431,7 @@ body.popup-active {
             <a href="https://m.booking.naver.com/booking/10/bizes/987028/items/5583476?area=pll&lang=ko&startDate=2025-12-28&theme=place"
               target="_blank" rel="noopener noreferrer" class="naver-banner-link" style="height: 100%;">
               <img src="./images/pilates_event_2026.jpg" alt="필라테스 등록시 헬스 전액 무료"
-                style="width: 100%; height: 100%; object-fit: contain; border-radius: 16px; object-position: center 25% !important;">
+                style="width: 100%; height: 100%; object-fit: contain; border-radius: 16px; object-position: center 50% !important;">
             </a>
           </div>
 
