@@ -21429,28 +21429,37 @@ body.popup-active {
 
                         /* 2. SPLIT MOTION: Decouple Top (Header/Video) from Bottom (Cards) */
                         
-                        /* HEADER: Aggressively pushed down (180px) */
-                        .smart-trainer-section-mobile h2 {
-                            margin-top: 180px !important; 
+                        /* HEADER: Aggressively pushed down (320px) to clear upper overlap */
+                        body #smart.smart-trainer-section-mobile h2 {
+                            margin-top: 320px !important; 
                             padding-top: 20px !important;
                             position: relative !important;
                             top: 0 !important;
                         }
                         
-                        /* VIDEO: Pushed down (120px) */
+                        /* VIDEO: Standard spacing */
                         .new-neos-showcase {
-                            margin-top: 120px !important;
+                            margin-top: 60px !important;
+                            margin-bottom: 0 !important;
                         }
 
-                        /* CONTAINER: Pulled UP strongly (-340px) to keep Bottom UI (Cards) from sinking */
+                        /* CARDS: Pulled UP (-180px) to neutralize the Header Push (Vacuum Effect) */
+                        /* This keeps the bottom UI fixed while the top drops */
+                        .neos-card-list {
+                            margin-top: -180px !important;
+                            position: relative !important;
+                            z-index: 101 !important;
+                        }
+
+                        /* CONTAINER: Pulled UP strongly (-340px) to keep Bottom UI anchored high */
                         .smart-trainer-section-mobile {
                             margin-top: -340px !important;
-                            padding-bottom: 300px !important; /* Safe padding for next section */
+                            padding-bottom: 300px !important; 
                         }
                     }
                  `;
           document.head.appendChild(style);
-          console.log("Neo Smart Mobile Layout Enforced via CSS Injection (Split Motion)");
+          console.log("Neo Smart Mobile Layout Enforced via CSS Injection (Internal Vacuum)");
         }
       }
     }
