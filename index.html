@@ -19962,8 +19962,8 @@ body.popup-active {
       if (!neoPilatesSection) return;
 
       if (window.innerWidth <= 768) {
-        // 모바일: margin-top만 사용하여 위치 조정 - 8칸(128px) 아래로 이동
-        neoPilatesSection.style.setProperty('margin-top', '-172px', 'important'); // -300px + 128px = -172px
+        // 모바일: 카드가 보이도록 충분한 간격 확보
+        neoPilatesSection.style.setProperty('margin-top', '60px', 'important');
         neoPilatesSection.style.setProperty('transform', 'none', 'important');
         neoPilatesSection.style.setProperty('-webkit-transform', 'none', 'important');
         neoPilatesSection.style.setProperty('position', 'relative', 'important');
