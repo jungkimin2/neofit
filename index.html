@@ -21488,17 +21488,56 @@ body.popup-active {
       overflow: visible !important;
     }
 
-    /* Smart 섹션 상단 여백 조정 */
+    /* Smart 섹션 상단 여백 조정 및 하단 확장 */
     section#smart,
-    section#smart.smart-trainer-section-mobile {
+    section#smart.smart-trainer-section-mobile,
+    body section#smart,
+    html body section#smart.smart-trainer-section-mobile {
       margin-top: 40px !important;
       overflow: visible !important;
+      padding-bottom: 200px !important;
+      min-height: auto !important;
+      height: auto !important;
     }
 
-    /* slide-container를 위로 올림 (태그 한 번 섹션) */
-    .slide-container.p-10.smart-section-mobile {
+    /* slide-container를 위로 올림 (태그 한 번 섹션) + 하단 공간 확보 */
+    .slide-container.p-10.smart-section-mobile,
+    body .slide-container.p-10.smart-section-mobile,
+    section#smart .slide-container.p-10.smart-section-mobile {
       margin-top: 20px !important;
       overflow: visible !important;
+      padding-bottom: 180px !important;
+      min-height: auto !important;
+      height: auto !important;
+    }
+
+    /* neos-card-list 4개 탭박스 모두 표시 - 최대 우선순위 */
+    .neos-card-list,
+    div.neos-card-list,
+    body .neos-card-list,
+    html body .neos-card-list,
+    body div.neos-card-list,
+    .smart-trainer-section-mobile .neos-card-list,
+    section#smart .neos-card-list,
+    .slide-container .neos-card-list {
+      margin-top: 20px !important;
+      transform: none !important;
+      overflow: visible !important;
+      display: grid !important;
+      grid-template-columns: 1fr 1fr !important;
+      gap: 12px !important;
+      position: relative !important;
+      z-index: 300 !important;
+    }
+
+    /* 개별 카드도 표시 보장 */
+    .neos-card,
+    div.neos-card,
+    .neos-card-list .neos-card {
+      overflow: visible !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      display: flex !important;
     }
   }
 </style>
