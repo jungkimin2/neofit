@@ -4004,9 +4004,10 @@ body.popup-active {
         /* 고정 높이 부여로 이미지 가출 방지 */
       }
 
-      /* Global Hide for Mobile Elements */
-      .naver-banner-arrow {
-        display: none;
+      /* Global Hide for Mobile Elements (Force hidden on PC) */
+      .naver-banner-arrow,
+      .mobile-view-container {
+        display: none !important;
       }
 
       .naver-slider-wrapper {
@@ -4027,6 +4028,8 @@ body.popup-active {
         width: 100% !important;
         height: 100% !important;
         object-fit: cover !important;
+        object-position: center !important;
+        /* PC: 무조건 중앙 정렬 고정 */
         border-radius: 16px;
       }
 
