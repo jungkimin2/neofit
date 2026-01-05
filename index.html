@@ -5467,7 +5467,15 @@ body.popup-active {
           #hive {
             position: relative !important;
             z-index: 200 !important;
-            /* 아래 섹션(z-index: 100)보다 위에 오게 수정 */
+            /* 아래 섹션보다 위에 오게 수정 */
+            padding-bottom: 120px !important;
+            /* 하단 박스가 짤리지 않도록 넉넉한 여백 추가 */
+            overflow: visible !important;
+            /* 컨텐츠가 섹션 밖으로 나가도 보이게 설정 */
+            content-visibility: visible !important;
+            /* 브라우저 최적화로 인한 잘림 방지 */
+            transform: translateZ(1px) !important;
+            /* 레이어 우선순위 강제 */
           }
         }
       </style>
