@@ -6815,9 +6815,9 @@ body.popup-active {
             }
 
             /* "태그 한 번, 자동 학습 시작!" 큰 제목 위치 (위로 바짝 붙임) */
-            /* 네오 스마트 상단 제목 (상단 비디오와의 간격 공격적 축소) - "3칸" 올리기 적용 */
+            /* 네오 스마트 상단 제목 - "3칸" 올리기 (약 -50px) */
             .smart-trainer-section-mobile h2 {
-              margin-top: -30px !important;
+              margin-top: -50px !important;
               padding-bottom: 0px !important;
             }
 
@@ -6837,7 +6837,7 @@ body.popup-active {
               /* 좀비 코드 방어 */
             }
 
-            /* 하단 설명 문구 (제목과 아주 촘촘하게) */
+            /* 하단 설명 문구 */
             .smart-desc-mobile {
               transform: translateY(0) !important;
               position: relative !important;
@@ -6938,11 +6938,14 @@ body.popup-active {
             /* 기존 no-bg 클래스 오버라이드 삭제 (위에서 통합 처리함) */
 
             /* 비디오 섹션과 싱크를 맞추되, 내부 겹침 없이 섹션 전체를 이동 */
+            /* 중요: padding-bottom을 대폭 추가하여 아래 섹션(네오 필라테스)이 위로 덮치는 것을 방지 */
             .smart-section-mobile {
               margin-top: -100px !important;
               padding-top: 20px !important;
-              /* 내부 여백 확보 */
+              padding-bottom: 240px !important;
+              /* 카드 영역 확보를 위한 안전 여백 */
               transform: none !important;
+              margin-bottom: 0 !important;
             }
 
             /* 설명 텍스트 하단 여백 확보 */
@@ -19381,7 +19384,7 @@ body.popup-active {
           { selector: '#mobile-moved-merged-box', transform: 'translateY(-48px)' },
           { selector: '.core-value-fresh-mobile', transform: 'translateY(-132px)' },
           { selector: '.mobile-system-box-wrapper', transform: 'translateY(-164px)' },
-          { selector: '#smart', transform: 'translateY(-120px)' },
+          // { selector: '#smart', transform: 'translateY(-120px)' }, // CSS로 제어하기 위해 JS 오버라이드 비활성화
           { selector: '#hive', transform: 'translateY(-149px)' }
           // { selector: '#neo-pilates', transform: 'translateY(144px)' } // 제거 - 스크롤 버그 수정
         ];
