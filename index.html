@@ -19292,15 +19292,16 @@ body.popup-active {
     }
   }
 
-  /* 네오 스마트 섹션 모바일 위치 조정 - 32px 아래로 이동 */
+  /* 네오 스마트 섹션 모바일 위치 조정 - 여백 제거를 위해 margin-top 삭제 */
   @media (max-width: 768px) {
     #smart {
-      margin-top: 32px !important;
+      margin-top: 0 !important;
       position: relative !important;
     }
+  }
 
-    /* 대체 방법: transform 사용 (필요시) */
-    /*
+  /* 대체 방법: transform 사용 (필요시) */
+  /*
   #smart {
     transform: translateY(32px) !important;
   }
@@ -19341,7 +19342,7 @@ body.popup-active {
           { selector: '#mobile-moved-merged-box', transform: 'translateY(-48px)' },
           { selector: '.core-value-fresh-mobile', transform: 'translateY(-132px)' },
           { selector: '.mobile-system-box-wrapper', transform: 'translateY(-164px)' },
-          { selector: '#smart', transform: 'translateY(-208px)' },
+          { selector: '#smart', transform: 'translateY(-220px)' },
           { selector: '#hive', transform: 'translateY(-149px)' }
           // { selector: '#neo-pilates', transform: 'translateY(144px)' } // 제거 - 스크롤 버그 수정
         ];
@@ -19371,9 +19372,9 @@ body.popup-active {
         }
 
         // NEOS 카드 리스트 위치 조정 - 2칸 위로 올림
-        const neosCardList = document.querySelector('div.neos-card-list[style*="margin-top"]');
+        const neosCardList = document.querySelector('div.neos-card-list');
         if (neosCardList) {
-          neosCardList.style.setProperty('transform', 'translateY(-48px) translateX(32px)', 'important');
+          neosCardList.style.setProperty('transform', 'translateY(-180px) translateX(32px)', 'important');
           neosCardList.style.setProperty('position', 'relative', 'important');
           neosCardList.style.setProperty('z-index', '15', 'important');
           neosCardList.style.setProperty('grid-template-columns', 'repeat(2, 1fr)', 'important');
