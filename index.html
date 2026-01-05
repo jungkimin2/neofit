@@ -6815,15 +6815,15 @@ body.popup-active {
             }
 
             /* "태그 한 번, 자동 학습 시작!" 큰 제목 위치 (위로 바짝 붙임) */
-            /* 네오 스마트 상단 제목 - "3칸" 올리기 (약 -50px) -> 다시 내리기 (-10px) : 상단 여백 확보 */
+            /* 네오 스마트 상단 제목 - "3칸" 올리기 (약 -50px) -> 다시 내리기 (-10px) -> 대폭 내리기 (+30px) : 확실한 상단 확보 */
             .smart-trainer-section-mobile h2 {
-              margin-top: -10px !important;
+              margin-top: 30px !important;
               padding-bottom: 0px !important;
             }
 
-            /* 비디오 쇼케이스 컨테이너 위로 당기기 -> 다시 내리기 (0px) : 상단 여백 확보 */
+            /* 비디오 쇼케이스 컨테이너 위로 당기기 -> 다시 내리기 (0px) -> 더 내리기 (+10px) */
             .new-neos-showcase {
-              margin-top: 0px !important;
+              margin-top: 10px !important;
             }
 
             /* 네오 스마트 상단 제목 (상단 비디오와의 간격 공격적 축소) */
@@ -6939,9 +6939,9 @@ body.popup-active {
 
             /* 비디오 섹션과 싱크를 맞추되, 내부 겹침 없이 섹션 전체를 이동 */
             /* 중요: padding-bottom을 대폭 추가하여 아래 섹션(네오 필라테스)이 위로 덮치는 것을 방지 */
-            /* 상단이 내려오므로, 하단은 더 강하게 위로 당겨서(-180px) 위치를 유지하고 갭을 줄임 */
+            /* 상단이 대폭 내려오므로(+30px), 하단은 아주 강력하게 위로 당겨서(-240px) 위치를 고정 */
             .smart-section-mobile {
-              margin-top: -180px !important;
+              margin-top: -240px !important;
               padding-top: 20px !important;
               padding-bottom: 240px !important;
               /* 카드 영역 확보를 위한 안전 여백 */
