@@ -5462,6 +5462,15 @@ body.popup-active {
 
     <section id="hive" class="section animate-on-scroll"
       style="background:#000; padding-top:24px; padding-bottom: 0px;">
+      <style>
+        @media (max-width: 768px) {
+          #hive {
+            position: relative !important;
+            z-index: 200 !important;
+            /* 아래 섹션(z-index: 100)보다 위에 오게 수정 */
+          }
+        }
+      </style>
       <div class="container"
         style="text-align:center; padding-top:0; max-width: 1100px; margin: 0 auto; padding: 0 20px;">
         <h2 style="font-size: 2rem; text-align: left; color: #FFFFFF; margin-top:0;">
