@@ -4268,14 +4268,16 @@ body.popup-active {
           left: 0 !important;
         }
 
-        /* 가로 화살표 네비게이션: 프리미엄 디자인 */
+        /* 가로 화살표 네비게이션: 축소 및 위치 조정 */
         .naver-banner-arrow {
           display: flex !important;
           position: absolute;
           top: 50%;
           transform: translateY(-50%);
-          width: 42px;
-          height: 42px;
+          width: 32px !important;
+          /* 42px -> 32px */
+          height: 32px !important;
+          /* 42px -> 32px */
           background: rgba(10, 14, 39, 0.6);
           backdrop-filter: blur(4px);
           border: 1.5px solid #7BE495;
@@ -4286,7 +4288,7 @@ body.popup-active {
           z-index: 2000000010;
           cursor: pointer;
           -webkit-tap-highlight-color: transparent;
-          box-shadow: 0 0 15px rgba(123, 228, 149, 0.3), inset 0 0 10px rgba(123, 228, 149, 0.1);
+          box-shadow: 0 0 10px rgba(123, 228, 149, 0.3);
           transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -4297,11 +4299,13 @@ body.popup-active {
         }
 
         .naver-banner-arrow.prev {
-          left: -48px;
+          left: -38px !important;
+          /* -48px -> -38px */
         }
 
         .naver-banner-arrow.next {
-          right: -48px;
+          right: -38px !important;
+          /* -48px -> -38px */
         }
 
         /* 닫기 버튼: 프리미엄 디자인 */
@@ -4332,18 +4336,22 @@ body.popup-active {
           box-shadow: 0 0 20px #7BE495;
         }
 
-        /* 스피커 버튼 모바일 축소 */
+        /* 스피커 버튼 모바일 축소 및 가시성 확보 */
         #videoSoundBtn {
-          width: 30px !important;
-          height: 30px !important;
-          bottom: 8px !important;
-          right: 8px !important;
+          width: 28px !important;
+          /* 살짝 더 축소 */
+          height: 28px !important;
+          bottom: 10px !important;
+          right: 10px !important;
           border-radius: 8px !important;
+          z-index: 2000000020 !important;
+          /* 최상단으로 올림 */
+          background: rgba(10, 14, 39, 0.9) !important;
         }
 
         #videoSoundBtn svg {
-          width: 18px !important;
-          height: 18px !important;
+          width: 16px !important;
+          height: 16px !important;
         }
       }
 
