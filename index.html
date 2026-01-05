@@ -6824,51 +6824,103 @@ body.popup-active {
               display: none !important;
             }
 
-            /* NEO-S 쇼케이스 전체를 원래 위치로 복구 (96px 아래로) */
+            /* NEO-S 쇼케이스 전체 정렬 (겹침 방지를 위해 Reset & Space) */
             .new-neos-showcase {
-              transform: translateY(96px) !important;
+              transform: translateY(0) !important;
               position: relative !important;
             }
 
-            /* 네오 스마트 상단 제목과 설명 (비디오 섹션과 싱크 맞추기 위해 96px 아래로) */
+            /* 네오 스마트 상단 제목과 설명 (자연스러운 덩어리감) */
             body section#smart h2,
             html body section#smart h2,
             body section#smart>.container>p,
             html body section#smart>.container>p {
-              transform: translateY(96px) !important;
+              transform: translateY(0) !important;
               position: relative !important;
             }
 
-            /* "태그 한 번, 자동 학습 시작!" 큰 제목 위치 고정 (-48px) */
+            /* "태그 한 번, 자동 학습 시작!" 큰 제목 위치 (살짝 위로) */
             h1.smart-title-mobile {
-              transform: translateY(-48px) !important;
+              transform: translateY(0) !important;
               position: relative !important;
               z-index: 201 !important;
+              margin-top: 30px !important;
+              margin-bottom: 0px !important;
+              text-align: left !important;
+              padding: 0 20px !important;
             }
 
-            /* 하단 설명 문구와 카드 그리드를 훨씬 더 공격적으로 위로 끌어올림 (Cascade Fix) */
+            /* 하단 설명 문구 (제목과 촘촘하게 밀착) */
             .smart-desc-mobile {
-              transform: translateY(-220px) !important;
+              transform: translateY(0) !important;
               position: relative !important;
               z-index: 205 !important;
+              margin-top: 8px !important;
+              padding: 0 20px !important;
+              opacity: 0.9;
             }
 
-            /* NEOS 카드 리스트 전체 견인 */
+            /* NEOS 카드 리스트 전체 (디자인 강화 및 정렬) */
             body .neos-card-list,
             html body .neos-card-list,
-            body div.neos-card-list[style*="margin-top"],
+            body div.neos-card-list,
             .smart-section-mobile .neos-card-list {
-              transform: translate(27px, -290px) !important;
+              transform: none !important;
               position: relative !important;
               z-index: 200 !important;
-              margin-top: 56px !important;
-              margin-bottom: 30px !important;
+              margin-top: 40px !important;
+              margin-bottom: 40px !important;
               display: grid !important;
               grid-template-columns: repeat(2, 1fr) !important;
               gap: 12px !important;
               padding: 0 20px !important;
               visibility: visible !important;
               opacity: 1 !important;
+            }
+
+            /* 모바일 전용 프리미엄 카드 디자인 */
+            .neos-card {
+              background: rgba(123, 228, 149, 0.05) !important;
+              border: 1px solid rgba(123, 228, 149, 0.2) !important;
+              border-radius: 16px !important;
+              padding: 16px !important;
+              display: flex !important;
+              flex-direction: column !important;
+              align-items: center !important;
+              justify-content: center !important;
+              min-height: 110px !important;
+              transition: all 0.3s ease !important;
+              box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+              text-align: center !important;
+              min-width: unset !important;
+              /* 모바일에서 고정폭 제거 */
+            }
+
+            .neos-icon {
+              margin-bottom: 12px !important;
+              margin-right: 0 !important;
+              width: 48px !important;
+              height: 48px !important;
+              display: flex !important;
+              align-items: center !important;
+              justify-content: center !important;
+              background: rgba(123, 228, 149, 0.1) !important;
+              border-radius: 12px !important;
+              box-shadow: 0 0 10px rgba(123, 228, 149, 0.1) !important;
+            }
+
+            .neos-text {
+              font-family: 'Inter', 'Noto Sans KR', sans-serif !important;
+              font-weight: 600 !important;
+              font-size: 0.95rem !important;
+              color: #fff !important;
+              letter-spacing: -0.02em !important;
+            }
+
+            /* 비디오 섹션과 싱크 맞추기 위해 상단 여백 보정 */
+            .smart-section-mobile {
+              margin-top: 0 !important;
+              transform: none !important;
             }
 
             /* 카드 섹션 스타일 */
