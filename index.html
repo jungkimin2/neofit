@@ -6374,7 +6374,7 @@ body.popup-active {
 
     <!-- <div id="hive"></div> -->
     <section id="smart" class="section animate-on-scroll smart-trainer-section-mobile"
-      style="background: #000; padding-top: 0px; margin-top: 0px; position: relative; z-index: 100;">
+      style="background: #000; padding-top: 0px; position: relative; z-index: 100;">
       <div class="container" style="text-align:left; max-width: 1100px; margin: 0 auto; padding: 0 20px;">
         <h2
           style="font-size: 2rem; text-align: left; margin-top: 20px; line-height: 1.4; padding-bottom: 10px; overflow: visible;">
@@ -21402,6 +21402,31 @@ body.popup-active {
 
     // 3초 후 재실행 (최종 보장)
     setTimeout(setupNavigation, 3000);
+
+    // [CRITICAL] Layout Enforcer for Mobile Neo Smart Section (Nuclear Option)
+    function enforceNeoSmartLayout() {
+      if (window.innerWidth <= 768) {
+        // Correct Selector: .smart-trainer-section-mobile
+        const header = document.querySelector('.smart-trainer-section-mobile h2');
+        const video = document.querySelector('.new-neos-showcase');
+        const section = document.querySelector('.smart-trainer-section-mobile');
+
+        // Apply "3 clicks" extra lowering values: 80px, 60px, -290px
+        if (header) header.style.setProperty('margin-top', '80px', 'important');
+        if (video) video.style.setProperty('margin-top', '60px', 'important');
+        if (section) {
+          section.style.setProperty('margin-top', '-290px', 'important');
+          section.style.setProperty('padding-bottom', '240px', 'important');
+          section.style.setProperty('transform', 'none', 'important');
+        }
+      }
+    }
+
+    // Run on critical events to override any conflicting scripts
+    window.addEventListener('load', enforceNeoSmartLayout);
+    window.addEventListener('resize', enforceNeoSmartLayout);
+    window.addEventListener('scroll', enforceNeoSmartLayout);
+    setInterval(enforceNeoSmartLayout, 500);
   })();
 </script>
 
