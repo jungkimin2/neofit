@@ -4197,16 +4197,20 @@ body.popup-active {
           z-index: 1;
         }
 
+        /* 모바일에서는 기존 슬라이더 숨기고 독립 뷰 사용 */
         .naver-slider-container {
+          display: none !important;
+        }
+
+        /* 모바일 뷰 컨테이너 스타일 */
+        .mobile-view-container {
           width: 100% !important;
-          height: auto !important;
-          aspect-ratio: 1 / 1 !important;
-          max-height: 45vh;
-          /* 높이 약간 조절 */
-          border-radius: 14px !important;
-          overflow: hidden !important;
-          position: relative !important;
+          height: 340px !important;
+          /* Fixed height for consistency */
           background: #000;
+          border-radius: 14px;
+          overflow: hidden;
+          position: relative;
         }
 
         .naver-slider-wrapper {
@@ -4375,6 +4379,33 @@ body.popup-active {
                 <img src="./images/pilates_event_2026.jpg" alt="필라테스 등록시 헬스 전액 무료">
               </a>
             </div>
+
+            <!-- [NEW] Mobile Independent Views (Hidden on PC) -->
+            <div id="mobileVideoView" class="mobile-view-container"
+              style="display: none; width: 100%; height: 100%; position: relative;">
+              <video id="mobilePromoVideo" src="images/naver_banner_final_v2.mp4" loop muted playsinline
+                style="width: 100%; height: 100%; object-fit: cover; border-radius: 16px;"></video>
+              <!-- Manual Play Overlay for Mobile View -->
+              <div id="mobilePlayOverlay"
+                onclick="document.getElementById('mobilePromoVideo').muted=false; document.getElementById('mobilePromoVideo').play(); this.style.opacity='0'; setTimeout(()=>{this.style.display='none'},300);"
+                style="position: absolute; top:0; left:0; width:100%; height:100%; display: flex; align-items: center; justify-content: center; z-index: 25; background: rgba(0,0,0,0.3);">
+                <div
+                  style="width: 50px; height: 50px; background: rgba(0,0,0,0.5); border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid #fff;">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="white" style="margin-left: 2px;">
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <div id="mobileImageView" class="mobile-view-container"
+              style="display: none; width: 100%; height: 100%; position: relative;">
+              <a href="https://m.booking.naver.com/booking/10/bizes/987028/items/5583476?area=pll&lang=ko&startDate=2025-12-28&theme=place"
+                target="_blank" rel="noopener noreferrer" class="naver-banner-link" style="height: 100%;">
+                <img src="./images/pilates_event_2026.jpg" alt="필라테스 등록시 헬스 전액 무료"
+                  style="width: 100%; height: 100%; object-fit: contain; border-radius: 16px;">
+              </a>
+            </div>
           </div>
 
           <!-- 소리 버튼 -->
@@ -4436,6 +4467,35 @@ body.popup-active {
       },
 
       move: function (index) {
+        const isMobile = window.innerWidth <= 768;
+
+        // [Mobile Logic] Dual View Toggle
+        if (isMobile) {
+          this.currentIndex = index;
+          const videoView = document.getElementById('mobileVideoView');
+          const imageView = document.getElementById('mobileImageView');
+          const mobileArrowPrev = document.querySelector('.naver-banner-arrow.prev');
+          const mobileArrowNext = document.querySelector('.naver-banner-arrow.next');
+
+          if (videoView && imageView) {
+            if (index === 0) {
+              videoView.style.display = 'block';
+              imageView.style.display = 'none';
+              // Video Auto Play
+              const mv = document.getElementById('mobilePromoVideo');
+              if (mv) { mv.muted = true; mv.play().catch(e => console.log(e)); }
+            } else {
+              videoView.style.display = 'none';
+              imageView.style.display = 'block';
+              // Pause Video
+              const mv = document.getElementById('mobilePromoVideo');
+              if (mv) { mv.pause(); }
+            }
+          }
+          return; // Stop here, do not run PC slider logic
+        }
+
+        // [PC Logic] Original Slider Transform
         const wrapper = document.getElementById('naverSliderWrapperV6');
         const dots = document.querySelectorAll('.naver-nav-dot');
         const video = document.getElementById('promoVideoV6');
@@ -4446,7 +4506,7 @@ body.popup-active {
         this.currentIndex = index;
         wrapper.style.transform = `translateX(-${index * 50}%)`;
 
-        // 영상 제어
+        // 영상 제어 (PC)
         if (video && index !== 0) {
           video.muted = true;
           // UI 업데이트
@@ -4484,18 +4544,21 @@ body.popup-active {
         }
       },
 
+      // Touch Logic Updated for Dual View
       addTouchListeners: function () {
-        const wrapper = document.getElementById('naverSliderWrapperV6');
-        if (!wrapper || wrapper.dataset.touchAdded) return;
+        // Mobile listener target should be the wrapper OR the container since wrapper is hidden
+        const target = window.innerWidth <= 768 ? document.querySelector('.naver-banner-wrapper') : document.getElementById('naverSliderWrapperV6');
 
-        wrapper.dataset.touchAdded = 'true';
+        if (!target || target.dataset.touchAdded) return;
 
-        wrapper.addEventListener('touchstart', (e) => {
+        target.dataset.touchAdded = 'true';
+
+        target.addEventListener('touchstart', (e) => {
           this.touchStartX = e.touches[0].clientX;
           this.stopTimer();
         }, { passive: true });
 
-        wrapper.addEventListener('touchend', (e) => {
+        target.addEventListener('touchend', (e) => {
           this.touchEndX = e.changedTouches[0].clientX;
           this.handleSwipe();
           this.startTimer();
