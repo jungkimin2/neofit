@@ -4027,8 +4027,8 @@ body.popup-active {
         width: 100% !important;
         height: 100% !important;
         object-fit: cover !important;
-        object-position: center !important;
-        /* PC: 무조건 중앙 정렬 강제 */
+        object-position: center center;
+        /* PC: 기본 중앙 정렬 */
         border-radius: 16px;
       }
 
@@ -4248,26 +4248,13 @@ body.popup-active {
           /* transform: translateX(0) !important; REMOVED to allow JS sliding */
         }
 
-        .naver-slide {
-          width: 50% !important;
-          height: 100% !important;
-          flex: 0 0 50% !important;
-          max-width: 50% !important;
-          /* Strict Flex Locking */
-          background: #000 !important;
-          position: relative !important;
-          overflow: hidden !important;
-        }
-
-        .naver-slide img,
-        .naver-slide video {
+        /* 모바일 전용 뷰 이미지/영상 기본 설정 */
+        .mobile-view-container img,
+        .mobile-view-container video {
           width: 100% !important;
           height: 100% !important;
           object-fit: contain !important;
-          object-position: center !important;
-          position: absolute !important;
-          top: 0 !important;
-          left: 0 !important;
+          border-radius: 14px;
         }
 
         /* 가로 화살표 네비게이션: 축소 및 위치 조정 */
