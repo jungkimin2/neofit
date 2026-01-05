@@ -4337,9 +4337,9 @@ body.popup-active {
         <!-- 슬라이더 영역 -->
         <div class="naver-slider-container">
           <!-- 모바일 전용 좌우 화살표: Reset timer on click -->
-          <div class="naver-banner-arrow prev" onclick="naverBannerSliderV6.move(0); naverBannerSliderV6.startTimer();">
+          <div class="naver-banner-arrow prev" onclick="naverBannerSliderV6.prev()">
             &lt;</div>
-          <div class="naver-banner-arrow next" onclick="naverBannerSliderV6.move(1); naverBannerSliderV6.startTimer();">
+          <div class="naver-banner-arrow next" onclick="naverBannerSliderV6.next()">
             &gt;</div>
           <!-- V6 ID 적용 -->
           <div class="naver-slider-wrapper" id="naverSliderWrapperV6">
@@ -4423,6 +4423,16 @@ body.popup-active {
       timer: null,
       touchStartX: 0,
       touchEndX: 0,
+
+      prev: function () {
+        this.move((this.currentIndex - 1 + 2) % 2);
+        this.startTimer();
+      },
+
+      next: function () {
+        this.move((this.currentIndex + 1) % 2);
+        this.startTimer();
+      },
 
       move: function (index) {
         const wrapper = document.getElementById('naverSliderWrapperV6');
