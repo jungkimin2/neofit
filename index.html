@@ -21428,10 +21428,11 @@ body.popup-active {
                         }
 
                         /* 2. SPLIT MOTION: Decouple Top (Header/Video) from Bottom (Cards) */
+                        /* CALIBRATION (STEP 3862): Relaxed margins to bring content back up */
                         
-                        /* HEADER: Aggressively pushed down (320px) to clear upper overlap */
+                        /* HEADER: Moderate push down (130px) - Balanced Position */
                         body #smart.smart-trainer-section-mobile h2 {
-                            margin-top: 320px !important; 
+                            margin-top: 130px !important; 
                             padding-top: 20px !important;
                             position: relative !important;
                             top: 0 !important;
@@ -21439,19 +21440,18 @@ body.popup-active {
                         
                         /* VIDEO: Standard spacing */
                         .new-neos-showcase {
-                            margin-top: 60px !important;
+                            margin-top: 50px !important;
                             margin-bottom: 0 !important;
                         }
 
-                        /* CARDS: Pulled UP (-180px) to neutralize the Header Push (Vacuum Effect) */
-                        /* This keeps the bottom UI fixed while the top drops */
+                        /* CARDS: Gentle pull up (-30px) to maintain connection */
                         .neos-card-list {
-                            margin-top: -180px !important;
+                            margin-top: -30px !important;
                             position: relative !important;
                             z-index: 101 !important;
                         }
 
-                        /* CONTAINER: Pulled UP strongly (-340px) to keep Bottom UI anchored high */
+                        /* CONTAINER: Keep Strong Pull UP (-340px) to anchor Bottom UI high */
                         .smart-trainer-section-mobile {
                             margin-top: -340px !important;
                             padding-bottom: 300px !important; 
@@ -21459,7 +21459,7 @@ body.popup-active {
                     }
                  `;
           document.head.appendChild(style);
-          console.log("Neo Smart Mobile Layout Enforced via CSS Injection (Internal Vacuum)");
+          console.log("Neo Smart Mobile Layout Enforced via CSS Injection (Calibrated)");
         }
       }
     }
