@@ -21403,30 +21403,57 @@ body.popup-active {
     // 3초 후 재실행 (최종 보장)
     setTimeout(setupNavigation, 3000);
 
-    // [CRITICAL] Layout Enforcer for Mobile Neo Smart Section (Nuclear Option)
+    // [CRITICAL] Layout Enforcer for Mobile Neo Smart Section (CSS Injection Strategy)
     function enforceNeoSmartLayout() {
+      // Only run on mobile - Inject global CSS to override animations permanently
       if (window.innerWidth <= 768) {
-        // Correct Selector: .smart-trainer-section-mobile
-        const header = document.querySelector('.smart-trainer-section-mobile h2');
-        const video = document.querySelector('.new-neos-showcase');
-        const section = document.querySelector('.smart-trainer-section-mobile');
+        const styleId = 'neo-smart-mobile-override';
+        // Check if style already exists to prevent duplicates
+        if (!document.getElementById(styleId)) {
+          const style = document.createElement('style');
+          style.id = styleId;
+          // Inject high-specificity CSS to kill parallax and enforce positioning
+          style.innerHTML = `
+                    @media (max-width: 768px) {
+                        /* 1. Force disable transforms (Parallax Kill Switch) */
+                        .smart-trainer-section-mobile, 
+                        .smart-trainer-section-mobile h2, 
+                        .new-neos-showcase,
+                        .smart-trainer-section-mobile * {
+                            transform: none !important;
+                            opacity: 1 !important; /* Ensure visibility */
+                            animation: none !important;
+                            transition: none !important;
+                        }
 
-        // Apply "3 clicks" extra lowering values: 80px, 60px, -290px
-        if (header) header.style.setProperty('margin-top', '80px', 'important');
-        if (video) video.style.setProperty('margin-top', '60px', 'important');
-        if (section) {
-          section.style.setProperty('margin-top', '-290px', 'important');
-          section.style.setProperty('padding-bottom', '240px', 'important');
-          // Reduced aggression: Removed transform override to prevent scroll locking
+                        /* 2. Aggressive Positioning Overrides (The "3 Clicks" Drop) */
+                        /* Header moved down to 100px to be safe */
+                        .smart-trainer-section-mobile h2 {
+                            margin-top: 100px !important;
+                            padding-top: 20px !important;
+                        }
+                        /* Video moved down */
+                        .new-neos-showcase {
+                            margin-top: 60px !important;
+                        }
+                        /* Bottom Section pulled up heavily to compensate */
+                        .smart-trainer-section-mobile {
+                            margin-top: -290px !important;
+                            padding-bottom: 240px !important;
+                        }
+                    }
+                 `;
+          document.head.appendChild(style);
+          console.log("Neo Smart Mobile Layout Enforced via CSS Injection");
         }
       }
     }
 
-    // Run on load and resize only. Scroll listener removed to fix "sticky" scroll.
+    // Run once on load/resize to inject the CSS. The CSS engine handles the rest.
     window.addEventListener('load', enforceNeoSmartLayout);
     window.addEventListener('resize', enforceNeoSmartLayout);
-    // window.addEventListener('scroll', enforceNeoSmartLayout); <--- REMOVED
-    setInterval(enforceNeoSmartLayout, 1000); // Polling reduced to 1s
+    // Interval ensures injection happens even if load event is missed
+    setInterval(enforceNeoSmartLayout, 1000);
   })();
 </script>
 
