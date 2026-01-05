@@ -21427,39 +21427,40 @@ body.popup-active {
                             transition: none !important;
                         }
 
-                        /* 2. OVERLAP FIX: Release Container Lift to reveal "Top Box" */
-                        /* Previously -340px was covering the section above. reduced to -50px. */
+                        /* 2. SIMPLE DROP: Per User Request "Lower page with background ~2 lines" */
                         
-                        /* HEADER: Slight push down for breathing room (30px) */
+                        /* HEADER: Internal drop (80px) to push text down from container top */
                         body #smart.smart-trainer-section-mobile h2 {
-                            margin-top: 30px !important; 
+                            margin-top: 80px !important; 
                             padding-top: 0px !important;
                             position: relative !important;
                             top: 0 !important;
                         }
                         
-                        /* VIDEO: Standard spacing */
+                        /* VIDEO: Consistent spacing */
                         .new-neos-showcase {
-                            margin-top: 30px !important;
+                            margin-top: 40px !important;
                             margin-bottom: 0 !important;
                         }
 
-                        /* CARDS: Reset to natural flow */
+                        /* CARDS: Moderate pull up (-80px) to keep Bottom UI from sinking too low */
                         .neos-card-list {
-                            margin-top: 0px !important;
+                            margin-top: -80px !important;
                             position: relative !important;
                             z-index: 101 !important;
                         }
 
-                        /* CONTAINER: Moderate Pull (-50px) just to close gap, NOT cover content */
+                        /* CONTAINER: MARGIN RESET (0px) */
+                        /* Previously negative margins caused overlap. 0px lets it sit naturally below previous section. */
                         .smart-trainer-section-mobile {
-                            margin-top: -50px !important;
+                            margin-top: 0px !important;
+                            padding-top: 0px !important;
                             padding-bottom: 120px !important; 
                         }
                     }
                  `;
           document.head.appendChild(style);
-          console.log("Neo Smart Mobile Layout Enforced via CSS Injection (Overlap Fix)");
+          console.log("Neo Smart Mobile Layout Enforced via CSS Injection (Simple Zero Reset)");
         }
       }
     }
