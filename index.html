@@ -21550,15 +21550,19 @@ body.popup-active {
       padding: 14px 10px !important;  /* 상하 패딩 증가 */
     }
 
-    /* 네오 필라테스 섹션 - 적절한 상단 간격 */
+    /* 네오 필라테스 섹션 - 카드 가림 방지 */
     section#neo-pilates,
     body section#neo-pilates,
     html body section#neo-pilates,
     #neo-pilates,
-    body #neo-pilates {
-      margin-top: 60px !important;
-      transform: translateY(80px) !important;
-      -webkit-transform: translateY(80px) !important;
+    body #neo-pilates,
+    section#neo-pilates.section,
+    body section#neo-pilates.section.animate-on-scroll.mobile-transform-target {
+      margin-top: 100px !important;
+      transform: translateY(120px) !important;
+      -webkit-transform: translateY(120px) !important;
+      position: relative !important;
+      z-index: 1 !important;
     }
   }
 </style>
