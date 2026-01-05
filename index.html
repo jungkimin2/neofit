@@ -21495,10 +21495,9 @@ body.popup-active {
       overflow: visible !important;
     }
 
-    /* slide-container 이중 스크롤 방지 */
-    .slide-container,
-    .slide-container.p-10,
-    .slide-container.smart-section-mobile {
+    /* slide-container를 위로 올림 (태그 한 번 섹션) */
+    .slide-container.p-10.smart-section-mobile {
+      margin-top: 20px !important;
       overflow: visible !important;
     }
   }
