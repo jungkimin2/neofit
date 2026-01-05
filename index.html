@@ -4197,8 +4197,20 @@ body.popup-active {
           z-index: 1;
         }
 
-        /* 모바일에서는 기존 슬라이더 숨기고 독립 뷰 사용 */
+        /* 모바일에서는 PC용 슬라이더 트랙(Wrapper)만 숨김 */
         .naver-slider-container {
+          width: 100% !important;
+          height: auto !important;
+          aspect-ratio: 1 / 1 !important;
+          border-radius: 14px !important;
+          overflow: hidden !important;
+          position: relative !important;
+          background: #000;
+          display: block !important;
+        }
+
+        /* PC용 슬라이더 트랙 숨김 */
+        #naverSliderWrapperV6 {
           display: none !important;
         }
 
