@@ -4027,8 +4027,6 @@ body.popup-active {
         width: 100% !important;
         height: 100% !important;
         object-fit: cover !important;
-        object-position: center center;
-        /* PC: 기본 중앙 정렬 */
         border-radius: 16px;
       }
 
@@ -4342,33 +4340,6 @@ body.popup-active {
           width: 16px !important;
           height: 16px !important;
         }
-      }
-
-      /* body 스크롤 방지 */
-      body.naver-popup-open {
-        overflow: hidden;
-      }
-
-      /* 스피커 버튼 기본 스타일 (PC용) */
-      #videoSoundBtn {
-        position: absolute;
-        bottom: 15px;
-        right: 15px;
-        background: rgba(10, 14, 39, 0.85);
-        border: 1px solid #7BE495;
-        width: 36px;
-        height: 36px;
-        border-radius: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        z-index: 100;
-        backdrop-filter: blur(8px);
-        transition: all 0.3s ease;
-        padding: 0;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-        outline: none;
       }
     </style>
     <div class="naver-banner-container" onclick="event.stopPropagation()">
