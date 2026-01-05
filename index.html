@@ -21427,11 +21427,12 @@ body.popup-active {
                             transition: none !important;
                         }
 
-                        /* 2. SIMPLE DROP: Per User Request "Lower page with background ~2 lines" */
+                        /* 2. OVERLAP FIX: PHYSICAL SEPARATION (Positive Margin) */
+                        /* User requires background to move down. 0px was not enough. */
                         
-                        /* HEADER: Internal drop (80px) to push text down from container top */
+                        /* HEADER: Reset internal margin since container acts as spacer */
                         body #smart.smart-trainer-section-mobile h2 {
-                            margin-top: 80px !important; 
+                            margin-top: 0px !important; 
                             padding-top: 0px !important;
                             position: relative !important;
                             top: 0 !important;
@@ -21443,24 +21444,24 @@ body.popup-active {
                             margin-bottom: 0 !important;
                         }
 
-                        /* CARDS: Moderate pull up (-80px) to keep Bottom UI from sinking too low */
+                        /* CARDS: Reset */
                         .neos-card-list {
-                            margin-top: -80px !important;
+                            margin-top: -60px !important;
                             position: relative !important;
                             z-index: 101 !important;
                         }
 
-                        /* CONTAINER: MARGIN RESET (0px) */
-                        /* Previously negative margins caused overlap. 0px lets it sit naturally below previous section. */
+                        /* CONTAINER: FORCE DOWN (120px) */
+                        /* Positive margin pushes the entire black background down, revealing the green box above */
                         .smart-trainer-section-mobile {
-                            margin-top: 0px !important;
-                            padding-top: 0px !important;
+                            margin-top: 120px !important;
+                            padding-top: 20px !important; /* Slight internal padding */
                             padding-bottom: 120px !important; 
                         }
                     }
                  `;
           document.head.appendChild(style);
-          console.log("Neo Smart Mobile Layout Enforced via CSS Injection (Simple Zero Reset)");
+          console.log("Neo Smart Mobile Layout Enforced via CSS Injection (Positive Separation)");
         }
       }
     }
