@@ -4486,9 +4486,9 @@ body.popup-active {
           window.naverBannerSliderV6.move(0);
         }
 
-        popup.style.display = 'flex';
-        popup.style.visibility = 'visible';
-        popup.style.opacity = '1';
+        popup.style.setProperty('display', 'flex', 'important');
+        popup.style.setProperty('visibility', 'visible', 'important');
+        popup.style.setProperty('opacity', '1', 'important');
         document.body.classList.add('naver-popup-open');
 
         setTimeout(() => {
@@ -4547,22 +4547,28 @@ body.popup-active {
       }
     }
 
-    // Auto-Start Timer & Bind Events (Robust Placement)
-    window.addEventListener('load', function () {
-      if (window.naverBannerSliderV6) {
+    // V6 Initialization logic
+    function initV6Banner() {
+      if (window.naverBannerSliderV6 && !window.v6Initialized) {
+        window.v6Initialized = true;
         // 1. 초기 상태 설정 (영상 우선)
         window.naverBannerSliderV6.move(0);
-
         // 2. 팝업 노출
         openNaverBanner();
-
         // 3. 타이머 시작
         window.naverBannerSliderV6.startTimer();
-        console.log("✅ V6 Banner Auto-Started & Opened (Slide 0 Priority)");
+        console.log("✅ V6 Banner Initialized (Slide 0 Priority)");
       }
-    });
+    }
+
+    // DOMContentLoaded + load backup
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initV6Banner);
+    } else {
+      initV6Banner();
+    }
+    window.addEventListener('load', initV6Banner);
   </script>
-  </div>
 
   <!-- 진입 팝업 - 전체 화면 오버레이 (임시 비활성화) -->
   <div id="entryPopup" style="
