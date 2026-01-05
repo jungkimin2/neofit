@@ -4322,31 +4322,26 @@ body.popup-active {
           /* -48px -> -38px */
         }
 
-        /* 닫기 버튼: 크기 축소 및 박스 상단 중첩 */
+        /* 닫기 버튼: 크기 축소 및 박스 상단 중첩 (앞으로 튀어나오게) */
         .naver-banner-close {
+          position: absolute !important;
           top: -12px !important;
-          /* 박스 상단에 걸치게 위치 조정 */
-          right: -10px !important;
-          /* 살짝 밖으로 빼거나 끝에 맞춤 */
-          width: 30px !important;
-          /* 38px -> 30px 축소 */
-          height: 30px !important;
-          /* 38px -> 30px 축소 */
-          font-size: 20px !important;
-          /* 폰트 리사이징 */
-          background: rgba(10, 14, 39, 0.85) !important;
+          right: -8px !important;
+          width: 32px !important;
+          height: 32px !important;
+          font-size: 22px !important;
+          background: rgba(10, 14, 39, 0.95) !important;
           backdrop-filter: blur(8px) !important;
           border: 1.5px solid #7BE495 !important;
           color: #7BE495 !important;
           border-radius: 50% !important;
-          z-index: 2000000001 !important;
+          z-index: 2000000060 !important;
+          /* 박스보다 확실히 앞으로 */
           display: flex !important;
           align-items: center;
           justify-content: center;
-          box-shadow: 0 0 15px rgba(123, 228, 149, 0.4);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
           transition: all 0.3s ease;
-          line-height: 1;
-          padding-bottom: 2px !important;
         }
 
         .naver-banner-close:active {
@@ -4373,6 +4368,18 @@ body.popup-active {
         #videoSoundBtn svg {
           width: 16px !important;
           height: 16px !important;
+        }
+
+        /* 영상 확대 강제 적용 (상위 코드 충돌 방지) */
+        #mobilePromoVideo {
+          width: 100% !important;
+          height: 100% !important;
+          object-fit: cover !important;
+          /* contain에서 cover로 변경하여 여백 원천 차단 */
+          transform: scale(2.2) !important;
+          object-position: center 40% !important;
+          /* 유저 요청한 원본 중심 위치 */
+          will-change: transform;
         }
       }
     </style>
@@ -4418,7 +4425,7 @@ body.popup-active {
           <!-- Video View: removed play overlay as requested -->
           <div id="mobileVideoView" class="mobile-view-container active">
             <video id="mobilePromoVideo" src="images/naver_banner_final_v2.mp4" loop muted playsinline
-              style="width: 100%; height: 100%; object-fit: contain; border-radius: 16px; transform: scale(3.5) !important; object-position: center 38% !important; will-change: transform;"></video>
+              style="border-radius: 16px;"></video>
           </div>
 
           <div id="mobileImageView" class="mobile-view-container">
