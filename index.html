@@ -4308,26 +4308,6 @@ body.popup-active {
           transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* [NEW] 극소형 모바일 기기 (너비 400px 이하) 화살표 짤림 방지 */
-        @media (max-width: 400px) {
-          .naver-banner-arrow {
-            width: 24px !important;
-            height: 24px !important;
-          }
-
-          .naver-banner-arrow svg {
-            width: 15px !important;
-            height: 15px !important;
-          }
-
-          .naver-banner-arrow.prev {
-            left: -32px !important;
-          }
-
-          .naver-banner-arrow.next {
-            right: -32px !important;
-          }
-        }
 
         .naver-banner-arrow:active {
           background: rgba(123, 228, 149, 0.2);
@@ -4343,6 +4323,27 @@ body.popup-active {
         .naver-banner-arrow.next {
           right: -44px !important;
           /* -38px -> -44px 여백 확보 */
+        }
+
+        /* [NEW] 극소형 모바일 기기 (너비 400px 이하) 화살표 짤림 방지 (Cascade Fix) */
+        @media (max-width: 400px) {
+          .naver-banner-arrow {
+            width: 24px !important;
+            height: 24px !important;
+          }
+
+          .naver-banner-arrow svg {
+            width: 15px !important;
+            height: 15px !important;
+          }
+
+          .naver-banner-arrow.prev {
+            left: -28px !important;
+          }
+
+          .naver-banner-arrow.next {
+            right: -28px !important;
+          }
         }
 
         /* 닫기 버튼: 크기 축소 및 박스 상단 중첩 (앞으로 튀어나오게) */
