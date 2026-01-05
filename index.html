@@ -3367,36 +3367,7 @@ body.popup-active {
       display: none;
     }
   </style>
-  <!-- 네오 스마트 모바일 위치 조정: 중복 제거 및 단일화 -->
-  <style>
-    /* 모바일 환경에서만 #smart 섹션의 상단 여백 8칸(약 128px) 삭제 -> 180px로 추가 감소 */
-    @media (max-width: 768px) {
-      #smart {
-        margin-top: -180px !important;
-        /* 추가적으로 상단 여백 감소 (기존 -128px에서 -180px로 변경) */
-        padding-top: 0 !important;
-        transform: translateY(-512px) !important;
-        /* 1칸(16px) 아래로 이동: -528px → -512px */
-      }
 
-      #smart.section,
-      #smart .container {
-        margin-top: 0 !important;
-        padding-top: 0 !important;
-        overflow: visible !important;
-      }
-
-      #smart h2,
-      #smart p,
-      #smart .hive-showcase {
-        transform: none !important;
-      }
-
-      #smart h2 {
-        font-size: 1.4rem !important;
-      }
-    }
-  </style>
   <style>
     @media (max-width: 768px) {
       .hive-image {
@@ -6840,15 +6811,15 @@ body.popup-active {
             }
 
             /* "태그 한 번, 자동 학습 시작!" 큰 제목 위치 (위로 바짝 붙임) */
+            /* 네오 스마트 상단 제목 (상단 비디오와의 간격 공격적 축소) */
             h1.smart-title-mobile {
-              transform: translateY(0) !important;
-              position: relative !important;
-              z-index: 201 !important;
-              margin-top: -30px !important;
-              /* 위로 바짝 붙임 */
+              margin-top: -120px !important;
+              /* 상단 비디오와 밀착 */
               margin-bottom: 0px !important;
               text-align: left !important;
               padding: 0 20px !important;
+              transform: translateY(0) !important;
+              /* 좀비 코드 방어 */
             }
 
             /* 하단 설명 문구 (제목과 아주 촘촘하게) */
@@ -6856,14 +6827,15 @@ body.popup-active {
               transform: translateY(0) !important;
               position: relative !important;
               z-index: 205 !important;
-              margin-top: 0px !important;
-              /* 여백 제거 */
+              margin-top: -10px !important;
+              /* 제목과 더 밀착 */
               padding: 0 20px !important;
               opacity: 1;
-              /* 투명도 제거 - 더 선명하게 */
+              color: #ccc !important;
+              /* 가독성 상향 */
             }
 
-            /* NEOS 카드 리스트 전체 (상단과 간격 축소) */
+            /* NEOS 카드 리스트 전체 (설명문구와 아주 촘촘하게) */
             body .neos-card-list,
             html body .neos-card-list,
             body div.neos-card-list,
@@ -6871,9 +6843,9 @@ body.popup-active {
               transform: none !important;
               position: relative !important;
               z-index: 200 !important;
-              margin-top: 24px !important;
-              /* 여백 축소 */
-              margin-bottom: 40px !important;
+              margin-top: 12px !important;
+              /* 설명 문구와 더 밀착 */
+              margin-bottom: 60px !important;
               display: grid !important;
               grid-template-columns: repeat(2, 1fr) !important;
               gap: 12px !important;
@@ -16814,37 +16786,7 @@ body.popup-active {
     }
   }
 </style>
-<style>
-  /* 네오 스마트: 모바일 환경에서 UI 전체를 위로 이동, 폰트 크기 축소 및 개별 transform 제거 */
-  @media (max-width: 768px) {
 
-    body #smart,
-    html body #smart {
-      transform: translateY(-512px) !important;
-      /* 1칸(16px) 아래로 이동: -528px → -512px */
-      -webkit-transform: translateY(-512px) !important;
-      margin-top: -180px !important;
-      padding-top: 0 !important;
-    }
-
-    body #smart h2,
-    html body #smart h2 {
-      font-size: 1.4rem !important;
-      transform: none !important;
-    }
-
-    body #smart .hive-showcase,
-    body #smart p,
-    html body #smart .hive-showcase,
-    html body #smart p {
-      transform: none !important;
-    }
-
-    .smart-caption {
-      margin-top: 12px !important;
-    }
-  }
-</style>
 <style>
   @media screen and (min-width: 768px) {
     .smart-trainer-text {
@@ -16853,88 +16795,8 @@ body.popup-active {
     }
   }
 </style>
-<style>
-  @media (max-width: 768px) {
-    .smart-trainer-text {
-      font-size: 0.9rem !important;
-      line-height: 1.2 !important;
-    }
 
-    body #smart,
-    html body #smart {
-      transform: translateY(-512px) !important;
-      /* 1칸(16px) 아래로 이동: -528px → -512px */
-      -webkit-transform: translateY(-512px) !important;
-      margin-top: -180px !important;
-      padding-top: 0 !important;
-    }
 
-    body #smart h2,
-    html body #smart h2 {
-      font-size: 1.4rem !important;
-      transform: none !important;
-    }
-
-    body #smart .hive-showcase,
-    body #smart p,
-    html body #smart .hive-showcase,
-    html body #smart p {
-      transform: none !important;
-    }
-
-    .smart-caption {
-      margin-top: 12px !important;
-    }
-  }
-</style>
-<style>
-  @media (max-width: 768px) {
-
-    /* 모바일에서 모든 스크롤 애니메이션 효과 제거 (특정 UI 요소들 제외) */
-    .animate-on-scroll:not(.mobile-ui-position-adjustment):not(#mobile-moved-merged-box):not(.core-value-fresh-mobile):not(.mobile-system-box-wrapper):not(#smart),
-    .section.animate-on-scroll:not(.mobile-ui-position-adjustment):not(#mobile-moved-merged-box):not(.core-value-fresh-mobile):not(.mobile-system-box-wrapper):not(#smart),
-    .slide-in-left:not(.mobile-ui-position-adjustment):not(#mobile-moved-merged-box):not(.core-value-fresh-mobile):not(.mobile-system-box-wrapper):not(#smart),
-    .slide-in-right:not(.mobile-ui-position-adjustment):not(#mobile-moved-merged-box):not(.core-value-fresh-mobile):not(.mobile-system-box-wrapper):not(#smart),
-    .feature-item:not(.mobile-ui-position-adjustment):not(#mobile-moved-merged-box):not(.core-value-fresh-mobile):not(.mobile-system-box-wrapper):not(#smart) {
-      opacity: 1 !important;
-      transform: none !important;
-      animation: none !important;
-      transition: none !important;
-    }
-
-    /* 기존 모바일 스타일 유지 */
-    .smart-trainer-text {
-      font-size: 1.8rem !important;
-      line-height: 1.2 !important;
-    }
-
-    body #smart,
-    html body #smart {
-      transform: translateY(-512px) !important;
-      /* 1칸(16px) 아래로 이동: -528px → -512px */
-      -webkit-transform: translateY(-512px) !important;
-      margin-top: -180px !important;
-      padding-top: 0 !important;
-    }
-
-    body #smart h2,
-    html body #smart h2 {
-      font-size: 1.4rem !important;
-      transform: none !important;
-    }
-
-    body #smart .hive-showcase,
-    body #smart p,
-    html body #smart .hive-showcase,
-    html body #smart p {
-      transform: none !important;
-    }
-
-    .smart-caption {
-      margin-top: 12px !important;
-    }
-  }
-</style>
 <style>
   @media (max-width: 768px) {
     .smart-trainer-text {
@@ -18450,18 +18312,6 @@ body.popup-active {
       position: unset !important;
     }
 
-    /* 네오 스마트 섹션은 독립적으로 처리 - transform 보존 */
-    body #smart,
-    html body #smart {
-      transform: translateY(-512px) !important;
-      /* 1칸(16px) 아래로 이동: -528px → -512px */
-      -webkit-transform: translateY(-512px) !important;
-      margin-top: -180px !important;
-      padding-top: 0 !important;
-      position: relative !important;
-      z-index: 50 !important;
-      /* 다른 UI 요소들과의 충돌 방지 */
-    }
 
     /* 네오 하이브 슬라이드는 원래 transform 값 보존 */
     .hive-image,
