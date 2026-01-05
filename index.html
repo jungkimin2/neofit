@@ -21539,6 +21539,17 @@ body.popup-active {
       opacity: 1 !important;
       display: flex !important;
     }
+
+    /* 네오 필라테스 섹션을 아래로 더 내림 - 탭박스 가림 방지 */
+    section#neo-pilates,
+    body section#neo-pilates,
+    html body section#neo-pilates,
+    #neo-pilates,
+    body #neo-pilates {
+      margin-top: 150px !important;
+      transform: translateY(200px) !important;
+      -webkit-transform: translateY(200px) !important;
+    }
   }
 </style>
 
