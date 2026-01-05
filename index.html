@@ -4477,14 +4477,41 @@ body.popup-active {
     };
 
     // V6 Global Functions
+    function openNaverBanner() {
+      const popup = document.getElementById('naverBannerPopup');
+      const video = document.getElementById('promoVideoV6');
+      if (popup) {
+        // 영상 먼저 세팅
+        if (window.naverBannerSliderV6) {
+          window.naverBannerSliderV6.move(0);
+        }
+
+        popup.style.display = 'flex';
+        popup.style.visibility = 'visible';
+        popup.style.opacity = '1';
+        document.body.classList.add('naver-popup-open');
+
+        setTimeout(() => {
+          popup.classList.add('show');
+          if (video) {
+            video.muted = true;
+            video.play().catch(e => console.log('Auto play failed:', e));
+          }
+        }, 10);
+      }
+    }
+
     function closeNaverBanner() {
       const popup = document.getElementById('naverBannerPopup');
       if (popup) {
-        popup.style.display = 'none';
-        document.body.classList.remove('naver-popup-open');
-        if (window.naverBannerSliderV6) {
-          window.naverBannerSliderV6.stopTimer();
-        }
+        popup.classList.remove('show');
+        setTimeout(() => {
+          popup.style.display = 'none';
+          document.body.classList.remove('naver-popup-open');
+          if (window.naverBannerSliderV6) {
+            window.naverBannerSliderV6.stopTimer();
+          }
+        }, 300);
       }
     }
 
@@ -4523,37 +4550,15 @@ body.popup-active {
     // Auto-Start Timer & Bind Events (Robust Placement)
     window.addEventListener('load', function () {
       if (window.naverBannerSliderV6) {
-        // 1. Force Video Play (Mobile Policy)
-        const video = document.getElementById('promoVideoV6');
-        const wrapper = document.getElementById('naverSliderWrapperV6');
-
-        if (wrapper) {
-          wrapper.style.transform = 'translateX(0)'; // Ensure Slide 0 is visible
-        }
-
-        if (video) {
-          video.muted = true; // Ensure muted for autoplay
-          video.style.display = 'block'; // Ensure visibility
-          video.load(); // Reload to ensure src change is picked up
-          video.play().catch(e => console.log('Force play failed:', e));
-        }
-
-        // 2. Ensure Slide 0 is shown first (Mobile/PC Sync)
+        // 1. 초기 상태 설정 (영상 우선)
         window.naverBannerSliderV6.move(0);
 
-        // 3. Bind Dot Clicks (Robust)
-        const dots = document.querySelectorAll('.naver-nav-dot');
-        dots.forEach((dot, idx) => {
-          dot.onclick = function (e) {
-            e.stopPropagation();
-            window.naverBannerSliderV6.move(idx);
-            window.naverBannerSliderV6.startTimer(); // Reset timer on interaction
-          };
-        });
+        // 2. 팝업 노출
+        openNaverBanner();
 
-        // 4. Start Timer
+        // 3. 타이머 시작
         window.naverBannerSliderV6.startTimer();
-        console.log("✅ V6 Banner Auto-Started & Events Bound (Slide 0 Fixed)");
+        console.log("✅ V6 Banner Auto-Started & Opened (Slide 0 Priority)");
       }
     });
   </script>
@@ -20019,94 +20024,7 @@ body.popup-active {
   }
 </style>
 
-<!-- 네이버 배너 팝업 스크립트 -->
-<script>
-  // 네이버 배너 팝업 열기
-  function openNaverBanner() {
-    console.log('🎯 네이버 배너 팝업 열기 시도');
-    const popup = document.getElementById('naverBannerPopup');
-    const video = document.getElementById('promoVideo');
-    if (popup) {
-      console.log('✅ 팝업 요소 찾음');
-      if (video && video.preload === 'none') {
-        video.preload = 'auto'; // 팝업 열릴 때 비디오 로드 시작
-        video.load();
-      }
-      popup.style.display = 'flex';
-      popup.style.visibility = 'visible';
-      popup.style.opacity = '1';
-      document.body.classList.add('naver-popup-open');
-      // 애니메이션 효과를 위해 약간의 지연 후 show 클래스 추가
-      setTimeout(() => {
-        popup.classList.add('show');
-        if (video) video.play().catch(err => console.log("Auto play prevented:", err));
-        console.log('✅ 팝업 애니메이션 시작');
-      }, 10);
-    } else {
-      console.error('❌ 팝업 요소를 찾을 수 없음');
-    }
-  }
 
-  // 네이버 배너 팝업 닫기
-  function closeNaverBanner() {
-    console.log('🔒 네이버 배너 팝업 닫기');
-    const popup = document.getElementById('naverBannerPopup');
-    const video = document.getElementById('promoVideo');
-    if (video) {
-      video.pause();
-      video.muted = true;
-    }
-    if (popup) {
-      popup.classList.remove('show');
-      // 애니메이션이 끝난 후 display none 처리
-      setTimeout(() => {
-        popup.style.display = 'none';
-        popup.style.visibility = 'hidden';
-        popup.style.opacity = '0';
-        document.body.classList.remove('naver-popup-open');
-      }, 300);
-    }
-  }
-
-  // 페이지 로드 시 팝업 즉시 표시
-  function initNaverBannerPopup() {
-    console.log('📱 디바이스 체크:', window.innerWidth <= 768 ? '모바일' : 'PC');
-    openNaverBanner(); // 지연 시간(500ms) 제거
-  }
-
-  // DOMContentLoaded 이벤트 (모바일에서 더 안정적)
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initNaverBannerPopup);
-  } else {
-    initNaverBannerPopup();
-  }
-
-  // window.load 이벤트 (백업)
-  window.addEventListener('load', function () {
-    console.log('🌐 페이지 완전 로드됨');
-    // DOMContentLoaded에서 실행 안됐을 경우를 위한 백업
-    const popup = document.getElementById('naverBannerPopup');
-    if (popup && popup.style.display === 'none') {
-      console.log('⚠️ 백업 로직으로 팝업 열기');
-      openNaverBanner();
-    }
-  });
-
-  // ESC 키로 팝업 닫기
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' || e.key === 'Esc') {
-      closeNaverBanner();
-    }
-  });
-
-  // 터치 이벤트로도 배경 닫기 (모바일 최적화)
-  document.addEventListener('touchstart', function (e) {
-    const popup = document.getElementById('naverBannerPopup');
-    if (popup && e.target === popup) {
-      closeNaverBanner();
-    }
-  });
-</script>
 
 </body>
 <script>
