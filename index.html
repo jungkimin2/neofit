@@ -4328,9 +4328,11 @@ body.popup-active {
 
         <!-- 슬라이더 영역 -->
         <div class="naver-slider-container">
-          <!-- 모바일 전용 좌우 화살표 -->
-          <div class="naver-banner-arrow prev" onclick="naverBannerSliderV6.move(0)" style="display: none;">&lt;</div>
-          <div class="naver-banner-arrow next" onclick="naverBannerSliderV6.move(1)" style="display: none;">&gt;</div>
+          <!-- 모바일 전용 좌우 화살표: Reset timer on click -->
+          <div class="naver-banner-arrow prev" onclick="naverBannerSliderV6.move(0); naverBannerSliderV6.startTimer();">
+            &lt;</div>
+          <div class="naver-banner-arrow next" onclick="naverBannerSliderV6.move(1); naverBannerSliderV6.startTimer();">
+            &gt;</div>
           <!-- V6 ID 적용 -->
           <div class="naver-slider-wrapper" id="naverSliderWrapperV6">
             <!-- 슬라이드 0 -->
@@ -4529,7 +4531,10 @@ body.popup-active {
           video.play().catch(e => console.log('Force play failed:', e));
         }
 
-        // 2. Bind Dot Clicks (Robust)
+        // 2. Ensure Slide 0 is shown first (Mobile/PC Sync)
+        window.naverBannerSliderV6.move(0);
+
+        // 3. Bind Dot Clicks (Robust)
         const dots = document.querySelectorAll('.naver-nav-dot');
         dots.forEach((dot, idx) => {
           dot.onclick = function (e) {
@@ -4539,9 +4544,9 @@ body.popup-active {
           };
         });
 
-        // 3. Start Timer
+        // 4. Start Timer
         window.naverBannerSliderV6.startTimer();
-        console.log("✅ V6 Banner Auto-Started & Events Bound");
+        console.log("✅ V6 Banner Auto-Started & Events Bound (Slide 0 Fixed)");
       }
     });
   </script>
