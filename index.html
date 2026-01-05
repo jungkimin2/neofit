@@ -15018,9 +15018,9 @@ body.popup-active {
             benefits.style.setProperty('margin-bottom', '0px', 'important');
           }
 
-          // 네오 필라테스를 아래로 4칸(64px) 이동
+          // 네오 필라테스 - 상단 박스와 간격 축소 (20px)
           neoPilates.style.cssText = `
-        transform: translateY(64px) !important;
+        transform: translateY(20px) !important;
         margin-top: 0px !important;
         position: relative !important;
         z-index: 100 !important;
@@ -19963,8 +19963,8 @@ body.popup-active {
       if (!neoPilatesSection) return;
 
       if (window.innerWidth <= 768) {
-        // 모바일: 카드가 보이도록 충분한 간격 확보
-        neoPilatesSection.style.setProperty('margin-top', '60px', 'important');
+        // 모바일: 상단 박스와 간격 축소
+        neoPilatesSection.style.setProperty('margin-top', '20px', 'important');
         neoPilatesSection.style.setProperty('transform', 'none', 'important');
         neoPilatesSection.style.setProperty('-webkit-transform', 'none', 'important');
         neoPilatesSection.style.setProperty('position', 'relative', 'important');
