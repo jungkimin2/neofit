@@ -4322,14 +4322,19 @@ body.popup-active {
           /* -48px -> -38px */
         }
 
-        /* 닫기 버튼: 프리미엄 디자인 */
+        /* 닫기 버튼: 크기 축소 및 박스 상단 중첩 */
         .naver-banner-close {
-          top: -48px !important;
-          right: 0px !important;
-          width: 38px !important;
-          height: 38px !important;
-          font-size: 26px !important;
-          background: rgba(10, 14, 39, 0.7) !important;
+          top: -12px !important;
+          /* 박스 상단에 걸치게 위치 조정 */
+          right: -10px !important;
+          /* 살짝 밖으로 빼거나 끝에 맞춤 */
+          width: 30px !important;
+          /* 38px -> 30px 축소 */
+          height: 30px !important;
+          /* 38px -> 30px 축소 */
+          font-size: 20px !important;
+          /* 폰트 리사이징 */
+          background: rgba(10, 14, 39, 0.85) !important;
           backdrop-filter: blur(8px) !important;
           border: 1.5px solid #7BE495 !important;
           color: #7BE495 !important;
