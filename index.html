@@ -4392,9 +4392,10 @@ body.popup-active {
               </a>
             </div>
 
-            <!-- [NEW] Mobile Independent Views (Hidden on PC) -->
+            <!-- [NEW] Mobile Independent Views (Hidden on PC via CSS) -->
+            <!-- Video View defaults to visible on mobile so it doesn't wait for JS -->
             <div id="mobileVideoView" class="mobile-view-container"
-              style="display: none; width: 100%; height: 100%; position: relative;">
+              style="display: block; width: 100%; height: 100%; position: relative;">
               <video id="mobilePromoVideo" src="images/naver_banner_final_v2.mp4" loop muted playsinline
                 style="width: 100%; height: 100%; object-fit: cover; border-radius: 16px;"></video>
               <!-- Manual Play Overlay for Mobile View -->
