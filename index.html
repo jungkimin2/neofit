@@ -7384,7 +7384,18 @@ body.popup-active {
           <div class="flex-grow mx-5 h-px bg-gradient-to-r from-transparent via-gray-500 to-transparent desktop-only"
             style="display: none !important;"></div>
         </div>
-        <div class="mb-6">
+        <style>
+          @media (min-width: 769px) {
+            .smart-desc-container {
+              margin-bottom: 60px !important;
+            }
+
+            .neos-card-list {
+              margin-top: 56px !important;
+            }
+          }
+        </style>
+        <div class="mb-6 smart-desc-container">
           <p class="text-xl text-gray-300 smart-desc-mobile"
             style="margin-top: 16px; font-weight: 500; text-align: left; color: #888;">
             <span style="color: #888;">스마트폰 태그 한 번으로, 모든 기구 사용법을 간편하게!<br>
@@ -7481,6 +7492,17 @@ body.popup-active {
               text-shadow: 0 0 12px rgba(157, 243, 164, 1);
             }
 
+            .circle-step {
+              transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+              cursor: pointer;
+            }
+
+            .circle-step:hover {
+              transform: scale(1.1) !important;
+              z-index: 10 !important;
+              box-shadow: 0 0 40px rgba(123, 228, 149, 0.8) !important;
+            }
+
             @media (max-width: 768px) {
               .mobile-hide {
                 display: none !important;
@@ -7515,7 +7537,7 @@ body.popup-active {
         </div>
         <!-- NEO SMART 카드형 주요 UI -->
         <div class="neos-card-list"
-          style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; justify-items: center;">
+          style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; justify-items: center; margin-top: 56px !important;">
           <div class="neos-card" style="display: flex; align-items: center; min-width: 240px;">
             <div class="neos-icon"
               style="width: 42px; height: 42px; background: linear-gradient(135deg, #7BE495, #62D2A2); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-right: 16px;">
