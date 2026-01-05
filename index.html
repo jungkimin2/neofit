@@ -6842,10 +6842,16 @@ body.popup-active {
               position: relative !important;
             }
 
-            /* "태그 한 번, 자동 학습 시작!" 문구와 설명을 위로 끌어올림 (-48px) */
-            h1.smart-title-mobile,
-            .smart-desc-mobile {
+            /* "태그 한 번, 자동 학습 시작!" 큰 제목 위치 고정 (-48px) */
+            h1.smart-title-mobile {
               transform: translateY(-48px) !important;
+              position: relative !important;
+              z-index: 201 !important;
+            }
+
+            /* 하단 설명 문구와 카드 그리드를 더 위로 끌어올림 */
+            .smart-desc-mobile {
+              transform: translateY(-84px) !important;
               position: relative !important;
               z-index: 201 !important;
             }
@@ -7567,7 +7573,7 @@ body.popup-active {
                 padding: 0 20px !important;
                 margin: 0 auto !important;
                 max-width: 100% !important;
-                transform: translateX(27px) !important;
+                transform: translate(27px, -110px) !important;
               }
 
               .neos-card {
