@@ -21478,11 +21478,34 @@ body.popup-active {
     section#hive {
       margin-bottom: -250px !important;
       padding-bottom: 0 !important;
+      overflow: visible !important;
     }
 
-    /* Smart 섹션 상단 여백 조정 */
+    /* Smart 섹션 상단 여백 조정 및 스크롤 문제 해결 */
+    section#smart,
     section#smart.smart-trainer-section-mobile {
       margin-top: 40px !important;
+      overflow: visible !important;
+      height: auto !important;
+      max-height: none !important;
+    }
+
+    /* slide-container 이중 스크롤 방지 */
+    .slide-container,
+    .slide-container.p-10,
+    .slide-container.smart-section-mobile {
+      overflow: visible !important;
+      height: auto !important;
+      max-height: none !important;
+    }
+
+    /* 전체 페이지 스크롤만 허용, 내부 스크롤 방지 */
+    section#hive,
+    section#smart,
+    section#neo-pilates,
+    section#benefits {
+      overflow: visible !important;
+      -webkit-overflow-scrolling: auto !important;
     }
   }
 </style>
