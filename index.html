@@ -21419,32 +21419,38 @@ body.popup-active {
                         .smart-trainer-section-mobile, 
                         .smart-trainer-section-mobile h2, 
                         .new-neos-showcase,
-                        .smart-trainer-section-mobile * {
+                        .smart-trainer-section-mobile *,
+                        .aos-animate {
                             transform: none !important;
                             opacity: 1 !important; /* Ensure visibility */
                             animation: none !important;
                             transition: none !important;
                         }
 
-                        /* 2. Aggressive Positioning Overrides (The "3 Clicks" Drop) */
-                        /* Header moved down to 100px to be safe */
+                        /* 2. SPLIT MOTION: Decouple Top (Header/Video) from Bottom (Cards) */
+                        
+                        /* HEADER: Aggressively pushed down (180px) */
                         .smart-trainer-section-mobile h2 {
-                            margin-top: 100px !important;
+                            margin-top: 180px !important; 
                             padding-top: 20px !important;
+                            position: relative !important;
+                            top: 0 !important;
                         }
-                        /* Video moved down */
+                        
+                        /* VIDEO: Pushed down (120px) */
                         .new-neos-showcase {
-                            margin-top: 60px !important;
+                            margin-top: 120px !important;
                         }
-                        /* Bottom Section pulled up heavily to compensate */
+
+                        /* CONTAINER: Pulled UP strongly (-340px) to keep Bottom UI (Cards) from sinking */
                         .smart-trainer-section-mobile {
-                            margin-top: -290px !important;
-                            padding-bottom: 240px !important;
+                            margin-top: -340px !important;
+                            padding-bottom: 300px !important; /* Safe padding for next section */
                         }
                     }
                  `;
           document.head.appendChild(style);
-          console.log("Neo Smart Mobile Layout Enforced via CSS Injection");
+          console.log("Neo Smart Mobile Layout Enforced via CSS Injection (Split Motion)");
         }
       }
     }
