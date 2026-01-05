@@ -4150,7 +4150,7 @@ body.popup-active {
         overflow: hidden;
       }
 
-      /* [통합 모바일 스타일] PC와 동일한 고기능 레이아웃 */
+      /* [통합 모바일 스타일] 화살표 네비게이션 적용 버전 */
       @media (max-width: 768px) {
         #naverBannerPopup {
           position: fixed !important;
@@ -4172,11 +4172,13 @@ body.popup-active {
         }
 
         .naver-banner-container {
-          width: 90% !important;
-          max-width: 400px !important;
+          width: 82% !important;
+          /* 박스 좀더 축소 */
+          max-width: 340px !important;
+          /* 박스 좀더 축소 */
           padding: 6px !important;
           border-radius: 20px !important;
-          margin-bottom: 70px !important;
+          margin-bottom: 30px !important;
           overflow: visible !important;
           background: linear-gradient(135deg, #7BE495 0%, #5fd17f 100%) !important;
           position: relative;
@@ -4186,13 +4188,15 @@ body.popup-active {
           border-radius: 16px !important;
           overflow: visible !important;
           background: #000;
+          z-index: 1;
         }
 
         .naver-slider-container {
           width: 100% !important;
           height: auto !important;
           aspect-ratio: 1 / 1 !important;
-          max-height: 50vh;
+          max-height: 45vh;
+          /* 높이 약간 조절 */
           border-radius: 14px !important;
           overflow: hidden !important;
           position: relative !important;
@@ -4215,67 +4219,77 @@ body.popup-active {
           overflow: hidden !important;
         }
 
-        .naver-banner-link {
-          width: 100% !important;
-          height: 100% !important;
-          display: block !important;
-          position: relative !important;
-        }
-
         .naver-slide img,
         .naver-slide video {
           width: 100% !important;
           height: 100% !important;
-          object-fit: cover !important;
-          /* 'cover'로 변경하여 팝업 박스에 꽉 채우고 중앙 정렬 (확대 효과) */
+          object-fit: contain !important;
+          /* 영상을 좀더 축소(축소 효과) */
           position: absolute !important;
           top: 0 !important;
           left: 0 !important;
         }
 
-        /* 닫기 버튼: 확실한 가시성 확보 */
+        /* 화살표 네비게이션 스타일 추가 */
+        .naver-banner-arrow {
+          display: flex !important;
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          width: 32px;
+          height: 32px;
+          background: rgba(10, 14, 39, 0.8);
+          border: 1px solid #7BE495;
+          border-radius: 50%;
+          color: #7BE495;
+          align-items: center;
+          justify-content: center;
+          z-index: 2000000010;
+          cursor: pointer;
+          font-size: 18px;
+          font-weight: bold;
+          -webkit-tap-highlight-color: transparent;
+        }
+
+        .naver-banner-arrow.prev {
+          left: -40px;
+        }
+
+        .naver-banner-arrow.next {
+          right: -40px;
+        }
+
+        /* 하단 네비게이터 도트 숨김 */
+        .naver-banner-navigator {
+          display: none !important;
+        }
+
         .naver-banner-close {
-          top: -45px !important;
+          top: -35px !important;
+          /* 팝업 크기 맞춰 조절 */
           right: -5px !important;
-          width: 42px !important;
-          height: 42px !important;
-          font-size: 30px !important;
+          width: 36px !important;
+          height: 36px !important;
+          font-size: 24px !important;
           background: #0A0E27 !important;
           border: 2px solid #7BE495 !important;
           color: #7BE495 !important;
           z-index: 2000000001 !important;
-          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5) !important;
         }
 
-        /* 네비게이터 */
-        .naver-banner-navigator {
-          bottom: -55px !important;
-          z-index: 2000000001 !important;
-        }
-
-        /* 스피커 버튼: 레이어 최상단 강조 */
         #videoSoundBtn {
-          width: 42px !important;
-          height: 42px !important;
-          bottom: 12px !important;
-          right: 12px !important;
+          width: 36px !important;
+          height: 36px !important;
+          bottom: 10px !important;
+          right: 10px !important;
           z-index: 2000000005 !important;
-          background: rgba(10, 14, 39, 0.9) !important;
-          border: 2px solid #7BE495 !important;
-          display: flex !important;
-          box-shadow: 0 0 15px rgba(123, 228, 149, 0.4) !important;
-        }
-
-        #videoSoundBtn svg {
-          width: 22px !important;
-          height: 22px !important;
         }
 
         .event-date-footer {
-          padding: 12px 18px !important;
-          font-size: 15px !important;
-          margin-top: 6px !important;
-          border-radius: 14px !important;
+          padding: 10px 15px !important;
+          font-size: 13px !important;
+          margin-top: 4px !important;
+          border-radius: 12px !important;
         }
       }
 
@@ -4314,6 +4328,9 @@ body.popup-active {
 
         <!-- 슬라이더 영역 -->
         <div class="naver-slider-container">
+          <!-- 모바일 전용 좌우 화살표 -->
+          <div class="naver-banner-arrow prev" onclick="naverBannerSliderV6.move(0)" style="display: none;">&lt;</div>
+          <div class="naver-banner-arrow next" onclick="naverBannerSliderV6.move(1)" style="display: none;">&gt;</div>
           <!-- V6 ID 적용 -->
           <div class="naver-slider-wrapper" id="naverSliderWrapperV6">
             <!-- 슬라이드 0 -->
