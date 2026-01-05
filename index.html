@@ -4339,9 +4339,9 @@ body.popup-active {
           <div class="naver-slider-wrapper" id="naverSliderWrapperV6">
             <!-- 슬라이드 0 (Video) -->
             <div class="naver-slide" style="z-index: 10;">
-              <!-- poster removed to avoid confusion -->
-              <video id="promoVideoV6" src="images/naver_banner_final_v2.mp4" loop muted playsinline autoplay
-                style="z-index: 20;"></video>
+              <!-- Poster restored for PC; removed on mobile via JS -->
+              <video id="promoVideoV6" src="images/naver_banner_final_v2.mp4" poster="images/pilates_event_2026.jpg"
+                loop muted playsinline autoplay style="z-index: 20;"></video>
               <!-- Manual Play Overlay (Mobile Only via CSS/JS) -->
               <div id="v6PlayOverlay" style="
                   position: absolute; top: 0; left: 0; width: 100%; height: 100%;
@@ -4584,7 +4584,8 @@ body.popup-active {
         const isMobile = window.innerWidth <= 768;
 
         if (v6Video && v6Overlay && isMobile) {
-          // Enable Overlay Display via JS for Mobile Only
+          // Mobile: Remove poster to avoid confusion, enable manual play overlay
+          v6Video.removeAttribute('poster');
           v6Overlay.style.display = 'flex';
 
           function updateOverlay() {
