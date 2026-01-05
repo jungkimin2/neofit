@@ -6937,18 +6937,8 @@ body.popup-active {
 
             /* 기존 no-bg 클래스 오버라이드 삭제 (위에서 통합 처리함) */
 
-            /* 비디오 섹션과 싱크를 맞추되, 내부 겹침 없이 섹션 전체를 이동 */
-            /* 중요: padding-bottom을 대폭 추가하여 아래 섹션(네오 필라테스)이 위로 덮치는 것을 방지 */
-            /* 상단이 대폭 내려오므로(+80px), 하단은 아주 강력하게 위로 당겨서(-290px) 위치를 고정 */
-            /* [CRITICAL FIX] 클래스명 오타 수정: .smart-section-mobile -> .smart-trainer-section-mobile */
-            .smart-trainer-section-mobile {
-              margin-top: -290px !important;
-              padding-top: 20px !important;
-              padding-bottom: 240px !important;
-              /* 카드 영역 확보를 위한 안전 여백 */
-              transform: none !important;
-              margin-bottom: 0 !important;
-            }
+            /* [CRITICAL FIX] Removed conflicting negative margin block */
+            /* The layout is now handled entirely by the JS-injected Max-Specificity Enforcer */
 
             /* 설명 텍스트 하단 여백 확보 */
             .smart-trainer-section-mobile .explanation-text,
@@ -21416,10 +21406,11 @@ body.popup-active {
           style.innerHTML = `
                     @media (max-width: 768px) {
                         /* 1. Force disable transforms (Parallax Kill Switch) */
-                        .smart-trainer-section-mobile, 
-                        .smart-trainer-section-mobile h2, 
+                        /* High Specificity Targeting */
+                        body #smart.smart-trainer-section-mobile, 
+                        body #smart.smart-trainer-section-mobile h2, 
                         .new-neos-showcase,
-                        .smart-trainer-section-mobile *,
+                        body #smart.smart-trainer-section-mobile *,
                         .aos-animate {
                             transform: none !important;
                             opacity: 1 !important; /* Ensure visibility */
@@ -21428,7 +21419,6 @@ body.popup-active {
                         }
 
                         /* 2. OVERLAP FIX: PHYSICAL SEPARATION (Positive Margin) */
-                        /* User requires background to move down. 0px was not enough. */
                         
                         /* HEADER: Reset internal margin since container acts as spacer */
                         body #smart.smart-trainer-section-mobile h2 {
@@ -21452,16 +21442,16 @@ body.popup-active {
                         }
 
                         /* CONTAINER: FORCE DOWN (120px) */
-                        /* Positive margin pushes the entire black background down, revealing the green box above */
-                        .smart-trainer-section-mobile {
+                        /* Used ID Selector #smart for Max Specificity to override body styles */
+                        body #smart.smart-trainer-section-mobile {
                             margin-top: 120px !important;
-                            padding-top: 20px !important; /* Slight internal padding */
+                            padding-top: 20px !important; 
                             padding-bottom: 120px !important; 
                         }
                     }
                  `;
           document.head.appendChild(style);
-          console.log("Neo Smart Mobile Layout Enforced via CSS Injection (Positive Separation)");
+          console.log("Neo Smart Mobile Layout Enforced via CSS Injection (Max Specificity + Cleanup)");
         }
       }
     }
