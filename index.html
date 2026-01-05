@@ -21471,5 +21471,20 @@ body.popup-active {
   })();
 </script>
 
+<!-- 모바일 hive-smart 섹션 간격 수정 -->
+<style>
+  @media (max-width: 768px) {
+    /* Hive 섹션 하단 여백 제거 - transform으로 올린 요소들의 빈 공간 제거 */
+    section#hive {
+      margin-bottom: -400px !important;
+      padding-bottom: 0 !important;
+    }
+
+    /* Smart 섹션 상단 여백 조정 */
+    section#smart.smart-trainer-section-mobile {
+      margin-top: 20px !important;
+    }
+  }
+</style>
 
 </html>
