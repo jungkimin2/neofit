@@ -21471,34 +21471,17 @@ body.popup-active {
   })();
 </script>
 
-<!-- 모바일 hive-smart 섹션 간격 수정 및 이중 스크롤 완전 제거 -->
+<!-- 모바일 hive-smart 섹션 간격 수정 -->
 <style>
   @media (max-width: 768px) {
-    /* 핵심: scrollable-content 이중 스크롤 완전 제거 */
-    #scrollable-content {
-      overflow: visible !important;
-      height: auto !important;
-      max-height: none !important;
-      min-height: auto !important;
-      position: static !important;
-    }
-
-    /* body와 html만 스크롤 가능 */
-    html, body {
-      overflow-x: hidden !important;
-      overflow-y: scroll !important;
-      height: auto !important;
-      min-height: 100% !important;
-    }
-
-    /* Hive 섹션 하단 여백 제거 */
+    /* Hive 섹션 하단 여백 제거 - transform으로 올린 요소들의 빈 공간 제거 */
     section#hive {
       margin-bottom: -250px !important;
       padding-bottom: 0 !important;
       overflow: visible !important;
     }
 
-    /* Smart 섹션 상단 여백 조정 */
+    /* Smart 섹션 상단 여백 조정 및 스크롤 문제 해결 */
     section#smart,
     section#smart.smart-trainer-section-mobile {
       margin-top: 40px !important;
@@ -21507,15 +21490,21 @@ body.popup-active {
       max-height: none !important;
     }
 
-    /* 모든 섹션과 컨테이너 이중 스크롤 방지 */
-    section,
-    .section,
+    /* slide-container 이중 스크롤 방지 */
     .slide-container,
-    .container,
-    div[class*="container"] {
+    .slide-container.p-10,
+    .slide-container.smart-section-mobile {
       overflow: visible !important;
       height: auto !important;
       max-height: none !important;
+    }
+
+    /* 전체 페이지 스크롤만 허용, 내부 스크롤 방지 */
+    section#hive,
+    section#smart,
+    section#neo-pilates,
+    section#benefits {
+      overflow: visible !important;
       -webkit-overflow-scrolling: auto !important;
     }
   }
