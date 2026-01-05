@@ -4004,6 +4004,11 @@ body.popup-active {
         /* 고정 높이 부여로 이미지 가출 방지 */
       }
 
+      /* Global Hide for Mobile Elements */
+      .naver-banner-arrow {
+        display: none;
+      }
+
       .naver-slider-wrapper {
         display: flex;
         transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
@@ -4017,7 +4022,8 @@ body.popup-active {
         flex-shrink: 0;
       }
 
-      .naver-slide img {
+      .naver-slide img,
+      .naver-slide video {
         width: 100% !important;
         height: 100% !important;
         object-fit: cover !important;
