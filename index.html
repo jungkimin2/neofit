@@ -4214,15 +4214,28 @@ body.popup-active {
           display: none !important;
         }
 
-        /* 모바일 뷰 컨테이너 스타일 */
+        /* 모바일 뷰 트랜지션 스타일 */
         .mobile-view-container {
+          position: absolute !important;
+          top: 0;
+          left: 0;
           width: 100% !important;
-          height: 340px !important;
-          /* Fixed height for consistency */
+          height: 100% !important;
           background: #000;
           border-radius: 14px;
           overflow: hidden;
-          position: relative;
+          opacity: 0;
+          visibility: hidden;
+          transform: scale(0.98);
+          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+          z-index: 1;
+        }
+
+        .mobile-view-container.active {
+          opacity: 1;
+          visibility: visible;
+          transform: scale(1);
+          z-index: 2;
         }
 
         .naver-slider-wrapper {
@@ -4255,66 +4268,68 @@ body.popup-active {
           left: 0 !important;
         }
 
-        /* 화살표 네비게이션 스타일 추가 */
+        /* 가로 화살표 네비게이션: 프리미엄 디자인 */
         .naver-banner-arrow {
           display: flex !important;
           position: absolute;
           top: 50%;
           transform: translateY(-50%);
-          width: 32px;
-          height: 32px;
-          background: rgba(10, 14, 39, 0.8);
-          border: 1px solid #7BE495;
+          width: 42px;
+          height: 42px;
+          background: rgba(10, 14, 39, 0.6);
+          backdrop-filter: blur(4px);
+          border: 1.5px solid #7BE495;
           border-radius: 50%;
           color: #7BE495;
           align-items: center;
           justify-content: center;
           z-index: 2000000010;
           cursor: pointer;
-          font-size: 18px;
-          font-weight: bold;
           -webkit-tap-highlight-color: transparent;
+          box-shadow: 0 0 15px rgba(123, 228, 149, 0.3), inset 0 0 10px rgba(123, 228, 149, 0.1);
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .naver-banner-arrow:active {
+          background: rgba(123, 228, 149, 0.2);
+          transform: translateY(-50%) scale(0.9);
+          box-shadow: 0 0 20px rgba(123, 228, 149, 0.5);
         }
 
         .naver-banner-arrow.prev {
-          left: -40px;
+          left: -48px;
         }
 
         .naver-banner-arrow.next {
-          right: -40px;
+          right: -48px;
         }
 
-        /* 하단 네비게이터 도트 숨김 */
-        .naver-banner-navigator {
-          display: none !important;
-        }
-
+        /* 닫기 버튼: 프리미엄 디자인 */
         .naver-banner-close {
-          top: -35px !important;
-          /* 팝업 크기 맞춰 조절 */
-          right: -5px !important;
-          width: 36px !important;
-          height: 36px !important;
-          font-size: 24px !important;
-          background: #0A0E27 !important;
-          border: 2px solid #7BE495 !important;
+          top: -48px !important;
+          right: 0px !important;
+          width: 38px !important;
+          height: 38px !important;
+          font-size: 26px !important;
+          background: rgba(10, 14, 39, 0.7) !important;
+          backdrop-filter: blur(8px) !important;
+          border: 1.5px solid #7BE495 !important;
           color: #7BE495 !important;
+          border-radius: 50% !important;
           z-index: 2000000001 !important;
+          display: flex !important;
+          align-items: center;
+          justify-content: center;
+          box-shadow: 0 0 15px rgba(123, 228, 149, 0.4);
+          transition: all 0.3s ease;
+          line-height: 1;
+          padding-bottom: 2px !important;
         }
 
-        #videoSoundBtn {
-          width: 36px !important;
-          height: 36px !important;
-          bottom: 10px !important;
-          right: 10px !important;
-          z-index: 2000000005 !important;
-        }
-
-        .event-date-footer {
-          padding: 10px 15px !important;
-          font-size: 13px !important;
-          margin-top: 4px !important;
-          border-radius: 12px !important;
+        .naver-banner-close:active {
+          transform: scale(0.9);
+          background: rgba(123, 228, 149, 0.3) !important;
+          box-shadow: 0 0 20px #7BE495;
         }
       }
 
@@ -4355,9 +4370,18 @@ body.popup-active {
         <div class="naver-slider-container">
           <!-- 모바일 전용 좌우 화살표: Reset timer on click -->
           <div class="naver-banner-arrow prev" onclick="naverBannerSliderV6.prev()">
-            &lt;</div>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+              stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </div>
           <div class="naver-banner-arrow next" onclick="naverBannerSliderV6.next()">
-            &gt;</div>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+              stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </div>
+
           <!-- V6 ID 적용 -->
           <div class="naver-slider-wrapper" id="naverSliderWrapperV6">
             <!-- 슬라이드 0 (Video) - PC용 -->
@@ -4375,25 +4399,13 @@ body.popup-active {
           </div>
 
           <!-- [NEW] Mobile Independent Views (Moved OUTSIDE wrapper) -->
-          <div id="mobileVideoView" class="mobile-view-container"
-            style="display: block; width: 100%; height: 100%; position: relative;">
+          <!-- Video View: removed play overlay as requested -->
+          <div id="mobileVideoView" class="mobile-view-container active">
             <video id="mobilePromoVideo" src="images/naver_banner_final_v2.mp4" loop muted playsinline
               style="width: 100%; height: 100%; object-fit: cover; border-radius: 16px;"></video>
-            <!-- Manual Play Overlay for Mobile View -->
-            <div id="mobilePlayOverlay"
-              onclick="document.getElementById('mobilePromoVideo').muted=false; document.getElementById('mobilePromoVideo').play(); this.style.opacity='0'; setTimeout(()=>{this.style.display='none'},300);"
-              style="position: absolute; top:0; left:0; width:100%; height:100%; display: flex; align-items: center; justify-content: center; z-index: 25; background: rgba(0,0,0,0.3);">
-              <div
-                style="width: 50px; height: 50px; background: rgba(0,0,0,0.5); border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid #fff;">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="white" style="margin-left: 2px;">
-                  <path d="M8 5v14l11-7z" />
-                </svg>
-              </div>
-            </div>
           </div>
 
-          <div id="mobileImageView" class="mobile-view-container"
-            style="display: none; width: 100%; height: 100%; position: relative;">
+          <div id="mobileImageView" class="mobile-view-container">
             <a href="https://m.booking.naver.com/booking/10/bizes/987028/items/5583476?area=pll&lang=ko&startDate=2025-12-28&theme=place"
               target="_blank" rel="noopener noreferrer" class="naver-banner-link" style="height: 100%;">
               <img src="./images/pilates_event_2026.jpg" alt="필라테스 등록시 헬스 전액 무료"
@@ -4467,21 +4479,16 @@ body.popup-active {
           this.currentIndex = index;
           const videoView = document.getElementById('mobileVideoView');
           const imageView = document.getElementById('mobileImageView');
-          const mobileArrowPrev = document.querySelector('.naver-banner-arrow.prev');
-          const mobileArrowNext = document.querySelector('.naver-banner-arrow.next');
 
           if (videoView && imageView) {
+            // Toggling .active class triggers CSS transitions
+            videoView.classList.toggle('active', index === 0);
+            imageView.classList.toggle('active', index === 1);
+
+            const mv = document.getElementById('mobilePromoVideo');
             if (index === 0) {
-              videoView.style.display = 'block';
-              imageView.style.display = 'none';
-              // Video Auto Play
-              const mv = document.getElementById('mobilePromoVideo');
-              if (mv) { mv.muted = true; mv.play().catch(e => console.log(e)); }
+              if (mv) { mv.muted = true; mv.play().catch(e => { }); }
             } else {
-              videoView.style.display = 'none';
-              imageView.style.display = 'block';
-              // Pause Video
-              const mv = document.getElementById('mobilePromoVideo');
               if (mv) { mv.pause(); }
             }
           }
