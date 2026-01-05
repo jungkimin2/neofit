@@ -4027,6 +4027,8 @@ body.popup-active {
         width: 100% !important;
         height: 100% !important;
         object-fit: cover !important;
+        object-position: center center !important;
+        /* PC: 무조건 중앙 정렬 강제 */
         border-radius: 16px;
       }
 
@@ -4262,7 +4264,8 @@ body.popup-active {
           width: 100% !important;
           height: 100% !important;
           object-fit: contain !important;
-          /* 영상을 좀더 축소(축소 효과) */
+          object-position: center center !important;
+          /* 모바일 슬라이더(PC용)도 모바일에서 볼 땐 중앙 유지 */
           position: absolute !important;
           top: 0 !important;
           left: 0 !important;
