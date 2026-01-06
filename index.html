@@ -13567,7 +13567,7 @@ body.popup-active {
               syncVideo.style.left = '10px';
               syncVideo.style.width = 'calc(100% - 20px)';
               syncVideo.style.height = 'calc(100% - 20px)';
-              syncVideo.style.objectFit = 'cover';
+              syncVideo.style.objectFit = isMobile ? 'contain' : 'cover';
               syncVideo.style.borderRadius = '16px';
               syncVideo.style.border = 'none';
               syncVideo.style.boxShadow = 'none';
@@ -13686,7 +13686,7 @@ body.popup-active {
               balanceVideo.style.left = '10px';
               balanceVideo.style.width = 'calc(100% - 20px)';
               balanceVideo.style.height = 'calc(100% - 20px)';
-              balanceVideo.style.objectFit = 'cover';
+              balanceVideo.style.objectFit = isMobile ? 'contain' : 'cover';
               balanceVideo.style.borderRadius = '16px';
               balanceVideo.style.border = 'none';
               balanceVideo.style.boxShadow = 'none';
@@ -13809,7 +13809,7 @@ body.popup-active {
               boostVideo.style.left = '10px';
               boostVideo.style.width = 'calc(100% - 20px)';
               boostVideo.style.height = 'calc(100% - 20px)';
-              boostVideo.style.objectFit = 'cover';
+              boostVideo.style.objectFit = isMobile ? 'contain' : 'cover';
               boostVideo.style.borderRadius = '16px';
               boostVideo.style.border = 'none';
               boostVideo.style.boxShadow = 'none';
@@ -20997,21 +20997,47 @@ body.popup-active {
       background: #000 !important;
     }
 
-    /* 모바일에서 모든 비디오 카드를 페이지 최상위로 강제 이동 - 위쪽으로 더 이동 */
+    /* 모바일에서 모든 비디오 카드를 페이지 최상위로 강제 이동 */
     #sync-card.video-playing-sync,
     #balance-card.video-playing-balance,
     #boost-card.video-playing-boost {
       position: fixed !important;
-      top: 35% !important;
+      top: 45% !important;
       left: 50% !important;
       transform: translateX(-50%) translateY(-50%) scale(1.0) !important;
       z-index: 2147483647 !important;
       transition: all 0.3s ease !important;
-      width: 320px !important;
-      height: 400px !important;
+      width: 350px !important;
+      height: 450px !important;
       margin: 0 !important;
-      max-width: 90vw !important;
-      max-height: 70vh !important;
+      max-width: 92vw !important;
+      max-height: 80vh !important;
+      background: #000 !important;
+      border-radius: 20px !important;
+      overflow: hidden !important;
+    }
+
+    /* 작은 스마트폰 화면 대응 (아이폰 SE, 미니 등) */
+    @media (max-width: 400px) {
+
+      #sync-card.video-playing-sync,
+      #balance-card.video-playing-balance,
+      #boost-card.video-playing-boost {
+        width: 300px !important;
+        height: 385px !important;
+        top: 42% !important;
+      }
+    }
+
+    /* 모바일에서 비디오 요소 잘림 방지 */
+    .sync-hover-video.playing,
+    .balance-hover-video.playing,
+    .boost-hover-video.playing {
+      object-fit: contain !important;
+      width: 100% !important;
+      height: 100% !important;
+      top: 0 !important;
+      left: 0 !important;
     }
 
     /* 모바일에서만 NEO HIVE 섹션을 아래로 이동 */
@@ -21019,221 +21045,34 @@ body.popup-active {
       margin-top: 200px !important;
     }
 
-    /* 비디오 자체는 최고 우선순위 */
-    .boost-hover-video.playing,
-    .sync-hover-video.playing,
-    .balance-hover-video.playing {
-      z-index: 2147483647 !important;
+    /* 비디오 재생 중 UI 숨김 (Sync) */
+    body #sync-card.video-playing-sync .card-front>div[style*="z-index: 2"],
+    body #sync-card.video-playing-sync .click-indicator {
+      display: none !important;
+    }
+
+    /* 비디오 재생 중 UI 숨김 (Balance) */
+    body #balance-card.video-playing-balance .card-front>div[style*="z-index: 2"],
+    body #balance-card.video-playing-balance .click-indicator {
+      display: none !important;
+    }
+
+    /* 비디오 재생 중 UI 숨김 (Boost) */
+    body #boost-card.video-playing-boost .card-front>div[style*="z-index: 2"],
+    body #boost-card.video-playing-boost .click-indicator {
+      display: none !important;
     }
   }
 
-  /* 네오 싱크 카드 비디오 재생 시 확대 효과 */
-  html body .training-cards-container #sync-card.video-playing-sync,
-  html body .training-cards-container #sync-card.video-playing-sync.active,
-  html body .training-cards-container.sync-active #sync-card.video-playing-sync,
-  html body .training-cards-container.sync-active #sync-card.video-playing-sync.active,
-  html body #sync-card.video-playing-sync[style*="transform"],
-  html body #sync-card.video-playing-sync[style*="position"],
-  html body #sync-card.video-playing-sync[style],
-  body #sync-card.video-playing-sync {
-    position: absolute !important;
-    left: 50% !important;
-    top: 50% !important;
-    transform: translateX(-50%) translateY(calc(-50% - 48px)) translateZ(50px) scale(1.1) !important;
-    z-index: 100 !important;
-    margin: 0 !important;
-    width: 350px !important;
-    height: 450px !important;
-    transition: all 0.3s ease !important;
-  }
-
-  /* 네오 싱크 비디오 재생 중 모든 UI 요소 강제 숨김 */
-  body #sync-card.video-playing-sync .card-front h3,
-  body #sync-card.video-playing-sync .card-front p,
-  body #sync-card.video-playing-sync .card-front img,
-  body #sync-card.video-playing-sync .click-indicator,
-  body #sync-card.video-playing-sync .card-front>div[style*="z-index: 2"],
-  body #sync-card.video-playing-sync .card-front>div[style*="z-index: 2"]>*:not(.sync-hover-video) {
-    opacity: 0 !important;
-    visibility: hidden !important;
-    display: none !important;
-    pointer-events: none !important;
-    z-index: -1 !important;
-  }
-
-  /* 네오 싱크 비디오만 표시 */
-  body #sync-card.video-playing-sync .sync-hover-video {
-    opacity: 1 !important;
-    visibility: visible !important;
-    display: block !important;
-    z-index: 9999 !important;
-    position: absolute !important;
-    top: 10px !important;
-    left: 10px !important;
-    width: calc(100% - 20px) !important;
-    height: calc(100% - 20px) !important;
-    object-fit: cover !important;
-    border-radius: 16px !important;
-    background: #000 !important;
-  }
-
-  /* 네오 밸런스 카드 비디오 재생 시 확대 효과 */
-  html body .training-cards-container #balance-card.video-playing-balance,
-  html body .training-cards-container #balance-card.video-playing-balance.active,
-  html body .training-cards-container.balance-active #balance-card.video-playing-balance,
-  html body .training-cards-container.balance-active #balance-card.video-playing-balance.active,
-  html body #balance-card.video-playing-balance[style*="transform"],
-  html body #balance-card.video-playing-balance[style*="position"],
-  html body #balance-card.video-playing-balance[style],
-  body #balance-card.video-playing-balance {
-    position: absolute !important;
-    left: 50% !important;
-    top: 50% !important;
-    transform: translateX(-50%) translateY(calc(-50% - 48px)) translateZ(50px) scale(1.1) !important;
-    z-index: 100 !important;
-    margin: 0 !important;
-    width: 350px !important;
-    height: 450px !important;
-    transition: all 0.3s ease !important;
-  }
-
-  /* 네오 밸런스 비디오 재생 중 모든 UI 요소 강제 숨김 */
-  body #balance-card.video-playing-balance .card-front h3,
-  body #balance-card.video-playing-balance .card-front p,
-  body #balance-card.video-playing-balance .card-front img,
-  body #balance-card.video-playing-balance .click-indicator,
-  body #balance-card.video-playing-balance .card-front>div[style*="z-index: 2"],
-  body #balance-card.video-playing-balance .card-front>div[style*="z-index: 2"]>*:not(.balance-hover-video) {
-    opacity: 0 !important;
-    visibility: hidden !important;
-    display: none !important;
-    pointer-events: none !important;
-    z-index: -1 !important;
-  }
-
-  /* 네오 밸런스 비디오만 표시 */
-  body #balance-card.video-playing-balance .balance-hover-video {
-    opacity: 1 !important;
-    visibility: visible !important;
-    display: block !important;
-    z-index: 9999 !important;
-    position: absolute !important;
-    top: 10px !important;
-    left: 10px !important;
-    width: calc(100% - 20px) !important;
-    height: calc(100% - 20px) !important;
-    object-fit: cover !important;
-    border-radius: 16px !important;
-    background: #000 !important;
-  }
-  }
-
-  /* PC 환경에서 모든 카드 비디오 재생 시 확대 효과 - 완전히 동일한 로직 */
+  /* PC 환경 확대 효과 */
   @media (min-width: 769px) {
 
-    /* 네오 싱크 카드 PC 확대 효과 */
-    html body .training-cards-container #sync-card.video-playing-sync,
-    html body #sync-card.video-playing-sync.active,
-    html body #sync-card.video-playing-sync {
-      transform: scale(1.1) !important;
-      transition: all 0.3s ease !important;
-      z-index: 1000 !important;
-    }
-
-    /* 네오 밸런스 카드 PC 확대 효과 - 네오 싱크와 완전히 동일 */
-    html body .training-cards-container #balance-card.video-playing-balance,
-    html body #balance-card.video-playing-balance.active,
-    html body #balance-card.video-playing-balance {
-      transform: scale(1.1) !important;
-      transition: all 0.3s ease !important;
-      z-index: 1000 !important;
-    }
-
-    /* 네오 부스트 카드 PC 확대 효과 - 네오 싱크와 완전히 동일 */
-    html body .training-cards-container #boost-card.video-playing-boost,
-    html body #boost-card.video-playing-boost.active,
-    html body #boost-card.video-playing-boost {
-      position: absolute !important;
-      left: 50% !important;
-      top: 50% !important;
-      transform: translateX(-50%) translateY(calc(-50% - 48px)) translateZ(50px) scale(1.1) !important;
-      z-index: 100 !important;
-      margin: 0 !important;
-      width: 350px !important;
-      height: 450px !important;
-      transition: all 0.3s ease !important;
-    }
-
-    /* 추가 강제 적용 - 인라인 스타일까지 덮어쓰기 */
-    html body #balance-card.video-playing-balance[style*="transform"] {
-      transform: scale(1.1) !important;
-    }
-
-    html body #boost-card.video-playing-boost[style*="transform"] {
-      transform: scale(1.1) !important;
-    }
-
-    /* NEO BOOST 카드 최강 우선순위 - 완전히 제자리에서만 확대 */
-    html body #boost-card.video-playing-boost,
-    html body #boost-card.video-playing-boost[style],
-    html body #boost-card.video-playing-boost[style*="transform"],
-    html body #boost-card.video-playing-boost[style*="position"] {
-      transform: scale(1.1) !important;
-      position: static !important;
-      top: auto !important;
-      left: auto !important;
-      bottom: auto !important;
-      right: auto !important;
-      margin: 0 !important;
-      translate: none !important;
-      will-change: auto !important;
-    }
-
-    /* 네오 부스트 최강 특이성 - 모든 상황에서 확대 적용 */
-    html body .training-cards-container.boost-active #boost-card.video-playing-boost.active,
-    html body .training-cards-container #boost-card.video-playing-boost.active,
-    html body .training-cards-container #boost-card.video-playing-boost,
-    html body #boost-card.video-playing-boost.active,
-    html body #boost-card.video-playing-boost,
+    #sync-card.video-playing-sync,
+    #balance-card.video-playing-balance,
     #boost-card.video-playing-boost {
       transform: scale(1.1) !important;
-      transition: all 0.3s ease !important;
       z-index: 1000 !important;
-    }
-
-    /* 네오 부스트 강제 확대 - 절대적 우선순위 */
-    body #boost-card.video-playing-boost,
-    #boost-card.video-playing-boost {
-      transform: scale(1.1) !important;
-    }
-  }
-
-  /* 네오 부스트 확대 효과 - 최종 강제 적용 (PC 환경) */
-  @media (min-width: 769px) {
-    #boost-card.video-playing-boost {
-      transform: scale(1.1) !important;
       transition: all 0.3s ease !important;
-      z-index: 1000 !important;
-    }
-
-    html body #boost-card.video-playing-boost {
-      transform: scale(1.1) !important;
-    }
-
-    html body .training-cards-container #boost-card.video-playing-boost {
-      transform: scale(1.1) !important;
-    }
-
-    /* 모든 경우의 수를 다 커버 */
-    [id="boost-card"].video-playing-boost {
-      transform: scale(1.1) !important;
-    }
-  }
-
-  /* 네오 부스트 PC 확대 - 최종 강제 */
-  @media (min-width: 769px) {
-    #boost-card.video-playing-boost[style] {
-      transform: scale(1.1) !important;
     }
 
     /* NEO BOOST 카드 위치 고정 - 절대 이동 금지 */
@@ -21248,73 +21087,6 @@ body.popup-active {
       bottom: auto !important;
       margin: 0 !important;
       transform: scale(1.1) !important;
-    }
-  }
-</style>
-
-<!-- NEO BOOST 네오 싱크와 완전히 동일한 구조 -->
-<style>
-  /* 네오 부스트 카드 비디오 재생 시 확대 효과 - 네오 싱크와 완전 동일 */
-  html body .training-cards-container #boost-card.video-playing-boost,
-  html body .training-cards-container #boost-card.video-playing-boost.active,
-  html body .training-cards-container.boost-active #boost-card.video-playing-boost,
-  html body .training-cards-container.boost-active #boost-card.video-playing-boost.active,
-  html body #boost-card.video-playing-boost[style*="transform"],
-  html body #boost-card.video-playing-boost[style*="position"],
-  html body #boost-card.video-playing-boost[style],
-  body #boost-card.video-playing-boost {
-    position: absolute !important;
-    left: 50% !important;
-    top: 50% !important;
-    transform: translateX(-50%) translateY(calc(-50% - 48px)) translateZ(50px) scale(1.1) !important;
-    z-index: 100 !important;
-    margin: 0 !important;
-    width: 350px !important;
-    height: 450px !important;
-    transition: all 0.3s ease !important;
-  }
-
-  /* 네오 부스트 비디오 재생 중 모든 UI 요소 강제 숨김 - 네오 싱크와 동일 */
-  body #boost-card.video-playing-boost .card-front h3,
-  body #boost-card.video-playing-boost .card-front p,
-  body #boost-card.video-playing-boost .card-front img,
-  body #boost-card.video-playing-boost .click-indicator,
-  body #boost-card.video-playing-boost .card-front>div[style*="z-index: 2"],
-  body #boost-card.video-playing-boost .card-front>div[style*="z-index: 2"]>*:not(.boost-hover-video) {
-    opacity: 0 !important;
-    visibility: hidden !important;
-    display: none !important;
-    pointer-events: none !important;
-    z-index: -1 !important;
-  }
-
-  /* 네오 부스트 비디오만 표시 - 네오 싱크와 동일 */
-  body #boost-card.video-playing-boost .boost-hover-video {
-    opacity: 1 !important;
-    visibility: visible !important;
-    display: block !important;
-    z-index: 9999 !important;
-    position: absolute !important;
-    top: 10px !important;
-    left: 10px !important;
-    width: calc(100% - 20px) !important;
-    height: calc(100% - 20px) !important;
-    object-fit: cover !important;
-    border-radius: 16px !important;
-    background: #000 !important;
-  }
-
-  /* 네오 부스트 비디오 재생 시 빨간 테두리 유지 - 모바일에서만 적용 */
-  @media (max-width: 768px) {
-    body #boost-card.video-playing-boost .card-front {
-      border: 2px solid #F87171 !important;
-    }
-  }
-
-  /* PC에서는 글래스 오버레이만 표시 */
-  @media (min-width: 769px) {
-    body #boost-card.video-playing-boost .card-front {
-      border: none !important;
     }
   }
 </style>
