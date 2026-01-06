@@ -1118,21 +1118,26 @@ body.popup-active {
 
       /* 모바일에서 네오핏 제목과 설명 크기 조정 */
       .neofit-title {
-        font-size: 1.6rem !important;
+        font-size: 1.55rem !important;
+        /* Slightly smaller to fit better */
         margin-bottom: 20px !important;
-        padding: 0 20px !important;
+        padding: 0 15px !important;
         text-align: center !important;
         display: flex !important;
         justify-content: center !important;
         flex-wrap: wrap !important;
+        word-break: keep-all !important;
       }
 
       .neofit-description {
-        font-size: 0.9rem !important;
+        font-size: 0.85rem !important;
+        /* Adjusted for better fit */
         margin-bottom: 24px !important;
-        padding: 0 20px !important;
-        line-height: 1.8 !important;
+        padding: 0 15px !important;
+        line-height: 1.7 !important;
         text-align: center !important;
+        word-break: keep-all !important;
+        /* Prevent mid-word breaks (e.g., 퍼포먼/스) */
       }
 
       /* PC에서만 보이는 요소 */
@@ -5363,10 +5368,12 @@ body.popup-active {
               기반 그룹 트레이닝</span> 시스템입니다.<br>
             <span class="neon-green">체계적인 단계별 프로그램</span>을 통해 기초부터 퍼포먼스까지 <span class="neon-green">함께
               성장</span>합니다.</span>
-          <span class="mobile-only">네오핏은 <span style="color: #aaa;">1~4명이 함께 운동하는</span> <span class="neon-green">팀 기반
-              그룹 트레이닝</span><br>시스템입니다.<br>
-            <span class="neon-green">체계적인 단계별 프로그램</span>을 통해 기초부터 퍼포먼스<br>
-            <span class="neon-green">까지 함께 성장</span>합니다.</span>
+          <span class="mobile-only" style="display: block; width: 100%;">
+            네오핏은 1~4명이 함께 운동하는 팀 기반 그룹 트레이닝<br>
+            시스템입니다.<br>
+            체계적인 단계별 프로그램을 통해 기초부터 퍼포먼스<br>
+            까지 함께 성장합니다.
+          </span>
         </p>
 
         <!-- 3D 카드 컨테이너 -->
