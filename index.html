@@ -4621,6 +4621,28 @@ body.popup-active {
     }
 
     function closeNaverBanner() {
+      // 팝업 닫을 때 비디오 음소거 처리
+      const video = document.getElementById('promoVideoV6');
+      const mobileVideo = document.getElementById('mobilePromoVideo');
+      const muteSvg = document.getElementById('muteSvg');
+      const unmuteSvg = document.getElementById('unmuteSvg');
+      const soundBtn = document.getElementById('videoSoundBtn');
+
+      if (video) video.muted = true;
+      if (mobileVideo) mobileVideo.muted = true;
+
+      // 스피커 아이콘 상태 초기화 (음소거 상태로)
+      if (muteSvg && unmuteSvg) {
+        muteSvg.style.display = 'block';
+        unmuteSvg.style.display = 'none';
+      }
+
+      // 버튼 스타일 초기화
+      if (soundBtn) {
+        soundBtn.style.borderColor = 'rgba(123, 228, 149, 0.5)';
+        soundBtn.style.boxShadow = 'none';
+      }
+
       const popup = document.getElementById('naverBannerPopup');
       if (popup) {
         popup.classList.remove('show');
@@ -20390,6 +20412,14 @@ body.popup-active {
   // 팝업 닫기 함수
   function closeEntryPopup() {
     console.log('closeEntryPopup 함수 호출됨');
+
+    // 팝업 닫을 때 비디오 음소거 처리
+    const popupVideo = document.querySelector('#entryPopup video');
+    if (popupVideo) {
+      console.log('팝업 비디오 음소거 처리');
+      popupVideo.muted = true;
+    }
+
     const popup = document.getElementById('entryPopup');
     if (popup) {
       console.log('팝업 요소 찾음, 강제로 닫는 중...');
@@ -21483,6 +21513,7 @@ body.popup-active {
 <!-- 모바일 hive-smart 섹션 간격 수정 -->
 <style>
   @media (max-width: 768px) {
+
     /* 이중 스크롤 완전 제거 - scrollable-content */
     #scrollable-content {
       overflow: visible !important;
@@ -21535,7 +21566,8 @@ body.popup-active {
       overflow: visible !important;
       display: grid !important;
       grid-template-columns: 1fr 1fr !important;
-      gap: 32px 12px !important;  /* 상하 32px로 증가 */
+      gap: 32px 12px !important;
+      /* 상하 32px로 증가 */
       position: relative !important;
       z-index: 300 !important;
     }
@@ -21548,7 +21580,8 @@ body.popup-active {
       visibility: visible !important;
       opacity: 1 !important;
       display: flex !important;
-      padding: 14px 10px !important;  /* 상하 패딩 증가 */
+      padding: 14px 10px !important;
+      /* 상하 패딩 증가 */
     }
 
     /* 네오 필라테스 섹션 - 카드 가림 방지 + 상단 여백 축소 */
