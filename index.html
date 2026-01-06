@@ -4347,19 +4347,9 @@ body.popup-active {
           box-shadow: 0 0 20px #7BE495;
         }
 
-        /* 스피커 버튼 모바일 축소 및 가시성 확보 */
+        /* 스피커 버튼 모바일 삭제 */
         #videoSoundBtn {
-          width: 32px !important;
-          height: 32px !important;
-          bottom: 12px !important;
-          right: 12px !important;
-          top: auto !important;
-          left: auto !important;
-          border-radius: 8px !important;
-          z-index: 2000000050 !important;
-          /* 최상단 레이어 보장 */
-          background: rgba(10, 14, 39, 0.95) !important;
-          border: 1.5px solid #7BE495 !important;
+          display: none !important;
         }
 
         #videoSoundBtn svg {
@@ -4516,14 +4506,6 @@ body.popup-active {
               if (index === 0) mv.play().catch(e => { });
               else mv.pause();
             }
-
-            // Reset UI to muted state
-            if (muteSvg && unmuteSvg && btn) {
-              muteSvg.style.display = 'block';
-              unmuteSvg.style.display = 'none';
-              btn.style.borderColor = 'rgba(123, 228, 149, 0.5)';
-              btn.style.boxShadow = 'none';
-            }
           }
           return; // Stop here, do not run PC slider logic
         }
@@ -4671,6 +4653,9 @@ body.popup-active {
 
     function togglePromoSound(event) {
       if (event) event.stopPropagation();
+
+      const isMobile = window.innerWidth <= 768;
+      if (isMobile) return; // 모바일에서는 소리 켜기 금지
 
       const video = document.getElementById('promoVideoV6');
       const mobileVideo = document.getElementById('mobilePromoVideo');
