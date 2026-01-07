@@ -20939,85 +20939,33 @@ body.popup-active {
       console.log('❌ 안전장치: 오늘 하루 안보기 설정으로 팝업 숨김 유지');
     }
   }, 1000);
-
-  // 중복 함수 정의 제거됨 - 상단에 window.showHiveChallengePopup으로 이미 정의됨
-
-  // 자동 팝업 테스트 제거됨 - 모바일에서 드래그 시 나타나는 문제 해결
 </script>
 
-<!-- NEO BOOST 비디오 재생 시 UI 숨김을 위한 CSS -->
 <style>
+  /* 통합된 모바일 비디오 카드 스타일 (Sync, Balance, Boost 모두 동일 적용) */
   @media (max-width: 768px) {
 
-    /* 네오 부스트 카드 모바일 확대 효과 - 페이지 최상위로 강제 이동 */
-    html body .training-cards-container #boost-card.video-playing-boost,
-    html body #boost-card.video-playing-boost.active,
-    html body #boost-card.video-playing-boost {
-      position: fixed !important;
-      top: 50% !important;
-      left: 50% !important;
-      transform: translateX(-50%) translateY(-50%) scale(1.1) !important;
-      z-index: 2147483647 !important;
-      transition: all 0.3s ease !important;
-      width: 350px !important;
-      height: 450px !important;
-      margin: 0 !important;
-    }
-
-    /* 비디오 재생 중 모든 UI 요소 강제 숨김 - 최고 우선순위 */
-    body #boost-card.video-playing-boost .boost-title,
-    body #boost-card.video-playing-boost .boost-text-1,
-    body #boost-card.video-playing-boost .boost-text-2,
-    body #boost-card.video-playing-boost .card-front h3,
-    body #boost-card.video-playing-boost .card-front p,
-    body #boost-card.video-playing-boost .card-front img,
-    body #boost-card.video-playing-boost .click-indicator,
-    body #boost-card.video-playing-boost .card-front>div[style*="z-index: 2"],
-    body #boost-card.video-playing-boost .card-front>div[style*="z-index: 2"]>*:not(.boost-hover-video) {
-      opacity: 0 !important;
-      visibility: hidden !important;
-      display: none !important;
-      pointer-events: none !important;
-      z-index: -1 !important;
-    }
-
-    /* 비디오만 표시 - 최고 z-index로 모든 요소 위에 표시 */
-    body #boost-card.video-playing-boost .boost-hover-video {
-      opacity: 1 !important;
-      visibility: visible !important;
-      display: block !important;
-      z-index: 99999 !important;
-      position: absolute !important;
-      top: 10px !important;
-      left: 10px !important;
-      width: calc(100% - 20px) !important;
-      height: calc(100% - 20px) !important;
-      object-fit: cover !important;
-      border-radius: 16px !important;
-      background: #000 !important;
-    }
-
-    /* 모바일에서 모든 비디오 카드를 페이지 최상위로 강제 이동 */
+    /* 모든 카드를 화면 중앙에 고정하고 1.1배 확대 - 부스트와 동일하게 적용 */
     #sync-card.video-playing-sync,
     #balance-card.video-playing-balance,
     #boost-card.video-playing-boost {
       position: fixed !important;
-      top: 45% !important;
+      top: 50% !important;
       left: 50% !important;
-      transform: translateX(-50%) translateY(-50%) scale(1.0) !important;
-      z-index: 2147483647 !important;
-      transition: all 0.3s ease !important;
+      transform: translate(-50%, -50%) scale(1.1) !important;
+      z-index: 20000 !important;
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
       width: 350px !important;
       height: 450px !important;
-      margin: 0 !important;
-      max-width: 92vw !important;
+      max-width: 90vw !important;
       max-height: 80vh !important;
       background: #000 !important;
       border-radius: 20px !important;
-      overflow: hidden !important;
+      margin: 0 !important;
+      box-shadow: 0 0 0 100vh rgba(0, 0, 0, 0.85) !important;
     }
 
-    /* 작은 스마트폰 화면 대응 (아이폰 SE, 미니 등) */
+    /* 작은 화면(폴드, 미니 등) 대응 */
     @media (max-width: 400px) {
 
       #sync-card.video-playing-sync,
@@ -21025,41 +20973,26 @@ body.popup-active {
       #boost-card.video-playing-boost {
         width: 300px !important;
         height: 385px !important;
-        top: 42% !important;
+        transform: translate(-50%, -50%) scale(1.05) !important;
       }
     }
 
-    /* 모바일에서 비디오 요소 잘림 방지 */
+    /* 비디오 객체 스타일 - 잘림 방지 */
     .sync-hover-video.playing,
     .balance-hover-video.playing,
     .boost-hover-video.playing {
       object-fit: contain !important;
       width: 100% !important;
       height: 100% !important;
-      top: 0 !important;
-      left: 0 !important;
+      border-radius: 20px !important;
     }
 
-    /* 모바일에서만 NEO HIVE 섹션을 아래로 이동 */
-    section#hive {
-      margin-top: 200px !important;
-    }
-
-    /* 비디오 재생 중 UI 숨김 (Sync) */
-    body #sync-card.video-playing-sync .card-front>div[style*="z-index: 2"],
-    body #sync-card.video-playing-sync .click-indicator {
-      display: none !important;
-    }
-
-    /* 비디오 재생 중 UI 숨김 (Balance) */
-    body #balance-card.video-playing-balance .card-front>div[style*="z-index: 2"],
-    body #balance-card.video-playing-balance .click-indicator {
-      display: none !important;
-    }
-
-    /* 비디오 재생 중 UI 숨김 (Boost) */
-    body #boost-card.video-playing-boost .card-front>div[style*="z-index: 2"],
-    body #boost-card.video-playing-boost .click-indicator {
+    /* 비디오 재생 중 잡다한 UI 숨기기 */
+    #sync-card.video-playing-sync .card-front>*:not(.sync-hover-video),
+    #balance-card.video-playing-balance .card-front>*:not(.balance-hover-video),
+    #boost-card.video-playing-boost .card-front>*:not(.boost-hover-video) {
+      opacity: 0 !important;
+      pointer-events: none !important;
       display: none !important;
     }
   }
@@ -21073,32 +21006,20 @@ body.popup-active {
       transform: scale(1.1) !important;
       z-index: 1000 !important;
       transition: all 0.3s ease !important;
-    }
-
-    /* NEO BOOST 카드 위치 고정 - 절대 이동 금지 */
-    #boost-card.video-playing-boost,
-    html body #boost-card.video-playing-boost,
-    html body .training-cards-container #boost-card.video-playing-boost,
-    [id="boost-card"].video-playing-boost {
-      position: relative !important;
-      top: auto !important;
-      left: auto !important;
-      right: auto !important;
-      bottom: auto !important;
-      margin: 0 !important;
-      transform: scale(1.1) !important;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5) !important;
     }
   }
 </style>
 
 <script>
-  // PC 네비게이션 이벤트 핸들러 - 강력한 방식
+  // PC 네비게이션 이벤트 핸들러
   (function () {
     function setupNavigation() {
       console.log('네비게이션 설정 시작');
 
       // PC 환경에서만 실행
       if (window.innerWidth <= 768) {
+
         console.log('모바일 환경 - PC 네비게이션 건너뛰기');
         return;
       }
