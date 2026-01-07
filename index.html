@@ -13185,7 +13185,7 @@ body.popup-active {
               boostVideo.style.borderRadius = '20px';
               boostVideo.style.transform = 'scale(0.94)';
 
-              // 글래스모피즘 테두리 오버레이 추가 - NEO SYNC와 동일한 그린 테마
+              // 글래스모피즘 테두리 오버레이 추가 - 레드 테마 적용
               const glassOverlay = document.createElement('div');
               glassOverlay.className = 'video-glass-overlay';
               glassOverlay.style.cssText = `
@@ -13195,16 +13195,16 @@ body.popup-active {
             right: 0;
             bottom: 0;
             border-radius: 20px;
-            border: 1px solid rgba(123, 228, 149, 0.5);
+            border: 1px solid rgba(248, 113, 113, 0.5);
             background: linear-gradient(135deg,
-              rgba(123, 228, 149, 0.15) 0%,
+              rgba(248, 113, 113, 0.15) 0%,
               transparent 40%,
               transparent 60%,
-              rgba(123, 228, 149, 0.15) 100%);
+              rgba(248, 113, 113, 0.15) 100%);
             pointer-events: none;
             z-index: 10;
-            box-shadow: inset 0 0 30px rgba(123, 228, 149, 0.2),
-                        0 0 60px rgba(123, 228, 149, 0.3);
+            box-shadow: inset 0 0 30px rgba(248, 113, 113, 0.2),
+                        0 0 60px rgba(248, 113, 113, 0.3);
           `;
               this.querySelector('.card-front').appendChild(glassOverlay);
 
