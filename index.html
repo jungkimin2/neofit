@@ -4536,12 +4536,12 @@ body.popup-active {
 
       prev: function () {
         this.move((this.currentIndex - 1 + 2) % 2);
-        this.startTimer();
+        this.stopTimer();
       },
 
       next: function () {
         this.move((this.currentIndex + 1) % 2);
-        this.startTimer();
+        this.stopTimer();
       },
 
       move: function (index) {
@@ -4602,16 +4602,18 @@ body.popup-active {
 
       startTimer: function () {
         this.stopTimer();
-        this.timer = setInterval(() => {
+        // 3초 후 1회만 자동 슬라이드
+        this.timer = setTimeout(() => {
           let nextIndex = (this.currentIndex + 1) % 2;
           this.move(nextIndex);
-        }, 5000);
+          this.timer = null; // 1회 실행 후 타이머 제거
+        }, 3000);
         this.addTouchListeners();
       },
 
       stopTimer: function () {
         if (this.timer) {
-          clearInterval(this.timer);
+          clearTimeout(this.timer);
           this.timer = null;
         }
       },
