@@ -7216,7 +7216,7 @@ body.popup-active {
                   <img src="./images/neosync.png" data-webp="./images/neosync.webp" alt="네오 싱크"
                     style="width: 80%; height: auto; margin-bottom: 36px; filter: drop-shadow(0 0 20px rgba(123,228,149,0.5));">
                   <p style="color: #fff; font-size: 1.1rem; text-align: center;">기초 체력과 움직임의 동기화</p>
-                  <p style="color: #aaa; font-size: 0.82rem; text-align: center; margin-top: 10px;">팀원들과 함께 기본기를 다지는
+                  <p class="sync-intro-text" style="color: #aaa; font-size: 0.82rem; text-align: center; margin-top: 10px;">팀원들과 함께 기본기를 다지는
                     입문
                     프로그램</p>
                 </div>
@@ -14598,6 +14598,13 @@ body.popup-active {
 
       #boost-card .boost-text-2 {
         font-size: 0.75rem !important;
+      }
+
+      /* 모바일에서 NEO SYNC 입문 프로그램 문구 축소 */
+      #sync-card .sync-intro-text {
+        font-size: 0.68rem !important;
+        line-height: 1.35 !important;
+        letter-spacing: -0.01em !important;
       }
     }
 
