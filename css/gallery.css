@@ -123,6 +123,8 @@
         margin: 20px auto !important;
         max-width: 100% !important;
         padding: 0 10px !important; /* 좌우 패딩 추가 */
+        position: relative;
+        z-index: 1;
       }
       
       /* 썸네일만 좌측으로 이동 */
