@@ -14957,8 +14957,8 @@ body.popup-active {
       html body section#benefits,
       section#benefits.section.animate-on-scroll {
         margin-top: 0px !important;
-        transform: translateY(144px) !important;
-        -webkit-transform: translateY(144px) !important;
+        transform: translateY(180px) !important;
+        -webkit-transform: translateY(180px) !important;
         position: relative !important;
         z-index: 9999 !important;
         padding: 160px 16px 100px 16px !important;
@@ -15529,9 +15529,12 @@ body.popup-active {
       }
 
       .guide-icon {
-        width: 30px;
-        height: 30px;
+        width: 28px !important;
+        height: 28px !important;
         background: transparent;
+        flex-shrink: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
       }
 
       .guide-icon img {
@@ -15540,7 +15543,9 @@ body.popup-active {
       }
 
       .guide-pulse {
-        left: 50%;
+        left: 50% !important;
+        top: 50% !important;
+        transform: translate(-50%, -50%) !important;
         width: 25px;
         height: 25px;
       }
