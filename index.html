@@ -346,7 +346,11 @@
     object-fit: cover !important;
     border-radius: 15px !important;
     box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5) !important;
+    cursor: pointer !important;
   `;
+      img.addEventListener('click', function () {
+        window.open('https://m.booking.naver.com/booking/10/bizes/987028/items/6427809?area=pll&lang=ko&startDate=2026-03-02&theme=place', '_blank');
+      });
 
       // 닫기 버튼 생성 - 네오핏 테마
       const closeBtn = document.createElement('button');
