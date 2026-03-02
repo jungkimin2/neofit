@@ -18144,22 +18144,19 @@ body.popup-active {
 
     /* "시설 정보 및 위치 안내" 섹션 위치 조정 */
     section#benefits {
-      margin-top: -408px !important;
-      /* -472px + 64px(4칸) = -408px (위로 4칸 이동) */
+      margin-top: -372px !important;
+      /* -408px + 36px = -372px (아래로 36px 이동) */
       position: relative !important;
       z-index: 10 !important;
       background: #000 !important;
       padding-top: 48px !important;
-      /* 112px - 64px(4칸) = 48px */
-      transform: none !important;
     }
 
     /* 모바일에서 benefits 강제 적용 */
     html body section#benefits,
     body section#benefits.section,
     section#benefits.animate-on-scroll {
-      margin-top: -408px !important;
-      transform: none !important;
+      margin-top: -372px !important;
     }
 
     section#benefits .container {
@@ -19800,10 +19797,9 @@ body.popup-active {
         // benefits 섹션 강제 위치 조정 - 모바일에서만 적용
         const benefitsSection = document.querySelector('section#benefits');
         if (benefitsSection && window.innerWidth <= 768) {
-          benefitsSection.style.setProperty('margin-top', '-16px', 'important'); // -32px + 16px = -16px (1칸 더 아래로)
-          benefitsSection.style.setProperty('transform', 'translateY(0)', 'important');
+          benefitsSection.style.setProperty('margin-top', '20px', 'important');
           benefitsSection.style.setProperty('background', '#000', 'important');
-          benefitsSection.style.setProperty('padding-top', '20px', 'important');
+          benefitsSection.style.setProperty('padding-top', '40px', 'important');
           benefitsSection.style.setProperty('position', 'relative', 'important');
           benefitsSection.style.setProperty('z-index', '10', 'important');
           benefitsSection.style.setProperty('display', 'block', 'important');
